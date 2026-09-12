@@ -3,9 +3,9 @@
     "result": "ok",
     "stage": "done",
     "drop_id": "2026-09-12",
-    "title": "Grid Blade",
-    "finished_at": "2026-09-12T22:04:28Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34720744718",
+    "title": "Gravity Current",
+    "finished_at": "2026-09-12T22:48:37Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34722454218",
     "error": null
   },
   "next_post_at": "2026-09-13T17:30:00Z",
@@ -16,13 +16,15 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-12T22:04:28Z",
+  "updated_at": "2026-09-12T22:48:37Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
-    "lm_ms": 77692,
-    "dit_ms": 596934,
-    "vae_ms": 435175,
-    "total_s": 1122.6
+    "steps": 14,
+    "model": "acestep-v15-turbo-Q8_0.gguf",
+    "lm_ms": 71167,
+    "dit_ms": 938756,
+    "vae_ms": 483112,
+    "total_s": 1504.9
   }
 }
