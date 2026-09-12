@@ -119,3 +119,34 @@ def test_engine_paths_are_absolute(monkeypatch, tmp_path):
     engine = music.get_engine({"engine": "acestep_cpp", "dit_model": "dit", "lm_model": "lm"})
     assert engine.bin_dir.is_absolute() and engine.models_dir.is_absolute()
     assert engine.bin_dir == (tmp_path / "vendor/acestep.cpp/build").resolve()
+
+
+def test_queue_track_is_released_without_generating(fast_profile, tmp_path, site_dir):
+    """A file in queue/ is mastered, cut and released as-is - the generator never runs."""
+    import numpy as np
+    from anchor import pipeline
+    from anchor.music import SR, synth_techno, write_wav
+
+    queue = tmp_path / "queue"
+    queue.mkdir()
+    track = queue / "02_project-mayhem.wav"
+    write_wav(track, synth_techno(40, 150, 7), SR)
+    out = tmp_path / "drop"
+
+    def boom(*a, **k):                       # the generator must not be touched
+        raise AssertionError("generated a track while the queue had one")
+
+    import anchor.music as music
+    real = music.get_engine
+    music.get_engine = boom
+    try:
+        meta = pipeline.make(fast_profile, "2026-09-20", out, art_mode="procedural",
+                             catalog_path=site_dir / "data" / "catalog.json", queue_dir=queue)
+    finally:
+        music.get_engine = real
+
+    assert meta["brief"]["title"] == "Project Mayhem"
+    assert meta["brief"]["source"] == "queue" and meta["engine"]["engine"] == "queue"
+    assert abs(meta["brief"]["duration_s"] - 40) < 1.5
+    assert (out / meta["files"]["short"]).exists() and (out / meta["files"]["mp3"]).exists()
+    assert not track.exists() and (queue / "done" / track.name).exists()   # never posted twice

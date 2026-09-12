@@ -219,7 +219,9 @@
       ["Length", d.duration_s ? `${fmtTime(d.duration_s)} · Short ${d.short_s}s` : null],
       ["Master", q.lufs != null ? `${q.lufs} LUFS` : null],
       ["Cover", d.art_source === "cloudflare-flux" ? "AI (FLUX.1 schnell)" : "Procedural"],
-      ["Made by", eng.name === "acestep_cpp"
+      ["Made by", eng.name === "queue"
+        ? `Your own track${eng.source_file ? ` · ${eng.source_file}` : ""}`
+        : eng.name === "acestep_cpp"
         ? `ACE-Step 1.5 turbo · ${eng.steps || 8} steps${eng.render_s ? ` · ${Math.round(eng.render_s / 60)} min CPU` : ""}`
         : (eng.name || "—")],
       ["Seed", d.seed != null ? String(d.seed) : null],

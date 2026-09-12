@@ -13,6 +13,7 @@ from .audio import (analyze, beat_phase, best_window, cut, decode, encode_flac, 
 from .brief import describe, make_brief, post_time
 from .config import CATALOG_PATH, SITE, STATUS_PATH, Profile, env
 from .music import get_engine
+from .queue import QUEUE, mark_done, next_track
 from .publish import Buffer, BufferError, build_post_input, schedule_for, verify_media_url
 from .util import iso, log, read_json, utcnow, write_json
 from .video import poster_frame, render_short
@@ -32,9 +33,13 @@ def asset_base(profile: Profile, brief: dict) -> str:
 
 # ------------------------------------------------------------------------- make
 def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None = None,
-         art_mode: str | None = None, retries: int = 1, catalog_path: Path = CATALOG_PATH) -> dict:
+         art_mode: str | None = None, retries: int = 1, catalog_path: Path = CATALOG_PATH,
+         queue_dir: Path = QUEUE) -> dict:
     out_dir.mkdir(parents=True, exist_ok=True)
     hist = catalog.history(catalog.load(catalog_path))
+    queued = next_track(queue_dir) if engine_name not in ("fixture",) else None
+    if queued:
+        return make_from_queue(profile, day, out_dir, queued, art_mode=art_mode, hist=hist)
     engine = get_engine(profile.music, engine_name)
     attempts_log = []
     for attempt in range(retries + 1):
@@ -73,6 +78,12 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             brief["key"] = key
             brief.update(describe(profile, brief))
 
+    return finish(profile, brief, raw, stats_audio, stats, attempts_log, out_dir, art_mode)
+
+
+def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: dict,
+           attempts_log: list, out_dir: Path, art_mode: str | None) -> dict:
+    """Master, cut the Short, draw the cover, render the video, write the drop files."""
     base = asset_base(profile, brief)
     master_wav = out_dir / "master.wav"
     loud = master(raw, master_wav, float(profile.music["loudness_lufs"]), float(profile.music["true_peak_db"]))
@@ -114,6 +125,39 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
     (out_dir / "release_notes.md").write_text(release_notes(profile, meta), encoding="utf-8")
     log(f"made {base}: short {video['duration']:.1f}s, {video['size_bytes'] / 1e6:.1f} MB, "
         f"master {loud['after']['input_i']} LUFS")
+    return meta
+
+
+def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
+                    art_mode: str | None = None, hist: list | None = None) -> dict:
+    """Release a track you made yourself: master, cover, Short, notes - no generation."""
+    src = Path(queued["file"])
+    raw = out_dir / f"queued{src.suffix.lower()}"
+    shutil.copy(src, raw)
+    audio = decode(raw)
+    stats_audio = analyze(audio)
+    brief = make_brief(profile, day, hist or [], 0)
+    brief["title"] = queued["title"]
+    brief["duration_s"] = stats_audio["duration_s"]
+    brief["source"], brief["source_file"] = "queue", src.name
+    if queued.get("caption"):
+        brief["caption"] = queued["caption"]
+    est = stats_audio.get("bpm_est")
+    if est:
+        brief["bpm"] = int(round(est))
+    heard = estimate_key(audio.mean(axis=1))
+    if heard and heard[1] >= 0.25:
+        brief["key"], brief["key_confidence"] = heard[0], heard[1]
+    brief.update(describe(profile, brief))
+    log(f"queue drop: {brief['title']!r} | {brief['lane_name']} | {brief['bpm']} BPM | "
+        f"{brief['key']} | {brief['duration_s']:.0f}s from {src.name}")
+    ok, fails, warns = quality_gate(stats_audio, brief)
+    warn = list(warns) + ([f"kept despite: {'; '.join(fails)}"] if fails else [])
+    attempts_log = [{"attempt": 0, "seed": brief["seed"], "ok": True, "fail": [], "warn": warn,
+                     "source": src.name}]
+    meta = finish(profile, brief, raw, stats_audio,
+                  {"engine": "queue", "source_file": src.name}, attempts_log, out_dir, art_mode)
+    mark_done(src, src.parent / "done")
     return meta
 
 
@@ -192,7 +236,8 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
                                  "family_name", "duration_s", "short_s", "genre_line", "style_line",
                                  "caption", "seed")},
         "engine": {"name": meta["engine"].get("engine"), "steps": meta["engine"].get("steps"),
-                   "render_s": meta["engine"].get("total_s"), "threads": meta["engine"].get("threads")},
+                   "render_s": meta["engine"].get("total_s"), "threads": meta["engine"].get("threads"),
+                   "source_file": meta["engine"].get("source_file")},
         "cover": f"covers/{brief['id']}.jpg",
         "accent": profile.family(brief["family"]).accent,
         "audio_url": f"https://github.com/{repo}/releases/download/{tag}/{files['mp3']}" if repo else None,
