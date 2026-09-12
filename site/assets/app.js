@@ -77,8 +77,14 @@
     $("drop-note").textContent = statusNote(d);
     const actions = $("drop-actions");
     actions.replaceChildren();
-    actions.append(el("a", { class: "btn primary", href: d.youtube_url || CHANNEL, rel: "noopener", target: "_blank",
-      text: d.youtube_url ? "Watch the Short ↗" : "YouTube channel ↗" }));
+    const videoSrc = d.video_url || d.short_url;
+    if (videoSrc) {
+      const watch = el("button", { class: "btn primary", type: "button", text: "▶  Watch the Short" });
+      watch.addEventListener("click", () => openVideo(d));
+      actions.append(watch);
+    }
+    actions.append(el("a", { class: videoSrc ? "btn" : "btn primary", href: d.youtube_url || CHANNEL, rel: "noopener",
+      target: "_blank", text: d.youtube_url ? "On YouTube ↗" : "YouTube channel ↗" }));
     if (d.audio_url) actions.append(el("a", { class: "btn", href: d.audio_url, text: "Download MP3" }));
     if (d.release_url) actions.append(el("a", { class: "btn", href: d.release_url, rel: "noopener", target: "_blank", text: "Release files ↗" }));
 
@@ -170,6 +176,42 @@
     return img;
   }
 
+
+  // ------------------------------------------------------------ the Short
+  let lastFocus = null;
+
+  function openVideo(d) {
+    const src = d.video_url || d.short_url;
+    if (!src) return;
+    const box = $("video-box"), video = $("video"), audio = $("audio");
+    audio.pause();
+    setPlaying(false);
+    video.poster = d.cover ? d.cover : "/assets/hero-default.jpg";
+    if (video.getAttribute("src") !== src) video.setAttribute("src", src);
+    $("video-cap").textContent = `${d.title} · ${d.bpm} BPM · ${d.key}`;
+    lastFocus = document.activeElement;
+    box.hidden = false;
+    document.body.classList.add("locked");
+    $("video-close").focus();
+    video.play().catch(() => {});
+  }
+
+  function closeVideo() {
+    const box = $("video-box"), video = $("video");
+    if (box.hidden) return;
+    video.pause();
+    box.hidden = true;
+    document.body.classList.remove("locked");
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function wireVideo() {
+    $("video-close").addEventListener("click", closeVideo);
+    $("video-scrim").addEventListener("click", closeVideo);
+    $("video").addEventListener("ended", closeVideo);
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeVideo(); });
+  }
+
   // ------------------------------------------------------------ countdown
   function nextSlot() {
     const s = state.status;
@@ -240,6 +282,7 @@
       $("drop-note").textContent = "Daily drops start at the next slot.";
       $("drop-actions").replaceChildren(el("a", { class: "btn primary", href: CHANNEL, rel: "noopener", target: "_blank", text: "YouTube channel ↗" }));
     }
+    wireVideo();
     tick();
     setInterval(tick, 1000);
     setInterval(renderStatus, 60 * 1000);

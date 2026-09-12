@@ -1,4 +1,5 @@
 import re
+import json
 import shutil
 from pathlib import Path
 
@@ -23,5 +24,9 @@ def fast_profile(tmp_path):
 def site_dir(tmp_path):
     site = tmp_path / "site"
     (site / "data").mkdir(parents=True)
-    shutil.copy(ROOT / "site" / "data" / "catalog.json", site / "data" / "catalog.json")
+    # start from the shipped catalog but with no drops: the live one gains a drop every day,
+    # and a newer drop than the test's would change what the pipeline treats as "latest"
+    cat = json.loads((ROOT / "site" / "data" / "catalog.json").read_text())
+    cat["drops"] = []
+    (site / "data" / "catalog.json").write_text(json.dumps(cat, indent=2))
     return site

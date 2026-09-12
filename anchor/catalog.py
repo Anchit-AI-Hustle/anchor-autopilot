@@ -7,7 +7,7 @@ from .config import CATALOG_PATH, STATUS_PATH, Profile
 from .util import iso, read_json, utcnow, write_json
 
 DROP_FIELDS = ("id", "date", "title", "lane", "lane_name", "bpm", "key", "family", "family_name",
-               "duration_s", "short_s", "cover", "audio_url", "release_url", "short_url",
+               "duration_s", "short_s", "cover", "audio_url", "release_url", "short_url", "video_url",
                "youtube_url", "buffer_post_id", "status", "post_at", "qc", "art_source",
                "created_at", "genre_line", "style_line", "error", "accent")
 

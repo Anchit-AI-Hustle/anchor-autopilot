@@ -97,5 +97,16 @@
     <p>© <span id="year">2026</span> ANCHOR · a project by <a href="https://anchit-tandon.com">Anchit Tandon</a></p>
     <p><a href="/legal.html">Privacy &amp; terms</a> · <a href="https://www.youtube.com/@AT_ANCHOR" rel="noopener" target="_blank">@AT_ANCHOR</a></p>
   </footer>
+
+  <div class="lightbox" id="video-box" hidden>
+    <button class="lightbox-scrim" id="video-scrim" type="button" tabindex="-1" aria-label="Close the video"></button>
+    <figure class="lightbox-panel" role="dialog" aria-modal="true" aria-labelledby="video-cap">
+      <button class="lightbox-close" id="video-close" type="button" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <video id="video" class="short" controls playsinline preload="none" width="1080" height="1920"></video>
+      <figcaption class="lightbox-cap" id="video-cap"></figcaption>
+    </figure>
+  </div>
 </body>
 </html>

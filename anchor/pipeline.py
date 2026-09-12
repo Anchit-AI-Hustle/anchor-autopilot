@@ -180,7 +180,9 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         "accent": profile.family(brief["family"]).accent,
         "audio_url": f"https://github.com/{repo}/releases/download/{tag}/{files['mp3']}" if repo else None,
         "release_url": f"https://github.com/{repo}/releases/tag/{tag}" if repo else None,
-        "short_url": short_url,
+        "short_url": short_url,                       # GitHub Pages copy: only the last few stay online
+        # the release keeps the Short forever, so that is what the website plays
+        "video_url": f"https://github.com/{repo}/releases/download/{tag}/{files['short']}" if repo else None,
         "youtube_url": pub.get("external_link"),
         "buffer_post_id": pub.get("post_id"),
         "status": status,
