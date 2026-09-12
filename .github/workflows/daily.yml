@@ -294,6 +294,9 @@ jobs:
             echo "::error::YouTube publishing failed; the drop is still released on the website."
           fi
 
+      - name: Sync the Suno catalogue (ratings + postable decisions)
+        run: python -m anchor suno-sync || echo "::warning::Suno sync failed; keeping the last catalogue"
+
       - name: Record the drop on anchor.anchit-tandon.com
         run: |
           python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \

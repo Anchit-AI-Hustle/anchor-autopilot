@@ -162,3 +162,27 @@ body.locked { overflow: hidden; }
 .play.is-loading .i-play, .play.is-loading .i-pause { opacity: .35; }
 @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(.92); } }
 @media (prefers-reduced-motion: reduce) { .play.is-loading { animation: none; opacity: .7; } }
+
+/* --------------------------------------------------------- the catalogue */
+.catalogue { padding-block: clamp(40px, 7vw, 80px); display: grid; gap: 16px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.filters button { font: 700 11px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+                  background: var(--panel); color: var(--muted); border: 1px solid var(--line);
+                  padding: 9px 14px; border-radius: 999px; cursor: pointer; }
+.filters button[aria-pressed="true"] { background: var(--text); color: var(--ink); border-color: var(--text); }
+.cat-scroll { overflow-x: auto; }
+.cat { width: 100%; border-collapse: collapse; font-size: 14px; }
+.cat th { text-align: left; font: 700 10px/1.3 var(--mono); letter-spacing: .16em; text-transform: uppercase;
+          color: var(--muted); padding: 0 12px 10px 0; border-bottom: 1px solid var(--line); }
+.cat td { padding: 13px 12px 13px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.cat tr:hover td { background: color-mix(in srgb, var(--panel) 55%, transparent); }
+.c-name a { font-weight: 700; text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.c-why { display: block; color: var(--muted); font-size: 12.5px; margin-top: 4px; max-width: 42ch; }
+.c-tags { color: var(--muted); font-size: 12.5px; max-width: 34ch; }
+.c-num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.c-rate { font-family: var(--display); font-size: 1.35rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.chip { display: inline-block; font: 700 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+        padding: 6px 9px; border-radius: 4px; white-space: nowrap; }
+.chip-yes { background: var(--ok); color: #0a0a0b; }
+.chip-no { border: 1px solid var(--line); color: var(--muted); }
+@media (max-width: 760px) { .cat .hide-sm { display: none; } .c-why { max-width: none; } }

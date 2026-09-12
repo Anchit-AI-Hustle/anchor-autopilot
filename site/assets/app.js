@@ -236,6 +236,49 @@
     box.hidden = false;
   }
 
+
+  // ------------------------------------------------------------- catalogue
+  function renderCatalogue(filter) {
+    const cat = state.catalog.catalogue;
+    const box = $("catalogue");
+    if (!cat || !(cat.songs || []).length) { box.hidden = true; return; }
+    box.hidden = false;
+    $("cat-count").textContent = `${cat.postable} of ${cat.total} postable`;
+    const when = cat.checked_at ? ago(cat.checked_at) : "just now";
+    $("cat-sub").textContent = `Synced from suno.com/@${cat.handle} ${when} — every song rated against the channel's format.`;
+    const rows = $("cat-rows");
+    rows.replaceChildren();
+    for (const s of cat.songs) {
+      if (filter === "yes" && !s.postable) continue;
+      if (filter === "no" && s.postable) continue;
+      const tr = el("tr");
+      const name = el("td", { class: "c-name" },
+        el("a", { href: s.url, rel: "noopener", target: "_blank", text: s.title }),
+        el("span", { class: "c-why", text: s.verdict }));
+      tr.append(
+        name,
+        el("td", { class: "hide-sm c-tags", text: (s.tags || "—").slice(0, 90) }),
+        el("td", { class: "c-num", text: fmtTime(s.duration_s) }),
+        el("td", { class: "hide-sm c-num", text: String(s.plays ?? 0) }),
+        el("td", { class: "c-rate", text: Number(s.rating).toFixed(1) }),
+        el("td", {}, el("span", { class: "chip " + (s.postable ? "chip-yes" : "chip-no"),
+                                  text: s.postable ? "Yes" : "No" })),
+      );
+      rows.append(tr);
+    }
+  }
+
+  function wireCatalogue() {
+    const bar = $("cat-filters");
+    if (!bar) return;
+    bar.addEventListener("click", (e) => {
+      const b = e.target.closest("button");
+      if (!b) return;
+      bar.querySelectorAll("button").forEach((o) => o.setAttribute("aria-pressed", o === b ? "true" : "false"));
+      renderCatalogue(b.dataset.f);
+    });
+  }
+
   // ------------------------------------------------------------ the Short
   let lastFocus = null;
 
@@ -342,6 +385,8 @@
       $("drop-actions").replaceChildren(el("a", { class: "btn primary", href: CHANNEL, rel: "noopener", target: "_blank", text: "YouTube channel ↗" }));
     }
     wireVideo();
+    wireCatalogue();
+    renderCatalogue('all');
     tick();
     setInterval(tick, 1000);
     setInterval(renderStatus, 60 * 1000);

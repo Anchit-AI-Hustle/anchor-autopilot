@@ -47,6 +47,9 @@ def main(argv: list[str] | None = None) -> int:
     f.add_argument("--error", required=True)
     f.add_argument("--run-url", default=None)
 
+    ss = sub.add_parser("suno-sync", help="read a public Suno profile, rate every song, publish it to the site")
+    ss.add_argument("--handle", default=None)
+
     sub.add_parser("check", help="validate profile and site data")
 
     h = sub.add_parser("has-drop", help="print yes/no: is there already a published drop for the date")
@@ -74,6 +77,13 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(drop, indent=2))
     elif args.cmd == "sync":
         pipeline.sync(profile, limit=args.limit)
+    elif args.cmd == "suno-sync":
+        from .suno import catalogue
+        cat = catalog.load(CATALOG_PATH, profile)
+        cat["catalogue"] = catalogue(args.handle or profile.artist.get("suno_handle", "anchor_at"))
+        catalog.save(cat, CATALOG_PATH)
+        c = cat["catalogue"]
+        print(json.dumps({"total": c["total"], "postable": c["postable"], "checked_at": c["checked_at"]}))
     elif args.cmd == "fail":
         pipeline.fail(args.stage, args.error, args.run_url)
     elif args.cmd == "check":

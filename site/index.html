@@ -26,6 +26,7 @@
     <a class="brand" href="/" aria-label="ANCHOR home">A N C H O R</a>
     <nav aria-label="Primary">
       <a href="#releases">Releases</a>
+      <a href="#catalogue">Catalogue</a>
       <a href="#machine">Status</a>
       <a href="https://www.youtube.com/@AT_ANCHOR" rel="noopener" target="_blank">YouTube<span aria-hidden="true"> ↗</span></a>
     </nav>
@@ -76,6 +77,27 @@
       <p class="empty" id="grid-empty" hidden>The first automated drop lands at the next slot. Earlier releases are below.</p>
       <h3 class="legacy-h" id="legacy-h" hidden>Earlier releases</h3>
       <ol class="grid legacy" id="legacy"></ol>
+    </section>
+
+    <section id="catalogue" class="catalogue" aria-labelledby="cat-h" hidden>
+      <div class="section-head">
+        <h2 id="cat-h">The catalogue</h2>
+        <p class="count" id="cat-count"></p>
+      </div>
+      <p class="note" id="cat-sub"></p>
+      <div class="filters" id="cat-filters" role="group" aria-label="Filter the catalogue">
+        <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="yes" aria-pressed="false">Postable</button>
+        <button type="button" data-f="no" aria-pressed="false">Not yet</button>
+      </div>
+      <div class="cat-scroll">
+        <table class="cat">
+          <thead>
+            <tr><th>Song</th><th class="hide-sm">Prompt</th><th>Length</th><th class="hide-sm">Plays</th><th>Rating</th><th>YouTube</th></tr>
+          </thead>
+          <tbody id="cat-rows"></tbody>
+        </table>
+      </div>
     </section>
 
     <section id="machine" class="machine" aria-labelledby="machine-h">
