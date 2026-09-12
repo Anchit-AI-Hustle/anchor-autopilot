@@ -110,17 +110,39 @@
       c.setAttribute("aria-current", c.dataset.id === d.id ? "true" : "false"));
   }
 
+  function setBusy(on) {
+    const b = $("play");
+    b.classList.toggle("is-loading", on);
+    b.setAttribute("aria-busy", on ? "true" : "false");
+  }
+
   function setPlaying(on) {
     const b = $("play");
     b.setAttribute("aria-pressed", on ? "true" : "false");
     b.setAttribute("aria-label", on ? "Pause track" : "Play track");
+    if (on) setBusy(false);
   }
 
   function wirePlayer() {
     const audio = $("audio"), seek = $("seek");
     $("play").addEventListener("click", () => {
-      if (audio.paused) audio.play().then(() => setPlaying(true)).catch(() => setPlaying(false));
-      else { audio.pause(); setPlaying(false); }
+      if (!audio.getAttribute("src")) return;
+      if (audio.paused) {
+        setBusy(true);                       // the file streams from the release: say so while it loads
+        audio.play().then(() => setPlaying(true)).catch((err) => {
+          setBusy(false);
+          setPlaying(false);
+          $("drop-note").textContent = `Could not start playback (${err.name}). Use Download MP3.`;
+        });
+      } else { audio.pause(); setPlaying(false); }
+    });
+    audio.addEventListener("waiting", () => setBusy(true));
+    audio.addEventListener("playing", () => { setBusy(false); setPlaying(true); });
+    audio.addEventListener("canplay", () => setBusy(false));
+    audio.addEventListener("error", () => {
+      setBusy(false);
+      setPlaying(false);
+      $("drop-note").textContent = "That track would not load. Use Download MP3 or Release files.";
     });
     audio.addEventListener("timeupdate", () => {
       if (audio.duration) seek.value = Math.round((audio.currentTime / audio.duration) * 1000);

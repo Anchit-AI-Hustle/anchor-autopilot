@@ -157,3 +157,8 @@ body.locked { overflow: hidden; }
 .spec { background: var(--panel); padding: 14px 16px; min-width: 0; }
 .spec dt { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .spec dd { margin: 6px 0 0; font-size: 14px; overflow-wrap: anywhere; }
+
+.play.is-loading { animation: pulse 1s ease-in-out infinite; }
+.play.is-loading .i-play, .play.is-loading .i-pause { opacity: .35; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(.92); } }
+@media (prefers-reduced-motion: reduce) { .play.is-loading { animation: none; opacity: .7; } }
