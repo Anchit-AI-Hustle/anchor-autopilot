@@ -106,3 +106,16 @@ def test_buffer_failure_still_releases_on_site(fast_profile, site_dir, tmp_path,
     drop = pipeline.record(fast_profile, d, repo="o/r", catalog_path=cat_path, status_path=status_path,
                            site_dir=site_dir)
     assert drop["status"] == "error" and "servable" in drop["error"]
+
+
+def test_engine_paths_are_absolute(monkeypatch, tmp_path):
+    """The engine runs with cwd set to the drop folder, so its paths must be absolute."""
+    from anchor import music
+
+    monkeypatch.chdir(tmp_path)
+    (tmp_path / "vendor/acestep.cpp/build").mkdir(parents=True)
+    monkeypatch.setenv("ACESTEP_BIN", "vendor/acestep.cpp/build")
+    monkeypatch.setenv("ACESTEP_MODELS", "vendor/models")
+    engine = music.get_engine({"engine": "acestep_cpp", "dit_model": "dit", "lm_model": "lm"})
+    assert engine.bin_dir.is_absolute() and engine.models_dir.is_absolute()
+    assert engine.bin_dir == (tmp_path / "vendor/acestep.cpp/build").resolve()

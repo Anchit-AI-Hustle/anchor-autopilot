@@ -142,8 +142,8 @@ jobs:
         id: make
         env:
           DATE: ${{ steps.day.outputs.date }}
-          ACESTEP_BIN: vendor/acestep.cpp/build
-          ACESTEP_MODELS: vendor/models
+          ACESTEP_BIN: ${{ github.workspace }}/vendor/acestep.cpp/build
+          ACESTEP_MODELS: ${{ github.workspace }}/vendor/models
           ANCHOR_VAE_CHUNK: "1024"
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}

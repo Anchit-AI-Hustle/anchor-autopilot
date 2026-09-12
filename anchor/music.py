@@ -27,8 +27,10 @@ class AceStepCpp:
     def __init__(self, bin_dir: str | Path, models_dir: str | Path, dit_model: str,
                  lm_model: str | None, steps: int = 8, shift: float = 3.0,
                  threads: int | None = None, vae_chunk: int = 512, timeout_s: int = 5400):
-        self.bin_dir = Path(bin_dir)
-        self.models_dir = Path(models_dir)
+        # absolute: the binaries run with cwd set to the drop folder, so a relative
+        # path here would resolve against that folder instead of the repo
+        self.bin_dir = Path(bin_dir).expanduser().resolve()
+        self.models_dir = Path(models_dir).expanduser().resolve()
         self.dit_model = dit_model if dit_model.endswith(".gguf") else dit_model + ".gguf"
         self.lm_model = None
         if lm_model:
