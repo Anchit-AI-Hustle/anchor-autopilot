@@ -8,7 +8,8 @@ from pathlib import Path
 
 from . import catalog
 from .art import make_cover, og_card
-from .audio import analyze, best_window, cut, decode, encode_flac, encode_mp3, master, quality_gate
+from .audio import (analyze, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
+                    master, quality_gate)
 from .brief import describe, make_brief, post_time
 from .config import CATALOG_PATH, SITE, STATUS_PATH, Profile, env
 from .music import get_engine
@@ -69,6 +70,8 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
     start, length = best_window(decode(master_wav), int(brief["bpm"]), float(brief["short_s"]))
     short_wav = out_dir / "short.wav"
     cut(master_wav, short_wav, start, length)
+    # the Short pulses on the beat, so lock it to the beat grid of this cut
+    beat_offset = beat_phase(decode(short_wav).mean(axis=1), float(brief["bpm"]))
 
     fam = profile.family(brief["family"])
     art = make_cover(fam, brief, profile.artist["name"], out_dir, art_mode)
@@ -77,7 +80,8 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
 
     mp4 = out_dir / f"{base}-short.mp4"
     video = render_short(out_dir / "cover_1080.jpg", short_wav, mp4, fam, brief,
-                         profile.artist["name"], profile.artist["handle"], out_dir / "video-work")
+                         profile.artist["name"], profile.artist["handle"], out_dir / "video-work",
+                         beat_offset=beat_offset)
     poster_frame(mp4, out_dir / "poster.jpg", min(3.0, length / 2))
 
     meta = {
@@ -86,7 +90,7 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         "loudness": loud,
         "engine": stats,
         "art": art,
-        "short_window": {"start_s": start, "length_s": length},
+        "short_window": {"start_s": start, "length_s": length, "beat_offset_s": beat_offset},
         "video": video,
         "files": {"base": base, "mp3": mp3.name, "flac": flac.name, "short": mp4.name,
                   "cover": cover_named.name, "cover_600": "cover_600.jpg", "poster": "poster.jpg"},

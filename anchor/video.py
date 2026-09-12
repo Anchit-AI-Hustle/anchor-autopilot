@@ -6,6 +6,7 @@ consecutive drops never share one template.
 """
 from __future__ import annotations
 
+import math
 from pathlib import Path
 
 import numpy as np
@@ -57,12 +58,30 @@ def background(cover: Path, out: Path) -> None:
     Image.fromarray(arr.clip(0, 255).astype(np.uint8)).save(out, quality=92)
 
 
-def build_graph(fam: Family, bpm: int, duration: float, texts: dict[str, Path]) -> str:
+PULSE_AMP = 30      # px the cover grows on each beat
+PULSE_DECAY = 3.2   # decay per beat: visible for ~3 frames at 30 fps, gone before the next beat
+
+
+def pulse_curve(t: float, bpm: float, beat_offset: float = 0.0) -> float:
+    """0..1 cover pulse: 1 exactly on the beat, decaying to ~0 before the next one."""
+    beat = 60.0 / float(bpm)
+    return math.exp(-PULSE_DECAY * ((t - beat_offset) % beat) / beat)
+
+
+def pulse_expr(bpm: float, beat_offset: float = 0.0) -> str:
+    """The same curve as an ffmpeg expression (t + beat keeps the modulo positive)."""
+    beat = 60.0 / float(bpm)
+    return (f"{COVER}+{PULSE_AMP}*exp(-{PULSE_DECAY}*"
+            f"mod(t+{beat:.5f}-{beat_offset:.4f},{beat:.5f})/{beat:.5f})")
+
+
+def build_graph(fam: Family, bpm: int, duration: float, texts: dict[str, Path],
+                beat_offset: float = 0.0) -> str:
     anton = FONTS / "Anton.ttf"
     mono = FONTS / "JetBrainsMono-Bold.ttf"
     viz, vw, vh = _viz(fam)
     beat = 60.0 / bpm
-    pulse = f"{COVER}+16*pow(abs(sin(PI*t/{beat:.5f})),6)"
+    pulse = pulse_expr(bpm, beat_offset)
     title_y = COVER_Y + COVER + 50
     cover_mid = COVER_Y + COVER // 2
     if fam.viz == "scope":   # halo behind the cover
@@ -73,7 +92,9 @@ def build_graph(fam: Family, bpm: int, duration: float, texts: dict[str, Path]) 
                   f"[s1][viz]overlay=x={(W - vw) // 2}:y={VIZ_Y}:shortest=1[s2]"]
     return ";".join([
         "[0:v]format=yuv420p[bg]",
-        f"[1:v]scale=w='{pulse}':h='{pulse}':eval=frame,format=rgba[cov]",
+        # format must come BEFORE scale: a trailing format filter pins the link size and
+        # freezes the per-frame resize, which is what killed the pulse
+        f"[1:v]format=rgba,scale=w='{pulse}':h='{pulse}':eval=frame,setsar=1[cov]",
         "[2:a]asplit=2[aout][aviz]",
         f"[aviz]{viz},format=rgba,colorkey=0x000000:0.22:0.15[viz]",
         *layers,
@@ -95,7 +116,7 @@ def build_graph(fam: Family, bpm: int, duration: float, texts: dict[str, Path]) 
 
 
 def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: dict,
-                 artist: str, handle: str, workdir: Path) -> dict:
+                 artist: str, handle: str, workdir: Path, beat_offset: float = 0.0) -> dict:
     workdir.mkdir(parents=True, exist_ok=True)
     duration = media_summary(audio)["duration"]
     texts = {
@@ -109,7 +130,7 @@ def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: d
         p = workdir / f"text_{key}.txt"
         p.write_text(value, encoding="utf-8")
         paths[key] = p
-    graph = build_graph(fam, int(brief["bpm"]), duration, paths)
+    graph = build_graph(fam, int(brief["bpm"]), duration, paths, beat_offset)
     bg = workdir / "background.jpg"
     background(cover_1080, bg)
     run(["ffmpeg", "-y", "-hide_banner", "-v", "error",

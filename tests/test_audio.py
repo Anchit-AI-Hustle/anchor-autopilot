@@ -46,3 +46,21 @@ def test_master_hits_loudness_target(tmp_path):
     assert abs(res["after"]["input_i"] - (-11.0)) <= 0.5, res
     assert res["after"]["input_tp"] <= -0.9, "true peak must stay under the -1 dBTP target"
     assert abs(loudness(dst)["input_i"] - res["after"]["input_i"]) < 0.01
+
+
+def test_beat_phase_finds_the_grid():
+    """The Short pulses on the beat, so the estimator must find where the beats actually are."""
+    from anchor import audio
+
+    sr, bpm = audio.SR, 152.0
+    beat = 60 / bpm
+    for true_off in (0.05, 0.21, 0.33):
+        t = np.arange(0, 10, 1 / sr)
+        x = np.zeros_like(t)
+        hit = np.exp(-np.linspace(0, 7, int(0.03 * sr))) * np.sin(2 * np.pi * 55 * np.linspace(0, 0.03, int(0.03 * sr)))
+        for k in range(int(9 / beat)):
+            i = int((true_off + k * beat) * sr)
+            x[i:i + len(hit)] += hit
+        est = audio.beat_phase(x, bpm, sr)
+        miss = min(abs(est - true_off), beat - abs(est - true_off))
+        assert miss < 0.02, f"phase off by {miss * 1000:.0f} ms (est {est}, true {true_off})"

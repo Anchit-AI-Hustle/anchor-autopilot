@@ -17,6 +17,10 @@ on:
         description: "Render only: no release, no website update, no YouTube"
         type: boolean
         default: false
+      force:
+        description: "Re-make a date that already has a drop (replaces its files)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -69,7 +73,8 @@ jobs:
           DATE="${{ inputs.date }}"
           [ -z "$DATE" ] && DATE="$(date -u +%F)"
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
-          if [ "${{ inputs.dry_run }}" != "true" ] && [ "$(python -m anchor has-drop --date "$DATE")" = "yes" ]; then
+          if [ "${{ inputs.dry_run }}" != "true" ] && [ "${{ inputs.force }}" != "true" ] \
+             && [ "$(python -m anchor has-drop --date "$DATE")" = "yes" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "::notice::A drop for $DATE is already out; nothing to do."
           else

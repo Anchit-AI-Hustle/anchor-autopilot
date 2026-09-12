@@ -72,18 +72,14 @@ def estimate_bpm(mono: np.ndarray, sr: int = SR, lo: float = 110, hi: float = 19
     Summing several multiples of the beat period removes the plateau ambiguity of a single
     autocorrelation peak, so the estimate lands within ~0.2 BPM on steady four-on-the-floor material.
     """
-    step, hop, win = 4, 64, 1024
-    x = mono[: len(mono) // step * step].reshape(-1, step).mean(axis=1)  # 12 kHz
-    if len(x) < win * 16:
+    env = onset_envelope(mono, sr)
+    if env is None:
         return None
-    frames = np.lib.stride_tricks.sliding_window_view(x, win)[::hop] * np.hanning(win)
-    flux = np.maximum(np.diff(np.log1p(np.abs(np.fft.rfft(frames, axis=1))), axis=0), 0).sum(axis=1)
-    flux = flux - flux.mean()
+    flux, env_fs = env
     ac = np.correlate(flux, flux, mode="full")[len(flux) - 1:]
     if ac[0] <= 0:
         return None
     ac = ac / ac[0]
-    env_fs = sr / step / hop
     grid = np.arange(lo, hi, 0.1)
     periods = 60.0 * env_fs / grid                          # frames per beat
     pos = periods[:, None] * np.arange(1, 9)[None, :]       # 8 multiples per candidate
@@ -91,6 +87,42 @@ def estimate_bpm(mono: np.ndarray, sr: int = SR, lo: float = 110, hi: float = 19
     vals = np.interp(np.where(valid, pos, 0.0), np.arange(len(ac)), ac) * valid
     scores = vals.sum(axis=1) / np.maximum(valid.sum(axis=1), 1)
     return round(float(grid[int(np.argmax(scores))]), 1)
+
+
+ENV_LAG = 14          # onset-envelope latency in frames (window 1024 / hop 64 at 12 kHz)
+
+
+def onset_envelope(mono: np.ndarray, sr: int = SR) -> tuple[np.ndarray, float] | None:
+    """Spectral-flux onset envelope and its frame rate - the basis for tempo and beat phase."""
+    step, hop, win = 4, 64, 1024
+    x = mono[: len(mono) // step * step].reshape(-1, step).mean(axis=1)  # 12 kHz
+    if len(x) < win * 16:
+        return None
+    frames = np.lib.stride_tricks.sliding_window_view(x, win)[::hop] * np.hanning(win)
+    flux = np.maximum(np.diff(np.log1p(np.abs(np.fft.rfft(frames, axis=1))), axis=0), 0).sum(axis=1)
+    return flux - flux.mean(), sr / step / hop
+
+
+def beat_phase(mono: np.ndarray, bpm: float, sr: int = SR) -> float:
+    """Seconds from the start of the audio to the first beat of the grid at ``bpm``.
+
+    The Short pulses the cover on the beat, so it needs the grid's phase, not just its tempo:
+    a cut that starts a fraction of a beat early makes every pulse read as off-beat.
+    """
+    beat = 60.0 / float(bpm)
+    env = onset_envelope(mono, sr)
+    if env is None:
+        return 0.0
+    flux, env_fs = env
+    period = beat * env_fs
+    if period < 2 or len(flux) < period * 4:
+        return 0.0
+    offsets = np.arange(0.0, period, 0.25)
+    grids = offsets[:, None] + np.arange(0, (len(flux) - 1) / period) * period
+    scores = np.interp(grids, np.arange(len(flux)), flux).mean(axis=1)
+    # a flux frame fires once its window has swallowed the onset, so it reads ENV_LAG frames early
+    phase = (float(offsets[int(np.argmax(scores))]) + ENV_LAG) / env_fs
+    return round(phase % beat, 4)
 
 
 def analyze(audio: np.ndarray, sr: int = SR) -> dict:

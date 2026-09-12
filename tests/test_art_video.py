@@ -60,3 +60,27 @@ def test_render_short_all_viz_types(tmp_path):
         assert (info["width"], info["height"], info["vcodec"], info["acodec"]) == (1080, 1920, "h264", "aac")
         assert abs(info["duration"] - 4.0) < 0.2 and info["fps"] == 30.0
     assert seen == {"bars", "line", "wave", "scope"}
+
+
+def test_pulse_peaks_on_the_beat():
+    """The cover must be biggest ON the kick - the first version peaked between beats."""
+    from anchor import video
+
+    bpm, off, beat = 154, 0.137, 60 / 154
+    assert video.pulse_curve(off, bpm, off) == 1.0
+    assert video.pulse_curve(off + beat, bpm, off) > 0.99          # every beat, not every other
+    assert video.pulse_curve(off + beat / 2, bpm, off) < 0.25      # clearly smaller off-beat
+    expr = video.pulse_expr(bpm, off)
+    assert "0.1370" in expr and str(video.PULSE_AMP) in expr
+
+
+def test_cover_chain_can_still_resize_per_frame(fast_profile):
+    """format must come BEFORE scale: a trailing format filter freezes the per-frame resize."""
+    from anchor import video
+
+    graph = video.build_graph(fast_profile.family("prism"), 150, 30.0,
+                              {k: __import__("pathlib").Path(f"/tmp/{k}.txt")
+                               for k in ("artist", "title", "meta", "footer")}, 0.2)
+    cover = next(part for part in graph.split(";") if part.startswith("[1:v]"))
+    assert cover.index("format=rgba") < cover.index("scale="), cover
+    assert "eval=frame" in cover and cover.rstrip().endswith("[cov]")
