@@ -38,8 +38,8 @@ env:
     Qwen3-Embedding-0.6B-Q8_0.gguf:784144960
     vae-BF16.gguf:337420928
   MODELS_CACHE_KEY: acestep15-gguf-q8-turbo-lm06-v1
-  ROBOT_NAME: "anchittandon-create"
-  ROBOT_EMAIL: "224063064+anchittandon-create@users.noreply.github.com"
+  ROBOT_NAME: "Anchit Tandon"
+  ROBOT_EMAIL: "anchit.tandon@gmail.com"
 
 jobs:
   make:
