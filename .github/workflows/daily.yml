@@ -1,0 +1,341 @@
+name: Daily drop
+
+on:
+  schedule:
+    - cron: "7 15 * * *"   # 15:07 UTC (20:37 IST). The Short itself goes live at 17:30 UTC (23:00 IST).
+  workflow_dispatch:
+    inputs:
+      date:
+        description: "Drop date YYYY-MM-DD (default: today in UTC)"
+        required: false
+        default: ""
+      publish_now:
+        description: "Publish to YouTube immediately instead of at 17:30 UTC"
+        type: boolean
+        default: false
+      dry_run:
+        description: "Render only: no release, no website update, no YouTube"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-drop
+  cancel-in-progress: false
+
+env:
+  ACESTEP_CPP_REPO: https://github.com/ServeurpersoCom/acestep.cpp.git
+  ACESTEP_CPP_REF: c9045e270c3145a288579fee4f298286e03aa881
+  HF_REPO: Serveurperso/ACE-Step-1.5-GGUF
+  # file:bytes, verified against huggingface.co/Serveurperso/ACE-Step-1.5-GGUF (MIT licence)
+  MODEL_FILES: >-
+    acestep-v15-turbo-Q8_0.gguf:2549528000
+    acestep-5Hz-lm-0.6B-Q8_0.gguf:709846656
+    Qwen3-Embedding-0.6B-Q8_0.gguf:784144960
+    vae-BF16.gguf:337420928
+  MODELS_CACHE_KEY: acestep15-gguf-q8-turbo-lm06-v1
+  ROBOT_NAME: "anchittandon-create"
+  ROBOT_EMAIL: "224063064+anchittandon-create@users.noreply.github.com"
+
+jobs:
+  make:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    outputs:
+      date: ${{ steps.day.outputs.date }}
+      skip: ${{ steps.day.outputs.skip }}
+      short: ${{ steps.make.outputs.short }}
+      title: ${{ steps.make.outputs.title }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Pick the drop date
+        id: day
+        run: |
+          DATE="${{ inputs.date }}"
+          [ -z "$DATE" ] && DATE="$(date -u +%F)"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          if [ "${{ inputs.dry_run }}" != "true" ] && [ "$(python -m anchor has-drop --date "$DATE")" = "yes" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::A drop for $DATE is already out; nothing to do."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Fingerprint the CPU (native builds are CPU specific)
+        if: steps.day.outputs.skip != 'true'
+        id: cpu
+        run: |
+          grep -m1 'model name' /proc/cpuinfo; nproc
+          echo "hash=$(grep -m1 'model name' /proc/cpuinfo | sha256sum | cut -c1-12)" >> "$GITHUB_OUTPUT"
+
+      - name: Restore acestep.cpp build
+        if: steps.day.outputs.skip != 'true'
+        id: bin
+        uses: actions/cache/restore@v4
+        with:
+          path: vendor/acestep.cpp/build
+          key: acestep-bin-${{ env.ACESTEP_CPP_REF }}-${{ steps.cpu.outputs.hash }}
+
+      - name: Build acestep.cpp (CPU)
+        if: steps.day.outputs.skip != 'true' && steps.bin.outputs.cache-hit != 'true'
+        run: |
+          rm -rf vendor/acestep.cpp
+          git clone --recurse-submodules "$ACESTEP_CPP_REPO" vendor/acestep.cpp
+          cd vendor/acestep.cpp
+          git checkout "$ACESTEP_CPP_REF"
+          git submodule update --init --recursive
+          cmake -B build -DCMAKE_BUILD_TYPE=Release -DGGML_NATIVE=ON
+          cmake --build build --config Release -j "$(nproc)" --target ace-synth ace-lm
+          ls -la build/ace-synth build/ace-lm
+
+      - name: Save acestep.cpp build
+        if: steps.day.outputs.skip != 'true' && steps.bin.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: vendor/acestep.cpp/build
+          key: acestep-bin-${{ env.ACESTEP_CPP_REF }}-${{ steps.cpu.outputs.hash }}
+
+      - name: Restore models
+        if: steps.day.outputs.skip != 'true'
+        id: models
+        uses: actions/cache/restore@v4
+        with:
+          path: vendor/models
+          key: ${{ env.MODELS_CACHE_KEY }}
+
+      - name: Download ACE-Step 1.5 GGUF models (MIT licence)
+        if: steps.day.outputs.skip != 'true' && steps.models.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p vendor/models
+          for entry in $MODEL_FILES; do
+            f="${entry%%:*}"; want="${entry##*:}"
+            curl -fL --retry 5 --retry-delay 10 -o "vendor/models/$f" "https://huggingface.co/$HF_REPO/resolve/main/$f"
+            got="$(stat -c %s "vendor/models/$f")"
+            [ "$got" = "$want" ] || { echo "::error::$f is $got bytes, expected $want"; exit 1; }
+          done
+          ls -la vendor/models
+
+      - name: Save models
+        if: steps.day.outputs.skip != 'true' && steps.models.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: vendor/models
+          key: ${{ env.MODELS_CACHE_KEY }}
+
+      - name: Make the drop (brief, track, master, cover, Short)
+        if: steps.day.outputs.skip != 'true'
+        id: make
+        env:
+          DATE: ${{ steps.day.outputs.date }}
+          ACESTEP_BIN: vendor/acestep.cpp/build
+          ACESTEP_MODELS: vendor/models
+          ANCHOR_VAE_CHUNK: "1024"
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          export ACE_THREADS="$(nproc)"
+          python -m anchor make --date "$DATE" --out "build/$DATE"
+          python - >> "$GITHUB_OUTPUT" <<EOF
+          import json
+          m = json.load(open("build/$DATE/meta.json"))
+          print("short=" + m["files"]["short"])
+          print("title=" + m["brief"]["title"])
+          EOF
+          python - >> "$GITHUB_STEP_SUMMARY" <<EOF
+          import json
+          m = json.load(open("build/$DATE/meta.json")); b = m["brief"]
+          print(f"### {b['title']}\n\n{b['lane_name']} · {b['bpm']} BPM · {b['key']} · {b['family_name']}\n")
+          print(f"- Render: {m['engine'].get('total_s')} s ({m['engine'].get('threads')} threads)")
+          print(f"- Master: {m['loudness']['after']['input_i']} LUFS / {m['loudness']['after']['input_tp']} dBTP")
+          print(f"- QC warnings: {m['qc']['warnings'] or 'none'}")
+          print(f"- Cover: {m['art']['source']}")
+          EOF
+
+      - name: Upload drop files
+        if: steps.day.outputs.skip != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: drop-${{ steps.day.outputs.date }}
+          retention-days: 14
+          path: |
+            build/${{ steps.day.outputs.date }}/meta.json
+            build/${{ steps.day.outputs.date }}/release_notes.md
+            build/${{ steps.day.outputs.date }}/*.mp3
+            build/${{ steps.day.outputs.date }}/*.flac
+            build/${{ steps.day.outputs.date }}/*-short.mp4
+            build/${{ steps.day.outputs.date }}/*-cover.jpg
+            build/${{ steps.day.outputs.date }}/cover.jpg
+            build/${{ steps.day.outputs.date }}/cover_600.jpg
+            build/${{ steps.day.outputs.date }}/poster.jpg
+
+      - name: Publish the release files
+        if: steps.day.outputs.skip != 'true' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DATE: ${{ steps.day.outputs.date }}
+          TITLE: ${{ steps.make.outputs.title }}
+        run: |
+          D="build/$DATE"
+          B="$(python -c "import json;print(json.load(open('$D/meta.json'))['files']['base'])")"
+          FILES=("$D/$B.mp3" "$D/$B.flac" "$D/$B-short.mp4" "$D/$B-cover.jpg")
+          if gh release view "drop-$DATE" >/dev/null 2>&1; then
+            gh release upload "drop-$DATE" "${FILES[@]}" --clobber
+          else
+            gh release create "drop-$DATE" "${FILES[@]}" --title "$TITLE · ANCHOR" \
+              --notes-file "$D/release_notes.md" --target "$GITHUB_SHA"
+          fi
+
+  pages:
+    needs: make
+    if: needs.make.outputs.skip != 'true' && inputs.dry_run != true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: drop-${{ needs.make.outputs.date }}
+          path: drop
+
+      - name: Assemble the media host (latest Shorts only)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          DATE: ${{ needs.make.outputs.date }}
+        run: |
+          mkdir -p public/media
+          cp drop/*-short.mp4 public/media/
+          # keep the two previous Shorts online too, in case a scheduled post is still pending
+          for tag in $(gh release list --limit 6 --json tagName -q '.[].tagName' | grep '^drop-' | grep -vx "drop-$DATE" | head -2); do
+            gh release download "$tag" --pattern '*-short.mp4' --dir public/media --clobber || true
+          done
+          printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
+          printf '<!doctype html><meta charset="utf-8"><title>ANCHOR media</title><meta http-equiv="refresh" content="0;url=https://anchor.anchit-tandon.com/">' > public/index.html
+          ls -la public/media
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  publish:
+    needs: [make, pages]
+    if: needs.make.outputs.skip != 'true' && inputs.dry_run != true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      DATE: ${{ needs.make.outputs.date }}
+      SHORT: ${{ needs.make.outputs.short }}
+      TITLE: ${{ needs.make.outputs.title }}
+      PAGE_URL: ${{ needs.pages.outputs.page_url }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: drop-${{ needs.make.outputs.date }}
+          path: build/${{ needs.make.outputs.date }}
+
+      - name: Refresh earlier posts (Buffer status and YouTube links)
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+        run: python -m anchor sync
+
+      - name: Publish the Short to YouTube via Buffer
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ secrets.BUFFER_CHANNEL_ID }}
+        run: |
+          MEDIA="${PAGE_URL%/}/media/$SHORT"
+          FLAGS=()
+          if [ -z "$BUFFER_API_KEY" ]; then
+            FLAGS+=(--site-only)
+            echo "::warning::BUFFER_API_KEY is not set: releasing on the website only, not on YouTube."
+          fi
+          [ "${{ inputs.publish_now }}" = "true" ] && FLAGS+=(--now)
+          if ! python -m anchor publish --drop "build/$DATE" --media-url "$MEDIA" "${FLAGS[@]}"; then
+            echo "PUBLISH_FAILED=1" >> "$GITHUB_ENV"
+            echo "::error::YouTube publishing failed; the drop is still released on the website."
+          fi
+
+      - name: Record the drop on anchor.anchit-tandon.com
+        run: |
+          python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
+            --short-url "${PAGE_URL%/}/media/$SHORT" --run-url "$RUN_URL"
+          python -m anchor check
+
+      - name: Commit the catalog (triggers the website deploy)
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data site/covers site/og.jpg
+          git commit -m "drop: $DATE · $TITLE" || { echo "nothing to commit"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Fail the run if YouTube publishing failed (sends the GitHub alert email)
+        if: env.PUBLISH_FAILED == '1'
+        run: |
+          echo "::error::Buffer/YouTube publish failed. The drop is on the website; see the publish step log."
+          exit 1
+
+  report-failure:
+    needs: [make, pages, publish]
+    if: failure() && inputs.dry_run != true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Mark the failed run on the status page
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          STAGE: ${{ needs.make.result == 'failure' && 'make' || (needs.pages.result == 'failure' && 'pages' || 'publish') }}
+        run: |
+          python -m anchor fail --stage "$STAGE" --error "The $STAGE stage failed. Open the run log for details." --run-url "$RUN_URL"
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data/status.json
+          git commit -m "status: run failed at $STAGE" || exit 0
+          for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep 5; done

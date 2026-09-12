@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANCHOR — Industrial hard techno, a new track every day</title>
+  <meta name="description" content="ANCHOR releases a new industrial hard techno track every day. Listen to every release, see what's next, and watch the Shorts on YouTube.">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="canonical" href="https://anchor.anchit-tandon.com/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="music.musician">
+  <meta property="og:title" content="ANCHOR — a new hard techno track every day">
+  <meta property="og:description" content="Industrial hard techno from the machine room. One new track every day.">
+  <meta property="og:url" content="https://anchor.anchit-tandon.com/">
+  <meta property="og:image" content="https://anchor.anchit-tandon.com/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preload" href="/assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jbmono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="/" aria-label="ANCHOR home">A N C H O R</a>
+    <nav aria-label="Primary">
+      <a href="#releases">Releases</a>
+      <a href="#machine">Status</a>
+      <a href="https://www.youtube.com/@AT_ANCHOR" rel="noopener" target="_blank">YouTube<span aria-hidden="true"> ↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="drop-title">
+      <div class="hero-art">
+        <img id="drop-cover" src="/assets/hero-default.jpg" alt="" width="600" height="600" decoding="async">
+        <span class="hero-glow" aria-hidden="true"></span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow" id="drop-eyebrow">Latest drop</p>
+        <h1 id="drop-title">ANCHOR</h1>
+        <ul class="chips" id="drop-chips" aria-label="Track details"></ul>
+        <div class="player" id="player" hidden>
+          <button class="play" id="play" type="button" aria-label="Play track" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path class="i-play" d="M7 4.5v15l13-7.5z"/><path class="i-pause" d="M6 4h4.5v16H6zM13.5 4H18v16h-4.5z"/></svg>
+          </button>
+          <div class="track">
+            <input type="range" id="seek" min="0" max="1000" value="0" step="1" aria-label="Seek">
+            <div class="times"><span id="t-now">0:00</span><span id="t-total">0:00</span></div>
+          </div>
+          <audio id="audio" preload="none"></audio>
+        </div>
+        <p class="note" id="drop-note"></p>
+        <div class="actions" id="drop-actions"></div>
+      </div>
+    </section>
+
+    <section class="next" aria-label="Next drop">
+      <p class="label">Next drop</p>
+      <p class="countdown" id="countdown" aria-live="off">--:--:--</p>
+      <p class="sub" id="next-when"></p>
+    </section>
+
+    <section id="releases" class="releases" aria-labelledby="releases-h">
+      <div class="section-head">
+        <h2 id="releases-h">Releases</h2>
+        <p class="count" id="release-count"></p>
+      </div>
+      <ol class="grid" id="grid"></ol>
+      <p class="empty" id="grid-empty" hidden>The first automated drop lands at the next slot. Earlier releases are below.</p>
+      <h3 class="legacy-h" id="legacy-h" hidden>Earlier releases</h3>
+      <ol class="grid legacy" id="legacy"></ol>
+    </section>
+
+    <section id="machine" class="machine" aria-labelledby="machine-h">
+      <div class="section-head">
+        <h2 id="machine-h">Machine room</h2>
+        <p class="health" id="health"><span class="dot" aria-hidden="true"></span><span id="health-text">Checking…</span></p>
+      </div>
+      <dl class="stats">
+        <div><dt>Last run</dt><dd id="s-last">—</dd></div>
+        <div><dt>Streak</dt><dd id="s-streak">—</dd></div>
+        <div><dt>Releases</dt><dd id="s-total">—</dd></div>
+        <div><dt>Render time</dt><dd id="s-render">—</dd></div>
+      </dl>
+      <p class="how">Every day the robot writes a brief, generates the track with the open-source ACE-Step 1.5 model on a free CPU runner, masters it, designs the cover, renders the Short and publishes it to YouTube with the AI-use disclosure switched on. Nothing is uploaded by hand.</p>
+    </section>
+
+    <section class="about" aria-labelledby="about-h">
+      <h2 id="about-h">About ANCHOR</h2>
+      <p id="bio">Industrial hard techno from the machine room.</p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>© <span id="year">2026</span> ANCHOR · a project by <a href="https://anchit-tandon.com">Anchit Tandon</a></p>
+    <p><a href="/legal.html">Privacy &amp; terms</a> · <a href="https://www.youtube.com/@AT_ANCHOR" rel="noopener" target="_blank">@AT_ANCHOR</a></p>
+  </footer>
+</body>
+</html>

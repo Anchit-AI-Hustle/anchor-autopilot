@@ -1,0 +1,17 @@
+{
+  "last_run": {
+    "result": "pending",
+    "stage": "setup",
+    "error": null,
+    "finished_at": null
+  },
+  "next_post_at": "2026-09-11T17:30:00Z",
+  "streak": 0,
+  "totals": {
+    "drops": 0
+  },
+  "schedule": {
+    "post_time_utc": "17:30"
+  },
+  "updated_at": "2026-09-10T23:55:00Z"
+}

@@ -1,0 +1,172 @@
+# ANCHOR artist profile
+# The robot makes every creative decision from this file.
+# Edit it to steer the sound, visuals, titles and schedule; no code changes needed.
+
+[artist]
+name = "ANCHOR"
+handle = "@AT_ANCHOR"
+youtube_channel_id = "UCAKPJrMOwspkOXY1aLKaAkQ"
+youtube_url = "https://www.youtube.com/@AT_ANCHOR"
+site_url = "https://anchor.anchit-tandon.com"
+tagline = "Official tracks and releases by ANCHOR"
+bio = "Industrial hard techno from the machine room. One new track every day, built on a 150+ BPM spine of distorted kicks, rumble and steel."
+# Titles already on the channel. The robot never reuses them.
+existing_titles = ["Pull Under", "Apex Ascent", "Initiate Mayhem"]
+
+[schedule]
+# Daily publish time in UTC. 17:30 UTC = 23:00 IST = 19:30 CEST = 13:30 ET.
+post_time_utc = "17:30"
+
+[music]
+engine = "acestep_cpp"
+duration_s = 150          # full track length (released on the site + archive)
+short_s = 45              # YouTube Short = the strongest 45 s of the track
+dit_model = "acestep-v15-turbo-Q8_0"
+lm_model = "acestep-5Hz-lm-0.6B-Q8_0"
+steps = 8
+shift = 3.0
+keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B minor", "F# minor", "C# minor", "G# minor"]
+suffix = "instrumental, no vocals, club master, punchy mixdown"
+negative = "vocals, singing, spoken word, lyrics, acoustic guitar, piano ballad, pop, lo-fi, jazz"
+loudness_lufs = -11.0     # integrated loudness of the master (YouTube plays back at -14)
+true_peak_db = -1.0
+
+[[music.lanes]]
+id = "industrial"
+name = "Industrial Hard Techno"
+bpm = [150, 158]
+weight = 3
+caption = "industrial hard techno, pounding distorted kick drum, rumbling saturated bass, metallic percussion, dark warehouse atmosphere, driving four-on-the-floor"
+textures = ["clanking machinery hits", "hydraulic hiss", "grinding metal noise", "factory siren sweeps", "steel pipe percussion", "cavernous industrial reverb"]
+genre_line = "Industrial Hard Techno, Peak Time Techno"
+style_line = "Dark Industrial Techno, Mechanical Techno, Warehouse Techno, Driving Techno"
+tags = ["industrial techno", "hard techno", "industrial hard techno", "warehouse techno", "dark techno"]
+
+[[music.lanes]]
+id = "rawstyle"
+name = "Rawstyle Hybrid"
+bpm = [152, 160]
+weight = 2
+caption = "rawstyle hybrid hard techno, hard distorted kick with punchy tail, reverse bass, screeching lead stabs, relentless peak time energy"
+textures = ["pitched kick rolls", "screeching supersaw stabs", "gated noise risers", "distorted synth screams", "air-raid siren leads", "tight snare rolls into drops"]
+genre_line = "Rawstyle Hybrid, Hard Techno, Peak Time Techno"
+style_line = "Aggressive Techno, Hybrid Techno, Warehouse Techno, Driving Techno"
+tags = ["rawstyle techno", "rawstyle hybrid techno", "hard techno", "peak time techno", "hard techno 2026"]
+
+[[music.lanes]]
+id = "hypnotic"
+name = "Hypnotic Mechanical Techno"
+bpm = [145, 152]
+weight = 2
+caption = "hypnotic mechanical techno, repetitive modular sequence, deep rumble kick, tunnel-like atmosphere, subtle evolving textures, trance-inducing groove"
+textures = ["ticking modular clicks", "dub chord echoes", "filtered noise breaths", "polyrhythmic metal percussion", "slow phaser sweeps", "sub-bass pressure"]
+genre_line = "Hypnotic Techno, Mechanical Techno, Peak Time Techno"
+style_line = "Hypnotic Techno, Deep Industrial Techno, Warehouse Techno, Berlin Techno"
+tags = ["hypnotic techno", "mechanical techno", "berlin techno", "underground techno", "deep techno"]
+
+[[music.lanes]]
+id = "acid"
+name = "Acid Industrial"
+bpm = [148, 156]
+weight = 2
+caption = "acid industrial techno, squelching 303 acid line, distorted kick, dark warehouse energy, aggressive filter sweeps, driving rhythm"
+textures = ["resonant acid squelches", "overdriven 303 slides", "clattering hi-hats", "metallic claps", "rising filter tension", "industrial noise bursts"]
+genre_line = "Acid Techno, Industrial Hard Techno, Peak Time Techno"
+style_line = "Acid Industrial Techno, Dark Techno, Warehouse Techno, Driving Techno"
+tags = ["acid techno", "acid industrial techno", "hard techno", "warehouse techno", "techno 2026"]
+
+[[music.lanes]]
+id = "bunker"
+name = "Dark Bunker Techno"
+bpm = [146, 152]
+weight = 2
+caption = "dark bunker techno, heavy rumble bass, crisp rolling hi-hats, metallic stabs, cold concrete atmosphere, relentless and hypnotic"
+textures = ["concrete room reverb", "dark drone pads", "clipped rimshots", "sub-heavy kick rumble", "detuned stabs", "tense noise swells"]
+genre_line = "Dark Techno, Berlin Techno, Industrial Techno"
+style_line = "Bunker Techno, Hypnotic Techno, Dark Industrial Techno, Warehouse Techno"
+tags = ["dark techno", "berlin techno", "bunker techno", "industrial techno", "underground techno"]
+
+[[music.lanes]]
+id = "cyber"
+name = "Cyberpunk Hard Techno"
+bpm = [150, 158]
+weight = 1
+caption = "cyberpunk hard techno, futuristic distorted kick, glitching synth arpeggios, neon bass pulses, dystopian cinematic tension"
+textures = ["glitch stutters", "bit-crushed arps", "laser zaps", "neon pad swells", "robotic percussion", "data-burst noise"]
+genre_line = "Cyberpunk Techno, Hard Techno, Industrial Hard Techno"
+style_line = "Cyberpunk Techno, Mechanical Techno, Dark Techno, Driving Techno"
+tags = ["cyberpunk techno", "hard techno", "industrial hard techno", "dark techno", "techno 2026"]
+
+[titles]
+# Title patterns: V = verb, N = noun, A = adjective, P = particle ("Pull Under").
+patterns = [["V N", 4], ["N N", 3], ["A N", 3], ["PH", 1], ["N", 1]]
+verbs = ["Initiate", "Breach", "Ignite", "Sever", "Override", "Detonate", "Descend", "Fracture", "Crush", "Engage", "Unleash", "Grind", "Forge", "Dissolve", "Pierce", "Shatter", "Rupture", "Surge", "Drown", "Hunt", "Summon", "Reclaim", "Command", "Awaken", "Enforce", "Corrupt", "Distort", "Compress", "Eject", "Terminate", "Invoke", "Devour", "Consume", "Transmit", "Accelerate", "Strike", "Charge", "Collide", "Dominate", "Erase"]
+# ready-made phrases for the "PH" pattern, in the spirit of "Pull Under"
+phrases = ["Go Under", "Break Through", "Burn Down", "Shut Down", "Lock Down", "Tear Down", "Drag Under", "Push Through", "Dive Below", "Descend Below", "Break Loose", "Cut Loose", "Melt Down", "Crash Down", "Run Deep", "Sink Lower", "Hold Tight", "Stay Under", "Fall Inside", "Bring It Down"]
+nouns = ["Mayhem", "Pressure", "Machine", "Signal", "Vault", "Circuit", "Furnace", "Engine", "Static", "Voltage", "Protocol", "Reactor", "Void", "Frequency", "Pulse", "Tremor", "Chamber", "Bunker", "Horizon", "Gravity", "Rust", "Chrome", "Iron", "Carbon", "Magnet", "Current", "Relay", "Sector", "Grid", "Axis", "Orbit", "Vector", "Cipher", "Fault", "Dominion", "Tension", "Friction", "Impact", "Overload", "Blackout", "Descent", "Afterburn", "Piston", "Turbine", "Blade", "Hammer", "Anvil", "Monolith", "Spectre", "Singularity"]
+adjectives = ["Molten", "Hollow", "Kinetic", "Brutal", "Cold", "Null", "Heavy", "Final", "Silent", "Toxic", "Feral", "Absolute", "Critical", "Terminal", "Radiant", "Black", "Deep", "Raw", "Dark", "Static", "Electric", "Hydraulic", "Magnetic", "Nuclear", "Obsidian", "Savage", "Sonic", "Iron", "Rogue", "Sunken"]
+
+[youtube]
+title = "{title}"
+category_id = "10"        # Music
+privacy = "public"
+ai_generated = true       # YouTube "AI use" disclosure: always on
+notify_subscribers = true
+hashtags = ["#hardtechno", "#industrialtechno", "#techno"]
+base_tags = ["techno", "hard techno", "techno visualizer", "anchor techno", "techno official visualizer"]
+
+[visual]
+# One family per drop, rotated so no family repeats within 3 days.
+[[visual.families]]
+id = "furnace"
+name = "Furnace"
+bg = "#0b0605"
+accent = "#ff3b1f"
+accent2 = "#ffb000"
+viz = "bars"
+prompt = "industrial furnace interior, molten metal glow, faceless chrome cyborg silhouette seen from behind, sparks and smoke, red and orange light, cinematic, dark"
+
+[[visual.families]]
+id = "prism"
+name = "Prism"
+bg = "#050507"
+accent = "#f4f4f6"
+accent2 = "#35c6ff"
+viz = "wave"
+prompt = "exploding prism of light, shattered crystal shards, spectral colors on pure black, radial waveform rays, high contrast"
+
+[[visual.families]]
+id = "rust"
+name = "Rust"
+bg = "#0c0907"
+accent = "#d8742f"
+accent2 = "#9aa3ad"
+viz = "scope"
+prompt = "rusted mechanical spiral of gears and blades, corroded steel, dim studio light, macro photography, dark background"
+
+[[visual.families]]
+id = "chrome"
+name = "Chrome"
+bg = "#05070b"
+accent = "#d7e0ea"
+accent2 = "#5b7cfa"
+viz = "line"
+prompt = "liquid chrome sculpture, reflective metal waves, cold blue studio light, black background, abstract"
+
+[[visual.families]]
+id = "void"
+name = "Void"
+bg = "#070707"
+accent = "#f2f2f2"
+accent2 = "#8a8a8a"
+viz = "wave"
+prompt = "brutalist concrete monolith in fog, monochrome, harsh single light beam, minimal, cinematic"
+
+[[visual.families]]
+id = "volt"
+name = "Volt"
+bg = "#040806"
+accent = "#b6ff00"
+accent2 = "#00e5ff"
+viz = "bars"
+prompt = "high voltage electric arcs inside a dark industrial tunnel, neon green and cyan lightning, smoke, cinematic"

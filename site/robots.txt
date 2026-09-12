@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://anchor.anchit-tandon.com/sitemap.xml

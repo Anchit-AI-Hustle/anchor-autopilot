@@ -1,0 +1,32 @@
+{
+  "artist": {
+    "name": "ANCHOR",
+    "handle": "@AT_ANCHOR",
+    "youtube_url": "https://www.youtube.com/@AT_ANCHOR",
+    "site_url": "https://anchor.anchit-tandon.com",
+    "tagline": "Official tracks and releases by ANCHOR",
+    "bio": "Industrial hard techno from the machine room. One new track every day, built on a 150+ BPM spine of distorted kicks, rumble and steel."
+  },
+  "updated_at": "2026-09-10T23:55:00Z",
+  "drops": [],
+  "legacy": [
+    {
+      "title": "Initiate Mayhem",
+      "date": "2026-06-02",
+      "youtube_url": "https://www.youtube.com/shorts/uR2WjclFT9c",
+      "thumb": "https://i.ytimg.com/vi/uR2WjclFT9c/oar2.jpg"
+    },
+    {
+      "title": "Apex Ascent",
+      "date": "2026-06-02",
+      "youtube_url": "https://www.youtube.com/shorts/UaaDAMkgcjI",
+      "thumb": "https://i.ytimg.com/vi/UaaDAMkgcjI/oar2.jpg"
+    },
+    {
+      "title": "Pull Under",
+      "date": "2026-02-28",
+      "youtube_url": "https://www.youtube.com/shorts/sigSwB_JPUY",
+      "thumb": "https://i.ytimg.com/vi/sigSwB_JPUY/oar2.jpg"
+    }
+  ]
+}
