@@ -88,6 +88,8 @@
     if (d.audio_url) actions.append(el("a", { class: "btn", href: d.audio_url, text: "Download MP3" }));
     if (d.release_url) actions.append(el("a", { class: "btn", href: d.release_url, rel: "noopener", target: "_blank", text: "Release files ↗" }));
 
+    renderSpecs(d);
+
     const player = $("player"), audio = $("audio");
     if (d.audio_url) {
       player.hidden = false;
@@ -176,6 +178,39 @@
     return img;
   }
 
+
+
+  // -------------------------------------------------------------- the specs
+  function renderSpecs(d) {
+    const box = $("drop-specs"), grid = $("spec-grid");
+    if (!d || d.legacy) { box.hidden = true; return; }
+    const q = d.qc || {}, eng = d.engine || {};
+    const cap = (d.caption || "").split(",").map((s) => s.trim()).filter(Boolean);
+    $("spec-summary").textContent = cap.length
+      ? `${cap[0].replace(/^./, (c) => c.toUpperCase())} — ${cap.slice(1, 5).join(", ")}.`
+      : `${d.lane_name} at ${d.bpm} BPM in ${d.key}.`;
+    const rows = [
+      ["Genre", d.genre_line],
+      ["Style", d.style_line],
+      ["Tempo", q.bpm_est ? `${q.bpm_est} BPM (measured)` : (d.bpm ? `${d.bpm} BPM` : null)],
+      ["Key", d.key],
+      ["Length", d.duration_s ? `${fmtTime(d.duration_s)} · Short ${d.short_s}s` : null],
+      ["Master", q.lufs != null ? `${q.lufs} LUFS` : null],
+      ["Cover", d.art_source === "cloudflare-flux" ? "AI (FLUX.1 schnell)" : "Procedural"],
+      ["Made by", eng.name === "acestep_cpp"
+        ? `ACE-Step 1.5 turbo · ${eng.steps || 8} steps${eng.render_s ? ` · ${Math.round(eng.render_s / 60)} min CPU` : ""}`
+        : (eng.name || "—")],
+      ["Seed", d.seed != null ? String(d.seed) : null],
+      ["Checks", (q.warnings && q.warnings.length) ? q.warnings.join("; ") : "No warnings"],
+    ].filter(([, v]) => v);
+    grid.replaceChildren();
+    for (const [k, v] of rows) {
+      const cell = el("div", { class: "spec" });
+      cell.append(el("dt", { text: k }), el("dd", { text: v }));
+      grid.append(cell);
+    }
+    box.hidden = false;
+  }
 
   // ------------------------------------------------------------ the Short
   let lastFocus = null;

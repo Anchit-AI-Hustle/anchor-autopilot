@@ -64,7 +64,7 @@ class AceStepCpp:
             "inference_steps": self.steps,
             "guidance_scale": 1.0,
             "shift": self.shift,
-            "use_cot_caption": False,
+            "use_cot_caption": True,   # let the LM enrich the caption: it follows the genre better
             "output_format": "wav16",
             "synth_model": self.dit_model,
         }
@@ -76,7 +76,8 @@ class AceStepCpp:
     def generate(self, brief: dict, out_dir: Path) -> tuple[Path, dict]:
         self.check()
         out_dir.mkdir(parents=True, exist_ok=True)
-        stats: dict = {"engine": self.name, "threads": self.threads}
+        stats: dict = {"engine": self.name, "threads": self.threads, "steps": self.steps,
+                       "model": self.dit_model}
         proc_env = {**os.environ, "ACE_THREADS": str(self.threads)}
         req_path = out_dir / "gen.json"
         req_path.write_text(json.dumps(self.request(brief), indent=2))

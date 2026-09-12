@@ -125,6 +125,47 @@ def beat_phase(mono: np.ndarray, bpm: float, sr: int = SR) -> float:
     return round(phase % beat, 4)
 
 
+KEY_NAMES = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+# Krumhansl-Kessler key profiles, normalised
+_MAJOR = np.array([6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
+_MINOR = np.array([6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17])
+
+
+def estimate_key(mono: np.ndarray, sr: int = SR) -> tuple[str, float] | None:
+    """Best-matching key and a 0-1 confidence, from a chroma profile of the mid band.
+
+    Techno is mostly percussion, so the bass drum and hats are filtered out before the
+    chroma is taken; the confidence is the margin between the best key and the runner-up.
+    """
+    if len(mono) < sr * 5:
+        return None
+    step = 4                                   # 12 kHz is plenty for pitch classes
+    x = mono[: len(mono) // step * step].reshape(-1, step).mean(axis=1)
+    sr_d = sr / step
+    win = 8192
+    frames = np.lib.stride_tricks.sliding_window_view(x, win)[:: win // 2]
+    if len(frames) < 4:
+        return None
+    spec = np.abs(np.fft.rfft(frames * np.hanning(win), axis=1)).mean(axis=0)
+    freqs = np.fft.rfftfreq(win, 1 / sr_d)
+    band = (freqs > 110) & (freqs < 2200)      # above the kick, below the hats
+    f, mag = freqs[band], np.log1p(spec[band])
+    chroma = np.zeros(12)
+    np.add.at(chroma, (np.round(12 * np.log2(f / 440.0)).astype(int) + 9) % 12, mag)
+    if chroma.sum() <= 0:
+        return None
+    chroma = chroma / chroma.sum()
+    scores = []
+    for i in range(12):
+        rolled = np.roll(chroma, -i)
+        scores.append((float(np.corrcoef(rolled, _MAJOR)[0, 1]), f"{KEY_NAMES[i]} major"))
+        scores.append((float(np.corrcoef(rolled, _MINOR)[0, 1]), f"{KEY_NAMES[i]} minor"))
+    scores.sort(reverse=True)
+    best, second = scores[0], scores[1]
+    confidence = max(0.0, min(1.0, (best[0] - second[0]) * 5))
+    return best[1], round(confidence, 2)
+
+
 def analyze(audio: np.ndarray, sr: int = SR) -> dict:
     mono = audio.mean(axis=1)
     n = len(mono)

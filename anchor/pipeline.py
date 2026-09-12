@@ -9,7 +9,7 @@ from pathlib import Path
 from . import catalog
 from .art import make_cover, og_card
 from .audio import (analyze, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
-                    master, quality_gate)
+                    estimate_key, master, quality_gate)
 from .brief import describe, make_brief, post_time
 from .config import CATALOG_PATH, SITE, STATUS_PATH, Profile, env
 from .music import get_engine
@@ -58,6 +58,20 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         brief["bpm_requested"] = brief["bpm"]
         brief["bpm"] = int(round(est))
         brief.update(describe(profile, brief))
+
+    # same for the key: the model takes it as a hint, so publish what it actually played
+    heard = estimate_key(decode(raw).mean(axis=1))
+    if heard:
+        key, confidence = heard
+        brief["key_confidence"] = confidence
+        if confidence < 0.25:
+            attempts_log[-1]["warn"] = list(attempts_log[-1].get("warn") or []) + \
+                ["key is not clearly audible; kept the requested one"]
+        elif key != brief["key"]:
+            log(f"key landed on {key} (asked {brief['key']}); metadata follows the audio")
+            brief["key_requested"] = brief["key"]
+            brief["key"] = key
+            brief.update(describe(profile, brief))
 
     base = asset_base(profile, brief)
     master_wav = out_dir / "master.wav"
@@ -175,7 +189,10 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         status = "scheduled"
     drop = {
         **{k: brief[k] for k in ("id", "date", "title", "lane", "lane_name", "bpm", "key", "family",
-                                 "family_name", "duration_s", "short_s", "genre_line", "style_line")},
+                                 "family_name", "duration_s", "short_s", "genre_line", "style_line",
+                                 "caption", "seed")},
+        "engine": {"name": meta["engine"].get("engine"), "steps": meta["engine"].get("steps"),
+                   "render_s": meta["engine"].get("total_s"), "threads": meta["engine"].get("threads")},
         "cover": f"covers/{brief['id']}.jpg",
         "accent": profile.family(brief["family"]).accent,
         "audio_url": f"https://github.com/{repo}/releases/download/{tag}/{files['mp3']}" if repo else None,
