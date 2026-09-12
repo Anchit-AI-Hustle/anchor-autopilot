@@ -1,9 +1,10 @@
 {
   "last_run": {
-    "result": "pending",
-    "stage": "setup",
-    "error": null,
-    "finished_at": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-09-12T20:42:22Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34717691019"
   },
   "next_post_at": "2026-09-11T17:30:00Z",
   "streak": 0,
@@ -13,5 +14,5 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-10T23:55:00Z"
+  "updated_at": "2026-09-12T20:42:22Z"
 }
