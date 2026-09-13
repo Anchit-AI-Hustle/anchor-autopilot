@@ -462,3 +462,41 @@ def test_the_site_refuses_to_offer_a_take_of_a_song_already_out(tmp_path, monkey
     cta = js[js.index("function ctaCell("):js.index("function whyPanel(")]
     assert cta.index("s.idea_posted") < cta.index("queue-btn"), \
         "the duplicate guard must come before the button, not after it"
+
+
+def test_the_outro_fade_lands_on_the_music_not_the_padding(tmp_path):
+    """The 2026-09-12 render faded 6s into digital silence and left the cliff intact."""
+    import numpy as np
+    from anchor.audio import SR, master, music_end, ends_abruptly, decode
+    from anchor.music import write_wav
+
+    rng = np.random.default_rng(3)
+    body = (rng.standard_normal((SR * 10, 2)) * 0.2).astype("float32")
+    padded = np.vstack([body, np.zeros((SR * 5, 2), "float32")])   # stops at 10s, file is 15s
+    src = tmp_path / "padded.wav"
+    write_wav(src, padded)
+
+    assert abs(music_end(padded) - 10.0) < 0.3, "the music stops at 10s, not at the file end"
+    assert ends_abruptly(padded)[0]
+
+    dst = tmp_path / "mastered.wav"
+    stats = master(src, dst, outro_fade_s=3.0)
+    assert stats["outro_fade_s"] == 3.0 and abs(stats["music_end_s"] - 10.0) < 0.3
+
+    out = decode(dst)
+    assert abs(len(out) / SR - 10.0) < 0.3, "the trailing silence must be trimmed, not faded"
+    assert not ends_abruptly(out)[0], "after the fade the track has to resolve"
+
+
+def test_a_track_that_already_resolves_is_not_faded_again(tmp_path):
+    import numpy as np
+    from anchor.audio import SR, master
+    from anchor.music import write_wav
+    rng = np.random.default_rng(5)
+    a = (rng.standard_normal((SR * 10, 2)) * 0.2).astype("float32")
+    tail = SR * 3
+    a[-tail:] *= np.linspace(1, 0, tail)[:, None]
+    src = tmp_path / "resolved.wav"
+    write_wav(src, a)
+    stats = master(src, tmp_path / "out.wav", outro_fade_s=3.0)
+    assert stats["outro_fade_s"] == 0.0, "fading a real ending twice only makes it limp"

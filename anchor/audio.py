@@ -31,6 +31,25 @@ def loudness(path: Path) -> dict:
     return {k: float(data[k]) for k in ("input_i", "input_tp", "input_lra", "input_thresh")}
 
 
+def music_end(audio: np.ndarray, sr: int = SR, floor_db: float = -40.0) -> float:
+    """The second at which the music actually stops, ignoring rendered padding.
+
+    The model writes N seconds whether or not it has N seconds of music, so the file often
+    ends in several seconds of digital silence. Fading the end of the FILE fades that
+    silence and leaves the cliff untouched, which is exactly what happened on 2026-09-12.
+    """
+    mono = audio.mean(axis=1) if audio.ndim > 1 else audio
+    step = max(1, int(0.1 * sr))
+    frames = np.array([np.sqrt(np.mean(np.square(mono[i:i + step])) + 1e-12)
+                       for i in range(0, len(mono) - step, step)])
+    if not len(frames):
+        return len(mono) / sr
+    live = np.where(frames > frames.max() * 10 ** (floor_db / 20))[0]
+    if not len(live):
+        return len(mono) / sr
+    return round(float((live[-1] + 1) * step / sr), 3)
+
+
 def ends_abruptly(audio: np.ndarray, sr: int = SR, tail_s: float = 1.0,
                   margin_db: float = 6.0) -> tuple[bool, float]:
     """Is this track still at full level when it runs out?
@@ -76,29 +95,35 @@ def master(src: Path, dst: Path, lufs: float = -11.0, tp: float = -1.0,
     gain = lufs - before["input_i"]
     after = before
 
-    fade = ""
-    abrupt, tail_db = False, 0.0
+    fade, cut = "", []
+    abrupt, tail_db, end = False, 0.0, 0.0
     if outro_fade_s > 0:
-        abrupt, tail_db = ends_abruptly(decode(src))
+        raw = decode(src)
+        abrupt, tail_db = ends_abruptly(raw)
         if abrupt:
-            total = float(probe_duration(src))
-            start = max(0.0, total - outro_fade_s)
+            # Fade into where the MUSIC stops and cut there. Using the file length puts the
+            # fade inside the trailing silence, which fades nothing and keeps the cliff.
+            end = music_end(raw)
+            start = max(0.0, end - outro_fade_s)
             fade = f",afade=t=out:st={start:.3f}:d={outro_fade_s:.3f}"
-            log(f"master: tail only {tail_db} dB down - adding a {outro_fade_s:.1f}s outro fade")
+            cut = ["-t", f"{end:.3f}"]
+            log(f"master: music stops at {end:.1f}s of {probe_duration(src):.1f}s and is only "
+                f"{tail_db} dB down - fading the last {outro_fade_s:.1f}s and trimming the padding")
 
     for _ in range(3):
         chain = (f"highpass=f=22,volume={gain:.2f}dB,aresample=192000:resampler=soxr,"
                  f"alimiter=limit={ceiling:.4f}:attack=4:release=60:level=0,"
                  f"aresample={SR}:resampler=soxr{fade}")
         run(["ffmpeg", "-y", "-hide_banner", "-v", "error", "-i", src, "-af", chain,
-             "-ar", str(SR), "-c:a", "pcm_s16le", dst], quiet=True)
+             *cut, "-ar", str(SR), "-c:a", "pcm_s16le", dst], quiet=True)
         after = loudness(dst)
         miss = lufs - after["input_i"]
         if abs(miss) <= 0.4:
             break
         gain += miss
     return {"before": before, "after": after, "gain_db": round(gain, 2),
-            "tail_db": tail_db, "outro_fade_s": outro_fade_s if fade else 0.0}
+            "tail_db": tail_db, "outro_fade_s": outro_fade_s if fade else 0.0,
+            "music_end_s": end or None}
 
 
 def probe_duration(path: Path) -> float:
