@@ -7,7 +7,7 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Industrial hard techno from the machine room. One new track every day, built on a 150+ BPM spine of distorted kicks, rumble and steel."
   },
-  "updated_at": "2026-09-13T19:27:02Z",
+  "updated_at": "2026-09-13T21:07:39Z",
   "drops": [
     {
       "id": "2026-09-14",
@@ -142,6 +142,314 @@
         "guidance": 5.0,
         "source_file": null
       }
+    },
+    {
+      "id": "2026-09-10",
+      "date": "2026-09-10",
+      "title": "Signal Detected",
+      "lane": "acid",
+      "lane_name": "Acid Industrial",
+      "bpm": 127,
+      "key": "E minor",
+      "family": "chrome",
+      "family_name": "Chrome",
+      "duration_s": 101.74,
+      "short_s": 45,
+      "cover": "covers/2026-09-10.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-10/ANCHOR-2026-09-10-signal-detected.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-10",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-10-signal-detected-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-10/ANCHOR-2026-09-10-signal-detected-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=8CvtsUf5FS0",
+      "buffer_post_id": "6aa71097f7b1958d5cf2f7f7",
+      "status": "sent",
+      "post_at": "2026-09-13T21:07:35.292Z",
+      "qc": {
+        "bpm_est": 127.0,
+        "lufs": -11.2,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T21:04:42Z",
+      "genre_line": "Acid Techno, Industrial Hard Techno, Peak Time Techno",
+      "style_line": "Acid Industrial Techno, Dark Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#d7e0ea",
+      "caption": "acid industrial techno, hard techno, peak time techno, squelching 303 acid line with resonant filter sweeps, distorted kick dominant, deep mono sub bass, dark warehouse energy, clean punchy transient, industrial noise bursts, overdriven 303 slides, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 1955668105,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "36-signal-detected-e7f16cd4.m4a"
+      }
+    },
+    {
+      "id": "2026-09-09",
+      "date": "2026-09-09",
+      "title": "Let’s Fucking Go!",
+      "lane": "rawstyle",
+      "lane_name": "Rawstyle Hybrid",
+      "bpm": 160,
+      "key": "A# minor",
+      "family": "prism",
+      "family_name": "Prism",
+      "duration_s": 166.81,
+      "short_s": 45,
+      "cover": "covers/2026-09-09.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-09/ANCHOR-2026-09-09-let-s-fucking-go.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-09",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-09-let-s-fucking-go-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-09/ANCHOR-2026-09-09-let-s-fucking-go-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=9doanufUnZk",
+      "buffer_post_id": "6aa7108e1f8cf810a11d79ee",
+      "status": "sent",
+      "post_at": "2026-09-13T21:07:26.411Z",
+      "qc": {
+        "bpm_est": 160.0,
+        "lufs": -11.24,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T21:04:02Z",
+      "genre_line": "Rawstyle Hybrid, Hard Techno, Peak Time Techno",
+      "style_line": "Aggressive Techno, Hybrid Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#f4f4f6",
+      "caption": "hard techno, rawstyle hybrid, industrial techno, brutal distorted rawstyle kick with long controlled tail, reverse bass pressure, screeching lead stabs, festival techno energy, loud clean master, tight snare rolls into drops, distorted synth screams, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 640160633,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "34-let-s-fucking-go-d02466c4.m4a"
+      }
+    },
+    {
+      "id": "2026-09-08",
+      "date": "2026-09-08",
+      "title": "Where It Begins",
+      "lane": "industrial",
+      "lane_name": "Industrial Hard Techno",
+      "bpm": 130,
+      "key": "G# minor",
+      "family": "rust",
+      "family_name": "Rust",
+      "duration_s": 359.72,
+      "short_s": 45,
+      "cover": "covers/2026-09-08.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-08/ANCHOR-2026-09-08-where-it-begins.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-08",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-08-where-it-begins-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-08/ANCHOR-2026-09-08-where-it-begins-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=mPXDaT0vHG8",
+      "buffer_post_id": "6aa710884cc07ffa4d408a7d",
+      "status": "sent",
+      "post_at": "2026-09-13T21:07:20.203Z",
+      "qc": {
+        "bpm_est": 130.0,
+        "lufs": -11.3,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T21:03:18Z",
+      "genre_line": "Industrial Hard Techno, Peak Time Techno",
+      "style_line": "Dark Industrial Techno, Mechanical Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#d8742f",
+      "caption": "hard techno, industrial techno, peak time techno, powerful distorted kick dominant with clean punchy transient attack, deep tight mono sub bass, hypnotic warehouse groove, mechanical percussion, modern clean master, cavernous industrial reverb, factory siren sweeps, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 600496787,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "29-where-it-begins-c0db60f4.m4a"
+      }
+    },
+    {
+      "id": "2026-09-07",
+      "date": "2026-09-07",
+      "title": "Robot Love",
+      "lane": "industrial",
+      "lane_name": "Industrial Hard Techno",
+      "bpm": 132,
+      "key": "E minor",
+      "family": "rust",
+      "family_name": "Rust",
+      "duration_s": 248.94,
+      "short_s": 45,
+      "cover": "covers/2026-09-07.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-07/ANCHOR-2026-09-07-robot-love.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-07",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-07-robot-love-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-07/ANCHOR-2026-09-07-robot-love-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=mvIMp8LqgTY",
+      "buffer_post_id": "6aa71081eba7bc5677a1e0e8",
+      "status": "sent",
+      "post_at": "2026-09-13T21:07:13.701Z",
+      "qc": {
+        "bpm_est": 132.0,
+        "lufs": -11.38,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T21:02:15Z",
+      "genre_line": "Industrial Hard Techno, Peak Time Techno",
+      "style_line": "Dark Industrial Techno, Mechanical Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#d8742f",
+      "caption": "hard techno, industrial techno, peak time techno, powerful distorted kick dominant with clean punchy transient attack, deep tight mono sub bass, hypnotic warehouse groove, mechanical percussion, modern clean master, factory siren sweeps, grinding metal noise, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 1223744341,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "29-robot-love-b20ce676.m4a"
+      }
+    },
+    {
+      "id": "2026-09-06",
+      "date": "2026-09-06",
+      "title": "Stay With Me",
+      "lane": "bunker",
+      "lane_name": "Dark Bunker Techno",
+      "bpm": 155,
+      "key": "G major",
+      "family": "rust",
+      "family_name": "Rust",
+      "duration_s": 218.54,
+      "short_s": 45,
+      "cover": "covers/2026-09-06.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-06/ANCHOR-2026-09-06-stay-with-me.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-06",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-06-stay-with-me-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-06/ANCHOR-2026-09-06-stay-with-me-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=LGKtq0JoTiI",
+      "buffer_post_id": "6aa7107a66679b076f347cbd",
+      "status": "sent",
+      "post_at": "2026-09-13T21:07:06.469Z",
+      "qc": {
+        "bpm_est": 155.0,
+        "lufs": -11.17,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T21:01:18Z",
+      "genre_line": "Dark Techno, Berlin Techno, Industrial Techno",
+      "style_line": "Bunker Techno, Hypnotic Techno, Dark Industrial Techno, Warehouse Techno",
+      "error": null,
+      "accent": "#d8742f",
+      "caption": "dark industrial techno, berlin warehouse techno, hard techno, heavy rumble kick with long tail, crisp rolling hi-hats, cold concrete atmosphere, hypnotic minimal groove, deep mono sub bass, detuned stabs, tense noise swells, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 241093082,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "28-stay-with-me-9981adbf.m4a"
+      }
+    },
+    {
+      "id": "2026-09-05",
+      "date": "2026-09-05",
+      "title": "Silent Transmission",
+      "lane": "industrial",
+      "lane_name": "Industrial Hard Techno",
+      "bpm": 133,
+      "key": "D minor",
+      "family": "rust",
+      "family_name": "Rust",
+      "duration_s": 204.52,
+      "short_s": 45,
+      "cover": "covers/2026-09-05.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-05/ANCHOR-2026-09-05-silent-transmission.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-05",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-05-silent-transmission-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-05/ANCHOR-2026-09-05-silent-transmission-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=lHGYpSHK_BY",
+      "buffer_post_id": "6aa71072f7b1958d5cf2f431",
+      "status": "sent",
+      "post_at": "2026-09-13T21:06:58.819Z",
+      "qc": {
+        "bpm_est": 132.9,
+        "lufs": -11.14,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T21:00:22Z",
+      "genre_line": "Industrial Hard Techno, Peak Time Techno",
+      "style_line": "Dark Industrial Techno, Mechanical Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#d8742f",
+      "caption": "hard techno, industrial techno, peak time techno, powerful distorted kick dominant with clean punchy transient attack, deep tight mono sub bass, hypnotic warehouse groove, mechanical percussion, modern clean master, steel pipe percussion, clanking machinery hits, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 611167946,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "26-silent-transmission-d911518a.m4a"
+      }
+    },
+    {
+      "id": "2026-09-04",
+      "date": "2026-09-04",
+      "title": "Then Do It",
+      "lane": "rawstyle",
+      "lane_name": "Rawstyle Hybrid",
+      "bpm": 129,
+      "key": "C minor",
+      "family": "furnace",
+      "family_name": "Furnace",
+      "duration_s": 211.73,
+      "short_s": 45,
+      "cover": "covers/2026-09-04.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-04/ANCHOR-2026-09-04-then-do-it.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-04",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-04-then-do-it-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-04/ANCHOR-2026-09-04-then-do-it-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=MoTQ0lp6pz4",
+      "buffer_post_id": "6aa7106bf7b1958d5cf2f3bb",
+      "status": "sent",
+      "post_at": "2026-09-13T21:06:51.961Z",
+      "qc": {
+        "bpm_est": 129.0,
+        "lufs": -11.17,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T20:59:25Z",
+      "genre_line": "Rawstyle Hybrid, Hard Techno, Peak Time Techno",
+      "style_line": "Aggressive Techno, Hybrid Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#ff3b1f",
+      "caption": "hard techno, rawstyle hybrid, industrial techno, brutal distorted rawstyle kick with long controlled tail, reverse bass pressure, screeching lead stabs, festival techno energy, loud clean master, gated noise risers, screeching supersaw stabs, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 185971164,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "23-then-do-it-e7cf9992.m4a"
+      }
     }
   ],
   "legacy": [
@@ -167,22 +475,15 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-13T19:27:02Z",
+    "checked_at": "2026-09-13T21:07:40Z",
     "total": 21,
     "postable": 20,
     "families": 9,
     "twins": 20,
     "fresh": 0,
-    "queued": 8,
-    "released": 1,
-    "next_up": {
-      "title": "Crossing The Threshold",
-      "id": "324147b3-967b-4f51-8be4-f820d6e21341",
-      "rating": 7.7,
-      "source": "queue",
-      "why": "first in the release queue — goes out on the next daily run",
-      "waiting": 7
-    },
+    "queued": 0,
+    "released": 9,
+    "next_up": null,
     "songs": [
       {
         "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
@@ -612,8 +913,7 @@
         "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
         "group_size": 2,
         "group_pick": true,
-        "queue_pos": 1,
-        "queued_at": "2026-09-13T00:24:22Z"
+        "released_at": "2026-09-13T19:26:18Z"
       },
       {
         "id": "e7cf9992-0b49-4038-9b31-03f7c4290533",
@@ -691,8 +991,7 @@
         "group": "bba502a3-ebed-411a-8161-54153eca984b",
         "group_size": 2,
         "group_pick": true,
-        "queue_pos": 2,
-        "queued_at": "2026-09-13T14:10:47Z"
+        "released_at": "2026-09-13T20:59:25Z"
       },
       {
         "id": "bba502a3-ebed-411a-8161-54153eca984b",
@@ -847,8 +1146,7 @@
         "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
         "group_size": 2,
         "group_pick": true,
-        "queue_pos": 3,
-        "queued_at": "2026-09-13T14:10:47Z"
+        "released_at": "2026-09-13T21:00:22Z"
       },
       {
         "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
@@ -926,8 +1224,7 @@
         "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
         "group_size": 2,
         "group_pick": true,
-        "queue_pos": 4,
-        "queued_at": "2026-09-13T14:10:47Z"
+        "released_at": "2026-09-13T21:01:18Z"
       },
       {
         "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
@@ -1005,8 +1302,7 @@
         "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
         "group_size": 2,
         "group_pick": true,
-        "queue_pos": 6,
-        "queued_at": "2026-09-13T14:10:47Z"
+        "released_at": "2026-09-13T21:03:18Z"
       },
       {
         "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
@@ -1083,7 +1379,8 @@
         ],
         "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
         "group_size": 2,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
@@ -1161,8 +1458,7 @@
         "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
         "group_size": 2,
         "group_pick": true,
-        "queue_pos": 5,
-        "queued_at": "2026-09-13T14:10:47Z"
+        "released_at": "2026-09-13T21:02:15Z"
       },
       {
         "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
@@ -1239,7 +1535,8 @@
         ],
         "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
         "group_size": 2,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
@@ -1316,7 +1613,8 @@
         ],
         "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
         "group_size": 2,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
@@ -1393,7 +1691,8 @@
         ],
         "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
         "group_size": 2,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
@@ -1470,7 +1769,8 @@
         ],
         "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
         "group_size": 2,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "d02466c4-239f-472f-b50d-eb5ea5c66c9b",
@@ -1548,8 +1848,7 @@
         "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
         "group_size": 2,
         "group_pick": true,
-        "queue_pos": 7,
-        "queued_at": "2026-09-13T14:10:47Z"
+        "released_at": "2026-09-13T21:04:02Z"
       },
       {
         "id": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
@@ -1626,7 +1925,8 @@
         ],
         "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
         "group_size": 2,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "e7f16cd4-b99f-4246-a209-23eb0b304e8d",
@@ -1704,8 +2004,7 @@
         "group": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
         "group_size": 2,
         "group_pick": true,
-        "queue_pos": 8,
-        "queued_at": "2026-09-13T14:10:47Z"
+        "released_at": "2026-09-13T21:04:42Z"
       },
       {
         "id": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",

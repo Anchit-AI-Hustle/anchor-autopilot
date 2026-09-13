@@ -42,7 +42,8 @@
     "video_url": "https://cdn1.suno.ai/e7cf9992-0b49-4038-9b31-03f7c4290533.mp4",
     "rating": 7.7,
     "duration_s": 212.3,
-    "queued_at": "2026-09-13T14:10:47Z"
+    "queued_at": "2026-09-13T14:10:47Z",
+    "released_at": "2026-09-13T20:59:25Z"
   },
   "26-silent-transmission-d911518a.m4a": {
     "title": "Silent Transmission",
@@ -53,7 +54,8 @@
     "video_url": "https://cdn1.suno.ai/d911518a-edb8-4009-a694-935add5470f9.mp4",
     "rating": 7.4,
     "duration_s": 205.0,
-    "queued_at": "2026-09-13T14:10:47Z"
+    "queued_at": "2026-09-13T14:10:47Z",
+    "released_at": "2026-09-13T21:00:22Z"
   },
   "28-stay-with-me-9981adbf.m4a": {
     "title": "Stay With Me",
@@ -64,7 +66,8 @@
     "video_url": "https://cdn1.suno.ai/9981adbf-fbe3-4919-a021-82a2f3fb83a3.mp4",
     "rating": 7.2,
     "duration_s": 218.8,
-    "queued_at": "2026-09-13T14:10:47Z"
+    "queued_at": "2026-09-13T14:10:47Z",
+    "released_at": "2026-09-13T21:01:18Z"
   },
   "29-where-it-begins-c0db60f4.m4a": {
     "title": "Where It Begins",
@@ -75,7 +78,8 @@
     "video_url": "https://cdn1.suno.ai/c0db60f4-c089-446a-8d7d-b1609f4c8d73.mp4",
     "rating": 7.1,
     "duration_s": 360.0,
-    "queued_at": "2026-09-13T14:10:47Z"
+    "queued_at": "2026-09-13T14:10:47Z",
+    "released_at": "2026-09-13T21:03:18Z"
   },
   "29-robot-love-b20ce676.m4a": {
     "title": "Robot Love",
@@ -86,7 +90,8 @@
     "video_url": "https://cdn1.suno.ai/b20ce676-a10d-4df9-8e62-1a121cbec080.mp4",
     "rating": 7.1,
     "duration_s": 249.5,
-    "queued_at": "2026-09-13T14:10:47Z"
+    "queued_at": "2026-09-13T14:10:47Z",
+    "released_at": "2026-09-13T21:02:15Z"
   },
   "34-let-s-fucking-go-d02466c4.m4a": {
     "title": "Let’s Fucking Go!",
@@ -97,7 +102,8 @@
     "video_url": "https://cdn1.suno.ai/d02466c4-239f-472f-b50d-eb5ea5c66c9b.mp4",
     "rating": 6.6,
     "duration_s": 166.9,
-    "queued_at": "2026-09-13T14:10:47Z"
+    "queued_at": "2026-09-13T14:10:47Z",
+    "released_at": "2026-09-13T21:04:02Z"
   },
   "36-signal-detected-e7f16cd4.m4a": {
     "title": "Signal Detected",
@@ -108,6 +114,7 @@
     "video_url": "https://cdn1.suno.ai/e7f16cd4-b99f-4246-a209-23eb0b304e8d.mp4",
     "rating": 6.4,
     "duration_s": 102.1,
-    "queued_at": "2026-09-13T14:10:47Z"
+    "queued_at": "2026-09-13T14:10:47Z",
+    "released_at": "2026-09-13T21:04:42Z"
   }
 }
