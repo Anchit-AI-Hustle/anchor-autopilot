@@ -7,8 +7,52 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Industrial hard techno from the machine room. One new track every day, built on a 150+ BPM spine of distorted kicks, rumble and steel."
   },
-  "updated_at": "2026-09-12T21:14:34Z",
+  "updated_at": "2026-09-13T13:28:33Z",
   "drops": [
+    {
+      "id": "2026-09-13",
+      "date": "2026-09-13",
+      "title": "Project Mayhem",
+      "lane": "hypnotic",
+      "lane_name": "Hypnotic Mechanical Techno",
+      "bpm": 160,
+      "key": "C# minor",
+      "family": "furnace",
+      "family_name": "Furnace",
+      "duration_s": 244.52,
+      "short_s": 45,
+      "cover": "covers/2026-09-13.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-13/ANCHOR-2026-09-13-project-mayhem.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-13",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-13-project-mayhem-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-13/ANCHOR-2026-09-13-project-mayhem-short.mp4",
+      "youtube_url": null,
+      "buffer_post_id": null,
+      "status": "released",
+      "post_at": "2026-09-13T17:30:00Z",
+      "qc": {
+        "bpm_est": 160.0,
+        "lufs": -11.24,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T13:27:15Z",
+      "genre_line": "Hypnotic Techno, Mechanical Techno, Peak Time Techno",
+      "style_line": "Hypnotic Techno, Deep Industrial Techno, Warehouse Techno, Berlin Techno",
+      "error": null,
+      "accent": "#ff3b1f",
+      "caption": "hypnotic hard techno, industrial techno, deep warehouse techno, peak time techno, minimal mechanical groove, deep clean mono sub bass, repetitive modular sequence, tunnel atmosphere, controlled saturation, filtered noise breaths, sub-bass pressure, instrumental, no vocals, club master, punchy mixdown",
+      "seed": 51001091,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "14-project-mayhem-f5207246.m4a"
+      }
+    },
     {
       "id": "2026-09-12",
       "date": "2026-09-12",
@@ -65,7 +109,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-13T11:48:04Z",
+    "checked_at": "2026-09-13T13:28:33Z",
     "total": 21,
     "postable": 20,
     "families": 9,

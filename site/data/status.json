@@ -2,29 +2,23 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-09-12",
-    "title": "Gravity Current",
-    "finished_at": "2026-09-12T22:48:37Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34722454218",
+    "drop_id": "2026-09-13",
+    "title": "Project Mayhem",
+    "finished_at": "2026-09-13T13:28:33Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34759784432",
     "error": null
   },
-  "next_post_at": "2026-09-13T17:30:00Z",
-  "streak": 1,
+  "next_post_at": "2026-09-14T17:30:00Z",
+  "streak": 2,
   "totals": {
-    "drops": 1
+    "drops": 2
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-12T22:48:37Z",
+  "updated_at": "2026-09-13T13:28:33Z",
   "engine": {
-    "engine": "acestep_cpp",
-    "threads": 4,
-    "steps": 14,
-    "model": "acestep-v15-turbo-Q8_0.gguf",
-    "lm_ms": 71167,
-    "dit_ms": 938756,
-    "vae_ms": 483112,
-    "total_s": 1504.9
+    "engine": "queue",
+    "source_file": "14-project-mayhem-f5207246.m4a"
   }
 }
