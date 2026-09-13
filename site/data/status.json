@@ -2,30 +2,23 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-09-12",
-    "title": "Grid Blade",
-    "finished_at": "2026-09-13T15:56:44Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34762593364",
+    "drop_id": "2026-09-14",
+    "title": "Crossing The Threshold",
+    "finished_at": "2026-09-13T19:27:03Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34777569871",
     "error": null
   },
-  "next_post_at": "2026-09-13T17:30:00Z",
-  "streak": 2,
+  "next_post_at": "2026-09-15T17:30:00Z",
+  "streak": 3,
   "totals": {
-    "drops": 2
+    "drops": 3
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-13T15:56:44Z",
+  "updated_at": "2026-09-13T19:27:03Z",
   "engine": {
-    "engine": "acestep_cpp",
-    "threads": 4,
-    "steps": 32,
-    "model": "acestep-v15-sft-Q8_0.gguf",
-    "guidance": 5.0,
-    "lm_ms": 84796,
-    "dit_ms": 4799716,
-    "vae_ms": 431860,
-    "total_s": 5329.7
+    "engine": "queue",
+    "source_file": "23-crossing-the-threshold-324147b3.m4a"
   }
 }

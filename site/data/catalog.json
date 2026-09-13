@@ -7,8 +7,52 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Industrial hard techno from the machine room. One new track every day, built on a 150+ BPM spine of distorted kicks, rumble and steel."
   },
-  "updated_at": "2026-09-13T15:56:44Z",
+  "updated_at": "2026-09-13T19:27:02Z",
   "drops": [
+    {
+      "id": "2026-09-14",
+      "date": "2026-09-14",
+      "title": "Crossing The Threshold",
+      "lane": "industrial",
+      "lane_name": "Industrial Hard Techno",
+      "bpm": 135,
+      "key": "F major",
+      "family": "rust",
+      "family_name": "Rust",
+      "duration_s": 227.33,
+      "short_s": 45,
+      "cover": "covers/2026-09-14.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-14/ANCHOR-2026-09-14-crossing-the-threshold.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-14",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-14-crossing-the-threshold-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-14/ANCHOR-2026-09-14-crossing-the-threshold-short.mp4",
+      "youtube_url": null,
+      "buffer_post_id": "6aa6f905f7b1958d5cf109dd",
+      "status": "scheduled",
+      "post_at": "2026-09-14T17:30:00.000Z",
+      "qc": {
+        "bpm_est": 135.0,
+        "lufs": -11.36,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-13T19:26:18Z",
+      "genre_line": "Industrial Hard Techno, Peak Time Techno",
+      "style_line": "Dark Industrial Techno, Mechanical Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#d8742f",
+      "caption": "hard techno, industrial techno, peak time techno, powerful distorted kick dominant with clean punchy transient attack, deep tight mono sub bass, hypnotic warehouse groove, mechanical percussion, modern clean master, factory siren sweeps, hydraulic hiss, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 726827451,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "23-crossing-the-threshold-324147b3.m4a"
+      }
+    },
     {
       "id": "2026-09-13",
       "date": "2026-09-13",
@@ -123,7 +167,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-13T19:23:19Z",
+    "checked_at": "2026-09-13T19:27:02Z",
     "total": 21,
     "postable": 20,
     "families": 9,
