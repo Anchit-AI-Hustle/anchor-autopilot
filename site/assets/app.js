@@ -270,6 +270,11 @@
                   el("span", { class: "chip chip-done", text: fmtDate(s.released_at) }));
       return cell;
     }
+    if (s.idea_posted) {
+      cell.append(el("span", { class: "cta-state", text: "Already posted" }),
+                  el("span", { class: "chip chip-queued", text: "same song is out" }));
+      return cell;
+    }
     if (s.queue_pos) {
       const first = s.queue_pos === 1;
       cell.append(el("span", { class: "cta-state" + (first ? " is-next" : ""),

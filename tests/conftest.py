@@ -43,4 +43,7 @@ def isolated_queue(tmp_path, monkeypatch):
     q.mkdir()
     monkeypatch.setattr("anchor.pipeline.QUEUE", q)
     monkeypatch.setattr("anchor.queue.QUEUE", q)
+    # the queue now refuses to release anything the website already shows, so a test that
+    # saw the real catalogue would find its own fixture songs "already posted"
+    monkeypatch.setattr("anchor.config.CATALOG_PATH", tmp_path / "_no_catalog.json")
     return q

@@ -27,11 +27,31 @@ def _title_from(name: str) -> str:
     return " ".join(w if w.isupper() else w.capitalize() for w in stem.split())
 
 
-def pending(queue_dir: Path = QUEUE) -> list[Path]:
+def _already_posted(name: str, title: str | None, queue_dir: Path) -> bool:
+    """Has this track, or another take of the same song, already gone out?
+
+    Two guards, because they fail differently. The name guard stops the exact file coming
+    back when its released_at stamp went missing. The idea guard stops the channel posting
+    "Project Mayhem Part 2" the day after "Project Mayhem" - a different file, the same song,
+    and the one thing a once-a-day channel cannot get away with.
+    """
+    from .suno import title_key
+    if name in spent(queue_dir):
+        return True
+    key = title_key(title or _title_from(name))
+    return bool(key) and key in posted_ideas()
+
+
+def pending(queue_dir: Path = QUEUE, skip_spent: bool = True) -> list[Path]:
     if not queue_dir.exists():
         return []
-    return sorted(p for p in queue_dir.iterdir()
-                  if p.is_file() and p.suffix.lower() in AUDIO and not p.name.startswith("."))
+    files = sorted(p for p in queue_dir.iterdir()
+                   if p.is_file() and p.suffix.lower() in AUDIO and not p.name.startswith("."))
+    if not skip_spent:
+        return files
+    meta = read_json(queue_dir / "queue.json", {}) or {}
+    return [p for p in files
+            if not _already_posted(p.name, (meta.get(p.name) or {}).get("title"), queue_dir)]
 
 
 def reserved(queue_dir: Path = QUEUE) -> list[tuple[str, dict]]:
@@ -42,7 +62,8 @@ def reserved(queue_dir: Path = QUEUE) -> list[tuple[str, dict]]:
     """
     meta = read_json(queue_dir / "queue.json", {}) or {}
     return sorted(((n, e) for n, e in meta.items()
-                   if not e.get("released_at") and not (queue_dir / n).exists()),
+                   if not e.get("released_at") and not (queue_dir / n).exists()
+                   and not _already_posted(n, e.get("title"), queue_dir)),
                   key=lambda ne: ne[0])
 
 
@@ -139,9 +160,49 @@ def line_up(queue_dir: Path | None = None) -> list[dict]:
     return line
 
 
+def _drops(catalog_path: Path | None = None) -> list[dict]:
+    from .config import CATALOG_PATH
+    cat = read_json(Path(catalog_path) if catalog_path else CATALOG_PATH, {}) or {}
+    return cat.get("drops") or []
+
+
+def spent(queue_dir: Path | None = None, catalog_path: Path | None = None) -> set[str]:
+    """Queue file names that have already gone out, from both records that know.
+
+    The stamp in queue.json is written by the runner that renders, and that runner is not
+    the one that commits, so the stamp can be lost. The website's own drop list is committed
+    by definition: if a track is on the site, it has been released, stamp or no stamp.
+    """
+    qdir = Path(queue_dir) if queue_dir else QUEUE
+    meta = read_json(qdir / "queue.json", {}) or {}
+    names = {n for n, e in meta.items() if e.get("released_at")}
+    for d in _drops(catalog_path):
+        src = ((d.get("engine") or {}) if isinstance(d.get("engine"), dict) else {}).get("source_file")
+        if src:
+            names.add(src)
+    return names
+
+
+def posted_ideas(catalog_path: Path | None = None) -> set[frozenset[str]]:
+    """The title-key of every song already on the website.
+
+    Suno hands back two takes of one prompt, so "Project Mayhem" and "Project Mayhem Part 2"
+    are the same song twice. Releasing the second one a day after the first is the channel
+    repeating itself, which is the one thing a daily robot must not do.
+    """
+    from .suno import title_key
+    return {title_key(d["title"]) for d in _drops(catalog_path) if d.get("title")}
+
+
 def released(queue_dir: Path | None = None) -> dict[str, str]:
     """Suno id -> when it went out, for every song the queue has already released."""
     qdir = Path(queue_dir) if queue_dir else QUEUE
     meta = read_json(qdir / "queue.json", {}) or {}
-    return {e["suno_id"]: e["released_at"] for e in meta.values()
-            if e.get("released_at") and e.get("suno_id")}
+    out = {e["suno_id"]: e["released_at"] for e in meta.values()
+           if e.get("released_at") and e.get("suno_id")}
+    spent_names = spent(qdir)
+    for name in spent_names:                      # a lost stamp still counts as released
+        e = meta.get(name) or {}
+        if e.get("suno_id") and e["suno_id"] not in out:
+            out[e["suno_id"]] = e.get("released_at") or "released"
+    return out

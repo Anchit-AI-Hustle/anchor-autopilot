@@ -359,3 +359,101 @@ def test_published_catalogue_names_what_is_next():
     assert len(queued) == cat["queued"]
     assert sorted(s["queue_pos"] for s in queued) == list(range(1, len(queued) + 1)), \
         "the line is numbered 1..n with no gaps or ties"
+
+
+# ------------------------------------- the same song must never go out twice
+def test_a_released_track_is_dropped_even_when_its_stamp_was_lost(tmp_path, monkeypatch):
+    """The stamp is written on the render runner; the commit happens on another one."""
+    from anchor import queue as q
+    s = song(id="f5207246-bf22-41b1-a4d2-8b3861149d7d", title="Project Mayhem",
+             tags=TECHNO, duration_s=245.0, plays=36)
+    name = suno.queue_entry(s, tmp_path)["name"]
+    assert [n for n, _ in q.reserved(tmp_path)] == [name], "queued and waiting"
+
+    # the website says it went out, but queue.json never got the stamp
+    cat = tmp_path / "catalog.json"
+    cat.write_text(json.dumps({"drops": [{"date": "2026-09-13", "title": "Project Mayhem",
+                                          "engine": {"name": "queue", "source_file": name}}]}))
+    monkeypatch.setattr("anchor.config.CATALOG_PATH", cat)
+
+    assert name in q.spent(tmp_path), "the site's own drop list is the record that survives"
+    assert q.reserved(tmp_path) == [], "a released track is never offered again"
+    assert q.next_track(tmp_path) is None
+
+
+def test_another_take_of_a_posted_song_is_not_released_the_next_day(tmp_path, monkeypatch):
+    """Suno returns two takes per prompt; posting both is the channel repeating itself."""
+    from anchor import queue as q
+    part2 = song(id="0287e07b-4e22-4d9b-9d33-78e55743e3e7", title="Project Mayhem Part 2",
+                 tags=TECHNO, duration_s=177.0, plays=14)
+    other = song(id="324147b3-967b-4f51-8be4-f820d6e21341", title="Crossing The Threshold",
+                 tags=TECHNO, duration_s=227.0, plays=16)
+    n2 = suno.queue_entry(part2, tmp_path)["name"]
+    n3 = suno.queue_entry(other, tmp_path)["name"]
+
+    cat = tmp_path / "catalog.json"
+    cat.write_text(json.dumps({"drops": [{"date": "2026-09-13", "title": "Project Mayhem",
+                                          "engine": {"name": "queue", "source_file": "gone.m4a"}}]}))
+    monkeypatch.setattr("anchor.config.CATALOG_PATH", cat)
+
+    waiting = [n for n, _ in q.reserved(tmp_path)]
+    assert n2 not in waiting, "Part 2 is the same song as the one already posted"
+    assert waiting == [n3], "the next genuinely different idea is what goes out"
+    assert q.line_up(tmp_path)[0]["title"] == "Crossing The Threshold"
+
+
+def test_the_daily_workflow_carries_the_stamp_between_jobs():
+    wf = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
+    assert 'cp queue/queue.json "build/' in wf, "the make job must ship the stamp it wrote"
+    assert "build/${{ steps.day.outputs.date }}/queue.json" in wf, "and upload it"
+    assert 'cp "$f" queue/queue.json' in wf, "the publish job must restore it before committing"
+    assert wf.index("Restore the queue stamp") < wf.index("Commit the catalog"), \
+        "restoring after the commit would be pointless"
+
+
+# ------------------------------------------- a track has to end, not just stop
+def test_a_track_that_stops_dead_is_told_apart_from_one_that_resolves():
+    import numpy as np
+    from anchor.audio import SR, ends_abruptly
+    body = (np.random.default_rng(7).standard_normal((SR * 8, 2)) * 0.2).astype("float32")
+
+    cut = np.vstack([body, np.zeros((SR * 3, 2), "float32")])   # rendered, then padded
+    resolved = body.copy()
+    tail = SR * 3
+    resolved[-tail:] *= np.linspace(1, 0, tail)[:, None]        # an actual outro
+
+    assert ends_abruptly(cut)[0], "full level to the last bar, then silence: that is a cliff"
+    assert not ends_abruptly(resolved)[0], "a track that winds down must not be faded twice"
+
+
+def test_every_rendered_track_is_given_an_arrangement():
+    from anchor.music import structure
+    for seconds in (60, 100, 150, 245):
+        parts = structure(seconds).splitlines()
+        assert parts[0] == "[intro]" and parts[-1] == "[outro]", \
+            f"{seconds}s track must open on an intro and land on an outro"
+        assert len(parts) == len(set(range(len(parts)))), "sections are a flat ordered list"
+    assert structure(150).count("[drop]") == 2, "a 2:30 club edit gets two drops"
+    assert len(structure(245).splitlines()) > len(structure(100).splitlines()), \
+        "a longer track earns more sections, not longer ones"
+
+
+def test_the_site_refuses_to_offer_a_take_of_a_song_already_out(tmp_path, monkeypatch):
+    cat = tmp_path / "catalog.json"
+    cat.write_text(json.dumps({"drops": [{"date": "2026-09-13", "title": "Project Mayhem",
+                                          "engine": {"name": "queue", "source_file": "x.m4a"}}]}))
+    monkeypatch.setattr("anchor.config.CATALOG_PATH", cat)
+    songs = [song(id="bbbbbbbb-0000-0000-0000-000000000002", title="Project Mayhem Part 2",
+                  tags=TECHNO, duration_s=177.0, plays=14),
+             song(id="cccccccc-0000-0000-0000-000000000003", title="Concrete Pulse",
+                  tags=TECHNO, duration_s=227.0, plays=2)]
+    for s in songs:
+        s["group_pick"] = True
+    suno.annotate_queue(songs, tmp_path)
+    assert songs[0].get("idea_posted") is True, "another take of a posted song is not postable"
+    assert not songs[1].get("idea_posted"), "a different idea is still fair game"
+
+    js = (SITE / "assets" / "app.js").read_text()
+    cta = js[js.index("function ctaCell("):js.index("function whyPanel(")]
+    assert cta.index("s.idea_posted") < cta.index("queue-btn"), \
+        "the duplicate guard must come before the button, not after it"

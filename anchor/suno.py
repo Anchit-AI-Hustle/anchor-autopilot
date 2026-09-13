@@ -341,6 +341,12 @@ def annotate_queue(songs: list[dict], queue_dir=None) -> dict | None:
             s["queued_at"] = entry["queued_at"]
         if s["id"] in gone:
             s["released_at"] = gone[s["id"]]
+    # A take whose idea is already on the website must not be offered either: posting
+    # "Project Mayhem Part 2" the day after "Project Mayhem" is the channel repeating itself.
+    posted = q.posted_ideas()
+    for s in songs:
+        if not s.get("released_at") and title_key(s["title"]) in posted:
+            s["idea_posted"] = True
 
     if line:
         head = line[0]

@@ -90,7 +90,9 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     """Master, cut the Short, draw the cover, render the video, write the drop files."""
     base = asset_base(profile, brief)
     master_wav = out_dir / "master.wav"
-    loud = master(raw, master_wav, float(profile.music["loudness_lufs"]), float(profile.music["true_peak_db"]))
+    loud = master(raw, master_wav, float(profile.music["loudness_lufs"]),
+                  float(profile.music["true_peak_db"]),
+                  outro_fade_s=float(profile.music.get("outro_fade_s", 0.0)))
     mp3 = out_dir / f"{base}.mp3"
     flac = out_dir / f"{base}.flac"
     encode_mp3(master_wav, mp3)

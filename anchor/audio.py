@@ -8,7 +8,7 @@ from pathlib import Path
 
 import numpy as np
 
-from .util import run
+from .util import log, run
 
 SR = 48_000
 
@@ -31,19 +31,65 @@ def loudness(path: Path) -> dict:
     return {k: float(data[k]) for k in ("input_i", "input_tp", "input_lra", "input_thresh")}
 
 
-def master(src: Path, dst: Path, lufs: float = -11.0, tp: float = -1.0) -> dict:
+def ends_abruptly(audio: np.ndarray, sr: int = SR, tail_s: float = 1.0,
+                  margin_db: float = 6.0) -> tuple[bool, float]:
+    """Is this track still at full level when it runs out?
+
+    A model asked for N seconds renders N seconds and stops mid-bar, so the last sample is
+    as loud as the middle of the track. A track that actually resolves has already dropped
+    away by then. Returns (abrupt, how many dB down the tail is).
+    """
+    mono = audio.mean(axis=1) if audio.ndim > 1 else audio
+    # Trailing silence is padding, not an ending: a model asked for 150 s renders music to
+    # 147 s and pads the rest, so measuring the literal last second measures the padding.
+    step = max(1, int(0.1 * sr))
+    frames = np.array([np.sqrt(np.mean(np.square(mono[i:i + step])) + 1e-12)
+                       for i in range(0, len(mono) - step, step)])
+    if not len(frames):
+        return False, 0.0
+    live = np.where(frames > frames.max() * 10 ** (-40 / 20))[0]
+    if not len(live):
+        return False, 0.0
+    mono = mono[: (live[-1] + 1) * step]
+    n = int(tail_s * sr)
+    if len(mono) < n * 2:
+        return False, 0.0
+    body = float(np.sqrt(np.mean(np.square(mono[: -n])) + 1e-12))
+    tail = float(np.sqrt(np.mean(np.square(mono[-n:])) + 1e-12))
+    drop = 20.0 * np.log10(body / tail) if tail > 0 else 99.0
+    return bool(drop < margin_db), round(float(drop), 2)
+
+
+def master(src: Path, dst: Path, lufs: float = -11.0, tp: float = -1.0,
+           outro_fade_s: float = 0.0) -> dict:
     """Gain + true-peak-safe limiter, iterated until loudness is within 0.4 LU of the target.
 
     The limiter runs at 192 kHz (4x oversampling) so inter-sample peaks - big on distorted
     kicks - are caught too. Writes 48 kHz 16-bit WAV.
+
+    If the track is still at full level on its last second it was cut off rather than ended,
+    so an outro fade is applied. A track that already resolves is left alone - fading a real
+    ending twice only makes it limp.
     """
     before = loudness(src)
     ceiling = 10 ** ((tp - 0.3) / 20)
     gain = lufs - before["input_i"]
     after = before
+
+    fade = ""
+    abrupt, tail_db = False, 0.0
+    if outro_fade_s > 0:
+        abrupt, tail_db = ends_abruptly(decode(src))
+        if abrupt:
+            total = float(probe_duration(src))
+            start = max(0.0, total - outro_fade_s)
+            fade = f",afade=t=out:st={start:.3f}:d={outro_fade_s:.3f}"
+            log(f"master: tail only {tail_db} dB down - adding a {outro_fade_s:.1f}s outro fade")
+
     for _ in range(3):
         chain = (f"highpass=f=22,volume={gain:.2f}dB,aresample=192000:resampler=soxr,"
-                 f"alimiter=limit={ceiling:.4f}:attack=4:release=60:level=0,aresample={SR}:resampler=soxr")
+                 f"alimiter=limit={ceiling:.4f}:attack=4:release=60:level=0,"
+                 f"aresample={SR}:resampler=soxr{fade}")
         run(["ffmpeg", "-y", "-hide_banner", "-v", "error", "-i", src, "-af", chain,
              "-ar", str(SR), "-c:a", "pcm_s16le", dst], quiet=True)
         after = loudness(dst)
@@ -51,7 +97,17 @@ def master(src: Path, dst: Path, lufs: float = -11.0, tp: float = -1.0) -> dict:
         if abs(miss) <= 0.4:
             break
         gain += miss
-    return {"before": before, "after": after, "gain_db": round(gain, 2)}
+    return {"before": before, "after": after, "gain_db": round(gain, 2),
+            "tail_db": tail_db, "outro_fade_s": outro_fade_s if fade else 0.0}
+
+
+def probe_duration(path: Path) -> float:
+    out = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                          "-of", "default=nw=1:nk=1", str(path)], capture_output=True, text=True)
+    try:
+        return float(out.stdout.strip())
+    except ValueError:
+        return 0.0
 
 
 def encode_mp3(src: Path, dst: Path, kbps: int = 256) -> None:

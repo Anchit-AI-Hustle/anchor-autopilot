@@ -31,8 +31,12 @@ steps = 32        # sft range is 32-50; 32 keeps the render inside the runner bu
 guidance = 5.0    # real CFG: the lever turbo never had
 shift = 3.0
 keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B minor", "F# minor", "C# minor", "G# minor"]
-suffix = "instrumental, no vocals, club master, punchy mixdown"
+suffix = "instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves"
 negative = "vocals, singing, spoken word, lyrics, acoustic guitar, piano ballad, pop, lo-fi, jazz"
+# A model asked for N seconds renders N seconds and stops mid-bar. The arrangement (see
+# music.structure) is the real fix; this is the safety net, and it only fires when the
+# track is measurably still at full level on its last second.
+outro_fade_s = 3.0
 loudness_lufs = -11.0     # integrated loudness of the master (YouTube plays back at -14)
 true_peak_db = -1.0
 

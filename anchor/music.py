@@ -21,6 +21,28 @@ from .util import log, run
 SR = 48_000
 
 
+# A track that "just stops" was never composed: asked for N seconds with no arrangement,
+# the model renders N seconds of loop and runs out mid-bar. ACE-Step reads the lyrics field
+# as the arrangement, so the sections are named there - and the last one is always an outro,
+# which is what gives the track somewhere to land instead of a cliff.
+def structure(duration_s: float) -> str:
+    """The section list for a track of this length, always ending on an outro.
+
+    Sizes are chosen so each section gets roughly 8-16 bars at this channel's tempo, which
+    is how the genre is actually built: filtered intro, build, drop, breakdown, drop, outro.
+    """
+    if duration_s < 75:
+        parts = ["intro", "drop", "outro"]
+    elif duration_s < 130:
+        parts = ["intro", "build", "drop", "breakdown", "outro"]
+    elif duration_s < 210:
+        parts = ["intro", "build", "drop", "breakdown", "build", "drop", "outro"]
+    else:
+        parts = ["intro", "build", "drop", "breakdown", "build", "drop", "breakdown",
+                 "drop", "outro"]
+    return "\n".join(f"[{s}]" for s in parts)
+
+
 class AceStepCpp:
     name = "acestep_cpp"
 
@@ -56,7 +78,7 @@ class AceStepCpp:
     def request(self, brief: dict) -> dict:
         req = {
             "caption": brief["caption"],
-            "lyrics": "[Instrumental]",
+            "lyrics": structure(float(brief["duration_s"])),
             "bpm": int(brief["bpm"]),
             "duration": float(brief["duration_s"]),
             "keyscale": brief["key"],

@@ -177,6 +177,14 @@ jobs:
           print(f"- Cover: {m['art']['source']}")
           EOF
 
+      - name: Carry the queue stamp out of this job
+        if: steps.day.outputs.skip != 'true'
+        run: |
+          # anchor make stamps released_at into queue/queue.json, but the job that COMMITS
+          # is a different runner with a fresh checkout, so the stamp died here and the same
+          # track was offered again the next day. Ship it with the drop.
+          cp queue/queue.json "build/${{ steps.day.outputs.date }}/queue.json"
+
       - name: Upload drop files
         if: steps.day.outputs.skip != 'true'
         uses: actions/upload-artifact@v4
@@ -185,6 +193,7 @@ jobs:
           retention-days: 14
           path: |
             build/${{ steps.day.outputs.date }}/meta.json
+            build/${{ steps.day.outputs.date }}/queue.json
             build/${{ steps.day.outputs.date }}/release_notes.md
             build/${{ steps.day.outputs.date }}/*.mp3
             build/${{ steps.day.outputs.date }}/*.flac
@@ -308,6 +317,16 @@ jobs:
           python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
             --short-url "${PAGE_URL%/}/media/$SHORT" --run-url "$RUN_URL"
           python -m anchor check
+
+      - name: Restore the queue stamp written while rendering
+        run: |
+          f="build/$DATE/queue.json"
+          if [ -f "$f" ]; then
+            cp "$f" queue/queue.json
+            echo "queue stamp restored from the make job"
+          else
+            echo "::warning::no queue stamp in the artifact - a released track may be offered again"
+          fi
 
       - name: Commit the catalog (triggers the website deploy)
         run: |
