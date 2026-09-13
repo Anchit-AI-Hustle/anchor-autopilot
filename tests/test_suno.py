@@ -207,3 +207,16 @@ def test_a_released_reference_never_comes_back(tmp_path):
     assert [n for n, _ in q.reserved(tmp_path)] == ["23-b-bbbbbbbb.m4a"], \
         "the released song must not be fetched and posted a second time"
     assert json.loads((tmp_path / "queue.json").read_text())["14-a-aaaaaaaa.m4a"]["released_at"]
+
+
+def test_no_queue_forces_the_generator():
+    """The generator must be testable while tracks are queued, or a render costs a release."""
+    import inspect
+    import anchor.pipeline as pl
+    assert "use_queue" in inspect.signature(pl.make).parameters
+    assert "use_queue and engine_name" in inspect.getsource(pl.make), \
+        "the queue lookup must be gated on use_queue"
+    cli = (ROOT / "anchor" / "__main__.py").read_text()
+    assert '"--no-queue"' in cli and "use_queue=not args.no_queue" in cli
+    wf = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
+    assert "ignore_queue" in wf and "--no-queue" in wf, "the workflow must expose the flag"

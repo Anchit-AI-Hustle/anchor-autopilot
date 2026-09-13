@@ -21,6 +21,10 @@ on:
         description: "Re-make a date that already has a drop (replaces its files)"
         type: boolean
         default: false
+      ignore_queue:
+        description: "Generate with the model even if your own tracks are queued (for testing the engine)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -154,7 +158,9 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: |
           export ACE_THREADS="$(nproc)"
-          python -m anchor make --date "$DATE" --out "build/$DATE"
+          NOQ=""
+          [ "${{ inputs.ignore_queue }}" = "true" ] && NOQ="--no-queue"
+          python -m anchor make --date "$DATE" --out "build/$DATE" $NOQ
           python - >> "$GITHUB_OUTPUT" <<EOF
           import json
           m = json.load(open("build/$DATE/meta.json"))

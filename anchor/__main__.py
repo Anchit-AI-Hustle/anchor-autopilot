@@ -25,6 +25,8 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--engine", default=None, choices=["acestep_cpp", "fixture"])
     m.add_argument("--art", default=None, choices=["auto", "cloudflare", "procedural"])
     m.add_argument("--retries", type=int, default=1)
+    m.add_argument("--no-queue", action="store_true",
+                   help="generate even if tracks are queued (test the model without spending one)")
 
     pb = sub.add_parser("publish", help="send the Short to YouTube via Buffer")
     pb.add_argument("--drop", required=True)
@@ -69,7 +71,8 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "make":
         day = args.date or pipeline.today_utc()
         out = Path(args.out or f"build/{day}")
-        meta = pipeline.make(profile, day, out, engine_name=args.engine, art_mode=args.art, retries=args.retries)
+        meta = pipeline.make(profile, day, out, engine_name=args.engine, art_mode=args.art,
+                             retries=args.retries, use_queue=not args.no_queue)
         print(json.dumps({"out": str(out), "title": meta["brief"]["title"], "files": meta["files"]}))
     elif args.cmd == "publish":
         res = pipeline.publish(profile, Path(args.drop), args.media_url, dry_run=args.dry_run, now=args.now,

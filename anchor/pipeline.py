@@ -34,12 +34,14 @@ def asset_base(profile: Profile, brief: dict) -> str:
 # ------------------------------------------------------------------------- make
 def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None = None,
          art_mode: str | None = None, retries: int = 1, catalog_path: Path = CATALOG_PATH,
-         queue_dir: Path | None = None) -> dict:
+         queue_dir: Path | None = None, use_queue: bool = True) -> dict:
     # resolved here, not in the signature, so tests can point the queue somewhere empty
     queue_dir = queue_dir or QUEUE
     out_dir.mkdir(parents=True, exist_ok=True)
     hist = catalog.history(catalog.load(catalog_path))
-    queued = next_track(queue_dir) if engine_name not in ("fixture",) else None
+    # use_queue=False exercises the generator even when tracks are waiting - the only way
+    # to hear what the model does without spending a queued release to find out
+    queued = next_track(queue_dir) if use_queue and engine_name not in ("fixture",) else None
     if queued:
         return make_from_queue(profile, day, out_dir, queued, art_mode=art_mode, hist=hist)
     engine = get_engine(profile.music, engine_name)
