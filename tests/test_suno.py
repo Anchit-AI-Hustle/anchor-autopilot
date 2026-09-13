@@ -523,3 +523,46 @@ def test_the_catchup_workflow_releases_and_publishes_the_whole_queue():
     assert "--site-only" in wf, "no key must degrade to a website release, not a crash"
     assert "anchor record --drop" in wf, "every posted drop still has to reach the website"
     assert "git add site/data site/covers site/og.jpg queue" in wf, "the queue is committed too"
+
+
+def test_every_short_says_the_full_song_is_coming():
+    """The Shorts go up before any full-length video exists; the caption must not pretend."""
+    from anchor.brief import describe
+    from anchor.config import load_profile, PROFILE_PATH
+    profile = load_profile(PROFILE_PATH)
+    brief = {"bpm": 154, "key": "G# minor", "title": "Then Do It", "lane": "rawstyle", "short_s": 45}
+    lines = describe(profile, brief)["description"].splitlines()
+
+    assert lines[0] == "Then Do It by ANCHOR"
+    assert "full song out soon" in lines[1].lower(), "the promise sits on line 2, above the fold"
+    assert "45s" in lines[1], "and names the length of what they are actually watching"
+    assert "{seconds}" not in lines[1], "the placeholder has to be filled in"
+
+
+def test_the_teaser_can_be_switched_off_without_touching_code():
+    """When the full videos ship, removing one profile line has to be enough."""
+    from anchor.brief import describe
+    from anchor.config import load_profile, PROFILE_PATH
+    profile = load_profile(PROFILE_PATH)
+    profile.youtube["short_note"] = ""
+    brief = {"bpm": 154, "key": "G# minor", "title": "Then Do It", "lane": "rawstyle", "short_s": 45}
+    lines = describe(profile, brief)["description"].splitlines()
+    assert lines[0] == "Then Do It by ANCHOR" and lines[1] == "", "no note, no blank filler line"
+
+
+def test_the_musical_key_is_never_shown_to_a_listener():
+    """A key tells a listener nothing. It stays in the data for QC, off every surface."""
+    video = (ROOT / "anchor" / "video.py").read_text()
+    meta = next(l for l in video.splitlines() if '"meta":' in l)
+    assert "bpm" in meta.lower() and "key" not in meta.lower(), \
+        f"the burned-in meta line still carries the key: {meta.strip()}"
+
+    from anchor.brief import describe
+    from anchor.config import load_profile, PROFILE_PATH
+    brief = {"bpm": 154, "key": "G# minor", "title": "Then Do It", "lane": "rawstyle", "short_s": 45}
+    desc = describe(load_profile(PROFILE_PATH), brief)["description"]
+    assert "G#" not in desc and "minor" not in desc, "the YouTube description must not name the key"
+    assert "154 BPM" in desc, "the tempo is still worth saying"
+
+    js = (SITE / "assets" / "app.js").read_text()
+    assert "d.key" not in js, "the website must not print the key either"

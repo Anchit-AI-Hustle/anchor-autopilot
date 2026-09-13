@@ -121,6 +121,9 @@ category_id = "10"        # Music
 privacy = "public"
 ai_generated = true       # YouTube "AI use" disclosure: always on
 notify_subscribers = true
+# The Shorts go up before the full-length videos exist, so every Short says so on its
+# own line, high in the description where YouTube shows it before the "more" fold.
+short_note = "Full song out soon \u2014 this is the {seconds}s cut."
 hashtags = ["#hardtechno", "#industrialtechno", "#techno"]
 base_tags = ["techno", "hard techno", "techno visualizer", "anchor techno", "techno official visualizer"]
 

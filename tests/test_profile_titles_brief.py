@@ -74,6 +74,7 @@ def test_brief_description_and_bounds():
     b = make_brief(p, "2026-10-01", [])
     lane = p.lane(b["lane"])
     assert lane.bpm[0] <= b["bpm"] <= lane.bpm[1]
-    assert f"{b['bpm']} BPM" in b["description"] and b["key"] in b["description"]
+    # the key is measured and kept in the data for QC, but never shown to a listener
+    assert f"{b['bpm']} BPM" in b["description"] and b["key"] not in b["description"]
     assert "#hardtechno" in b["description"] and "AI-assisted" in b["description"]
     assert len(b["youtube_title"]) <= 100

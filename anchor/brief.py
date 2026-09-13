@@ -84,12 +84,14 @@ def describe(profile: Profile, brief: dict) -> dict:
     bpm, key, title = brief["bpm"], brief["key"], brief["title"]
     lane = profile.lane(brief["lane"])
     tags = list(dict.fromkeys([*yt["base_tags"], *lane.tags, f"hard techno {bpm} bpm"]))
+    note = str(yt.get("short_note") or "").format(seconds=int(brief.get("short_s") or 0))
     description = "\n".join([
         f"{title} by {name}",
+        *([note] if note else []),
         "",
         f"Genre: {lane.genre_line}",
         f"Style: {lane.style_line}",
-        f"{bpm} BPM · {key}",
+        f"{bpm} BPM",
         "",
         f"A new {name} track every day. Full tracks: {profile.artist['site_url'].removeprefix('https://')}",
         "Made with AI-assisted music tools.",

@@ -73,7 +73,6 @@
     chips.replaceChildren(
       el("li", {}, el("strong", { text: d.lane_name })),
       el("li", { text: `${d.bpm} BPM` }),
-      el("li", { text: d.key }),
       el("li", { text: fmtDate(d.date) }),
     );
     $("drop-note").textContent = statusNote(d);
@@ -167,7 +166,7 @@
         "aria-label": `Play ${d.title}, ${d.bpm} BPM, ${fmtDate(d.date)}` },
         el("img", { src: "/" + d.cover, alt: "", loading: "lazy", width: "600", height: "600" }),
         el("span", { class: "t", text: d.title }),
-        el("span", { class: "m", text: `${fmtDate(d.date)} · ${d.bpm} BPM · ${d.key}` }),
+        el("span", { class: "m", text: `${fmtDate(d.date)} · ${d.bpm} BPM` }),
         d.status === "sent" ? el("span", { class: "badge", text: "On YouTube" }) :
           d.status === "scheduled" ? el("span", { class: "badge", text: "Premieres soon" }) : null,
       );
@@ -212,12 +211,11 @@
     const cap = (d.caption || "").split(",").map((s) => s.trim()).filter(Boolean);
     $("spec-summary").textContent = cap.length
       ? `${cap[0].replace(/^./, (c) => c.toUpperCase())} — ${cap.slice(1, 5).join(", ")}.`
-      : `${d.lane_name} at ${d.bpm} BPM in ${d.key}.`;
+      : `${d.lane_name} at ${d.bpm} BPM.`;
     const rows = [
       ["Genre", d.genre_line],
       ["Style", d.style_line],
       ["Tempo", q.bpm_est ? `${q.bpm_est} BPM (measured)` : (d.bpm ? `${d.bpm} BPM` : null)],
-      ["Key", d.key],
       ["Length", d.duration_s ? `${fmtTime(d.duration_s)} · Short ${d.short_s}s` : null],
       ["Master", q.lufs != null ? `${q.lufs} LUFS` : null],
       ["Cover", d.art_source === "cloudflare-flux" ? "AI (FLUX.1 schnell)" : "Procedural"],
@@ -510,7 +508,7 @@
     setPlaying(false);
     video.poster = d.cover ? d.cover : "/assets/hero-default.jpg";
     if (video.getAttribute("src") !== src) video.setAttribute("src", src);
-    $("video-cap").textContent = `${d.title} · ${d.bpm} BPM · ${d.key}`;
+    $("video-cap").textContent = `${d.title} · ${d.bpm} BPM`;
     lastFocus = document.activeElement;
     box.hidden = false;
     document.body.classList.add("locked");

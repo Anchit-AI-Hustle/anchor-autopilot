@@ -122,7 +122,8 @@ def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: d
     texts = {
         "artist": "  ".join(artist.upper()),
         "title": brief["title"].upper(),
-        "meta": f"{brief['lane_name'].upper()}  ·  {brief['bpm']} BPM  ·  {brief['key'].upper()}",
+        # No musical key on screen: it tells a listener nothing and eats the meta line.
+        "meta": f"{brief['lane_name'].upper()}  ·  {brief['bpm']} BPM",
         "footer": f"{handle}  ·  NEW TRACK EVERY DAY",
     }
     paths = {}
