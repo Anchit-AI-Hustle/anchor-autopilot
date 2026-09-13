@@ -174,7 +174,8 @@ def release_notes(profile: Profile, meta: dict) -> str:
         f"- Style: {b['style_line']}",
         f"- Visual family: {b['family_name']}",
         f"- Master loudness: {meta['loudness']['after']['input_i']} LUFS, true peak {meta['loudness']['after']['input_tp']} dBTP",
-        f"- Engine: ACE-Step 1.5 turbo via acestep.cpp (seed {b['seed']}), tempo estimate {q.get('bpm_est')} BPM",
+        f"- Engine: ACE-Step 1.5 ({meta['engine'].get('model', 'acestep')}) via acestep.cpp "
+        f"(seed {b['seed']}), tempo estimate {q.get('bpm_est')} BPM",
         f"- Cover: {meta['art']['source']}",
         "",
         "Made with AI-assisted music tools (ACE-Step 1.5, MIT licence).",
@@ -239,6 +240,7 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
                                  "caption", "seed")},
         "engine": {"name": meta["engine"].get("engine"), "steps": meta["engine"].get("steps"),
                    "render_s": meta["engine"].get("total_s"), "threads": meta["engine"].get("threads"),
+                   "model": meta["engine"].get("model"), "guidance": meta["engine"].get("guidance"),
                    "source_file": meta["engine"].get("source_file")},
         "cover": f"covers/{brief['id']}.jpg",
         "accent": profile.family(brief["family"]).accent,

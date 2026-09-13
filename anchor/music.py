@@ -26,7 +26,8 @@ class AceStepCpp:
 
     def __init__(self, bin_dir: str | Path, models_dir: str | Path, dit_model: str,
                  lm_model: str | None, steps: int = 8, shift: float = 3.0,
-                 threads: int | None = None, vae_chunk: int = 512, timeout_s: int = 5400):
+                 guidance: float = 1.0, threads: int | None = None,
+                 vae_chunk: int = 512, timeout_s: int = 5400):
         # absolute: the binaries run with cwd set to the drop folder, so a relative
         # path here would resolve against that folder instead of the repo
         self.bin_dir = Path(bin_dir).expanduser().resolve()
@@ -37,6 +38,7 @@ class AceStepCpp:
             self.lm_model = lm_model if lm_model.endswith(".gguf") else lm_model + ".gguf"
         self.steps = steps
         self.shift = shift
+        self.guidance = float(guidance)
         self.threads = threads or os.cpu_count() or 2
         self.vae_chunk = vae_chunk
         self.timeout_s = timeout_s
@@ -62,7 +64,10 @@ class AceStepCpp:
             "vocal_language": "unknown",
             "seed": int(brief["seed"]),
             "inference_steps": self.steps,
-            "guidance_scale": 1.0,
+            # CFG is what makes the model actually follow the caption. The turbo DiT is
+            # distilled and silently clamps this to 1.0, which is why "acid" came out as
+            # generic techno no matter how the prompt was written; the sft DiT honours it.
+            "guidance_scale": float(self.guidance),
             "shift": self.shift,
             "use_cot_caption": True,   # let the LM enrich the caption: it follows the genre better
             "output_format": "wav16",
@@ -77,7 +82,7 @@ class AceStepCpp:
         self.check()
         out_dir.mkdir(parents=True, exist_ok=True)
         stats: dict = {"engine": self.name, "threads": self.threads, "steps": self.steps,
-                       "model": self.dit_model}
+                       "model": self.dit_model, "guidance": self.guidance}
         proc_env = {**os.environ, "ACE_THREADS": str(self.threads)}
         req_path = out_dir / "gen.json"
         req_path.write_text(json.dumps(self.request(brief), indent=2))
@@ -188,6 +193,7 @@ def get_engine(profile_music: dict, name: str | None = None):
             lm_model=profile_music.get("lm_model") if env("ANCHOR_USE_LM", "1") != "0" else None,
             steps=int(profile_music.get("steps", 8)),
             shift=float(profile_music.get("shift", 3.0)),
+            guidance=float(profile_music.get("guidance", 1.0)),
             threads=int(env("ACE_THREADS", "0") or 0) or None,
             vae_chunk=int(env("ANCHOR_VAE_CHUNK", "512")),
             timeout_s=int(env("ANCHOR_ENGINE_TIMEOUT", "5400")),

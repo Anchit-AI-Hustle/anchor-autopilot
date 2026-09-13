@@ -37,11 +37,11 @@ env:
   HF_REPO: Serveurperso/ACE-Step-1.5-GGUF
   # file:bytes, verified against huggingface.co/Serveurperso/ACE-Step-1.5-GGUF (MIT licence)
   MODEL_FILES: >-
-    acestep-v15-turbo-Q8_0.gguf:2549528000
+    acestep-v15-sft-Q8_0.gguf:2549527936
     acestep-5Hz-lm-0.6B-Q8_0.gguf:709846656
     Qwen3-Embedding-0.6B-Q8_0.gguf:784144960
     vae-BF16.gguf:337420928
-  MODELS_CACHE_KEY: acestep15-gguf-q8-turbo-lm06-v1
+  MODELS_CACHE_KEY: acestep15-gguf-q8-sft-lm06-v1
   ROBOT_NAME: "Anchit Tandon"
   ROBOT_EMAIL: "anchit.tandon@gmail.com"
 

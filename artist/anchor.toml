@@ -22,9 +22,13 @@ post_time_utc = "17:30"
 engine = "acestep_cpp"
 duration_s = 150          # full track length (released on the site + archive)
 short_s = 45              # YouTube Short = the strongest 45 s of the track
-dit_model = "acestep-v15-turbo-Q8_0"
+# sft, not turbo: the turbo DiT is distilled to 8 steps and silently clamps CFG to 1.0,
+# so the caption barely steers it - an "acid" brief came out as generic techno. The sft
+# DiT honours guidance, at 32-50 steps (model card), which is what makes the genre land.
+dit_model = "acestep-v15-sft-Q8_0"
 lm_model = "acestep-5Hz-lm-0.6B-Q8_0"
-steps = 14        # turbo allows up to 20; more steps = closer to the brief
+steps = 32        # sft range is 32-50; 32 keeps the render inside the runner budget
+guidance = 5.0    # real CFG: the lever turbo never had
 shift = 3.0
 keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B minor", "F# minor", "C# minor", "G# minor"]
 suffix = "instrumental, no vocals, club master, punchy mixdown"

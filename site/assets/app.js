@@ -224,7 +224,10 @@
       ["Made by", eng.name === "queue"
         ? `Your own track${eng.source_file ? ` · ${eng.source_file}` : ""}`
         : eng.name === "acestep_cpp"
-        ? `ACE-Step 1.5 turbo · ${eng.steps || 8} steps${eng.render_s ? ` · ${Math.round(eng.render_s / 60)} min CPU` : ""}`
+        ? `ACE-Step 1.5 ${(eng.model || "").includes("sft") ? "sft" : (eng.model || "").includes("turbo") ? "turbo" : "DiT"}`
+          + ` · ${eng.steps || 8} steps`
+          + (eng.guidance > 1 ? ` · CFG ${eng.guidance}` : " · no CFG")
+          + (eng.render_s ? ` · ${Math.round(eng.render_s / 60)} min CPU` : "")
         : (eng.name || "—")],
       ["Seed", d.seed != null ? String(d.seed) : null],
       ["Checks", (q.warnings && q.warnings.length) ? q.warnings.join("; ") : "No warnings"],
