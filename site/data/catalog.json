@@ -7,7 +7,7 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Industrial hard techno from the machine room. One new track every day, built on a 150+ BPM spine of distorted kicks, rumble and steel."
   },
-  "updated_at": "2026-09-13T13:28:33Z",
+  "updated_at": "2026-09-13T15:56:44Z",
   "drops": [
     {
       "id": "2026-09-13",
@@ -56,34 +56,48 @@
     {
       "id": "2026-09-12",
       "date": "2026-09-12",
-      "title": "Gravity Current",
+      "title": "Grid Blade",
       "lane": "acid",
       "lane_name": "Acid Industrial",
-      "bpm": 154,
+      "bpm": 155,
       "key": "G# minor",
       "family": "prism",
       "family_name": "Prism",
       "duration_s": 150,
       "short_s": 45,
       "cover": "covers/2026-09-12.jpg",
-      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-12/ANCHOR-2026-09-12-gravity-current.mp3",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-12/ANCHOR-2026-09-12-grid-blade.mp3",
       "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-12",
-      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-12-gravity-current-short.mp4",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-12-grid-blade-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-12/ANCHOR-2026-09-12-grid-blade-short.mp4",
       "youtube_url": null,
       "buffer_post_id": null,
       "status": "released",
       "post_at": "2026-09-12T17:30:00Z",
       "qc": {
-        "bpm_est": 154.1,
-        "lufs": -11.45,
-        "warnings": []
+        "bpm_est": 154.8,
+        "lufs": -11.22,
+        "warnings": [
+          "key is not clearly audible; kept the requested one"
+        ]
       },
       "art_source": "procedural",
-      "created_at": "2026-09-12T21:13:52Z",
+      "created_at": "2026-09-13T15:55:46Z",
       "genre_line": "Acid Techno, Industrial Hard Techno, Peak Time Techno",
       "style_line": "Acid Industrial Techno, Dark Techno, Warehouse Techno, Driving Techno",
       "error": null,
-      "accent": "#f4f4f6"
+      "accent": "#f4f4f6",
+      "caption": "acid industrial techno, hard techno, peak time techno, squelching 303 acid line with resonant filter sweeps, distorted kick dominant, deep mono sub bass, dark warehouse energy, clean punchy transient, rising filter tension, industrial noise bursts, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 1593960227,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 32,
+        "render_s": 5329.7,
+        "threads": 4,
+        "model": "acestep-v15-sft-Q8_0.gguf",
+        "guidance": 5.0,
+        "source_file": null
+      }
     }
   ],
   "legacy": [
@@ -109,7 +123,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-13T14:21:33Z",
+    "checked_at": "2026-09-13T15:56:44Z",
     "total": 21,
     "postable": 20,
     "families": 9,

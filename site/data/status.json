@@ -2,13 +2,13 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-09-13",
-    "title": "Project Mayhem",
-    "finished_at": "2026-09-13T13:28:33Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34759784432",
+    "drop_id": "2026-09-12",
+    "title": "Grid Blade",
+    "finished_at": "2026-09-13T15:56:44Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34762593364",
     "error": null
   },
-  "next_post_at": "2026-09-14T17:30:00Z",
+  "next_post_at": "2026-09-13T17:30:00Z",
   "streak": 2,
   "totals": {
     "drops": 2
@@ -16,9 +16,16 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-13T13:28:33Z",
+  "updated_at": "2026-09-13T15:56:44Z",
   "engine": {
-    "engine": "queue",
-    "source_file": "14-project-mayhem-f5207246.m4a"
+    "engine": "acestep_cpp",
+    "threads": 4,
+    "steps": 32,
+    "model": "acestep-v15-sft-Q8_0.gguf",
+    "guidance": 5.0,
+    "lm_ms": 84796,
+    "dit_ms": 4799716,
+    "vae_ms": 431860,
+    "total_s": 5329.7
   }
 }
