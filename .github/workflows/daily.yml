@@ -307,7 +307,9 @@ jobs:
         run: |
           git config user.name "$ROBOT_NAME"
           git config user.email "$ROBOT_EMAIL"
-          git add site/data site/covers site/og.jpg
+          # queue too: a released song is stamped in queue/queue.json, and if that stamp
+          # is not committed the next run fetches and posts the same track again
+          git add site/data site/covers site/og.jpg queue
           git commit -m "drop: $DATE · $TITLE" || { echo "nothing to commit"; exit 0; }
           for i in 1 2 3 4; do
             git pull --rebase -q origin main && git push origin HEAD:main && exit 0
