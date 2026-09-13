@@ -109,12 +109,22 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-13T13:28:33Z",
+    "checked_at": "2026-09-13T14:01:51Z",
     "total": 21,
     "postable": 20,
     "families": 9,
     "twins": 20,
-    "fresh": 9,
+    "fresh": 7,
+    "queued": 1,
+    "released": 1,
+    "next_up": {
+      "title": "Crossing The Threshold",
+      "id": "324147b3-967b-4f51-8be4-f820d6e21341",
+      "rating": 7.7,
+      "source": "queue",
+      "why": "first in the release queue — goes out on the next daily run",
+      "waiting": 0
+    },
     "songs": [
       {
         "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
@@ -201,7 +211,8 @@
         ],
         "group": "be9b114a-f658-465a-983b-759bacda940d",
         "group_size": 4,
-        "group_pick": true
+        "group_pick": true,
+        "released_at": "released"
       },
       {
         "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
@@ -288,7 +299,8 @@
         ],
         "group": "be9b114a-f658-465a-983b-759bacda940d",
         "group_size": 4,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
@@ -375,7 +387,8 @@
         ],
         "group": "be9b114a-f658-465a-983b-759bacda940d",
         "group_size": 4,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "be9b114a-f658-465a-983b-759bacda940d",
@@ -462,7 +475,8 @@
         ],
         "group": "be9b114a-f658-465a-983b-759bacda940d",
         "group_size": 4,
-        "group_pick": false
+        "group_pick": false,
+        "idea_posted": true
       },
       {
         "id": "324147b3-967b-4f51-8be4-f820d6e21341",
@@ -539,7 +553,9 @@
         ],
         "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
         "group_size": 2,
-        "group_pick": true
+        "group_pick": true,
+        "queue_pos": 1,
+        "queued_at": "2026-09-13T00:24:22Z"
       },
       {
         "id": "e7cf9992-0b49-4038-9b31-03f7c4290533",
