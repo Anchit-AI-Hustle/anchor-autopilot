@@ -112,3 +112,36 @@ def mark_done(path: Path, done_dir: Path = DONE) -> Path:
 
 def write_meta(queue_dir: Path, data: dict) -> None:
     (queue_dir / "queue.json").write_text(json.dumps(data, indent=2), encoding="utf-8")
+
+
+def line_up(queue_dir: Path | None = None) -> list[dict]:
+    """The queue as an ordered line: position 1 is the song the next daily run releases.
+
+    Files dropped in by hand come first because the pipeline releases those before it
+    fetches any reference; within each group, name order is quality order.
+    """
+    qdir = Path(queue_dir) if queue_dir else QUEUE
+    meta = read_json(qdir / "queue.json", {}) or {}
+    line, pos = [], 0
+    for name, have_audio in ([(p.name, True) for p in pending(qdir)]
+                             + [(n, False) for n, _ in reserved(qdir)]):
+        entry = meta.get(name, {})
+        pos += 1
+        line.append({
+            "name": name,
+            "position": pos,
+            "title": entry.get("title") or _title_from(name),
+            "suno_id": entry.get("suno_id"),
+            "rating": entry.get("rating"),
+            "queued_at": entry.get("queued_at"),
+            "have_audio": have_audio,
+        })
+    return line
+
+
+def released(queue_dir: Path | None = None) -> dict[str, str]:
+    """Suno id -> when it went out, for every song the queue has already released."""
+    qdir = Path(queue_dir) if queue_dir else QUEUE
+    meta = read_json(qdir / "queue.json", {}) or {}
+    return {e["suno_id"]: e["released_at"] for e in meta.values()
+            if e.get("released_at") and e.get("suno_id")}

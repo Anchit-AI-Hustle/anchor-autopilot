@@ -265,3 +265,66 @@ body.locked { overflow: hidden; }
   .take-tag { display: block; margin: 6px 0 0; width: fit-content; }
   .fam-verdict { flex-basis: 100%; }
 }
+
+/* --------------------------------- catalogue: the one song that goes out next */
+.next-up {
+  position: relative;
+  margin: 18px 0 4px;
+  padding: 18px 20px 16px 22px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  background:
+    linear-gradient(100deg, color-mix(in srgb, var(--accent) 12%, transparent), transparent 58%),
+    var(--panel);
+}
+.nu-eyebrow { display: flex; align-items: center; gap: 9px; margin: 0;
+              font: 700 10px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase;
+              color: var(--accent); }
+.nu-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none;
+          box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 60%, transparent);
+          animation: nu-pulse 2.4s ease-out infinite; }
+@keyframes nu-pulse {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent) 55%, transparent); }
+  70%  { box-shadow: 0 0 0 9px transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.nu-title { display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+            margin: 9px 0 0; }
+.nu-name { font: 400 clamp(26px, 4.4vw, 40px)/1 var(--display); letter-spacing: .01em;
+           text-transform: uppercase; color: var(--text); }
+.nu-rate { font: 400 clamp(22px, 3.4vw, 32px)/1 var(--display); color: var(--ok); flex: none; }
+.nu-why { margin: 9px 0 0; color: var(--muted); font-size: 13px; max-width: 62ch; }
+.nu-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 15px 0 0; }
+.nu-link { background: none; border: 0; padding: 0; cursor: pointer; color: var(--muted);
+           font: 700 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+           text-decoration: underline; text-underline-offset: 4px;
+           text-decoration-color: color-mix(in srgb, var(--accent) 60%, transparent); }
+.nu-link:hover { color: var(--accent); }
+.nu-link:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+
+/* a row that is already handled offers a state, not another button */
+.cta-state { display: inline-block; font: 700 11px/1 var(--mono); letter-spacing: .08em;
+             text-transform: uppercase; padding: 9px 0; color: var(--muted); }
+.cta-state.is-next { color: var(--accent); }
+.cta-state.is-out { color: var(--ok); }
+.c-cta .chip-next { color: var(--accent); }
+.c-cta .chip-queued, .c-cta .chip-done { color: var(--muted); }
+
+/* the pick should be readable as the answer from across the room */
+.cat tr.is-pick td { background: color-mix(in srgb, var(--ok) 7%, transparent); }
+.cat tr.is-pick td:first-child { border-left-width: 3px; }
+.cat tr.is-alt td { opacity: .5; }
+.cat tr.flash td { animation: nu-flash 1.6s ease-out 1; }
+@keyframes nu-flash {
+  0%, 40% { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+  100%    { background: transparent; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nu-dot { animation: none; }
+  .cat tr.flash td { animation: none; outline: 2px solid var(--accent); }
+}
+@media (max-width: 760px) {
+  .next-up { padding: 16px 14px 14px 16px; }
+  .nu-title { flex-wrap: wrap; gap: 4px 12px; }
+}

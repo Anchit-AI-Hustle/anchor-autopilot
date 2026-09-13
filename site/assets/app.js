@@ -265,6 +265,19 @@
 
   function ctaCell(s, isAlternate) {
     const cell = el("td", { class: "c-cta" });
+    if (s.released_at) {
+      cell.append(el("span", { class: "cta-state is-out", text: "Released" }),
+                  el("span", { class: "chip chip-done", text: fmtDate(s.released_at) }));
+      return cell;
+    }
+    if (s.queue_pos) {
+      const first = s.queue_pos === 1;
+      cell.append(el("span", { class: "cta-state" + (first ? " is-next" : ""),
+                               text: first ? "Next out" : "In the queue" }),
+                  el("span", { class: "chip " + (first ? "chip-next" : "chip-queued"),
+                               text: first ? "goes out next run" : `#${s.queue_pos} in line` }));
+      return cell;
+    }
     cell.append(el("a", {
       class: "queue-btn" + (s.postable && !isAlternate ? "" : " ghost"),
       href: queueUrl(s), rel: "noopener", target: "_blank",
@@ -337,22 +350,28 @@
   function famHeader(fam) {
     const n = fam.takes.length;
     const td = el("td", { class: "fam-head", colspan: "6" });
-    td.append(el("span", { class: "fam-title", text: fam.pick.title }),
+    const p = fam.pick, r = Number(p.rating).toFixed(1);
+    const verdict = p.released_at ? `${p.title} (${r}) is already out — skip the other ${n - 1}`
+      : p.queue_pos === 1 ? `${p.title} (${r}) is next out — skip the other ${n - 1}`
+      : p.queue_pos ? `${p.title} (${r}) is queued #${p.queue_pos} — skip the other ${n - 1}`
+      : `post ${p.title} (${r}) — skip the other ${n - 1}`;
+    td.append(el("span", { class: "fam-title", text: p.title }),
               el("span", { class: "fam-count", text: `${n} takes of this idea` }),
-              el("span", { class: "fam-verdict",
-                           text: `post ${fam.pick.title} (${Number(fam.pick.rating).toFixed(1)}) — skip the other ${n - 1}` }));
+              el("span", { class: "fam-verdict", text: verdict }));
     return el("tr", { class: "fam-row" }, td);
   }
 
   function takeRow(s, fam) {
     const multi = fam.takes.length > 1;
     const isPick = s === fam.pick;
-    const tr = el("tr", { class: multi ? (isPick ? "in-fam is-pick" : "in-fam is-alt") : "" });
+    const tr = el("tr", { "data-song": s.id,
+                          class: multi ? (isPick ? "in-fam is-pick" : "in-fam is-alt") : "" });
     const name = el("td", { class: "c-name" },
       el("a", { href: s.url, rel: "noopener", target: "_blank", text: s.title }));
     if (multi) {
       name.append(el("span", { class: "take-tag " + (isPick ? "tag-use" : "tag-alt"),
-        text: isPick ? "USE THIS ONE" : "alternate — " + whySameIdea(s, fam.pick) }));
+        text: isPick ? (s.released_at ? "POSTED" : s.queue_pos ? "QUEUED — POST THIS ONE" : "POST THIS ONE")
+                     : "alternate — " + whySameIdea(s, fam.pick) }));
     }
     name.append(s.checks || s.factors ? whyPanel(s) : el("span", { class: "c-why", text: s.verdict }));
     tr.append(
@@ -375,6 +394,55 @@
     return "another take of the same title, scores lower";
   }
 
+  // The channel posts one track a day, so the page owes the reader one answer before any
+  // table: which single song is next. Everything below this card is how it was chosen.
+  function renderNextUp(cat) {
+    const box = $("next-up");
+    if (!box) return;
+    const up = cat.next_up;
+    if (!up) { box.hidden = true; box.replaceChildren(); return; }
+    box.hidden = false;
+    const queued = up.source === "queue";
+    const song = (cat.songs || []).find((s) => s.id === up.id);
+
+    const head = el("p", { class: "nu-eyebrow" },
+      el("span", { class: "nu-dot", "aria-hidden": "true" }),
+      el("span", { text: queued ? "Next out" : "Nothing queued — post this next" }));
+
+    const title = el("p", { class: "nu-title" },
+      el("span", { class: "nu-name", text: up.title }),
+      up.rating != null ? el("span", { class: "nu-rate", text: Number(up.rating).toFixed(1) }) : null);
+
+    const why = el("p", { class: "nu-why", text:
+      up.why + (up.waiting ? ` · ${up.waiting} more waiting behind it.` : "") });
+
+    const acts = el("p", { class: "nu-acts" });
+    if (!queued && song) {
+      acts.append(el("a", { class: "queue-btn nu-btn", href: queueUrl(song), rel: "noopener",
+                            target: "_blank" },
+        el("span", { class: "queue-ico", "aria-hidden": "true", text: "\u25B6" }),
+        el("span", { text: "Add to YouTube" })));
+    }
+    if (song) {
+      acts.append(el("a", { class: "nu-link", href: song.url, rel: "noopener", target: "_blank",
+                            text: "Hear it on Suno \u2197" }));
+      acts.append(el("button", { type: "button", class: "nu-link nu-jump",
+                                 text: "Show me the row" }));
+    }
+    box.replaceChildren(head, title, why, acts);
+    const jump = box.querySelector(".nu-jump");
+    if (jump) jump.addEventListener("click", () => jumpTo(up.id));
+  }
+
+  function jumpTo(id) {
+    const row = document.querySelector(`tr[data-song="${id}"]`);
+    if (!row) return;
+    row.scrollIntoView({ block: "center", behavior: "smooth" });
+    row.classList.remove("flash");
+    void row.offsetWidth;                       // restart the animation on a repeat click
+    row.classList.add("flash");
+  }
+
   function renderCatalogue(filter) {
     const cat = state.catalog.catalogue;
     const box = $("catalogue");
@@ -383,12 +451,15 @@
     const fams = families(cat.songs);
     const distinct = fams.length;
     const dupes = fams.filter((f) => f.takes.length > 1);
-    $("cat-count").textContent = `${cat.postable} of ${cat.total} postable · ${distinct} distinct`;
+    renderNextUp(cat);
+    $("cat-count").textContent =
+      `${cat.postable} of ${cat.total} postable · ${distinct} distinct`
+      + (cat.queued ? ` · ${cat.queued} queued` : "");
     const when = cat.checked_at ? ago(cat.checked_at) : "just now";
     $("cat-sub").textContent =
       `Synced from suno.com/@${cat.handle} ${when} — every song rated against the channel's format`
       + (dupes.length
-          ? `. ${dupes.length} idea${dupes.length > 1 ? "s have" : " has"} more than one take, grouped below: post the one marked USE THIS ONE and skip its alternates.`
+          ? `. ${dupes.length} idea${dupes.length > 1 ? "s have" : " has"} more than one take, grouped below: post the one marked POST THIS ONE and skip its alternates.`
           : ".");
 
     const rows = $("cat-rows");

@@ -180,7 +180,9 @@ def test_published_catalogue_carries_the_similarity_fields():
         assert len(s["checks"]) == 4 and len(s["factors"]) == 4
         assert s["postable"] == all(c["ok"] for c in s["checks"]), "the yes/no matches its own checks"
         assert re.fullmatch(r"[0-9a-f-]{36}", s["id"]), "the CTA needs a real song id"
-    assert cat["fresh"] == sum(1 for s in cat["songs"] if s["postable"] and s["group_pick"])
+    assert cat["fresh"] == sum(1 for s in cat["songs"] if s["postable"] and s["group_pick"]
+                               and not s.get("queue_pos") and not s.get("released_at")), \
+        "fresh counts picks still going spare, not ones already queued or released"
 
 
 def test_the_queue_releases_the_best_song_first():
@@ -254,7 +256,7 @@ def test_title_key_ignores_take_markers():
 
 def test_the_site_groups_takes_and_names_the_one_to_post():
     js = (SITE / "assets" / "app.js").read_text()
-    for piece in ("function families(", "famHeader(fam)", "USE THIS ONE", "Post this instead",
+    for piece in ("function families(", "famHeader(fam)", "POST THIS ONE", "Post this instead",
                   "whySameIdea", "takes of this idea"):
         assert piece in js, f"the grouped view is missing {piece}"
     css = (SITE / "assets" / "style.css").read_text()
@@ -273,3 +275,87 @@ def test_published_catalogue_has_one_pick_per_family():
         picks = sum(1 for m in members if m["group_pick"])
         assert picks == 1, f"family {key} has {picks} picks, expected exactly 1"
         assert all(m["group_size"] == len(members) for m in members)
+
+
+# --------------------------------------------- which single song goes out next
+def test_the_catalogue_names_the_one_song_that_goes_out_next(tmp_path):
+    """A channel that posts once a day owes the reader one name, not a table to read."""
+    from anchor import queue as q
+    songs = [song(id="aaaaaaaa-0000-0000-0000-000000000001", title="Project Mayhem",
+                  tags=TECHNO, duration_s=245.0, plays=36),
+             song(id="bbbbbbbb-0000-0000-0000-000000000002", title="Crossing The Threshold",
+                  tags=TECHNO, duration_s=227.0, plays=16)]
+    for s in songs:
+        s["group_pick"] = True
+        suno.queue_entry(s, tmp_path)
+
+    up = suno.annotate_queue(songs, tmp_path)
+    assert up["title"] == "Project Mayhem", "the head of the queue is what goes out"
+    assert up["source"] == "queue" and up["waiting"] == 1
+    assert songs[0]["queue_pos"] == 1 and songs[1]["queue_pos"] == 2
+    assert q.line_up(tmp_path)[0]["suno_id"] == songs[0]["id"]
+
+
+def test_with_an_empty_queue_the_best_take_going_spare_is_named(tmp_path):
+    songs = [song(id="aaaaaaaa-0000-0000-0000-000000000001", title="Project Mayhem",
+                  tags=TECHNO, duration_s=245.0, plays=36),
+             song(id="bbbbbbbb-0000-0000-0000-000000000002", title="Concrete Pulse",
+                  tags=TECHNO, duration_s=227.0, plays=2)]
+    for s in songs:
+        s["group_pick"] = True
+    up = suno.annotate_queue(songs, tmp_path)
+    assert up["source"] == "catalogue" and up["title"] == "Project Mayhem"
+    assert up["waiting"] == 0 and not any(s.get("queue_pos") for s in songs)
+
+
+def test_a_released_song_is_never_named_as_next(tmp_path):
+    """The stamp that stops a re-release must also stop the page recommending it."""
+    from anchor import queue as q
+    s = song(id="aaaaaaaa-0000-0000-0000-000000000001", title="Project Mayhem",
+             tags=TECHNO, duration_s=245.0, plays=36)
+    s["group_pick"] = True
+    spare = song(id="bbbbbbbb-0000-0000-0000-000000000002", title="Concrete Pulse",
+                 tags=TECHNO, duration_s=227.0, plays=2)
+    spare["group_pick"] = True
+    name = suno.queue_entry(s, tmp_path)["name"]
+    meta = json.loads((tmp_path / "queue.json").read_text())
+    meta[name]["released_at"] = "2026-09-12T21:00:00Z"
+    q.write_meta(tmp_path, meta)
+
+    up = suno.annotate_queue([s, spare], tmp_path)
+    assert s["released_at"] == "2026-09-12T21:00:00Z" and not s.get("queue_pos")
+    assert up["title"] == "Concrete Pulse", "a song already out is not the next one out"
+
+
+def test_the_site_shows_the_next_song_and_stops_offering_queued_ones():
+    js = (SITE / "assets" / "app.js").read_text()
+    for piece in ("function renderNextUp(", "next_up", "queue_pos", "released_at",
+                  "goes out next run", "in line", "Nothing queued"):
+        assert piece in js, f"the next-up card is missing {piece}"
+    cta = js[js.index("function ctaCell("):js.index("function whyPanel(")]
+    assert cta.index("if (s.released_at)") < cta.index("if (s.queue_pos)") < cta.index("queue-btn"), \
+        "a song already out or already queued must return a state before any queue button"
+    css = (SITE / "assets" / "style.css").read_text()
+    for cls in (".next-up", ".nu-title", ".nu-name", ".cta-state", ".chip-queued"):
+        assert cls in css, f"unstyled: {cls}"
+    assert 'id="next-up"' in (SITE / "index.html").read_text()
+
+
+def test_published_catalogue_names_what_is_next():
+    cat = json.loads((SITE / "data" / "catalog.json").read_text()).get("catalogue")
+    if not cat:
+        pytest.skip("no catalogue synced yet")
+    assert "next_up" in cat, "the site cannot answer 'which one' without this"
+    up = cat["next_up"]
+    if up is None:
+        assert cat["queued"] == 0 and not cat["fresh"]
+        return
+    assert up["title"] and up["source"] in ("queue", "catalogue") and up["why"]
+    if up["id"]:
+        match = [s for s in cat["songs"] if s["id"] == up["id"]]
+        assert match, "the named song must exist in the catalogue so the row can be linked"
+        assert not match[0].get("released_at"), "never point at something already out"
+    queued = [s for s in cat["songs"] if s.get("queue_pos")]
+    assert len(queued) == cat["queued"]
+    assert sorted(s["queue_pos"] for s in queued) == list(range(1, len(queued) + 1)), \
+        "the line is numbered 1..n with no gaps or ties"

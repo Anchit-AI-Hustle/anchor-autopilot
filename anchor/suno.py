@@ -181,13 +181,15 @@ def rate(song: dict) -> dict:
             "factors": factors, "checks": checks, "summary": summary}
 
 
-def catalogue(handle: str) -> dict:
+def catalogue(handle: str, queue_dir=None) -> dict:
     songs = [rate(s) for s in fetch(handle)]
     songs.sort(key=lambda s: (-s["rating"], -s["duration_s"]))
     annotate_similar(songs)
     families = len({s["group"] for s in songs if s["group"]})
     twins = sum(1 for s in songs if s["group_size"] > 1)
     log(f"suno: {twins} song(s) in {families} near-duplicate family(ies)")
+    up = annotate_queue(songs, queue_dir)
+    log("suno: next out is " + (f"{up['title']!r} ({up['why']})" if up else "nothing — queue empty"))
     return {
         "handle": handle,
         "profile_url": PROFILE_URL.format(handle=handle),
@@ -196,7 +198,11 @@ def catalogue(handle: str) -> dict:
         "postable": sum(1 for s in songs if s["postable"]),
         "families": families,
         "twins": twins,
-        "fresh": sum(1 for s in songs if s["postable"] and s["group_pick"]),
+        "fresh": sum(1 for s in songs if s["postable"] and s["group_pick"]
+                     and not s.get("queue_pos") and not s.get("released_at")),
+        "queued": sum(1 for s in songs if s.get("queue_pos")),
+        "released": sum(1 for s in songs if s.get("released_at")),
+        "next_up": up,
         "songs": songs,
     }
 
@@ -314,6 +320,51 @@ def find(handle: str, sid: str) -> dict:
         if s["id"] == sid:
             return s
     raise LookupError(f"{sid} is not a public song on @{handle}")
+
+
+def annotate_queue(songs: list[dict], queue_dir=None) -> dict | None:
+    """Mark what is already queued or released, and name the one song that goes out next.
+
+    Without this the catalogue keeps offering "Add to YouTube" on a song that is already
+    first in line, so the page never answers the only question that matters on a channel
+    that posts once a day: which single track is next.
+    """
+    from . import queue as q
+
+    line = q.line_up(queue_dir)
+    by_id = {e["suno_id"]: e for e in line if e.get("suno_id")}
+    gone = q.released(queue_dir)
+    for s in songs:
+        entry = by_id.get(s["id"])
+        if entry:
+            s["queue_pos"] = entry["position"]
+            s["queued_at"] = entry["queued_at"]
+        if s["id"] in gone:
+            s["released_at"] = gone[s["id"]]
+
+    if line:
+        head = line[0]
+        return {
+            "title": head["title"],
+            "id": head.get("suno_id"),
+            "rating": head.get("rating"),
+            "source": "queue",
+            "why": "first in the release queue — goes out on the next daily run",
+            "waiting": len(line) - 1,
+        }
+    # Nothing queued: the best take still going spare is the one to add.
+    free = [s for s in songs if s["postable"] and s["group_pick"] and not s.get("released_at")]
+    if not free:
+        return None
+    best = free[0]                                   # songs are sorted best-first
+    return {
+        "title": best["title"],
+        "id": best["id"],
+        "rating": best["rating"],
+        "source": "catalogue",
+        "why": "nothing is queued — this is the best take not yet released",
+        "waiting": 0,
+    }
 
 
 def _fetch(url: str, dest, timeout: int = 180) -> int:
