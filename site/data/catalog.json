@@ -109,13 +109,13 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-13T14:01:51Z",
+    "checked_at": "2026-09-13T14:21:33Z",
     "total": 21,
     "postable": 20,
     "families": 9,
     "twins": 20,
-    "fresh": 7,
-    "queued": 1,
+    "fresh": 0,
+    "queued": 8,
     "released": 1,
     "next_up": {
       "title": "Crossing The Threshold",
@@ -123,7 +123,7 @@
       "rating": 7.7,
       "source": "queue",
       "why": "first in the release queue — goes out on the next daily run",
-      "waiting": 0
+      "waiting": 7
     },
     "songs": [
       {
@@ -632,7 +632,9 @@
         ],
         "group": "bba502a3-ebed-411a-8161-54153eca984b",
         "group_size": 2,
-        "group_pick": true
+        "group_pick": true,
+        "queue_pos": 2,
+        "queued_at": "2026-09-13T14:10:47Z"
       },
       {
         "id": "bba502a3-ebed-411a-8161-54153eca984b",
@@ -786,7 +788,9 @@
         ],
         "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
         "group_size": 2,
-        "group_pick": true
+        "group_pick": true,
+        "queue_pos": 3,
+        "queued_at": "2026-09-13T14:10:47Z"
       },
       {
         "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
@@ -863,7 +867,9 @@
         ],
         "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
         "group_size": 2,
-        "group_pick": true
+        "group_pick": true,
+        "queue_pos": 4,
+        "queued_at": "2026-09-13T14:10:47Z"
       },
       {
         "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
@@ -940,7 +946,9 @@
         ],
         "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
         "group_size": 2,
-        "group_pick": true
+        "group_pick": true,
+        "queue_pos": 6,
+        "queued_at": "2026-09-13T14:10:47Z"
       },
       {
         "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
@@ -1094,7 +1102,9 @@
         ],
         "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
         "group_size": 2,
-        "group_pick": true
+        "group_pick": true,
+        "queue_pos": 5,
+        "queued_at": "2026-09-13T14:10:47Z"
       },
       {
         "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
@@ -1479,7 +1489,9 @@
         ],
         "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
         "group_size": 2,
-        "group_pick": true
+        "group_pick": true,
+        "queue_pos": 7,
+        "queued_at": "2026-09-13T14:10:47Z"
       },
       {
         "id": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
@@ -1633,7 +1645,9 @@
         ],
         "group": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
         "group_size": 2,
-        "group_pick": true
+        "group_pick": true,
+        "queue_pos": 8,
+        "queued_at": "2026-09-13T14:10:47Z"
       },
       {
         "id": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
