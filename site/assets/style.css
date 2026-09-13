@@ -243,3 +243,25 @@ body.locked { overflow: hidden; }
 .why-checks li.no strong { color: var(--bad, #ff5b5b); }
 .why-call { margin: 12px 0 0; font: 600 12px/1.5 var(--mono); color: var(--muted); }
 @media (max-width: 760px) { .why-body { max-width: none; } .why-bar { grid-template-columns: 60px 1fr auto; } }
+
+/* --------------------------------------- catalogue: takes of one idea, together */
+.fam-row td { padding: 20px 0 7px; border-bottom: 0; }
+.fam-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; }
+.fam-title { font: 700 12px/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--text); }
+.fam-count { font: 700 10px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase;
+             color: var(--ink); background: var(--muted); padding: 4px 8px; border-radius: 999px; }
+.fam-verdict { font: 500 12px/1.4 var(--mono); color: var(--accent); }
+.cat tr.in-fam td:first-child { border-left: 2px solid var(--line); padding-left: 12px; }
+.cat tr.is-pick td:first-child { border-left-color: var(--ok); }
+.cat tr.is-alt td { opacity: .58; }
+.cat tr.is-alt:hover td { opacity: 1; }
+.take-tag { display: inline-block; margin-left: 9px; font: 700 10px/1 var(--mono);
+            letter-spacing: .1em; text-transform: uppercase; padding: 4px 7px; border-radius: 4px;
+            vertical-align: middle; }
+.tag-use { background: var(--ok); color: #0a0a0b; }
+.tag-alt { border: 1px solid var(--line); color: var(--muted); text-transform: none;
+           letter-spacing: .02em; font-weight: 500; }
+@media (max-width: 760px) {
+  .take-tag { display: block; margin: 6px 0 0; width: fit-content; }
+  .fam-verdict { flex-basis: 100%; }
+}

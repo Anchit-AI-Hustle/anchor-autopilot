@@ -263,16 +263,16 @@
       + `&body=${encodeURIComponent(body)}`;
   }
 
-  function ctaCell(s) {
+  function ctaCell(s, isAlternate) {
     const cell = el("td", { class: "c-cta" });
     cell.append(el("a", {
-      class: "queue-btn" + (s.postable ? "" : " ghost"),
+      class: "queue-btn" + (s.postable && !isAlternate ? "" : " ghost"),
       href: queueUrl(s), rel: "noopener", target: "_blank",
       title: s.postable
         ? `Queue "${s.title}" for the next drop`
         : `Not on format (${s.verdict}) — queue it anyway`,
     }, el("span", { class: "queue-ico", "aria-hidden": "true", text: "▶" }),
-       el("span", { text: s.postable ? "Add to YouTube" : "Queue anyway" })));
+       el("span", { text: !s.postable ? "Queue anyway" : isAlternate ? "Post this instead" : "Add to YouTube" })));
     cell.append(el("span", { class: "chip " + (s.postable ? "chip-yes" : "chip-no"),
                              text: s.postable ? "Postable" : "Not yet" }));
     return cell;
@@ -317,16 +317,62 @@
     return box;
   }
 
-  function similarLine(s) {
-    if (!s.similar || !s.similar.length) return null;
-    const best = s.similar[0];
-    const pct = Math.round(best.score * 100);
-    const text = s.group_size > 1
-      ? (s.group_pick
-          ? `≈ ${s.group_size} versions of this idea — best of them`
-          : `≈ ${pct}% the same as “${best.title}”, which scores higher`)
-      : `≈ ${pct}% the same as “${best.title}”`;
-    return el("span", { class: "c-twin" + (s.group_pick ? " pick" : ""), text });
+  // Takes of one idea are shown together, not scattered down a rating-sorted list, because
+  // the only decision that matters here is "which one of these do I post".
+  function families(songs) {
+    const by = new Map();
+    for (const s of songs) {
+      const k = s.group || ("solo:" + s.id);
+      if (!by.has(k)) by.set(k, []);
+      by.get(k).push(s);
+    }
+    const out = [...by.values()].map((takes) => {
+      takes.sort((a, b) => (b.group_pick === true) - (a.group_pick === true) || b.rating - a.rating);
+      return { takes, pick: takes.find((t) => t.group_pick !== false) || takes[0] };
+    });
+    out.sort((a, b) => b.pick.rating - a.pick.rating);
+    return out;
+  }
+
+  function famHeader(fam) {
+    const n = fam.takes.length;
+    const td = el("td", { class: "fam-head", colspan: "6" });
+    td.append(el("span", { class: "fam-title", text: fam.pick.title }),
+              el("span", { class: "fam-count", text: `${n} takes of this idea` }),
+              el("span", { class: "fam-verdict",
+                           text: `post ${fam.pick.title} (${Number(fam.pick.rating).toFixed(1)}) — skip the other ${n - 1}` }));
+    return el("tr", { class: "fam-row" }, td);
+  }
+
+  function takeRow(s, fam) {
+    const multi = fam.takes.length > 1;
+    const isPick = s === fam.pick;
+    const tr = el("tr", { class: multi ? (isPick ? "in-fam is-pick" : "in-fam is-alt") : "" });
+    const name = el("td", { class: "c-name" },
+      el("a", { href: s.url, rel: "noopener", target: "_blank", text: s.title }));
+    if (multi) {
+      name.append(el("span", { class: "take-tag " + (isPick ? "tag-use" : "tag-alt"),
+        text: isPick ? "USE THIS ONE" : "alternate — " + whySameIdea(s, fam.pick) }));
+    }
+    name.append(s.checks || s.factors ? whyPanel(s) : el("span", { class: "c-why", text: s.verdict }));
+    tr.append(
+      name,
+      el("td", { class: "hide-sm c-tags", text: (s.tags || "—").slice(0, 90) }),
+      el("td", { class: "c-num", text: fmtTime(s.duration_s) }),
+      el("td", { class: "hide-sm c-num", text: String(s.plays ?? 0) }),
+      el("td", { class: "c-rate", text: Number(s.rating).toFixed(1) }),
+      ctaCell(s, multi && !isPick),
+    );
+    return tr;
+  }
+
+  // Say why this is an alternate in the terms it was actually grouped on. A take that
+  // shares the title but was prompted differently is not "50% the same" - that number
+  // would argue against the grouping the reader is looking at.
+  function whySameIdea(s, pick) {
+    const hit = (s.similar || []).find((x) => x.id === pick.id);
+    if (hit && hit.score >= 0.55) return `${Math.round(hit.score * 100)}% the same, scores lower`;
+    return "another take of the same title, scores lower";
   }
 
   function renderCatalogue(filter) {
@@ -334,42 +380,31 @@
     const box = $("catalogue");
     if (!cat || !(cat.songs || []).length) { box.hidden = true; return; }
     box.hidden = false;
-    const fresh = cat.fresh != null
-      ? cat.fresh
-      : cat.songs.filter((s) => s.postable && s.group_pick !== false).length;
-    $("cat-count").textContent = `${cat.postable} of ${cat.total} postable · ${fresh} distinct`;
+    const fams = families(cat.songs);
+    const distinct = fams.length;
+    const dupes = fams.filter((f) => f.takes.length > 1);
+    $("cat-count").textContent = `${cat.postable} of ${cat.total} postable · ${distinct} distinct`;
     const when = cat.checked_at ? ago(cat.checked_at) : "just now";
-    const twins = cat.twins != null ? cat.twins : cat.songs.filter((s) => (s.group_size || 1) > 1).length;
     $("cat-sub").textContent =
       `Synced from suno.com/@${cat.handle} ${when} — every song rated against the channel's format`
-      + (twins ? `. ${twins} are near-identical versions of ${fresh === 1 ? "one idea" : "a smaller set of ideas"}, so post the picks, not the pairs.` : ".");
+      + (dupes.length
+          ? `. ${dupes.length} idea${dupes.length > 1 ? "s have" : " has"} more than one take, grouped below: post the one marked USE THIS ONE and skip its alternates.`
+          : ".");
+
     const rows = $("cat-rows");
     rows.replaceChildren();
     let shown = 0;
-    for (const s of cat.songs) {
-      const twinned = (s.group_size || 1) > 1;
-      if (filter === "yes" && !s.postable) continue;
-      if (filter === "no" && s.postable) continue;
-      if (filter === "pick" && !(s.postable && s.group_pick !== false)) continue;
-      if (filter === "twin" && !twinned) continue;
-      const tr = el("tr", { class: twinned && s.group_pick === false ? "is-twin" : "" });
-      const name = el("td", { class: "c-name" },
-        el("a", { href: s.url, rel: "noopener", target: "_blank", text: s.title }));
-      name.append(s.checks || s.factors
-        ? whyPanel(s)
-        : el("span", { class: "c-why", text: s.verdict }));
-      const twin = similarLine(s);
-      if (twin) name.append(twin);
-      tr.append(
-        name,
-        el("td", { class: "hide-sm c-tags", text: (s.tags || "—").slice(0, 90) }),
-        el("td", { class: "c-num", text: fmtTime(s.duration_s) }),
-        el("td", { class: "hide-sm c-num", text: String(s.plays ?? 0) }),
-        el("td", { class: "c-rate", text: Number(s.rating).toFixed(1) }),
-        ctaCell(s),
-      );
-      rows.append(tr);
-      shown++;
+    for (const fam of fams) {
+      const keep = fam.takes.filter((s) => {
+        if (filter === "yes" && !s.postable) return false;
+        if (filter === "no" && s.postable) return false;
+        if (filter === "pick" && !(s.postable && s === fam.pick)) return false;
+        if (filter === "twin" && fam.takes.length < 2) return false;
+        return true;
+      });
+      if (!keep.length) continue;
+      if (fam.takes.length > 1 && filter !== "pick") rows.append(famHeader(fam));
+      for (const s of keep) { rows.append(takeRow(s, fam)); shown++; }
     }
     if (!shown) {
       rows.append(el("tr", {}, el("td", { class: "c-empty", colspan: "6",

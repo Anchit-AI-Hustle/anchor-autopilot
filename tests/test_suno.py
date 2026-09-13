@@ -146,7 +146,7 @@ def test_a_short_track_is_refused_on_length():
 
 def test_every_catalogue_row_offers_the_youtube_cta():
     js = (SITE / "assets" / "app.js").read_text()
-    assert "ctaCell(s)" in js, "the CTA cell is built for every row"
+    assert "ctaCell(s, multi && !isPick)" in js, "every row gets a CTA; alternates get the quiet one"
     assert "issues/new?labels=youtube-queue" in js, "the CTA opens the queue issue"
     assert "Add to YouTube" in js and "Queue anyway" in js
     assert "whyPanel(s)" in js, "every row shows the full reasoning"
@@ -220,3 +220,56 @@ def test_no_queue_forces_the_generator():
     assert '"--no-queue"' in cli and "use_queue=not args.no_queue" in cli
     wf = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
     assert "ignore_queue" in wf and "--no-queue" in wf, "the workflow must expose the flag"
+
+
+def test_takes_of_one_idea_are_grouped_with_a_single_pick():
+    """Four Project Mayhem takes split into two families, so two rows both claimed 'best'."""
+    # the real tag strings off the profile: same idea, prompted in different words
+    tags_a = ("Hardstyle hard techno industrial techno with more hypnotic drops and "
+              "distortions - clean and clear master file audio quality")
+    tags_b = "hard techno, rawstyle hybrid, industrial, 156-158 bpm, techno, noise, hypnotic, minimal"
+    takes = [
+        song(id="aaaaaaaa-0000-0000-0000-000000000001", title="Project Mayhem",
+             tags=tags_a, duration_s=245.0, plays=36),
+        song(id="bbbbbbbb-0000-0000-0000-000000000002", title="Project Mayhem Part 2",
+             tags=tags_b, duration_s=177.0, plays=14),
+        song(id="cccccccc-0000-0000-0000-000000000003", title="Project Mayhem Part 1",
+             tags=tags_b, duration_s=227.0, plays=12),
+        song(id="dddddddd-0000-0000-0000-000000000004", title="Project Mayhem",
+             tags=tags_a, duration_s=165.0, plays=9),
+    ]
+    # the tag wording alone does NOT bring the two pairs together
+    assert suno.similarity(takes[0], takes[1]) < suno.NEAR
+    suno.annotate_similar(takes)
+    assert len({t["group"] for t in takes}) == 1, "all four takes are one idea"
+    assert [t["group_size"] for t in takes] == [4, 4, 4, 4]
+    assert sum(t["group_pick"] for t in takes) == 1, "exactly one take is the pick"
+    assert next(t for t in takes if t["group_pick"])["id"] == takes[0]["id"], "best rated wins"
+
+
+def test_title_key_ignores_take_markers():
+    assert suno.title_key("Project Mayhem") == suno.title_key("Project Mayhem Part 2")
+    assert suno.title_key("Project Mayhem") != suno.title_key("Concrete Pulse")
+
+
+def test_the_site_groups_takes_and_names_the_one_to_post():
+    js = (SITE / "assets" / "app.js").read_text()
+    for piece in ("function families(", "famHeader(fam)", "USE THIS ONE", "Post this instead",
+                  "whySameIdea", "takes of this idea"):
+        assert piece in js, f"the grouped view is missing {piece}"
+    css = (SITE / "assets" / "style.css").read_text()
+    for cls in (".fam-row", ".tag-use", ".tag-alt", "tr.is-pick", "tr.is-alt"):
+        assert cls in css, f"unstyled: {cls}"
+
+
+def test_published_catalogue_has_one_pick_per_family():
+    cat = json.loads((SITE / "data" / "catalog.json").read_text()).get("catalogue")
+    if not cat:
+        pytest.skip("no catalogue synced yet")
+    fams = {}
+    for s in cat["songs"]:
+        fams.setdefault(s["group"] or s["id"], []).append(s)
+    for key, members in fams.items():
+        picks = sum(1 for m in members if m["group_pick"])
+        assert picks == 1, f"family {key} has {picks} picks, expected exactly 1"
+        assert all(m["group_size"] == len(members) for m in members)

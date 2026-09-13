@@ -235,6 +235,15 @@ def similarity(a: dict, b: dict) -> float:
 NEAR = 0.55          # "these two are the same idea"
 
 
+def title_key(title: str) -> frozenset[str]:
+    """What the title is *about*, with take markers stripped.
+
+    "Project Mayhem", "Project Mayhem Part 1" and "Project Mayhem Part 2" all reduce to
+    {mayhem, project}: three takes at one idea, however differently they were prompted.
+    """
+    return frozenset(_tokens(title))
+
+
 def annotate_similar(songs: list[dict], near: float = NEAR, top: int = 3) -> list[dict]:
     """Attach each song's closest neighbours and group the twins together.
 
@@ -248,7 +257,11 @@ def annotate_similar(songs: list[dict], near: float = NEAR, top: int = 3) -> lis
     for i, a in enumerate(songs):
         for b in songs[i + 1:]:
             sc = similarity(a, b)
-            if sc >= near:
+            # Same title = same idea, even when the two takes were prompted in completely
+            # different words. Without this, four "Project Mayhem" takes split into two
+            # families and two different rows each claimed to be the best one.
+            same_title = bool(title_key(a["title"])) and title_key(a["title"]) == title_key(b["title"])
+            if sc >= near or same_title:
                 pairs.append((sc, a, b))
     for sc, a, b in sorted(pairs, key=lambda p: -p[0]):
         a["similar"].append({"id": b["id"], "title": b["title"], "score": sc})
