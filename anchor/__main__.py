@@ -1,4 +1,4 @@
-"""CLI: python -m anchor <plan|make|publish|record|sync|fail|check> ..."""
+"""CLI: python -m anchor <plan|make|publish|record|sync|suno-sync|queue-add|fail|check> ..."""
 from __future__ import annotations
 
 import argparse
@@ -6,7 +6,7 @@ import json
 import sys
 from pathlib import Path
 
-from . import catalog, pipeline
+from . import catalog, pipeline, queue
 from .brief import make_brief
 from .config import CATALOG_PATH, STATUS_PATH, env, load_profile
 from .util import read_json
@@ -50,6 +50,10 @@ def main(argv: list[str] | None = None) -> int:
     ss = sub.add_parser("suno-sync", help="read a public Suno profile, rate every song, publish it to the site")
     ss.add_argument("--handle", default=None)
 
+    qa = sub.add_parser("queue-add", help="pull a Suno song into the release queue (the site's Add to YouTube button)")
+    qa.add_argument("--song", required=True, help="Suno song id, song URL, or text containing one")
+    qa.add_argument("--handle", default=None)
+
     sub.add_parser("check", help="validate profile and site data")
 
     h = sub.add_parser("has-drop", help="print yes/no: is there already a published drop for the date")
@@ -84,6 +88,18 @@ def main(argv: list[str] | None = None) -> int:
         catalog.save(cat, CATALOG_PATH)
         c = cat["catalogue"]
         print(json.dumps({"total": c["total"], "postable": c["postable"], "checked_at": c["checked_at"]}))
+    elif args.cmd == "queue-add":
+        from . import suno
+        handle = args.handle or profile.artist.get("suno_handle", "anchor_at")
+        song = suno.find(handle, args.song)
+        if not song["postable"]:
+            print(f"note: {song['title']!r} is rated {song['rating']} and marked not-postable "
+                  f"({song['verdict']}) — queueing anyway because you asked for it", file=sys.stderr)
+        res = suno.queue_entry(song, queue.QUEUE)
+        print(json.dumps({"queued": res["name"], "title": song["title"], "rating": song["rating"],
+                          "suno_url": song["url"],
+                          "waiting": len(queue.pending()) + len(queue.reserved())},
+                         ensure_ascii=False))
     elif args.cmd == "fail":
         pipeline.fail(args.stage, args.error, args.run_url)
     elif args.cmd == "check":

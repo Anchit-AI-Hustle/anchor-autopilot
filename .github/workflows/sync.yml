@@ -1,0 +1,43 @@
+# Refresh the catalogue on anchor.anchit-tandon.com without waiting for the daily run:
+# reads suno.com/@anchor_at, rates every song, and commits the result. The daily workflow
+# does this too; this is the button for when you have just published something on Suno.
+name: Sync the Suno catalogue
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 3 * * *"   # 03:23 UTC, well clear of the 15:07 daily run
+
+permissions:
+  contents: write
+
+concurrency:
+  group: suno-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Read the profile and rate every song
+        run: python -m anchor suno-sync
+
+      - name: Commit the catalogue
+        run: |
+          git config user.name "Anchit Tandon"
+          git config user.email "anchit.tandon@gmail.com"
+          git add site/data/catalog.json
+          git commit -m "catalogue: refresh from suno.com/@anchor_at" || { echo "no change"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1

@@ -6,3 +6,6 @@ vendor/
 *.wav
 .env
 .DS_Store
+queue/*.m4a
+queue/*.src.mp4
+queue/done/

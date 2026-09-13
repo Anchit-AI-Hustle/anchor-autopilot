@@ -34,7 +34,9 @@ def asset_base(profile: Profile, brief: dict) -> str:
 # ------------------------------------------------------------------------- make
 def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None = None,
          art_mode: str | None = None, retries: int = 1, catalog_path: Path = CATALOG_PATH,
-         queue_dir: Path = QUEUE) -> dict:
+         queue_dir: Path | None = None) -> dict:
+    # resolved here, not in the signature, so tests can point the queue somewhere empty
+    queue_dir = queue_dir or QUEUE
     out_dir.mkdir(parents=True, exist_ok=True)
     hist = catalog.history(catalog.load(catalog_path))
     queued = next_track(queue_dir) if engine_name not in ("fixture",) else None

@@ -30,3 +30,17 @@ def site_dir(tmp_path):
     cat["drops"] = []
     (site / "data" / "catalog.json").write_text(json.dumps(cat, indent=2))
     return site
+
+
+@pytest.fixture(autouse=True)
+def isolated_queue(tmp_path, monkeypatch):
+    """No test reads the real release queue.
+
+    The queue holds references to Suno songs that the robot fetches at release time, so
+    a test that picked it up would both change what it released and hit the network.
+    """
+    q = tmp_path / "_isolated_queue"          # not "queue": tests make their own
+    q.mkdir()
+    monkeypatch.setattr("anchor.pipeline.QUEUE", q)
+    monkeypatch.setattr("anchor.queue.QUEUE", q)
+    return q

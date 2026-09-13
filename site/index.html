@@ -87,13 +87,15 @@
       <p class="note" id="cat-sub"></p>
       <div class="filters" id="cat-filters" role="group" aria-label="Filter the catalogue">
         <button type="button" data-f="all" aria-pressed="true">All</button>
+        <button type="button" data-f="pick" aria-pressed="false">Best of each idea</button>
+        <button type="button" data-f="twin" aria-pressed="false">Near-duplicates</button>
         <button type="button" data-f="yes" aria-pressed="false">Postable</button>
         <button type="button" data-f="no" aria-pressed="false">Not yet</button>
       </div>
       <div class="cat-scroll">
         <table class="cat">
           <thead>
-            <tr><th>Song</th><th class="hide-sm">Prompt</th><th>Length</th><th class="hide-sm">Plays</th><th>Rating</th><th>YouTube</th></tr>
+            <tr><th>Song</th><th class="hide-sm">Prompt</th><th>Length</th><th class="hide-sm">Plays</th><th>Rating</th><th>Add to YouTube</th></tr>
           </thead>
           <tbody id="cat-rows"></tbody>
         </table>

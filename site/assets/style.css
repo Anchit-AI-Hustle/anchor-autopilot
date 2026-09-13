@@ -186,3 +186,60 @@ body.locked { overflow: hidden; }
 .chip-yes { background: var(--ok); color: #0a0a0b; }
 .chip-no { border: 1px solid var(--line); color: var(--muted); }
 @media (max-width: 760px) { .cat .hide-sm { display: none; } .c-why { max-width: none; } }
+
+/* ------------------------------------------- catalogue: twins and the CTA */
+.c-twin { display: block; margin-top: 5px; font: 600 11px/1.3 var(--mono); letter-spacing: .04em;
+          color: color-mix(in srgb, var(--muted) 85%, var(--accent)); }
+.c-twin.pick { color: var(--accent); }
+.cat tr.is-twin td { opacity: .62; }
+.cat tr.is-twin:hover td { opacity: 1; }
+.c-cta { white-space: nowrap; }
+.queue-btn { display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
+             font: 700 11px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase;
+             background: var(--accent); color: #0a0a0b; border: 1px solid var(--accent);
+             padding: 9px 13px; border-radius: 999px; transition: transform .12s ease, filter .12s ease; }
+.queue-btn:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.queue-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+.queue-btn .queue-ico { font-size: 9px; }
+.queue-btn.ghost { background: transparent; color: var(--muted); border-color: var(--line); }
+.queue-btn.ghost:hover { color: var(--text); border-color: var(--text); filter: none; }
+.c-cta .chip { display: block; margin-top: 7px; background: none; border: 0; padding: 0;
+               color: var(--muted); letter-spacing: .1em; }
+.c-cta .chip-yes { color: var(--ok); }
+.c-empty { color: var(--muted); padding: 22px 0; text-align: center; }
+@media (max-width: 760px) {
+  .queue-btn { padding: 8px 11px; }
+  .queue-btn .queue-ico { display: none; }
+}
+
+/* ------------------------------------------ catalogue: the whole reasoning */
+.why { margin-top: 5px; }
+.why > summary { list-style: none; cursor: pointer; display: flex; flex-wrap: wrap;
+                 align-items: baseline; gap: 8px; }
+.why > summary::-webkit-details-marker { display: none; }
+.why > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+.why > summary .c-why { display: inline; margin-top: 0; }
+.why-more { font: 700 10px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase;
+            color: var(--accent); border-bottom: 1px dotted currentColor; white-space: nowrap; }
+.why[open] .why-more::after { content: " ▴"; }
+.why:not([open]) .why-more::after { content: " ▾"; }
+.why-body { margin-top: 12px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 10px;
+            background: color-mix(in srgb, var(--panel) 70%, transparent); max-width: 56ch; }
+.why-bars { display: grid; gap: 9px; }
+.why-bar { display: grid; grid-template-columns: 68px 1fr auto; gap: 8px; align-items: center;
+           font: 500 12px/1.35 var(--mono); }
+.wb-name { color: var(--muted); letter-spacing: .03em; }
+.wb-track { height: 5px; border-radius: 999px; background: color-mix(in srgb, var(--line) 90%, transparent); overflow: hidden; }
+.wb-fill { display: block; height: 100%; background: var(--accent); border-radius: 999px; }
+.wb-num { font-variant-numeric: tabular-nums; color: var(--text); }
+.wb-note { grid-column: 1 / -1; color: var(--muted); font-size: 11.5px; line-height: 1.45; margin: -3px 0 2px; }
+.why-checks { list-style: none; margin: 14px 0 0; padding: 12px 0 0; display: grid; gap: 7px;
+              border-top: 1px solid var(--line); font-size: 12.5px; line-height: 1.45; }
+.why-checks li { display: grid; grid-template-columns: 15px 1fr; gap: 7px; color: var(--muted); }
+.why-checks strong { color: var(--text); font-weight: 700; }
+.wc-mark { font-weight: 700; }
+.why-checks li.ok .wc-mark { color: var(--ok); }
+.why-checks li.no .wc-mark { color: var(--bad, #ff5b5b); }
+.why-checks li.no strong { color: var(--bad, #ff5b5b); }
+.why-call { margin: 12px 0 0; font: 600 12px/1.5 var(--mono); color: var(--muted); }
+@media (max-width: 760px) { .why-body { max-width: none; } .why-bar { grid-template-columns: 60px 1fr auto; } }

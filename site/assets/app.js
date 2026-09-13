@@ -9,7 +9,8 @@
       if (k === "class") node.className = v;
       else if (k === "text") node.textContent = v;
       else if (k.startsWith("data-") || k.startsWith("aria-") || k === "href" || k === "src" || k === "alt" ||
-               k === "rel" || k === "target" || k === "type" || k === "loading" || k === "width" || k === "height") {
+               k === "rel" || k === "target" || k === "type" || k === "loading" || k === "width" ||
+               k === "height" || k === "style" || k === "colspan" || k === "title") {
         node.setAttribute(k, v);
       } else node[k] = v;
     }
@@ -18,6 +19,7 @@
   };
 
   const CHANNEL = "https://www.youtube.com/@AT_ANCHOR";
+  const REPO = "https://github.com/Anchit-AI-Hustle/anchor-autopilot";
   const state = { catalog: { drops: [] }, status: {}, current: null };
 
   const fmtDate = (iso) => new Date(iso + (iso.length === 10 ? "T00:00:00Z" : ""))
@@ -238,33 +240,137 @@
 
 
   // ------------------------------------------------------------- catalogue
+  // Clicking "Add to YouTube" opens a prefilled issue on the repo. A workflow picks it
+  // up and records the song in queue/queue.json, best rating first; the next daily run
+  // fetches the audio from Suno and releases it — the robot always prefers the queue.
+  function queueUrl(s) {
+    const body = [
+      `Queue this song for the next ANCHOR drop.`,
+      ``,
+      `- Song: ${s.title}`,
+      `- Suno: ${s.url}`,
+      `- Id: \`${s.id}\``,
+      `- Rated ${Number(s.rating).toFixed(1)} — ${s.verdict}`,
+      s.group_size > 1 ? `- Note: ${s.group_size} near-identical versions exist; ${s.group_pick ? "this is the best of them" : "a higher rated version exists"}` : null,
+      ``,
+      `_Sent from the catalogue on anchor.anchit-tandon.com._`,
+    ].filter((l) => l !== null).join("\n");
+    return `${REPO}/issues/new?labels=youtube-queue`
+      + `&title=${encodeURIComponent("Queue: " + s.title)}`
+      + `&body=${encodeURIComponent(body)}`;
+  }
+
+  function ctaCell(s) {
+    const cell = el("td", { class: "c-cta" });
+    cell.append(el("a", {
+      class: "queue-btn" + (s.postable ? "" : " ghost"),
+      href: queueUrl(s), rel: "noopener", target: "_blank",
+      title: s.postable
+        ? `Queue "${s.title}" for the next drop`
+        : `Not on format (${s.verdict}) — queue it anyway`,
+    }, el("span", { class: "queue-ico", "aria-hidden": "true", text: "▶" }),
+       el("span", { text: s.postable ? "Add to YouTube" : "Queue anyway" })));
+    cell.append(el("span", { class: "chip " + (s.postable ? "chip-yes" : "chip-no"),
+                             text: s.postable ? "Postable" : "Not yet" }));
+    return cell;
+  }
+
+  // The whole working behind the rating and the yes/no, so a No can be argued with.
+  function whyPanel(s) {
+    const box = el("details", { class: "why" });
+    const passed = (s.checks || []).filter((c) => c.ok).length;
+    const total = (s.checks || []).length;
+    box.append(el("summary", {},
+      el("span", { class: "c-why", text: s.verdict }),
+      el("span", { class: "why-more", text: total ? `why — ${passed}/${total} checks` : "why" })));
+
+    const body = el("div", { class: "why-body" });
+    if (s.factors && s.factors.length) {
+      const bars = el("div", { class: "why-bars" });
+      for (const f of s.factors) {
+        const pct = Math.max(0, Math.min(100, (f.score / f.max) * 100));
+        bars.append(el("div", { class: "why-bar" },
+          el("span", { class: "wb-name", text: f.name }),
+          el("span", { class: "wb-track" }, el("span", { class: "wb-fill", style: `width:${pct}%` })),
+          el("span", { class: "wb-num", text: `${Number(f.score).toFixed(1)} / ${Number(f.max).toFixed(1)}` }),
+          el("span", { class: "wb-note", text: f.note })));
+      }
+      body.append(bars);
+    }
+    if (total) {
+      const list = el("ul", { class: "why-checks" });
+      for (const c of s.checks) {
+        list.append(el("li", { class: c.ok ? "ok" : "no" },
+          el("span", { class: "wc-mark", "aria-hidden": "true", text: c.ok ? "✓" : "✕" }),
+          el("span", {}, el("strong", { text: c.label }), el("span", { text: " — " + c.detail }))));
+      }
+      body.append(list);
+      body.append(el("p", { class: "why-call",
+        text: s.postable
+          ? `All ${total} checks pass, so this one can go to YouTube.`
+          : `${total - passed} check${total - passed > 1 ? "s" : ""} failed, so the robot will not post it on its own — the button queues it anyway if you disagree.` }));
+    }
+    box.append(body);
+    return box;
+  }
+
+  function similarLine(s) {
+    if (!s.similar || !s.similar.length) return null;
+    const best = s.similar[0];
+    const pct = Math.round(best.score * 100);
+    const text = s.group_size > 1
+      ? (s.group_pick
+          ? `≈ ${s.group_size} versions of this idea — best of them`
+          : `≈ ${pct}% the same as “${best.title}”, which scores higher`)
+      : `≈ ${pct}% the same as “${best.title}”`;
+    return el("span", { class: "c-twin" + (s.group_pick ? " pick" : ""), text });
+  }
+
   function renderCatalogue(filter) {
     const cat = state.catalog.catalogue;
     const box = $("catalogue");
     if (!cat || !(cat.songs || []).length) { box.hidden = true; return; }
     box.hidden = false;
-    $("cat-count").textContent = `${cat.postable} of ${cat.total} postable`;
+    const fresh = cat.fresh != null
+      ? cat.fresh
+      : cat.songs.filter((s) => s.postable && s.group_pick !== false).length;
+    $("cat-count").textContent = `${cat.postable} of ${cat.total} postable · ${fresh} distinct`;
     const when = cat.checked_at ? ago(cat.checked_at) : "just now";
-    $("cat-sub").textContent = `Synced from suno.com/@${cat.handle} ${when} — every song rated against the channel's format.`;
+    const twins = cat.twins != null ? cat.twins : cat.songs.filter((s) => (s.group_size || 1) > 1).length;
+    $("cat-sub").textContent =
+      `Synced from suno.com/@${cat.handle} ${when} — every song rated against the channel's format`
+      + (twins ? `. ${twins} are near-identical versions of ${fresh === 1 ? "one idea" : "a smaller set of ideas"}, so post the picks, not the pairs.` : ".");
     const rows = $("cat-rows");
     rows.replaceChildren();
+    let shown = 0;
     for (const s of cat.songs) {
+      const twinned = (s.group_size || 1) > 1;
       if (filter === "yes" && !s.postable) continue;
       if (filter === "no" && s.postable) continue;
-      const tr = el("tr");
+      if (filter === "pick" && !(s.postable && s.group_pick !== false)) continue;
+      if (filter === "twin" && !twinned) continue;
+      const tr = el("tr", { class: twinned && s.group_pick === false ? "is-twin" : "" });
       const name = el("td", { class: "c-name" },
-        el("a", { href: s.url, rel: "noopener", target: "_blank", text: s.title }),
-        el("span", { class: "c-why", text: s.verdict }));
+        el("a", { href: s.url, rel: "noopener", target: "_blank", text: s.title }));
+      name.append(s.checks || s.factors
+        ? whyPanel(s)
+        : el("span", { class: "c-why", text: s.verdict }));
+      const twin = similarLine(s);
+      if (twin) name.append(twin);
       tr.append(
         name,
         el("td", { class: "hide-sm c-tags", text: (s.tags || "—").slice(0, 90) }),
         el("td", { class: "c-num", text: fmtTime(s.duration_s) }),
         el("td", { class: "hide-sm c-num", text: String(s.plays ?? 0) }),
         el("td", { class: "c-rate", text: Number(s.rating).toFixed(1) }),
-        el("td", {}, el("span", { class: "chip " + (s.postable ? "chip-yes" : "chip-no"),
-                                  text: s.postable ? "Yes" : "No" })),
+        ctaCell(s),
       );
       rows.append(tr);
+      shown++;
+    }
+    if (!shown) {
+      rows.append(el("tr", {}, el("td", { class: "c-empty", colspan: "6",
+        text: "Nothing in the catalogue matches that filter." })));
     }
   }
 

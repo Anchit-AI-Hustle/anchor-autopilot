@@ -1,0 +1,109 @@
+# The "Add to YouTube" button in the catalogue on anchor.anchit-tandon.com opens a
+# prefilled issue here. This workflow turns that issue into a queued release: it records
+# the song in queue/queue.json, best rating first. Only the reference is stored, so the
+# repo stays small - the daily run fetches the audio from Suno when it releases it, and
+# it always prefers the queue over the generator.
+name: Queue a Suno song
+
+on:
+  issues:
+    types: [opened, labeled]
+  workflow_dispatch:
+    inputs:
+      song:
+        description: "Suno song id or https://suno.com/song/... URL"
+        required: true
+      release_now:
+        description: "Run the daily drop immediately instead of waiting for the next slot"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: queue-song
+  cancel-in-progress: false
+
+jobs:
+  queue:
+    # Only the owner can queue a release: an issue from anyone else is ignored. The song
+    # itself is looked up on the channel's own Suno profile, so nothing outside it can
+    # ever be queued.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (contains(github.event.issue.labels.*.name, 'youtube-queue') &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      ROBOT_NAME: "Anchit Tandon"
+      ROBOT_EMAIL: "anchit.tandon@gmail.com"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Pull the song into the queue
+        id: q
+        env:
+          SONG: ${{ github.event_name == 'workflow_dispatch' && inputs.song || format('{0} {1}', github.event.issue.title, github.event.issue.body) }}
+        run: |
+          set -o pipefail
+          python -m anchor queue-add --song "$SONG" | tee queued.json
+          echo "title=$(python -c 'import json;print(json.load(open("queued.json"))["title"])')" >> "$GITHUB_OUTPUT"
+          echo "file=$(python -c 'import json;print(json.load(open("queued.json"))["queued"])')"  >> "$GITHUB_OUTPUT"
+          echo "waiting=$(python -c 'import json;print(json.load(open("queued.json"))["waiting"])')" >> "$GITHUB_OUTPUT"
+          rm -f queued.json
+
+      - name: Commit the queue
+        env:
+          TITLE: ${{ steps.q.outputs.title }}
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add queue
+          git commit -m "queue: $TITLE" || { echo "already queued"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Say so on the issue
+        if: github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TITLE: ${{ steps.q.outputs.title }}
+          FILE: ${{ steps.q.outputs.file }}
+          WAITING: ${{ steps.q.outputs.waiting }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body \
+            "**$TITLE** is queued as \`queue/$FILE\` — $WAITING track(s) waiting. The next daily run releases it: master, cover, Short, website. YouTube goes out with it once \`BUFFER_API_KEY\` is set. [Run log]($RUN)"
+          gh issue close "${{ github.event.issue.number }}" --reason completed
+
+      - name: Release it now
+        if: github.event_name == 'workflow_dispatch' && inputs.release_now
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run daily.yml --ref main
+
+      - name: Report a failure on the issue
+        if: failure() && github.event_name == 'issues'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body \
+            "Could not queue that one — see the [run log]($RUN). If Suno is not serving a public render for it, download the audio from the song page and drop the file into \`queue/\` instead."
