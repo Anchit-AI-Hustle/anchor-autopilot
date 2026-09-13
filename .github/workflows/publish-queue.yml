@@ -1,0 +1,227 @@
+name: Publish the queue to YouTube
+
+# One dispatch, the whole queue. Each track is released on the website and sent to YouTube
+# in the same run, oldest free date first, so the eight Suno tracks do not need eight
+# separate Daily drop dispatches.
+#
+# Nothing here generates music: every queued track is an existing Suno render, so a release
+# costs about 85 seconds. The dedupe guard in anchor/queue.py still applies, so a take of a
+# song already on the site is skipped rather than posted twice.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dates:
+        description: "Drop dates, comma separated, one per track (oldest first)"
+        required: true
+        default: "2026-09-04,2026-09-05,2026-09-06,2026-09-07,2026-09-08,2026-09-09,2026-09-10,2026-09-11"
+      publish_now:
+        description: "Send each Short to YouTube immediately (off = the usual 17:30 UTC slot)"
+        type: boolean
+        default: true
+      dry_run:
+        description: "Render and release on the website only, nothing to YouTube"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-drop          # never race the daily run
+  cancel-in-progress: false
+
+jobs:
+  make:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    outputs:
+      made: ${{ steps.build.outputs.made }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install ffmpeg
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - run: pip install -r requirements.txt
+
+      - name: Release every queued track
+        id: build
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DATES: ${{ inputs.dates }}
+        run: |
+          set -uo pipefail
+          MADE=""
+          IFS=',' read -ra LIST <<< "$DATES"
+          for RAW in "${LIST[@]}"; do
+            DATE="$(echo "$RAW" | tr -d '[:space:]')"
+            [ -z "$DATE" ] && continue
+
+            if python - "$DATE" <<'PY'
+          import json, pathlib, sys
+          drops = json.loads(pathlib.Path("site/data/catalog.json").read_text()).get("drops", [])
+          sys.exit(0 if any(d.get("date") == sys.argv[1] for d in drops) else 1)
+          PY
+            then
+              echo "::notice::$DATE already has a drop - skipping"
+              continue
+            fi
+
+            if ! python -m anchor make --date "$DATE" --out "build/$DATE"; then
+              echo "::notice::nothing left in the queue at $DATE - stopping here"
+              break
+            fi
+
+            B="$(python -c "import json;print(json.load(open('build/$DATE/meta.json'))['files']['base'])")"
+            T="$(python -c "import json;print(json.load(open('build/$DATE/meta.json'))['brief']['title'])")"
+            FILES=("build/$DATE/$B.mp3" "build/$DATE/$B.flac" "build/$DATE/$B-short.mp4" "build/$DATE/$B-cover.jpg")
+            if gh release view "drop-$DATE" >/dev/null 2>&1; then
+              gh release upload "drop-$DATE" "${FILES[@]}" --clobber
+            else
+              gh release create "drop-$DATE" "${FILES[@]}" --title "$T · ANCHOR" \
+                --notes-file "build/$DATE/release_notes.md" --target "$GITHUB_SHA"
+            fi
+            MADE="${MADE:+$MADE,}$DATE"
+            echo "::notice::released $T for $DATE"
+          done
+
+          if [ -z "$MADE" ]; then
+            echo "::error::nothing was released - every date was taken or the queue is empty"
+            exit 1
+          fi
+          echo "made=$MADE" >> "$GITHUB_OUTPUT"
+          # the stamps written here die with this runner unless they travel (see daily.yml)
+          mkdir -p carry && cp queue/queue.json carry/queue.json
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: queue-drops
+          retention-days: 14
+          path: |
+            build/**
+            carry/queue.json
+
+  pages:
+    needs: make
+    if: inputs.dry_run != true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: queue-drops
+          path: art
+
+      - name: Host every Short in this batch
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          mkdir -p public/media
+          find art/build -name '*-short.mp4' -exec cp {} public/media/ \;
+          # keep the last few earlier Shorts online so a pending scheduled post still resolves
+          for tag in $(gh release list --limit 12 --json tagName -q '.[].tagName' | grep '^drop-' | head -3); do
+            gh release download "$tag" --pattern '*-short.mp4' --dir public/media --clobber || true
+          done
+          printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
+          printf '<!doctype html><meta charset="utf-8"><title>ANCHOR media</title><meta http-equiv="refresh" content="0;url=https://anchor.anchit-tandon.com/">' > public/index.html
+          ls -la public/media
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  publish:
+    needs: [make, pages]
+    if: inputs.dry_run != true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: queue-drops
+          path: art
+
+      - name: Put the release stamps back before anything reads the queue
+        run: |
+          [ -f art/carry/queue.json ] && cp art/carry/queue.json queue/queue.json
+          echo "queue stamps restored"
+
+      - name: Send each Short to YouTube, then record the drop
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ secrets.BUFFER_CHANNEL_ID }}
+          PAGE_URL: ${{ needs.pages.outputs.page_url }}
+          MADE: ${{ needs.make.outputs.made }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -uo pipefail
+          FAILED=0
+          IFS=',' read -ra LIST <<< "$MADE"
+          for DATE in "${LIST[@]}"; do
+            mkdir -p build
+            cp -r "art/build/$DATE" "build/$DATE"
+            SHORT="$(python -c "import json;print(json.load(open('build/$DATE/meta.json'))['files']['short'])")"
+            MEDIA="${PAGE_URL%/}/media/$SHORT"
+
+            FLAGS=()
+            if [ -z "$BUFFER_API_KEY" ]; then
+              FLAGS+=(--site-only)
+              echo "::warning::BUFFER_API_KEY is not set: $DATE goes to the website only."
+            fi
+            [ "${{ inputs.publish_now }}" = "true" ] && FLAGS+=(--now)
+
+            if ! python -m anchor publish --drop "build/$DATE" --media-url "$MEDIA" "${FLAGS[@]}"; then
+              FAILED=1
+              echo "::error::YouTube publishing failed for $DATE; it is still released on the website."
+            fi
+            python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
+              --short-url "$MEDIA" --run-url "$RUN_URL"
+          done
+          python -m anchor suno-sync || echo "::warning::Suno sync failed; keeping the last catalogue"
+          python -m anchor check
+          echo "PUBLISH_FAILED=$FAILED" >> "$GITHUB_ENV"
+
+      - name: Commit the catalog (triggers the website deploy)
+        env:
+          ROBOT_NAME: ${{ vars.ROBOT_NAME || 'Anchit Tandon' }}
+          ROBOT_EMAIL: ${{ vars.ROBOT_EMAIL || 'anchit.tandon@gmail.com' }}
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data site/covers site/og.jpg queue
+          git commit -m "drops: released the queue to YouTube and the website" || { echo "nothing to commit"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Fail the run if any YouTube publish failed
+        if: env.PUBLISH_FAILED == '1'
+        run: exit 1

@@ -500,3 +500,26 @@ def test_a_track_that_already_resolves_is_not_faded_again(tmp_path):
     write_wav(src, a)
     stats = master(src, tmp_path / "out.wav", outro_fade_s=3.0)
     assert stats["outro_fade_s"] == 0.0, "fading a real ending twice only makes it limp"
+
+
+def test_the_catchup_workflow_releases_and_publishes_the_whole_queue():
+    """One dispatch has to do what eight Daily drop dispatches would."""
+    wf = (ROOT / ".github" / "workflows" / "publish-queue.yml").read_text()
+
+    for job in ("  make:", "  pages:", "  publish:"):
+        assert job in wf, f"missing job {job.strip()}"
+    assert "needs: [make, pages]" in wf, \
+        "Buffer fetches the media URL, so Pages must be live before anything is posted"
+    assert "group: daily-drop" in wf, "must never race the daily run"
+
+    assert "already has a drop - skipping" in wf, "a taken date is skipped, not overwritten"
+    assert "nothing left in the queue" in wf, "an empty queue ends the batch cleanly"
+    assert "cp queue/queue.json carry/queue.json" in wf, "release stamps must leave the make runner"
+    assert "cp art/carry/queue.json queue/queue.json" in wf, \
+        "and be restored before the commit, or a released track comes back"
+    assert wf.index("stamps back") < wf.index("Commit the catalog"), "restore, then commit"
+
+    assert "--media-url" in wf and "/media/" in wf, "the Short is served from the media host"
+    assert "--site-only" in wf, "no key must degrade to a website release, not a crash"
+    assert "anchor record --drop" in wf, "every posted drop still has to reach the website"
+    assert "git add site/data site/covers site/og.jpg queue" in wf, "the queue is committed too"
