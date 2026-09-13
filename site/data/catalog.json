@@ -65,9 +65,12 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-12T23:44:43Z",
+    "checked_at": "2026-09-13T01:24:28Z",
     "total": 21,
     "postable": 20,
+    "families": 10,
+    "twins": 20,
+    "fresh": 10,
     "songs": [
       {
         "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
@@ -85,7 +88,66 @@
         "rating": 8.6,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, hardstyle), 4.1 min"
+        "verdict": "on format (techno, industrial, hardstyle), 4:05",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, hardstyle, hypnotic — straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:05 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.9,
+            "max": 1.5,
+            "note": "36 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, hardstyle, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:05 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.6/10. Postable: prompt names techno, industrial, hardstyle, hypnotic — straight down the middle of the channel. 4:05 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "be9b114a-f658-465a-983b-759bacda940d",
+            "title": "Project Mayhem",
+            "score": 0.967
+          }
+        ],
+        "group": "be9b114a-f658-465a-983b-759bacda940d",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
@@ -103,7 +165,66 @@
         "rating": 8.3,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 3.0 min"
+        "verdict": "on format (techno, industrial, rawstyle), 2:57",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, hypnotic — straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "2:57 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.6,
+            "max": 1.5,
+            "note": "14 plays and 1 upvote on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:57 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.3/10. Postable: prompt names techno, industrial, rawstyle, hypnotic — straight down the middle of the channel. 2:57 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
+            "title": "Project Mayhem Part 1",
+            "score": 0.978
+          }
+        ],
+        "group": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
@@ -121,7 +242,66 @@
         "rating": 8.0,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 3.8 min"
+        "verdict": "on format (techno, industrial, rawstyle), 3:47",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, hypnotic — straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:47 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:47 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.0/10. Postable: prompt names techno, industrial, rawstyle, hypnotic — straight down the middle of the channel. 3:47 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
+            "title": "Project Mayhem Part 2",
+            "score": 0.978
+          }
+        ],
+        "group": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "be9b114a-f658-465a-983b-759bacda940d",
@@ -139,7 +319,66 @@
         "rating": 7.9,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, hardstyle), 2.8 min"
+        "verdict": "on format (techno, industrial, hardstyle), 2:45",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, hardstyle, hypnotic — straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "2:45 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "9 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, hardstyle, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:45 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.9/10. Postable: prompt names techno, industrial, hardstyle, hypnotic — straight down the middle of the channel. 2:45 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
+            "title": "Project Mayhem",
+            "score": 0.967
+          }
+        ],
+        "group": "be9b114a-f658-465a-983b-759bacda940d",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "324147b3-967b-4f51-8be4-f820d6e21341",
@@ -157,7 +396,66 @@
         "rating": 7.7,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 3.8 min"
+        "verdict": "on format (techno, industrial, rawstyle), 3:47",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:47 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.9,
+            "max": 1.5,
+            "note": "16 plays and 3 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:47 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.7/10. Postable: techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9. 3:47 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+            "title": "Crossing The Threshold",
+            "score": 0.992
+          }
+        ],
+        "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "e7cf9992-0b49-4038-9b31-03f7c4290533",
@@ -175,7 +473,66 @@
         "rating": 7.7,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, hypnotic), 3.5 min"
+        "verdict": "on format (techno, industrial, hypnotic), 3:32",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.6,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, hypnotic — straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:32 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.4,
+            "max": 1.5,
+            "note": "16 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:32 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.6 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.7/10. Postable: prompt names techno, industrial, hypnotic — straight down the middle of the channel. 3:32 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "bba502a3-ebed-411a-8161-54153eca984b",
+            "title": "Do It",
+            "score": 0.718
+          }
+        ],
+        "group": "bba502a3-ebed-411a-8161-54153eca984b",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "bba502a3-ebed-411a-8161-54153eca984b",
@@ -193,7 +550,66 @@
         "rating": 7.6,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, hypnotic), 3.5 min"
+        "verdict": "on format (techno, industrial, hypnotic), 3:28",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.6,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, hypnotic — straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:28 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:28 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.6 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.6/10. Postable: prompt names techno, industrial, hypnotic — straight down the middle of the channel. 3:28 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "e7cf9992-0b49-4038-9b31-03f7c4290533",
+            "title": "Then Do It",
+            "score": 0.718
+          }
+        ],
+        "group": "bba502a3-ebed-411a-8161-54153eca984b",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "d911518a-edb8-4009-a694-935add5470f9",
@@ -211,7 +627,66 @@
         "rating": 7.4,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 3.4 min"
+        "verdict": "on format (techno, industrial, rawstyle), 3:25",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:25 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.6,
+            "max": 1.5,
+            "note": "15 plays and 1 upvote on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:25 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.4/10. Postable: techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9. 3:25 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+            "title": "Silent Transmission",
+            "score": 0.96
+          }
+        ],
+        "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
@@ -229,7 +704,66 @@
         "rating": 7.2,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, warehouse), 3.6 min"
+        "verdict": "on format (techno, industrial, warehouse), 3:38",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:38 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.5,
+            "max": 1.5,
+            "note": "18 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak-time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:38 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.2/10. Postable: techno, industrial, warehouse, but also house — the off-format tags cost it 0.9. 3:38 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+            "title": "Stay With Me",
+            "score": 0.986
+          }
+        ],
+        "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
@@ -247,7 +781,66 @@
         "rating": 7.1,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 6.0 min"
+        "verdict": "on format (techno, industrial, rawstyle), 6:00",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "6:00 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "14 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "6:00 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.1/10. Postable: techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9. 6:00 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+            "title": "Where It Begins",
+            "score": 0.956
+          }
+        ],
+        "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
@@ -265,7 +858,66 @@
         "rating": 7.1,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, warehouse), 4.2 min"
+        "verdict": "on format (techno, industrial, warehouse), 4:14",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:14 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak-time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:14 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.1/10. Postable: techno, industrial, warehouse, but also house — the off-format tags cost it 0.9. 4:14 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
+            "title": "Stay With Me",
+            "score": 0.986
+          }
+        ],
+        "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
@@ -283,7 +935,66 @@
         "rating": 7.1,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, warehouse), 4.2 min"
+        "verdict": "on format (techno, industrial, warehouse), 4:09",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:09 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "14 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:09 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.1/10. Postable: techno, industrial, warehouse, but also house — the off-format tags cost it 0.9. 4:09 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+            "title": "Robot Love",
+            "score": 0.999
+          }
+        ],
+        "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
@@ -301,7 +1012,66 @@
         "rating": 7.0,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, warehouse), 4.2 min"
+        "verdict": "on format (techno, industrial, warehouse), 4:10",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:10 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.1,
+            "max": 1.5,
+            "note": "6 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:10 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.0/10. Postable: techno, industrial, warehouse, but also house — the off-format tags cost it 0.9. 4:10 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
+            "title": "Robot Love",
+            "score": 0.999
+          }
+        ],
+        "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
@@ -319,7 +1089,66 @@
         "rating": 7.0,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 4.1 min"
+        "verdict": "on format (techno, industrial, rawstyle), 4:07",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:07 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "10 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:07 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.0/10. Postable: techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9. 4:07 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "324147b3-967b-4f51-8be4-f820d6e21341",
+            "title": "Crossing The Threshold",
+            "score": 0.992
+          }
+        ],
+        "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
@@ -337,7 +1166,66 @@
         "rating": 7.0,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 3.4 min"
+        "verdict": "on format (techno, industrial, rawstyle), 3:22",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:22 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "10 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:22 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 7.0/10. Postable: techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9. 3:22 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
+            "title": "Where It Begins",
+            "score": 0.956
+          }
+        ],
+        "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
@@ -355,7 +1243,66 @@
         "rating": 6.7,
         "postable": true,
         "slot": "full release",
-        "verdict": "123s — works as a Short, thin as a full drop"
+        "verdict": "on format (techno, industrial, rawstyle), 2:02 — good for a Short",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.2,
+            "max": 2.5,
+            "note": "2:02 — just long enough for a full release"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "9 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:02 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 6.7/10. Postable: techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9. 2:02 — just long enough for a full release. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "d911518a-edb8-4009-a694-935add5470f9",
+            "title": "Silent Transmission",
+            "score": 0.96
+          }
+        ],
+        "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "d02466c4-239f-472f-b50d-eb5ea5c66c9b",
@@ -373,7 +1320,66 @@
         "rating": 6.6,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, acid), 2.8 min"
+        "verdict": "on format (techno, industrial, acid), 2:46",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 2.7,
+            "max": 4.0,
+            "note": "techno, industrial, acid, but also trance — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "2:46 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "8 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, acid"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:46 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "2.7 against a 2.0 floor, pulled down by trance"
+          }
+        ],
+        "summary": "Rated 6.6/10. Postable: techno, industrial, acid, but also trance — the off-format tags cost it 0.9. 2:46 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
+            "title": "Let’s Fucking Go!",
+            "score": 0.995
+          }
+        ],
+        "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
@@ -391,7 +1397,66 @@
         "rating": 6.5,
         "postable": true,
         "slot": "full release",
-        "verdict": "on format (techno, industrial, acid), 2.6 min"
+        "verdict": "on format (techno, industrial, acid), 2:38",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 2.7,
+            "max": 4.0,
+            "note": "techno, industrial, acid, but also trance — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "2:38 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.1,
+            "max": 1.5,
+            "note": "6 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, acid"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:38 against a 1:00 floor — full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "2.7 against a 2.0 floor, pulled down by trance"
+          }
+        ],
+        "summary": "Rated 6.5/10. Postable: techno, industrial, acid, but also trance — the off-format tags cost it 0.9. 2:38 — full release length. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "d02466c4-239f-472f-b50d-eb5ea5c66c9b",
+            "title": "Let’s Fucking Go!",
+            "score": 0.995
+          }
+        ],
+        "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "e7f16cd4-b99f-4246-a209-23eb0b304e8d",
@@ -409,7 +1474,66 @@
         "rating": 6.4,
         "postable": true,
         "slot": "Short only",
-        "verdict": "102s — works as a Short, thin as a full drop"
+        "verdict": "on format (techno, industrial, warehouse), 1:42 — good for a Short",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 1.3,
+            "max": 2.5,
+            "note": "1:42 — carries a Short, thin as a full drop"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.8,
+            "max": 1.5,
+            "note": "23 plays and 1 upvote on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "1:42 against a 1:00 floor — Short only"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 6.4/10. Postable: techno, industrial, warehouse, but also house — the off-format tags cost it 0.9. 1:42 — carries a Short, thin as a full drop. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+            "title": "First Contact",
+            "score": 0.713
+          }
+        ],
+        "group": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+        "group_size": 2,
+        "group_pick": true
       },
       {
         "id": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
@@ -427,7 +1551,66 @@
         "rating": 5.9,
         "postable": true,
         "slot": "Short only",
-        "verdict": "109s — works as a Short, thin as a full drop"
+        "verdict": "on format (techno, industrial, warehouse), 1:49 — good for a Short",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.1,
+            "max": 4.0,
+            "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
+          },
+          {
+            "name": "Length",
+            "score": 1.3,
+            "max": 2.5,
+            "note": "1:49 — carries a Short, thin as a full drop"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "1:49 against a 1:00 floor — Short only"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.1 against a 2.0 floor, pulled down by house"
+          }
+        ],
+        "summary": "Rated 5.9/10. Postable: techno, industrial, warehouse, but also house — the off-format tags cost it 0.9. 1:49 — carries a Short, thin as a full drop. made on Suno v4.5-all — good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "e7f16cd4-b99f-4246-a209-23eb0b304e8d",
+            "title": "Signal Detected",
+            "score": 0.713
+          }
+        ],
+        "group": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+        "group_size": 2,
+        "group_pick": false
       },
       {
         "id": "fe67ed44-93d0-4b7e-9f72-fc014bae0c8e",
@@ -445,7 +1628,60 @@
         "rating": 5.4,
         "postable": false,
         "slot": "full release",
-        "verdict": "on format (techno), 3.9 min"
+        "verdict": "1.6 against a 2.0 floor, pulled down by hip hop, rap",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 1.6,
+            "max": 4.0,
+            "note": "techno, but also hip hop, rap — the off-format tags cost it 1.8"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:51 — full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all — good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.1,
+            "max": 1.5,
+            "note": "5 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:51 against a 1:00 floor — full release"
+          },
+          {
+            "ok": false,
+            "label": "Genre score clears the bar",
+            "detail": "1.6 against a 2.0 floor, pulled down by hip hop, rap"
+          }
+        ],
+        "summary": "Rated 5.4/10. Not yet: 1.6 against a 2.0 floor, pulled down by hip hop, rap",
+        "similar": [],
+        "group": null,
+        "group_size": 1,
+        "group_pick": true
       }
     ]
   }
