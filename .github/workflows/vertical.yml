@@ -1,0 +1,58 @@
+name: Render vertical full tracks
+
+# 9:16 versions of the full-length tracks, for phones - and the only free automated route the
+# full tracks have: Buffer publishes Instagram Reels directly and a Reel may run to 15 minutes.
+# Nothing is posted here; the files are attached to each drop's release.
+on:
+  workflow_dispatch:
+    inputs:
+      dates:
+        description: "Drop dates, comma separated"
+        required: true
+        default: "2026-09-04,2026-09-05,2026-09-06,2026-09-07,2026-09-08,2026-09-10,2026-09-12,2026-09-13,2026-09-14"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-drop            # never race the daily run
+  cancel-in-progress: false
+
+jobs:
+  vertical:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -r requirements.txt
+
+      - name: Render each track portrait
+        run: python scripts/vertical.py --dates "${{ inputs.dates }}" --out build-vertical
+
+      - name: Attach them to each drop's release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY' > upload.txt
+          import json, pathlib
+          for m in json.loads(pathlib.Path("build-vertical/made.json").read_text()):
+              print(f"{m['date']}\t{m['dir']}/{m['file']}")
+          PY
+          while IFS=$'\t' read -r DATE FILE; do
+            gh release upload "drop-$DATE" "$FILE" --clobber
+            echo "::notice::uploaded $(basename "$FILE") to drop-$DATE"
+          done < upload.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vertical
+          retention-days: 14
+          path: |
+            build-vertical/**
+            !build-vertical/work/**
