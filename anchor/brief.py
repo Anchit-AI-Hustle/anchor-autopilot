@@ -97,7 +97,7 @@ def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
     clickable link, so the URL is stated as a bare domain and the hashtags do the discovery.
     """
     yt, name = profile.youtube, profile.artist["name"]
-    bpm, key, title = brief["bpm"], brief["key"], brief["title"]
+    bpm, title = brief["bpm"], brief["title"]
     lane = profile.lane(brief["lane"])
     site = profile.artist["site_url"].removeprefix("https://").rstrip("/")
     tags = list(dict.fromkeys([*yt["base_tags"], *lane.tags, f"hard techno {bpm} bpm"]))
@@ -106,7 +106,9 @@ def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
     # generation caption - but nine of ten drops come in through queue from Suno, where that
     # caption never applied, and several carry a vocal hook: 2026-09-13 chants "project
     # mayhem" over and over. The line was on every post and was false for most of them.
-    facts = [f"{lane.genre_line} \u00b7 {bpm} BPM \u00b7 {key}"]
+    # The key is gone from here too, for the same reason it left the artwork: it does not
+    # survive checking against the audio, and it told a listener nothing to begin with.
+    facts = [f"{lane.genre_line} \u00b7 {bpm} BPM"]
     tail = [f"A new {name} track every day.", "Made with AI-assisted music tools."]
 
     if platform == "instagram":

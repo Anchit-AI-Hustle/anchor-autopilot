@@ -525,29 +525,35 @@ def test_the_catchup_workflow_releases_and_publishes_the_whole_queue():
     assert "git add site/data site/covers site/og.jpg queue" in wf, "the queue is committed too"
 
 
-def test_every_short_says_the_full_song_is_coming():
-    """The Shorts go up before any full-length video exists; the caption must not pretend."""
+def test_every_short_links_to_the_full_track():
+    """These two tests used to guard a teaser - "full song out soon - this is the 45s cut".
+
+    That copy outlived its own premise: the full tracks are published, so the line told every
+    viewer to wait for something already up, and linked none of them to it. The promise was
+    replaced by the link, and the tests were left asserting the promise - which is why main
+    has been red. The contract they guard now is the real one: line two is the way in.
+    """
     from anchor.brief import describe
     from anchor.config import load_profile, PROFILE_PATH
     profile = load_profile(PROFILE_PATH)
     brief = {"bpm": 154, "key": "G# minor", "title": "Then Do It", "lane": "rawstyle", "short_s": 45}
     lines = describe(profile, brief)["description"].splitlines()
 
-    assert lines[0] == "Then Do It by ANCHOR"
-    assert "full song out soon" in lines[1].lower(), "the promise sits on line 2, above the fold"
-    assert "45s" in lines[1], "and names the length of what they are actually watching"
-    assert "{seconds}" not in lines[1], "the placeholder has to be filled in"
+    assert lines[0] == "Then Do It \u2014 ANCHOR"
+    assert lines[1].startswith("Full track, free:"), "the link sits on line 2, above the fold"
+    assert profile.artist["site_url"].removeprefix("https://").rstrip("/") in lines[1]
 
 
-def test_the_teaser_can_be_switched_off_without_touching_code():
-    """When the full videos ship, removing one profile line has to be enough."""
+def test_the_copy_never_promises_a_track_that_is_already_out():
+    """Whatever the wording, nothing may tell a viewer to wait for what they can hear now."""
     from anchor.brief import describe
     from anchor.config import load_profile, PROFILE_PATH
     profile = load_profile(PROFILE_PATH)
-    profile.youtube["short_note"] = ""
     brief = {"bpm": 154, "key": "G# minor", "title": "Then Do It", "lane": "rawstyle", "short_s": 45}
-    lines = describe(profile, brief)["description"].splitlines()
-    assert lines[0] == "Then Do It by ANCHOR" and lines[1] == "", "no note, no blank filler line"
+    for platform in ("youtube", "instagram"):
+        desc = describe(profile, brief, platform)["description"].lower()
+        for promise in ("out soon", "coming soon", "stay tuned", "full song soon"):
+            assert promise not in desc, f"{platform} copy still promises: {promise!r}"
 
 
 def test_the_musical_key_is_never_shown_to_a_listener():
@@ -566,3 +572,10 @@ def test_the_musical_key_is_never_shown_to_a_listener():
 
     js = (SITE / "assets" / "app.js").read_text()
     assert "d.key" not in js, "the website must not print the key either"
+
+    # and off the artwork, which is the surface that outlives every other one: a cover is
+    # burned into the Short, the 16:9 and the 9:16, and reprinting it means re-rendering all three.
+    art = (ROOT / "scripts" / "art_from_audio.py").read_text()
+    tag = next(l for l in art.splitlines() if l.strip().startswith("tag = f"))
+    assert "bpm" in tag.lower() and "key" not in tag.lower(), \
+        f"the cover footer still carries the key: {tag.strip()}"

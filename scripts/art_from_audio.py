@@ -169,7 +169,11 @@ def frame(im, meta, bottom_type=False):
     yf = S - M - int(S*0.030)
     foot_ink = (8, 6, 4, 255) if light else (*p["ink"], 255)
     d.text((M, yf), "A N C H O R", font=fm, fill=foot_ink)
-    tag = f"{meta['bpm']} BPM   {meta['key'].upper()}"
+    # No musical key in the footer. Detected straight from the released masters, the key
+    # the catalogue claims disagrees with the audio on three of the four tracks a
+    # Krumhansl-Schmuckler profile is confident about, and three more come back ambiguous.
+    # An unreliable number burned into permanent artwork is worse than no number.
+    tag = f"{meta['bpm']} BPM"
     hot = p["hot"] if not light else (122, 38, 8)      # the bone ground washes out the accent
     d.text((S - M - d.textbbox((0,0), tag, font=fm)[2], yf), tag, font=fm, fill=(*hot, 255))
     return im
