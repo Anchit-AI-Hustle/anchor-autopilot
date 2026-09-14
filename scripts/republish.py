@@ -24,20 +24,23 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
 import shutil
 import subprocess
 import sys
+import time
 import urllib.request
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageEnhance, ImageFilter
+from PIL import Image, ImageEnhance, ImageFilter, ImageFont
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 from anchor import catalog, video as V                            # noqa: E402
+from anchor.publish import Buffer, BufferError                    # noqa: E402
 from anchor.config import CATALOG_PATH, SITE, load_profile        # noqa: E402
 from anchor.util import log                                       # noqa: E402
 
@@ -184,6 +187,19 @@ def playable(audio: Path, work: Path) -> Path:
     return dest
 
 
+def title_size(title: str, room: int, biggest: int = 104, smallest: int = 58) -> int:
+    """Largest size at which the title still fits the text column.
+
+    A fixed 104 clipped "CROSSING THE THRESHOLD" to "CROSSING THE THRESHOL" - ffmpeg's
+    drawtext neither wraps nor shrinks, it just runs off the frame.
+    """
+    font_path = str(FONTS / "Anton.ttf")
+    for size in range(biggest, smallest - 1, -2):
+        if ImageFont.truetype(font_path, size).getbbox(title)[2] <= room:
+            return size
+    return smallest
+
+
 def full_backdrop(date: str, dest: Path) -> Path:
     """The cover blown up, blurred and vignetted to fill a 16:9 frame."""
     src = Image.open(SITE / "covers" / f"{date}.jpg").convert("RGB")
@@ -220,6 +236,7 @@ def full(drop: dict, profile, audio: Path, work: Path, out: Path) -> dict:
     # showwaves wants #rrggbb; handed the 0x form it silently falls back to a default
     # green that has nothing to do with the art, which is how the first cut came out.
     wave = fam.accent if fam.accent.startswith("#") else "#" + fam.accent
+    tsize = title_size(texts["title"], FW - TX - 40)
     bar = FW - 400
     graph = ";".join([
         "[0:v]format=yuv420p[bg]",
@@ -235,7 +252,7 @@ def full(drop: dict, profile, audio: Path, work: Path, out: Path) -> dict:
         "[s2][prog]overlay=x=200:y=960:shortest=1[s3]",
         "[s3]"
         f"drawtext=fontfile='{mono}':textfile='{tp['artist']}':fontsize=40:fontcolor=0xF2F2F2:x={TX}:y=250,"
-        f"drawtext=fontfile='{anton}':textfile='{tp['title']}':fontsize=104:fontcolor={acc}:"
+        f"drawtext=fontfile='{anton}':textfile='{tp['title']}':fontsize={tsize}:fontcolor={acc}:"
         f"shadowcolor=0x000000@0.7:shadowx=4:shadowy=6:x={TX}:y=330,"
         f"drawtext=fontfile='{mono}':textfile='{tp['meta']}':fontsize=34:fontcolor=0xE6E6E6:x={TX}:y=480,"
         f"drawtext=fontfile='{mono}':textfile='{tp['footer']}':fontsize=26:fontcolor=0xBDBDBD:"
@@ -286,6 +303,36 @@ def one(date: str, drop: dict, profile, outdir: Path, kinds: list[str]) -> list[
     return made
 
 
+def resolve(post_id: str, tries: int = 12, wait_s: int = 20) -> str | None:
+    """Ask Buffer where the post actually landed.
+
+    createPost answers before the post is sent, so externalLink comes back null on a
+    share-now: reading it straight out of the response records nothing. anchor.pipeline
+    handles this with a separate sync pass; here the wait is inline, because a link that
+    is never written is a video nobody can find from the site.
+    """
+    key = os.environ.get("BUFFER_API_KEY")
+    if not (key and post_id):
+        return None
+    buf = Buffer(key)
+    for attempt in range(1, tries + 1):
+        try:
+            post = buf.post(post_id)
+        except BufferError as exc:
+            log(f"republish: Buffer lookup failed for {post_id}: {exc}")
+            return None
+        link = post.get("externalLink")
+        if link:
+            return link
+        if (post.get("error") or {}).get("message"):
+            log(f"republish: {post_id} errored: {post['error']['message']}")
+            return None
+        if attempt < tries:
+            time.sleep(wait_s)
+    log(f"republish: {post_id} still had no link after {tries * wait_s}s")
+    return None
+
+
 def stamp(outdir: Path) -> int:
     """Write the new YouTube links back into the catalogue after publishing."""
     profile = load_profile()
@@ -296,22 +343,25 @@ def stamp(outdir: Path) -> int:
         meta = json.loads((pub_file.parent / "meta.json").read_text())
         pub = json.loads(pub_file.read_text())
         date, kind = meta["brief"]["date"], meta["kind"]
-        link = pub.get("external_link")
-        if date not in drops or not link:
-            log(f"republish: {date} {kind} has no link yet ({pub.get('status')})")
+        if date not in drops:
             continue
-        if kind == "short":
-            drops[date]["youtube_url"] = link
-            drops[date]["buffer_post_id"] = pub.get("post_id")
-        else:
-            drops[date]["youtube_full_url"] = link
-            drops[date]["buffer_full_post_id"] = pub.get("post_id")
+        post_id = pub.get("post_id")
+        # record the post id FIRST and unconditionally: with it, `anchor sync` can find the
+        # link later. Without it a posted video is unrecoverable from the repo, which is
+        # exactly what went wrong the first time this ran.
+        if post_id:
+            drops[date]["buffer_post_id" if kind == "short" else "buffer_full_post_id"] = post_id
+            n += 1
+        link = pub.get("external_link") or resolve(post_id)
+        if not link:
+            log(f"republish: {date} {kind} posted as {post_id} but has no link yet")
+            continue
+        drops[date]["youtube_url" if kind == "short" else "youtube_full_url"] = link
         drops[date]["status"] = "sent"
-        n += 1
         log(f"republish: {date} {kind} -> {link}")
     if n:
         catalog.save(cat, CATALOG_PATH)
-    log(f"republish: stamped {n} links")
+    log(f"republish: recorded {n} posts")
     return 0
 
 
