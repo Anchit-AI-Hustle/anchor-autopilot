@@ -4,40 +4,6 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/media/(.*)\\.mp3",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "audio/mpeg"
-        },
-        {
-          "key": "Content-Disposition",
-          "value": "inline"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400"
-        }
-      ]
-    },
-    {
-      "source": "/media/(.*)\\.mp4",
-      "headers": [
-        {
-          "key": "Content-Type",
-          "value": "video/mp4"
-        },
-        {
-          "key": "Content-Disposition",
-          "value": "inline"
-        },
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400"
-        }
-      ]
-    },
-    {
       "source": "/data/(.*)",
       "headers": [
         {
@@ -80,7 +46,7 @@
   "rewrites": [
     {
       "source": "/media/:tag/:file",
-      "destination": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/:tag/:file"
+      "destination": "/api/media?tag=:tag&file=:file"
     }
   ]
 }
