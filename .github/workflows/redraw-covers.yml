@@ -1,0 +1,59 @@
+name: Redraw covers from audio
+
+# The covers were drawn from a visual family seeded by the drop date - a seed that never saw
+# the title or the audio. This redraws them from the released master itself. Audio is fetched
+# from the public releases, so nothing here needs a secret.
+on:
+  workflow_dispatch:
+    inputs:
+      dates:
+        description: "Drop dates, comma separated (blank = every drop)"
+        required: false
+        default: ""
+      dry_run:
+        description: "Report only: redraw nothing, commit nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-drop            # never race the daily run
+  cancel-in-progress: false
+
+env:
+  ROBOT_NAME: "Anchit Tandon"
+  ROBOT_EMAIL: "anchit.tandon@gmail.com"
+
+jobs:
+  covers:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -r requirements.txt
+
+      - name: Redraw every cover from its own track
+        run: |
+          python scripts/art_from_audio.py \
+            ${{ inputs.dates && format('--dates "{0}"', inputs.dates) || '' }} \
+            ${{ inputs.dry_run && '--dry-run' || '' }}
+
+      - name: Commit the redrawn covers
+        if: ${{ !inputs.dry_run }}
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/covers
+          git commit -m "covers: redrawn from each track's own audio" || { echo "nothing to commit"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
