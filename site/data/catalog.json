@@ -12,7 +12,7 @@
     {
       "id": "2026-09-14",
       "date": "2026-09-14",
-      "title": "Threshold",
+      "title": "Crossing The Threshold",
       "lane": "industrial",
       "lane_name": "Industrial Hard Techno",
       "bpm": 135,
@@ -58,7 +58,7 @@
     {
       "id": "2026-09-13",
       "date": "2026-09-13",
-      "title": "Flashover",
+      "title": "Project Mayhem",
       "lane": "hypnotic",
       "lane_name": "Hypnotic Mechanical Techno",
       "bpm": 160,
@@ -152,7 +152,7 @@
     {
       "id": "2026-09-10",
       "date": "2026-09-10",
-      "title": "Ping",
+      "title": "Signal Detected",
       "lane": "acid",
       "lane_name": "Acid Industrial",
       "bpm": 127,
@@ -290,7 +290,7 @@
     {
       "id": "2026-09-07",
       "date": "2026-09-07",
-      "title": "Servo",
+      "title": "Robot Love",
       "lane": "industrial",
       "lane_name": "Industrial Hard Techno",
       "bpm": 132,
@@ -336,7 +336,7 @@
     {
       "id": "2026-09-06",
       "date": "2026-09-06",
-      "title": "Lockstep",
+      "title": "Stay With Me",
       "lane": "bunker",
       "lane_name": "Dark Bunker Techno",
       "bpm": 155,
@@ -382,7 +382,7 @@
     {
       "id": "2026-09-05",
       "date": "2026-09-05",
-      "title": "Carrier",
+      "title": "Silent Transmission",
       "lane": "industrial",
       "lane_name": "Industrial Hard Techno",
       "bpm": 133,
