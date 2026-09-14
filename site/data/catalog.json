@@ -12,7 +12,7 @@
     {
       "id": "2026-09-14",
       "date": "2026-09-14",
-      "title": "Crossing The Threshold",
+      "title": "Threshold",
       "lane": "industrial",
       "lane_name": "Industrial Hard Techno",
       "bpm": 135,
@@ -31,7 +31,7 @@
       "status": "sent",
       "post_at": "2026-09-14T17:30:00.000Z",
       "qc": {
-        "bpm_est": 135.0,
+        "bpm_est": 135,
         "lufs": -11.36,
         "warnings": []
       },
@@ -58,7 +58,7 @@
     {
       "id": "2026-09-13",
       "date": "2026-09-13",
-      "title": "Project Mayhem",
+      "title": "Flashover",
       "lane": "hypnotic",
       "lane_name": "Hypnotic Mechanical Techno",
       "bpm": 160,
@@ -77,7 +77,7 @@
       "status": "sent",
       "post_at": "2026-09-13T17:30:00Z",
       "qc": {
-        "bpm_est": 160.0,
+        "bpm_est": 160,
         "lufs": -11.24,
         "warnings": []
       },
@@ -143,7 +143,7 @@
         "render_s": 5329.7,
         "threads": 4,
         "model": "acestep-v15-sft-Q8_0.gguf",
-        "guidance": 5.0,
+        "guidance": 5,
         "source_file": null
       },
       "art_coverprint": "1a13130d36320063600b5654565e5c1c1e1c000808194f4e2758522f5b5a2347485756573d59551d5a50075d4e015c4c1b494417322e26736c34a4a3629e9d6691894675702e665f6998917f93935c8884569a9139a190259784238b7b3b8b7d1b28290065537dbfb1beddd9c4e2e0cae5e3b4c8c76bb4addaebeb5ecbc3a9e4dfb4dbd8ccd9d8c8c5c6b5b4b598b5b03fb9b75ebec3b4cfd7c8d4d3b2d7d6bad8d792d7d45ae1ddbbcdcc84c7c3bbc5c5ddd8d9b3c4c3aad0c97ce1ce7ed7c559dfcc5ceed934edd826eadf24ece228ebde15e9db7ff4f3d0c2cd657da35189927ce0ce9bf4df668c85a8b9b6ffffff0ff2ca03ffd50effe42df7e032d2bc60c6e70effe91bfce38dfff99aeeff76afff7d85fbeee5ffe4dfdf4c494cc5c8c71fe8bf38dcb23d978047a88a40cfb88bbdf33ab9a900fbd121fae8dffbf7e8bae9987df27571e8f4f8ffd7d8d7494a4c3f7865275c4d25897614c39477e3f0b999f49a468209816c2cfff72ef9ebe4f9f49f8d9c685787857d98eff0f0d0d1d41777621775611d4f4430bc8472759abb6eb4b674b731222411a58e00fff140faefeaedeb5452501d19255f5d65f8fbfb17221f2109112362493488693f383a874c6ca16ead443d46312d2a1dc2ad00fff15bfdf5ece3e5383b380f131164626419181935363620865f3f48464e515062374c815b8b5a5160363634333a3817d5bf00fff075fff9efdce131282a0f1d1932292d295041255d4841363b49504e442632583f5f64576c28322d30272a26302d15dac400fbe678fae74bc7ab01ba901d1b1c144733373d3b3d3d3d3c414041343a382b3c5342592c24232c3232204a4020af9015ebbd01ce9d09d6a63ee0bc0c1a1421362e433f41393b3a332f30392e31363439506b7327867013ba9513e1b323d9b11bab8910d8b115f3d6abf4ee131a172222221716163033332b433e195b4c1d967b23bc9e28bd9c1aa284197662113e3415131312605418cfbc1dcabc1312121f2624394a47185c4d10725c1e7e6817705c0c5546223d38181818150d0f0f060810101108000006493e048879",
@@ -152,7 +152,7 @@
     {
       "id": "2026-09-10",
       "date": "2026-09-10",
-      "title": "Signal Detected",
+      "title": "Ping",
       "lane": "acid",
       "lane_name": "Acid Industrial",
       "bpm": 127,
@@ -171,7 +171,7 @@
       "status": "sent",
       "post_at": "2026-09-13T21:07:35.292Z",
       "qc": {
-        "bpm_est": 127.0,
+        "bpm_est": 127,
         "lufs": -11.2,
         "warnings": []
       },
@@ -217,7 +217,7 @@
       "status": "sent",
       "post_at": "2026-09-13T21:07:26.411Z",
       "qc": {
-        "bpm_est": 160.0,
+        "bpm_est": 160,
         "lufs": -11.24,
         "warnings": []
       },
@@ -263,7 +263,7 @@
       "status": "sent",
       "post_at": "2026-09-13T21:07:20.203Z",
       "qc": {
-        "bpm_est": 130.0,
+        "bpm_est": 130,
         "lufs": -11.3,
         "warnings": []
       },
@@ -290,7 +290,7 @@
     {
       "id": "2026-09-07",
       "date": "2026-09-07",
-      "title": "Robot Love",
+      "title": "Servo",
       "lane": "industrial",
       "lane_name": "Industrial Hard Techno",
       "bpm": 132,
@@ -309,7 +309,7 @@
       "status": "sent",
       "post_at": "2026-09-13T21:07:13.701Z",
       "qc": {
-        "bpm_est": 132.0,
+        "bpm_est": 132,
         "lufs": -11.38,
         "warnings": []
       },
@@ -336,7 +336,7 @@
     {
       "id": "2026-09-06",
       "date": "2026-09-06",
-      "title": "Stay With Me",
+      "title": "Lockstep",
       "lane": "bunker",
       "lane_name": "Dark Bunker Techno",
       "bpm": 155,
@@ -355,7 +355,7 @@
       "status": "sent",
       "post_at": "2026-09-13T21:07:06.469Z",
       "qc": {
-        "bpm_est": 155.0,
+        "bpm_est": 155,
         "lufs": -11.17,
         "warnings": []
       },
@@ -382,7 +382,7 @@
     {
       "id": "2026-09-05",
       "date": "2026-09-05",
-      "title": "Silent Transmission",
+      "title": "Carrier",
       "lane": "industrial",
       "lane_name": "Industrial Hard Techno",
       "bpm": 133,
@@ -447,7 +447,7 @@
       "status": "sent",
       "post_at": "2026-09-13T21:06:51.961Z",
       "qc": {
-        "bpm_est": 129.0,
+        "bpm_est": 129,
         "lufs": -11.17,
         "warnings": []
       },
@@ -508,7 +508,7 @@
       {
         "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
         "title": "Project Mayhem",
-        "duration_s": 245.0,
+        "duration_s": 245,
         "tags": "Hardstyle hard techno industrial techno with more hypnotic drops and distortion’s - clean and clear master file audio quality",
         "model": "v4.5-all",
         "plays": 36,
@@ -525,8 +525,8 @@
         "factors": [
           {
             "name": "Genre fit",
-            "score": 4.0,
-            "max": 4.0,
+            "score": 4,
+            "max": 4,
             "note": "prompt names techno, industrial, hardstyle, hypnotic — straight down the middle of the channel"
           },
           {
@@ -596,7 +596,7 @@
       {
         "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
         "title": "Project Mayhem Part 2",
-        "duration_s": 177.0,
+        "duration_s": 177,
         "tags": "hard techno, rawstyle hybrid, industrial, 156–158 bpm, techno, noise, hypnotic, minimal",
         "model": "v4.5-all",
         "plays": 14,
@@ -613,8 +613,8 @@
         "factors": [
           {
             "name": "Genre fit",
-            "score": 4.0,
-            "max": 4.0,
+            "score": 4,
+            "max": 4,
             "note": "prompt names techno, industrial, rawstyle, hypnotic — straight down the middle of the channel"
           },
           {
@@ -694,15 +694,15 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/01f2d8fc-1d9e-49cc-b632-81745b3e0b4a.m4a",
         "video_url": "https://cdn1.suno.ai/01f2d8fc-1d9e-49cc-b632-81745b3e0b4a.mp4",
         "url": "https://suno.com/song/01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
-        "rating": 8.0,
+        "rating": 8,
         "postable": true,
         "slot": "full release",
         "verdict": "on format (techno, industrial, rawstyle), 3:47",
         "factors": [
           {
             "name": "Genre fit",
-            "score": 4.0,
-            "max": 4.0,
+            "score": 4,
+            "max": 4,
             "note": "prompt names techno, industrial, rawstyle, hypnotic — straight down the middle of the channel"
           },
           {
@@ -772,7 +772,7 @@
       {
         "id": "be9b114a-f658-465a-983b-759bacda940d",
         "title": "Project Mayhem",
-        "duration_s": 165.0,
+        "duration_s": 165,
         "tags": "Hardstyle hard techno industrial techno with more hypnotic drops and distortion’s - clean and clear master file audio quality",
         "model": "v4.5-all",
         "plays": 9,
@@ -789,8 +789,8 @@
         "factors": [
           {
             "name": "Genre fit",
-            "score": 4.0,
-            "max": 4.0,
+            "score": 4,
+            "max": 4,
             "note": "prompt names techno, industrial, hardstyle, hypnotic — straight down the middle of the channel"
           },
           {
@@ -878,7 +878,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -956,7 +956,7 @@
           {
             "name": "Genre fit",
             "score": 3.6,
-            "max": 4.0,
+            "max": 4,
             "note": "prompt names techno, industrial, hypnotic — straight down the middle of the channel"
           },
           {
@@ -1034,7 +1034,7 @@
           {
             "name": "Genre fit",
             "score": 3.6,
-            "max": 4.0,
+            "max": 4,
             "note": "prompt names techno, industrial, hypnotic — straight down the middle of the channel"
           },
           {
@@ -1093,7 +1093,7 @@
       {
         "id": "d911518a-edb8-4009-a694-935add5470f9",
         "title": "Silent Transmission",
-        "duration_s": 205.0,
+        "duration_s": 205,
         "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful distorted rawstyle kick dominant, deep tight mono sub bass aligned with kick phase, minimal industrial percussion, subtle atmospheric tension pads.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging mids and highs, mono-compatible sub bass, club-ready mixdown, large sound system optimized, Tomorrowland mainstage quality, Berghain warehouse authority, Verknipt and Awakenings festival energy.\n\nVocals minimal hypnotic repetitive techno vocal phrases, breathy female or androgynous voice, emotionally neutral, immersi",
         "model": "v4.5-all",
         "plays": 15,
@@ -1111,7 +1111,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1189,7 +1189,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1249,7 +1249,7 @@
       {
         "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
         "title": "Where It Begins",
-        "duration_s": 360.0,
+        "duration_s": 360,
         "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Dark Minimal Techno, Modern Techno, Industrial Rave, Raw Techno, Hard Dance influence, cinematic techno atmosphere, aggressive, punchy, hypnotic, immersive, dense, powerful, professional, clean, loud, deep, driving, analog saturation character, digital precision, modern European techno sound.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, wide stereo imaging in mids and highs, tight mono-compatible sub bass, balanced frequency spectrum, club-ready mixdown, large sound system optimized, Tomorrowland mainstage playback quality, Berghain warehouse energy, Verknipt and Awakenings festival sound.\n\nDominant distorted techno kick with rawstyle character, deep sub bass aligned with kick phase, hypnotic",
         "model": "v4.5-all",
         "plays": 14,
@@ -1267,7 +1267,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1327,7 +1327,7 @@
       {
         "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
         "title": "Stay With Me",
-        "duration_s": 254.0,
+        "duration_s": 254,
         "tags": "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick dominant with clean punchy transient attack, deep mono sub bass tightly phase aligned with kick, driving warehouse groove, minimal industrial percussion, dark atmospheric tension, immersive hypnotic rhythm, emotional but controlled energy, modern European techno sound.\n\nProfessional clean master audio quality, studio-grade mastering, distortion-free output, no clipping, clean transient response, balanced frequency spectrum, tight low end with mono compatibility, wide stereo clarity in mids and highs, limiter controlled peaks, club-ready mixdown, optimized for large sound system playback, festival-ready audio clarity, suitable for warehouse and mainstage environments.",
         "model": "v4.5-all",
         "plays": 12,
@@ -1345,7 +1345,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1423,7 +1423,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1493,7 +1493,7 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/1cba5057-cc31-4a56-b7c1-db29ec259792.m4a",
         "video_url": "https://cdn1.suno.ai/1cba5057-cc31-4a56-b7c1-db29ec259792.mp4",
         "url": "https://suno.com/song/1cba5057-cc31-4a56-b7c1-db29ec259792",
-        "rating": 7.0,
+        "rating": 7,
         "postable": true,
         "slot": "full release",
         "verdict": "on format (techno, industrial, warehouse), 4:10",
@@ -1501,7 +1501,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1571,7 +1571,7 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/92e63fb9-bc78-4004-971c-a3221ef0b359.m4a",
         "video_url": "https://cdn1.suno.ai/92e63fb9-bc78-4004-971c-a3221ef0b359.mp4",
         "url": "https://suno.com/song/92e63fb9-bc78-4004-971c-a3221ef0b359",
-        "rating": 7.0,
+        "rating": 7,
         "postable": true,
         "slot": "full release",
         "verdict": "on format (techno, industrial, rawstyle), 4:07",
@@ -1579,7 +1579,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1639,7 +1639,7 @@
       {
         "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
         "title": "Where It Begins",
-        "duration_s": 202.0,
+        "duration_s": 202,
         "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Dark Minimal Techno, Modern Techno, Industrial Rave, Raw Techno, Hard Dance influence, cinematic techno atmosphere, aggressive, punchy, hypnotic, immersive, dense, powerful, professional, clean, loud, deep, driving, analog saturation character, digital precision, modern European techno sound.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, wide stereo imaging in mids and highs, tight mono-compatible sub bass, balanced frequency spectrum, club-ready mixdown, large sound system optimized, Tomorrowland mainstage playback quality, Berghain warehouse energy, Verknipt and Awakenings festival sound.\n\nDominant distorted techno kick with rawstyle character, deep sub bass aligned with kick phase, hypnotic",
         "model": "v4.5-all",
         "plays": 10,
@@ -1649,7 +1649,7 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.m4a",
         "video_url": "https://cdn1.suno.ai/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.mp4",
         "url": "https://suno.com/song/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
-        "rating": 7.0,
+        "rating": 7,
         "postable": true,
         "slot": "full release",
         "verdict": "on format (techno, industrial, rawstyle), 3:22",
@@ -1657,7 +1657,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1735,7 +1735,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, rawstyle, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -1813,7 +1813,7 @@
           {
             "name": "Genre fit",
             "score": 2.7,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, acid, but also trance — the off-format tags cost it 0.9"
           },
           {
@@ -1891,7 +1891,7 @@
           {
             "name": "Genre fit",
             "score": 2.7,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, acid, but also trance — the off-format tags cost it 0.9"
           },
           {
@@ -1969,7 +1969,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -2047,7 +2047,7 @@
           {
             "name": "Genre fit",
             "score": 3.1,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, industrial, warehouse, but also house — the off-format tags cost it 0.9"
           },
           {
@@ -2124,7 +2124,7 @@
           {
             "name": "Genre fit",
             "score": 1.6,
-            "max": 4.0,
+            "max": 4,
             "note": "techno, but also hip hop, rap — the off-format tags cost it 1.8"
           },
           {
