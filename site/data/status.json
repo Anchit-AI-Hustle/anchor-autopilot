@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-09-10",
-    "title": "Signal Detected",
-    "finished_at": "2026-09-13T21:07:39Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34777856330",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-09-14T00:08:19Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34787205889"
   },
   "next_post_at": "2026-09-11T17:30:00Z",
   "streak": 3,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-13T21:07:39Z",
+  "updated_at": "2026-09-14T00:08:19Z",
   "engine": {
     "engine": "queue",
     "source_file": "36-signal-detected-e7f16cd4.m4a"
