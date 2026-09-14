@@ -160,6 +160,30 @@ def short(drop: dict, profile, audio: Path, work: Path, out: Path) -> dict:
     return info
 
 
+def playable(audio: Path, work: Path) -> Path:
+    """Trim rendered padding off a track before posting it as the full song.
+
+    Some released files predate eb49ace: the model wrote N seconds whether or not it had
+    N seconds of music, so the file ends in digital silence after an abrupt cut. Grid Blade
+    is 149.2s of file for 140.2s of music. Posting that as "the full track, start to
+    finish" means nine seconds of nothing and a dead stop, so the padding goes and the
+    ending gets the taper it never had. A track that already lands cleanly is left alone.
+    """
+    from anchor import audio as A                                   # noqa: PLC0415
+    data = A.decode(audio)
+    total, end = len(data) / A.SR, A.music_end(data)
+    if total - end < 0.75:
+        return audio
+    dest = work / f"{audio.stem}-trimmed.m4a"
+    fade = max(0.0, end - 4.0)
+    V.run(["ffmpeg", "-y", "-v", "error", "-i", str(audio), "-t", f"{end:.3f}",
+           "-af", f"afade=t=out:st={fade:.3f}:d={end - fade:.3f}",
+           "-c:a", "aac", "-b:a", "256k", "-ar", "48000", str(dest)], timeout=900)
+    log(f"republish: {audio.name} carried {total - end:.1f}s of padding - "
+        f"trimmed to {end:.1f}s and faded the ending")
+    return dest
+
+
 def full_backdrop(date: str, dest: Path) -> Path:
     """The cover blown up, blurred and vignetted to fill a 16:9 frame."""
     src = Image.open(SITE / "covers" / f"{date}.jpg").convert("RGB")
@@ -178,6 +202,7 @@ def full_backdrop(date: str, dest: Path) -> Path:
 
 def full(drop: dict, profile, audio: Path, work: Path, out: Path) -> dict:
     fam = profile.family(drop["family"])
+    audio = playable(audio, work)
     duration = V.media_summary(audio)["duration"]
     texts = {
         "artist": "  ".join(profile.artist["name"].upper()),
