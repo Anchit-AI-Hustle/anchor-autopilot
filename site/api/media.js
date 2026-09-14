@@ -42,11 +42,16 @@ export default async function handler(req) {
     return new Response("Not found", { status: upstream.status === 404 ? 404 : 502 });
   }
 
+  const partial = upstream.status === 206;
   const headers = new Headers({
     "Content-Type": TYPES[file.split(".").pop()],
     "Content-Disposition": "inline",
     "Accept-Ranges": "bytes",
-    "Cache-Control": "public, max-age=86400",
+    // A 206 must never be cached at the edge: the CDN keys on URL alone, so one cached
+    // slice gets served for every later range and the player seeks to the wrong bytes.
+    // Measured: a request for 5000-5099 came back as "bytes 0-9" on a cache HIT.
+    "Cache-Control": partial ? "no-store" : "public, max-age=86400",
+    "Vary": "Range",
     "X-Content-Type-Options": "nosniff",
   });
   for (const k of ["content-length", "content-range"]) {
