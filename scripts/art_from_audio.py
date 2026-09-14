@@ -348,12 +348,12 @@ FORMS = {
 WORDS = {
     "grid": "grid", "blade": "grid", "circuit": "grid", "sector": "grid", "axis": "grid",
     "signal": "reticle", "ping": "reticle", "detect": "reticle", "relay": "reticle",
-    "carrier": "broadcast", "transmit": "broadcast", "frequency": "broadcast", "static": "broadcast",
+    "carrier": "broadcast", "transmis": "broadcast", "frequency": "broadcast", "static": "broadcast",
     "servo": "mechanism", "robot": "mechanism", "machine": "mechanism", "engine": "mechanism",
     "threshold": "doorway", "door": "doorway", "gate": "doorway", "breach": "doorway",
     "begin": "horizon", "origin": "horizon", "deep": "horizon", "descent": "horizon",
     "flashover": "shatter", "mayhem": "shatter", "shatter": "shatter", "fracture": "shatter",
-    "lockstep": "colonnade", "pressure": "colonnade", "tension": "colonnade",
+    "lockstep": "colonnade", "stay": "colonnade", "pressure": "colonnade", "tension": "colonnade",
 }
 
 
