@@ -102,7 +102,11 @@ def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
     site = profile.artist["site_url"].removeprefix("https://").rstrip("/")
     tags = list(dict.fromkeys([*yt["base_tags"], *lane.tags, f"hard techno {bpm} bpm"]))
 
-    facts = [f"{lane.genre_line} \u00b7 {bpm} BPM \u00b7 {key}", "Instrumental \u2014 no vocals."]
+    # No claim about vocals here. It said "Instrumental - no vocals", taken from the
+    # generation caption - but nine of ten drops come in through queue from Suno, where that
+    # caption never applied, and several carry a vocal hook: 2026-09-13 chants "project
+    # mayhem" over and over. The line was on every post and was false for most of them.
+    facts = [f"{lane.genre_line} \u00b7 {bpm} BPM \u00b7 {key}"]
     tail = [f"A new {name} track every day.", "Made with AI-assisted music tools."]
 
     if platform == "instagram":
