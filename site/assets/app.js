@@ -1,6 +1,15 @@
 (() => {
   "use strict";
 
+  // GitHub serves release downloads as application/octet-stream with an attachment
+  // disposition. Chrome sniffs the container and plays them anyway; Safari and iOS refuse,
+  // which is the NotSupportedError on the audio element and the dead play button on the
+  // video. /media/ is a Vercel rewrite onto the same release asset that answers with a real
+  // audio/mpeg or video/mp4, so the same file plays everywhere. Download links keep the
+  // GitHub URL, where "attachment" is exactly what you want.
+  const playable = (url) => (url || "").replace(
+    /^https:\/\/github\.com\/[^/]+\/[^/]+\/releases\/download\//, "/media/");
+
   const $ = (id) => document.getElementById(id);
   const el = (tag, props = {}, ...kids) => {
     const node = document.createElement(tag);
@@ -78,7 +87,7 @@
     $("drop-note").textContent = statusNote(d);
     const actions = $("drop-actions");
     actions.replaceChildren();
-    const videoSrc = d.video_url || d.short_url;
+    const videoSrc = playable(d.video_url) || d.short_url;
     if (videoSrc) {
       const watch = el("button", { class: "btn primary", type: "button", text: "▶  Watch the Short" });
       watch.addEventListener("click", () => openVideo(d));
@@ -94,9 +103,10 @@
     const player = $("player"), audio = $("audio");
     if (d.audio_url) {
       player.hidden = false;
-      if (audio.getAttribute("src") !== d.audio_url) {
+      const audioSrc = playable(d.audio_url);
+      if (audio.getAttribute("src") !== audioSrc) {
         audio.pause();
-        audio.setAttribute("src", d.audio_url);
+        audio.setAttribute("src", audioSrc);
         $("seek").value = 0;
         $("t-now").textContent = "0:00";
         $("t-total").textContent = fmtTime(d.duration_s);
@@ -501,7 +511,7 @@
   let lastFocus = null;
 
   function openVideo(d) {
-    const src = d.video_url || d.short_url;
+    const src = playable(d.video_url) || d.short_url;
     if (!src) return;
     const box = $("video-box"), video = $("video"), audio = $("audio");
     audio.pause();
