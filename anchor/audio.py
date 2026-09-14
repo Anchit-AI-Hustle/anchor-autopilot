@@ -135,8 +135,24 @@ def probe_duration(path: Path) -> float:
         return 0.0
 
 
-def encode_mp3(src: Path, dst: Path, kbps: int = 256) -> None:
-    run(["ffmpeg", "-y", "-v", "error", "-i", src, "-c:a", "libmp3lame", "-b:a", f"{kbps}k", dst], quiet=True)
+def encode_mp3(src: Path, dst: Path, kbps: int = 256, *, tags: dict | None = None,
+               cover: Path | None = None) -> None:
+    """Encode to MP3 carrying its own title, artist and cover art.
+
+    ID3v2.3 on purpose: ffmpeg defaults to 2.4, which Windows Explorer and plenty of car
+    stereos do not read, so a downloaded track shows up as its filename over a blank square.
+    """
+    cmd = ["ffmpeg", "-y", "-v", "error", "-i", str(src)]
+    if cover and Path(cover).exists():
+        cmd += ["-i", str(cover), "-map", "0:a", "-map", "1:v", "-c:v", "mjpeg",
+                "-disposition:v", "attached_pic",
+                "-metadata:s:v", "title=Album cover",
+                "-metadata:s:v", "comment=Cover (front)"]
+    cmd += ["-c:a", "libmp3lame", "-b:a", f"{kbps}k", "-id3v2_version", "3", "-write_id3v1", "1"]
+    for key, value in (tags or {}).items():
+        if value not in (None, ""):
+            cmd += ["-metadata", f"{key}={value}"]
+    run(cmd + [str(dst)], quiet=True)
 
 
 def encode_flac(src: Path, dst: Path) -> None:

@@ -95,7 +95,6 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
                   outro_fade_s=float(profile.music.get("outro_fade_s", 0.0)))
     mp3 = out_dir / f"{base}.mp3"
     flac = out_dir / f"{base}.flac"
-    encode_mp3(master_wav, mp3)
     encode_flac(master_wav, flac)
 
     start, length = best_window(decode(master_wav), int(brief["bpm"]), float(brief["short_s"]))
@@ -108,6 +107,20 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     art = make_cover(fam, brief, profile.artist["name"], out_dir, art_mode)
     cover_named = out_dir / f"{base}-cover.jpg"
     shutil.copy(out_dir / "cover.jpg", cover_named)
+
+    # tagged only now the cover exists: a downloaded track should show its own title,
+    # artist and artwork in every player, not a filename over a blank square
+    encode_mp3(master_wav, mp3, tags={
+        "title": brief["title"],
+        "artist": profile.artist["name"],
+        "album_artist": profile.artist["name"],
+        "album": profile.artist["name"],
+        "date": brief["date"],
+        "genre": ", ".join(x for x in (brief.get("family_name"), brief.get("lane_name")) if x),
+        "TBPM": str(int(brief["bpm"])),
+        "comment": f"{brief.get('key', '')} - {int(brief['bpm'])} BPM",
+        "WOAR": "https://anchor.anchit-tandon.com/",
+    }, cover=out_dir / "cover_600.jpg")
 
     mp4 = out_dir / f"{base}-short.mp4"
     video = render_short(out_dir / "cover_1080.jpg", short_wav, mp4, fam, brief,
