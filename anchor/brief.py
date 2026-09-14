@@ -78,24 +78,44 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     return brief
 
 
-def describe(profile: Profile, brief: dict) -> dict:
-    """YouTube title, tags and description from the brief (re-run after the tempo is measured)."""
+def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
+    """Title, tags and post copy from the brief (re-run after the tempo is measured).
+
+    Two things were wrong here and both went out on every post for weeks.
+
+    The copy said "Full song out soon - this is the 45s cut" on every Short. The full tracks
+    now exist, so that line told every viewer to wait for something already published, and
+    pointed none of them at it.
+
+    And ``tags`` is computed but cannot reach YouTube: Buffer's YoutubePostMetadata accepts
+    title, category, privacy, madeForKids, isAiGenerated, notifySubscribers, embeddable,
+    license, annotations and type - there is no tags field, so every tag computed here has
+    been discarded in transit. It is still returned, for anything that CAN set it (a pass in
+    Studio, or a future uploader), but nothing downstream should assume it reached YouTube.
+
+    Instagram takes the same facts with different plumbing: a Reel caption cannot carry a
+    clickable link, so the URL is stated as a bare domain and the hashtags do the discovery.
+    """
     yt, name = profile.youtube, profile.artist["name"]
     bpm, key, title = brief["bpm"], brief["key"], brief["title"]
     lane = profile.lane(brief["lane"])
+    site = profile.artist["site_url"].removeprefix("https://").rstrip("/")
     tags = list(dict.fromkeys([*yt["base_tags"], *lane.tags, f"hard techno {bpm} bpm"]))
-    note = str(yt.get("short_note") or "").format(seconds=int(brief.get("short_s") or 0))
-    description = "\n".join([
-        f"{title} by {name}",
-        *([note] if note else []),
-        "",
-        f"Genre: {lane.genre_line}",
-        f"Style: {lane.style_line}",
-        f"{bpm} BPM",
-        "",
-        f"A new {name} track every day. Full tracks: {profile.artist['site_url'].removeprefix('https://')}",
-        "Made with AI-assisted music tools.",
-        "",
-        " ".join([*yt["hashtags"], "#shorts"]),
-    ])
-    return {"youtube_title": yt["title"].format(title=title)[:100], "tags": tags, "description": description}
+
+    facts = [f"{lane.genre_line} \u00b7 {bpm} BPM \u00b7 {key}", "Instrumental \u2014 no vocals."]
+    tail = [f"A new {name} track every day.", "Made with AI-assisted music tools."]
+
+    if platform == "instagram":
+        body = [f"{title} \u2014 {name}", "", *facts, "",
+                f"Full track, free: {site}", *tail, "",
+                # the two lists overlap; a repeated tag helps nothing and reads as sloppy
+                " ".join(dict.fromkeys([*yt["hashtags"], *yt.get("instagram_hashtags", [])]))]
+    else:
+        body = [f"{title} \u2014 {name}",
+                f"Full track, free: {site}", "",
+                *facts, "", *tail, "",
+                " ".join([*yt["hashtags"], "#shorts"])]
+
+    return {"youtube_title": yt["title"].format(title=title)[:100],
+            "tags": tags,
+            "description": "\n".join(body)}
