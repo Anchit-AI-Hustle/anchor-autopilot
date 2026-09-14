@@ -1,0 +1,170 @@
+name: Republish to YouTube
+
+# The Shorts on the channel were rendered from the old art, so YouTube and the website
+# disagree about what every song looks like. A Short cannot be re-skinned in place - the
+# cover is burned into all 45s of frames and a published file cannot be replaced - so each
+# drop is re-rendered from site/covers/<date>.jpg and posted again. The old videos are
+# retired by hand afterwards; nothing here deletes anything.
+#
+# It also posts a 16:9 full-length video per song, which the channel has never had.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dates:
+        description: "Drop dates, comma separated"
+        required: true
+        default: "2026-09-04,2026-09-05,2026-09-06,2026-09-07,2026-09-08,2026-09-10,2026-09-12,2026-09-13,2026-09-14"
+      kinds:
+        description: "What to post"
+        type: choice
+        options: ["short,full", "short", "full"]
+        default: "short,full"
+      dry_run:
+        description: "Render and check only - nothing is posted to YouTube"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-drop            # never race the daily run
+  cancel-in-progress: false
+
+env:
+  ROBOT_NAME: "Anchit Tandon"
+  ROBOT_EMAIL: "anchit.tandon@gmail.com"
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -r requirements.txt
+
+      - name: Re-render every drop from the cover the site serves
+        run: python scripts/republish.py --dates "${{ inputs.dates }}" --kinds "${{ inputs.kinds }}" --out build-republish
+
+      - name: Attach the new files to each drop's release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          python - <<'PY' > upload.txt
+          import json, pathlib
+          for m in json.loads(pathlib.Path("build-republish/made.json").read_text()):
+              print(f"{m['date']}\t{m['dir']}/{m['file']}")
+          PY
+          while IFS=$'\t' read -r DATE FILE; do
+            gh release upload "drop-$DATE" "$FILE" --clobber
+            echo "::notice::uploaded $(basename "$FILE") to drop-$DATE"
+          done < upload.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: republish
+          retention-days: 14
+          # work/ holds the downloaded source audio - hundreds of MB that nothing downstream reads
+          path: |
+            build-republish/**
+            !build-republish/work/**
+
+  pages:
+    needs: render
+    if: ${{ inputs.dry_run != true }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: republish
+          path: art
+
+      # Buffer fetches the media itself, so every file has to be live on a public URL
+      # before a single post goes out. That is why publish needs [render, pages].
+      - name: Host every new video
+        run: |
+          mkdir -p public/media
+          find art -name '*.mp4' -exec cp {} public/media/ \;
+          printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
+          printf '<!doctype html><meta charset="utf-8"><title>ANCHOR media</title><meta http-equiv="refresh" content="0;url=https://anchor.anchit-tandon.com/">' > public/index.html
+          ls -la public/media
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deploy
+        uses: actions/deploy-pages@v4
+
+  publish:
+    needs: [render, pages]
+    if: ${{ inputs.dry_run != true }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - uses: actions/download-artifact@v4
+        with:
+          name: republish
+          path: build-republish
+
+      - name: Post each video to YouTube
+        env:
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ secrets.BUFFER_CHANNEL_ID }}
+          PAGE_URL: ${{ needs.pages.outputs.page_url }}
+        run: |
+          set -uo pipefail
+          if [ -z "${BUFFER_API_KEY:-}" ]; then
+            echo "::error::BUFFER_API_KEY is not set - nothing can reach YouTube"; exit 1
+          fi
+          FAILED=0
+          python - <<'PY' > posts.txt
+          import json, pathlib
+          for m in json.loads(pathlib.Path("build-republish/made.json").read_text()):
+              print(f"{m['dir']}\t{m['file']}")
+          PY
+          while IFS=$'\t' read -r DIR FILE; do
+            # the artifact lands under build-republish/, one level below where it was built
+            D="build-republish/$(basename "$DIR")"
+            if ! python -m anchor publish --drop "$D" --media-url "${PAGE_URL%/}/media/$FILE" --now; then
+              echo "::error::$FILE was not posted"; FAILED=1
+            fi
+            sleep 20                      # Buffer free plan: 250 requests a day, do not burst
+          done < posts.txt
+
+          python scripts/republish.py --stamp build-republish
+          exit $FAILED
+
+      - name: Commit the new YouTube links
+        if: always()
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data/catalog.json
+          git commit -m "republish: the channel now shows the same art as the site" || { echo "nothing to commit"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
