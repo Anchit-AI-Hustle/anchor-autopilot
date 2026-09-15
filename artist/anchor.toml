@@ -31,8 +31,14 @@ steps = 32        # sft range is 32-50; 32 keeps the render inside the runner bu
 guidance = 5.0    # real CFG: the lever turbo never had
 shift = 3.0
 keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B minor", "F# minor", "C# minor", "G# minor"]
-suffix = "instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves"
-negative = "vocals, singing, spoken word, lyrics, acoustic guitar, piano ballad, pop, lo-fi, jazz"
+# The style prompt is composed layer by layer (genre -> era -> mood arc -> tempo/groove ->
+# instruments and when they enter -> vocals -> production -> arrangement arc -> special
+# moment), then compressed into prose; see brief.compose_style. These two lines are the
+# layers every lane shares; each lane below supplies its own era, groove, moods, production
+# and special moments, and rotates them day to day.
+vocals = "No vocals, no singing, no spoken word: purely instrumental"
+mastering = "club master, deep controlled sub-bass, punchy kick transient, crisp but not harsh highs, real dynamics rather than constant loudness"
+negative = "vocals, singing, spoken word, lyrics, acoustic guitar, piano ballad, pop, lo-fi, jazz, trance uplift, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop"
 # A model asked for N seconds renders N seconds and stops mid-bar. The arrangement (see
 # music.structure) is the real fix; this is the safety net, and it only fires when the
 # track is measurably still at full level on its last second.
@@ -50,6 +56,11 @@ textures = ["clanking machinery hits", "hydraulic hiss", "grinding metal noise",
 genre_line = "Industrial Hard Techno, Peak Time Techno"
 style_line = "Dark Industrial Techno, Mechanical Techno, Warehouse Techno, Driving Techno"
 tags = ["industrial techno", "hard techno", "industrial hard techno", "warehouse techno", "dark techno"]
+era = "Late-2010s Berlin and Dutch industrial warehouse aesthetic, modern and clean rather than lo-fi"
+groove = "relentless four-on-the-floor, straight sixteenth hi-hats, off-beat rumble tail"
+production = "Cavernous concrete room, kick dry and up front, textures wide and far back, saturation on the low end only"
+mood_arcs = ["cold and mechanical, growing oppressive, ending exhausted and hollow", "menacing from the first bar, peaking in fury, resolving into a cold hum", "clinical and detached, hardening into brute force, then withdrawing"]
+special_moments = ["one full bar of silence right before the second drop", "the kick doubles into a rolling stutter for the last two bars of each build", "a siren sweep that only ever resolves on the final drop"]
 
 [[music.lanes]]
 id = "rawstyle"
@@ -61,6 +72,11 @@ textures = ["pitched kick rolls", "screeching supersaw stabs", "gated noise rise
 genre_line = "Rawstyle Hybrid, Hard Techno, Peak Time Techno"
 style_line = "Aggressive Techno, Hybrid Techno, Warehouse Techno, Driving Techno"
 tags = ["rawstyle techno", "rawstyle hybrid techno", "hard techno", "peak time techno", "hard techno 2026"]
+era = "Mid-2020s festival hard techno crossed with Dutch rawstyle, loud and modern"
+groove = "four-on-the-floor with a reverse-bass pull on the off-beat, snare rolls into every drop"
+production = "Loud and clean, kick tail long but controlled, leads screaming in the upper mids, wide festival stereo image"
+mood_arcs = ["confident swagger, escalating into open aggression, ending triumphant", "tense and coiled, exploding at the first drop, never letting go", "hostile from the start, building to a wall of pressure, cut dead at the end"]
+special_moments = ["a pitched kick roll that climbs a full octave into the second drop", "the lead stab drops out for one bar and comes back an octave higher", "a two-bar gated noise wall before the final section"]
 
 [[music.lanes]]
 id = "hypnotic"
@@ -72,6 +88,11 @@ textures = ["ticking modular clicks", "dub chord echoes", "filtered noise breath
 genre_line = "Hypnotic Techno, Mechanical Techno, Peak Time Techno"
 style_line = "Hypnotic Techno, Deep Industrial Techno, Warehouse Techno, Berlin Techno"
 tags = ["hypnotic techno", "mechanical techno", "berlin techno", "underground techno", "deep techno"]
+era = "Berlin tunnel techno lineage, 2015 onwards, minimal and deep rather than maximal"
+groove = "steady four-on-the-floor with a swung sixteenth shuffle in the percussion, sub-bass locked to the kick"
+production = "Dry and close, sub bass mono and deep, modular sequence panned wide, reverb only on the textures, very little else in the mix"
+mood_arcs = ["trance-like and patient, deepening into a tunnel, surfacing slowly at the end", "detached and clinical, tightening into obsession, then releasing", "hypnotic and level, with tension that only ever grows, never resolving until the outro"]
+special_moments = ["the modular sequence shifts one step every sixteen bars and never returns", "a dub chord echo that answers the kick only in the breakdowns", "the hi-hats vanish for the last drop and only the kick and sequence remain"]
 
 [[music.lanes]]
 id = "acid"
@@ -83,6 +104,11 @@ textures = ["resonant acid squelches", "overdriven 303 slides", "clattering hi-h
 genre_line = "Acid Techno, Industrial Hard Techno, Peak Time Techno"
 style_line = "Acid Industrial Techno, Dark Techno, Warehouse Techno, Driving Techno"
 tags = ["acid techno", "acid industrial techno", "hard techno", "warehouse techno", "techno 2026"]
+era = "Acid techno lineage from 1990s London squat parties, rebuilt with a modern industrial low end"
+groove = "four-on-the-floor with an accented off-beat, 303 riding sixteenths with slides and accents"
+production = "303 overdriven and centred, kick distorted and dominant, hi-hats clattering wide, warehouse reverb on the claps only"
+mood_arcs = ["sly and squelching, growing manic, ending in a resonant scream", "dark and driving, the acid line getting angrier every section, then cut", "nervous energy, sharpening into euphoria, leaving on a single held note"]
+special_moments = ["the 303 filter opens fully for the first time only on the second drop", "one breakdown where the acid line runs alone with no drums", "a resonance peak that squeals across the final bar"]
 
 [[music.lanes]]
 id = "bunker"
@@ -94,6 +120,11 @@ textures = ["concrete room reverb", "dark drone pads", "clipped rimshots", "sub-
 genre_line = "Dark Techno, Berlin Techno, Industrial Techno"
 style_line = "Bunker Techno, Hypnotic Techno, Dark Industrial Techno, Warehouse Techno"
 tags = ["dark techno", "berlin techno", "bunker techno", "industrial techno", "underground techno"]
+era = "Berlin bunker techno, 2010s, concrete and cold, Ostgut-era heaviness without the melody"
+groove = "heavy four-on-the-floor with a long rumble tail filling the off-beats, rolling hi-hats"
+production = "Concrete room reverb on everything except the kick, rumble deep and wide, drones far back, rimshots clipped and dry"
+mood_arcs = ["cold and subterranean, thickening into dread, then emptying out", "still and heavy, growing claustrophobic, ending with the walls closing in", "menacing calm, cracking into pressure, resolving into a low drone"]
+special_moments = ["the rumble tail lengthens until it swallows the off-beat in the final drop", "one drone note that rises a semitone every breakdown", "a rimshot pattern that only appears in the outro"]
 
 [[music.lanes]]
 id = "cyber"
@@ -105,6 +136,11 @@ textures = ["glitch stutters", "bit-crushed arps", "laser zaps", "neon pad swell
 genre_line = "Cyberpunk Techno, Hard Techno, Industrial Hard Techno"
 style_line = "Cyberpunk Techno, Mechanical Techno, Dark Techno, Driving Techno"
 tags = ["cyberpunk techno", "hard techno", "industrial hard techno", "dark techno", "techno 2026"]
+era = "Cyberpunk cinema aesthetic, 2077-style neon dystopia, modern hard techno underneath"
+groove = "tight four-on-the-floor with glitched off-beat stutters, arpeggios in triplets against the kick"
+production = "Pristine and digital, kick punchy and dry, arps glassy and wide, neon pads swelling behind, occasional bit-crush on the percussion"
+mood_arcs = ["sleek and tense, escalating into a chase, ending in a data blackout", "dystopian and cinematic, hardening into aggression, resolving into cold neon calm", "paranoid and glitching, building to system overload, then a clean shutdown"]
+special_moments = ["a glitch stutter that freezes the whole track for half a bar before the second drop", "the arpeggio doubles its speed on the final drop", "a laser zap that lands exactly on the last beat"]
 
 [titles]
 # Title patterns: V = verb, N = noun, A = adjective, P = particle ("Pull Under").

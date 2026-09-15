@@ -25,8 +25,23 @@ SR = 48_000
 # the model renders N seconds of loop and runs out mid-bar. ACE-Step reads the lyrics field
 # as the arrangement, so the sections are named there - and the last one is always an outro,
 # which is what gives the track somewhere to land instead of a cliff.
-def structure(duration_s: float) -> str:
-    """The section list for a track of this length, always ending on an outro.
+#
+# Each section also carries a performance direction, the way a Suno/ACE lyrics sheet does
+# ("[Bridge - instruments drop out]"): the arranger is told what happens over time, not just
+# handed a list of ingredients, which is what stops every bar sounding equally loud.
+SECTION_DIRECTIONS = {
+    "intro": "filtered kick alone, no sub bass yet, {t0} far back, tension only",
+    "build": "hi-hats and {t1} enter, filter opening, pressure rising bar by bar",
+    "drop": "full distorted kick, sub bass in, main hook at peak energy",
+    "breakdown": "kick out, {t2} alone over a held drone, tension kept",
+    "build2": "snare roll and riser, every element pulled back in",
+    "drop2": "harder than the first drop, everything at once",
+    "outro": "kick and bass strip back, filter closing, {t0} last, resolve to silence",
+}
+
+
+def arrangement(duration_s: float, textures: tuple[str, ...] = ()) -> list[tuple[str, str]]:
+    """The ordered sections for a track of this length, each with its direction.
 
     Sizes are chosen so each section gets roughly 8-16 bars at this channel's tempo, which
     is how the genre is actually built: filtered intro, build, drop, breakdown, drop, outro.
@@ -36,11 +51,32 @@ def structure(duration_s: float) -> str:
     elif duration_s < 130:
         parts = ["intro", "build", "drop", "breakdown", "outro"]
     elif duration_s < 210:
-        parts = ["intro", "build", "drop", "breakdown", "build", "drop", "outro"]
+        parts = ["intro", "build", "drop", "breakdown", "build2", "drop2", "outro"]
     else:
-        parts = ["intro", "build", "drop", "breakdown", "build", "drop", "breakdown",
-                 "drop", "outro"]
-    return "\n".join(f"[{s}]" for s in parts)
+        parts = ["intro", "build", "drop", "breakdown", "build2", "drop2", "breakdown",
+                 "drop2", "outro"]
+    tex = list(textures) or ["noise", "percussion", "drone"]
+    while len(tex) < 3:
+        tex.append(tex[-1])
+    fill = {"t0": tex[0], "t1": tex[1], "t2": tex[2]}
+    return [(name.rstrip("2"), SECTION_DIRECTIONS[name].format(**fill)) for name in parts]
+
+
+def structure(duration_s: float, textures: tuple[str, ...] = ()) -> str:
+    """The lyrics-field arrangement: one bracketed section per line, direction attached."""
+    return "\n".join(f"[{tag} - {direction}]" for tag, direction in arrangement(duration_s, textures))
+
+
+def arc(duration_s: float, textures: tuple[str, ...] = ()) -> str:
+    """The arrangement as one line of prose for the style prompt.
+
+    The lyrics field carries the full per-section directions; the caption only needs the
+    shape, so the encoder's budget goes on sound rather than on repeating the sheet.
+    """
+    steps = arrangement(duration_s, textures)
+    tags = " -> ".join(tag for tag, _ in steps)
+    last = steps[-1][1]
+    return f"Arrangement: {tags}; {steps[0][1]} at the start, and the outro {last}"
 
 
 class AceStepCpp:
@@ -78,7 +114,7 @@ class AceStepCpp:
     def request(self, brief: dict) -> dict:
         req = {
             "caption": brief["caption"],
-            "lyrics": structure(float(brief["duration_s"])),
+            "lyrics": brief.get("lyrics") or structure(float(brief["duration_s"])),
             "bpm": int(brief["bpm"]),
             "duration": float(brief["duration_s"]),
             "keyscale": brief["key"],

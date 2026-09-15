@@ -435,10 +435,13 @@ def test_every_rendered_track_is_given_an_arrangement():
     from anchor.music import structure
     for seconds in (60, 100, 150, 245):
         parts = structure(seconds).splitlines()
-        assert parts[0] == "[intro]" and parts[-1] == "[outro]", \
+        assert parts[0].startswith("[intro - ") and parts[-1].startswith("[outro - "), \
             f"{seconds}s track must open on an intro and land on an outro"
-        assert len(parts) == len(set(range(len(parts)))), "sections are a flat ordered list"
-    assert structure(150).count("[drop]") == 2, "a 2:30 club edit gets two drops"
+        assert all(p.startswith("[") and p.endswith("]") and " - " in p for p in parts), \
+            "every section is a bracketed tag with a performance direction"
+    assert structure(150).count("[drop - ") == 2, "a 2:30 club edit gets two drops"
+    assert "steel pipe percussion" in structure(150, ("hydraulic hiss", "steel pipe percussion", "sirens")), \
+        "the day's textures are told where they enter"
     assert len(structure(245).splitlines()) > len(structure(100).splitlines()), \
         "a longer track earns more sections, not longer ones"
 

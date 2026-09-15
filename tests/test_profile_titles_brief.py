@@ -57,6 +57,36 @@ def test_brief_is_deterministic():
     assert "[Instrumental]" not in a["caption"] and "instrumental" in a["caption"]
 
 
+def test_style_prompt_carries_all_nine_layers():
+    """The producer's brief describes the record, layer by layer, and never a vague idea."""
+    p = load_profile()
+    b = make_brief(p, "2026-09-16", [])
+    lane = p.lane(b["lane"])
+    cap = b["caption"]
+    for layer in (lane.caption, lane.era, "Mood: " + b["mood"], f"{b['bpm']} BPM", lane.groove,
+                  "Instruments:", p.music["vocals"], "Production: " + lane.production,
+                  "Arrangement:", "Special moment: " + b["special"]):
+        assert layer in cap, f"layer missing from style prompt: {layer[:40]}"
+    for t in b["textures"]:
+        assert t in cap and t in b["lyrics"], "the day's textures are placed in both sheets"
+    assert b["lyrics"].splitlines()[0].startswith("[intro - "), "songwriter gets section directions"
+    assert len(cap) < 1400, "compressed prose, not the design headings"
+
+
+def test_style_prompt_rotates_within_a_lane():
+    """Two days in the same lane must not be the same record with a different date."""
+    p = load_profile()
+    briefs = [make_brief(p, f"2026-10-{d:02d}", []) for d in range(1, 29)]
+    by_lane: dict[str, list[dict]] = {}
+    for b in briefs:
+        by_lane.setdefault(b["lane"], []).append(b)
+    for lane_id, bs in by_lane.items():
+        if len(bs) < 3:
+            continue
+        assert len({b["caption"] for b in bs}) == len(bs), f"{lane_id}: identical captions"
+        assert len({(b["mood"], b["special"], tuple(b["textures"])) for b in bs}) > 1
+
+
 def test_brief_rotation_rules_over_60_days():
     p = load_profile()
     hist = list(reversed(_history(p, 60)))  # oldest first

@@ -25,6 +25,13 @@ class Lane:
     genre_line: str
     style_line: str
     tags: tuple[str, ...]
+    # the prompt layers a lane owns (brief.compose_style): era/aesthetic, groove, production
+    # and the day-to-day rotated mood arcs and special moments
+    era: str = ""
+    groove: str = ""
+    production: str = ""
+    mood_arcs: tuple[str, ...] = ()
+    special_moments: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -87,6 +94,9 @@ def load_profile(path: Path | str = PROFILE_PATH) -> Profile:
             weight=int(l.get("weight", 1)), caption=l["caption"],
             textures=tuple(l.get("textures", [])), genre_line=l["genre_line"],
             style_line=l["style_line"], tags=tuple(l.get("tags", [])),
+            era=l.get("era", ""), groove=l.get("groove", ""), production=l.get("production", ""),
+            mood_arcs=tuple(l.get("mood_arcs", [])),
+            special_moments=tuple(l.get("special_moments", [])),
         )
         for l in raw["music"]["lanes"]
     )
@@ -112,6 +122,13 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
             problems.append(f"lane {lane.id}: bpm range {lane.bpm} outside 60-200")
         if lane.weight < 1:
             problems.append(f"lane {lane.id}: weight must be >= 1")
+        for name in ("era", "groove", "production"):
+            if not getattr(lane, name):
+                problems.append(f"lane {lane.id}: {name} is empty - the style prompt needs it")
+        if not lane.mood_arcs or not lane.special_moments:
+            problems.append(f"lane {lane.id}: needs at least one mood_arc and one special_moment")
+        if len(lane.textures) < 3:
+            problems.append(f"lane {lane.id}: needs at least 3 textures for the arrangement")
     for fam in families:
         if fam.viz not in {"bars", "line", "wave", "scope"}:
             problems.append(f"family {fam.id}: viz {fam.viz!r} not supported")
@@ -119,6 +136,9 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
             if not (len(colour) == 7 and colour.startswith("#")):
                 problems.append(f"family {fam.id}: colour {colour!r} must be #rrggbb")
     music = raw["music"]
+    for name in ("vocals", "mastering", "negative"):
+        if not music.get(name):
+            problems.append(f"music.{name} is missing")
     if not (10 <= int(music["duration_s"]) <= 600):
         problems.append("music.duration_s must be 10-600")
     if not (15 <= int(music["short_s"]) <= 175):
