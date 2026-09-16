@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-09-15",
-    "title": "Afterburn",
-    "finished_at": "2026-09-15T11:02:48Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/34952738993",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-09-16T18:48:16Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/35136549800"
   },
   "next_post_at": "2026-09-16T17:30:00Z",
   "streak": 4,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-15T11:02:48Z",
+  "updated_at": "2026-09-16T18:48:16Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
