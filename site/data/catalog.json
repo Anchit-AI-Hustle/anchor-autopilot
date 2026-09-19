@@ -7,8 +7,52 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Industrial hard techno from the machine room. One new track every day, built on a 150+ BPM spine of distorted kicks, rumble and steel."
   },
-  "updated_at": "2026-09-18T19:48:03Z",
+  "updated_at": "2026-09-19T19:25:36Z",
   "drops": [
+    {
+      "id": "2026-09-19",
+      "date": "2026-09-19",
+      "title": "Feral Machine",
+      "lane": "cyber",
+      "lane_name": "Cyberpunk Hard Techno",
+      "bpm": 154,
+      "key": "A minor",
+      "family": "chrome",
+      "family_name": "Chrome",
+      "duration_s": 150,
+      "short_s": 45,
+      "cover": "covers/2026-09-19.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-19/ANCHOR-2026-09-19-feral-machine.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-19",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-19-feral-machine-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-19/ANCHOR-2026-09-19-feral-machine-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=JIdq5wX6XvE",
+      "buffer_post_id": "6aaee1aa13d908add203d8bd",
+      "status": "sent",
+      "post_at": "2026-09-19T19:25:31.010Z",
+      "qc": {
+        "bpm_est": 154.1,
+        "lufs": -11.23,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-19T19:24:37Z",
+      "genre_line": "Cyberpunk Techno, Hard Techno, Industrial Hard Techno",
+      "style_line": "Cyberpunk Techno, Mechanical Techno, Dark Techno, Driving Techno",
+      "error": null,
+      "accent": "#d7e0ea",
+      "caption": "cyberpunk hard techno, industrial techno, peak time techno, futuristic distorted kick with punchy transient, glitching synth arpeggios, neon bass pulses, dystopian cinematic tension, clean modern master, glitch stutters, data-burst noise, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 1018877080,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 32,
+        "render_s": 5323.1,
+        "threads": 4,
+        "model": "acestep-v15-sft-Q8_0.gguf",
+        "guidance": 5.0,
+        "source_file": null
+      }
+    },
     {
       "id": "2026-09-18",
       "date": "2026-09-18",
@@ -583,7 +627,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-19T08:10:23Z",
+    "checked_at": "2026-09-19T19:25:36Z",
     "total": 21,
     "postable": 20,
     "families": 9,
