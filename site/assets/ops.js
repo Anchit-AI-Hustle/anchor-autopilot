@@ -179,5 +179,5 @@
       $("#run").innerHTML = `<span class="bad">Could not load the ledger: ${esc(err.message)}</span>`;
     }
   };
-  boot();
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();
