@@ -173,6 +173,9 @@ def poster_frame(video: Path, out: Path, at: float = 3.0) -> None:
 # points of that. Nothing here leaves the frame empty.
 
 def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path) -> Path:
+    """The 16:9 frame and the thumbnail. Set for a phone: YouTube shows it at about 170 px
+    tall, so the title fills two thirds of the width in one or two lines and the genre line is
+    big enough to read at that size. Nothing smaller than 90 px goes on it."""
     W2, H2 = 1920, 1080
     cov = Image.open(cover).convert("RGB")
     s = max(W2 / cov.width, H2 / cov.height)
@@ -180,20 +183,43 @@ def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path
     x, y = (bg.width - W2) // 2, (bg.height - H2) // 2
     bg = bg.crop((x, y, x + W2, y + H2))
     from PIL import ImageDraw, ImageFont
+    scrim = Image.new("RGBA", (W2, H2), (0, 0, 0, 0))
+    sd = ImageDraw.Draw(scrim)
+    for i in range(1300):                                          # left-to-right fade: solid under the type, the art clear on the right
+        a = int(190 * max(0.0, 1 - i / 1300) ** 1.4)
+        sd.line([(i, 0), (i, H2)], fill=(9, 8, 8, a))
+    bg = Image.alpha_composite(bg.convert("RGBA"), scrim).convert("RGB")
     d = ImageDraw.Draw(bg, "RGBA")
-    d.rectangle([0, 0, W2, H2], fill=(9, 8, 8, 60))                # a light even scrim: the art stays the picture
-    d.rectangle([0, 0, 1060, H2], fill=(9, 8, 8, 110))             # darker only under the type column
-    anton = ImageFont.truetype(str(FONTS / "Anton.ttf"), 230)
-    mono_b = ImageFont.truetype(str(FONTS / "JetBrainsMono-Bold.ttf"), 54)
-    mono = ImageFont.truetype(str(FONTS / "JetBrainsMono-Regular.ttf"), 40)
+
+    def font(size):
+        return ImageFont.truetype(str(FONTS / "Anton.ttf"), size)
+
+    # title: one line if it fits at 300, otherwise two lines split at the widest gap
     title = brief["title"].upper()
-    while d.textlength(title, font=anton) > 1000 and anton.size > 110:
-        anton = ImageFont.truetype(str(FONTS / "Anton.ttf"), anton.size - 10)
-    d.text((110, 300), title, font=anton, fill=(244, 244, 242))
-    d.text((114, 300 + anton.size + 60), lane_phrase.upper(), font=mono_b, fill=(214, 76, 38))
-    d.text((114, 300 + anton.size + 140), f"{int(brief['bpm'])} BPM  ·  FULL TRACK", font=mono_b,
-           fill=(200, 198, 196))
-    d.text((114, H2 - 120), "  ".join(artist.upper()), font=mono, fill=(150, 148, 146))
+    words = title.split()
+    lines, size = [title], 300
+    while d.textlength(lines[0], font=font(size)) > 1240 and size > 200:
+        size -= 10
+    if d.textlength(title, font=font(size)) > 1240 and len(words) > 1:
+        best = min(range(1, len(words)), key=lambda k: abs(len(" ".join(words[:k])) - len(" ".join(words[k:]))))
+        lines, size = [" ".join(words[:best]), " ".join(words[best:])], 250
+        while max(d.textlength(l, font=font(size)) for l in lines) > 1240 and size > 150:
+            size -= 10
+    f = font(size)
+    line_h = int(size * 0.98)
+    block = len(lines) * line_h + 40 + int(size * 0.38)
+    top = (H2 - block) // 2 - 20
+    for i, line in enumerate(lines):
+        yy = top + i * line_h
+        d.text((104, yy + 8), line, font=f, fill=(0, 0, 0, 170))     # hard shadow: reads on any art
+        d.text((96, yy), line, font=f, fill=(246, 246, 244))
+    sub = f"{lane_phrase.upper()}  ·  {int(brief['bpm'])} BPM" if brief.get("bpm") else lane_phrase.upper()
+    fs = font(max(90, int(size * 0.38)))
+    while d.textlength(sub, font=fs) > 1240 and fs.size > 80:
+        fs = font(fs.size - 6)
+    yy = top + len(lines) * line_h + 40
+    d.text((104, yy + 6), sub, font=fs, fill=(0, 0, 0, 170))
+    d.text((96, yy), sub, font=fs, fill=(226, 84, 40))
     bg.save(out, quality=93)
     return out
 
@@ -224,18 +250,49 @@ def render_still(frame: Path, audio: Path, out: Path, crf: int = 23) -> dict:
     return info
 
 
+def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 23) -> dict:
+    """The 16:9 frame with the record moving on it: a waveform in the family accent along the
+    bottom and a thin progress bar. A still frame lost most viewers inside thirty seconds
+    (channel analytics, Sept 2026: 0:30 average view from impressions); something on screen
+    that follows the kick keeps the listener with the track."""
+    duration = media_summary(audio)["duration"]
+    r, g, b = (int(accent.lstrip("#")[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    graph = ";".join([
+        "[0:v]format=yuv420p[bg]",
+        "[1:a]asplit=2[aout][aviz]",
+        # drawn white and tinted afterwards: showwaves' cline mode mangles a coloured line
+        "[aviz]showwaves=s=1920x220:mode=cline:rate=30:colors=white|white:scale=sqrt,format=rgba,"
+        f"colorkey=0x000000:0.2:0.1,colorchannelmixer=rr={r:.3f}:gg={g:.3f}:bb={b:.3f}:aa=0.8[wave]",
+        "[bg][wave]overlay=x=0:y=852:shortest=1[s1]",
+        f"color=c={_ff(accent)}:s=1920x8:r=30[fill]",
+        "color=c=0x1a1a1a:s=1920x8:r=30[track]",
+        f"[track][fill]overlay=x='-1920+1920*t/{duration:.3f}':y=0:shortest=1[bar]",
+        "[s1][bar]overlay=x=0:y=1072:shortest=1,format=yuv420p[vout]",
+    ])
+    run(["ffmpeg", "-y", "-hide_banner", "-v", "error", "-loop", "1", "-framerate", "30", "-i", frame,
+         "-i", audio, "-filter_complex", graph, "-map", "[vout]", "-map", "[aout]",
+         "-t", f"{duration:.3f}", "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", str(crf),
+         "-maxrate", "4M", "-bufsize", "8M", "-pix_fmt", "yuv420p",
+         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out], timeout=1800)
+    info = media_summary(out)
+    if abs(info["duration"] - duration) > 1.5:
+        raise RuntimeError(f"full render truncated: {info['duration']:.1f}s vs audio {duration:.1f}s")
+    return info
+
+
 def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: str, brief: dict,
-                lane_phrase: str, artist: str) -> dict:
+                lane_phrase: str, artist: str, accent: str | None = None) -> dict:
     """The 16:9 YouTube video and the 9:16 Reel, both verified against the audio length.
 
     ``art_raw`` is the artwork before the cover typography: the 16:9 frame sets its own title
     so nothing half-cropped shows through. ``cover`` is the finished square for the Reel.
+    With ``accent`` the 16:9 moves (waveform + progress); without it, a still at 2 fps.
     """
     f169 = frame_169(art_raw if art_raw.exists() else cover, brief, lane_phrase, artist, out_dir / "frame-169.jpg")
     f916 = frame_916(cover, out_dir / "frame-916.jpg")
     v169 = out_dir / f"{base}-full-169.mp4"
     v916 = out_dir / f"{base}-full-916.mp4"
-    i169 = render_still(f169, audio, v169, crf=23)
+    i169 = render_motion(f169, audio, v169, accent, crf=23) if accent else render_still(f169, audio, v169, crf=23)
     i916 = render_still(f916, audio, v916, crf=24)
     return {"full_169": {"file": v169.name, **i169}, "full_916": {"file": v916.name, **i916},
             "thumbnail": f169.name}

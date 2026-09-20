@@ -127,7 +127,8 @@ def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
     """
     from .seo import description, tags, youtube_title
     lane = profile.lane(brief["lane"])
-    return {"youtube_title": youtube_title(brief["title"], lane, int(brief["bpm"]), profile.artist["name"]),
+    line = (brief.get("copy") or {}).get("line")
+    return {"youtube_title": youtube_title(brief["title"], lane, int(brief["bpm"]), profile.artist["name"], line),
             "tags": tags(profile, lane, int(brief["bpm"])),
             "description": description(profile, brief, platform),
             "caption_instagram": description(profile, brief, "instagram")}

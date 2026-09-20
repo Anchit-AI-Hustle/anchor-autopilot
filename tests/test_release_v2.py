@@ -112,8 +112,10 @@ def test_seo_title_description_and_tags_carry_the_lane_and_tempo():
     b = make_brief(p, "2026-09-22", [])
     lane = p.lane(b["lane"])
     t = youtube_title(b["title"], lane, b["bpm"], "ANCHOR")
-    assert t.startswith(b["title"] + " — ") and f"{b['bpm']} BPM | ANCHOR" in t and len(t) <= 100
+    assert t.startswith(b["title"] + " — ") and t.endswith(f"{b['bpm']} BPM") and "ANCHOR" not in t and len(t) <= 60
     assert len(youtube_title("X" * 90, lane, 150, "ANCHOR")) <= 100
+    assert youtube_title(b["title"], lane, b["bpm"], "ANCHOR", "for the second you stop thinking") == b["title"] + " — for the second you stop thinking"
+    assert youtube_title("X" * 90, lane, 150, "ANCHOR", "a line that would push it over") == "X" * 90 + f" — {lane.genre_line.split(',')[0].strip()}"[:10]
     d = description(p, b)
     head = d.split("\n\n")[0]
     assert head[0].isupper() and head.endswith(".") and "BPM" not in head       # vibe first, specs later

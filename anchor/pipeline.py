@@ -169,7 +169,7 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     lane = profile.lane(brief["lane"])
     # the 16:9 frame sets its own type over the raw art; the 9:16 shows the finished cover
     full = render_full(out_dir / "cover_art_raw.jpg", out_dir / "cover.jpg", mp3, out_dir, base, brief,
-                       genre_phrase(lane), profile.artist["name"])
+                       genre_phrase(lane), profile.artist["name"], accent=fam.accent)
 
     meta = {
         "brief": brief,

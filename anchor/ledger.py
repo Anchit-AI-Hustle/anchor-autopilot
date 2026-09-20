@@ -164,7 +164,7 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
     else:
         F.append(_field("title", b["title"], "Drawn from the title word bank: never repeats a title on the channel, avoids every word used in the last ten titles, never doubles a word. Seeded by the date.", "no sung hook found", "content"))
     F.append(_field("youtube title", b["youtube_title"],
-                    f"'<Title> — <genre phrase>, <BPM> BPM | {profile.artist['name']}': the search phrase people type (genre + tempo) sits in the title; the genre phrase is the first phrase of the lane's genre line; capped at {MAX_TITLE} characters.",
+                    "'<Title> — <spoken line>': the line is what you'd say to make someone press play, written with the copy; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters. Falls back to '<Title> — <genre phrase>, <BPM> BPM' when the writer gave no line.",
                     f"{len(b['youtube_title'])} chars; genre phrase {genre_phrase(lane)!r}", "content"))
     copy = b.get("copy") or {}
     F.append(_field("description", b["description"],
@@ -194,7 +194,7 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
     F.append(_field("cover", src, ("Cloudflare Flux image from the family prompt, seeded by the date" if src != "procedural" else "Procedural art drawn from the family's forms and the date seed") +
                     f"; redrawn from the next seed until it is at least {COVER_MIN_DISTANCE}/256 away from every cover already on the site.",
                     f"nearest existing cover {(art.get('nearest') or {}).get('id')} at distance {(art.get('nearest') or {}).get('distance')}" + (f"; fallback because {art['fallback_reason']}" if art.get("fallback_reason") else ""), "visual"))
-    F.append(_field("thumbnail 16:9", meta["files"].get("thumbnail"), "A 1920x1080 frame: the raw cover art bleeds across the frame with the title, genre and BPM set in the house type over a light scrim, so it reads at Shorts-shelf size.", None, "visual"))
+    F.append(_field("thumbnail 16:9", meta["files"].get("thumbnail"), "Drawn for the phone: the title in Anton at up to 300 px on a left scrim, the lane and BPM under it at 90 px, hard shadow; no wordmark, because the channel name is printed under the thumbnail anyway. Legible at the 336×189 px a phone shows.", None, "visual"))
     F.append(_field("short window", f"{win.get('start_s', 0):.1f} s for {win.get('length_s', 0):.1f} s",
                     f"The loudest, busiest {b['short_s']} s of the master snapped to whole bars, with the pulse locked to the beat grid of that cut.", f"beat offset {win.get('beat_offset_s')} s", "visual"))
     return F

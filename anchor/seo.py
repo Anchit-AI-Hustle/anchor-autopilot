@@ -81,12 +81,18 @@ def genre_phrase(lane: Lane) -> str:
     return lane.genre_line.split(",")[0].strip()
 
 
-def youtube_title(title: str, lane: Lane, bpm: int, artist: str) -> str:
-    t = f"{title} — {genre_phrase(lane)}, {int(bpm)} BPM | {artist}"
+def youtube_title(title: str, lane: Lane, bpm: int, artist: str, line: str | None = None) -> str:
+    """'<Title> — <spoken line>' when the writer gave one ("Then Do It — for the second you stop
+    thinking"); '<Title> — <genre phrase>, <BPM> BPM' otherwise. The channel name is not in it:
+    YouTube prints it under every title, and a phone cuts the title at about 50 characters."""
+    if line:
+        t = f"{title} — {line}"
+        if len(t) <= MAX_TITLE:
+            return t
+    t = f"{title} — {genre_phrase(lane)}, {int(bpm)} BPM"
     if len(t) <= MAX_TITLE:
         return t
-    t = f"{title} — {genre_phrase(lane)} | {artist}"
-    return t[:MAX_TITLE]
+    return f"{title} — {genre_phrase(lane)}"[:MAX_TITLE]
 
 
 def tags(profile: Profile, lane: Lane, bpm: int) -> list[str]:
