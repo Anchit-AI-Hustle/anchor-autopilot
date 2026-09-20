@@ -14,9 +14,11 @@ from .brief import describe, make_brief, post_time
 from .config import CATALOG_PATH, SITE, STATUS_PATH, Profile, env
 from .music import get_engine
 from .queue import QUEUE, mark_done, next_track
-from .publish import Buffer, BufferError, build_post_input, schedule_for, verify_media_url
+from .publish import Buffer, BufferError, build_post_input, build_reel_input, schedule_for, verify_media_url
+from .seo import genre_phrase, hook_title
+from .unique import AUDIO_MAX_SIMILARITY, COVER_MIN_DISTANCE, check_audio, nearest_cover
 from .util import iso, log, read_json, utcnow, write_json
-from .video import poster_frame, render_short
+from .video import poster_frame, render_full, render_short
 
 
 class QualityError(RuntimeError):
@@ -53,12 +55,29 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         raw, stats = engine.generate(brief, out_dir / f"gen-{attempt}")
         stats_audio = analyze(decode(raw))
         ok, fails, warns = quality_gate(stats_audio, brief)
-        attempts_log.append({"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns})
+        # a record that resembles one already out is a failed attempt, same as bad audio
+        sim, twin = check_audio(raw, catalog_path, out_dir / "unique-audio")
+        if twin and sim > AUDIO_MAX_SIMILARITY:
+            ok = False
+            fails = [*fails, f"sounds like released drop {twin} (envelope similarity {sim:.2f})"]
+        attempts_log.append({"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns,
+                             "nearest_audio": {"id": twin, "similarity": round(sim, 3)}})
         log(f"QC attempt {attempt}: {'PASS' if ok else 'FAIL'} {fails or ''} {warns or ''}")
         if ok:
             break
     else:
         raise QualityError(f"track failed QC after {retries + 1} attempts: {attempts_log}")
+
+    # a song that sings a hook is called by its hook; a name from the word list is the
+    # fallback, not the default ("Welcome to Project Mayhem" x6 is why that one is Project Mayhem)
+    lyrics = stats.get("lyrics")
+    hook = hook_title(lyrics)
+    used = {d.get("title", "").lower() for d in hist} | {t.lower() for t in profile.artist["existing_titles"]}
+    if hook and hook.lower() not in used:
+        log(f"title from the hook: {hook!r} (was {brief['title']!r})")
+        brief["title_generated"], brief["title"] = brief["title"], hook
+    brief["lyrics_sung"] = lyrics
+    brief["hook"] = hook
 
     # the model treats BPM as guidance; publish the tempo the track actually has
     est = stats_audio.get("bpm_est")
@@ -105,6 +124,15 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
 
     fam = profile.family(brief["family"])
     art = make_cover(fam, brief, profile.artist["name"], out_dir, art_mode)
+    # the cover must not repeat a motif already on the site; redraw from the next seeds
+    covers_dir = SITE / "covers"
+    for bump in range(1, 6):
+        dist, twin = nearest_cover(out_dir / "cover.jpg", covers_dir)
+        if dist >= COVER_MIN_DISTANCE:
+            break
+        log(f"cover too close to {twin} ({dist:.0f}/256 < {COVER_MIN_DISTANCE}); redrawing with seed+{bump}")
+        art = make_cover(fam, {**brief, "seed": int(brief["seed"]) + bump}, profile.artist["name"], out_dir, art_mode)
+    art["nearest"] = {"id": twin, "distance": dist}
     cover_named = out_dir / f"{base}-cover.jpg"
     shutil.copy(out_dir / "cover.jpg", cover_named)
 
@@ -127,6 +155,10 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
                          profile.artist["name"], profile.artist["handle"], out_dir / "video-work",
                          beat_offset=beat_offset)
     poster_frame(mp4, out_dir / "poster.jpg", min(3.0, length / 2))
+    lane = profile.lane(brief["lane"])
+    # the 16:9 frame sets its own type over the raw art; the 9:16 shows the finished cover
+    full = render_full(out_dir / "cover_art_raw.jpg", out_dir / "cover.jpg", mp3, out_dir, base, brief,
+                       genre_phrase(lane), profile.artist["name"])
 
     meta = {
         "brief": brief,
@@ -136,7 +168,10 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
         "art": art,
         "short_window": {"start_s": start, "length_s": length, "beat_offset_s": beat_offset},
         "video": video,
+        "full": full,
         "files": {"base": base, "mp3": mp3.name, "flac": flac.name, "short": mp4.name,
+                  "full_169": full["full_169"]["file"], "full_916": full["full_916"]["file"],
+                  "thumbnail": full["thumbnail"],
                   "cover": cover_named.name, "cover_600": "cover_600.jpg", "poster": "poster.jpg"},
         "made_at": iso(utcnow()),
     }
@@ -201,39 +236,68 @@ def release_notes(profile: Profile, meta: dict) -> str:
 
 # ---------------------------------------------------------------------- publish
 def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool = False,
-            now: bool = False, site_only: bool = False) -> dict:
+            now: bool = False, site_only: bool = False, reel_url: str | None = None) -> dict:
+    """The full 16:9 track goes to YouTube as a song video and the 9:16 to Instagram as a Reel.
+
+    ``media_url`` is the public URL of the 16:9 file; ``reel_url`` of the 9:16. Either
+    platform failing is recorded and re-raised after the other has been tried, so one
+    outage never blocks the other channel.
+    """
     meta = read_json(drop_dir / "meta.json")
     brief = meta["brief"]
     yt = profile.youtube
     post_at = datetime.fromisoformat(brief["post_at"].replace("Z", "+00:00"))
     due = None if now else schedule_for(post_at)
-    common = dict(title=brief["youtube_title"], description=brief["description"], video_url=media_url,
-                  due_at=due, category_id=str(yt["category_id"]), privacy=yt["privacy"],
-                  ai_generated=bool(yt["ai_generated"]), notify=bool(yt["notify_subscribers"]))
+    yt_common = dict(title=brief["youtube_title"], description=brief["description"], video_url=media_url,
+                     due_at=due, category_id=str(yt["category_id"]), privacy=yt["privacy"],
+                     ai_generated=bool(yt["ai_generated"]), notify=bool(yt["notify_subscribers"]))
+    ig_common = dict(caption=brief.get("caption_instagram") or brief["description"], video_url=reel_url or "",
+                     due_at=due, ai_generated=bool(yt["ai_generated"]))
+    result = {"dry_run": dry_run, "site_only": site_only, "created_at": iso(utcnow()), "youtube": None,
+              "instagram": None}
     if dry_run or site_only:
-        result = {"dry_run": dry_run, "site_only": site_only,
-                  "payload": build_post_input("NOT_SENT", **common),
-                  "status": "dry-run" if dry_run else "released", "created_at": iso(utcnow())}
+        result["payload"] = {"youtube": build_post_input("NOT_SENT", **yt_common),
+                             "instagram": build_reel_input("NOT_SENT", **{**ig_common, "video_url": reel_url or "https://not-sent"})}
+        result["status"] = "dry-run" if dry_run else "released"
         write_json(drop_dir / "publish.json", result)
         log("publish: " + ("dry run" if dry_run else "site-only release (BUFFER_API_KEY not set)")
             + ", nothing sent to Buffer")
         return result
+
+    buf = Buffer(env("BUFFER_API_KEY") or "")
+    errors = []
     try:
-        media = verify_media_url(media_url, expect_min_bytes=int(meta["video"]["size_bytes"] * 0.9))
-        common["video_url"] = media["url"]
-        buf = Buffer(env("BUFFER_API_KEY") or "")
+        media = verify_media_url(media_url, expect_min_bytes=int(meta["full"]["full_169"]["size_bytes"] * 0.9))
+        yt_common["video_url"] = media["url"]
         ch = buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
-        post = buf.create_short(ch["id"], **common)
+        post = buf.create_short(ch["id"], **yt_common)          # same mutation; a 16:9 file is a video, not a Short
+        result["youtube"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
+                             "external_link": post.get("externalLink"), "channel": {"id": ch["id"], "name": ch.get("name")},
+                             "media": media}
+        log(f"publish: YouTube post {post['id']} {post.get('status')} due {post.get('dueAt')}")
     except BufferError as exc:
-        # the drop still goes out on the website; the status page shows the YouTube failure
-        write_json(drop_dir / "publish.json", {"dry_run": False, "status": "error", "error": str(exc)[:500],
-                                               "created_at": iso(utcnow())})
-        raise
-    result = {"dry_run": False, "post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
-              "external_link": post.get("externalLink"), "channel": {"id": ch["id"], "name": ch.get("name")},
-              "media": media, "created_at": iso(utcnow())}
+        errors.append(f"youtube: {exc}")
+        result["youtube"] = {"error": str(exc)[:500]}
+    if reel_url:
+        try:
+            media = verify_media_url(reel_url, expect_min_bytes=int(meta["full"]["full_916"]["size_bytes"] * 0.9))
+            ig_common["video_url"] = media["url"]
+            ch = buf.instagram_channel(env("BUFFER_INSTAGRAM_CHANNEL_ID"))
+            post = buf.create_reel(ch["id"], **ig_common)
+            result["instagram"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
+                                   "external_link": post.get("externalLink"),
+                                   "channel": {"id": ch["id"], "name": ch.get("name")}, "media": media}
+            log(f"publish: Instagram reel {post['id']} {post.get('status')} due {post.get('dueAt')}")
+        except BufferError as exc:
+            errors.append(f"instagram: {exc}")
+            result["instagram"] = {"error": str(exc)[:500]}
+    # the fields older code and the status page read
+    y = result["youtube"] or {}
+    result.update(post_id=y.get("post_id"), status=y.get("status") or ("error" if errors else None),
+                  due_at=y.get("due_at"), external_link=y.get("external_link"), error="; ".join(errors) or None)
     write_json(drop_dir / "publish.json", result)
-    log(f"publish: Buffer post {post['id']} {post.get('status')} due {post.get('dueAt')}")
+    if errors:
+        raise BufferError("; ".join(errors))
     return result
 
 
@@ -267,6 +331,11 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         # the release keeps the Short forever, so that is what the website plays
         "video_url": f"https://github.com/{repo}/releases/download/{tag}/{files['short']}" if repo else None,
         "youtube_url": pub.get("external_link"),
+        "instagram_url": (pub.get("instagram") or {}).get("external_link"),
+        "full_video_url": f"https://github.com/{repo}/releases/download/{tag}/{files['full_169']}" if repo and files.get("full_169") else None,
+        "reel_url": f"https://github.com/{repo}/releases/download/{tag}/{files['full_916']}" if repo and files.get("full_916") else None,
+        "hook": brief.get("hook"),
+        "lyrics": brief.get("lyrics_sung"),
         "buffer_post_id": pub.get("post_id"),
         "status": status,
         "error": pub.get("error"),
@@ -332,6 +401,18 @@ def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH)
 def fail(stage: str, error: str, run_url: str | None = None, status_path: Path = STATUS_PATH) -> None:
     catalog.update_status(status_path, last_run={"result": "failed", "stage": stage, "error": error[:600],
                                                  "finished_at": iso(utcnow()), "run_url": run_url})
+
+
+def is_release_day(profile: Profile, day: str) -> bool:
+    """Every ``schedule.every_days`` days counted from ``schedule.anchor_date`` (both in the
+    profile). The cron still fires daily; this is what turns the off-days into no-ops.
+    Counting from a fixed date keeps the rhythm exact across month ends, which a
+    day-of-month cron cannot."""
+    every = int(profile.schedule.get("every_days", 1))
+    if every <= 1:
+        return True
+    anchor = Date.fromisoformat(profile.schedule.get("anchor_date", day))
+    return (Date.fromisoformat(day) - anchor).days % every == 0
 
 
 def today_utc() -> str:

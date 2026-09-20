@@ -1,4 +1,4 @@
-name: Daily drop
+name: Drop (every second day)
 
 on:
   schedule:
@@ -57,6 +57,8 @@ jobs:
       date: ${{ steps.day.outputs.date }}
       skip: ${{ steps.day.outputs.skip }}
       short: ${{ steps.make.outputs.short }}
+      full169: ${{ steps.make.outputs.full169 }}
+      full916: ${{ steps.make.outputs.full916 }}
       title: ${{ steps.make.outputs.title }}
     steps:
       - uses: actions/checkout@v4
@@ -81,6 +83,9 @@ jobs:
              && [ "$(python -m anchor has-drop --date "$DATE")" = "yes" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "::notice::A drop for $DATE is already out; nothing to do."
+          elif [ "${{ github.event_name }}" = "schedule" ] && [ "$(python -m anchor cadence --date "$DATE")" = "no" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::notice::$DATE is an off-day on the every-second-day schedule; nothing to do."
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
@@ -146,11 +151,12 @@ jobs:
           path: vendor/models
           key: ${{ env.MODELS_CACHE_KEY }}
 
-      - name: Make the drop (brief, track, master, cover, Short)
+      - name: Make the drop (brief, track, master, cover, full videos, Short)
         if: steps.day.outputs.skip != 'true'
         id: make
         env:
           DATE: ${{ steps.day.outputs.date }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           ACESTEP_BIN: ${{ github.workspace }}/vendor/acestep.cpp/build
           ACESTEP_MODELS: ${{ github.workspace }}/vendor/models
           ANCHOR_VAE_CHUNK: "1024"
@@ -165,13 +171,18 @@ jobs:
           import json
           m = json.load(open("build/$DATE/meta.json"))
           print("short=" + m["files"]["short"])
+          print("full169=" + m["files"]["full_169"])
+          print("full916=" + m["files"]["full_916"])
           print("title=" + m["brief"]["title"])
           EOF
           python - >> "$GITHUB_STEP_SUMMARY" <<EOF
           import json
           m = json.load(open("build/$DATE/meta.json")); b = m["brief"]
           print(f"### {b['title']}\n\n{b['lane_name']} · {b['bpm']} BPM · {b['key']} · {b['family_name']}\n")
-          print(f"- Render: {m['engine'].get('total_s')} s ({m['engine'].get('threads')} threads)")
+          print(f"- Engine: {m['engine'].get('engine')} ({m['engine'].get('model')}), {m['engine'].get('total_s')} s"
+                + (f" - fell back from {m['engine']['fallback_from']}: {m['engine'].get('fallback_reason')}" if m['engine'].get('fallback_from') else ""))
+          print(f"- Title: {b.get('youtube_title')}" + (f" (hook: {b['hook']!r})" if b.get('hook') else ""))
+          print(f"- Nearest released audio: {m['qc']['attempts'][-1].get('nearest_audio')}; nearest cover: {m['art'].get('nearest')}")
           print(f"- Master: {m['loudness']['after']['input_i']} LUFS / {m['loudness']['after']['input_tp']} dBTP")
           print(f"- QC warnings: {m['qc']['warnings'] or 'none'}")
           print(f"- Cover: {m['art']['source']}")
@@ -198,6 +209,9 @@ jobs:
             build/${{ steps.day.outputs.date }}/*.mp3
             build/${{ steps.day.outputs.date }}/*.flac
             build/${{ steps.day.outputs.date }}/*-short.mp4
+            build/${{ steps.day.outputs.date }}/*-full-169.mp4
+            build/${{ steps.day.outputs.date }}/*-full-916.mp4
+            build/${{ steps.day.outputs.date }}/frame-169.jpg
             build/${{ steps.day.outputs.date }}/*-cover.jpg
             build/${{ steps.day.outputs.date }}/cover.jpg
             build/${{ steps.day.outputs.date }}/cover_600.jpg
@@ -212,7 +226,7 @@ jobs:
         run: |
           D="build/$DATE"
           B="$(python -c "import json;print(json.load(open('$D/meta.json'))['files']['base'])")"
-          FILES=("$D/$B.mp3" "$D/$B.flac" "$D/$B-short.mp4" "$D/$B-cover.jpg")
+          FILES=("$D/$B.mp3" "$D/$B.flac" "$D/$B-short.mp4" "$D/$B-full-169.mp4" "$D/$B-full-916.mp4" "$D/$B-cover.jpg" "$D/frame-169.jpg")
           if gh release view "drop-$DATE" >/dev/null 2>&1; then
             gh release upload "drop-$DATE" "${FILES[@]}" --clobber
           else
@@ -236,17 +250,17 @@ jobs:
           name: drop-${{ needs.make.outputs.date }}
           path: drop
 
-      - name: Assemble the media host (latest Shorts only)
+      - name: Assemble the media host (latest drops only)
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
           DATE: ${{ needs.make.outputs.date }}
         run: |
           mkdir -p public/media
-          cp drop/*-short.mp4 public/media/
-          # keep the two previous Shorts online too, in case a scheduled post is still pending
+          cp drop/*-short.mp4 drop/*-full-169.mp4 drop/*-full-916.mp4 public/media/
+          # keep the two previous drops online too, in case a scheduled post is still pending
           for tag in $(gh release list --limit 6 --json tagName -q '.[].tagName' | grep '^drop-' | grep -vx "drop-$DATE" | head -2); do
-            gh release download "$tag" --pattern '*-short.mp4' --dir public/media --clobber || true
+            gh release download "$tag" --pattern '*-full-*.mp4' --dir public/media --clobber || true
           done
           printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
           printf '<!doctype html><meta charset="utf-8"><title>ANCHOR media</title><meta http-equiv="refresh" content="0;url=https://anchor.anchit-tandon.com/">' > public/index.html
@@ -269,6 +283,8 @@ jobs:
     env:
       DATE: ${{ needs.make.outputs.date }}
       SHORT: ${{ needs.make.outputs.short }}
+      FULL169: ${{ needs.make.outputs.full169 }}
+      FULL916: ${{ needs.make.outputs.full916 }}
       TITLE: ${{ needs.make.outputs.title }}
       PAGE_URL: ${{ needs.pages.outputs.page_url }}
       RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
@@ -292,21 +308,23 @@ jobs:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
         run: python -m anchor sync
 
-      - name: Publish the Short to YouTube via Buffer
+      - name: Publish the full track to YouTube and the Reel to Instagram via Buffer
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_CHANNEL_ID: ${{ secrets.BUFFER_CHANNEL_ID }}
+          BUFFER_INSTAGRAM_CHANNEL_ID: ${{ secrets.BUFFER_INSTAGRAM_CHANNEL_ID }}
         run: |
-          MEDIA="${PAGE_URL%/}/media/$SHORT"
+          MEDIA="${PAGE_URL%/}/media/$FULL169"
+          REEL="${PAGE_URL%/}/media/$FULL916"
           FLAGS=()
           if [ -z "$BUFFER_API_KEY" ]; then
             FLAGS+=(--site-only)
-            echo "::warning::BUFFER_API_KEY is not set: releasing on the website only, not on YouTube."
+            echo "::warning::BUFFER_API_KEY is not set: releasing on the website only, not on YouTube/Instagram."
           fi
           [ "${{ inputs.publish_now }}" = "true" ] && FLAGS+=(--now)
-          if ! python -m anchor publish --drop "build/$DATE" --media-url "$MEDIA" "${FLAGS[@]}"; then
+          if ! python -m anchor publish --drop "build/$DATE" --media-url "$MEDIA" --reel-url "$REEL" "${FLAGS[@]}"; then
             echo "PUBLISH_FAILED=1" >> "$GITHUB_ENV"
-            echo "::error::YouTube publishing failed; the drop is still released on the website."
+            echo "::error::Publishing failed on at least one platform; the drop is still released on the website. See publish.json in the drop artifact."
           fi
 
       - name: Sync the Suno catalogue (ratings + postable decisions)
@@ -315,7 +333,7 @@ jobs:
       - name: Record the drop on anchor.anchit-tandon.com
         run: |
           python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
-            --short-url "${PAGE_URL%/}/media/$SHORT" --run-url "$RUN_URL"
+            --short-url "${PAGE_URL%/}/media/$FULL916" --run-url "$RUN_URL"
           python -m anchor check
 
       - name: Restore the queue stamp written while rendering
@@ -342,7 +360,7 @@ jobs:
           done
           exit 1
 
-      - name: Fail the run if YouTube publishing failed (sends the GitHub alert email)
+      - name: Fail the run if publishing failed (sends the GitHub alert email)
         if: env.PUBLISH_FAILED == '1'
         run: |
           echo "::error::Buffer/YouTube publish failed. The drop is on the website; see the publish step log."

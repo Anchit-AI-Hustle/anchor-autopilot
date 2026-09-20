@@ -62,3 +62,18 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
 - YouTube's monetisation rules penalise templated mass production. Every drop varies the sound lane, key, tempo,
   cover and visual family, and the AI disclosure is always on. Keep an eye on quality rather than quantity.
 - Buffer's free plan allows 10 scheduled posts per channel and 250 API calls a day; the robot uses a handful.
+
+## Engine and cadence (v2)
+
+- **Music engine:** `[music] engine = "lyria"` — Google Lyria 3.5 through the Gemini API
+  (`GEMINI_API_KEY` secret). `fallback_engine = "acestep_cpp"` runs when Lyria is unavailable.
+  There is no official Suno API; the Suno web app is never automated.
+- **Cadence:** `[schedule] every_days = 2`, `anchor_date = "2026-09-20"`. The cron still fires
+  daily; `python -m anchor cadence --date YYYY-MM-DD` answers yes/no and the workflow skips
+  off-days. A manual `workflow_dispatch` always runs.
+- **Title:** the most repeated sung phrase becomes the title when it reads as one and is unused.
+- **Uniqueness gates:** cover art must be >= 84 hash-distance from every released cover;
+  audio envelope similarity to any released track must be <= 0.80. Both are retried, then fail loudly.
+- **Outputs per drop:** full 16:9 video (YouTube, first frame = thumbnail), full 9:16 (Instagram Reel),
+  45 s Short, MP3/FLAC, cover. Publishing goes through Buffer to YouTube and Instagram
+  (`BUFFER_INSTAGRAM_CHANNEL_ID`).

@@ -92,6 +92,35 @@ class Buffer:
         return ch
 
     # ------------------------------------------------------------------ posting
+    def instagram_channel(self, channel_id: str | None = None) -> dict:
+        data = self.gql("query($org: OrganizationId!) { channels(input: {organizationId: $org}) "
+                        "{ id name service serviceId isDisconnected isLocked isQueuePaused } }",
+                        {"org": self.organization_id()})
+        channels = [c for c in data["channels"] if c.get("service") == "instagram"]
+        if channel_id:
+            channels = [c for c in channels if c["id"] == channel_id]
+        if not channels:
+            raise BufferError("no Instagram channel connected in Buffer (connect @anchor_at2803 in Buffer first)")
+        if len(channels) > 1:
+            raise BufferError("several Instagram channels in Buffer; set BUFFER_INSTAGRAM_CHANNEL_ID")
+        ch = channels[0]
+        if ch.get("isDisconnected") or ch.get("isLocked"):
+            raise BufferError(f"Buffer channel {ch.get('name')} is disconnected or locked; reconnect it in Buffer")
+        return ch
+
+    def create_reel(self, channel_id: str, *, caption: str, video_url: str, due_at: datetime | None,
+                    ai_generated: bool = True, first_comment: str | None = None) -> dict:
+        variables = {"input": build_reel_input(channel_id, caption=caption, video_url=video_url, due_at=due_at,
+                                               ai_generated=ai_generated, first_comment=first_comment)}
+        data = self.gql(
+            "mutation($input: CreatePostInput!) { createPost(input: $input) { "
+            "... on PostActionSuccess { post { id status dueAt externalLink } } "
+            "... on MutationError { message } } }", variables)
+        result = data["createPost"]
+        if "post" not in result:
+            raise BufferError(f"createPost rejected: {result.get('message', result)}")
+        return result["post"]
+
     def create_short(self, channel_id: str, *, title: str, description: str, video_url: str,
                      due_at: datetime | None, category_id: str = "10", privacy: str = "public",
                      ai_generated: bool = True, notify: bool = True) -> dict:
@@ -134,6 +163,29 @@ def build_post_input(channel_id: str, *, title: str, description: str, video_url
             "notifySubscribers": bool(notify),
             "embeddable": True,
         }},
+    }
+    if due_at:
+        inp["dueAt"] = iso(due_at)
+    return inp
+
+
+def build_reel_input(channel_id: str, *, caption: str, video_url: str, due_at: datetime | None,
+                     ai_generated: bool = True, first_comment: str | None = None) -> dict:
+    """Instagram Reel through Buffer: InstagramPostMetadataInput needs ``type`` (PostType
+    ``reel``) and ``shouldShareToFeed``; ``isAiGenerated`` sets the AI label, the same
+    disclosure the channel makes on YouTube."""
+    if not video_url.startswith("https://"):
+        raise BufferError("video URL must be https")
+    meta = {"type": "reel", "shouldShareToFeed": True, "isAiGenerated": bool(ai_generated)}
+    if first_comment:
+        meta["firstComment"] = first_comment[:2200]
+    inp = {
+        "channelId": channel_id,
+        "text": caption[:2200],
+        "schedulingType": "automatic",
+        "mode": "customScheduled" if due_at else "shareNow",
+        "assets": [{"video": {"url": video_url}}],
+        "metadata": {"instagram": meta},
     }
     if due_at:
         inp["dueAt"] = iso(due_at)

@@ -120,47 +120,14 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int)
 def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
     """Title, tags and post copy from the brief (re-run after the tempo is measured).
 
-    Two things were wrong here and both went out on every post for weeks.
-
-    The copy said "Full song out soon - this is the 45s cut" on every Short. The full tracks
-    now exist, so that line told every viewer to wait for something already published, and
-    pointed none of them at it.
-
-    And ``tags`` is computed but cannot reach YouTube: Buffer's YoutubePostMetadata accepts
-    title, category, privacy, madeForKids, isAiGenerated, notifySubscribers, embeddable,
-    license, annotations and type - there is no tags field, so every tag computed here has
-    been discarded in transit. It is still returned, for anything that CAN set it (a pass in
-    Studio, or a future uploader), but nothing downstream should assume it reached YouTube.
-
-    Instagram takes the same facts with different plumbing: a Reel caption cannot carry a
-    clickable link, so the URL is stated as a bare domain and the hashtags do the discovery.
+    All three are built in seo.py so the words a search can find - the lane's genre phrase,
+    the tempo, the artist - sit in the title and the first two lines of every description.
+    ``tags`` cannot reach YouTube through Buffer (its YoutubePostMetadata has no tags field);
+    it is returned for the release notes and for any uploader that can set it.
     """
-    yt, name = profile.youtube, profile.artist["name"]
-    bpm, title = brief["bpm"], brief["title"]
+    from .seo import description, tags, youtube_title
     lane = profile.lane(brief["lane"])
-    site = profile.artist["site_url"].removeprefix("https://").rstrip("/")
-    tags = list(dict.fromkeys([*yt["base_tags"], *lane.tags, f"hard techno {bpm} bpm"]))
-
-    # No claim about vocals here. It said "Instrumental - no vocals", taken from the
-    # generation caption - but nine of ten drops come in through queue from Suno, where that
-    # caption never applied, and several carry a vocal hook: 2026-09-13 chants "project
-    # mayhem" over and over. The line was on every post and was false for most of them.
-    # The key is gone from here too, for the same reason it left the artwork: it does not
-    # survive checking against the audio, and it told a listener nothing to begin with.
-    facts = [f"{lane.genre_line} \u00b7 {bpm} BPM"]
-    tail = [f"A new {name} track every day.", "Made with AI-assisted music tools."]
-
-    if platform == "instagram":
-        body = [f"{title} \u2014 {name}", "", *facts, "",
-                f"Full track, free: {site}", *tail, "",
-                # the two lists overlap; a repeated tag helps nothing and reads as sloppy
-                " ".join(dict.fromkeys([*yt["hashtags"], *yt.get("instagram_hashtags", [])]))]
-    else:
-        body = [f"{title} \u2014 {name}",
-                f"Full track, free: {site}", "",
-                *facts, "", *tail, "",
-                " ".join([*yt["hashtags"], "#shorts"])]
-
-    return {"youtube_title": yt["title"].format(title=title)[:100],
-            "tags": tags,
-            "description": "\n".join(body)}
+    return {"youtube_title": youtube_title(brief["title"], lane, int(brief["bpm"]), profile.artist["name"]),
+            "tags": tags(profile, lane, int(brief["bpm"])),
+            "description": description(profile, brief, platform),
+            "caption_instagram": description(profile, brief, "instagram")}

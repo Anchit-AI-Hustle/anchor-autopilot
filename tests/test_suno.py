@@ -542,9 +542,12 @@ def test_every_short_links_to_the_full_track():
     brief = {"bpm": 154, "key": "G# minor", "title": "Then Do It", "lane": "rawstyle", "short_s": 45}
     lines = describe(profile, brief)["description"].splitlines()
 
-    assert lines[0] == "Then Do It \u2014 ANCHOR"
-    assert lines[1].startswith("Full track, free:"), "the link sits on line 2, above the fold"
-    assert profile.artist["site_url"].removeprefix("https://").rstrip("/") in lines[1]
+    assert lines[0] and "ANCHOR" not in lines[0], "line one is about the record, not the label"
+    assert "Rawstyle" in lines[2] and "154 BPM" in lines[2], "line three: genre, tempo, artist"
+    link = next(i for i, l in enumerate(lines) if "full length:" in l)
+    assert link <= 5, "the playlist link sits above the fold"
+    assert profile.youtube["playlist_url"] in lines[link]
+    assert profile.artist["site_url"].removeprefix("https://").rstrip("/") in lines[link + 1]
 
 
 def test_the_copy_never_promises_a_track_that_is_already_out():

@@ -239,10 +239,37 @@ def write_wav(path: Path, audio: np.ndarray, sr: int = SR) -> None:
         w.writeframes(pcm.tobytes())
 
 
+class Fallback:
+    """Try the first engine; on its own error (missing key, API failure), use the second.
+
+    A QC failure is not an engine error: that comes back as a normal result and the
+    pipeline retries with a new seed as before.
+    """
+    def __init__(self, primary, secondary):
+        self.primary, self.secondary = primary, secondary
+        self.name = f"{primary.name}->{secondary.name}"
+
+    def generate(self, brief: dict, out_dir):
+        try:
+            self.primary.check()
+            return self.primary.generate(brief, out_dir)
+        except Exception as exc:                          # noqa: BLE001 - any engine failure
+            log(f"{self.primary.name} unavailable ({str(exc)[:160]}); falling back to {self.secondary.name}")
+            wav, stats = self.secondary.generate(brief, out_dir)
+            stats["fallback_from"] = self.primary.name
+            stats["fallback_reason"] = str(exc)[:200]
+            return wav, stats
+
+
 def get_engine(profile_music: dict, name: str | None = None):
     name = name or env("ANCHOR_ENGINE") or profile_music.get("engine", "acestep_cpp")
     if name == "fixture":
         return FixtureEngine()
+    if name == "lyria":
+        from .lyria import LyriaEngine
+        engine = LyriaEngine(wav=bool(profile_music.get("lyria_wav", False)))
+        fb = profile_music.get("fallback_engine")
+        return Fallback(engine, get_engine(profile_music, fb)) if fb and fb != "lyria" else engine
     if name == "acestep_cpp":
         return AceStepCpp(
             bin_dir=env("ACESTEP_BIN", "vendor/acestep.cpp/build"),

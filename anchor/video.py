@@ -160,3 +160,82 @@ def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: d
 def poster_frame(video: Path, out: Path, at: float = 3.0) -> None:
     run(["ffmpeg", "-y", "-v", "error", "-ss", f"{at:.2f}", "-i", video, "-frames:v", "1", "-q:v", "3", out],
         quiet=True)
+
+
+# ------------------------------------------------------------- full-length videos
+# The full track is a still frame over the audio, encoded at 2 fps: a 3-minute video comes
+# out at 4-5 MB and renders in seconds, and because every frame is the same, YouTube's own
+# thumbnail IS the composed frame - so the frame is designed as a thumbnail first.
+#
+# The 16:9 frame fills itself: the art bleeds edge to edge with the title and genre phrase set
+# over it. The catalogue's earlier full-length frames put a small square cover in the middle
+# of a blurred field; vidIQ scored one at 27/100, and "too much empty space" alone cost 40
+# points of that. Nothing here leaves the frame empty.
+
+def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path) -> Path:
+    W2, H2 = 1920, 1080
+    cov = Image.open(cover).convert("RGB")
+    s = max(W2 / cov.width, H2 / cov.height)
+    bg = cov.resize((int(cov.width * s) + 1, int(cov.height * s) + 1), Image.LANCZOS)
+    x, y = (bg.width - W2) // 2, (bg.height - H2) // 2
+    bg = bg.crop((x, y, x + W2, y + H2))
+    from PIL import ImageDraw, ImageFont
+    d = ImageDraw.Draw(bg, "RGBA")
+    d.rectangle([0, 0, W2, H2], fill=(9, 8, 8, 120))               # one even scrim: type stays legible
+    d.rectangle([0, 0, 1060, H2], fill=(9, 8, 8, 120))             # darker under the type column
+    anton = ImageFont.truetype(str(FONTS / "Anton.ttf"), 230)
+    mono_b = ImageFont.truetype(str(FONTS / "JetBrainsMono-Bold.ttf"), 54)
+    mono = ImageFont.truetype(str(FONTS / "JetBrainsMono-Regular.ttf"), 40)
+    title = brief["title"].upper()
+    while d.textlength(title, font=anton) > 1000 and anton.size > 110:
+        anton = ImageFont.truetype(str(FONTS / "Anton.ttf"), anton.size - 10)
+    d.text((110, 300), title, font=anton, fill=(244, 244, 242))
+    d.text((114, 300 + anton.size + 60), lane_phrase.upper(), font=mono_b, fill=(214, 76, 38))
+    d.text((114, 300 + anton.size + 140), f"{int(brief['bpm'])} BPM  ·  FULL TRACK", font=mono_b,
+           fill=(200, 198, 196))
+    d.text((114, H2 - 120), "  ".join(artist.upper()), font=mono, fill=(150, 148, 146))
+    bg.save(out, quality=93)
+    return out
+
+
+def frame_916(cover: Path, out: Path) -> Path:
+    W2, H2 = 1080, 1920
+    cov = Image.open(cover).convert("RGB")
+    s = max(W2 / cov.width, H2 / cov.height)
+    bg = cov.resize((int(cov.width * s) + 1, int(cov.height * s) + 1), Image.LANCZOS)
+    x, y = (bg.width - W2) // 2, (bg.height - H2) // 2
+    bg = bg.crop((x, y, x + W2, y + H2)).filter(ImageFilter.GaussianBlur(30))
+    bg = ImageEnhance.Brightness(bg).enhance(0.45)
+    fg = cov.resize((1000, 1000), Image.LANCZOS)
+    bg.paste(fg, (40, (H2 - 1000) // 2))
+    bg.save(out, quality=93)
+    return out
+
+
+def render_still(frame: Path, audio: Path, out: Path, crf: int = 23) -> dict:
+    duration = media_summary(audio)["duration"]
+    run(["ffmpeg", "-y", "-hide_banner", "-v", "error", "-loop", "1", "-framerate", "2", "-i", frame,
+         "-i", audio, "-c:v", "libx264", "-preset", "ultrafast", "-tune", "stillimage", "-crf", str(crf),
+         "-r", "2", "-g", "60", "-pix_fmt", "yuv420p", "-shortest",
+         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out], timeout=900)
+    info = media_summary(out)
+    if abs(info["duration"] - duration) > 1.5:
+        raise RuntimeError(f"full render truncated: {info['duration']:.1f}s vs audio {duration:.1f}s")
+    return info
+
+
+def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: str, brief: dict,
+                lane_phrase: str, artist: str) -> dict:
+    """The 16:9 YouTube video and the 9:16 Reel, both verified against the audio length.
+
+    ``art_raw`` is the artwork before the cover typography: the 16:9 frame sets its own title
+    so nothing half-cropped shows through. ``cover`` is the finished square for the Reel.
+    """
+    f169 = frame_169(art_raw if art_raw.exists() else cover, brief, lane_phrase, artist, out_dir / "frame-169.jpg")
+    f916 = frame_916(cover, out_dir / "frame-916.jpg")
+    v169 = out_dir / f"{base}-full-169.mp4"
+    v916 = out_dir / f"{base}-full-916.mp4"
+    i169 = render_still(f169, audio, v169, crf=23)
+    i916 = render_still(f916, audio, v916, crf=24)
+    return {"full_169": {"file": v169.name, **i169}, "full_916": {"file": v916.name, **i916},
+            "thumbnail": f169.name}

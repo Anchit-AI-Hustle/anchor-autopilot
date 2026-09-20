@@ -9,3 +9,4 @@ vendor/
 queue/*.m4a
 queue/*.src.mp4
 queue/done/
+build-art/

@@ -10,7 +10,7 @@ DROP_FIELDS = ("id", "date", "title", "lane", "lane_name", "bpm", "key", "family
                "duration_s", "short_s", "cover", "audio_url", "release_url", "short_url", "video_url",
                "youtube_url", "buffer_post_id", "status", "post_at", "qc", "art_source",
                "created_at", "genre_line", "style_line", "error", "accent", "caption", "seed",
-               "engine")
+               "engine", "instagram_url", "full_video_url", "reel_url", "hook", "lyrics")
 
 
 def load(path: Path = CATALOG_PATH, profile: Profile | None = None) -> dict:

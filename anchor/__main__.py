@@ -28,13 +28,13 @@ def main(argv: list[str] | None = None) -> int:
     m.add_argument("--no-queue", action="store_true",
                    help="generate even if tracks are queued (test the model without spending one)")
 
-    pb = sub.add_parser("publish", help="send the Short to YouTube via Buffer")
+    pb = sub.add_parser("publish", help="send the full track to YouTube and the Reel to Instagram via Buffer")
     pb.add_argument("--drop", required=True)
     pb.add_argument("--media-url", required=True)
     pb.add_argument("--dry-run", action="store_true")
     pb.add_argument("--now", action="store_true", help="publish immediately instead of at post_time_utc")
     pb.add_argument("--site-only", action="store_true", help="release on the website only (no Buffer key)")
-
+    pb.add_argument("--reel-url", default=None, help="public https URL of the 9:16 file for Instagram")
     r = sub.add_parser("record", help="add the drop to the website catalog")
     r.add_argument("--drop", required=True)
     r.add_argument("--repo", default=env("GITHUB_REPOSITORY"))
@@ -60,6 +60,8 @@ def main(argv: list[str] | None = None) -> int:
 
     h = sub.add_parser("has-drop", help="print yes/no: is there already a published drop for the date")
     h.add_argument("--date", default=None)
+    cd = sub.add_parser("cadence", help="print yes/no: is the date a release day on the every-N-days schedule")
+    cd.add_argument("--date", default=None)
 
     args = ap.parse_args(argv)
     profile = load_profile()
@@ -76,7 +78,7 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"out": str(out), "title": meta["brief"]["title"], "files": meta["files"]}))
     elif args.cmd == "publish":
         res = pipeline.publish(profile, Path(args.drop), args.media_url, dry_run=args.dry_run, now=args.now,
-                               site_only=args.site_only)
+                               site_only=args.site_only, reel_url=args.reel_url)
         print(json.dumps(res, indent=2))
     elif args.cmd == "record":
         drop = pipeline.record(profile, Path(args.drop), repo=args.repo, short_url=args.short_url,
@@ -107,6 +109,9 @@ def main(argv: list[str] | None = None) -> int:
         pipeline.fail(args.stage, args.error, args.run_url)
     elif args.cmd == "check":
         return check(profile)
+    elif args.cmd == "cadence":
+        day = args.date or pipeline.today_utc()
+        print("yes" if pipeline.is_release_day(profile, day) else "no")
     elif args.cmd == "has-drop":
         day = args.date or pipeline.today_utc()
         drops = catalog.load(CATALOG_PATH).get("drops", [])

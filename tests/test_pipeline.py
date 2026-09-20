@@ -21,7 +21,8 @@ def test_full_drop_cycle_site_only(fast_profile, site_dir, tmp_path, monkeypatch
 
     pub = pipeline.publish(fast_profile, day1, "https://example.com/v.mp4", site_only=True)
     assert pub["status"] == "released"
-    assert pub["payload"]["metadata"]["youtube"]["isAiGenerated"] is True
+    assert pub["payload"]["youtube"]["metadata"]["youtube"]["isAiGenerated"] is True
+    assert pub["payload"]["instagram"]["metadata"]["instagram"]["type"] == "reel"
 
     drop = pipeline.record(fast_profile, day1, repo="Anchit-AI-Hustle/anchor-autopilot",
                            short_url="https://example.com/v.mp4", catalog_path=cat_path,
@@ -64,7 +65,7 @@ def test_measured_tempo_overrides_requested_bpm(fast_profile, site_dir, tmp_path
     meta = pl.make(fast_profile, "2026-09-23", tmp_path / "d", art_mode="procedural",
                    catalog_path=site_dir / "data" / "catalog.json")
     assert meta["brief"]["bpm"] == 150 and meta["brief"]["bpm_requested"] == brief["bpm"]
-    assert "150 BPM" in meta["brief"]["description"] and "hard techno 150 bpm" in meta["brief"]["tags"]
+    assert "150 BPM" in meta["brief"]["description"] and "150 bpm techno" in meta["brief"]["tags"]
 
 
 def test_dry_run_publish_never_calls_buffer(fast_profile, tmp_path, monkeypatch, site_dir):

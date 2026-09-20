@@ -106,5 +106,5 @@ def test_brief_description_and_bounds():
     assert lane.bpm[0] <= b["bpm"] <= lane.bpm[1]
     # the key is measured and kept in the data for QC, but never shown to a listener
     assert f"{b['bpm']} BPM" in b["description"] and b["key"] not in b["description"]
-    assert "#hardtechno" in b["description"] and "AI-assisted" in b["description"]
+    assert "#hardtechno" in b["description"] and "AI use disclosed" in b["description"]
     assert len(b["youtube_title"]) <= 100
