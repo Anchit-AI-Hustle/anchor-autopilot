@@ -7,7 +7,7 @@ from anchor.config import load_profile
 from anchor.seo import description
 
 ROOT = Path(__file__).resolve().parents[1]
-META = json.load(open(ROOT / "build/e2e/meta.json"))
+META = json.load(open(ROOT / "tests/fixtures/drop-meta.json"))   # a real drop's meta.json, from an end-to-end run
 PROFILE = load_profile()
 CATALOG = json.load(open(ROOT / "site/data/catalog.json"))
 PUB = {"dry_run": False, "status": "scheduled", "post_id": "p1", "due_at": "2026-09-22T17:30:00Z",

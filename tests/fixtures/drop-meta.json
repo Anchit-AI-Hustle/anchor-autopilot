@@ -1,0 +1,169 @@
+{
+ "brief": {
+  "id": "2026-09-22",
+  "date": "2026-09-22",
+  "attempt": 0,
+  "seed": 1277714841,
+  "title": "Horizon Engine",
+  "lane": "rawstyle",
+  "lane_name": "Rawstyle Hybrid",
+  "bpm": 152,
+  "key": "A minor",
+  "family": "volt",
+  "family_name": "Volt",
+  "caption": "hard techno, rawstyle hybrid, industrial techno, brutal distorted rawstyle kick with long controlled tail, reverse bass pressure, screeching lead stabs, festival techno energy, loud clean master. Mid-2020s festival hard techno crossed with Dutch rawstyle, loud and modern. Mood: tense and coiled, exploding at the first drop, never letting go. 152 BPM, four-on-the-floor with a reverse-bass pull on the off-beat, snare rolls into every drop. Instruments: distorted kick and sub bass carry it; distorted synth screams sits under the intro, pitched kick rolls arrives with the build, tight snare rolls into drops owns the breakdown. No vocals, no singing, no spoken word: purely instrumental. Production: Loud and clean, kick tail long but controlled, leads screaming in the upper mids, wide festival stereo image; club master, deep controlled sub-bass, punchy kick transient, crisp but not harsh highs, real dynamics rather than constant loudness. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> outro; filtered kick alone, no sub bass yet, distorted synth screams far back, tension only at the start, and the outro kick and bass strip back, filter closing, distorted synth screams last, resolve to silence. Special moment: a pitched kick roll that climbs a full octave into the second drop.",
+  "lyrics": "[intro - filtered kick alone, no sub bass yet, distorted synth screams far back, tension only]\n[build - hi-hats and pitched kick rolls enter, filter opening, pressure rising bar by bar]\n[drop - full distorted kick, sub bass in, main hook at peak energy]\n[breakdown - kick out, tight snare rolls into drops alone over a held drone, tension kept]\n[build - snare roll and riser, every element pulled back in]\n[drop - harder than the first drop, everything at once]\n[outro - kick and bass strip back, filter closing, distorted synth screams last, resolve to silence]",
+  "textures": [
+   "distorted synth screams",
+   "pitched kick rolls",
+   "tight snare rolls into drops"
+  ],
+  "mood": "tense and coiled, exploding at the first drop, never letting go",
+  "special": "a pitched kick roll that climbs a full octave into the second drop",
+  "negative": "vocals, singing, spoken word, lyrics, acoustic guitar, piano ballad, pop, lo-fi, jazz, trance uplift, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop",
+  "duration_s": 150,
+  "short_s": 45,
+  "genre_line": "Rawstyle Hybrid, Hard Techno, Peak Time Techno",
+  "style_line": "Aggressive Techno, Hybrid Techno, Warehouse Techno, Driving Techno",
+  "post_at": "2026-09-22T17:30:00Z",
+  "youtube_title": "Horizon Engine — Rawstyle Hybrid, 152 BPM | ANCHOR",
+  "tags": [
+   "rawstyle techno",
+   "rawstyle hybrid techno",
+   "hard techno",
+   "peak time techno",
+   "hard techno 2026",
+   "techno",
+   "techno visualizer",
+   "anchor techno",
+   "techno official visualizer",
+   "rawstyle hybrid",
+   "152 bpm techno",
+   "techno 2026",
+   "ai techno",
+   "techno full track"
+  ],
+  "description": "Tense and coiled, exploding at the first drop, never letting go.\n\nA pitched kick roll that climbs a full octave into the second drop.\n\nRawstyle Hybrid · 152 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nSite: anchor.anchit-tandon.com\n\nA new ANCHOR track every other day. Made with AI music tools; AI use disclosed.\n\n#hardtechno #industrialtechno #techno",
+  "caption_instagram": "Tense and coiled, exploding at the first drop, never letting go.\n\nA pitched kick roll that climbs a full octave into the second drop.\n\nRawstyle Hybrid · 152 BPM · ANCHOR\n\nFull catalogue: anchor.anchit-tandon.com\n\n#hardtechno #industrialtechno #techno #technomusic #warehousetechno #darktechno #peaktimetechno #rawtechno #undergroundtechno #technoreel #electronicmusic #aimusic #newmusic #technolovers #rave #clubmusic #technodaily #instrumental #anchortechno",
+  "lyrics_sung": null,
+  "hook": null,
+  "key_confidence": 0.94,
+  "key_requested": "G minor"
+ },
+ "qc": {
+  "audio": {
+   "duration_s": 150.0,
+   "finite": true,
+   "rms_db": -12.95,
+   "peak_db": -1.94,
+   "clip_ratio": 0.0,
+   "longest_dropout_s": 0.0,
+   "low_ratio": 0.861,
+   "bpm_est": 152.0
+  },
+  "attempts": [
+   {
+    "attempt": 0,
+    "seed": 1277714841,
+    "ok": true,
+    "fail": [],
+    "warn": [],
+    "nearest_audio": {
+     "id": "2026-09-05",
+     "similarity": 0.24
+    }
+   }
+  ],
+  "warnings": []
+ },
+ "loudness": {
+  "before": {
+   "input_i": -12.32,
+   "input_tp": -1.46,
+   "input_lra": 4.3,
+   "input_thresh": -22.48
+  },
+  "after": {
+   "input_i": -11.24,
+   "input_tp": -1.26,
+   "input_lra": 4.8,
+   "input_thresh": -21.49
+  },
+  "gain_db": 1.32,
+  "tail_db": 4.03,
+  "outro_fade_s": 3.0,
+  "music_end_s": 149.9
+ },
+ "engine": {
+  "engine": "fixture",
+  "total_s": 0.0
+ },
+ "art": {
+  "source": "procedural",
+  "prompt": null,
+  "fallback_reason": null,
+  "nearest": {
+   "id": "2026-09-12",
+   "distance": 108.0
+  }
+ },
+ "short_window": {
+  "start_s": 88.426,
+  "length_s": 44.211,
+  "beat_offset_s": 0.0093
+ },
+ "video": {
+  "duration": 44.211,
+  "size_bytes": 17554675,
+  "width": 1080,
+  "height": 1920,
+  "vcodec": "h264",
+  "pix_fmt": "yuv420p",
+  "fps": 30.0,
+  "acodec": "aac",
+  "sample_rate": 48000,
+  "channels": 2
+ },
+ "full": {
+  "full_169": {
+   "file": "ANCHOR-2026-09-22-horizon-engine-full-169.mp4",
+   "duration": 149.9,
+   "size_bytes": 6320273,
+   "width": 1920,
+   "height": 1080,
+   "vcodec": "h264",
+   "pix_fmt": "yuv420p",
+   "fps": 2.0,
+   "acodec": "aac",
+   "sample_rate": 48000,
+   "channels": 2
+  },
+  "full_916": {
+   "file": "ANCHOR-2026-09-22-horizon-engine-full-916.mp4",
+   "duration": 149.9,
+   "size_bytes": 9396008,
+   "width": 1080,
+   "height": 1920,
+   "vcodec": "h264",
+   "pix_fmt": "yuv420p",
+   "fps": 2.0,
+   "acodec": "aac",
+   "sample_rate": 48000,
+   "channels": 2
+  },
+  "thumbnail": "frame-169.jpg"
+ },
+ "files": {
+  "base": "ANCHOR-2026-09-22-horizon-engine",
+  "mp3": "ANCHOR-2026-09-22-horizon-engine.mp3",
+  "flac": "ANCHOR-2026-09-22-horizon-engine.flac",
+  "short": "ANCHOR-2026-09-22-horizon-engine-short.mp4",
+  "full_169": "ANCHOR-2026-09-22-horizon-engine-full-169.mp4",
+  "full_916": "ANCHOR-2026-09-22-horizon-engine-full-916.mp4",
+  "thumbnail": "frame-169.jpg",
+  "cover": "ANCHOR-2026-09-22-horizon-engine-cover.jpg",
+  "cover_600": "cover_600.jpg",
+  "poster": "poster.jpg"
+ },
+ "made_at": "2026-09-20T09:41:00Z"
+}
