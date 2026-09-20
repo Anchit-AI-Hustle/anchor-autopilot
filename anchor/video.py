@@ -181,8 +181,8 @@ def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path
     bg = bg.crop((x, y, x + W2, y + H2))
     from PIL import ImageDraw, ImageFont
     d = ImageDraw.Draw(bg, "RGBA")
-    d.rectangle([0, 0, W2, H2], fill=(9, 8, 8, 120))               # one even scrim: type stays legible
-    d.rectangle([0, 0, 1060, H2], fill=(9, 8, 8, 120))             # darker under the type column
+    d.rectangle([0, 0, W2, H2], fill=(9, 8, 8, 60))                # a light even scrim: the art stays the picture
+    d.rectangle([0, 0, 1060, H2], fill=(9, 8, 8, 110))             # darker only under the type column
     anton = ImageFont.truetype(str(FONTS / "Anton.ttf"), 230)
     mono_b = ImageFont.truetype(str(FONTS / "JetBrainsMono-Bold.ttf"), 54)
     mono = ImageFont.truetype(str(FONTS / "JetBrainsMono-Regular.ttf"), 40)
