@@ -93,3 +93,60 @@ def test_description_carries_the_copyright_line():
     for platform in ("youtube", "instagram"):
         text = description(PROFILE, brief, platform)
         assert "© 2026 ANCHOR. All rights reserved." in text.splitlines()
+
+
+# ------------------------------------------------------------------ the words
+def test_arc_finds_the_breakdown_and_the_drop():
+    import numpy as np
+    from anchor.audio import arc
+    sr = 48_000
+    t = np.arange(sr * 60) / sr
+    loud = 0.5 * np.sign(np.sin(2 * np.pi * 50 * t))          # a square wave: loud
+    x = loud.copy()
+    x[sr * 20: sr * 30] *= 0.1                                  # 10 s breakdown at 0:20
+    a = arc(np.stack([x, x], axis=1), sr)
+    assert a["duration_s"] == 60.0
+    assert len(a["breakdowns"]) == 1 and abs(a["breakdowns"][0]["start"] - 20) <= 2 and abs(a["breakdowns"][0]["end"] - 30) <= 2
+    assert any(abs(d["at"] - 30) <= 2 for d in a["drops"]), "the return is a drop"
+
+
+def test_template_copy_is_human_grounded_and_repeatable(monkeypatch):
+    from anchor import copy as C
+    brief = {**META["brief"], "date": "2026-09-22"}
+    arc = {"duration_s": 150.0, "breakdowns": [{"start": 66.0, "end": 86.0, "depth_db": -14.0}],
+           "drops": [{"at": 34.0, "rise_db": 3.8}, {"at": 144.0, "rise_db": 4.4}]}
+    monkeypatch.delenv("GEMINI_API_KEY", raising=False)
+    a = C.write(PROFILE, brief, arc)
+    b = C.write(PROFILE, brief, arc)
+    assert a == b and a["source"] == "template"
+    parts = a["body"].split("\n\n")
+    assert len(parts) == 5 and parts[3].startswith("Play it when:") and "read" in parts[4].lower()
+    assert "0:34" in a["body"] and "1:06" in a["body"] and C._timestamps_ok(a["body"], arc)
+    assert "!" not in a["body"] and a["hashtags"].startswith("#") and len(a["hashtags"].split()) == 3
+
+
+def test_gemini_copy_is_checked_against_the_record(monkeypatch):
+    from anchor import copy as C
+    brief = {**META["brief"], "date": "2026-09-22"}
+    arc = {"duration_s": 150.0, "breakdowns": [], "drops": [{"at": 34.0, "rise_db": 3.8}]}
+    good = {"hook": "The kick arrives before you do.", "body": "By 0:34 the floor is yours.", "why": "I made it for the walk in.",
+            "moment": "Play it when: the room needs you.", "ask": "Tell me the bar that got you; I read every comment.", "hashtags": "#rawstyle #hardtechno #techno"}
+    bad = {**good, "body": "At 1:10 it explodes."}          # no such moment in the record
+    answers = iter([json.dumps(bad), json.dumps(good)])
+    monkeypatch.setenv("GEMINI_API_KEY", "x")
+    monkeypatch.setattr(C, "ask_gemini", lambda prompt, key: next(answers))
+    out = C.write(PROFILE, brief, arc)
+    assert out["source"] == "gemini" and "0:34" in out["body"] and "1:10" not in out["body"]
+    # every answer bad -> the template, never a broken description
+    monkeypatch.setattr(C, "ask_gemini", lambda prompt, key: json.dumps(bad))
+    assert C.write(PROFILE, brief, arc)["source"] == "template"
+
+
+def test_description_is_the_copy_then_the_practical_block():
+    brief = {**META["brief"], "copy": {"body": "Hook line.\n\nBody at 0:34.\n\nWhy.\n\nPlay it when: late.\n\nAsk? I read them.", "hashtags": "#a #b #c", "source": "template"}}
+    d = description(PROFILE, brief)
+    lines = d.splitlines()
+    assert lines[0] == "Hook line." and d.endswith("#a #b #c")
+    assert "Rawstyle Hybrid · 152 BPM · ANCHOR" in lines and "Instagram: @anchor_at2803" in lines
+    ig = description(PROFILE, brief, "instagram")
+    assert ig.startswith("Hook line.") and "playlist" not in ig and "#anchortechno" in ig

@@ -166,14 +166,15 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
     F.append(_field("youtube title", b["youtube_title"],
                     f"'<Title> — <genre phrase>, <BPM> BPM | {profile.artist['name']}': the search phrase people type (genre + tempo) sits in the title; the genre phrase is the first phrase of the lane's genre line; capped at {MAX_TITLE} characters.",
                     f"{len(b['youtube_title'])} chars; genre phrase {genre_phrase(lane)!r}", "content"))
+    copy = b.get("copy") or {}
     F.append(_field("description", b["description"],
-                    "Two lines about the record in the house voice (mood arc, then the one special moment), the genre · BPM · artist line, the full-length playlist link inside the first five lines (what YouTube shows above the fold), the site, the AI disclosure, the © line, then three hashtags.",
-                    f"mood: {b.get('mood')!r}; special: {b.get('special')!r}", "content"))
+                    "Written as the person who made it: a hook line above the fold, what the record does to you with the real timestamps measured on the master, why it exists, 'Play it when:', and a question for the comments; then genre · BPM · artist, the playlist and site links, the cadence line with the AI disclosure, the © line, three hashtags. Gemini writes it in the house voice and every m:ss is checked against the measured arc; the template writes it when there is no key.",
+                    f"written by {copy.get('source', 'template')}; arc: {len((b.get('arc') or {}).get('drops', []))} drop(s), {len((b.get('arc') or {}).get('breakdowns', []))} breakdown(s); mood: {b.get('mood')!r}", "content"))
     F.append(_field("tags", b["tags"],
                     "Lane tags first (the niche), then the channel's base tags, the genre phrase, '<BPM> bpm techno', the year, 'ai techno' and 'techno full track'; duplicates removed, order kept so the most specific tags lead.",
                     f"{len(b['tags'])} tags", "content"))
     F.append(_field("instagram caption", b.get("caption_instagram"),
-                    "Same two lines and genre line as YouTube, the site link, then the channel's Instagram hashtag set (broader than YouTube's three).", None, "content"))
+                    "The same copy as YouTube, the genre line, the site link, then the channel's Instagram hashtag set (broader than YouTube's three).", None, "content"))
 
     # ---- platform settings
     F.append(_field("category", "Music (10)", "YouTube category id from the profile; every drop is a song.", f"sent as categoryId {payload.get('categoryId', yt['category_id'])}", "platform"))

@@ -358,3 +358,29 @@ def cut(src: Path, dst: Path, start: float, length: float, fade_in: float = 0.35
     run(["ffmpeg", "-y", "-v", "error", "-ss", f"{start:.3f}", "-t", f"{length:.3f}", "-i", src,
          "-af", f"afade=t=in:st=0:d={fade_in},afade=t=out:st={max(0.0, length - fade_out):.3f}:d={fade_out}",
          "-ar", str(SR), "-c:a", "pcm_s16le", dst], quiet=True)
+
+
+def arc(audio: np.ndarray, sr: int = SR, win_s: float = 2.0) -> dict:
+    """Where the record breathes: breakdowns (>= 6 dB under the loudest stretch, >= 6 s long)
+    and drops (the biggest jumps back up). Seconds, so the copy can say "at 2:14" and mean it."""
+    mono = audio.mean(axis=1) if audio.ndim == 2 else audio
+    n = int(win_s * sr)
+    if len(mono) < 3 * n:
+        return {"duration_s": round(len(mono) / sr, 1), "breakdowns": [], "drops": []}
+    frames = mono[: len(mono) // n * n].reshape(-1, n)
+    rms = 20 * np.log10(np.sqrt((frames ** 2).mean(axis=1)) + 1e-9)
+    sm = np.convolve(rms, np.ones(3) / 3, mode="same")
+    peak, duration = float(sm.max()), len(mono) / sr
+    quiet = sm < peak - 6
+    breakdowns, start = [], None
+    for i, q in enumerate(quiet):
+        if q and start is None:
+            start = i
+        if (not q or i == len(quiet) - 1) and start is not None:
+            if i - start >= 3 and start * win_s > duration * 0.08 and start * win_s < duration * 0.95:
+                breakdowns.append({"start": start * win_s, "end": i * win_s, "depth_db": round(float(sm[start:i].min() - peak), 1)})
+            start = None
+    d = np.diff(sm)
+    drops = sorted(float(i * win_s) for i in np.argsort(d)[::-1][:4] if d[i] > 3 and i * win_s > 1)
+    return {"duration_s": round(duration, 1), "breakdowns": breakdowns, "drops": [{"at": t, "rise_db": round(float(d[int(t / win_s)]), 1)} for t in drops]}
+

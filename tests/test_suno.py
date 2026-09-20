@@ -543,11 +543,13 @@ def test_every_short_links_to_the_full_track():
     lines = describe(profile, brief)["description"].splitlines()
 
     assert lines[0] and "ANCHOR" not in lines[0], "line one is about the record, not the label"
-    assert "Rawstyle" in lines[2] and "154 BPM" in lines[2], "line three: genre, tempo, artist"
+    # the copy (hook, what it does, why, when, ask) owns the fold; the practical block follows it
+    spec = next(i for i, l in enumerate(lines) if "Rawstyle" in l and "154 BPM" in l)
     link = next(i for i, l in enumerate(lines) if "full length:" in l)
-    assert link <= 5, "the playlist link sits above the fold"
+    assert spec < link, "genre and tempo, then the way in"
     assert profile.youtube["playlist_url"] in lines[link]
     assert profile.artist["site_url"].removeprefix("https://").rstrip("/") in lines[link + 1]
+    assert any("AI use disclosed" in l for l in lines) and any("All rights reserved" in l for l in lines)
 
 
 def test_the_copy_never_promises_a_track_that_is_already_out():

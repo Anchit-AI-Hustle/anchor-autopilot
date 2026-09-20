@@ -91,3 +91,16 @@ The page reads the ledger, the catalog and the status file, so it is current as 
 drop commit deploys. Songs released by hand before the ledger existed were backfilled on
 2026-09-20 with `source: "manual"` and are never touched by the robot.
 
+## The words (v3 voice)
+
+Every description is written as the person who made the record, not a label: a hook line
+above the fold, what the track does to you with timestamps measured on the master
+(`audio.arc`), why it exists, a "Play it when:", and a question for the comments; then the
+genre · BPM · artist line, the links, the cadence line with the AI disclosure, the © line and
+three hashtags. `anchor/copy.py` asks Gemini (`GEMINI_API_KEY`, model `gemini-2.5-flash`) for
+those five parts in the house voice and rejects any answer that uses a timestamp the record
+does not have, marketing words, or exclamation marks; with no key (or `ANCHOR_COPY=template`)
+a seeded template writes the same five parts from the brief and the arc. The 38 videos already
+on the channel, the four playlists and the channel description were rewritten by hand in this
+voice on 2026-09-21.
+

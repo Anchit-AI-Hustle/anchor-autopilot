@@ -8,9 +8,10 @@ from pathlib import Path
 
 from . import catalog, ledger
 from .art import make_cover, og_card
-from .audio import (analyze, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
+from .audio import (analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
 from .brief import describe, make_brief, post_time
+from .copy import write as write_copy
 from .config import CATALOG_PATH, SITE, STATUS_PATH, Profile, env
 from .music import get_engine
 from .queue import QUEUE, mark_done, next_track
@@ -116,7 +117,13 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     flac = out_dir / f"{base}.flac"
     encode_flac(master_wav, flac)
 
-    start, length = best_window(decode(master_wav), int(brief["bpm"]), float(brief["short_s"]))
+    master_audio = decode(master_wav)
+    # the words come after the master: the copy quotes where the record actually breathes
+    brief["arc"] = arc(master_audio)
+    brief["copy"] = write_copy(profile, brief, brief["arc"])
+    brief.update(describe(profile, brief))
+
+    start, length = best_window(master_audio, int(brief["bpm"]), float(brief["short_s"]))
     short_wav = out_dir / "short.wav"
     cut(master_wav, short_wav, start, length)
     # the Short pulses on the beat, so lock it to the beat grid of this cut

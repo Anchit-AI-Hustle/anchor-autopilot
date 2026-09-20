@@ -6,6 +6,7 @@
 name = "ANCHOR"
 handle = "@AT_ANCHOR"
 suno_handle = "anchor_at"          # public profile the website syncs from
+instagram_handle = "anchor_at2803"
 youtube_channel_id = "UCAKPJrMOwspkOXY1aLKaAkQ"
 youtube_url = "https://www.youtube.com/@AT_ANCHOR"
 site_url = "https://anchor.anchit-tandon.com"

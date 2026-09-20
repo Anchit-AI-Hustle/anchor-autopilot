@@ -115,21 +115,26 @@ def vibe_copy(brief: dict) -> str:
 
 
 def description(profile: Profile, brief: dict, platform: str = "youtube") -> str:
+    """The copy (hook, body, why, moment, ask) first, because that is what sits above the fold;
+    then genre · BPM · artist, the links, the cadence with the AI disclosure, the © line and
+    the hashtags. Instagram gets the site instead of the playlist and its own hashtag set."""
     yt, name = profile.youtube, profile.artist["name"]
     lane = profile.lane(brief["lane"])
     site = profile.artist["site_url"].removeprefix("https://").rstrip("/")
     playlist = yt.get("playlist_url", "")
-    head = [vibe_copy(brief), "",
-            f"{genre_phrase(lane)} · {int(brief['bpm'])} BPM · {name}"]
+    copy = brief.get("copy") or {}
+    body = copy.get("body") or vibe_copy(brief)
     year = (brief.get("date") or datetime.now(timezone.utc).date().isoformat())[:4]
     rights = f"© {year} {name}. All rights reserved."
+    cadence = f"A new {name} track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always."
+    line = f"{genre_phrase(lane)} · {int(brief['bpm'])} BPM · {name}"
     if platform == "instagram":
-        body = [*head, "", f"Full catalogue: {site}", rights, "",
-                " ".join(dict.fromkeys([*yt["hashtags"], *yt.get("instagram_hashtags", [])]))]
-    else:
-        links = [f"Every {name} track, full length: {playlist}" if playlist else f"Full catalogue: {site}",
-                 f"Site: {site}"]
-        body = [*head, "", *links, "",
-                f"A new {name} track every other day. Made with AI music tools; AI use disclosed.", rights, "",
-                " ".join(yt["hashtags"])]
-    return "\n".join(body)
+        tags = " ".join(dict.fromkeys([*yt["hashtags"], *yt.get("instagram_hashtags", [])]))
+        return "\n".join([body, "", line, "", f"Full catalogue, free: {site}", "", cadence, rights, "", tags])
+    links = [f"Every {name} track, full length: {playlist}" if playlist else f"Full catalogue: {site}",
+             f"Listen and download free: {site}"]
+    handle = profile.artist.get("instagram_handle")
+    if handle:
+        links.append(f"Instagram: @{handle.lstrip('@')}")
+    tags = copy.get("hashtags") or " ".join(yt["hashtags"])
+    return "\n".join([body, "", line, "", *links, "", cadence, rights, "", tags])
