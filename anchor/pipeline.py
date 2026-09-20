@@ -6,7 +6,7 @@ import shutil
 from datetime import date as Date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import catalog
+from . import catalog, ledger
 from .art import make_cover, og_card
 from .audio import (analyze, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
@@ -126,13 +126,17 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     art = make_cover(fam, brief, profile.artist["name"], out_dir, art_mode)
     # the cover must not repeat a motif already on the site; redraw from the next seeds
     covers_dir = SITE / "covers"
+    tries = []   # every draw, kept for the ledger: seed, how close it came, to which cover
     for bump in range(1, 6):
         dist, twin = nearest_cover(out_dir / "cover.jpg", covers_dir)
+        tries.append({"seed": int(brief["seed"]) + bump - 1, "nearest": twin, "distance": dist,
+                      "ok": dist >= COVER_MIN_DISTANCE})
         if dist >= COVER_MIN_DISTANCE:
             break
         log(f"cover too close to {twin} ({dist:.0f}/256 < {COVER_MIN_DISTANCE}); redrawing with seed+{bump}")
         art = make_cover(fam, {**brief, "seed": int(brief["seed"]) + bump}, profile.artist["name"], out_dir, art_mode)
     art["nearest"] = {"id": twin, "distance": dist}
+    art["tries"] = tries
     cover_named = out_dir / f"{base}-cover.jpg"
     shutil.copy(out_dir / "cover.jpg", cover_named)
 
@@ -304,7 +308,8 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
 # ----------------------------------------------------------------------- record
 def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_url: str | None = None,
            run_url: str | None = None, catalog_path: Path = CATALOG_PATH, status_path: Path = STATUS_PATH,
-           site_dir: Path = SITE) -> dict:
+           site_dir: Path = SITE, ledger_path: Path | None = None) -> dict:
+    ledger_path = ledger_path or catalog_path.parent / "ledger.json"   # lives beside the catalog
     meta = read_json(drop_dir / "meta.json")
     pub = read_json(drop_dir / "publish.json", {}) or {}
     brief, files = meta["brief"], meta["files"]
@@ -348,6 +353,11 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
     cat = catalog.load(catalog_path, profile)
     catalog.upsert(cat, drop)
     catalog.save(cat, catalog_path)
+    # the ledger keeps what the catalog does not: every attempt, every file, every upload,
+    # and why each published field is what it is (read by /ops/)
+    book = ledger.load(ledger_path)
+    ledger.upsert(book, ledger.build_entry(profile, meta, pub, drop, cat))
+    ledger.save(book, ledger_path)
     if catalog.history(cat)[0]["id"] == brief["id"]:  # newest drop becomes the social preview image
         og_card(drop_dir / "cover.jpg", brief["title"], f"{brief['lane_name']} · {brief['bpm']} BPM",
                 profile.family(brief["family"]).accent, site_dir / "og.jpg", profile.artist["name"])
@@ -367,8 +377,10 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
 
 
 # ------------------------------------------------------------------------- sync
-def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH) -> int:
+def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH,
+         ledger_path: Path | None = None) -> int:
     """Pull Buffer status (sent/error + YouTube link) for recent drops."""
+    ledger_path = ledger_path or catalog_path.parent / "ledger.json"
     key = env("BUFFER_API_KEY")
     if not key:
         log("sync: BUFFER_API_KEY not set, skipping")
@@ -394,6 +406,9 @@ def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH)
             changed += 1
     if changed:
         catalog.save(cat, catalog_path)
+        book = ledger.load(ledger_path)
+        if ledger.refresh(book, cat):
+            ledger.save(book, ledger_path)
     log(f"sync: {changed} drop(s) updated")
     return changed
 

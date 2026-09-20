@@ -12,6 +12,7 @@ FONTS = ROOT / "assets" / "fonts"
 SITE = ROOT / "site"
 CATALOG_PATH = SITE / "data" / "catalog.json"
 STATUS_PATH = SITE / "data" / "status.json"
+LEDGER_PATH = SITE / "data" / "ledger.json"
 
 
 @dataclass(frozen=True)

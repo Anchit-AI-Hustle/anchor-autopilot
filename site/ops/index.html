@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ANCHOR ops — every song, every variant, every upload, every decision</title>
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jbmono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/ops.css">
+  <script src="/assets/ops.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="/" aria-label="ANCHOR home">A N C H O R</a>
+    <nav aria-label="Primary">
+      <a href="#songs">Songs</a>
+      <a href="#rules">Rules</a>
+      <a href="/">Site</a>
+      <a href="https://studio.youtube.com/channel/UCAKPJrMOwspkOXY1aLKaAkQ/videos" rel="noopener" target="_blank">Studio<span aria-hidden="true"> ↗</span></a>
+      <a href="https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions" rel="noopener" target="_blank">Runs<span aria-hidden="true"> ↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="ops-head">
+      <p class="eyebrow">Ops · refreshed by every run</p>
+      <h1>The ledger</h1>
+      <p class="lede">Every song the robot made or you queued, every variant it tried, every file it rendered, every place it was uploaded, and why each published field is what it is. Written by <code>anchor record</code> on each drop and <code>anchor sync</code> when Buffer reports back; this page reads the same files the website does.</p>
+      <p id="run" class="run" aria-live="polite">Loading…</p>
+    </section>
+
+    <dl class="stats ops-stats" id="stats" aria-label="Totals"></dl>
+
+    <section id="songs" aria-labelledby="songs-h">
+      <div class="bar">
+        <h2 id="songs-h">Songs</h2>
+        <div class="filters" role="group" aria-label="Filters">
+          <label>Source <select id="f-source"><option value="">all</option><option value="pipeline">robot</option><option value="queue">your queue</option><option value="manual">by hand</option></select></label>
+          <label><input type="checkbox" id="f-attn"> needs attention</label>
+          <label class="search">Find <input type="search" id="f-q" placeholder="title, id, lane"></label>
+        </div>
+      </div>
+      <p class="hint">Newest first. Open a row for the variants, the uploads and the decision table.</p>
+      <div class="table-wrap">
+        <table class="ledger" id="ledger">
+          <thead>
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Song</th>
+              <th scope="col">Lane · BPM</th>
+              <th scope="col">Source</th>
+              <th scope="col">Variants</th>
+              <th scope="col">Uploads</th>
+              <th scope="col"><span class="sr">Details</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+      <p id="empty" class="hint" hidden>Nothing matches.</p>
+    </section>
+
+    <section id="rules" aria-labelledby="rules-h">
+      <h2 id="rules-h">The rules, in one place</h2>
+      <p class="hint">The same decision table every song carries, read across the whole channel: one row per field, the rule, and how many songs it has been applied to.</p>
+      <div class="table-wrap">
+        <table class="rules" id="rules-table">
+          <thead><tr><th scope="col">Field</th><th scope="col">Rule</th><th scope="col">Songs</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>Private page: not indexed, not linked from the site. Data: <a href="/data/ledger.json">ledger.json</a> · <a href="/data/catalog.json">catalog.json</a> · <a href="/data/status.json">status.json</a></p>
+  </footer>
+
+  <template id="row-detail">
+    <tr class="detail" hidden>
+      <td colspan="7">
+        <div class="detail-grid">
+          <section class="box">
+            <h3>Variants tried</h3>
+            <table class="mini variants"><thead><tr><th>What</th><th>Score</th><th>Result</th><th>Why</th></tr></thead><tbody></tbody></table>
+          </section>
+          <section class="box">
+            <h3>Uploads</h3>
+            <table class="mini uploads"><thead><tr><th>Target</th><th>File</th><th>Status</th><th>Link</th></tr></thead><tbody></tbody></table>
+          </section>
+          <section class="box files">
+            <h3>Files rendered</h3>
+            <table class="mini files"><thead><tr><th>Role</th><th>File</th><th>Spec</th></tr></thead><tbody></tbody></table>
+          </section>
+          <section class="box wide">
+            <h3>Every field, and why</h3>
+            <table class="mini decisions"><thead><tr><th>Field</th><th>Value</th><th>Rule</th><th>Evidence</th></tr></thead><tbody></tbody></table>
+          </section>
+        </div>
+      </td>
+    </tr>
+  </template>
+</body>
+</html>

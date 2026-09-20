@@ -39,7 +39,7 @@ jobs:
         run: python -m anchor check
 
       - name: Check site JavaScript syntax
-        run: node --check site/assets/app.js
+        run: node --check site/assets/app.js && node --check site/assets/ops.js
 
       - name: Tests
         run: python -m pytest -q

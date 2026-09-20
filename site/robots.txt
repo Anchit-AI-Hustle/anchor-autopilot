@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Disallow: /ops/
 Sitemap: https://anchor.anchit-tandon.com/sitemap.xml

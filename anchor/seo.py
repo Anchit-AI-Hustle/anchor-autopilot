@@ -15,6 +15,8 @@ Project Mayhem" x6 is why that track is called Project Mayhem).
 """
 from __future__ import annotations
 
+from datetime import datetime, timezone
+
 import collections
 import re
 
@@ -119,13 +121,15 @@ def description(profile: Profile, brief: dict, platform: str = "youtube") -> str
     playlist = yt.get("playlist_url", "")
     head = [vibe_copy(brief), "",
             f"{genre_phrase(lane)} · {int(brief['bpm'])} BPM · {name}"]
+    year = (brief.get("date") or datetime.now(timezone.utc).date().isoformat())[:4]
+    rights = f"© {year} {name}. All rights reserved."
     if platform == "instagram":
-        body = [*head, "", f"Full catalogue: {site}", "",
+        body = [*head, "", f"Full catalogue: {site}", rights, "",
                 " ".join(dict.fromkeys([*yt["hashtags"], *yt.get("instagram_hashtags", [])]))]
     else:
         links = [f"Every {name} track, full length: {playlist}" if playlist else f"Full catalogue: {site}",
                  f"Site: {site}"]
         body = [*head, "", *links, "",
-                f"A new {name} track every other day. Made with AI music tools; AI use disclosed.", "",
+                f"A new {name} track every other day. Made with AI music tools; AI use disclosed.", rights, "",
                 " ".join(yt["hashtags"])]
     return "\n".join(body)

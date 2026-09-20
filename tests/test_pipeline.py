@@ -47,6 +47,12 @@ def test_full_drop_cycle_site_only(fast_profile, site_dir, tmp_path, monkeypatch
     assert cat["legacy"], "legacy releases survive catalog updates"
     assert read_json(status_path)["streak"] == 2
     assert pipeline.sync(fast_profile, catalog_path=cat_path) == 0  # no Buffer key -> skipped
+    # the ledger lands beside the catalog, one entry per drop, every field with its reason
+    book = read_json(cat_path.parent / "ledger.json")
+    assert [e["id"] for e in book["entries"]] == ["2026-09-12", "2026-09-11"]
+    assert all(f["rule"] for e in book["entries"] for f in e["fields"])
+    assert {u["target"] for u in book["entries"][0]["uploads"]} >= {"youtube_full", "instagram_reel", "github_release", "site"}
+    assert [v["ok"] for v in book["entries"][0]["variants"] if v["kind"] == "cover"], "cover draws are logged"
 
 
 def test_measured_tempo_overrides_requested_bpm(fast_profile, site_dir, tmp_path, monkeypatch):

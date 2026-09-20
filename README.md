@@ -77,3 +77,17 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
 - **Outputs per drop:** full 16:9 video (YouTube, first frame = thumbnail), full 9:16 (Instagram Reel),
   45 s Short, MP3/FLAC, cover. Publishing goes through Buffer to YouTube and Instagram
   (`BUFFER_INSTAGRAM_CHANNEL_ID`).
+
+## The ledger (/ops/)
+
+`site/data/ledger.json` is the tracker behind `anchor.anchit-tandon.com/ops/` (not indexed,
+not linked). `anchor record` writes one entry per drop: every attempt the engine made (seed,
+QC result, nearest released record), the Suno siblings of a queued track and which one was
+picked, every cover draw and how close it came to an existing one, every file rendered, every
+upload target with its status and link, and a decision table: each published field, the rule
+that produced it, and the evidence. `anchor sync` refreshes the upload rows when Buffer reports
+a status or a link; `anchor ledger` does the same by hand; `anchor check` validates the file.
+The page reads the ledger, the catalog and the status file, so it is current as soon as the
+drop commit deploys. Songs released by hand before the ledger existed were backfilled on
+2026-09-20 with `source: "manual"` and are never touched by the robot.
+

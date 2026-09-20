@@ -6,9 +6,9 @@ import json
 import sys
 from pathlib import Path
 
-from . import catalog, pipeline, queue
+from . import catalog, ledger, pipeline, queue
 from .brief import make_brief
-from .config import CATALOG_PATH, STATUS_PATH, env, load_profile
+from .config import CATALOG_PATH, LEDGER_PATH, STATUS_PATH, env, load_profile
 from .util import read_json
 
 
@@ -57,6 +57,7 @@ def main(argv: list[str] | None = None) -> int:
     qa.add_argument("--handle", default=None)
 
     sub.add_parser("check", help="validate profile and site data")
+    sub.add_parser("ledger", help="refresh the /ops ledger's upload rows from the catalog")
 
     h = sub.add_parser("has-drop", help="print yes/no: is there already a published drop for the date")
     h.add_argument("--date", default=None)
@@ -109,6 +110,11 @@ def main(argv: list[str] | None = None) -> int:
         pipeline.fail(args.stage, args.error, args.run_url)
     elif args.cmd == "check":
         return check(profile)
+    elif args.cmd == "ledger":
+        book = ledger.load(LEDGER_PATH)
+        n = ledger.refresh(book, catalog.load(CATALOG_PATH))
+        ledger.save(book, LEDGER_PATH)
+        print(f"ledger: {len(book['entries'])} entries, {n} upload row(s) refreshed")
     elif args.cmd == "cadence":
         day = args.date or pipeline.today_utc()
         print("yes" if pipeline.is_release_day(profile, day) else "no")
@@ -139,10 +145,12 @@ def check(profile) -> int:
     status = read_json(STATUS_PATH, {}) or {}
     if status and "last_run" in status and status["last_run"].get("result") not in ("ok", "failed", "dry-run", "pending"):
         problems.append("status.last_run.result invalid")
+    book = ledger.load(LEDGER_PATH)
+    problems.extend(ledger.problems(book))
     for msg in problems:
         print("CHECK FAIL:", msg, file=sys.stderr)
     print(f"check: profile ok ({len(profile.lanes)} lanes, {len(profile.families)} families), "
-          f"catalog {len(ids)} drop(s), {len(problems)} problem(s)")
+          f"catalog {len(ids)} drop(s), ledger {len(book['entries'])} entr(ies), {len(problems)} problem(s)")
     return 1 if problems else 0
 
 
