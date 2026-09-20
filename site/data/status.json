@@ -2,30 +2,30 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-09-19",
-    "title": "Feral Machine",
-    "finished_at": "2026-09-19T19:25:36Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/35459485979",
+    "drop_id": "2026-09-20",
+    "title": "Rupture Pulse",
+    "finished_at": "2026-09-20T19:04:40Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/35528127536",
     "error": null
   },
-  "next_post_at": "2026-09-20T17:30:00Z",
-  "streak": 2,
+  "next_post_at": "2026-09-21T17:30:00Z",
+  "streak": 3,
   "totals": {
-    "drops": 13
+    "drops": 14
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-19T19:25:36Z",
+  "updated_at": "2026-09-20T19:04:40Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
     "steps": 32,
     "model": "acestep-v15-sft-Q8_0.gguf",
     "guidance": 5.0,
-    "lm_ms": 85682,
-    "dit_ms": 4789908,
-    "vae_ms": 434160,
-    "total_s": 5323.1
+    "lm_ms": 56884,
+    "dit_ms": 2749026,
+    "vae_ms": 260248,
+    "total_s": 3074.9
   }
 }
