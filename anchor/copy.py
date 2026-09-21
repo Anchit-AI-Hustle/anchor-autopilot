@@ -2,11 +2,12 @@
 
 The brief knows the mood arc and the one special moment; the master knows where the record
 actually breathes (``audio.arc``). ``write`` hands both to Gemini with the house voice and
-gets back a spoken title line and five short paragraphs: a hook, what the record does to you
-(with real timestamps), why it was kept, a "play it when", and a question for the comments. Every m:ss the
+gets back three short lines: what the track does,
+the timestamps that matter, and a question for the comments. Every m:ss the
 model writes is checked against the measured arc, so the copy never promises a drop that
 isn't there. No key, no network, or a bad answer: ``fallback`` writes the same five parts
-from the brief and the arc, seeded by the date so a rerun says the same thing.
+from the arc, seeded by the date so a rerun says the same thing. Short on purpose: a phone
+shows about 50 characters of a title and two lines of a description.
 """
 from __future__ import annotations
 
@@ -23,23 +24,17 @@ from .util import log, rng
 MODEL = "gemini-2.5-flash"
 ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
 
-VOICE = """You write the YouTube title line and description for one techno track, as the person who
-made it, talking to a friend. Plain speech: contractions, short sentences, first person, the way
-you'd type a message at 2 a.m. about a track you can't stop playing. Not a tagline, not a poem,
-not a press release. No fragments stacked for effect ("No mercy. No breakdown. No way back."),
-no "immerse yourself", no "journey", no "experience", no emojis, no exclamation marks, no lists,
-no hashtags in the text. British spelling. Music is freedom and relief for you; that comes
-through in how you talk about it, never as a slogan.
+VOICE = """You write the YouTube description for one techno track, as the person who
+made it, talking to a friend. Plain speech, first person, short. Not a tagline, not a poem, not a
+press release. No "immerse", "journey", "experience", no emojis, no exclamation marks, no lists,
+no hashtags in the text. British spelling.
 
 Write as JSON with these keys:
-- "line": under 40 characters, lowercase start, no full stop: the thing you'd say about this track to make someone press play. It goes after the title, like "Then Do It — for the second you stop thinking". Not the genre, not the tempo, not the mood word.
-- "hook": one sentence, under 120 characters, plain and personal, the first line under the video.
-- "body": two to four sentences on what the track actually does, in order, using the timestamps given (as m:ss) and the sound details. Only claim what the facts support.
-- "why": one or two sentences, first person, on why you kept this one. Feelings are fine; never invent a specific event that is not in the facts.
-- "moment": one sentence starting with "Play it when" naming a real moment for it. No colon needed.
-- "ask": one sentence asking the listener something specific about the track, and saying you read every comment.
+- "l1": one sentence, under 60 characters, what the track does or why you kept it.
+- "l2": one sentence, under 60 characters, the timestamps that matter (as m:ss), from the facts only.
+- "ask": one short question about the track, under 50 characters.
 - "hashtags": three hashtags, the lane's genre first, lowercase, space separated.
-Total under 1100 characters. Output only the JSON."""
+Output only the JSON."""
 
 
 def _mmss(s: float) -> str:
@@ -73,21 +68,17 @@ def _timestamps_ok(text: str, arc: dict, tolerance_s: int = 3) -> bool:
 
 
 def _clean(parts: dict, arc: dict) -> dict | None:
-    need = ("hook", "body", "why", "moment", "ask", "hashtags")
+    need = ("l1", "l2", "ask", "hashtags")
     if not all(isinstance(parts.get(k), str) and parts[k].strip() for k in need):
         return None
-    text = "\n\n".join(parts[k].strip() for k in need[:-1])
-    if len(text) > 1400 or "!" in text or not parts["moment"].startswith("Play it when"):
+    l1, l2, ask = (parts[k].strip() for k in need[:-1])
+    if max(len(l1), len(l2)) > 90 or len(ask) > 80 or "!" in l1 + l2 + ask:
         return None
-    if re.search(r"immers|journey|experience the|unleash", text, re.I):
-        return None
-    if not _timestamps_ok(text, arc):
+    if re.search(r"immers|journey|experience the|unleash", l1 + l2, re.I) or not _timestamps_ok(l1 + " " + l2, arc):
         return None
     tags = [t if t.startswith("#") else "#" + t for t in re.split(r"[\s,]+", parts["hashtags"].strip().lower()) if t]
-    line = _line_ok(parts.get("line"))
-    if not line:
-        return None
-    return {"line": line, "body": text, "hashtags": " ".join(dict.fromkeys(tags[:3])), "source": "gemini"}
+    return {"body": f"{l1}\n{l2}\n{ask.rstrip('?')}? I read every comment.",
+            "hashtags": " ".join(dict.fromkeys(tags[:3])), "source": "gemini"}
 
 
 def ask_gemini(prompt: str, api_key: str, timeout_s: int = 60, attempts: int = 2) -> str:
@@ -108,69 +99,31 @@ def ask_gemini(prompt: str, api_key: str, timeout_s: int = 60, attempts: int = 2
     raise RuntimeError(f"gemini copy: {last}")
 
 
-def _line_ok(line) -> str | None:
-    """The title tail: short, spoken, no genre or tempo in it (they are in the description)."""
-    if not isinstance(line, str):
-        return None
-    line = line.strip().strip(".").strip()
-    if not 6 <= len(line) <= 44 or "!" in line or re.search(r"\bbpm\b|techno|rawstyle|acid|industrial", line, re.I):
-        return None
-    return line[0].lower() + line[1:]
-
-
 # ------------------------------------------------------------------ fallback writer
-HOOKS = ["I've had this one on repeat all week and I'm not tired of it yet.",
-         "This is the one I'd play you first if you asked me what I've been making.",
-         "I nearly cut this one shorter. Glad I didn't.",
-         "Put this on loud and tell me it doesn't move you."]
-OPENS = {"industrial": "with the machine already running", "rawstyle": "like a countdown", "hypnotic": "with one figure and no promises",
-         "acid": "with the 303 asking a question", "bunker": "in the cold, with the door shut", "cyber": "with the lights flickering"}
-WHYS = ["I kept this one for the part of the night when nobody's watching and it still matters.",
-        "This came out of a week that needed somewhere to go, so it went here.",
-        "I wanted a track that doesn't explain itself, and this one doesn't.",
-        "Music is where I get to put everything down. This is what that sounds like."]
-MOMENTS = {"industrial": "Play it when the room's empty and you want it to feel bigger.",
-           "rawstyle": "Play it when it's the last rep, the last hour, the walk into the room.",
-           "hypnotic": "Play it when it's late, you're alone, headphones on, lights off.",
-           "acid": "Play it when the night's turned into morning and you're not done.",
-           "bunker": "Play it when you need the walls to be concrete for a while.",
-           "cyber": "Play it when the city's loud and you want to be louder."}
-ASKS = ["Tell me the timestamp that got you. I read every comment.",
-        "Where were you when {first} hit? Tell me, I read everything.",
-        "Which minute do you keep going back to? Comments are open and I answer."]
-LINES = {"industrial": "it never lets up", "rawstyle": "for the last rep", "hypnotic": "lights off for this one",
-         "acid": "the 303 does the talking", "bunker": "the walls are concrete", "cyber": "run to this one"}
+L1 = {"industrial": "A dry kick in a big room. It never lets up.", "rawstyle": "A kick with a tail you feel in your teeth.",
+      "hypnotic": "One figure, turning until it becomes a room.", "acid": "A 303 that keeps changing its question.",
+      "bunker": "Cold, dry, the door shut behind you.", "cyber": "Neon bass and a kick that snarls."}
+ASKS = ["Where did it get you?", "Which drop is yours?", "Which minute do you replay?"]
 
 
 def fallback(profile: Profile, brief: dict, arc: dict, r: random.Random | None = None) -> dict:
     r = r or rng("anchor-copy", brief["date"])
     lane = profile.lane(brief["lane"])
-    drops = [d["at"] for d in arc.get("drops", [])]
+    drops = [_mmss(d["at"]) for d in arc.get("drops", [])]
     breaks = arc.get("breakdowns", [])
-    first = _mmss(drops[0]) if drops else "the first minute"
-    length = _mmss(brief.get("duration_s") or arc.get("duration_s") or 0)
     if breaks:
-        line = f"the breakdown at {_mmss(breaks[0]['start'])} is the whole track"
-        mid = (f"At {_mmss(breaks[0]['start'])} it all falls away for {int(breaks[0]['end'] - breaks[0]['start'])} seconds, "
-               f"and when it comes back at {_mmss(breaks[0]['end'])} that's the bit I keep replaying.")
+        l2 = f"Falls away at {_mmss(breaks[0]['start'])}, back at {_mmss(breaks[0]['end'])}. Wait for it."
+    elif drops:
+        l2 = f"Drops at {', '.join(drops[:4])}. No breakdown."
     else:
-        line = LINES.get(lane.id, "it never lets up")
-        mid = "There's no breakdown in it. It doesn't stop to think, and I didn't want it to."
-    if len(drops) > 2:
-        line = f"{len(drops)} drops in {length}"
-    close = (f"The last lift at {_mmss(drops[-1])} is the one that moves you out the door." if len(drops) > 1 else
-             f"{length} long, and I wouldn't cut a bar of it.")
-    body = (f"It opens {OPENS.get(lane.id, 'quietly')}, and by {first} the kick has stopped being a sound and started being the floor. "
-            f"{mid} {close}") if drops else f"It lands from the first bar and holds. {mid} {close}"
-    text = "\n\n".join([r.choice(HOOKS), body, r.choice(WHYS),
-                        MOMENTS.get(lane.id, "Play it when it's late and you're still going."),
-                        r.choice(ASKS).format(first=first)])
+        l2 = "Steady the whole way. No breakdown, on purpose."
+    body = "\n".join([L1.get(lane.id, "Hard, dry, unhurried."), l2, f"{r.choice(ASKS)} I read every comment."])
     genre = lane.genre_line.split(",")[0].strip().lower().replace(" ", "")
-    return {"line": line, "body": text, "hashtags": " ".join(dict.fromkeys([f"#{genre}", "#hardtechno", "#techno"])), "source": "template"}
+    return {"body": body, "hashtags": " ".join(dict.fromkeys([f"#{genre}", "#hardtechno", "#techno"])), "source": "template"}
 
 
 def write(profile: Profile, brief: dict, arc: dict) -> dict:
-    """Title line + body + hashtags for the drop. Gemini in the house voice, checked; the template otherwise."""
+    """Body + hashtags for the drop. Gemini in the house voice, checked; the template otherwise."""
     key = env("GEMINI_API_KEY")
     if key and env("ANCHOR_COPY", "gemini") != "template":
         prompt = VOICE + "\n\nFacts (JSON):\n" + json.dumps(facts(profile, brief, arc), ensure_ascii=False)

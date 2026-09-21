@@ -55,7 +55,7 @@ def pending(queue_dir: Path = QUEUE, skip_spent: bool = True) -> list[Path]:
 
 
 def reserved(queue_dir: Path = QUEUE) -> list[tuple[str, dict]]:
-    """Queued songs that are only a reference so far — no audio on disk yet.
+    """Queued songs that are only a reference so far - no audio on disk yet.
 
     The site's Add to YouTube button queues by reference, so the repo stays small; the
     audio is fetched at release time. Name order is quality order, best first.

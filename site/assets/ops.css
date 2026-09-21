@@ -1,4 +1,4 @@
-/* /ops/ — the ledger. Builds on style.css (tokens, .top, .stats, .eyebrow, h1/h2). */
+/* /ops/ - the ledger. Builds on style.css (tokens, .top, .stats, .eyebrow, h1/h2). */
 .ops-head { padding-block: clamp(28px, 5vw, 56px) 20px; max-width: 860px; }
 .lede { color: var(--muted); margin: 14px 0 0; max-width: 70ch; }
 .lede code { color: var(--text); font-size: 13px; }

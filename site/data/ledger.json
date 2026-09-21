@@ -244,16 +244,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Feral Machine — something got loose in here",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "43 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Feral Machine",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "This is the wildest thing on the channel and I'm a bit proud of that.\n\nGlitching synth arpeggios, neon bass pulses, and a kick that's been pushed until it snarls. It doesn't build up to anything, it's already going when you walk in, and it doesn't stop to think for two minutes twenty.\n\nI made a lot of tidy tracks before this one. I wanted one that felt like it had got out of its cage.\n\nPlay it running through a city at night, or on the train home when you've had enough of being polite.\n\nDoes it feel too much to you, or exactly enough? I want to know. I read every comment.\n\nCyberpunk Hard Techno · 154 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#hardtechno #cyberpunk #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "The wildest thing I've made.\nGlitching arps, neon bass, a kick that snarls.\nToo much, or exactly enough? I read every comment.\n\nCyberpunk Hard Techno · 154 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #cyberpunk #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -440,16 +440,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Engage Gravity — the one that pulls the whole room down",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "55 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Engage Gravity",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "I've played this back more than anything else this month, and the drop at 0:32 still gets me in the knees every time.\n\nIt's a rawstyle kick with a tail so long it's basically the bassline, a reverse bass that keeps pulling the floor out from under you, and screeching lead stabs on top. It goes: first drop 0:32, falls away at 1:06, back at 1:22, drops out again at 1:50, and then 2:00 is the one. Two and a half minutes, no fat on it.\n\nI kept it for what it does to a room. There's a moment where a crowd stops standing and starts moving as one thing, and I wanted a track that forces that moment.\n\nPlay it loud, in company, when the night needs pulling together.\n\nWhich one got you, 0:32 or 2:00? Tell me in the comments, I read every one.\n\nRawstyle Hybrid · 156 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#rawstyle #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "The drop at 0:32 still gets me in the knees.\nThen 1:22 and 2:00. Pick one.\nWhich one got you? I read every comment.\n\nRawstyle Hybrid · 156 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#rawstyle #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -695,16 +695,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Time To Peak — two minutes of pure climb",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "40 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Time To Peak",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "Two minutes, 170 BPM, and I don't think there's a wasted bar in it. Four surges: 0:20, 0:48, 1:16, 1:56. Every time you think it's peaked it finds another gear.\n\nRawstyle stomp with a long tail, screeching lead stabs, and no breakdown long enough to sit down in.\n\nI made this for the climb, the part of anything hard that nobody photographs and that actually costs something. I wanted a track that's all climb and no summit.\n\nPlay it on the last rep, the last kilometre, the last hour of a shift.\n\nWhich of the four surges got you? I have a favourite, but tell me yours first. I read every one.\n\nRawstyle Hybrid · 170 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#rawstyle #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "Two minutes, four surges, no summit.\n0:20, 0:48, 1:16, 1:56.\nWhich surge got you? I read every comment.\n\nRawstyle Hybrid · 170 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#rawstyle #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -849,16 +849,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Underground Fever Dream — a night in the wrong order",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "52 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Underground Fever Dream",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "Built like a night you half remember. A straight, hard kick at 154 that never lets up, and everything around it warping.\n\nThe first lift is at 0:22 and the room tilts. The big one is at 1:40, and after that the track stops caring about the order things happen in.\n\nI made it about those nights that come back in the wrong sequence and somehow more vivid than what actually happened. Below street level, lights doing things lights don't do.\n\nPlay it late, underground, or with the curtains shut.\n\nWhat's the bit that comes back to you afterwards? Tell me. I read every one.\n\nDark Techno · 154 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#darktechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "A night you half remember, in the wrong order.\nTilts at 0:22, the big one at 1:40.\nWhich bit comes back to you after? I read every comment.\n\nDark Techno · 154 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#darktechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -1003,16 +1003,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Crossing The Line — slowest here, most peak time",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "48 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Crossing The Line",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "125 is the slowest the channel gets, and this is the most peak-time thing on it. A rolling, driving groove with a bass you could lean your whole weight on, and a vocal that keeps circling back to the same line.\n\nFirst drop at 1:32, the big one at 2:48.\n\nMind on a loop, body somewhere behind it, speeding through a dark you keep choosing. The line was never the point. The crossing was.\n\nPlay it at 1 a.m. when the room's full and nobody's leaving.\n\nHave you crossed it? No need to say which line. I read every comment.\n\nPeak Time Techno · 125 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#peaktimetechno #techno #hardtechno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "The slowest one here and the most peak-time.\nDrop at 1:32, the big one at 2:48.\nHave you crossed it? I read every comment.\n\nPeak Time Techno · 125 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#peaktimetechno #techno #hardtechno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -1158,16 +1158,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Kindness Needs Truth — the slow one that argues with you",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "56 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Kindness Needs Truth",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "90 BPM, which is nothing like the rest of the channel, and I don't care. It's a slow, heavy industrial crawl: a kick you feel in your chest, a bass that moves like it's dragging something. No breakdown. It doesn't let up, it just leans.\n\nThis is the only track here that argues. Kindness without honesty is just avoidance in a nicer coat, and I wanted a record that says so.\n\nI put it up because I'd been thinking about that a lot and needed somewhere to put it.\n\nPlay it when you've got a hard conversation coming and you want to walk in steady.\n\nDo you want more slow ones like this, or should I keep it fast? I'll do what you tell me. I read every comment.\n\nIndustrial Techno · 90 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#industrialtechno #techno #slowtechno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "90 BPM. Nothing like the rest, and I don't care.\nA slow heavy crawl that leans instead of lifts.\nMore slow ones, or keep it fast? I read every comment.\n\nIndustrial Techno · 90 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#industrialtechno #techno #slowtechno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -1311,16 +1311,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Absolute Force — pure weight at 105",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "35 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Absolute Force",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "105 BPM. Slow enough to feel every single hit land, heavy enough that you will. A kick like a piston, sub-bass you feel in the floor before you hear it, and a spoken voice running the whole thing like a system coming online.\n\nNo breakdown, no lift. It's pure weight from the first bar to the last.\n\nI wanted one track that doesn't need speed to be hard. This is it.\n\nPlay it loud, in a big room, and stand near the sub.\n\nDo you feel this one in your chest or in your feet? Tell me. I read every comment.\n\nIndustrial Techno · 105 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#industrialtechno #techno #hardtechno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "105 BPM. Slow enough to feel every hit.\nNo lift, no breakdown. Weight.\nChest or feet? I read every comment.\n\nIndustrial Techno · 105 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#industrialtechno #techno #hardtechno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -1464,16 +1464,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Cold Metal Floor — a huge room with nothing soft in it",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "54 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Cold Metal Floor",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "The kick is huge and dry, the reverb is the size of an aircraft hangar, and everything metallic in the mix rings like it's been struck rather than played. No breakdown. It just stays in the room with you.\n\nI wanted a track that sounds like concrete, steel, and the cold that comes up through your shoes. A big space with nothing soft in it.\n\nI play this when I want a room to feel bigger than it is.\n\nPlay it in an empty venue, or an empty flat, loud.\n\nWhat room does it put you in? Tell me. I read every one.\n\nIndustrial Hard Techno · 150 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#industrialtechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "A huge dry kick in a room the size of a hangar.\nNo breakdown. It stays with you.\nWhat room does it put you in? I read every comment.\n\nIndustrial Hard Techno · 150 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#industrialtechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -1644,16 +1644,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Pressure Spiral — it doesn't drop, it tightens",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "46 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Pressure Spiral",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "This one never explodes. That's the whole point of it. It lets go in stages, 1:12, then 1:52, then 2:14, each one giving you a little more than the last and pulling you back in before you've finished breathing out.\n\nStraight hard techno at 152. Three minutes of a spiral that keeps coming back round a bit tighter each time.\n\nI made it for the kind of pressure that doesn't arrive all at once. It builds up over a week and you only notice it when it starts to turn.\n\nPlay it when you need something to push against.\n\nWhich release is the real one for you, 1:12, 1:52 or 2:14? Tell me below. I read every comment.\n\nHard Techno · 152 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#hardtechno #techno #rave",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "It never explodes. It lets go in stages.\n1:12, 1:52, 2:14. Each one tighter.\nWhich release is the real one? I read every comment.\n\nHard Techno · 152 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #techno #rave",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -1838,16 +1838,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Afterburn — what's still hot after the fire",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "43 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Afterburn",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "Acid and industrial in the same room, which I'd been wanting to try for a while. A squelching 303 with the filter sweeping open and shut, a kick with soot on it, and a deep mono sub that keeps glowing long after each hit.\n\nIt holds steady until 1:52, where it lifts, then a short breakdown at 2:16 before the last push at 2:24. Two and a half minutes, and nothing in it cools down when you'd expect.\n\nI kept this one for the mornings after. The night's over, you're home, and you're still not done.\n\nPlay it when you should be asleep and you're not.\n\nWhich do you hear more, the acid or the industrial? Comments are open. I read every one.\n\nAcid Industrial Techno · 154 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#acidtechno #industrialtechno #hardtechno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "Acid and industrial in the same room.\nHolds till 1:52, dips at 2:16, last push 2:24.\nAcid or industrial, which do you hear? I read every comment.\n\nAcid Industrial Techno · 154 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#acidtechno #industrialtechno #hardtechno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -2050,16 +2050,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Crossing The Threshold — the door you can't un-enter",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "52 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Crossing The Threshold",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "This one doesn't build to the moment. It starts just after it. From the first bar you're already through the door: a big warehouse kick, hydraulic hiss, a factory siren somewhere above you.\n\nThe first drop is at 0:50, then it goes down a long corridor, ninety seconds of it, before it comes back at 2:22.\n\nI made it about the moment you stop being outside a thing and start being inside it. Some rooms you can't un-enter, and I didn't want a track that pretends you can.\n\nPlay it walking into somewhere you've decided to go.\n\nDid you walk through the corridor or skip it? Be honest. I read every comment.\n\nIndustrial Hard Techno · 135 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#industrialtechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "It starts just after the moment.\nDrop at 0:50, a long corridor, back at 2:22.\nDid you walk the corridor or skip it? I read every comment.\n\nIndustrial Hard Techno · 135 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#industrialtechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -2331,16 +2331,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Project Mayhem — it starts with laughter",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "40 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Project Mayhem",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "It opens with laughter. That's your warning. What follows is four minutes of the same figure turning over and over at 160 until it stops being a sound and starts being a room you're standing in.\n\nThe first lift is at 1:02, it drops away at 1:50, and 2:28 is where it comes back and takes over. \"Welcome to Project Mayhem\" is the only thing anyone says, and it's all it needs to say.\n\nThis is a remaster. The first version I put up wasn't finished the way I wanted, and it bugged me every time I heard it, so I went back and did it properly. This is the one.\n\nPlay it with the lights off, late, when you want to stop thinking for a while.\n\nDid you catch the laugh at the start the first time, or only on the second listen? Tell me. I read all of these.\n\nHypnotic Techno · 160 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#hypnotictechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "The laugh at the start is the warning.\nLift at 1:02, gone at 1:50, back at 2:28. Remastered.\nDid you catch the laugh first time? I read every comment.\n\nHypnotic Techno · 160 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hypnotictechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -2532,16 +2532,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Grid Blade — nothing in here bends",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "34 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Grid Blade",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "155 BPM of acid cut into straight lines. A 303 that saws instead of squelches, a kick like a stamping press, and a sub that stays exactly where you put it. One big lift at 1:00 and then it holds.\n\nTwo hard nouns for a title, and the track lives up to them. Nothing bends, nothing slows down.\n\nI made it for the part of a run where your legs want to stop and you don't let them. There's a freedom in something that refuses to give.\n\nPlay it when you need to be the thing that doesn't move.\n\nDo you hear this one as acid or as hard techno? I keep going back and forth. I read every comment.\n\nAcid Techno · 155 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#acidtechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "Acid cut into straight lines.\nOne lift at 1:00, then it holds.\nAcid or hard techno? I read every comment.\n\nAcid Techno · 155 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#acidtechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -2646,7 +2646,7 @@
      "warn": [],
      "nearest": null,
      "score": 6.4,
-     "note": "on format (techno, industrial, warehouse), 1:42 — good for a Short",
+     "note": "on format (techno, industrial, warehouse), 1:42 - good for a Short",
      "url": "https://suno.com/song/e7f16cd4-b99f-4246-a209-23eb0b304e8d"
     },
     {
@@ -2659,7 +2659,7 @@
      "warn": [],
      "nearest": null,
      "score": 5.9,
-     "note": "on format (techno, industrial, warehouse), 1:49 — good for a Short",
+     "note": "on format (techno, industrial, warehouse), 1:49 - good for a Short",
      "url": "https://suno.com/song/2826d0d4-3c00-46f3-8c08-2e8a1ff9c022"
     }
    ],
@@ -2751,16 +2751,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Signal Detected — two tracks welded into one",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "44 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Signal Detected",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "This started as two separate tracks. They shared a pulse, so I put them together, and the seam is in here somewhere if you want to find it.\n\nThe first half is the searching: a 303 line that keeps changing its question, a kick at walking pace, space between everything. From 1:16 it thins out to almost nothing, and 2:34 is where the answer comes back and the second half takes over.\n\nI like the idea that something reaches out and something answers. That's the whole record.\n\nPlay it late with headphones, when you want a track to think alongside.\n\nCan you hear where the two tracks join? Tell me the timestamp you think it is. I read every one.\n\nAcid Techno · 127 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#acidtechno #techno #hardtechno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "Two tracks welded into one.\nThins out at 1:16, the answer comes at 2:34.\nCan you find the seam? I read every comment.\n\nAcid Techno · 127 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#acidtechno #techno #hardtechno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -2996,16 +2996,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Let's F*cking Go — no subtext, just go",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "38 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Let's F*cking Go",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "Nothing clever underneath this one. Some days you need a track that makes you move before you've agreed to, and this is that track.\n\n160 BPM, a rawstyle kick with a tail you feel in your teeth, a noisy acid line, and one raw vocal stab that says exactly what you think it says. The build hits at 1:00 and the big one lands at 1:36.\n\nI kept it because it's the most honest thing I've put up. There's no story here. It just goes.\n\nPlay it before the gym, before the door, before anything you've been putting off.\n\nWhat did you do right after it finished? I'd love to know. I read everything.\n\nRawstyle Hybrid · 160 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#rawstyle #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "No subtext. It just goes.\nBuild at 1:00, the big one at 1:36.\nWhat did you do after? I read every comment.\n\nRawstyle Hybrid · 160 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#rawstyle #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -3217,16 +3217,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Where It Begins — six minutes, no hurry, worth it",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "49 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Where It Begins",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "This is the longest thing on the channel and the one I'd hand you first if you asked me where to start.\n\nSix minutes at 130, in absolutely no hurry. The first real drop comes at 1:02, a proper breakdown around 2:54, and 4:14 is the one you'll go back for. Industrial kick, big dry room, a bass that moves like it has somewhere to be.\n\nI think most beginnings look like nothing at the time. You only spot them later. That's how I built this, so the moment you're waiting for is quieter than you expect and then it's already happened.\n\nPlay it while starting something, anything, that you've been circling for a while.\n\nWhat were you doing when 4:14 hit? Tell me. I read every comment.\n\nIndustrial Hard Techno · 130 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#industrialtechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "The one I'd play you first.\nDrop at 1:02, breakdown 2:54, the one at 4:14.\nWhat were you doing at 4:14? I read every comment.\n\nIndustrial Hard Techno · 130 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#industrialtechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -3437,16 +3437,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Robot Love — the groove works even though it shouldn't",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "54 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Robot Love",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "Mechanical percussion, a sub that clicks along like a relay, and a kick that lands exactly where you expect it to every single time. That's the point of it. There's a comfort in something that never misses.\n\nIt drops away at 2:22 and comes back at 3:06, and the return is the part I keep replaying.\n\nAffection with no warmth in it, running perfectly. The uncanny thing isn't that it's cold. It's that it almost works anyway.\n\nPlay it on the train, looking out the window. Everything outside starts looking choreographed.\n\nDoes it feel cold to you, or oddly warm? I get both answers. I read every comment.\n\nIndustrial Hard Techno · 132 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#industrialtechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "A kick that never misses. That's the comfort.\nDrops away 2:22, back at 3:06.\nCold, or oddly warm? I read every comment.\n\nIndustrial Hard Techno · 132 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#industrialtechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -3657,16 +3657,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Stay With Me — the breakdown at 2:14 is the whole track",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "55 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Stay With Me",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "155 and relentless. A rumbling kick with a long tail, rolling hats, and a detuned lead that sits over it like a hand on your back.\n\nThen at 2:14 everything falls away for a full minute. I nearly cut it shorter and I'm glad I didn't. When it comes back at 3:18, that's the moment. Wait for it.\n\nThe title isn't about a person. It's about the state you get into when everything's working, and the feeling of it starting to slip.\n\nPlay it when you're trying to hold onto a good night a little longer.\n\nDid the minute-long breakdown feel long to you, or exactly right? I want to know. I read every comment.\n\nDark Techno · 155 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#darktechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "Everything falls away at 2:14 for a full minute.\n3:18 is the return. Wait for it.\nToo long, or exactly right? I read every comment.\n\nDark Techno · 155 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#darktechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -3786,7 +3786,7 @@
      "warn": [],
      "nearest": null,
      "score": 6.7,
-     "note": "on format (techno, industrial, rawstyle), 2:02 — good for a Short",
+     "note": "on format (techno, industrial, rawstyle), 2:02 - good for a Short",
      "url": "https://suno.com/song/568df3fe-272a-45db-92f6-f139b3e6d8dc"
     }
    ],
@@ -3878,16 +3878,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Silent Transmission — my late-night walking track",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "49 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Silent Transmission",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "This is my walking-home track. Headphones on, nobody around, nothing to perform.\n\nThe kick is dry and close, like it's in the room with you. Around it there's mechanical percussion, a distant sweep, and a sub that never quite lets go. It doesn't build to a big moment. It just keeps sending, whether or not anyone's listening, which I think is most of us on most nights.\n\nI kept it because it's the quiet one. Not every track needs to make the room jump.\n\nPlay it at 3 a.m. walking somewhere, or in a venue before the crowd's in.\n\nWhere do you listen to this one? I'm curious whether it's a walking track for anyone else. I read every comment.\n\nIndustrial Hard Techno · 133 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#industrialtechno #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "My walking-home track. Headphones, nobody around.\nDry kick, distant sweep, no big moment. On purpose.\nWhere do you play this one? I read every comment.\n\nIndustrial Hard Techno · 133 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#industrialtechno #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -4098,16 +4098,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Then Do It — for the second you stop thinking about it",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "54 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Then Do It",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "You already know the thing you should be doing. This is the track for the exact second you stop thinking about it and start.\n\nIt opens patient, almost polite: a kick you can walk to, a bass that keeps nudging your shoulder. Then it pulls right back, holds you there for a full minute, and at 1:44 the first drop lands. The second half goes quiet again to make you wait, and 3:14 is the one that actually moves you out the door.\n\nI kept this one for myself, if I'm honest. I put things off. This is what I play when I'm done doing that.\n\nPlay it before the thing you've been avoiding.\n\nWhat did you finally do after this? Tell me in the comments. I read every one.\n\nRawstyle Hybrid · 129 BPM · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#rawstyle #hardtechno #techno",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "For the second you stop thinking and start.\nFirst drop 1:44. The one that moves you: 3:14.\nWhat did you finally do? I read every comment.\n\nRawstyle Hybrid · 129 BPM · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#rawstyle #hardtechno #techno",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -4256,16 +4256,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Initiate Mayhem — thirty seconds of intent",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "42 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Initiate Mayhem",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "The order goes out and nothing waits for a reply. Thirty seconds, that's the whole piece.\n\nIf you want the four-minute version of this feeling, Project Mayhem is on the channel.\n\nHard Techno · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#hardtechno #techno #shorts",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "Thirty seconds of intent. Project Mayhem is the long one.\n\nHard Techno · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #techno #shorts",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -4394,16 +4394,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Apex Ascent — all climb, no summit",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "34 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Apex Ascent",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "Thirty seconds of climb with no top to it. The apex is wherever you stop.\n\nFor the long version of the climb, play Time To Peak.\n\nHard Techno · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#hardtechno #techno #shorts",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "Thirty seconds of climb, no summit. Time To Peak is the long one.\n\nHard Techno · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #techno #shorts",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {
@@ -4532,16 +4532,16 @@
     },
     {
      "field": "youtube title",
-     "value": "Pull Under — the current wins",
-     "rule": "'<Title> — <spoken line>': the line is what you'd say to make someone press play; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters.",
-     "evidence": "29 chars; rewritten by hand in the v4 voice on 2026-09-21",
+     "value": "Pull Under",
+     "rule": "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+     "evidence": "set by hand on 2026-09-21",
      "group": "content"
     },
     {
      "field": "description",
-     "value": "The current wins. It always does. Dark, mechanical, and not letting go.\n\nThis is the whole track, all two minutes forty of it. It's warmer down here than it looks.\n\nIndustrial Hard Techno · ANCHOR\n\nEvery ANCHOR track, full length: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nListen and download free: anchor.anchit-tandon.com\nInstagram: @anchor_at2803\n\nA new ANCHOR track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always.\n© 2026 ANCHOR. All rights reserved.\n\n#hardtechno #techno #shorts",
-     "rule": "Plain first-person talk: what the track does with timestamps measured on the master, why it was kept, a 'Play it when', a question for the comments; then genre · BPM · ANCHOR, links, the AI disclosure, © and three hashtags.",
-     "evidence": "rewritten by hand in the v4 voice on 2026-09-21; timestamps carried over from the measured arcs",
+     "value": "The current wins. It always does.\n\nIndustrial Hard Techno · ANCHOR\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #techno #shorts",
+     "rule": "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines.",
+     "evidence": "rewritten by hand on 2026-09-21; timestamps carried over from the measured arcs",
      "group": "content"
     },
     {

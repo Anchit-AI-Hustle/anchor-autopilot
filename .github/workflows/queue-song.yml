@@ -90,7 +90,7 @@ jobs:
           RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           gh issue comment "${{ github.event.issue.number }}" --body \
-            "**$TITLE** is queued as \`queue/$FILE\` — $WAITING track(s) waiting. The next daily run releases it: master, cover, Short, website. YouTube goes out with it once \`BUFFER_API_KEY\` is set. [Run log]($RUN)"
+            "**$TITLE** is queued as \`queue/$FILE\` - $WAITING track(s) waiting. The next daily run releases it: master, cover, Short, website. YouTube goes out with it once \`BUFFER_API_KEY\` is set. [Run log]($RUN)"
           gh issue close "${{ github.event.issue.number }}" --reason completed
 
       - name: Release it now
@@ -106,4 +106,4 @@ jobs:
           RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           gh issue comment "${{ github.event.issue.number }}" --body \
-            "Could not queue that one — see the [run log]($RUN). If Suno is not serving a public render for it, download the audio from the song page and drop the file into \`queue/\` instead."
+            "Could not queue that one - see the [run log]($RUN). If Suno is not serving a public render for it, download the audio from the song page and drop the file into \`queue/\` instead."

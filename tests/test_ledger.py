@@ -92,7 +92,7 @@ def test_description_carries_the_copyright_line():
     brief = {**META["brief"]}
     for platform in ("youtube", "instagram"):
         text = description(PROFILE, brief, platform)
-        assert "© 2026 ANCHOR. All rights reserved." in text.splitlines()
+        assert "© 2026 ANCHOR" in text.splitlines()
 
 
 # ------------------------------------------------------------------ the words
@@ -119,37 +119,35 @@ def test_template_copy_is_human_grounded_and_repeatable(monkeypatch):
     a = C.write(PROFILE, brief, arc)
     b = C.write(PROFILE, brief, arc)
     assert a == b and a["source"] == "template"
-    parts = a["body"].split("\n\n")
-    assert len(parts) == 5 and parts[3].startswith("Play it when") and "read" in parts[4].lower()
-    assert "0:34" in a["body"] and "1:06" in a["body"] and C._timestamps_ok(a["body"], arc)
+    lines = a["body"].splitlines()
+    assert len(lines) == 3 and lines[2].endswith("? I read every comment.") and all(len(l) <= 90 for l in lines)
+    assert "1:06" in a["body"] and "1:26" in a["body"] and C._timestamps_ok(a["body"], arc)
     assert "!" not in a["body"] and a["hashtags"].startswith("#") and len(a["hashtags"].split()) == 3
-    assert a["line"] == "the breakdown at 1:06 is the whole track" and C._line_ok(a["line"])
-    assert not C._line_ok("Rawstyle Hybrid, 152 BPM") and not C._line_ok("x") and C._line_ok("For the last rep.") == "for the last rep"
 
 
 def test_gemini_copy_is_checked_against_the_record(monkeypatch):
     from anchor import copy as C
     brief = {**META["brief"], "date": "2026-09-22"}
     arc = {"duration_s": 150.0, "breakdowns": [], "drops": [{"at": 34.0, "rise_db": 3.8}]}
-    good = {"line": "the kick gets there before you do", "hook": "The kick arrives before you do.", "body": "By 0:34 the floor is yours.", "why": "I made it for the walk in.",
-            "moment": "Play it when the room needs you.", "ask": "Tell me the bar that got you; I read every comment.", "hashtags": "#rawstyle #hardtechno #techno"}
-    bad = {**good, "body": "At 1:10 it explodes."}          # no such moment in the record
-    answers = iter([json.dumps(bad), json.dumps({**good, "line": "Rawstyle Hybrid, 152 BPM"}), json.dumps(good)])
+    good = {"l1": "The kick arrives before you do.", "l2": "By 0:34 the floor is yours.",
+            "ask": "Which bar got you?", "hashtags": "#rawstyle #hardtechno #techno"}
+    bad = {**good, "l2": "At 1:10 it explodes."}            # no such moment in the record
+    answers = iter([json.dumps(bad), json.dumps(good)])
     monkeypatch.setenv("GEMINI_API_KEY", "x")
     monkeypatch.setattr(C, "ask_gemini", lambda prompt, key: next(answers))
     out = C.write(PROFILE, brief, arc)
     assert out["source"] == "gemini" and "0:34" in out["body"] and "1:10" not in out["body"]
-    assert out["line"] == "the kick gets there before you do"      # the genre-and-tempo line was refused
+    assert out["body"].splitlines() == ["The kick arrives before you do.", "By 0:34 the floor is yours.", "Which bar got you? I read every comment."]
     # every answer bad -> the template, never a broken description
     monkeypatch.setattr(C, "ask_gemini", lambda prompt, key: json.dumps(bad))
     assert C.write(PROFILE, brief, arc)["source"] == "template"
 
 
 def test_description_is_the_copy_then_the_practical_block():
-    brief = {**META["brief"], "copy": {"body": "Hook line.\n\nBody at 0:34.\n\nWhy.\n\nPlay it when: late.\n\nAsk? I read them.", "hashtags": "#a #b #c", "source": "template"}}
+    brief = {**META["brief"], "copy": {"body": "Hook line.\nBody at 0:34.\nAsk? I read every comment.", "hashtags": "#a #b #c", "source": "template"}}
     d = description(PROFILE, brief)
     lines = d.splitlines()
-    assert lines[0] == "Hook line." and d.endswith("#a #b #c")
-    assert "Rawstyle Hybrid · 152 BPM · ANCHOR" in lines and "Instagram: @anchor_at2803" in lines
+    assert lines[0] == "Hook line." and d.endswith("#a #b #c") and len(d) < 500
+    assert "Rawstyle Hybrid · 152 BPM · ANCHOR" in lines and any(l.endswith("· IG @anchor_at2803") for l in lines)
     ig = description(PROFILE, brief, "instagram")
     assert ig.startswith("Hook line.") and "playlist" not in ig and "#anchortechno" in ig

@@ -1,4 +1,4 @@
-/* /ops/ — reads ledger.json (decisions, variants, uploads), catalog.json (latest status and
+/* /ops/ - reads ledger.json (decisions, variants, uploads), catalog.json (latest status and
    links) and status.json (last run) and draws the tracker. No build step, no dependencies. */
 (() => {
   "use strict";
@@ -50,8 +50,8 @@
   const drawRun = (status) => {
     const r = status.last_run || {};
     const cls = r.result === "ok" ? "ok" : r.result === "failed" ? "bad" : "warn";
-    const when = r.finished_at ? new Date(r.finished_at).toLocaleString("en-GB", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" }) + " IST" : "—";
-    const next = status.next_post_at ? new Date(status.next_post_at).toLocaleString("en-GB", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" }) + " IST" : "—";
+    const when = r.finished_at ? new Date(r.finished_at).toLocaleString("en-GB", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" }) + " IST" : "-";
+    const next = status.next_post_at ? new Date(status.next_post_at).toLocaleString("en-GB", { timeZone: "Asia/Kolkata", dateStyle: "medium", timeStyle: "short" }) + " IST" : "-";
     $("#run").innerHTML = `Last run <b class="${cls}">${esc(r.result || "unknown")}</b>` +
       (r.drop_id ? ` · ${esc(r.drop_id)} ${esc(r.title || "")}` : "") + ` · ${esc(when)}` +
       (r.run_url ? ` · <a href="${esc(r.run_url)}" rel="noopener" target="_blank">log ↗</a>` : "") +
@@ -77,7 +77,7 @@
   const pill = (u) => `<span class="pill ${tone(u)}" title="${esc(u.error || u.note || u.status || "")}">${esc(TARGET[u.target] || u.target)}</span>`;
 
   const valueCell = (v) => {
-    const text = Array.isArray(v) ? v.join(", ") : v == null ? "—" : String(v);
+    const text = Array.isArray(v) ? v.join(", ") : v == null ? "-" : String(v);
     const long = text.length > 220 || text.split("\n").length > 5;
     return `<div class="value${long ? " clip" : ""}">${esc(text)}</div>` + (long ? `<button class="more" type="button">show all</button>` : "");
   };
@@ -88,20 +88,20 @@
     const vb = det.querySelector(".variants tbody");
     vb.innerHTML = e.variants.length ? e.variants.map((v) => `<tr class="${v.chosen ? "chosen" : v.ok ? "" : "rejected"}">
         <td>${esc(v.label)}${v.url ? ` <a href="${esc(v.url)}" rel="noopener" target="_blank">↗</a>` : ""}</td>
-        <td class="num">${v.score == null ? "—" : esc(v.score)}${v.kind === "audio" && v.nearest ? `<br><small>vs ${esc(v.nearest)}</small>` : ""}</td>
+        <td class="num">${v.score == null ? "-" : esc(v.score)}${v.kind === "audio" && v.nearest ? `<br><small>vs ${esc(v.nearest)}</small>` : ""}</td>
         <td>${v.chosen ? "released" : v.ok ? "passed, not used" : "rejected"}</td>
-        <td class="rule">${esc([...(v.fail || []), ...(v.warn || []), v.note].filter(Boolean).join(" · ") || "—")}</td></tr>`).join("")
+        <td class="rule">${esc([...(v.fail || []), ...(v.warn || []), v.note].filter(Boolean).join(" · ") || "-")}</td></tr>`).join("")
       : `<tr><td colspan="4" class="rule">Single take: nothing else was tried.</td></tr>`;
     det.querySelector(".uploads tbody").innerHTML = e.uploads.map((u) => `<tr>
-        <td>${pill(u)}</td><td class="ev">${esc(u.file || "—")}${u.seconds ? ` · ${u.seconds}s` : ""}</td>
-        <td>${esc(u.status || "—")}${u.due_at ? `<br><small>${esc(u.due_at)}</small>` : ""}${u.error ? `<br><small class="bad">${esc(u.error)}</small>` : u.note ? `<br><small>${esc(u.note)}</small>` : ""}</td>
-        <td>${u.url ? `<a href="${esc(u.url)}" rel="noopener" target="_blank">open ↗</a>` : "—"}</td></tr>`).join("");
+        <td>${pill(u)}</td><td class="ev">${esc(u.file || "-")}${u.seconds ? ` · ${u.seconds}s` : ""}</td>
+        <td>${esc(u.status || "-")}${u.due_at ? `<br><small>${esc(u.due_at)}</small>` : ""}${u.error ? `<br><small class="bad">${esc(u.error)}</small>` : u.note ? `<br><small>${esc(u.note)}</small>` : ""}</td>
+        <td>${u.url ? `<a href="${esc(u.url)}" rel="noopener" target="_blank">open ↗</a>` : "-"}</td></tr>`).join("");
     const files = det.querySelector(".files");
-    if (e.files && e.files.length) files.querySelector("tbody").innerHTML = e.files.map((f) => `<tr><td>${esc(f.role)}</td><td class="ev">${esc(f.file || "—")}</td><td class="rule">${esc(f.spec || "")}</td></tr>`).join("");
+    if (e.files && e.files.length) files.querySelector("tbody").innerHTML = e.files.map((f) => `<tr><td>${esc(f.role)}</td><td class="ev">${esc(f.file || "-")}</td><td class="rule">${esc(f.spec || "")}</td></tr>`).join("");
     else files.hidden = true;
     const db = det.querySelector(".decisions tbody");
     db.innerHTML = GROUPS.filter((g) => e.fields.some((f) => f.group === g)).map((g) => `<tr class="group"><td colspan="4">${esc(g)}</td></tr>` +
-      e.fields.filter((f) => f.group === g).map((f) => `<tr><td>${esc(f.field)}</td><td class="val">${valueCell(f.value)}</td><td class="rule">${esc(f.rule)}</td><td class="ev">${esc(f.evidence || "—")}</td></tr>`).join("")).join("");
+      e.fields.filter((f) => f.group === g).map((f) => `<tr><td>${esc(f.field)}</td><td class="val">${valueCell(f.value)}</td><td class="rule">${esc(f.rule)}</td><td class="ev">${esc(f.evidence || "-")}</td></tr>`).join("")).join("");
     if (e.note) det.querySelector(".detail-grid").insertAdjacentHTML("afterbegin", `<p class="note wide">⚠ ${esc(e.note)}</p>`);
     det.addEventListener("click", (ev) => {
       const b = ev.target.closest(".more");
@@ -125,7 +125,7 @@
       const chosen = e.variants.filter((v) => v.chosen).length;
       tr.innerHTML = `<td class="date">${esc(e.date)}</td>
         <td><span class="t"><span class="swatch" style="--sw:${esc(e.accent || "")}"></span>${esc(e.title)}<small>${esc(e.id)}${e.family ? ` · ${esc(e.family)}` : ""}${needsAttention(e) ? ' · <span class="warn">needs attention</span>' : ""}</small></span></td>
-        <td>${esc(e.lane || "—")}${e.bpm ? `<br><small>${esc(e.bpm)} BPM</small>` : ""}</td>
+        <td>${esc(e.lane || "-")}${e.bpm ? `<br><small>${esc(e.bpm)} BPM</small>` : ""}</td>
         <td>${esc(src)}${e.engine && e.engine.name && e.engine.name !== "queue" ? `<br><small>${esc(e.engine.name)}</small>` : ""}</td>
         <td class="num">${e.variants.length ? `${e.variants.length} tried${chosen ? ` · ${chosen} used` : ""}` : "1 take"}</td>
         <td>${e.uploads.map(pill).join("")}</td>

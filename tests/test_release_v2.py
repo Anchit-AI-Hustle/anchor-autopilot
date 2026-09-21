@@ -97,7 +97,7 @@ def test_hook_title_is_used_only_when_it_is_new(monkeypatch, tmp_path):
     meta = pipeline.make(p, "2026-09-22", tmp_path / "d", engine_name="fixture", art_mode="procedural",
                          catalog_path=cat, use_queue=False)
     assert meta["brief"]["title"] == "Cold Iron Sky" and meta["brief"]["hook"] == "Cold Iron Sky"
-    assert meta["brief"]["youtube_title"].startswith("Cold Iron Sky — ")
+    assert meta["brief"]["youtube_title"] == "Cold Iron Sky"
     # and not when the hook is already a released title
     cat.write_text(json.dumps({"drops": [{"id": "2026-09-20", "date": "2026-09-20", "title": "Cold Iron Sky",
                                           "lane": "acid", "key": "D minor", "family": "void"}]}))
@@ -111,15 +111,11 @@ def test_seo_title_description_and_tags_carry_the_lane_and_tempo():
     p = load_profile()
     b = make_brief(p, "2026-09-22", [])
     lane = p.lane(b["lane"])
-    t = youtube_title(b["title"], lane, b["bpm"], "ANCHOR")
-    assert t.startswith(b["title"] + " — ") and t.endswith(f"{b['bpm']} BPM") and "ANCHOR" not in t and len(t) <= 60
-    assert len(youtube_title("X" * 90, lane, 150, "ANCHOR")) <= 100
-    assert youtube_title(b["title"], lane, b["bpm"], "ANCHOR", "for the second you stop thinking") == b["title"] + " — for the second you stop thinking"
-    assert youtube_title("X" * 90, lane, 150, "ANCHOR", "a line that would push it over") == "X" * 90 + f" — {lane.genre_line.split(',')[0].strip()}"[:10]
+    assert youtube_title(b["title"]) == b["title"] and len(youtube_title("X" * 120)) <= 100
     d = description(p, b)
     head = d.split("\n\n")[0]
     assert head[0].isupper() and head.endswith(".") and "BPM" not in head       # vibe first, specs later
-    assert lane.genre_line.split(",")[0] in d and "playlist?list=PLSA3gW62zSYE" in d and "every other day" in d
+    assert lane.genre_line.split(",")[0] in d and "playlist?list=PLSA3gW62zSYE" in d and "AI use disclosed" in d and len(d) < 700
     ig = description(p, b, "instagram")
     assert "#hardtechno" in ig and "playlist" not in ig and len(ig) <= 2200
     tg = tags(p, lane, b["bpm"])

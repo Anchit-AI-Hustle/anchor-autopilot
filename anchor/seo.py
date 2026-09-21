@@ -1,7 +1,7 @@
 """Titles, descriptions and tags that a search can find.
 
 Measured on 2026-09-20 with vidIQ on this channel: the bare title "Pressure Spiral" scored
-67/100, "Pressure Spiral — Acid Industrial Techno, 154 BPM | ANCHOR" scored 72. Keyword
+67/100, "Pressure Spiral - Acid Industrial Techno, 154 BPM | ANCHOR" scored 72. Keyword
 demand the same day: "industrial techno" 105k searches/month at competition 18.5 (the
 channel's exact lane, and the lowest competition of anything related), "berlin techno" up
 54% in 30 days, "peak time techno" up 68%, "hard techno" 318k/month at competition 37.
@@ -81,18 +81,10 @@ def genre_phrase(lane: Lane) -> str:
     return lane.genre_line.split(",")[0].strip()
 
 
-def youtube_title(title: str, lane: Lane, bpm: int, artist: str, line: str | None = None) -> str:
-    """'<Title> — <spoken line>' when the writer gave one ("Then Do It — for the second you stop
-    thinking"); '<Title> — <genre phrase>, <BPM> BPM' otherwise. The channel name is not in it:
-    YouTube prints it under every title, and a phone cuts the title at about 50 characters."""
-    if line:
-        t = f"{title} — {line}"
-        if len(t) <= MAX_TITLE:
-            return t
-    t = f"{title} — {genre_phrase(lane)}, {int(bpm)} BPM"
-    if len(t) <= MAX_TITLE:
-        return t
-    return f"{title} — {genre_phrase(lane)}"[:MAX_TITLE]
+def youtube_title(title: str, *_args, **_kw) -> str:
+    """The track's name and nothing else. YouTube prints the channel name under every title,
+    the description carries the genre and the tempo, and a phone shows about 50 characters."""
+    return title[:MAX_TITLE]
 
 
 def tags(profile: Profile, lane: Lane, bpm: int) -> list[str]:
@@ -121,9 +113,9 @@ def vibe_copy(brief: dict) -> str:
 
 
 def description(profile: Profile, brief: dict, platform: str = "youtube") -> str:
-    """The copy (hook, body, why, moment, ask) first, because that is what sits above the fold;
-    then genre · BPM · artist, the links, the cadence with the AI disclosure, the © line and
-    the hashtags. Instagram gets the site instead of the playlist and its own hashtag set."""
+    """Three short lines of copy, then a tight footer: genre · BPM · artist, the playlist, the
+    site and Instagram on one line, the AI disclosure, the © line, three hashtags. Short on
+    purpose: a phone shows two lines above the fold."""
     yt, name = profile.youtube, profile.artist["name"]
     lane = profile.lane(brief["lane"])
     site = profile.artist["site_url"].removeprefix("https://").rstrip("/")
@@ -131,16 +123,14 @@ def description(profile: Profile, brief: dict, platform: str = "youtube") -> str
     copy = brief.get("copy") or {}
     body = copy.get("body") or vibe_copy(brief)
     year = (brief.get("date") or datetime.now(timezone.utc).date().isoformat())[:4]
-    rights = f"© {year} {name}. All rights reserved."
-    cadence = f"A new {name} track every other day. Made with AI music tools and a lot of my own hours; AI use disclosed, always."
+    rights = f"© {year} {name}"
+    cadence = "Made with AI music tools and my own hours. AI use disclosed."
     line = f"{genre_phrase(lane)} · {int(brief['bpm'])} BPM · {name}"
+    handle = profile.artist.get("instagram_handle")
+    free = f"Free download: {site}" + (f" · IG @{handle.lstrip('@')}" if handle else "")
     if platform == "instagram":
         tags = " ".join(dict.fromkeys([*yt["hashtags"], *yt.get("instagram_hashtags", [])]))
-        return "\n".join([body, "", line, "", f"Full catalogue, free: {site}", "", cadence, rights, "", tags])
-    links = [f"Every {name} track, full length: {playlist}" if playlist else f"Full catalogue: {site}",
-             f"Listen and download free: {site}"]
-    handle = profile.artist.get("instagram_handle")
-    if handle:
-        links.append(f"Instagram: @{handle.lstrip('@')}")
+        return "\n".join([body, "", line, free, cadence, rights, "", tags])
+    links = [f"All tracks: {playlist}" if playlist else f"Full catalogue: {site}", free]
     tags = copy.get("hashtags") or " ".join(yt["hashtags"])
-    return "\n".join([body, "", line, "", *links, "", cadence, rights, "", tags])
+    return "\n".join([body, "", line, *links, cadence, rights, "", tags])

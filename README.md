@@ -65,7 +65,7 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
 
 ## Engine and cadence (v2)
 
-- **Music engine:** `[music] engine = "lyria"` — Google Lyria 3.5 through the Gemini API
+- **Music engine:** `[music] engine = "lyria"` - Google Lyria 3.5 through the Gemini API
   (`GEMINI_API_KEY` secret). `fallback_engine = "acestep_cpp"` runs when Lyria is unavailable.
   There is no official Suno API; the Suno web app is never automated.
 - **Cadence:** `[schedule] every_days = 2`, `anchor_date = "2026-09-20"`. The cron still fires
@@ -91,22 +91,20 @@ The page reads the ledger, the catalog and the status file, so it is current as 
 drop commit deploys. Songs released by hand before the ledger existed were backfilled on
 2026-09-20 with `source: "manual"` and are never touched by the robot.
 
-## The words (v4 voice)
+## The words (v5: short)
 
-Every title and description is written as the person who made the record, talking, not a
-label and not a tagline. The YouTube title is `<Title> — <spoken line>` ("Then Do It — for the
-second you stop thinking about it"): the line is what you'd say to make someone press play,
-under 40 characters so a phone shows all of it, and it never carries the genre or the tempo
-(those live in the description, where search still finds them). The description is plain
-first-person speech: a hook, what the track does with timestamps measured on the master
-(`audio.arc`), why it was kept, a "Play it when", and a question for the comments; then the
-genre · BPM · artist line, the links, the cadence line with the AI disclosure, the © line and
-three hashtags. `anchor/copy.py` asks Gemini (`GEMINI_API_KEY`, model `gemini-2.5-flash`) for
-the line and the five parts in that voice and rejects any answer that uses a timestamp the
-record does not have, puts genre or tempo in the line, uses marketing words or exclamation
-marks; with no key (or `ANCHOR_COPY=template`) a seeded template writes the same parts from
-the brief and the arc. The 38 videos on the channel, the playlists and the channel About were
-rewritten by hand in this voice on 2026-09-21; the thumbnails were redrawn for the phone the
-same day (`video.frame_169`), and full videos now render with a moving waveform
+A phone shows about 50 characters of a title and two lines of a description, so that is the
+budget. The YouTube title is the track's name and nothing else: YouTube prints the channel
+name under it, and the description carries the genre and the tempo where search still finds
+them. The description is three short lines, first person: what the track does, the timestamps
+that matter (measured on the master, `audio.arc`), a question; then a tight footer: genre ·
+BPM · artist, the playlist, the site and Instagram on one line, the AI disclosure, © and three
+hashtags. About 400 characters in all. No em dashes anywhere; a hyphen or a full stop instead.
+`anchor/copy.py` asks Gemini (`GEMINI_API_KEY`, model `gemini-2.5-flash`) for the three parts
+and rejects any answer that uses a timestamp the record does not have, runs long, or uses
+marketing words or exclamation marks; with no key (or `ANCHOR_COPY=template`) a seeded template
+writes the same parts from the arc. The 38 videos on the channel, the playlists and the channel
+About were rewritten by hand in this voice on 2026-09-21; the thumbnails were redrawn for the
+phone the same day (`video.frame_169`), and full videos now render with a moving waveform
 (`video.render_motion`).
 

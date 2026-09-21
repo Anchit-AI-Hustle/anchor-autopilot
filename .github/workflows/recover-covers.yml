@@ -1,7 +1,7 @@
 name: Recover covers
 
 # One-shot repair. The ten covers already on the site were drawn one motif per visual family,
-# so five rust drops came out as five orange tiles — the worst pair scored 7.8 out of 255 at
+# so five rust drops came out as five orange tiles - the worst pair scored 7.8 out of 255 at
 # thumbnail size. Cover art is a pure function of the drop's seed, so they can be redrawn
 # from the catalogue here: no audio, no model, a couple of minutes on a free runner.
 on:

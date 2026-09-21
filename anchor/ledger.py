@@ -164,11 +164,11 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
     else:
         F.append(_field("title", b["title"], "Drawn from the title word bank: never repeats a title on the channel, avoids every word used in the last ten titles, never doubles a word. Seeded by the date.", "no sung hook found", "content"))
     F.append(_field("youtube title", b["youtube_title"],
-                    "'<Title> — <spoken line>': the line is what you'd say to make someone press play, written with the copy; genre and tempo live in the description, and there is no channel suffix because YouTube prints the channel name under every title and a phone cuts it at about 50 characters. Falls back to '<Title> — <genre phrase>, <BPM> BPM' when the writer gave no line.",
+                    "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
                     f"{len(b['youtube_title'])} chars; genre phrase {genre_phrase(lane)!r}", "content"))
     copy = b.get("copy") or {}
     F.append(_field("description", b["description"],
-                    "Written as the person who made it: a hook line above the fold, what the record does to you with the real timestamps measured on the master, why it exists, 'Play it when:', and a question for the comments; then genre · BPM · artist, the playlist and site links, the cadence line with the AI disclosure, the © line, three hashtags. Gemini writes it in the house voice and every m:ss is checked against the measured arc; the template writes it when there is no key.",
+                    "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines. Gemini writes it and every m:ss is checked against the measured arc; the template writes it when there is no key.",
                     f"written by {copy.get('source', 'template')}; arc: {len((b.get('arc') or {}).get('drops', []))} drop(s), {len((b.get('arc') or {}).get('breakdowns', []))} breakdown(s); mood: {b.get('mood')!r}", "content"))
     F.append(_field("tags", b["tags"],
                     "Lane tags first (the niche), then the channel's base tags, the genre phrase, '<BPM> bpm techno', the year, 'ai techno' and 'techno full track'; duplicates removed, order kept so the most specific tags lead.",

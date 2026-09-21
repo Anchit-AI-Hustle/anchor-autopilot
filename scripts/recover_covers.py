@@ -1,14 +1,14 @@
 """Redraw every published cover so that no two read as the same picture.
 
 The guard that keeps new covers apart lives in the pipeline and only protects drops made
-after it. The ten already on the site were drawn one motif per visual family — rust is
-always gear arcs, furnace always pipes and sparks — so five rust drops came out as five
+after it. The ten already on the site were drawn one motif per visual family - rust is
+always gear arcs, furnace always pipes and sparks - so five rust drops came out as five
 orange tiles. Measured at thumbnail size, the worst pair scored 7.8 out of 255.
 
 Cover art is a pure function of the drop's seed, so the published ones can simply be redrawn
 from the catalogue: no audio, no model, about a minute on a free runner. Two surfaces are
-checked, because a viewer meets each song twice — the square cover on the website and the
-9:16 tile on YouTube — and a drop has to differ from every earlier drop on BOTH.
+checked, because a viewer meets each song twice - the square cover on the website and the
+9:16 tile on YouTube - and a drop has to differ from every earlier drop on BOTH.
 
 Self-contained on purpose: it adds structure, framing and grading of its own on top of the
 existing family art rather than requiring changes to anchor/, so it can run on the tree as
@@ -50,8 +50,8 @@ def structure(img: Image.Image, fam, seed: int) -> Image.Image:
     """Lay a seeded structural motif over the family art.
 
     A family is one motif and one palette, which is why its drops all look alike. This adds a
-    second layer that differs in *shape*, not just colour — the thing a viewer actually reads
-    at 200px — while leaving the family underneath recognisable.
+    second layer that differs in *shape*, not just colour - the thing a viewer actually reads
+    at 200px - while leaving the family underneath recognisable.
     """
     r = random.Random(seed ^ 0x2545F491)
     size = img.width
@@ -142,7 +142,7 @@ def grade(img: Image.Image, seed: int, spread: float = 1.0) -> Image.Image:
 
 
 def published(img: Image.Image, quality: int = 92) -> Image.Image:
-    """The image as it will exist on disk — the JPEG round-trip moves a tile by a point or two."""
+    """The image as it will exist on disk - the JPEG round-trip moves a tile by a point or two."""
     buf = io.BytesIO()
     img.convert("RGB").save(buf, format="JPEG", quality=quality)
     buf.seek(0)
@@ -152,7 +152,7 @@ def published(img: Image.Image, quality: int = 92) -> Image.Image:
 def tile(cover: Image.Image, seed: int) -> Image.Image:
     """What the cover becomes in a grid of Shorts: blurred backdrop plus the square inset.
 
-    The backdrop is two thirds of the frame, so it is seeded too — a fixed treatment turns
+    The backdrop is two thirds of the frame, so it is seeded too - a fixed treatment turns
     every drop in a family into the same tile however the cover itself is framed.
     """
     r = random.Random(seed ^ 0x9E3779B9)
@@ -186,7 +186,7 @@ def legible(fam, art: Image.Image):
 
     finish() paints the title in the family accent, which was chosen against the family's
     default palette. Grading moves the art off that palette, and orange on yellow clears a
-    brightness test while being unreadable — so the accent is kept only when it is far away
+    brightness test while being unreadable - so the accent is kept only when it is far away
     in colour as well, and otherwise the drop borrows the treatment the mono families use.
     """
     band = np.asarray(art.convert("RGB").crop((0, int(art.width * 0.05), art.width,

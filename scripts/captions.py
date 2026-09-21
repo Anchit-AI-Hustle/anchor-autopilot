@@ -92,15 +92,15 @@ def sections(y, hop=0.5):
         if not raw:
             label = "full kick from the top" if kick else "filtered intro"
         elif kick and prev_kick is False:
-            label = "the drop — kick and bass return"
+            label = "the drop - kick and bass return"
         elif kick and rising:
             label = "building"
         elif kick:
-            label = "driving — heavy low end" if seg_low > 0.70 else "driving"
+            label = "driving - heavy low end" if seg_low > 0.70 else "driving"
         elif rising:
-            label = "kick drops out — tension building"
+            label = "kick drops out - tension building"
         else:
-            label = "breakdown — kick stripped out"
+            label = "breakdown - kick stripped out"
         raw.append([t0, t1, label, seg_db, seg_low])
         prev_kick = kick
 
@@ -112,8 +112,8 @@ def sections(y, hop=0.5):
         else:
             out.append(seg)
     if out:
-        out[-1][2] = "outro — resolving out"
-        if len(out) > 1 and out[-2][2] == "outro — resolving out":
+        out[-1][2] = "outro - resolving out"
+        if len(out) > 1 and out[-2][2] == "outro - resolving out":
             out[-2][1] = out[-1][1]; out.pop()
     return [tuple(o) for o in out]
 
@@ -128,7 +128,7 @@ def srt(secs, genre, bpm):
     """A caption track a deaf viewer can actually use: what is playing, and when it changes."""
     lines = []
     for i, (t0, t1, label, _, _) in enumerate(secs, 1):
-        text = f"[{genre.lower()}, {bpm} BPM — {label}]" if i == 1 else f"[{label}]"
+        text = f"[{genre.lower()}, {bpm} BPM - {label}]" if i == 1 else f"[{label}]"
         lines += [str(i), f"{ts(t0)} --> {ts(t1)}", text, ""]
     return "\n".join(lines)
 

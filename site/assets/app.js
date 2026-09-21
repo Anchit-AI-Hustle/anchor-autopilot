@@ -220,7 +220,7 @@
     const q = d.qc || {}, eng = d.engine || {};
     const cap = (d.caption || "").split(",").map((s) => s.trim()).filter(Boolean);
     $("spec-summary").textContent = cap.length
-      ? `${cap[0].replace(/^./, (c) => c.toUpperCase())} — ${cap.slice(1, 5).join(", ")}.`
+      ? `${cap[0].replace(/^./, (c) => c.toUpperCase())} - ${cap.slice(1, 5).join(", ")}.`
       : `${d.lane_name} at ${d.bpm} BPM.`;
     const rows = [
       ["Genre", d.genre_line],
@@ -236,7 +236,7 @@
           + ` · ${eng.steps || 8} steps`
           + (eng.guidance > 1 ? ` · CFG ${eng.guidance}` : " · no CFG")
           + (eng.render_s ? ` · ${Math.round(eng.render_s / 60)} min CPU` : "")
-        : (eng.name || "—")],
+        : (eng.name || "-")],
       ["Seed", d.seed != null ? String(d.seed) : null],
       ["Checks", (q.warnings && q.warnings.length) ? q.warnings.join("; ") : "No warnings"],
     ].filter(([, v]) => v);
@@ -253,7 +253,7 @@
   // ------------------------------------------------------------- catalogue
   // Clicking "Add to YouTube" opens a prefilled issue on the repo. A workflow picks it
   // up and records the song in queue/queue.json, best rating first; the next daily run
-  // fetches the audio from Suno and releases it — the robot always prefers the queue.
+  // fetches the audio from Suno and releases it - the robot always prefers the queue.
   function queueUrl(s) {
     const body = [
       `Queue this song for the next ANCHOR drop.`,
@@ -261,7 +261,7 @@
       `- Song: ${s.title}`,
       `- Suno: ${s.url}`,
       `- Id: \`${s.id}\``,
-      `- Rated ${Number(s.rating).toFixed(1)} — ${s.verdict}`,
+      `- Rated ${Number(s.rating).toFixed(1)} - ${s.verdict}`,
       s.group_size > 1 ? `- Note: ${s.group_size} near-identical versions exist; ${s.group_pick ? "this is the best of them" : "a higher rated version exists"}` : null,
       ``,
       `_Sent from the catalogue on anchor.anchit-tandon.com._`,
@@ -296,7 +296,7 @@
       href: queueUrl(s), rel: "noopener", target: "_blank",
       title: s.postable
         ? `Queue "${s.title}" for the next drop`
-        : `Not on format (${s.verdict}) — queue it anyway`,
+        : `Not on format (${s.verdict}) - queue it anyway`,
     }, el("span", { class: "queue-ico", "aria-hidden": "true", text: "▶" }),
        el("span", { text: !s.postable ? "Queue anyway" : isAlternate ? "Post this instead" : "Add to YouTube" })));
     cell.append(el("span", { class: "chip " + (s.postable ? "chip-yes" : "chip-no"),
@@ -311,7 +311,7 @@
     const total = (s.checks || []).length;
     box.append(el("summary", {},
       el("span", { class: "c-why", text: s.verdict }),
-      el("span", { class: "why-more", text: total ? `why — ${passed}/${total} checks` : "why" })));
+      el("span", { class: "why-more", text: total ? `why - ${passed}/${total} checks` : "why" })));
 
     const body = el("div", { class: "why-body" });
     if (s.factors && s.factors.length) {
@@ -331,13 +331,13 @@
       for (const c of s.checks) {
         list.append(el("li", { class: c.ok ? "ok" : "no" },
           el("span", { class: "wc-mark", "aria-hidden": "true", text: c.ok ? "✓" : "✕" }),
-          el("span", {}, el("strong", { text: c.label }), el("span", { text: " — " + c.detail }))));
+          el("span", {}, el("strong", { text: c.label }), el("span", { text: " - " + c.detail }))));
       }
       body.append(list);
       body.append(el("p", { class: "why-call",
         text: s.postable
           ? `All ${total} checks pass, so this one can go to YouTube.`
-          : `${total - passed} check${total - passed > 1 ? "s" : ""} failed, so the robot will not post it on its own — the button queues it anyway if you disagree.` }));
+          : `${total - passed} check${total - passed > 1 ? "s" : ""} failed, so the robot will not post it on its own - the button queues it anyway if you disagree.` }));
     }
     box.append(body);
     return box;
@@ -364,10 +364,10 @@
     const n = fam.takes.length;
     const td = el("td", { class: "fam-head", colspan: "6" });
     const p = fam.pick, r = Number(p.rating).toFixed(1);
-    const verdict = p.released_at ? `${p.title} (${r}) is already out — skip the other ${n - 1}`
-      : p.queue_pos === 1 ? `${p.title} (${r}) is next out — skip the other ${n - 1}`
-      : p.queue_pos ? `${p.title} (${r}) is queued #${p.queue_pos} — skip the other ${n - 1}`
-      : `post ${p.title} (${r}) — skip the other ${n - 1}`;
+    const verdict = p.released_at ? `${p.title} (${r}) is already out - skip the other ${n - 1}`
+      : p.queue_pos === 1 ? `${p.title} (${r}) is next out - skip the other ${n - 1}`
+      : p.queue_pos ? `${p.title} (${r}) is queued #${p.queue_pos} - skip the other ${n - 1}`
+      : `post ${p.title} (${r}) - skip the other ${n - 1}`;
     td.append(el("span", { class: "fam-title", text: p.title }),
               el("span", { class: "fam-count", text: `${n} takes of this idea` }),
               el("span", { class: "fam-verdict", text: verdict }));
@@ -383,13 +383,13 @@
       el("a", { href: s.url, rel: "noopener", target: "_blank", text: s.title }));
     if (multi) {
       name.append(el("span", { class: "take-tag " + (isPick ? "tag-use" : "tag-alt"),
-        text: isPick ? (s.released_at ? "POSTED" : s.queue_pos ? "QUEUED — POST THIS ONE" : "POST THIS ONE")
-                     : "alternate — " + whySameIdea(s, fam.pick) }));
+        text: isPick ? (s.released_at ? "POSTED" : s.queue_pos ? "QUEUED - POST THIS ONE" : "POST THIS ONE")
+                     : "alternate - " + whySameIdea(s, fam.pick) }));
     }
     name.append(s.checks || s.factors ? whyPanel(s) : el("span", { class: "c-why", text: s.verdict }));
     tr.append(
       name,
-      el("td", { class: "hide-sm c-tags", text: (s.tags || "—").slice(0, 90) }),
+      el("td", { class: "hide-sm c-tags", text: (s.tags || "-").slice(0, 90) }),
       el("td", { class: "c-num", text: fmtTime(s.duration_s) }),
       el("td", { class: "hide-sm c-num", text: String(s.plays ?? 0) }),
       el("td", { class: "c-rate", text: Number(s.rating).toFixed(1) }),
@@ -420,7 +420,7 @@
 
     const head = el("p", { class: "nu-eyebrow" },
       el("span", { class: "nu-dot", "aria-hidden": "true" }),
-      el("span", { text: queued ? "Next out" : "Nothing queued — post this next" }));
+      el("span", { text: queued ? "Next out" : "Nothing queued - post this next" }));
 
     const title = el("p", { class: "nu-title" },
       el("span", { class: "nu-name", text: up.title }),
@@ -470,7 +470,7 @@
       + (cat.queued ? ` · ${cat.queued} queued` : "");
     const when = cat.checked_at ? ago(cat.checked_at) : "just now";
     $("cat-sub").textContent =
-      `Synced from suno.com/@${cat.handle} ${when} — every song rated against the channel's format`
+      `Synced from suno.com/@${cat.handle} ${when} - every song rated against the channel's format`
       + (dupes.length
           ? `. ${dupes.length} idea${dupes.length > 1 ? "s have" : " has"} more than one take, grouped below: post the one marked POST THIS ONE and skip its alternates.`
           : ".");
@@ -578,11 +578,11 @@
     }
     health.className = "health " + cls;
     $("health-text").textContent = text;
-    $("s-last").textContent = last.finished_at ? `${last.result === "failed" ? "Failed" : "OK"} · ${ago(last.finished_at)}` : "—";
-    $("s-streak").textContent = s.streak ? `${s.streak} day${s.streak > 1 ? "s" : ""}` : "—";
+    $("s-last").textContent = last.finished_at ? `${last.result === "failed" ? "Failed" : "OK"} · ${ago(last.finished_at)}` : "-";
+    $("s-streak").textContent = s.streak ? `${s.streak} day${s.streak > 1 ? "s" : ""}` : "-";
     $("s-total").textContent = s.totals ? String(s.totals.drops) : String((state.catalog.drops || []).length);
     const eng = s.engine || {};
-    $("s-render").textContent = eng.total_s ? `${Math.round(eng.total_s / 60)} min · free CPU` : "—";
+    $("s-render").textContent = eng.total_s ? `${Math.round(eng.total_s / 60)} min · free CPU` : "-";
   }
 
   async function init() {

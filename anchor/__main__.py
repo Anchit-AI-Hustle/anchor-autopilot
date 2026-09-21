@@ -100,7 +100,7 @@ def main(argv: list[str] | None = None) -> int:
         song = suno.find(handle, args.song)
         if not song["postable"]:
             print(f"note: {song['title']!r} is rated {song['rating']} and marked not-postable "
-                  f"({song['verdict']}) — queueing anyway because you asked for it", file=sys.stderr)
+                  f"({song['verdict']}) - queueing anyway because you asked for it", file=sys.stderr)
         res = suno.queue_entry(song, queue.QUEUE)
         print(json.dumps({"queued": res["name"], "title": song["title"], "rating": song["rating"],
                           "suno_url": song["url"],

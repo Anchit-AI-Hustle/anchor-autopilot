@@ -75,7 +75,7 @@ def cover_at(date: str, size: int, dest: Path) -> Path:
 def describe(drop: dict, kind: str) -> str:
     """A release note, not a spec sheet: what it sounds like first, the plumbing last."""
     lead = ("The full track, start to finish." if kind == "full"
-            else "Full song out soon — this is the 45s cut.")
+            else "Full song out soon - this is the 45s cut.")
     tags = "#hardtechno #industrialtechno #techno" + ("" if kind == "full" else " #shorts")
     return "\n".join([
         lead,

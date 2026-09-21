@@ -100,45 +100,45 @@ def rate(song: dict) -> dict:
     genre = 4.0 if not hits else min(4.0, 2.2 + 0.45 * len(hits))
     if misses and not hits:
         genre = 0.6
-        gnote = f"prompt asks for {', '.join(misses[:3])} — a different channel"
+        gnote = f"prompt asks for {', '.join(misses[:3])} - a different channel"
     elif misses:
         genre = max(1.6, genre - 0.9 * len(misses))
-        gnote = (f"{', '.join(hits[:3])}, but also {', '.join(misses[:2])} — "
+        gnote = (f"{', '.join(hits[:3])}, but also {', '.join(misses[:2])} - "
                  f"the off-format tags cost it {0.9 * len(misses):.1f}")
     elif not hits:
         genre = 4.0
         gnote = "the prompt never says what the genre is, so nothing contradicts the format"
     else:
-        gnote = f"prompt names {', '.join(hits[:4])} — straight down the middle of the channel"
+        gnote = f"prompt names {', '.join(hits[:4])} - straight down the middle of the channel"
 
     # 2. length -------------------------------------------------------------
     if dur >= 150:
         length, slot = 2.5, "full release"
-        lnote = f"{_mmss(dur)} — full release length"
+        lnote = f"{_mmss(dur)} - full release length"
     elif dur >= 120:
         length, slot = 2.2, "full release"
-        lnote = f"{_mmss(dur)} — just long enough for a full release"
+        lnote = f"{_mmss(dur)} - just long enough for a full release"
     elif dur >= 60:
         length, slot = 1.3, "Short only"
-        lnote = f"{_mmss(dur)} — carries a Short, thin as a full drop"
+        lnote = f"{_mmss(dur)} - carries a Short, thin as a full drop"
     else:
         length, slot = 0.4, "too short"
-        lnote = f"{_mmss(dur)} — too short to stand as a release"
+        lnote = f"{_mmss(dur)} - too short to stand as a release"
 
     # 3. model --------------------------------------------------------------
     model = song["model"].lower()
     if any(v in model for v in ("v6", "v5")):
-        fidelity, fnote = 1.5, f"made on Suno {song['model']} — current generation, cleanest master"
+        fidelity, fnote = 1.5, f"made on Suno {song['model']} - current generation, cleanest master"
     elif "v4.5" in model:
-        fidelity, fnote = 1.2, f"made on Suno {song['model']} — good, half a point behind v5"
+        fidelity, fnote = 1.2, f"made on Suno {song['model']} - good, half a point behind v5"
     else:
-        fidelity, fnote = 0.7, f"made on Suno {song['model'] or 'an older model'} — audible quality gap"
+        fidelity, fnote = 0.7, f"made on Suno {song['model'] or 'an older model'} - audible quality gap"
 
     # 4. traction -----------------------------------------------------------
     traction = min(1.0, song["plays"] / 40) + min(0.5, song["upvotes"] * 0.25)
     tnote = (f"{song['plays']} play{'s' if song['plays'] != 1 else ''} and "
              f"{song['upvotes']} upvote{'s' if song['upvotes'] != 1 else ''} on Suno"
-             + (" — no signal yet" if not song["plays"] else ""))
+             + (" - no signal yet" if not song["plays"] else ""))
 
     personal = [p for p in PERSONAL if p in title]
     score = round(min(10.0, genre + length + fidelity + traction), 1)
@@ -155,10 +155,10 @@ def rate(song: dict) -> dict:
          "detail": (f"the prompt names {', '.join(hits[:4])}" if hits
                     else "nothing in the prompt says hard techno, industrial, rawstyle or warehouse")},
         {"ok": not personal, "label": "Not a personal track",
-         "detail": (f"the title says {personal[0]!r} — that one is yours, not the channel's"
+         "detail": (f"the title says {personal[0]!r} - that one is yours, not the channel's"
                     if personal else "nothing personal in the title")},
         {"ok": dur >= 60, "label": "Long enough to release",
-         "detail": f"{_mmss(dur)} against a 1:00 floor — {slot}"},
+         "detail": f"{_mmss(dur)} against a 1:00 floor - {slot}"},
         {"ok": genre >= 2.0, "label": "Genre score clears the bar",
          "detail": f"{genre:.1f} against a 2.0 floor"
                    + (f", pulled down by {', '.join(misses[:2])}" if misses else "")},
@@ -169,7 +169,7 @@ def rate(song: dict) -> dict:
     if failed:
         why = failed[0]["detail"]
     elif dur < 150:
-        why = f"on format ({', '.join(hits[:3])}), {_mmss(dur)} — good for a Short"
+        why = f"on format ({', '.join(hits[:3])}), {_mmss(dur)} - good for a Short"
     else:
         why = f"on format ({', '.join(hits[:3])}), {_mmss(dur)}"
 
@@ -189,7 +189,7 @@ def catalogue(handle: str, queue_dir=None) -> dict:
     twins = sum(1 for s in songs if s["group_size"] > 1)
     log(f"suno: {twins} song(s) in {families} near-duplicate family(ies)")
     up = annotate_queue(songs, queue_dir)
-    log("suno: next out is " + (f"{up['title']!r} ({up['why']})" if up else "nothing — queue empty"))
+    log("suno: next out is " + (f"{up['title']!r} ({up['why']})" if up else "nothing - queue empty"))
     return {
         "handle": handle,
         "profile_url": PROFILE_URL.format(handle=handle),
@@ -227,8 +227,8 @@ def _jaccard(a: set[str], b: set[str]) -> float:
 def similarity(a: dict, b: dict) -> float:
     """How alike two songs are, 0-1.
 
-    Weighted so the prompt dominates — two tracks built from the same tags are the
-    same idea twice even when the titles differ — with the title and the runtime as
+    Weighted so the prompt dominates - two tracks built from the same tags are the
+    same idea twice even when the titles differ - with the title and the runtime as
     tie-breakers. Deterministic, no model, so the number on the site is reproducible.
     """
     tag = _jaccard(_tokens(a["tags"]), _tokens(b["tags"]))
@@ -355,7 +355,7 @@ def annotate_queue(songs: list[dict], queue_dir=None) -> dict | None:
             "id": head.get("suno_id"),
             "rating": head.get("rating"),
             "source": "queue",
-            "why": "first in the release queue — goes out on the next daily run",
+            "why": "first in the release queue - goes out on the next daily run",
             "waiting": len(line) - 1,
         }
     # Nothing queued: the best take still going spare is the one to add.
@@ -368,7 +368,7 @@ def annotate_queue(songs: list[dict], queue_dir=None) -> dict | None:
         "id": best["id"],
         "rating": best["rating"],
         "source": "catalogue",
-        "why": "nothing is queued — this is the best take not yet released",
+        "why": "nothing is queued - this is the best take not yet released",
         "waiting": 0,
     }
 
@@ -441,7 +441,7 @@ def materialise(name: str, entry: dict, queue_dir, timeout: int = 180):
     if not video and entry.get("suno_id"):
         video = f"https://cdn1.suno.ai/{entry['suno_id']}.mp4"
     if not video:
-        raise ValueError(f"{name} has no source to fetch — put the audio in queue/ by hand")
+        raise ValueError(f"{name} has no source to fetch - put the audio in queue/ by hand")
     tmp = dest.with_suffix(".src.mp4")
     try:
         size = _fetch(video, tmp, timeout)
