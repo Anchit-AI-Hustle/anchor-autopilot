@@ -91,20 +91,19 @@ The page reads the ledger, the catalog and the status file, so it is current as 
 drop commit deploys. Songs released by hand before the ledger existed were backfilled on
 2026-09-20 with `source: "manual"` and are never touched by the robot.
 
-## The words (v5: short)
+## The words (v6: the vibe, hyped, short)
 
-A phone shows about 50 characters of a title and two lines of a description, so that is the
-budget. The YouTube title is the track's name and nothing else: YouTube prints the channel
-name under it, and the description carries the genre and the tempo where search still finds
-them. The description is three short lines, first person: what the track does, the timestamps
-that matter (measured on the master, `audio.arc`), a question; then a tight footer: genre ·
-BPM · artist, the playlist, the site and Instagram on one line, the AI disclosure, © and three
-hashtags. About 400 characters in all. No em dashes anywhere; a hyphen or a full stop instead.
-`anchor/copy.py` asks Gemini (`GEMINI_API_KEY`, model `gemini-2.5-flash`) for the three parts
-and rejects any answer that uses a timestamp the record does not have, runs long, or uses
-marketing words or exclamation marks; with no key (or `ANCHOR_COPY=template`) a seeded template
-writes the same parts from the arc. The 38 videos on the channel, the playlists and the channel
-About were rewritten by hand in this voice on 2026-09-21; the thumbnails were redrawn for the
-phone the same day (`video.frame_169`), and full videos now render with a moving waveform
+The YouTube title is the track's name and nothing else. The description is the vibe and the
+theme of the record in two to four sentences that build like an intro: what it feels like,
+what it's about, where it takes you. Nothing mechanical: no timestamps, no tempo in the body,
+no section names. Then a five-line footer: genre · BPM · artist, the playlist, the site and
+Instagram on one line, the AI disclosure, © and three hashtags. About 400 characters in all,
+no em dashes anywhere. `anchor/copy.py` asks Gemini (`GEMINI_API_KEY`, model
+`gemini-2.5-flash`) for the body from the brief's mood, theme and textures and rejects any
+answer with a clock time, a section name, a marketing word, an exclamation mark or a dash;
+with no key (or `ANCHOR_COPY=template`) a seeded template writes it from the same brief. The
+38 videos on the channel, the playlists and the channel About were rewritten by hand in this
+voice on 2026-09-21; the thumbnails were redrawn for the phone the same day
+(`video.frame_169`), and full videos now render with a moving waveform
 (`video.render_motion`).
 

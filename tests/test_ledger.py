@@ -110,44 +110,38 @@ def test_arc_finds_the_breakdown_and_the_drop():
     assert any(abs(d["at"] - 30) <= 2 for d in a["drops"]), "the return is a drop"
 
 
-def test_template_copy_is_human_grounded_and_repeatable(monkeypatch):
+def test_template_copy_is_vibe_only_and_repeatable(monkeypatch):
     from anchor import copy as C
     brief = {**META["brief"], "date": "2026-09-22"}
-    arc = {"duration_s": 150.0, "breakdowns": [{"start": 66.0, "end": 86.0, "depth_db": -14.0}],
-           "drops": [{"at": 34.0, "rise_db": 3.8}, {"at": 144.0, "rise_db": 4.4}]}
     monkeypatch.delenv("GEMINI_API_KEY", raising=False)
-    a = C.write(PROFILE, brief, arc)
-    b = C.write(PROFILE, brief, arc)
+    a = C.write(PROFILE, brief)
+    b = C.write(PROFILE, brief, {"drops": [{"at": 34.0}]})
     assert a == b and a["source"] == "template"
-    lines = a["body"].splitlines()
-    assert len(lines) == 3 and lines[2].endswith("? I read every comment.") and all(len(l) <= 90 for l in lines)
-    assert "1:06" in a["body"] and "1:26" in a["body"] and C._timestamps_ok(a["body"], arc)
-    assert "!" not in a["body"] and a["hashtags"].startswith("#") and len(a["hashtags"].split()) == 3
+    assert not C.BANNED.search(a["body"]) and len(a["body"]) < 400 and a["body"].endswith(".")
+    assert a["hashtags"].startswith("#") and len(a["hashtags"].split()) == 3
 
 
-def test_gemini_copy_is_checked_against_the_record(monkeypatch):
+def test_gemini_copy_is_checked_for_clock_times_and_hype_words(monkeypatch):
     from anchor import copy as C
     brief = {**META["brief"], "date": "2026-09-22"}
-    arc = {"duration_s": 150.0, "breakdowns": [], "drops": [{"at": 34.0, "rise_db": 3.8}]}
-    good = {"l1": "The kick arrives before you do.", "l2": "By 0:34 the floor is yours.",
-            "ask": "Which bar got you?", "hashtags": "#rawstyle #hardtechno #techno"}
-    bad = {**good, "l2": "At 1:10 it explodes."}            # no such moment in the record
-    answers = iter([json.dumps(bad), json.dumps(good)])
+    good = {"body": "Warehouse pressure with no off switch. It starts before you're ready and it does not let go.", "hashtags": "#rawstyle #hardtechno #techno"}
+    bad_time = {**good, "body": "At 1:10 it explodes."}
+    bad_word = {**good, "body": "Immerse yourself in the journey."}
+    answers = iter([json.dumps(bad_time), json.dumps(bad_word), json.dumps(good)])
     monkeypatch.setenv("GEMINI_API_KEY", "x")
     monkeypatch.setattr(C, "ask_gemini", lambda prompt, key: next(answers))
-    out = C.write(PROFILE, brief, arc)
-    assert out["source"] == "gemini" and "0:34" in out["body"] and "1:10" not in out["body"]
-    assert out["body"].splitlines() == ["The kick arrives before you do.", "By 0:34 the floor is yours.", "Which bar got you? I read every comment."]
+    out = C.write(PROFILE, brief)
+    assert out["source"] == "gemini" and out["body"] == good["body"]
     # every answer bad -> the template, never a broken description
-    monkeypatch.setattr(C, "ask_gemini", lambda prompt, key: json.dumps(bad))
-    assert C.write(PROFILE, brief, arc)["source"] == "template"
+    monkeypatch.setattr(C, "ask_gemini", lambda prompt, key: json.dumps(bad_time))
+    assert C.write(PROFILE, brief)["source"] == "template"
 
 
 def test_description_is_the_copy_then_the_practical_block():
-    brief = {**META["brief"], "copy": {"body": "Hook line.\nBody at 0:34.\nAsk? I read every comment.", "hashtags": "#a #b #c", "source": "template"}}
+    brief = {**META["brief"], "copy": {"body": "Hook line. Bigger line. Biggest line.", "hashtags": "#a #b #c", "source": "template"}}
     d = description(PROFILE, brief)
     lines = d.splitlines()
-    assert lines[0] == "Hook line." and d.endswith("#a #b #c") and len(d) < 500
+    assert lines[0] == "Hook line. Bigger line. Biggest line." and d.endswith("#a #b #c") and len(d) < 500
     assert "Rawstyle Hybrid · 152 BPM · ANCHOR" in lines and any(l.endswith("· IG @anchor_at2803") for l in lines)
     ig = description(PROFILE, brief, "instagram")
     assert ig.startswith("Hook line.") and "playlist" not in ig and "#anchortechno" in ig

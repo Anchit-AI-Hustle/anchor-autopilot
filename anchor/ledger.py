@@ -168,7 +168,7 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
                     f"{len(b['youtube_title'])} chars; genre phrase {genre_phrase(lane)!r}", "content"))
     copy = b.get("copy") or {}
     F.append(_field("description", b["description"],
-                    "Three short lines as the person who made it: what the track does, the timestamps that matter (measured on the master), a question; then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines. Gemini writes it and every m:ss is checked against the measured arc; the template writes it when there is no key.",
+                    "The vibe and the theme of the record in two to four sentences that build like an intro, nothing mechanical (no timestamps, no tempo, no section names); then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines. Gemini writes it from the brief's mood and theme and any clock time or hype word is rejected; the template writes it when there is no key.",
                     f"written by {copy.get('source', 'template')}; arc: {len((b.get('arc') or {}).get('drops', []))} drop(s), {len((b.get('arc') or {}).get('breakdowns', []))} breakdown(s); mood: {b.get('mood')!r}", "content"))
     F.append(_field("tags", b["tags"],
                     "Lane tags first (the niche), then the channel's base tags, the genre phrase, '<BPM> bpm techno', the year, 'ai techno' and 'techno full track'; duplicates removed, order kept so the most specific tags lead.",
