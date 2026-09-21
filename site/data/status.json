@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-09-20",
-    "title": "Rupture Pulse",
-    "finished_at": "2026-09-20T19:04:40Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/35528127536",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-09-21T19:56:58Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/35647842924"
   },
   "next_post_at": "2026-09-21T17:30:00Z",
   "streak": 3,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-20T19:04:40Z",
+  "updated_at": "2026-09-21T19:56:58Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
