@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-09-22",
-    "title": "Horizon Engine",
-    "finished_at": "2026-09-22T20:13:57Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/35768849671",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-09-23T18:57:49Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/35905919252"
   },
   "next_post_at": "2026-09-23T17:30:00Z",
   "streak": 1,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-22T20:13:57Z",
+  "updated_at": "2026-09-23T18:57:49Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
