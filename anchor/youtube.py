@@ -177,6 +177,44 @@ class YouTube:
                    {"snippet": {"playlistId": playlist_id, "resourceId": {"kind": "youtube#video", "videoId": video_id}}})
         log(f"youtube: {video_id} added to playlist {playlist_id}")
 
+    # ------------------------------------------------------------ the catalogue
+    def channel_videos(self, channel_id: str) -> list[dict]:
+        """Every upload on the channel: id, title, description, tags, categoryId, duration."""
+        data = self._json("GET", "channels", {"part": "contentDetails", "id": channel_id})
+        items = data.get("items") or []
+        if not items:
+            raise YouTubeError(f"channel {channel_id} not visible to these credentials")
+        uploads = items[0]["contentDetails"]["relatedPlaylists"]["uploads"]
+        ids, token = [], None
+        while True:
+            params = {"part": "contentDetails", "playlistId": uploads, "maxResults": 50}
+            if token:
+                params["pageToken"] = token
+            page = self._json("GET", "playlistItems", params)
+            ids += [i["contentDetails"]["videoId"] for i in page.get("items", [])]
+            token = page.get("nextPageToken")
+            if not token:
+                break
+        out = []
+        for k in range(0, len(ids), 50):
+            page = self._json("GET", "videos", {"part": "snippet,contentDetails,status", "id": ",".join(ids[k:k + 50]), "maxResults": 50})
+            for v in page.get("items", []):
+                sn = v["snippet"]
+                out.append({"id": v["id"], "title": sn.get("title", ""), "description": sn.get("description", ""),
+                            "tags": sn.get("tags") or [], "categoryId": sn.get("categoryId", "10"),
+                            "duration": v.get("contentDetails", {}).get("duration"), "privacy": v.get("status", {}).get("privacyStatus"),
+                            "language": sn.get("defaultLanguage")})
+        return out
+
+    def update_video(self, video: dict, *, title: str, description: str, tags: list[str] | None = None) -> None:
+        """videos.update replaces the whole snippet, so the category and tags ride along."""
+        snippet = {"title": title[:100], "description": description[:5000], "categoryId": video.get("categoryId", "10"),
+                   "tags": (tags if tags is not None else video.get("tags") or [])[:60]}
+        if video.get("language"):
+            snippet["defaultLanguage"] = video["language"]
+        self._json("PUT", "videos", {"part": "snippet"}, {"id": video["id"], "snippet": snippet})
+        log(f"youtube: updated {video['id']}: {title!r}")
+
     def video_status(self, video_id: str) -> dict:
         data = self._json("GET", "videos", {"part": "status,statistics", "id": video_id})
         items = data.get("items") or []

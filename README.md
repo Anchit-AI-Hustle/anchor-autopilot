@@ -95,6 +95,11 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
   robot then uploads from disk with tags, category, AI disclosure, scheduled publish time,
   custom thumbnail and playlist, and the Short links its full track by id. Without them,
   Buffer is used as before. Instagram always goes through Buffer.
+- **The back catalogue keeps up:** `retitle.yml` (every Monday, or on demand) reads every
+  upload on the channel and rewrites any title or description that is not in the search-led
+  form, robot drops from the catalog and the hand uploads from `site/data/channel.json`.
+  Idempotent: a clean channel costs one read. `python -m anchor retitle --dry-run` shows
+  what would change.
 - **Title:** the most repeated sung phrase becomes the title when it reads as one and is unused.
 - **Uniqueness gates:** cover art must be >= 84 hash-distance from every released cover; the
   audio is printed twice against every released master, loudness envelope (limit 0.80) and

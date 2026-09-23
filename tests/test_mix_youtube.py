@@ -172,3 +172,42 @@ def test_build_makes_audio_cover_video_and_chapters_from_the_period(fast_profile
     assert book["entries"][0]["source"] == "mix" and book["entries"][0]["uploads"][0]["url"] == "https://youtu.be/v9"
     with pytest.raises(RuntimeError):
         mix.build(p, {"drops": cat["drops"][:2]}, "2026-09-27", "week", tmp_path / "out2")
+
+
+# ---------------------------------------------------------------------- retitle
+def test_retitle_rewrites_only_what_differs_and_is_idempotent(monkeypatch, tmp_path):
+    from anchor import retitle
+    p = load_profile()
+    updates = []
+
+    class FakeApi:
+        def channel_videos(self, channel_id):
+            return [
+                {"id": "kbMQz4tWUtU", "title": "Rupture Pulse", "categoryId": "10", "tags": ["t"],
+                 "description": "Warehouse pressure with no off switch.\n\nIndustrial Hard Techno · 154 BPM · ANCHOR\nAll tracks: https://p\nFree download: site\n\n#a #b #c"},
+                {"id": "done1", "title": "Pull Under | Industrial Hard Techno | ANCHOR", "categoryId": "10", "tags": [],
+                 "description": "Industrial Hard Techno. An ANCHOR original, free download below.\n\nThe current wins."},
+                {"id": "robot1", "title": "Cold Iron Sky", "categoryId": "10", "tags": [],
+                 "description": "Cold and clean.\n\nAcid Techno · 150 BPM · ANCHOR\nAll tracks: https://p"},
+                {"id": "mystery", "title": "Something Else", "categoryId": "10", "tags": [], "description": "x"},
+            ]
+
+        def update_video(self, video, *, title, description, tags=None):
+            updates.append((video["id"], title, description))
+
+    channel = tmp_path / "channel.json"
+    channel.write_text(json.dumps({"videos": {"kbMQz4tWUtU": {"title": "Rupture Pulse", "genre": "Industrial Hard Techno", "bpm": 154},
+                                              "done1": {"title": "Pull Under", "genre": "Industrial Hard Techno", "bpm": None}}}))
+    cat = tmp_path / "catalog.json"
+    cat.write_text(json.dumps({"drops": [{"id": "2026-09-24", "title": "Cold Iron Sky", "lane": "acid", "bpm": 150,
+                                          "youtube_url": "https://www.youtube.com/watch?v=robot1"}]}))
+    r = retitle.run(p, catalog_path=cat, channel_path=channel, api=FakeApi())
+    assert [u[0] for u in updates] == ["kbMQz4tWUtU", "robot1"] and r["same"] == ["done1"] and r["unknown"] == ["mystery"]
+    assert updates[0][1] == "Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR"
+    assert updates[0][2] == ("Industrial Hard Techno at 154 BPM. An ANCHOR original, free download below.\n\n"
+                             "Warehouse pressure with no off switch.\n\nAll tracks: https://p\nFree download: site\n\n#a #b #c")
+    assert updates[1][1] == "Cold Iron Sky | Acid Techno 150 BPM | ANCHOR" and updates[1][2].startswith("Acid Techno at 150 BPM. An ANCHOR original")
+    # a second pass over the rewritten text changes nothing
+    again = retitle.rewrite_description(updates[0][2], "Industrial Hard Techno", 154, "ANCHOR")
+    assert again == updates[0][2]
+    assert retitle.search_title("X" * 95, "Industrial Hard Techno", 154, "ANCHOR") == "X" * 95

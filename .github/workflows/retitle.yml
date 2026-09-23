@@ -1,0 +1,48 @@
+name: Retitle (search-led titles on every upload)
+
+# Every Monday, and on demand: every video and Short on the channel gets the title
+# 'Name | Genre 154 BPM | ANCHOR' and a description that opens with the search line. It
+# changes only what differs, so a clean channel costs one read. Needs the channel's own
+# credentials (YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN).
+on:
+  schedule:
+    - cron: "37 9 * * 1"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Report what would change, change nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  retitle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Rewrite what differs
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          if [ -z "$YT_REFRESH_TOKEN" ]; then
+            echo "::warning::YT_* secrets are not set; nothing can be retitled without the channel's credentials."
+            exit 0
+          fi
+          FLAGS=()
+          [ "${{ inputs.dry_run }}" = "true" ] && FLAGS+=(--dry-run)
+          python -m anchor retitle "${FLAGS[@]}" | tee retitle.json
+          python - >> "$GITHUB_STEP_SUMMARY" <<EOF
+          import json; r = json.load(open("retitle.json"))
+          print(f"### Retitle\n\n{len(r['changed'])} updated, {len(r['same'])} already right, {len(r['unknown'])} unknown\n")
+          for c in r["changed"]: print(f"- {c['id']}: {c['from']!r} -> {c['to']!r}")
+          EOF

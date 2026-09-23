@@ -75,6 +75,9 @@ def main(argv: list[str] | None = None) -> int:
     ya.add_argument("--client-secret", required=True)
     ya.add_argument("--port", type=int, default=8765)
 
+    rt = sub.add_parser("retitle", help="give every upload on the channel the search-led title and description (Data API)")
+    rt.add_argument("--dry-run", action="store_true")
+
     sub.add_parser("check", help="validate profile and site data")
     sub.add_parser("ledger", help="refresh the /ops ledger's upload rows from the catalog")
 
@@ -138,6 +141,9 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "record-mix":
         row = pipeline.record_mix(profile, Path(args.mix), repo=args.repo)
         print(json.dumps(row, indent=2))
+    elif args.cmd == "retitle":
+        from . import retitle
+        print(json.dumps(retitle.run(profile, dry_run=args.dry_run), indent=2, ensure_ascii=False))
     elif args.cmd == "youtube-auth":
         from .youtube import authorize_interactively
         token = authorize_interactively(args.client_id, args.client_secret, args.port)
