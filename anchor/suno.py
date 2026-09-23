@@ -403,7 +403,7 @@ def _audio_seconds(path) -> float:
     return 0.0
 
 
-def queue_entry(song: dict, queue_dir) -> dict:
+def queue_entry(song: dict, queue_dir, force: bool = False) -> dict:
     """Reserve a slot in the release queue without downloading anything yet.
 
     Only the reference is stored, so the queue stays a few kB of JSON in git instead of
@@ -431,6 +431,8 @@ def queue_entry(song: dict, queue_dir) -> dict:
         "duration_s": song["duration_s"],
         "queued_at": datetime.now(timezone.utc).isoformat(timespec="seconds").replace("+00:00", "Z"),
     }
+    if force:
+        meta[name]["force"] = True
     index.write_text(json.dumps(meta, indent=2, ensure_ascii=False) + "\n")
     log(f"suno: queued {song['title']!r} as {name} (rated {song['rating']})")
     return {"name": name, "entry": meta[name]}

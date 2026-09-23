@@ -35,6 +35,23 @@ def asset_base(profile: Profile, brief: dict) -> str:
     return f"{profile.artist['name']}-{brief['date']}-{slug(brief['title'])}"
 
 
+def autofill(profile: Profile, queue_dir: Path, catalog_path: Path) -> None:
+    """Your newest eligible Suno song into the queue, from the live profile when it answers,
+    from the last synced catalogue otherwise. Never a reason for a failed run."""
+    from . import autoqueue, suno
+    if not autoqueue.settings(profile)["auto"]:
+        return
+    try:
+        songs = suno.catalogue(profile.artist.get("suno_handle", "anchor_at"))["songs"]
+    except Exception as exc:      # noqa: BLE001 - offline: use what the site last saw
+        log(f"autoqueue: live Suno read failed ({exc}); using the synced catalogue")
+        songs = ((catalog.load(catalog_path).get("catalogue") or {}).get("songs")) or []
+    try:
+        autoqueue.fill(profile, songs, queue_dir, catalog_path)
+    except Exception as exc:      # noqa: BLE001
+        log(f"autoqueue: skipped: {exc}")
+
+
 # ------------------------------------------------------------------------- make
 def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None = None,
          art_mode: str | None = None, retries: int = 1, catalog_path: Path = CATALOG_PATH,
@@ -45,6 +62,9 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
     hist = catalog.history(catalog.load(catalog_path))
     # use_queue=False exercises the generator even when tracks are waiting - the only way
     # to hear what the model does without spending a queued release to find out
+    # only a real run reads Suno; a test with its own catalog never touches the network or the repo's queue
+    if use_queue and engine_name not in ("fixture",) and Path(catalog_path) == CATALOG_PATH:
+        autofill(profile, queue_dir, catalog_path)
     queued = next_track(queue_dir) if use_queue and engine_name not in ("fixture",) else None
     if queued:
         return make_from_queue(profile, day, out_dir, queued, art_mode=art_mode, hist=hist)

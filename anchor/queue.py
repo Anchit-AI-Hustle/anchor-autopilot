@@ -38,6 +38,9 @@ def _already_posted(name: str, title: str | None, queue_dir: Path) -> bool:
     from .suno import title_key
     if name in spent(queue_dir):
         return True
+    meta = read_json(Path(queue_dir) / "queue.json", {}) or {}
+    if (meta.get(name) or {}).get("force"):       # you said release it anyway; the audio gate still runs
+        return False
     key = title_key(title or _title_from(name))
     return bool(key) and key in posted_ideas()
 

@@ -15,6 +15,17 @@ bio = "Industrial hard techno from the machine room. One new track every day, bu
 # Titles already on the channel. The robot never reuses them.
 existing_titles = ["Pull Under", "Apex Ascent", "Initiate Mayhem"]
 
+[queue]
+# Your own Suno songs go out first: every day the robot reads the public profile and queues
+# the best song that is on format, above the floor, not another take of a song already out,
+# and not personal. The engine renders only when the queue is empty. Songs about family,
+# birthdays or love stay home: any of these words in the title or prompt keeps a song
+# private, and never_titles names exact titles to keep private whatever they say.
+auto = true
+min_rating = 6.0
+never_words = ["birthday", "happy birthday", "anniversary", "wedding", "mom", "mum", "mummy", "dad", "papa", "father", "mother", "sister", "brother", "family", "my love", "wife", "husband", "girlfriend", "boyfriend", "baby girl", "baby boy", "valentine", "proposal"]
+never_titles = []
+
 [schedule]
 # Publish time in UTC. 17:30 UTC = 23:00 IST = 19:30 CEST = 13:30 ET.
 post_time_utc = "17:30"

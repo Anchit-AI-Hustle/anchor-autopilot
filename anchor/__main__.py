@@ -56,6 +56,10 @@ def main(argv: list[str] | None = None) -> int:
     qa = sub.add_parser("queue-add", help="pull a Suno song into the release queue (the site's Add to YouTube button)")
     qa.add_argument("--song", required=True, help="Suno song id, song URL, or text containing one")
     qa.add_argument("--handle", default=None)
+    qa.add_argument("--force", action="store_true", help="release it even if it is another take of a song already out (the audio gate still runs)")
+    qp = sub.add_parser("queue-plan", help="every public Suno song: released, queued, eligible or held, and why")
+    qp.add_argument("--handle", default=None)
+    qp.add_argument("--offline", action="store_true", help="use the synced catalogue instead of reading Suno")
 
     mx = sub.add_parser("mix", help="build the week's or month's mix: audio, cover, 16:9 video, chapters")
     mx.add_argument("--period", default="week", choices=["week", "month"])
@@ -113,6 +117,11 @@ def main(argv: list[str] | None = None) -> int:
         from .suno import catalogue
         cat = catalog.load(CATALOG_PATH, profile)
         cat["catalogue"] = catalogue(args.handle or profile.artist.get("suno_handle", "anchor_at"))
+        # what the robot will do with each song, written where the site can show it
+        from . import autoqueue
+        plan = {r["id"]: {"verdict": r["verdict"], "reason": r["reason"]} for r in autoqueue.plan(profile, cat["catalogue"]["songs"])}
+        for song in cat["catalogue"]["songs"]:
+            song["decision"] = plan.get(song["id"])
         catalog.save(cat, CATALOG_PATH)
         c = cat["catalogue"]
         print(json.dumps({"total": c["total"], "postable": c["postable"], "checked_at": c["checked_at"]}))
@@ -123,7 +132,7 @@ def main(argv: list[str] | None = None) -> int:
         if not song["postable"]:
             print(f"note: {song['title']!r} is rated {song['rating']} and marked not-postable "
                   f"({song['verdict']}) - queueing anyway because you asked for it", file=sys.stderr)
-        res = suno.queue_entry(song, queue.QUEUE)
+        res = suno.queue_entry(song, queue.QUEUE, force=args.force)
         print(json.dumps({"queued": res["name"], "title": song["title"], "rating": song["rating"],
                           "suno_url": song["url"],
                           "waiting": len(queue.pending()) + len(queue.reserved())},
@@ -148,6 +157,14 @@ def main(argv: list[str] | None = None) -> int:
         from .youtube import authorize_interactively
         token = authorize_interactively(args.client_id, args.client_secret, args.port)
         print("\nYT_REFRESH_TOKEN (add it to the repository secrets, then close this window):\n\n" + token + "\n")
+    elif args.cmd == "queue-plan":
+        from . import autoqueue, suno
+        if args.offline:
+            songs = ((catalog.load(CATALOG_PATH).get("catalogue") or {}).get("songs")) or []
+        else:
+            songs = suno.catalogue(args.handle or profile.artist.get("suno_handle", "anchor_at"))["songs"]
+        for r in autoqueue.plan(profile, songs):
+            print(f"{r['verdict']:9} {str(r['title'])[:30]:30} {r.get('duration_s') or 0:5.0f}s r{r.get('rating')}  {r['reason']}")
     elif args.cmd == "fail":
         pipeline.fail(args.stage, args.error, args.run_url)
     elif args.cmd == "check":

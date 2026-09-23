@@ -100,6 +100,15 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
   form, robot drops from the catalog and the hand uploads from `site/data/channel.json`.
   Idempotent: a clean channel costs one read. `python -m anchor retitle --dry-run` shows
   what would change.
+- **Your Suno songs go out first, on their own:** there is no official Suno API (checked
+  2026-09-23) and the third-party "Suno APIs" drive accounts through the web app against
+  Suno's terms, so the robot never generates on Suno. Instead, every day before it renders,
+  it reads your public Suno profile and queues the best song that is on format, above
+  `[queue] min_rating`, not another take of a song already out, and not personal
+  (`never_words`: birthday, family, love and so on in the title or prompt; `never_titles`
+  for exact titles). Lyria renders only on a day the queue is empty. `python -m anchor
+  queue-plan` shows every song's verdict and reason; `queue-add --force` releases a held
+  take anyway (the audio gate still runs).
 - **Title:** the most repeated sung phrase becomes the title when it reads as one and is unused.
 - **Uniqueness gates:** cover art must be >= 84 hash-distance from every released cover; the
   audio is printed twice against every released master, loudness envelope (limit 0.80) and

@@ -143,7 +143,7 @@ def test_period_window_volume_and_words():
     assert "0:00 T1 (150 BPM)" in w["description"] and "2:28 T2 (154 BPM)" in w["description"]
     assert w["description"].splitlines()[0].startswith("Industrial Hard Techno mix, 5 minutes, 2 original ANCHOR tracks")
     assert "hard techno mix 2026" in w["tags"] and "acid techno" in w["tags"] and len(w["tags"]) <= 40
-    assert "—" not in w["description"] and "!" not in w["title"]
+    assert "\u2014" not in w["description"] and "!" not in w["title"]
 
 
 def test_build_makes_audio_cover_video_and_chapters_from_the_period(fast_profile, tmp_path, monkeypatch):
