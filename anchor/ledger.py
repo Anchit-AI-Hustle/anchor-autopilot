@@ -156,7 +156,7 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
                     f"Each attempt must be finite audio at the right length, no dropouts, no clipping, tempo near the brief, and must not resemble a released drop: loudness envelope correlation <= {AUDIO_MAX_SIMILARITY} and spectral-sequence correlation <= {SEQUENCE_MAX_SIMILARITY} against every released master. A fail is regenerated with the next seed.",
                     f"nearest released audio {near.get('id')} at envelope {near.get('envelope', near.get('similarity'))}, spectral sequence {near.get('sequence', 'n/a')}; warnings: {', '.join(meta['qc']['warnings']) or 'none'}", "record"))
     F.append(_field("master loudness", f"{loud['after']['input_i']} LUFS / {loud['after']['input_tp']} dBTP",
-                    f"Mastered to {music['loudness_lufs']} LUFS integrated with a {music['true_peak_db']} dBTP ceiling (YouTube normalises to -14, so the record never gets turned down harshly) and a {music.get('outro_fade_s', 0)} s outro fade.",
+                    f"Mastered to {music['loudness_lufs']} LUFS integrated with a {music['true_peak_db']} dBTP ceiling (YouTube plays everything at -14, so the master sits at that level with headroom for the AAC encoder instead of being turned down) and a {music.get('outro_fade_s', 0)} s outro fade.",
                     f"before {loud['before']['input_i']} LUFS; gain {loud.get('gain_db')} dB", "record"))
 
     # ---- names and copy

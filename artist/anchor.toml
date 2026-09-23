@@ -53,8 +53,13 @@ negative = "vocals, singing, spoken word, lyrics, acoustic guitar, piano ballad,
 # music.structure) is the real fix; this is the safety net, and it only fires when the
 # track is measurably still at full level on its last second.
 outro_fade_s = 3.0
-loudness_lufs = -11.0     # integrated loudness of the master (YouTube plays back at -14)
-true_peak_db = -1.0
+# Measured on the channel 2026-09-23: the -11 LUFS / -1 dBTP masters came back from
+# YouTube's AAC encoder at +0.2 to +1.2 dBTP (codec overshoot, audible as grit on the
+# kick), and YouTube turns everything down to -14 anyway, so the extra 3 dB bought nothing.
+# -14 with 1.5 dB of true-peak headroom plays at exactly the level YouTube would have set,
+# with the transients intact.
+loudness_lufs = -14.0     # integrated loudness of the master = YouTube's playback level
+true_peak_db = -1.5
 
 [[music.lanes]]
 id = "industrial"

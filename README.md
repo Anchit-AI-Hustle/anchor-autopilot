@@ -10,7 +10,7 @@ It costs nothing to run.
                                 ├─ brief      artist/anchor.toml + catalog history (no repeats)
                                 ├─ music      ACE-Step 1.5 turbo via acestep.cpp, CPU only (MIT licence)
                                 ├─ QC         duration, silence, dropouts, low end, tempo; 1 retry
-                                ├─ master     gain + limiter to -10 LUFS / -1 dBTP → FLAC + MP3
+                                ├─ master     gain + limiter to -14 LUFS / -1.5 dBTP → FLAC + MP3
                                 ├─ cover      Cloudflare Workers AI FLUX.1 schnell (free) → procedural fallback
                                 ├─ Short      45 s of the strongest bars, 1080x1920, 6 rotating visual families
                                 ├─ release    GitHub Release (MP3, FLAC, Short, cover)
