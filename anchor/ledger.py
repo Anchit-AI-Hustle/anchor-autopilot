@@ -168,11 +168,11 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
     else:
         F.append(_field("title", b["title"], "Drawn from the title word bank: never repeats a title on the channel, avoids every word used in the last ten titles, never doubles a word. Seeded by the date.", "no sung hook found", "content"))
     F.append(_field("youtube title", b["youtube_title"],
-                    "The track's name and nothing else: YouTube prints the channel name under every title, the description carries genre and tempo, and a phone shows about 50 characters.",
+                    "The track's name first, then the lane's genre phrase and the tempo, then the artist ('Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR'): search matches the words in the title, and the bare name scored 62 against 70 for this form (vidIQ, 2026-09-23).",
                     f"{len(b['youtube_title'])} chars; genre phrase {genre_phrase(lane)!r}", "content"))
     copy = b.get("copy") or {}
     F.append(_field("description", b["description"],
-                    "The vibe and the theme of the record in two to four sentences that build like an intro, nothing mechanical (no timestamps, no tempo, no section names); then genre · BPM · artist, the playlist, site and Instagram, the AI disclosure, ©, three hashtags. About 400 characters, because a phone shows two lines. Gemini writes it from the brief's mood and theme and any clock time or hype word is rejected; the template writes it when there is no key.",
+                    "One search line first (genre phrase, tempo, artist), because that is the line YouTube shows under the title; then the vibe and the theme of the record in two to four sentences that build like an intro, nothing mechanical (no timestamps, no section names); then the playlist, site and Instagram, the AI disclosure, ©, three hashtags. Gemini writes the vibe from the brief's mood and theme and any clock time or hype word is rejected; the template writes it when there is no key.",
                     f"written by {copy.get('source', 'template')}; arc: {len((b.get('arc') or {}).get('drops', []))} drop(s), {len((b.get('arc') or {}).get('breakdowns', []))} breakdown(s); mood: {b.get('mood')!r}", "content"))
     F.append(_field("tags", b["tags"],
                     "Lane tags first (the niche), then the channel's base tags, the genre phrase, '<BPM> bpm techno', the year, 'ai techno' and 'techno full track'; duplicates removed, order kept so the most specific tags lead.",
@@ -217,6 +217,34 @@ def build_entry(profile: Profile, meta: dict, pub: dict, drop: dict, catalog: di
         "files": _files(meta),
         "uploads": _uploads(meta, pub, drop),
         "fields": _fields(profile, meta, pub),
+    }
+
+
+def mix_entry(profile: Profile, meta: dict, pub: dict, row: dict) -> dict:
+    """The ledger's row for a mix: which tracks, in what order, where it went."""
+    y = pub.get("youtube") or {}
+    return {
+        "id": row["id"], "date": meta["date"], "title": meta["title"], "source": "mix", "made_at": meta["made_at"],
+        "recorded_at": iso(utcnow()), "lane": "mix", "bpm": None, "family": None, "accent": None,
+        "cover": row.get("cover"), "engine": {"name": "mix", "model": None, "render_s": None, "fallback_from": None},
+        "variants": [], "files": [
+            {"role": "mix master", "file": meta["files"]["mp3"], "spec": f"MP3 320k, {meta['loudness']['after']['input_i']} LUFS, {meta['duration_s']:.0f} s"},
+            {"role": "full video 16:9", "file": meta["files"]["full_169"], "spec": f"{meta['video'].get('width')}x{meta['video'].get('height')}, {meta['video'].get('duration', 0):.0f} s"},
+            {"role": "thumbnail 16:9", "file": meta["files"]["thumbnail"], "spec": "1920x1080 frame"},
+        ],
+        "uploads": [
+            {"target": "youtube_full", "file": meta["files"]["full_169"], "status": row["status"], "url": row.get("youtube_url"),
+             "post_id": y.get("post_id"), "due_at": y.get("due_at"), "error": y.get("error")},
+            {"target": "github_release", "file": meta["files"]["mp3"], "status": "released" if row.get("audio_url") else "not released",
+             "url": row.get("audio_url"), "post_id": None, "due_at": None, "error": None},
+            {"target": "site", "file": meta["files"]["cover_600"], "status": "listed", "url": None, "post_id": None, "due_at": None, "error": None},
+        ],
+        "fields": [
+            _field("tracks", ", ".join(f"{c['title']} ({c['bpm']} BPM) at {c['start_s']:.0f} s" for c in meta["chapters"]),
+                   "The period's released drops in tempo order, so the set climbs; each matched to -14 LUFS and joined with an eight-bar equal-power crossfade, the incoming record entering on its own downbeat. No time-stretching.", None, "record"),
+            _field("youtube title", meta["title"], "The genre phrase and the year first, then the artist and the volume, then what is inside: a mix is found by search, and every breakout mix in this niche is titled this way.", f"{len(meta['title'])} chars", "content"),
+            _field("description", meta["description"], "One search line, then the tracklist as chapters (a clock time per track, which is navigation, not hype), then the footer.", None, "content"),
+        ],
     }
 
 

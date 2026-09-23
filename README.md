@@ -81,6 +81,20 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
 - **Every record is its own record:** the day draws the lane, key, tempo, textures, mood,
   special moment, the length (`duration_range_s`, 135-170 s) and the arrangement shape
   (`music.SHAPES`: classic, early, peak, twice), so no two days share a timeline.
+- **Reach (2026-09-23):** every breakout video in this niche from a channel under 6k
+  subscribers is a 30 to 70 minute mix with a keyword-led title, and a bare track name scores
+  62 against 70 with the genre phrase (vidIQ). So: titles are `Track | Industrial Hard
+  Techno 154 BPM | ANCHOR`; the first description line is the search line; every Sunday
+  `weekly-mix.yml` builds the week's drops into one continuous set (tempo order, -14 LUFS,
+  eight-bar crossfades, chapters) with a moving 16:9, and the first Sunday of a month adds
+  the month's set. `python -m anchor mix --period week|month`.
+- **Uploading with the channel's own credentials:** set `YT_CLIENT_ID`, `YT_CLIENT_SECRET`
+  and `YT_REFRESH_TOKEN` (one-time: create an OAuth desktop client in Google Cloud with the
+  YouTube Data API enabled, run `python -m anchor youtube-auth --client-id ... --client-secret ...`
+  on your own machine, paste the printed refresh token into the repository secrets). The
+  robot then uploads from disk with tags, category, AI disclosure, scheduled publish time,
+  custom thumbnail and playlist, and the Short links its full track by id. Without them,
+  Buffer is used as before. Instagram always goes through Buffer.
 - **Title:** the most repeated sung phrase becomes the title when it reads as one and is unused.
 - **Uniqueness gates:** cover art must be >= 84 hash-distance from every released cover; the
   audio is printed twice against every released master, loudness envelope (limit 0.80) and

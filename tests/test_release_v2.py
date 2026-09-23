@@ -114,7 +114,7 @@ def test_hook_title_is_used_only_when_it_is_new(monkeypatch, tmp_path):
     meta = pipeline.make(p, "2026-09-22", tmp_path / "d", engine_name="fixture", art_mode="procedural",
                          catalog_path=cat, use_queue=False)
     assert meta["brief"]["title"] == "Cold Iron Sky" and meta["brief"]["hook"] == "Cold Iron Sky"
-    assert meta["brief"]["youtube_title"] == "Cold Iron Sky"
+    assert meta["brief"]["youtube_title"].startswith("Cold Iron Sky | ") and meta["brief"]["youtube_title"].endswith(" | ANCHOR")
     # and not when the hook is already a released title
     cat.write_text(json.dumps({"drops": [{"id": "2026-09-20", "date": "2026-09-20", "title": "Cold Iron Sky",
                                           "lane": "acid", "key": "D minor", "family": "void"}]}))
@@ -128,11 +128,15 @@ def test_seo_title_description_and_tags_carry_the_lane_and_tempo():
     p = load_profile()
     b = make_brief(p, "2026-09-22", [])
     lane = p.lane(b["lane"])
-    assert youtube_title(b["title"]) == b["title"] and len(youtube_title("X" * 120)) <= 100
+    # the search phrase rides on the name: "Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR"
+    assert youtube_title(b["title"], lane, b["bpm"], "ANCHOR") == f"{b['title']} | {lane.genre_line.split(',')[0]} {b['bpm']} BPM | ANCHOR"
+    assert youtube_title(b["title"]) == b["title"] and len(youtube_title("X" * 120, lane, 150, "ANCHOR")) <= 100
+    assert b["youtube_title"] == youtube_title(b["title"], lane, b["bpm"], "ANCHOR")
     d = description(p, b)
-    head = d.split("\n\n")[0]
-    assert head[0].isupper() and head.endswith(".") and "BPM" not in head       # vibe first, specs later
-    assert lane.genre_line.split(",")[0] in d and "playlist?list=PLSA3gW62zSYE" in d and "AI use disclosed" in d and len(d) < 700
+    head, vibe = d.split("\n\n")[:2]
+    assert head == f"{lane.genre_line.split(',')[0]} at {b['bpm']} BPM. An ANCHOR original, free download below."   # the search line first
+    assert vibe[0].isupper() and vibe.endswith(".") and "BPM" not in vibe                                            # then the vibe
+    assert "playlist?list=PLSA3gW62zSYE" in d and "AI use disclosed" in d and len(d) < 700
     ig = description(p, b, "instagram")
     assert "#hardtechno" in ig and "playlist" not in ig and len(ig) <= 2200
     tg = tags(p, lane, b["bpm"])
@@ -202,9 +206,10 @@ def test_dry_run_publish_writes_the_three_payloads_full_short_and_reel(tmp_path)
     assert full["assets"][0]["video"]["url"].endswith("full-169.mp4") and short["assets"][0]["video"]["url"].endswith("short.mp4")
     assert full["text"] == b["description"] and short["text"] == b["description_short"] != b["description"]
     # the Short is the preview: shorter words, a pointer to the full track, #shorts, no second notification
-    def body(text):   # everything above the genre line
-        return text[: text.index(" BPM · ")].rsplit("\n\n", 1)[0]
+    def body(text):   # the record's words: after the search line, before the links
+        return text.split("\n\n", 1)[1].split("\n\nFull track:")[0].split("\n\nAll tracks:")[0]
     assert len(body(short["text"])) <= len(body(full["text"])) <= 320
+    assert short["text"].split("\n")[0] == full["text"].split("\n")[0]        # the same search line leads both
     assert "Full track: https://www.youtube.com/@AT_ANCHOR/videos" in short["text"] and short["text"].endswith("#shorts")
     assert full["metadata"]["youtube"]["notifySubscribers"] is True and short["metadata"]["youtube"]["notifySubscribers"] is False
     assert full.get("dueAt") == short.get("dueAt") == res["payload"]["instagram"].get("dueAt")

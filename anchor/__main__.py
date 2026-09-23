@@ -57,6 +57,24 @@ def main(argv: list[str] | None = None) -> int:
     qa.add_argument("--song", required=True, help="Suno song id, song URL, or text containing one")
     qa.add_argument("--handle", default=None)
 
+    mx = sub.add_parser("mix", help="build the week's or month's mix: audio, cover, 16:9 video, chapters")
+    mx.add_argument("--period", default="week", choices=["week", "month"])
+    mx.add_argument("--date", default=None, help="last day of the period (default: today in UTC)")
+    mx.add_argument("--out", default=None)
+    mx.add_argument("--art", default=None, choices=["auto", "cloudflare", "procedural"])
+    pm = sub.add_parser("publish-mix", help="send the mix video to YouTube (own credentials, or Buffer)")
+    pm.add_argument("--mix", required=True)
+    pm.add_argument("--media-url", default=None, help="public https URL of the mix video, for the Buffer road")
+    pm.add_argument("--dry-run", action="store_true")
+    pm.add_argument("--now", action="store_true")
+    rm = sub.add_parser("record-mix", help="add the mix to the website catalog and the ledger")
+    rm.add_argument("--mix", required=True)
+    rm.add_argument("--repo", default=env("GITHUB_REPOSITORY"))
+    ya = sub.add_parser("youtube-auth", help="one-time, on your own machine: get the channel's refresh token for YT_REFRESH_TOKEN")
+    ya.add_argument("--client-id", required=True)
+    ya.add_argument("--client-secret", required=True)
+    ya.add_argument("--port", type=int, default=8765)
+
     sub.add_parser("check", help="validate profile and site data")
     sub.add_parser("ledger", help="refresh the /ops ledger's upload rows from the catalog")
 
@@ -107,6 +125,23 @@ def main(argv: list[str] | None = None) -> int:
                           "suno_url": song["url"],
                           "waiting": len(queue.pending()) + len(queue.reserved())},
                          ensure_ascii=False))
+    elif args.cmd == "mix":
+        from . import mix
+        day = args.date or pipeline.today_utc()
+        out = Path(args.out or f"build/mix-{args.period}-{day}")
+        meta = mix.build(profile, catalog.load(CATALOG_PATH, profile), day, args.period, out, art_mode=args.art)
+        print(json.dumps({"out": str(out), "title": meta["title"], "tracks": len(meta["chapters"]),
+                          "duration_s": meta["duration_s"], "files": meta["files"]}))
+    elif args.cmd == "publish-mix":
+        res = pipeline.publish_mix(profile, Path(args.mix), args.media_url, dry_run=args.dry_run, now=args.now)
+        print(json.dumps(res, indent=2))
+    elif args.cmd == "record-mix":
+        row = pipeline.record_mix(profile, Path(args.mix), repo=args.repo)
+        print(json.dumps(row, indent=2))
+    elif args.cmd == "youtube-auth":
+        from .youtube import authorize_interactively
+        token = authorize_interactively(args.client_id, args.client_secret, args.port)
+        print("\nYT_REFRESH_TOKEN (add it to the repository secrets, then close this window):\n\n" + token + "\n")
     elif args.cmd == "fail":
         pipeline.fail(args.stage, args.error, args.run_url)
     elif args.cmd == "check":

@@ -542,9 +542,9 @@ def test_every_short_links_to_the_full_track():
     brief = {"bpm": 154, "key": "G# minor", "title": "Then Do It", "lane": "rawstyle", "short_s": 45}
     lines = describe(profile, brief)["description"].splitlines()
 
-    assert lines[0] and "ANCHOR" not in lines[0], "line one is about the record, not the label"
-    # the copy (hook, what it does, why, when, ask) owns the fold; the practical block follows it
-    spec = next(i for i, l in enumerate(lines) if "Rawstyle" in l and "154 BPM" in l)
+    # line one is the search line (genre, tempo, artist); the record's own words follow it
+    assert lines[0].startswith("Rawstyle Hybrid at 154 BPM.") and lines[2], "the search line, then the record"
+    spec = 0
     link = next(i for i, l in enumerate(lines) if l.startswith("All tracks:"))
     assert spec < link, "genre and tempo, then the way in"
     assert profile.youtube["playlist_url"] in lines[link]

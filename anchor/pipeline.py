@@ -16,7 +16,8 @@ from .config import CATALOG_PATH, SITE, STATUS_PATH, Profile, env
 from .music import get_engine
 from .queue import QUEUE, mark_done, next_track
 from .publish import Buffer, BufferError, build_post_input, build_reel_input, schedule_for, verify_media_url
-from .seo import genre_phrase, hook_title
+from .seo import description as seo_description, genre_phrase, hook_title
+from .youtube import YouTube, YouTubeError, configured as youtube_configured, playlist_id
 from .unique import COVER_MIN_DISTANCE, check_audio, is_same_record, nearest_cover
 from .util import iso, log, read_json, utcnow, write_json
 from .video import poster_frame, render_full, render_short
@@ -285,35 +286,48 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
             + ", nothing sent to Buffer")
         return result
 
-    buf = Buffer(env("BUFFER_API_KEY") or "")
+    key = env("BUFFER_API_KEY") or ""
+    buf = Buffer(key) if key else None
     errors = []
     ch = None
-    try:
-        media = verify_media_url(media_url, expect_min_bytes=int(meta["full"]["full_169"]["size_bytes"] * 0.9))
-        yt_common["video_url"] = media["url"]
-        ch = buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
-        post = buf.create_short(ch["id"], **yt_common)          # same mutation; a 16:9 file is a video, not a Short
-        result["youtube"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
-                             "external_link": post.get("externalLink"), "channel": {"id": ch["id"], "name": ch.get("name")},
-                             "media": media}
-        log(f"publish: YouTube post {post['id']} {post.get('status')} due {post.get('dueAt')}")
-    except BufferError as exc:
-        errors.append(f"youtube: {exc}")
-        result["youtube"] = {"error": str(exc)[:500]}
-    if short_url:
+    if youtube_configured():
+        # the channel's own credentials: upload from disk, with tags, thumbnail, playlist and
+        # a scheduled publish time; the Short then links the full track by id
+        publish_at = None if now else schedule_for(post_at)
+        publish_youtube_api(profile, drop_dir, meta, brief, publish_at, result, errors)
+    elif buf:
         try:
-            media = verify_media_url(short_url, expect_min_bytes=int(meta["video"]["size_bytes"] * 0.9))
-            short_common["video_url"] = media["url"]
-            ch = ch or buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
-            post = buf.create_short(ch["id"], **short_common)
-            result["youtube_short"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
-                                       "external_link": post.get("externalLink"),
-                                       "channel": {"id": ch["id"], "name": ch.get("name")}, "media": media}
-            log(f"publish: YouTube Short {post['id']} {post.get('status')} due {post.get('dueAt')}")
+            media = verify_media_url(media_url, expect_min_bytes=int(meta["full"]["full_169"]["size_bytes"] * 0.9))
+            yt_common["video_url"] = media["url"]
+            ch = buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
+            post = buf.create_short(ch["id"], **yt_common)          # same mutation; a 16:9 file is a video, not a Short
+            result["youtube"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
+                                 "external_link": post.get("externalLink"), "channel": {"id": ch["id"], "name": ch.get("name")},
+                                 "media": media, "via": "buffer"}
+            log(f"publish: YouTube post {post['id']} {post.get('status')} due {post.get('dueAt')}")
         except BufferError as exc:
-            errors.append(f"youtube short: {exc}")
-            result["youtube_short"] = {"error": str(exc)[:500]}
-    if reel_url:
+            errors.append(f"youtube: {exc}")
+            result["youtube"] = {"error": str(exc)[:500]}
+        if short_url:
+            try:
+                media = verify_media_url(short_url, expect_min_bytes=int(meta["video"]["size_bytes"] * 0.9))
+                short_common["video_url"] = media["url"]
+                ch = ch or buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
+                post = buf.create_short(ch["id"], **short_common)
+                result["youtube_short"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
+                                           "external_link": post.get("externalLink"),
+                                           "channel": {"id": ch["id"], "name": ch.get("name")}, "media": media, "via": "buffer"}
+                log(f"publish: YouTube Short {post['id']} {post.get('status')} due {post.get('dueAt')}")
+            except BufferError as exc:
+                errors.append(f"youtube short: {exc}")
+                result["youtube_short"] = {"error": str(exc)[:500]}
+    else:
+        errors.append("youtube: neither YT_* credentials nor BUFFER_API_KEY are set")
+        result["youtube"] = {"error": errors[-1]}
+    if reel_url and not buf:
+        result["instagram"] = {"status": "not connected", "error": None}
+        log("publish: Instagram skipped: BUFFER_API_KEY is not set")
+    elif reel_url:
         try:
             media = verify_media_url(reel_url, expect_min_bytes=int(meta["full"]["full_916"]["size_bytes"] * 0.9))
             ig_common["video_url"] = media["url"]
@@ -339,6 +353,115 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
     if errors:
         raise BufferError("; ".join(errors))
     return result
+
+
+def publish_youtube_api(profile: Profile, drop_dir: Path, meta: dict, brief: dict, publish_at: datetime | None,
+                        result: dict, errors: list) -> None:
+    """The full track, then the Short, straight to the channel. Each leg fails on its own."""
+    yt = profile.youtube
+    files = meta["files"]
+    api = YouTube()
+    common = dict(category_id=str(yt["category_id"]), publish_at=publish_at, privacy=yt["privacy"],
+                  ai_generated=bool(yt["ai_generated"]))
+    tags = list(brief.get("tags") or [])
+    full = None
+    try:
+        full = api.upload(drop_dir / files["full_169"], title=brief["youtube_title"], description=brief["description"],
+                          tags=tags, notify=bool(yt["notify_subscribers"]), **common)
+        result["youtube"] = {"post_id": full["id"], "status": full["status"], "due_at": full["publish_at"],
+                             "external_link": full["url"], "via": "youtube_api"}
+        thumb = drop_dir / files["thumbnail"] if files.get("thumbnail") else None
+        for step, fn in (("thumbnail", lambda: api.set_thumbnail(full["id"], thumb) if thumb and thumb.exists() else None),
+                         ("playlist", lambda: api.add_to_playlist(full["id"], playlist_id(yt.get("playlist_url"))) if playlist_id(yt.get("playlist_url")) else None)):
+            try:
+                fn()
+            except YouTubeError as exc:      # cosmetic legs: logged, never a failed drop
+                log(f"publish: youtube {step} failed: {exc}")
+                result["youtube"][step + "_error"] = str(exc)[:300]
+    except YouTubeError as exc:
+        errors.append(f"youtube: {exc}")
+        result["youtube"] = {"error": str(exc)[:500], "via": "youtube_api"}
+    if not files.get("short"):
+        return
+    try:
+        if full:
+            brief["full_video_url"] = full["url"]
+            brief["description_short"] = seo_description(profile, brief, "short")
+        short = api.upload(drop_dir / files["short"], title=brief["youtube_title"],
+                           description=brief.get("description_short") or brief["description"],
+                           tags=[*tags, "shorts"], notify=False, **common)
+        result["youtube_short"] = {"post_id": short["id"], "status": short["status"], "due_at": short["publish_at"],
+                                   "external_link": short["url"], "via": "youtube_api"}
+    except YouTubeError as exc:
+        errors.append(f"youtube short: {exc}")
+        result["youtube_short"] = {"error": str(exc)[:500], "via": "youtube_api"}
+
+
+# -------------------------------------------------------------------------- mix
+def publish_mix(profile: Profile, mix_dir: Path, media_url: str | None, *, dry_run: bool = False, now: bool = False) -> dict:
+    """The mix video to YouTube: the channel's own credentials when set, Buffer otherwise."""
+    from . import mix as mixmod
+    meta = read_json(mix_dir / "meta.json")
+    yt = profile.youtube
+    post_at = post_time(profile, meta["date"])
+    due = None if now else schedule_for(post_at)
+    result = {"dry_run": dry_run, "created_at": iso(utcnow()), "youtube": None, "error": None}
+    if dry_run:
+        result["status"] = "dry-run"
+        write_json(mix_dir / "publish.json", result)
+        return result
+    try:
+        if youtube_configured():
+            api = YouTube()
+            up = api.upload(mix_dir / meta["files"]["full_169"], title=meta["title"], description=meta["description"],
+                            tags=meta["tags"], category_id=str(yt["category_id"]), publish_at=due, privacy=yt["privacy"],
+                            ai_generated=bool(yt["ai_generated"]), notify=bool(yt["notify_subscribers"]))
+            result["youtube"] = {"post_id": up["id"], "status": up["status"], "due_at": up["publish_at"],
+                                 "external_link": up["url"], "via": "youtube_api"}
+            for step, fn in (("thumbnail", lambda: api.set_thumbnail(up["id"], mix_dir / meta["files"]["thumbnail"])),
+                             ("playlist", lambda: api.add_to_playlist(up["id"], playlist_id(yt.get("playlist_url"))) if playlist_id(yt.get("playlist_url")) else None)):
+                try:
+                    fn()
+                except YouTubeError as exc:
+                    log(f"publish-mix: {step} failed: {exc}")
+        elif env("BUFFER_API_KEY") and media_url:
+            buf = Buffer(env("BUFFER_API_KEY") or "")
+            media = verify_media_url(media_url, expect_min_bytes=int(meta["video"]["size_bytes"] * 0.9))
+            ch = buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
+            post = buf.create_short(ch["id"], title=meta["title"], description=meta["description"], video_url=media["url"],
+                                    due_at=due, category_id=str(yt["category_id"]), privacy=yt["privacy"],
+                                    ai_generated=bool(yt["ai_generated"]), notify=bool(yt["notify_subscribers"]))
+            result["youtube"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
+                                 "external_link": post.get("externalLink"), "via": "buffer"}
+        else:
+            raise BufferError("neither YT_* credentials nor BUFFER_API_KEY with a media URL are set")
+    except (BufferError, YouTubeError) as exc:
+        result["error"] = str(exc)[:500]
+        result["youtube"] = {"error": result["error"]}
+    result["status"] = (result["youtube"] or {}).get("status") or ("error" if result["error"] else None)
+    write_json(mix_dir / "publish.json", result)
+    if result["error"]:
+        raise BufferError(result["error"])
+    return result
+
+
+def record_mix(profile: Profile, mix_dir: Path, *, repo: str | None = None, catalog_path: Path = CATALOG_PATH,
+               site_dir: Path = SITE, ledger_path: Path | None = None) -> dict:
+    from . import mix as mixmod
+    ledger_path = ledger_path or catalog_path.parent / "ledger.json"
+    meta = read_json(mix_dir / "meta.json")
+    pub = read_json(mix_dir / "publish.json", {}) or {}
+    cat = catalog.load(catalog_path, profile)
+    row = mixmod.record(cat, meta, pub, repo)
+    covers = site_dir / "covers"
+    covers.mkdir(parents=True, exist_ok=True)
+    shutil.copy(mix_dir / meta["files"]["cover_600"], covers / f"{row['id']}.jpg")
+    catalog.save(cat, catalog_path)
+    book = ledger.load(ledger_path)
+    ledger.upsert(book, ledger.mix_entry(profile, meta, pub, row))
+    ledger.save(book, ledger_path)
+    log(f"record-mix: {row['id']} {row['status']}")
+    return row
 
 
 # ----------------------------------------------------------------------- record
@@ -380,6 +503,7 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         "lyrics": brief.get("lyrics_sung"),
         "buffer_post_id": pub.get("post_id"),
         "buffer_short_post_id": (pub.get("youtube_short") or {}).get("post_id"),
+        "youtube_via": (pub.get("youtube") or {}).get("via"),
         "short_status": (pub.get("youtube_short") or {}).get("status"),
         "status": status,
         "error": pub.get("error"),
@@ -425,11 +549,12 @@ def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH,
     """Pull Buffer status (sent/error + YouTube link) for recent drops, full track and Short."""
     ledger_path = ledger_path or catalog_path.parent / "ledger.json"
     key = env("BUFFER_API_KEY")
-    if not key:
-        log("sync: BUFFER_API_KEY not set, skipping")
+    api = YouTube() if youtube_configured() else None
+    if not key and not api:
+        log("sync: neither BUFFER_API_KEY nor YT_* set, skipping")
         return 0
     cat = catalog.load(catalog_path, profile)
-    buf = Buffer(key)
+    buf = Buffer(key) if key else None
     changed = 0
     for drop in catalog.history(cat)[:limit]:
         touched = False
@@ -437,8 +562,16 @@ def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH,
             if not drop.get(id_field) or (drop.get(status_field) == "sent" and drop.get(link_field)):
                 continue
             try:
-                post = buf.post(drop[id_field])
-            except BufferError as exc:
+                if drop.get("youtube_via") == "youtube_api":
+                    if not api:
+                        continue
+                    st = api.video_status(drop[id_field])
+                    post = {"status": st.get("status"), "externalLink": f"https://youtu.be/{drop[id_field]}"}
+                elif buf:
+                    post = buf.post(drop[id_field])
+                else:
+                    continue
+            except (BufferError, YouTubeError) as exc:
                 log(f"sync: {drop['id']} {id_field} lookup failed: {exc}")
                 continue
             new_status = post.get("status") or drop.get(status_field)

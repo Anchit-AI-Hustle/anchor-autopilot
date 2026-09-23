@@ -81,10 +81,20 @@ def genre_phrase(lane: Lane) -> str:
     return lane.genre_line.split(",")[0].strip()
 
 
-def youtube_title(title: str, *_args, **_kw) -> str:
-    """The track's name and nothing else. YouTube prints the channel name under every title,
-    the description carries the genre and the tempo, and a phone shows about 50 characters."""
-    return title[:MAX_TITLE]
+def youtube_title(title: str, lane: Lane | None = None, bpm: int | None = None, artist: str | None = None) -> str:
+    """The track's name, then the search phrase: 'Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR'.
+
+    Measured 2026-09-23 with vidIQ on this channel: the bare name scored 62, this form 70.
+    A channel with eleven subscribers gets its first views from search, and search matches
+    the words in the title; the name alone matches nothing anyone types. The name still
+    comes first, so a phone shows it whole."""
+    parts = [title]
+    if lane is not None:
+        parts.append(f"{genre_phrase(lane)} {int(bpm)} BPM" if bpm else genre_phrase(lane))
+    if artist:
+        parts.append(artist)
+    out = " | ".join(parts)
+    return out if len(out) <= MAX_TITLE else title[:MAX_TITLE]
 
 
 def tags(profile: Profile, lane: Lane, bpm: int) -> list[str]:
@@ -138,19 +148,19 @@ def description(profile: Profile, brief: dict, platform: str = "youtube") -> str
     year = (brief.get("date") or datetime.now(timezone.utc).date().isoformat())[:4]
     rights = f"© {year} {name}"
     cadence = "Made with AI music tools and my own hours. AI use disclosed."
-    line = f"{genre_phrase(lane)} · {int(brief['bpm'])} BPM · {name}"
+    # the first line is the one YouTube shows under the title and the one search reads:
+    # the genre phrase, the tempo, the artist, then the vibe copy below it
+    line = f"{genre_phrase(lane)} at {int(brief['bpm'])} BPM. An {name} original, free download below."
     handle = profile.artist.get("instagram_handle")
     free = f"Free download: {site}" + (f" · IG @{handle.lstrip('@')}" if handle else "")
     if platform == "instagram":
         tags = " ".join(dict.fromkeys([*yt["hashtags"], *yt.get("instagram_hashtags", [])]))
-        return "\n".join([body, "", line, free, cadence, rights, "", tags])
+        return "\n".join([line, "", body, "", free, cadence, rights, "", tags])
     links = [f"All tracks: {playlist}" if playlist else f"Full catalogue: {site}", free]
     if platform == "short":
-        # the full track goes out in the same slot; its id is not known until YouTube has it,
-        # so the Short points at the channel, where the full track is the newest video
-        channel = profile.artist.get("youtube_url", "").rstrip("/")
-        links = [f"Full track: {channel}/videos" if channel else f"Full track: {site}", *links]
+        full = brief.get("full_video_url") or (profile.artist.get("youtube_url", "").rstrip("/") + "/videos")
+        links = [f"Full track: {full}", *links]
         tags = " ".join(dict.fromkeys([*yt["hashtags"][:2], "#shorts"]))
-        return "\n".join([preview_copy(body), "", line, *links, cadence, rights, "", tags])
+        return "\n".join([line, "", preview_copy(body), "", *links, cadence, rights, "", tags])
     tags = copy.get("hashtags") or " ".join(yt["hashtags"])
-    return "\n".join([body, "", line, *links, cadence, rights, "", tags])
+    return "\n".join([line, "", body, "", *links, cadence, rights, "", tags])

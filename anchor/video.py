@@ -250,7 +250,7 @@ def render_still(frame: Path, audio: Path, out: Path, crf: int = 23) -> dict:
     return info
 
 
-def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 23) -> dict:
+def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 23, timeout: int = 1800) -> dict:
     """The 16:9 frame with the record moving on it: a waveform in the family accent along the
     bottom and a thin progress bar. A still frame lost most viewers inside thirty seconds
     (channel analytics, Sept 2026: 0:30 average view from impressions); something on screen
@@ -273,7 +273,7 @@ def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 2
          "-i", audio, "-filter_complex", graph, "-map", "[vout]", "-map", "[aout]",
          "-t", f"{duration:.3f}", "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", str(crf),
          "-maxrate", "4M", "-bufsize", "8M", "-pix_fmt", "yuv420p",
-         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out], timeout=1800)
+         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out], timeout=timeout)
     info = media_summary(out)
     if abs(info["duration"] - duration) > 1.5:
         raise RuntimeError(f"full render truncated: {info['duration']:.1f}s vs audio {duration:.1f}s")

@@ -1,0 +1,148 @@
+name: Mix (weekly and monthly)
+
+# Sunday: the week's drops as one set. The first Sunday of a month also builds the month's
+# set. The mix goes live at post_time_utc like every drop; the 11:07 start leaves time for
+# the render (a 30 minute 1080p video takes about 10 minutes on the runner).
+on:
+  schedule:
+    - cron: "7 11 * * 0"
+  workflow_dispatch:
+    inputs:
+      period:
+        description: "week or month"
+        default: "week"
+      date:
+        description: "Last day of the period YYYY-MM-DD (default: today in UTC)"
+        default: ""
+      dry_run:
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily-drop
+  cancel-in-progress: false
+
+env:
+  ROBOT_NAME: "Anchit Tandon"
+  ROBOT_EMAIL: "anchit.tandon@gmail.com"
+
+jobs:
+  mix:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      max-parallel: 1
+      matrix:
+        period: [week, month]
+    env:
+      PERIOD: ${{ matrix.period }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+
+      - name: Decide whether this period is due
+        id: due
+        run: |
+          DATE="${{ inputs.date }}"
+          [ -z "$DATE" ] && DATE="$(date -u +%F)"
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          DOM=$(date -u -d "$DATE" +%d)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.period }}" != "$PERIOD" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"; echo "::notice::dispatch asked for ${{ inputs.period }}, this is $PERIOD"
+          elif [ "$PERIOD" = "month" ] && [ "${{ github.event_name }}" = "schedule" ] && [ "$DOM" -gt 7 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"; echo "::notice::not the first Sunday of the month; no monthly mix today"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build the mix (audio, cover, video, chapters)
+        if: steps.due.outputs.skip != 'true'
+        id: build
+        env:
+          DATE: ${{ steps.due.outputs.date }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+        run: |
+          if [ "$PERIOD" = "month" ]; then
+            # the month that ended before this Sunday
+            DATE="$(date -u -d "$DATE -$(( $(date -u -d "$DATE" +%d) )) days" +%F)"
+          fi
+          echo "date=$DATE" >> "$GITHUB_OUTPUT"
+          python -m anchor mix --period "$PERIOD" --date "$DATE" --out "build/mix-$PERIOD-$DATE" | tee mix.json
+          python - >> "$GITHUB_OUTPUT" <<EOF
+          import json; m = json.load(open("mix.json")); print("base=" + m["files"]["base"]); print("video=" + m["files"]["full_169"])
+          EOF
+          python - >> "$GITHUB_STEP_SUMMARY" <<EOF
+          import json
+          m = json.load(open("build/mix-$PERIOD-$DATE/meta.json"))
+          print(f"### {m['title']}\n\n{len(m['chapters'])} tracks, {m['duration_s'] / 60:.1f} min, {m['loudness']['after']['input_i']} LUFS\n")
+          for c in m["chapters"]: print(f"- {c['start_s']:.0f} s: {c['title']} ({c['bpm']} BPM)")
+          EOF
+
+      - name: Publish the release files
+        if: steps.due.outputs.skip != 'true' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DATE: ${{ steps.build.outputs.date }}
+          B: ${{ steps.build.outputs.base }}
+        run: |
+          D="build/mix-$PERIOD-$DATE"
+          TITLE="$(python -c "import json;print(json.load(open('$D/meta.json'))['title'])")"
+          FILES=("$D/$B.mp3" "$D/$B-full-169.mp4" "$D/frame-169.jpg" "$D/cover.jpg")
+          if gh release view "mix-$PERIOD-$DATE" >/dev/null 2>&1; then
+            gh release upload "mix-$PERIOD-$DATE" "${FILES[@]}" --clobber
+          else
+            gh release create "mix-$PERIOD-$DATE" "${FILES[@]}" --title "$TITLE" --notes "$(sed -n '1,200p' "$D/meta.json" | python -c "import json,sys; print(json.load(sys.stdin)['description'])")" --target "$GITHUB_SHA"
+          fi
+
+      - name: Publish the mix to YouTube
+        if: steps.due.outputs.skip != 'true' && inputs.dry_run != true
+        env:
+          DATE: ${{ steps.build.outputs.date }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          BUFFER_CHANNEL_ID: ${{ secrets.BUFFER_CHANNEL_ID }}
+        run: |
+          MEDIA="https://github.com/$GITHUB_REPOSITORY/releases/download/mix-$PERIOD-$DATE/${{ steps.build.outputs.video }}"
+          if ! python -m anchor publish-mix --mix "build/mix-$PERIOD-$DATE" --media-url "$MEDIA"; then
+            echo "PUBLISH_FAILED=1" >> "$GITHUB_ENV"
+            echo "::error::the mix is released on GitHub but did not reach YouTube; see publish.json"
+          fi
+
+      - name: Record the mix on the website
+        if: steps.due.outputs.skip != 'true' && inputs.dry_run != true
+        env:
+          DATE: ${{ steps.build.outputs.date }}
+        run: |
+          python -m anchor record-mix --mix "build/mix-$PERIOD-$DATE" --repo "$GITHUB_REPOSITORY"
+          python -m anchor check
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data site/covers
+          git commit -m "mix: $PERIOD $DATE" || { echo "nothing to commit"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Fail the run if publishing failed
+        if: env.PUBLISH_FAILED == '1'
+        run: exit 1

@@ -304,13 +304,21 @@ jobs:
           name: drop-${{ needs.make.outputs.date }}
           path: build/${{ needs.make.outputs.date }}
 
-      - name: Refresh earlier posts (Buffer status and YouTube links)
+      - name: Refresh earlier posts (YouTube status and links)
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: python -m anchor sync
 
-      - name: Publish the full track and the Short to YouTube and the Reel to Instagram via Buffer
+      # YouTube: the channel's own credentials (YT_*) when set, with tags, thumbnail, playlist
+      # and the Short linking its full track; Buffer otherwise. Instagram: always Buffer.
+      - name: Publish the full track and the Short to YouTube and the Reel to Instagram
         env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_CHANNEL_ID: ${{ secrets.BUFFER_CHANNEL_ID }}
           BUFFER_INSTAGRAM_CHANNEL_ID: ${{ secrets.BUFFER_INSTAGRAM_CHANNEL_ID }}
@@ -319,9 +327,9 @@ jobs:
           SHORTURL="${PAGE_URL%/}/media/$SHORT"
           REEL="${PAGE_URL%/}/media/$FULL916"
           FLAGS=()
-          if [ -z "$BUFFER_API_KEY" ]; then
+          if [ -z "$BUFFER_API_KEY" ] && [ -z "$YT_REFRESH_TOKEN" ]; then
             FLAGS+=(--site-only)
-            echo "::warning::BUFFER_API_KEY is not set: releasing on the website only, not on YouTube/Instagram."
+            echo "::warning::neither YT_* nor BUFFER_API_KEY is set: releasing on the website only."
           fi
           [ "${{ inputs.publish_now }}" = "true" ] && FLAGS+=(--now)
           if ! python -m anchor publish --drop "build/$DATE" --media-url "$MEDIA" --short-url "$SHORTURL" --reel-url "$REEL" "${FLAGS[@]}"; then

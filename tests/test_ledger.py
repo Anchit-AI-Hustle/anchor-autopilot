@@ -141,7 +141,7 @@ def test_description_is_the_copy_then_the_practical_block():
     brief = {**META["brief"], "copy": {"body": "Hook line. Bigger line. Biggest line.", "hashtags": "#a #b #c", "source": "template"}}
     d = description(PROFILE, brief)
     lines = d.splitlines()
-    assert lines[0] == "Hook line. Bigger line. Biggest line." and d.endswith("#a #b #c") and len(d) < 500
-    assert "Rawstyle Hybrid · 152 BPM · ANCHOR" in lines and any(l.endswith("· IG @anchor_at2803") for l in lines)
+    assert lines[0] == "Rawstyle Hybrid at 152 BPM. An ANCHOR original, free download below." and lines[2] == "Hook line. Bigger line. Biggest line."
+    assert d.endswith("#a #b #c") and len(d) < 500 and any(l.endswith("· IG @anchor_at2803") for l in lines)
     ig = description(PROFILE, brief, "instagram")
-    assert ig.startswith("Hook line.") and "playlist" not in ig and "#anchortechno" in ig
+    assert ig.startswith("Rawstyle Hybrid at 152 BPM.") and "Hook line." in ig and "playlist" not in ig and "#anchortechno" in ig
