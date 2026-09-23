@@ -17,7 +17,7 @@ from .music import get_engine
 from .queue import QUEUE, mark_done, next_track
 from .publish import Buffer, BufferError, build_post_input, build_reel_input, schedule_for, verify_media_url
 from .seo import genre_phrase, hook_title
-from .unique import AUDIO_MAX_SIMILARITY, COVER_MIN_DISTANCE, check_audio, nearest_cover
+from .unique import COVER_MIN_DISTANCE, check_audio, is_same_record, nearest_cover
 from .util import iso, log, read_json, utcnow, write_json
 from .video import poster_frame, render_full, render_short
 
@@ -57,12 +57,14 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         stats_audio = analyze(decode(raw))
         ok, fails, warns = quality_gate(stats_audio, brief)
         # a record that resembles one already out is a failed attempt, same as bad audio
-        sim, twin = check_audio(raw, catalog_path, out_dir / "unique-audio")
-        if twin and sim > AUDIO_MAX_SIMILARITY:
+        sim, twin, score = check_audio(raw, catalog_path, out_dir / "unique-audio")
+        if twin and is_same_record(score):
             ok = False
-            fails = [*fails, f"sounds like released drop {twin} (envelope similarity {sim:.2f})"]
+            fails = [*fails, f"sounds like released drop {twin} (envelope {score['envelope']:.2f}, "
+                             f"spectral sequence {score['sequence']:.2f})"]
         attempts_log.append({"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns,
-                             "nearest_audio": {"id": twin, "similarity": round(sim, 3)}})
+                             "nearest_audio": {"id": twin, "similarity": round(sim, 3),
+                                               "envelope": round(score["envelope"], 3), "sequence": round(score["sequence"], 3)}})
         log(f"QC attempt {attempt}: {'PASS' if ok else 'FAIL'} {fails or ''} {warns or ''}")
         if ok:
             break
@@ -247,12 +249,15 @@ def release_notes(profile: Profile, meta: dict) -> str:
 
 # ---------------------------------------------------------------------- publish
 def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool = False,
-            now: bool = False, site_only: bool = False, reel_url: str | None = None) -> dict:
-    """The full 16:9 track goes to YouTube as a song video and the 9:16 to Instagram as a Reel.
+            now: bool = False, site_only: bool = False, reel_url: str | None = None,
+            short_url: str | None = None) -> dict:
+    """Every day, three posts from one record: the full 16:9 track to YouTube as a song
+    video, the strongest 45 s to YouTube as a Short (the preview), and the 9:16 full track
+    to Instagram as a Reel.
 
-    ``media_url`` is the public URL of the 16:9 file; ``reel_url`` of the 9:16. Either
-    platform failing is recorded and re-raised after the other has been tried, so one
-    outage never blocks the other channel.
+    ``media_url`` is the public URL of the 16:9 file, ``short_url`` of the 45 s 9:16 cut,
+    ``reel_url`` of the full 9:16. Each post failing is recorded and re-raised after the
+    others have been tried, so one outage never blocks another.
     """
     meta = read_json(drop_dir / "meta.json")
     brief = meta["brief"]
@@ -262,12 +267,17 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
     yt_common = dict(title=brief["youtube_title"], description=brief["description"], video_url=media_url,
                      due_at=due, category_id=str(yt["category_id"]), privacy=yt["privacy"],
                      ai_generated=bool(yt["ai_generated"]), notify=bool(yt["notify_subscribers"]))
+    # the Short: same title, the preview copy, the same slot; a 45 s vertical file is a Short
+    # on YouTube's side, no flag needed. Subscribers are told once, by the full track.
+    short_common = {**yt_common, "description": brief.get("description_short") or brief["description"],
+                    "video_url": short_url or "", "notify": False}
     ig_common = dict(caption=brief.get("caption_instagram") or brief["description"], video_url=reel_url or "",
                      due_at=due, ai_generated=bool(yt["ai_generated"]))
     result = {"dry_run": dry_run, "site_only": site_only, "created_at": iso(utcnow()), "youtube": None,
-              "instagram": None}
+              "youtube_short": None, "instagram": None}
     if dry_run or site_only:
         result["payload"] = {"youtube": build_post_input("NOT_SENT", **yt_common),
+                             "youtube_short": build_post_input("NOT_SENT", **{**short_common, "video_url": short_url or "https://not-sent"}),
                              "instagram": build_reel_input("NOT_SENT", **{**ig_common, "video_url": reel_url or "https://not-sent"})}
         result["status"] = "dry-run" if dry_run else "released"
         write_json(drop_dir / "publish.json", result)
@@ -277,6 +287,7 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
 
     buf = Buffer(env("BUFFER_API_KEY") or "")
     errors = []
+    ch = None
     try:
         media = verify_media_url(media_url, expect_min_bytes=int(meta["full"]["full_169"]["size_bytes"] * 0.9))
         yt_common["video_url"] = media["url"]
@@ -289,6 +300,19 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
     except BufferError as exc:
         errors.append(f"youtube: {exc}")
         result["youtube"] = {"error": str(exc)[:500]}
+    if short_url:
+        try:
+            media = verify_media_url(short_url, expect_min_bytes=int(meta["video"]["size_bytes"] * 0.9))
+            short_common["video_url"] = media["url"]
+            ch = ch or buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
+            post = buf.create_short(ch["id"], **short_common)
+            result["youtube_short"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
+                                       "external_link": post.get("externalLink"),
+                                       "channel": {"id": ch["id"], "name": ch.get("name")}, "media": media}
+            log(f"publish: YouTube Short {post['id']} {post.get('status')} due {post.get('dueAt')}")
+        except BufferError as exc:
+            errors.append(f"youtube short: {exc}")
+            result["youtube_short"] = {"error": str(exc)[:500]}
     if reel_url:
         try:
             media = verify_media_url(reel_url, expect_min_bytes=int(meta["full"]["full_916"]["size_bytes"] * 0.9))
@@ -300,8 +324,13 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
                                    "channel": {"id": ch["id"], "name": ch.get("name")}, "media": media}
             log(f"publish: Instagram reel {post['id']} {post.get('status')} due {post.get('dueAt')}")
         except BufferError as exc:
-            errors.append(f"instagram: {exc}")
-            result["instagram"] = {"error": str(exc)[:500]}
+            if "no Instagram channel connected" in str(exc):
+                # the YouTube posts are the release; the Reel starts the day the account is connected
+                log(f"publish: Instagram skipped: {exc}")
+                result["instagram"] = {"status": "not connected", "error": None}
+            else:
+                errors.append(f"instagram: {exc}")
+                result["instagram"] = {"error": str(exc)[:500]}
     # the fields older code and the status page read
     y = result["youtube"] or {}
     result.update(post_id=y.get("post_id"), status=y.get("status") or ("error" if errors else None),
@@ -343,12 +372,15 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         # the release keeps the Short forever, so that is what the website plays
         "video_url": f"https://github.com/{repo}/releases/download/{tag}/{files['short']}" if repo else None,
         "youtube_url": pub.get("external_link"),
+        "youtube_short_url": (pub.get("youtube_short") or {}).get("external_link"),
         "instagram_url": (pub.get("instagram") or {}).get("external_link"),
         "full_video_url": f"https://github.com/{repo}/releases/download/{tag}/{files['full_169']}" if repo and files.get("full_169") else None,
         "reel_url": f"https://github.com/{repo}/releases/download/{tag}/{files['full_916']}" if repo and files.get("full_916") else None,
         "hook": brief.get("hook"),
         "lyrics": brief.get("lyrics_sung"),
         "buffer_post_id": pub.get("post_id"),
+        "buffer_short_post_id": (pub.get("youtube_short") or {}).get("post_id"),
+        "short_status": (pub.get("youtube_short") or {}).get("status"),
         "status": status,
         "error": pub.get("error"),
         "post_at": pub.get("due_at") or brief["post_at"],
@@ -384,9 +416,13 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
 
 
 # ------------------------------------------------------------------------- sync
+# Buffer post id field -> (status field, link field) on the catalog entry
+POSTS = {"buffer_post_id": ("status", "youtube_url"), "buffer_short_post_id": ("short_status", "youtube_short_url")}
+
+
 def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH,
          ledger_path: Path | None = None) -> int:
-    """Pull Buffer status (sent/error + YouTube link) for recent drops."""
+    """Pull Buffer status (sent/error + YouTube link) for recent drops, full track and Short."""
     ledger_path = ledger_path or catalog_path.parent / "ledger.json"
     key = env("BUFFER_API_KEY")
     if not key:
@@ -396,19 +432,23 @@ def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH,
     buf = Buffer(key)
     changed = 0
     for drop in catalog.history(cat)[:limit]:
-        if not drop.get("buffer_post_id") or (drop.get("status") == "sent" and drop.get("youtube_url")):
-            continue
-        try:
-            post = buf.post(drop["buffer_post_id"])
-        except BufferError as exc:
-            log(f"sync: {drop['id']} lookup failed: {exc}")
-            continue
-        new_status = post.get("status") or drop.get("status")
-        link = post.get("externalLink") or drop.get("youtube_url")
-        if new_status != drop.get("status") or link != drop.get("youtube_url"):
-            drop["status"], drop["youtube_url"] = new_status, link
-            if post.get("error"):
-                drop["error"] = post["error"].get("message")
+        touched = False
+        for id_field, (status_field, link_field) in POSTS.items():
+            if not drop.get(id_field) or (drop.get(status_field) == "sent" and drop.get(link_field)):
+                continue
+            try:
+                post = buf.post(drop[id_field])
+            except BufferError as exc:
+                log(f"sync: {drop['id']} {id_field} lookup failed: {exc}")
+                continue
+            new_status = post.get("status") or drop.get(status_field)
+            link = post.get("externalLink") or drop.get(link_field)
+            if new_status != drop.get(status_field) or link != drop.get(link_field):
+                drop[status_field], drop[link_field] = new_status, link
+                if post.get("error") and status_field == "status":
+                    drop["error"] = post["error"].get("message")
+                touched = True
+        if touched:
             catalog.upsert(cat, drop)
             changed += 1
     if changed:

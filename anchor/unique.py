@@ -5,9 +5,14 @@ Cover art: a 16x16 perceptual hash (DCT of the greyscale thumbnail) plus a diffe
 compared bit for bit. Two covers drawn from the same motif land under 70 of 256; the
 catalogue's own near-duplicates (the three orange chevron stacks) scored 56 and 74.
 
-Audio: the loudness envelope at 100 ms, cross-correlated after normalisation; identical
-recordings score 1.00, the same loop re-rendered scores above 0.8, unrelated techno at the
-same tempo sits around 0.3-0.5.
+Audio, two prints of every released master, both cross-correlated over a lag window:
+the loudness envelope at 100 ms (identical recordings 1.00, the same record shifted or
+regained 1.00, unrelated techno 0.0-0.5) and the spectral sequence, 24 log-spaced bands
+every 0.5 s, z-scored per band (the same record 0.86 after a shift and a gain change,
+unrelated records 0.0-0.65 across the catalogue on 2026-09-23, the top pair being two acid
+tracks cut to the same arrangement). Either print over its limit sends the take back for
+another seed. Timbre alone (band means) is useless here: every record on the channel is a
+distorted kick and a sub, and they all correlate above 0.75.
 """
 from __future__ import annotations
 
@@ -20,6 +25,8 @@ from PIL import Image
 
 COVER_MIN_DISTANCE = 84       # of 256; below this the motif is the same one
 AUDIO_MAX_SIMILARITY = 0.80   # envelope correlation above this is the same record
+SEQUENCE_MAX_SIMILARITY = 0.75   # spectral-sequence correlation above this is the same record and sound
+SR = 48_000
 
 
 # --------------------------------------------------------------------------- images
@@ -87,11 +94,54 @@ def audio_similarity(env_a: np.ndarray, env_b: np.ndarray, max_lag_s: float = 8.
     return best
 
 
-def released_envelopes(catalog_path: Path, work: Path, limit: int = 40) -> dict[str, np.ndarray]:
-    """Envelopes of the released masters (cached as .npy next to the build)."""
+def band_sequence(mono: np.ndarray, sr: int = SR, n_fft: int = 2048, hop_s: float = 0.5, n_bands: int = 24,
+                  lo: float = 40.0, hi: float = 16000.0) -> np.ndarray:
+    """Log energy in ``n_bands`` log-spaced bands every ``hop_s``: (frames, bands). The
+    record's sound over time, which is what two takes of one prompt share and two records do not."""
+    hop = max(1, int(sr * hop_s))
+    win = np.hanning(n_fft)
+    edges = np.geomspace(lo, min(hi, sr / 2 - 1), n_bands + 1)
+    idx = np.searchsorted(np.fft.rfftfreq(n_fft, 1 / sr), edges)
+    rows = []
+    for s in range(0, len(mono) - n_fft, hop):
+        spec = np.abs(np.fft.rfft(mono[s:s + n_fft] * win)) ** 2
+        rows.append([np.log10(spec[idx[i]:idx[i + 1]].sum() + 1e-9) for i in range(n_bands)])
+    return np.array(rows) if rows else np.zeros((4, n_bands))
+
+
+def sequence_similarity(seq_a: np.ndarray, seq_b: np.ndarray, max_lag_s: float = 8.0, hop_s: float = 0.5) -> float:
+    """Mean per-band correlation of the z-scored sequences, best over a small lag window."""
+    n = min(len(seq_a), len(seq_b))
+    a, b = seq_a[:n], seq_b[:n]
+    a = (a - a.mean(axis=0)) / (a.std(axis=0) + 1e-9)
+    b = (b - b.mean(axis=0)) / (b.std(axis=0) + 1e-9)
+    lag = int(max_lag_s / hop_s)
+    best = 0.0
+    for k in range(-lag, lag + 1):
+        x, y = (a[k:], b[: n - k]) if k >= 0 else (a[: n + k], b[-k:])
+        if len(x) < 10:
+            continue
+        best = max(best, float((x * y).mean()))
+    return best
+
+
+def prints(mono: np.ndarray, sr: int = SR) -> dict[str, np.ndarray]:
+    return {"env": envelope(mono, sr), "seq": band_sequence(mono, sr)}
+
+
+def similarity(a: dict, b: dict) -> dict[str, float]:
+    return {"envelope": audio_similarity(a["env"], b["env"]), "sequence": sequence_similarity(a["seq"], b["seq"])}
+
+
+def is_same_record(score: dict) -> bool:
+    return score["envelope"] > AUDIO_MAX_SIMILARITY or score["sequence"] > SEQUENCE_MAX_SIMILARITY
+
+
+def released_prints(catalog_path: Path, work: Path, limit: int = 40) -> dict[str, dict]:
+    """Prints of the released masters (cached as .npz next to the build)."""
     from .audio import decode
     work.mkdir(parents=True, exist_ok=True)
-    out: dict[str, np.ndarray] = {}
+    out: dict[str, dict] = {}
     try:
         drops = json.loads(Path(catalog_path).read_text()).get("drops", [])[:limit]
     except (OSError, ValueError):
@@ -100,28 +150,33 @@ def released_envelopes(catalog_path: Path, work: Path, limit: int = 40) -> dict[
         url, did = d.get("audio_url"), d.get("id")
         if not (url and did):
             continue
-        npy = work / f"{did}.npy"
-        if npy.exists():
-            out[did] = np.load(npy)
+        npz = work / f"{did}.npz"
+        if npz.exists():
+            with np.load(npz) as z:
+                out[did] = {"env": z["env"], "seq": z["seq"]}
             continue
         mp3 = work / f"{did}.mp3"
         try:
             if not mp3.exists():
                 urllib.request.urlretrieve(url, mp3)
-            env = envelope(decode(mp3).mean(axis=1), 48_000)
+            pr = prints(decode(mp3).mean(axis=1))
         except Exception:      # noqa: BLE001 - a missing release must not block the drop
             continue
-        np.save(npy, env)
-        out[did] = env
+        np.savez(npz, **pr)
+        out[did] = pr
     return out
 
 
-def check_audio(wav: Path, catalog_path: Path, work: Path) -> tuple[float, str | None]:
+def check_audio(wav: Path, catalog_path: Path, work: Path) -> tuple[float, str | None, dict]:
+    """(worst score, the release it is nearest to, both scores for that release).
+
+    The worst score is the larger of the two prints' correlations so that one number still
+    answers "how close did this come"; the dict says which print said so."""
     from .audio import decode
-    mine = envelope(decode(wav).mean(axis=1), 48_000)
-    worst = (0.0, None)
-    for did, env in released_envelopes(catalog_path, work).items():
-        s = audio_similarity(mine, env)
-        if s > worst[0]:
-            worst = (s, did)
+    mine = prints(decode(wav).mean(axis=1))
+    worst: tuple[float, str | None, dict] = (0.0, None, {"envelope": 0.0, "sequence": 0.0})
+    for did, pr in released_prints(catalog_path, work).items():
+        score = similarity(mine, pr)
+        if max(score.values()) > worst[0]:
+            worst = (max(score.values()), did, score)
     return worst

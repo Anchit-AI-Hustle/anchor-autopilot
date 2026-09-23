@@ -55,9 +55,9 @@ def _payload(html: str) -> list[dict]:
         meta = obj.get("metadata") or {}
         songs.append({
             "id": sid,
-            "title": (obj.get("title") or "").strip() or "Untitled",
+            "title": _plain(obj.get("title")) or "Untitled",
             "duration_s": round(float(meta.get("duration") or obj.get("duration") or 0), 1),
-            "tags": (meta.get("tags") or "").strip(),
+            "tags": _plain(meta.get("tags")),
             "model": obj.get("major_model_version") or obj.get("model_name") or "",
             "plays": int(obj.get("play_count") or 0),
             "upvotes": int(obj.get("upvote_count") or 0),
@@ -207,10 +207,15 @@ def catalogue(handle: str, queue_dir=None) -> dict:
     }
 
 
+def _plain(text) -> str:
+    """Suno text as the site shows it: trimmed, with the house hyphen in place of any dash."""
+    return (text or "").replace("\u2014", "-").replace("\u2013", "-").strip()
+
+
 # ------------------------------------------------------------------ similarity
 STOP = {"the", "a", "an", "and", "of", "with", "for", "to", "in", "on", "part",
         "feat", "remix", "version", "mix", "edit", "bpm", "more", "very"}
-NUM = re.compile(r"^\d+([–-]\d+)?$")
+NUM = re.compile(r"^\d+(-\d+)?$")
 
 
 def _tokens(text: str) -> set[str]:

@@ -112,10 +112,23 @@ def vibe_copy(brief: dict) -> str:
     return "\n\n".join(lines) if lines else f"{brief['title']}. Nothing soft in it."
 
 
+def preview_copy(body: str, limit: int = 140) -> str:
+    """The Short's words: the first sentence of the copy, plus the second when both fit a
+    phone's two lines. A Short is the preview, so it says less than the full track."""
+    sentences = [s for s in re.split(r"(?<=[.?])\s+", " ".join(body.split())) if s]
+    if not sentences:
+        return body
+    two = " ".join(sentences[:2])
+    return two if len(two) <= limit else sentences[0]
+
+
 def description(profile: Profile, brief: dict, platform: str = "youtube") -> str:
     """Three short lines of copy, then a tight footer: genre · BPM · artist, the playlist, the
     site and Instagram on one line, the AI disclosure, the © line, three hashtags. Short on
-    purpose: a phone shows two lines above the fold."""
+    purpose: a phone shows two lines above the fold.
+
+    ``platform``: ``youtube`` (the full track), ``short`` (the 45 s preview: shorter copy, a
+    pointer to the full track, #shorts) or ``instagram`` (the Reel caption)."""
     yt, name = profile.youtube, profile.artist["name"]
     lane = profile.lane(brief["lane"])
     site = profile.artist["site_url"].removeprefix("https://").rstrip("/")
@@ -132,5 +145,12 @@ def description(profile: Profile, brief: dict, platform: str = "youtube") -> str
         tags = " ".join(dict.fromkeys([*yt["hashtags"], *yt.get("instagram_hashtags", [])]))
         return "\n".join([body, "", line, free, cadence, rights, "", tags])
     links = [f"All tracks: {playlist}" if playlist else f"Full catalogue: {site}", free]
+    if platform == "short":
+        # the full track goes out in the same slot; its id is not known until YouTube has it,
+        # so the Short points at the channel, where the full track is the newest video
+        channel = profile.artist.get("youtube_url", "").rstrip("/")
+        links = [f"Full track: {channel}/videos" if channel else f"Full track: {site}", *links]
+        tags = " ".join(dict.fromkeys([*yt["hashtags"][:2], "#shorts"]))
+        return "\n".join([preview_copy(body), "", line, *links, cadence, rights, "", tags])
     tags = copy.get("hashtags") or " ".join(yt["hashtags"])
     return "\n".join([body, "", line, *links, cadence, rights, "", tags])

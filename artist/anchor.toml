@@ -18,9 +18,9 @@ existing_titles = ["Pull Under", "Apex Ascent", "Initiate Mayhem"]
 [schedule]
 # Publish time in UTC. 17:30 UTC = 23:00 IST = 19:30 CEST = 13:30 ET.
 post_time_utc = "17:30"
-# One release every second day, counted from anchor_date (the cron fires daily; the
-# off-days are no-ops). Set every_days = 1 to go back to daily.
-every_days = 2
+# One release every day: the full track as a video and the strongest 45 s as a Short, in
+# the same slot. every_days = 2 makes it every second day, counted from anchor_date.
+every_days = 1
 anchor_date = "2026-09-20"
 
 [music]
@@ -29,7 +29,8 @@ anchor_date = "2026-09-20"
 # or the call fails the drop still ships, rendered by the free engine below.
 engine = "lyria"
 fallback_engine = "acestep_cpp"
-duration_s = 150          # full track length (released on the site + archive)
+duration_s = 150          # full track length when no range is set (tests, queued tracks)
+duration_range_s = [135, 170]   # the day's length is drawn from here, and its arrangement shape from music.SHAPES
 short_s = 45              # YouTube Short = the strongest 45 s of the track
 # sft, not turbo: the turbo DiT is distilled to 8 steps and silently clamps CFG to 1.0,
 # so the caption barely steers it - an "acid" brief came out as generic techno. The sft

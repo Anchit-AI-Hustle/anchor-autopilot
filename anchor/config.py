@@ -142,6 +142,9 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
             problems.append(f"music.{name} is missing")
     if not (10 <= int(music["duration_s"]) <= 600):
         problems.append("music.duration_s must be 10-600")
+    rng_s = music.get("duration_range_s")
+    if rng_s is not None and not (isinstance(rng_s, list) and len(rng_s) == 2 and 10 <= int(rng_s[0]) <= int(rng_s[1]) <= 600):
+        problems.append("music.duration_range_s must be [low, high] inside 10-600")
     if not (15 <= int(music["short_s"]) <= 175):
         problems.append("music.short_s must be 15-175 (YouTube Shorts max 3 min)")
     if int(music["short_s"]) > int(music["duration_s"]):

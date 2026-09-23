@@ -32,7 +32,7 @@ SR = 48_000
 SECTION_DIRECTIONS = {
     "intro": "filtered kick alone, no sub bass yet, {t0} far back, tension only",
     "build": "hi-hats and {t1} enter, filter opening, pressure rising bar by bar",
-    "drop": "full distorted kick, sub bass in, main hook at peak energy",
+    "drop": "full distorted kick, sub bass in, {t1} on top, main hook at peak energy",
     "breakdown": "kick out, {t2} alone over a held drone, tension kept",
     "build2": "snare roll and riser, every element pulled back in",
     "drop2": "harder than the first drop, everything at once",
@@ -40,18 +40,30 @@ SECTION_DIRECTIONS = {
 }
 
 
-def arrangement(duration_s: float, textures: tuple[str, ...] = ()) -> list[tuple[str, str]]:
+# The shapes a full-length record can take. One is drawn per day (brief.make_brief), so
+# consecutive records do not share a timeline even when the sound is close: the spectral
+# sequence gate in unique.py measured 0.65 between two acid tracks cut to the same shape.
+SHAPES = {
+    "classic": ["intro", "build", "drop", "breakdown", "build2", "drop2", "outro"],
+    "early": ["intro", "drop", "breakdown", "build2", "drop2", "outro"],            # the drop comes first
+    "peak": ["intro", "build", "drop", "drop2", "breakdown", "drop2", "outro"],     # a long peak, a late breakdown
+    "twice": ["intro", "build", "drop", "breakdown", "drop2", "build2", "drop2", "outro"],  # two returns
+}
+
+
+def arrangement(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic") -> list[tuple[str, str]]:
     """The ordered sections for a track of this length, each with its direction.
 
     Sizes are chosen so each section gets roughly 8-16 bars at this channel's tempo, which
     is how the genre is actually built: filtered intro, build, drop, breakdown, drop, outro.
+    ``shape`` picks one of ``SHAPES`` for a full-length record (130-210 s).
     """
     if duration_s < 75:
         parts = ["intro", "drop", "outro"]
     elif duration_s < 130:
         parts = ["intro", "build", "drop", "breakdown", "outro"]
     elif duration_s < 210:
-        parts = ["intro", "build", "drop", "breakdown", "build2", "drop2", "outro"]
+        parts = SHAPES.get(shape, SHAPES["classic"])
     else:
         parts = ["intro", "build", "drop", "breakdown", "build2", "drop2", "breakdown",
                  "drop2", "outro"]
@@ -62,18 +74,18 @@ def arrangement(duration_s: float, textures: tuple[str, ...] = ()) -> list[tuple
     return [(name.rstrip("2"), SECTION_DIRECTIONS[name].format(**fill)) for name in parts]
 
 
-def structure(duration_s: float, textures: tuple[str, ...] = ()) -> str:
+def structure(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic") -> str:
     """The lyrics-field arrangement: one bracketed section per line, direction attached."""
-    return "\n".join(f"[{tag} - {direction}]" for tag, direction in arrangement(duration_s, textures))
+    return "\n".join(f"[{tag} - {direction}]" for tag, direction in arrangement(duration_s, textures, shape))
 
 
-def arc(duration_s: float, textures: tuple[str, ...] = ()) -> str:
+def arc(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic") -> str:
     """The arrangement as one line of prose for the style prompt.
 
     The lyrics field carries the full per-section directions; the caption only needs the
     shape, so the encoder's budget goes on sound rather than on repeating the sheet.
     """
-    steps = arrangement(duration_s, textures)
+    steps = arrangement(duration_s, textures, shape)
     tags = " -> ".join(tag for tag, _ in steps)
     last = steps[-1][1]
     return f"Arrangement: {tags}; {steps[0][1]} at the start, and the outro {last}"

@@ -12,7 +12,7 @@ from pathlib import Path
 
 from .config import LEDGER_PATH, Profile
 from .seo import MAX_TITLE, genre_phrase
-from .unique import AUDIO_MAX_SIMILARITY, COVER_MIN_DISTANCE
+from .unique import AUDIO_MAX_SIMILARITY, COVER_MIN_DISTANCE, SEQUENCE_MAX_SIMILARITY
 from .util import iso, read_json, utcnow, write_json
 
 # targets a drop is pushed to, in the order the dashboard shows them
@@ -86,12 +86,16 @@ def suno_variants(catalog: dict | None, source_file: str | None) -> list[dict]:
 
 def _uploads(meta: dict, pub: dict, drop: dict) -> list[dict]:
     files = meta["files"]
-    y, ig = pub.get("youtube") or {}, pub.get("instagram") or {}
+    y, ys, ig = pub.get("youtube") or {}, pub.get("youtube_short") or {}, pub.get("instagram") or {}
     status = drop.get("status") or pub.get("status") or "made"
     rows = [
         {"target": "youtube_full", "file": files.get("full_169"), "status": status,
          "url": drop.get("youtube_url") or y.get("external_link"), "post_id": y.get("post_id") or pub.get("post_id"),
          "due_at": y.get("due_at") or pub.get("due_at"), "error": y.get("error") or pub.get("error")},
+        {"target": "youtube_short", "file": files.get("short"),
+         "status": ("error" if ys.get("error") else drop.get("short_status") or ys.get("status")) or ("not sent" if not ys else None),
+         "url": drop.get("youtube_short_url") or ys.get("external_link"), "post_id": ys.get("post_id"),
+         "due_at": ys.get("due_at"), "error": ys.get("error")},
         {"target": "instagram_reel", "file": files.get("full_916"),
          "status": ("error" if ig.get("error") else ig.get("status")) or ("not sent" if not ig else None),
          "url": drop.get("instagram_url") or ig.get("external_link"), "post_id": ig.get("post_id"),
@@ -147,10 +151,10 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
     key_ev = (f"asked {b['key_requested']}, heard {b['key']} (confidence {b.get('key_confidence')})" if b.get("key_requested")
               else f"confidence {b.get('key_confidence', 'n/a')}")
     F.append(_field("key", b["key"], "Random key not used in the last three drops; replaced by the key actually heard in the audio when the detector is confident (>= 0.25). Kept off every public surface.", key_ev, "record"))
-    F.append(_field("duration", f"{b['duration_s']} s", "Full-length target from the profile; every drop is a complete arrangement (intro, build, drop, breakdown, second drop, outro).", None, "record"))
+    F.append(_field("duration", f"{b['duration_s']} s", "Drawn for the day inside the profile's duration range; every drop is a complete arrangement whose shape is also drawn for the day, so no two records share a timeline.", f"shape {b.get('shape', 'classic')}", "record"))
     F.append(_field("quality gate", "pass" if attempts[-1]["ok"] else "kept despite fails",
-                    f"Each attempt must be finite audio at the right length, no dropouts, no clipping, tempo near the brief, and must not resemble a released drop (envelope similarity <= {AUDIO_MAX_SIMILARITY}). A fail is regenerated with the next seed.",
-                    f"nearest released audio {near.get('id')} at similarity {near.get('similarity')}; warnings: {', '.join(meta['qc']['warnings']) or 'none'}", "record"))
+                    f"Each attempt must be finite audio at the right length, no dropouts, no clipping, tempo near the brief, and must not resemble a released drop: loudness envelope correlation <= {AUDIO_MAX_SIMILARITY} and spectral-sequence correlation <= {SEQUENCE_MAX_SIMILARITY} against every released master. A fail is regenerated with the next seed.",
+                    f"nearest released audio {near.get('id')} at envelope {near.get('envelope', near.get('similarity'))}, spectral sequence {near.get('sequence', 'n/a')}; warnings: {', '.join(meta['qc']['warnings']) or 'none'}", "record"))
     F.append(_field("master loudness", f"{loud['after']['input_i']} LUFS / {loud['after']['input_tp']} dBTP",
                     f"Mastered to {music['loudness_lufs']} LUFS integrated with a {music['true_peak_db']} dBTP ceiling (YouTube normalises to -14, so the record never gets turned down harshly) and a {music.get('outro_fade_s', 0)} s outro fade.",
                     f"before {loud['before']['input_i']} LUFS; gain {loud.get('gain_db')} dB", "record"))
@@ -228,6 +232,8 @@ def refresh(ledger: dict, catalog: dict) -> int:
             new = None
             if row["target"] == "youtube_full":
                 new = {"status": d.get("status") or row["status"], "url": d.get("youtube_url") or row["url"], "error": d.get("error")}
+            elif row["target"] == "youtube_short" and (d.get("short_status") or d.get("youtube_short_url")):
+                new = {"status": d.get("short_status") or row["status"], "url": d.get("youtube_short_url") or row["url"]}
             elif row["target"] == "instagram_reel" and d.get("instagram_url"):
                 new = {"url": d["instagram_url"]}
             if new and any(row.get(k) != v for k, v in new.items()):

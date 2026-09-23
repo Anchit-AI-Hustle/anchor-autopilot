@@ -1,8 +1,9 @@
-name: Drop (every second day)
+name: Drop (daily)
 
 on:
   schedule:
-    - cron: "7 15 * * *"   # 15:07 UTC (20:37 IST). The Short itself goes live at 17:30 UTC (23:00 IST).
+    - cron: "7 13 * * *"   # 13:07 UTC (18:37 IST). The posts go live at 17:30 UTC (23:00 IST); four hours
+                           # covers the CPU fallback engine (about 90 min) plus a retry if the first take fails QC.
   workflow_dispatch:
     inputs:
       date:
@@ -10,7 +11,7 @@ on:
         required: false
         default: ""
       publish_now:
-        description: "Publish to YouTube immediately instead of at 17:30 UTC"
+        description: "Publish to YouTube and Instagram immediately instead of at 17:30 UTC"
         type: boolean
         default: false
       dry_run:
@@ -52,7 +53,7 @@ env:
 jobs:
   make:
     runs-on: ubuntu-24.04
-    timeout-minutes: 150
+    timeout-minutes: 210
     outputs:
       date: ${{ steps.day.outputs.date }}
       skip: ${{ steps.day.outputs.skip }}
@@ -85,7 +86,7 @@ jobs:
             echo "::notice::A drop for $DATE is already out; nothing to do."
           elif [ "${{ github.event_name }}" = "schedule" ] && [ "$(python -m anchor cadence --date "$DATE")" = "no" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "::notice::$DATE is an off-day on the every-second-day schedule; nothing to do."
+            echo "::notice::$DATE is an off-day on the schedule (schedule.every_days); nothing to do."
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
@@ -260,7 +261,7 @@ jobs:
           cp drop/*-short.mp4 drop/*-full-169.mp4 drop/*-full-916.mp4 public/media/
           # keep the two previous drops online too, in case a scheduled post is still pending
           for tag in $(gh release list --limit 6 --json tagName -q '.[].tagName' | grep '^drop-' | grep -vx "drop-$DATE" | head -2); do
-            gh release download "$tag" --pattern '*-full-*.mp4' --dir public/media --clobber || true
+            gh release download "$tag" --pattern '*.mp4' --dir public/media --clobber || true
           done
           printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
           printf '<!doctype html><meta charset="utf-8"><title>ANCHOR media</title><meta http-equiv="refresh" content="0;url=https://anchor.anchit-tandon.com/">' > public/index.html
@@ -308,13 +309,14 @@ jobs:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
         run: python -m anchor sync
 
-      - name: Publish the full track to YouTube and the Reel to Instagram via Buffer
+      - name: Publish the full track and the Short to YouTube and the Reel to Instagram via Buffer
         env:
           BUFFER_API_KEY: ${{ secrets.BUFFER_API_KEY }}
           BUFFER_CHANNEL_ID: ${{ secrets.BUFFER_CHANNEL_ID }}
           BUFFER_INSTAGRAM_CHANNEL_ID: ${{ secrets.BUFFER_INSTAGRAM_CHANNEL_ID }}
         run: |
           MEDIA="${PAGE_URL%/}/media/$FULL169"
+          SHORTURL="${PAGE_URL%/}/media/$SHORT"
           REEL="${PAGE_URL%/}/media/$FULL916"
           FLAGS=()
           if [ -z "$BUFFER_API_KEY" ]; then
@@ -322,7 +324,7 @@ jobs:
             echo "::warning::BUFFER_API_KEY is not set: releasing on the website only, not on YouTube/Instagram."
           fi
           [ "${{ inputs.publish_now }}" = "true" ] && FLAGS+=(--now)
-          if ! python -m anchor publish --drop "build/$DATE" --media-url "$MEDIA" --reel-url "$REEL" "${FLAGS[@]}"; then
+          if ! python -m anchor publish --drop "build/$DATE" --media-url "$MEDIA" --short-url "$SHORTURL" --reel-url "$REEL" "${FLAGS[@]}"; then
             echo "PUBLISH_FAILED=1" >> "$GITHUB_ENV"
             echo "::error::Publishing failed on at least one platform; the drop is still released on the website. See publish.json in the drop artifact."
           fi

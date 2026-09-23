@@ -14,6 +14,7 @@ def fast_profile(tmp_path):
     from anchor.config import load_profile
     text = (ROOT / "artist" / "anchor.toml").read_text()
     text = re.sub(r"^duration_s = \d+", "duration_s = 36", text, flags=re.M)
+    text = re.sub(r"^duration_range_s = .*$", "", text, flags=re.M)
     text = re.sub(r"^short_s = \d+", "short_s = 16", text, flags=re.M)
     path = tmp_path / "anchor.toml"
     path.write_text(text)

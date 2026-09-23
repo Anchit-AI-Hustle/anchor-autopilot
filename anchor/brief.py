@@ -8,7 +8,7 @@ from __future__ import annotations
 from datetime import date as Date, datetime, timezone
 
 from .config import Lane, Profile
-from .music import arc, structure
+from .music import SHAPES, arc, structure
 from .titles import make_title
 from .util import iso, rng, seed_from
 
@@ -48,7 +48,12 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     key = r.choice(keys)
 
     bpm = r.randint(lane.bpm[0], lane.bpm[1])
-    style = compose_style(profile, lane, r, bpm=bpm, duration_s=int(profile.music["duration_s"]))
+    # length and shape are drawn for the day too: two records of the same length cut to the
+    # same shape share a timeline, and that is most of what "sounds the same" means
+    lo, hi = profile.music.get("duration_range_s") or (profile.music["duration_s"], profile.music["duration_s"])
+    duration_s = r.randint(int(lo), int(hi))
+    shape = r.choice(list(SHAPES))
+    style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape)
 
     used_titles = [d.get("title", "") for d in history] + list(profile.artist["existing_titles"])
     recent_titles = [d.get("title", "") for d in past[:10]] + list(profile.artist["existing_titles"])
@@ -72,7 +77,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "mood": style["mood"],
         "special": style["special"],
         "negative": profile.music["negative"],
-        "duration_s": int(profile.music["duration_s"]),
+        "duration_s": duration_s,
+        "shape": shape,
         "short_s": int(profile.music["short_s"]),
         "genre_line": lane.genre_line,
         "style_line": lane.style_line,
@@ -82,7 +88,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     return brief
 
 
-def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int) -> dict:
+def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int, shape: str = "classic") -> dict:
     """The producer's brief, written the way a strong Suno/ACE-Step prompt is written.
 
     Nine layers, in this order, then compressed into prose: genre -> era/aesthetic -> mood
@@ -109,11 +115,11 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int)
         f"{t1} arrives with the build, {t2} owns the breakdown",        # 5 instruments + entry
         music["vocals"],                                                # 6 vocals
         f"Production: {lane.production}; {music['mastering']}",         # 7 production
-        arc(duration_s, textures),                                      # 8 arrangement arc
+        arc(duration_s, textures, shape),                               # 8 arrangement arc
         f"Special moment: {special}",                                   # 9 special moment
     ]
     caption = ". ".join(part.rstrip(".") for part in layers) + "."
-    return {"caption": caption, "lyrics": structure(duration_s, textures),
+    return {"caption": caption, "lyrics": structure(duration_s, textures, shape),
             "textures": list(textures), "mood": mood, "special": special}
 
 
@@ -130,4 +136,5 @@ def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
     return {"youtube_title": youtube_title(brief["title"]),
             "tags": tags(profile, lane, int(brief["bpm"])),
             "description": description(profile, brief, platform),
+            "description_short": description(profile, brief, "short"),
             "caption_instagram": description(profile, brief, "instagram")}

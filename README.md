@@ -58,7 +58,7 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
 
 ## Limits worth knowing
 
-- Generation runs on a free 4-vCPU GitHub runner: about 25–40 minutes a day, well inside the 6-hour job limit.
+- Generation runs on a free 4-vCPU GitHub runner: about 25-40 minutes a day, well inside the 6-hour job limit.
 - YouTube's monetisation rules penalise templated mass production. Every drop varies the sound lane, key, tempo,
   cover and visual family, and the AI disclosure is always on. Keep an eye on quality rather than quantity.
 - Buffer's free plan allows 10 scheduled posts per channel and 250 API calls a day; the robot uses a handful.
@@ -68,15 +68,27 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
 - **Music engine:** `[music] engine = "lyria"` - Google Lyria 3.5 through the Gemini API
   (`GEMINI_API_KEY` secret). `fallback_engine = "acestep_cpp"` runs when Lyria is unavailable.
   There is no official Suno API; the Suno web app is never automated.
-- **Cadence:** `[schedule] every_days = 2`, `anchor_date = "2026-09-20"`. The cron still fires
-  daily; `python -m anchor cadence --date YYYY-MM-DD` answers yes/no and the workflow skips
-  off-days. A manual `workflow_dispatch` always runs.
+- **Cadence:** `[schedule] every_days = 1`: one record every day. The cron fires at 13:07 UTC
+  and the posts go live at 17:30 UTC; the four hours cover the CPU fallback engine and one
+  retry. `every_days = 2` with `anchor_date` makes it every second day
+  (`python -m anchor cadence --date YYYY-MM-DD` answers yes/no; a manual `workflow_dispatch`
+  always runs).
+- **Three posts a day from one record:** the full 16:9 track to YouTube as a video, the
+  strongest 45 s to YouTube as a Short (the preview: shorter words, a pointer to the full
+  track, #shorts, no second subscriber notification), and the full 9:16 to Instagram as a
+  Reel. All three go out in the same slot through Buffer (`BUFFER_INSTAGRAM_CHANNEL_ID` for
+  the Reel). `sync` follows the full track and the Short separately; the ledger shows both.
+- **Every record is its own record:** the day draws the lane, key, tempo, textures, mood,
+  special moment, the length (`duration_range_s`, 135-170 s) and the arrangement shape
+  (`music.SHAPES`: classic, early, peak, twice), so no two days share a timeline.
 - **Title:** the most repeated sung phrase becomes the title when it reads as one and is unused.
-- **Uniqueness gates:** cover art must be >= 84 hash-distance from every released cover;
-  audio envelope similarity to any released track must be <= 0.80. Both are retried, then fail loudly.
+- **Uniqueness gates:** cover art must be >= 84 hash-distance from every released cover; the
+  audio is printed twice against every released master, loudness envelope (limit 0.80) and
+  spectral sequence, 24 bands every 0.5 s (limit 0.75). The 2026-09-23 audit of the 15
+  released masters: highest envelope 0.48, highest sequence 0.65, nothing near either limit.
+  A take over a limit is regenerated with the next seed, then the run fails loudly.
 - **Outputs per drop:** full 16:9 video (YouTube, first frame = thumbnail), full 9:16 (Instagram Reel),
-  45 s Short, MP3/FLAC, cover. Publishing goes through Buffer to YouTube and Instagram
-  (`BUFFER_INSTAGRAM_CHANNEL_ID`).
+  45 s Short (YouTube), MP3/FLAC, cover.
 
 ## The ledger (/ops/)
 

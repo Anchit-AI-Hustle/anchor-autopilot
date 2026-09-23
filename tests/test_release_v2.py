@@ -1,5 +1,5 @@
-"""Every-second-day cadence, Lyria engine plumbing, hook titles, SEO copy, uniqueness gates,
-full-length renders and the two-platform publish payload."""
+"""Daily cadence, Lyria engine plumbing, hook titles, SEO copy, uniqueness gates,
+full-length renders and the three-post publish payload (full track, Short, Reel)."""
 import base64
 import json
 from datetime import date
@@ -20,16 +20,16 @@ from anchor.unique import audio_similarity, cover_distance, envelope, nearest_co
 
 
 # ------------------------------------------------------------------- cadence
-def test_release_every_second_day_from_the_anchor_date_across_month_ends():
+def test_the_channel_releases_every_day_and_every_second_day_is_one_setting_away():
     p = load_profile()
-    assert p.schedule["every_days"] == 2 and p.schedule["anchor_date"] == "2026-09-20"
+    assert p.schedule["every_days"] == 1
     on = [d for d in ("2026-09-20", "2026-09-22", "2026-09-30", "2026-10-02", "2026-12-31", "2027-01-02")]
     off = [d for d in ("2026-09-21", "2026-09-23", "2026-10-01", "2027-01-01")]
-    assert all(pipeline.is_release_day(p, d) for d in on)
-    assert not any(pipeline.is_release_day(p, d) for d in off)
-    # daily again when every_days is 1
-    daily = load_profile(); daily.raw["schedule"]["every_days"] = 1
-    assert all(pipeline.is_release_day(daily, d) for d in on + off)
+    assert all(pipeline.is_release_day(p, d) for d in on + off)
+    # every second day, counted from the anchor date across month ends
+    alt = load_profile(); alt.raw["schedule"]["every_days"] = 2; alt.raw["schedule"]["anchor_date"] = "2026-09-20"
+    assert all(pipeline.is_release_day(alt, d) for d in on)
+    assert not any(pipeline.is_release_day(alt, d) for d in off)
 
 
 # --------------------------------------------------------------------- lyria
@@ -38,8 +38,25 @@ def test_lyria_prompt_carries_the_nine_layers_and_the_length_in_words():
     b = make_brief(p, "2026-09-22", [])
     text = compose_input(b)
     assert b["caption"] in text and b["lyrics"] in text
-    assert "exactly 2:30 (150 seconds)" in text and f"{b['bpm']} BPM" in text and b["key"] in text
+    mm, ss = divmod(b["duration_s"], 60)
+    assert f"exactly {mm}:{ss:02d} ({b['duration_s']} seconds)" in text and f"{b['bpm']} BPM" in text and b["key"] in text
     assert "Avoid:" in text and "trance uplift" in text
+
+
+def test_length_and_arrangement_shape_are_drawn_for_the_day_so_records_do_not_share_a_timeline():
+    from anchor.music import SHAPES, arrangement
+    p = load_profile()
+    lo, hi = p.music["duration_range_s"]
+    briefs = [make_brief(p, f"2026-10-{d:02d}", []) for d in range(1, 21)]
+    lengths, shapes = {b["duration_s"] for b in briefs}, {b["shape"] for b in briefs}
+    assert all(lo <= b["duration_s"] <= hi for b in briefs) and len(lengths) > 5 and len(shapes) == len(SHAPES)
+    for b in briefs:
+        tags = [t for t, _ in arrangement(b["duration_s"], tuple(b["textures"]), b["shape"])]
+        assert tags[0] == "intro" and tags[-1] == "outro" and "drop" in tags and "breakdown" in tags
+        assert b["lyrics"].count("[") == len(tags)
+    # the same day always gets the same record
+    assert make_brief(p, "2026-10-03", [])["shape"] == briefs[2]["shape"]
+    assert make_brief(p, "2026-10-03", [])["duration_s"] == briefs[2]["duration_s"]
 
 
 def test_lyria_response_parser_finds_audio_and_lyrics_wherever_they_are_nested():
@@ -172,14 +189,57 @@ def test_reel_input_is_what_buffer_requires_for_instagram():
         build_reel_input("ch1", caption="c", video_url="http://insecure/y.mp4", due_at=None)
 
 
-def test_dry_run_publish_writes_both_platform_payloads(tmp_path):
+def test_dry_run_publish_writes_the_three_payloads_full_short_and_reel(tmp_path):
     p = load_profile()
     b = make_brief(p, "2026-09-22", [])
     meta = {"brief": b, "full": {"full_169": {"size_bytes": 10}, "full_916": {"size_bytes": 10}},
             "video": {"size_bytes": 10}}
     (tmp_path / "meta.json").write_text(json.dumps(meta))
-    res = pipeline.publish(p, tmp_path, "https://host/a-full-169.mp4", dry_run=True, reel_url="https://host/a-full-916.mp4")
-    assert res["payload"]["youtube"]["metadata"]["youtube"]["title"] == b["youtube_title"]
+    res = pipeline.publish(p, tmp_path, "https://host/a-full-169.mp4", dry_run=True,
+                           reel_url="https://host/a-full-916.mp4", short_url="https://host/a-short.mp4")
+    full, short = res["payload"]["youtube"], res["payload"]["youtube_short"]
+    assert full["metadata"]["youtube"]["title"] == b["youtube_title"] == short["metadata"]["youtube"]["title"]
+    assert full["assets"][0]["video"]["url"].endswith("full-169.mp4") and short["assets"][0]["video"]["url"].endswith("short.mp4")
+    assert full["text"] == b["description"] and short["text"] == b["description_short"] != b["description"]
+    # the Short is the preview: shorter words, a pointer to the full track, #shorts, no second notification
+    def body(text):   # everything above the genre line
+        return text[: text.index(" BPM · ")].rsplit("\n\n", 1)[0]
+    assert len(body(short["text"])) <= len(body(full["text"])) <= 320
+    assert "Full track: https://www.youtube.com/@AT_ANCHOR/videos" in short["text"] and short["text"].endswith("#shorts")
+    assert full["metadata"]["youtube"]["notifySubscribers"] is True and short["metadata"]["youtube"]["notifySubscribers"] is False
+    assert full.get("dueAt") == short.get("dueAt") == res["payload"]["instagram"].get("dueAt")
     assert res["payload"]["instagram"]["metadata"]["instagram"]["type"] == "reel"
     assert res["payload"]["instagram"]["text"] == b["caption_instagram"]
     assert json.loads((tmp_path / "publish.json").read_text())["status"] == "dry-run"
+
+
+def test_the_short_copy_is_the_first_sentence_or_two_of_the_full_copy():
+    from anchor.seo import preview_copy
+    body = "Warehouse pressure with no off switch. It starts hitting before you're ready. By the end something in you has given way."
+    assert preview_copy(body) == "Warehouse pressure with no off switch. It starts hitting before you're ready."
+    long_second = "Short first. " + "A second sentence that runs on and on, well past the two lines a phone shows above the fold of a Short, and then keeps going, and going."
+    assert len(long_second) > 140
+    assert preview_copy(long_second) == "Short first."
+    assert preview_copy("One line only.") == "One line only."
+
+
+def test_an_unconnected_instagram_account_is_a_note_not_a_failed_run(tmp_path, monkeypatch):
+    """The YouTube posts are the release; the Reel starts the day the account is connected in Buffer."""
+    from anchor.publish import Buffer, BufferError
+    p = load_profile()
+    b = make_brief(p, "2026-09-22", [])
+    meta = {"brief": b, "full": {"full_169": {"size_bytes": 10}, "full_916": {"size_bytes": 10}}, "video": {"size_bytes": 10}}
+    (tmp_path / "meta.json").write_text(json.dumps(meta))
+    monkeypatch.setenv("BUFFER_API_KEY", "k")
+    monkeypatch.setattr(pipeline, "verify_media_url", lambda url, **k: {"url": url, "bytes": 10})
+    monkeypatch.setattr(Buffer, "youtube_channel", lambda self, *a: {"id": "yt", "name": "AT_ANCHOR"})
+    sent = []
+    monkeypatch.setattr(Buffer, "create_short", lambda self, ch, **kw: sent.append(kw) or {"id": f"p{len(sent)}", "status": "buffer"})
+
+    def no_ig(self, *a):
+        raise BufferError("no Instagram channel connected in Buffer (connect @anchor_at2803 in Buffer first)")
+    monkeypatch.setattr(Buffer, "instagram_channel", no_ig)
+    res = pipeline.publish(p, tmp_path, "https://host/full.mp4", short_url="https://host/short.mp4", reel_url="https://host/reel.mp4")
+    assert [s["video_url"] for s in sent] == ["https://host/full.mp4", "https://host/short.mp4"]
+    assert res["youtube"]["post_id"] == "p1" and res["youtube_short"]["post_id"] == "p2"
+    assert res["instagram"] == {"status": "not connected", "error": None} and res["error"] is None
