@@ -58,7 +58,10 @@ keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B min
 # layers every lane shares; each lane below supplies its own era, groove, moods, production
 # and special moments, and rotates them day to day.
 vocals = "No vocals, no singing, no spoken word: purely instrumental"
-mastering = "club master, deep controlled sub-bass, punchy kick transient, crisp but not harsh highs, real dynamics rather than constant loudness"
+# What the channel's best records share (measured 2026-09-23): the kick's click and the bass's
+# harmonics carry on a phone speaker, the textures are wide while kick and sub stay centred,
+# and the record falls away and comes back rather than holding one level.
+mastering = "club master, sub-bass harmonics audible on small speakers, kick with a clear click, wide textures over a centred kick and sub, real dynamics"
 negative = "vocals, singing, spoken word, lyrics, acoustic guitar, piano ballad, pop, lo-fi, jazz, trance uplift, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop"
 # A model asked for N seconds renders N seconds and stops mid-bar. The arrangement (see
 # music.structure) is the real fix; this is the safety net, and it only fires when the

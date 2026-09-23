@@ -33,7 +33,7 @@ SECTION_DIRECTIONS = {
     "intro": "filtered kick alone, no sub bass yet, {t0} far back, tension only",
     "build": "hi-hats and {t1} enter, filter opening, pressure rising bar by bar",
     "drop": "full distorted kick, sub bass in, {t1} on top, main hook at peak energy",
-    "breakdown": "kick out, {t2} alone over a held drone, tension kept",
+    "breakdown": "kick and sub fully out for eight to sixteen bars, {t2} alone over a held drone, the room drops away, tension kept",
     "build2": "snare roll and riser, every element pulled back in",
     "drop2": "harder than the first drop, everything at once",
     "outro": "kick and bass strip back, filter closing, {t0} last, resolve to silence",

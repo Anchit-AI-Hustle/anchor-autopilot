@@ -6,7 +6,7 @@ import shutil
 from datetime import date as Date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import catalog, ledger
+from . import catalog, craft, ledger
 from .art import make_cover, og_card
 from .audio import (analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
@@ -83,7 +83,18 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             ok = False
             fails = [*fails, f"sounds like released drop {twin} (envelope {score['envelope']:.2f}, "
                              f"spectral sequence {score['sequence']:.2f})"]
+        # the craft the channel's best records share: a real breakdown, and a sound that moves.
+        # A take without them is sent back while seeds remain; on the last take it ships with a
+        # warning, because a daily channel that misses a day loses more than a weaker record costs
+        shape = craft.measure(decode(raw))
+        # the fixture engine is a test tone loop with no arrangement to judge
+        shape_fails = [] if stats.get("engine") == "fixture" else craft.gate(shape)
+        if shape_fails and attempt < retries:
+            ok, fails = False, [*fails, *shape_fails]
+        elif shape_fails:
+            warns = [*warns, *(f"shipped anyway on the last take: {f}" for f in shape_fails)]
         attempts_log.append({"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns,
+                             "craft": {k: v for k, v in shape.items() if k != "breakdowns"} | {"breakdowns": len(shape["breakdowns"])},
                              "nearest_audio": {"id": twin, "similarity": round(sim, 3),
                                                "envelope": round(score["envelope"], 3), "sequence": round(score["sequence"], 3)}})
         log(f"QC attempt {attempt}: {'PASS' if ok else 'FAIL'} {fails or ''} {warns or ''}")
@@ -133,7 +144,14 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     """Master, cut the Short, draw the cover, render the video, write the drop files."""
     base = asset_base(profile, brief)
     master_wav = out_dir / "master.wav"
-    loud = master(raw, master_wav, float(profile.music["loudness_lufs"]),
+    # the finishing pass: audible on a phone, wide above the bass, mono below it; a record
+    # already in the channel's range passes through untouched
+    enhanced = out_dir / "enhanced.wav"
+    finish_info = craft.enhance_file(raw, enhanced)
+    log(f"craft: finishing pass tone {finish_info.get('tone', 0)} width {finish_info.get('spread', 0)}; phone share "
+        f"{finish_info['before']['phone_share']} -> {finish_info['after']['phone_share']}, width "
+        f"{finish_info['before']['width']} -> {finish_info['after']['width']}")
+    loud = master(enhanced, master_wav, float(profile.music["loudness_lufs"]),
                   float(profile.music["true_peak_db"]),
                   outro_fade_s=float(profile.music.get("outro_fade_s", 0.0)))
     mp3 = out_dir / f"{base}.mp3"
@@ -197,6 +215,9 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     meta = {
         "brief": brief,
         "qc": {"audio": stats_audio, "attempts": attempts_log, "warnings": attempts_log[-1]["warn"]},
+        "craft": {"finish": {k: v for k, v in finish_info.items() if k not in ("before", "after")},
+                  "before": {k: v for k, v in finish_info["before"].items() if k != "breakdowns"} | {"breakdowns": finish_info["before"]["breakdowns"]},
+                  "after": {k: v for k, v in finish_info["after"].items() if k != "breakdowns"} | {"breakdowns": finish_info["after"]["breakdowns"]}},
         "loudness": loud,
         "engine": stats,
         "art": art,

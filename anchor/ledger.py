@@ -155,6 +155,12 @@ def _fields(profile: Profile, meta: dict, pub: dict) -> list[dict]:
     F.append(_field("quality gate", "pass" if attempts[-1]["ok"] else "kept despite fails",
                     f"Each attempt must be finite audio at the right length, no dropouts, no clipping, tempo near the brief, and must not resemble a released drop: loudness envelope correlation <= {AUDIO_MAX_SIMILARITY} and spectral-sequence correlation <= {SEQUENCE_MAX_SIMILARITY} against every released master. A fail is regenerated with the next seed.",
                     f"nearest released audio {near.get('id')} at envelope {near.get('envelope', near.get('similarity'))}, spectral sequence {near.get('sequence', 'n/a')}; warnings: {', '.join(meta['qc']['warnings']) or 'none'}", "record"))
+    cr = meta.get("craft") or {}
+    if cr:
+        bf, af = cr.get("before", {}), cr.get("after", {})
+        F.append(_field("craft", f"phone share {af.get('phone_share')}, width {af.get('width')}, {len(af.get('breakdowns') or [])} breakdown(s)",
+                        "What the channel's best records share (measured 2026-09-23): a generated take needs a breakdown of 8 s or more at least 8 dB under the peak and a sound that moves, or it is regenerated while seeds remain; every record then gets the finishing pass (bass harmonics where a phone plays them, the kick's click and air lifted, wider above 250 Hz, mono below), only as much as it needs.",
+                        f"before the pass: phone share {bf.get('phone_share')}, width {bf.get('width')}; pass tone {cr.get('finish', {}).get('tone', 0)}, width {cr.get('finish', {}).get('spread', 0)}", "record"))
     F.append(_field("master loudness", f"{loud['after']['input_i']} LUFS / {loud['after']['input_tp']} dBTP",
                     f"Mastered to {music['loudness_lufs']} LUFS integrated with a {music['true_peak_db']} dBTP ceiling (YouTube plays everything at -14, so the master sits at that level with headroom for the AAC encoder instead of being turned down) and a {music.get('outro_fade_s', 0)} s outro fade.",
                     f"before {loud['before']['input_i']} LUFS; gain {loud.get('gain_db')} dB", "record"))

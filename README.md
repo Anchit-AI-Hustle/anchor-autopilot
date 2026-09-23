@@ -109,6 +109,16 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
   for exact titles). Lyria renders only on a day the queue is empty. `python -m anchor
   queue-plan` shows every song's verdict and reason; `queue-add --force` releases a held
   take anyway (the audio gate still runs).
+- **Craft, learned from the channel (`anchor/craft.py`):** the 2026-09-23 rating of all 21
+  videos found the weakest records share three faults: almost all their energy below 60 Hz
+  (silent on a phone), a near-mono image, and no breakdown. So a generated take must have a
+  breakdown of 8 s or more at least 8 dB under the peak and a sound that moves, or it is
+  regenerated while seeds remain (the last take ships with a warning rather than miss the
+  day); every record, your Suno songs included, then gets the finishing pass: the sub a
+  little lower with its harmonics where a phone plays them, the kick's click and air lifted,
+  wider above 250 Hz, mono below, and only as much as it needs. The prompt asks for the same
+  things up front (`[music] mastering`, the breakdown direction). The ledger shows each
+  record's craft numbers before and after.
 - **Title:** the most repeated sung phrase becomes the title when it reads as one and is unused.
 - **Uniqueness gates:** cover art must be >= 84 hash-distance from every released cover; the
   audio is printed twice against every released master, loudness envelope (limit 0.80) and
