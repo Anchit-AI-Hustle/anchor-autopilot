@@ -16,6 +16,10 @@ from .config import FONTS, Family
 from .util import media_summary, run
 
 W, H, FPS = 1080, 1920, 30
+# ffmpeg's own AAC encoder uses perceptual noise substitution and intensity stereo at low
+# bitrates, and on dense stereo techno that can throw a single +4 dB spike (measured on Robot
+# Love, 2026-09-23). Off, always: the cost is nothing at 192k.
+AAC_CLEAN = ["-aac_pns", "0", "-aac_is", "0"]
 COVER = 900
 COVER_Y = 330
 VIZ_W, VIZ_H, VIZ_Y = 1080, 250, 1525   # between the meta line (1450) and the progress bar (1812)
@@ -142,7 +146,7 @@ def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: d
          "-t", f"{duration:.3f}", "-r", str(FPS),
          "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-maxrate", "8M", "-bufsize", "16M",
          "-profile:v", "high",
-         "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-ar", "48000",
+         "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN, "-ar", "48000",
          "-movflags", "+faststart", out], timeout=1800)
     info = media_summary(out)
     problems = []
@@ -243,7 +247,7 @@ def render_still(frame: Path, audio: Path, out: Path, crf: int = 23) -> dict:
     run(["ffmpeg", "-y", "-hide_banner", "-v", "error", "-loop", "1", "-framerate", "2", "-i", frame,
          "-i", audio, "-c:v", "libx264", "-preset", "ultrafast", "-tune", "stillimage", "-crf", str(crf),
          "-r", "2", "-g", "60", "-pix_fmt", "yuv420p", "-shortest",
-         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out], timeout=900)
+         "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN, "-ar", "48000", "-movflags", "+faststart", out], timeout=900)
     info = media_summary(out)
     if abs(info["duration"] - duration) > 1.5:
         raise RuntimeError(f"full render truncated: {info['duration']:.1f}s vs audio {duration:.1f}s")
@@ -273,7 +277,7 @@ def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 2
          "-i", audio, "-filter_complex", graph, "-map", "[vout]", "-map", "[aout]",
          "-t", f"{duration:.3f}", "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", str(crf),
          "-maxrate", "4M", "-bufsize", "8M", "-pix_fmt", "yuv420p",
-         "-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-movflags", "+faststart", out], timeout=timeout)
+         "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN, "-ar", "48000", "-movflags", "+faststart", out], timeout=timeout)
     info = media_summary(out)
     if abs(info["duration"] - duration) > 1.5:
         raise RuntimeError(f"full render truncated: {info['duration']:.1f}s vs audio {duration:.1f}s")

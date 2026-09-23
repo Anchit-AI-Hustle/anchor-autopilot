@@ -1,0 +1,115 @@
+{
+ "note": "One version of each record everywhere. Built by 'anchor versions build', published by 'anchor versions publish' (the versions.yml workflow). built/published are filled in by the robot.",
+ "records": [
+  {
+   "id": "2026-09-20",
+   "title": "Rupture Pulse",
+   "why": "extended remaster: a sixteen-bar breakdown and the drop phrase twice, all on the record's own eight-bar phrases, audible on a phone",
+   "source": {
+    "release": "drop-2026-09-20",
+    "file": "ANCHOR-2026-09-20-rupture-pulse.flac"
+   },
+   "extend": {
+    "breakdown_from": [
+     72,
+     80
+    ],
+    "before_bar": 80,
+    "repeat": [
+     80,
+     88
+    ],
+    "outro_bar": 88
+   },
+   "tame": false,
+   "finish": true,
+   "youtube": {
+    "full": "kbMQz4tWUtU",
+    "short": "Y4OZbHAi2mc"
+   },
+   "accent": "#d8742f"
+  },
+  {
+   "id": "2026-09-15",
+   "title": "Afterburn",
+   "why": "one version everywhere: the released master (the only lossless source), finished and mastered clean",
+   "source": {
+    "release": "drop-2026-09-15",
+    "file": "ANCHOR-2026-09-15-afterburn.flac"
+   },
+   "tame": false,
+   "finish": true,
+   "youtube": {
+    "full": "22daVf0Cp4c",
+    "short": "vezK0w3nmx8"
+   },
+   "accent": "#f2f2f2"
+  },
+  {
+   "id": "2026-09-13",
+   "title": "Project Mayhem",
+   "why": "same record, cleaner: from the original Suno render with the noise wash over the breakdowns tamed and no limiting",
+   "source": {
+    "suno": "f5207246-bf22-41b1-a4d2-8b3861149d7d"
+   },
+   "tame": true,
+   "finish": false,
+   "youtube": {
+    "full": "erxuPLyK7uA",
+    "short": "p7XE0YOwoTw"
+   },
+   "accent": "#ff3b1f"
+  },
+  {
+   "id": "2026-09-10",
+   "title": "Signal Detected",
+   "why": "one version everywhere: the two-part weld the video and its words describe, rebuilt from the Suno renders at full loudness (the old video played at -18 LUFS)",
+   "source": [
+    {
+     "suno": "e7f16cd4-b99f-4246-a209-23eb0b304e8d"
+    },
+    {
+     "suno": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+     "at": 96.5
+    }
+   ],
+   "tame": true,
+   "finish": true,
+   "youtube": {
+    "full": "uM_4JEC03ik",
+    "short": "SoCMir5uFxY"
+   },
+   "accent": "#d7e0ea"
+  },
+  {
+   "id": "2026-09-07",
+   "title": "Robot Love",
+   "why": "one version everywhere: the higher-rated take (7.1), the one on the site and in the Short",
+   "source": {
+    "suno": "b20ce676-a10d-4df9-8e62-1a121cbec080"
+   },
+   "tame": true,
+   "finish": true,
+   "youtube": {
+    "full": "KBCM6KXVlgI",
+    "short": "mvIMp8LqgTY"
+   },
+   "accent": "#d8742f"
+  },
+  {
+   "id": "2026-09-06",
+   "title": "Stay With Me",
+   "why": "one version everywhere: the higher-rated take (7.2), the one on the site and in the Short",
+   "source": {
+    "suno": "9981adbf-fbe3-4919-a021-82a2f3fb83a3"
+   },
+   "tame": true,
+   "finish": true,
+   "youtube": {
+    "full": "ZslHMH4TVtM",
+    "short": "-E9qHH9MhTQ"
+   },
+   "accent": "#d8742f"
+  }
+ ]
+}

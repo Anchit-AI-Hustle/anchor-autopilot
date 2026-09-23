@@ -82,6 +82,12 @@ def main(argv: list[str] | None = None) -> int:
     rt = sub.add_parser("retitle", help="give every upload on the channel the search-led title and description (Data API)")
     rt.add_argument("--dry-run", action="store_true")
 
+    vs = sub.add_parser("versions", help="one version of each record everywhere: build, then publish (site/data/versions.json)")
+    vs.add_argument("stage", choices=["build", "publish"])
+    vs.add_argument("--only", default=None, help="one record id (YYYY-MM-DD)")
+    vs.add_argument("--out", default="build/versions")
+    vs.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
+
     sub.add_parser("check", help="validate profile and site data")
     sub.add_parser("ledger", help="refresh the /ops ledger's upload rows from the catalog")
 
@@ -153,6 +159,23 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "retitle":
         from . import retitle
         print(json.dumps(retitle.run(profile, dry_run=args.dry_run), indent=2, ensure_ascii=False))
+    elif args.cmd == "versions":
+        from . import versions
+        data, cat = versions.load(), catalog.load(CATALOG_PATH, profile)
+        drops = {d["id"]: d for d in cat["drops"]}
+        stage = "built" if args.stage == "build" else "published"
+        todo = [e for e in versions.pending(data, stage) if (not args.only or e["id"] == args.only)
+                and (stage == "built" or "built" in e)]         # a record goes up only once it is built
+        done = []
+        for e in todo:
+            work = Path(args.out) / e["id"]
+            try:
+                _version_step(args, profile, versions, e, drops, cat, work)
+            finally:                                          # a half-published entry keeps what landed
+                versions.save(data)
+                catalog.save(cat, CATALOG_PATH)
+            done.append(e["id"])
+        print(json.dumps({"stage": args.stage, "done": done}))
     elif args.cmd == "youtube-auth":
         from .youtube import authorize_interactively
         token = authorize_interactively(args.client_id, args.client_secret, args.port)
@@ -183,6 +206,22 @@ def main(argv: list[str] | None = None) -> int:
         done = any(d.get("id") == day and d.get("status") not in ("dry-run", "error") for d in drops)
         print("yes" if done else "no")
     return 0
+
+
+def _version_step(args, profile, versions, e: dict, drops: dict, cat: dict, work: Path) -> None:
+    """One record through one stage of ``anchor versions``."""
+    if args.stage == "build":
+        versions.record(cat, e, versions.build(profile, e, drops[e["id"]], args.repo, work), None)
+        return
+    from .retitle import CHANNEL_PATH
+    if not (work / "meta.json").exists():             # built in an earlier run: the kept originals give the same files
+        versions.build(profile, e, drops[e["id"]], args.repo, work)
+    meta = json.loads((work / "meta.json").read_text())
+    pub = versions.publish(profile, e, meta, work)
+    versions.record(cat, e, meta, pub)
+    channel = json.loads(CHANNEL_PATH.read_text())
+    versions.remap_channel(channel, pub)
+    CHANNEL_PATH.write_text(json.dumps(channel, indent=1, ensure_ascii=False))
 
 
 def check(profile) -> int:

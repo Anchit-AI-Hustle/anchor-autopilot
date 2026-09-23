@@ -47,7 +47,7 @@ def facts(profile: Profile, video: dict, catalog: dict, channel: dict) -> tuple[
         return clean_title(known["title"]), known["genre"], known.get("bpm")
     by_url = {}
     for d in catalog.get("drops", []):
-        for k in ("youtube_url", "youtube_short_url"):
+        for k in ("youtube_url", "youtube_short_url", "youtube_full_url"):
             u = d.get(k) or ""
             vid = u.rsplit("=", 1)[-1].rsplit("/", 1)[-1] if u else None
             if vid:

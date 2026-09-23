@@ -1,0 +1,129 @@
+name: Versions (one version of each record everywhere)
+
+# site/data/versions.json names the records whose site, release, Short and YouTube video
+# should all carry one new master (a remaster, a cleaned-up render, the better take). This
+# builds each pending entry from public sources, keeps the first master in the release as
+# <name>-original.*, replaces the release files under their old names (so every link the
+# site has keeps working), and, with the channel's credentials (YT_CLIENT_ID,
+# YT_CLIENT_SECRET, YT_REFRESH_TOKEN), uploads the new video and Short with the old ones'
+# words and sets the old ones to private. Nothing is deleted anywhere. Every step is
+# written back to versions.json, so a second run does only what is left.
+on:
+  push:
+    branches: [main]
+    paths:
+      - site/data/versions.json
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "One record id (YYYY-MM-DD); empty for every pending entry"
+        default: ""
+      youtube:
+        description: "Also swap the videos on YouTube (needs the YT_* secrets; the new uploads start from zero views)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-drop            # never race the daily run over the catalog
+  cancel-in-progress: false
+
+env:
+  ROBOT_NAME: "Anchit Tandon"
+  ROBOT_EMAIL: "anchit.tandon@gmail.com"
+
+jobs:
+  versions:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -r requirements.txt
+
+      - name: Build every pending entry
+        run: |
+          set -euo pipefail
+          ONLY=()
+          [ -n "${{ inputs.only }}" ] && ONLY=(--only "${{ inputs.only }}")
+          python -m anchor versions build "${ONLY[@]}" --out build/versions | tee built.json
+
+      - name: Keep the first master, then replace the release files under their old names
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p originals
+          for ID in $(python -c "import json; print(' '.join(json.load(open('built.json'))['done']))"); do
+            TAG="drop-$ID"
+            META="build/versions/$ID/meta.json"
+            ASSETS=$(gh release view "$TAG" --json assets -q '.assets[].name')
+            for KEY in mp3 flac short; do
+              NAME=$(python -c "import json; print(json.load(open('$META'))['files']['$KEY'])")
+              KEPT=$(python -c "from anchor.versions import original; print(original('$NAME'))")
+              if echo "$ASSETS" | grep -Fqx "$NAME" && ! echo "$ASSETS" | grep -Fqx "$KEPT"; then
+                gh release download "$TAG" -p "$NAME" -O "originals/$KEPT" --clobber
+                gh release upload "$TAG" "originals/$KEPT"
+                echo "::notice::$TAG: kept the first master as $KEPT"
+              fi
+              gh release upload "$TAG" "build/versions/$ID/$NAME" --clobber
+              echo "::notice::$TAG: $NAME replaced"
+            done
+          done
+
+      - name: Commit the built versions
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data/versions.json site/data/catalog.json
+          git commit -m "versions: new masters on the site and in the releases" || echo "nothing to commit"
+
+      - name: Swap the videos on YouTube
+        if: ${{ github.event_name == 'push' || inputs.youtube }}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$YT_REFRESH_TOKEN" ]; then
+            echo "::warning::YT_* secrets are not set; the site and releases carry the new versions, YouTube still has the old ones. Add the secrets and run this again."
+            exit 0
+          fi
+          ONLY=()
+          [ -n "${{ inputs.only }}" ] && ONLY=(--only "${{ inputs.only }}")
+          python -m anchor versions publish "${ONLY[@]}" --out build/versions | tee published.json
+
+      - name: Commit the new YouTube links
+        # only once the releases hold the new files; a failed upload leaves every entry pending
+        if: ${{ always() && steps.release.outcome == 'success' }}
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data/versions.json site/data/catalog.json site/data/channel.json
+          git commit -m "versions: the new videos and Shorts are on the channel" || true
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Summary
+        if: always()
+        run: |
+          python - >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          import json, pathlib
+          print("### Versions\n")
+          for e in json.loads(pathlib.Path("site/data/versions.json").read_text())["records"]:
+              b, p = e.get("built") or {}, e.get("published") or {}
+              state = "on YouTube" if p else "halfway on YouTube" if e.get("publishing") else "site and release" if b else "pending"
+              extra = f", {b['duration_s']} s at {b['loudness']['input_i']} LUFS" if b else ""
+              print(f"- {e['id']} {e['title']}: {state}{extra}")
+          EOF

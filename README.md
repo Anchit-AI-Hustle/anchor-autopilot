@@ -119,6 +119,21 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
   wider above 250 Hz, mono below, and only as much as it needs. The prompt asks for the same
   things up front (`[music] mastering`, the breakdown direction). The ledger shows each
   record's craft numbers before and after.
+- **One version of each record everywhere (`anchor/versions.py`):** `site/data/versions.json`
+  names each record whose site player, download, Short and YouTube video should all carry one
+  new master, where to build it from (the release master, the original Suno render, or two
+  takes welded) and what to do to it: `extend` (a 16-bar breakdown made from the record and
+  its drop phrase played twice, on its own 8-bar phrases), `tame` (turns down the noise wash
+  Suno leaves over breakdowns, the "distortion" in them, leaving tonal highs and everything
+  under 6 kHz alone) and `finish` (the craft pass). `versions.yml` runs on every change to
+  that file: it builds each pending entry, keeps the first master in the release as
+  `<name>-original.*`, replaces the release files under their old names with a `?v=` mark on
+  the site links so no cache plays the old one, and, with the `YT_*` secrets, uploads the new
+  video and Short with the old ones' words and sets the old ones to private. Nothing is ever
+  deleted, a rebuild always starts from the kept original, and a run that stops halfway
+  resumes where it stopped. The new uploads start from zero views; that is YouTube's rule
+  (a video's audio cannot be swapped in place). `python -m anchor versions build --only
+  YYYY-MM-DD` builds one locally into `build/versions/`.
 - **Title:** the most repeated sung phrase becomes the title when it reads as one and is unused.
 - **Uniqueness gates:** cover art must be >= 84 hash-distance from every released cover; the
   audio is printed twice against every released master, loudness envelope (limit 0.80) and

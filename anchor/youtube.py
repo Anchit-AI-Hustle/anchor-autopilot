@@ -215,6 +215,20 @@ class YouTube:
         self._json("PUT", "videos", {"part": "snippet"}, {"id": video["id"], "snippet": snippet})
         log(f"youtube: updated {video['id']}: {title!r}")
 
+    def videos(self, ids: list[str]) -> list[dict]:
+        """Title, description, tags and category of each video, for a re-upload that keeps its words."""
+        data = self._json("GET", "videos", {"part": "snippet", "id": ",".join(ids), "maxResults": 50})
+        return [{"id": v["id"], "title": v["snippet"].get("title", ""), "description": v["snippet"].get("description", ""),
+                 "tags": v["snippet"].get("tags") or [], "categoryId": v["snippet"].get("categoryId", "10")}
+                for v in data.get("items", [])]
+
+    def set_privacy(self, video_id: str, privacy: str) -> None:
+        """Private, unlisted or public. Replaced versions go private, never deleted."""
+        self._json("PUT", "videos", {"part": "status"}, {"id": video_id, "status": {"privacyStatus": privacy, "selfDeclaredMadeForKids": False,
+                                                                    "containsSyntheticMedia": True, "license": "youtube",
+                                                                    "embeddable": True}})
+        log(f"youtube: {video_id} set to {privacy}")
+
     def video_status(self, video_id: str) -> dict:
         data = self._json("GET", "videos", {"part": "status,statistics", "id": video_id})
         items = data.get("items") or []

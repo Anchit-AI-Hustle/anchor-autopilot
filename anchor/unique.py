@@ -150,12 +150,13 @@ def released_prints(catalog_path: Path, work: Path, limit: int = 40) -> dict[str
         url, did = d.get("audio_url"), d.get("id")
         if not (url and did):
             continue
-        npz = work / f"{did}.npz"
+        key = did + (f"-v{url.split('?v=', 1)[1]}" if "?v=" in url else "")      # a new master is printed again
+        npz = work / f"{key}.npz"
         if npz.exists():
             with np.load(npz) as z:
                 out[did] = {"env": z["env"], "seq": z["seq"]}
             continue
-        mp3 = work / f"{did}.mp3"
+        mp3 = work / f"{key}.mp3"
         try:
             if not mp3.exists():
                 urllib.request.urlretrieve(url, mp3)
