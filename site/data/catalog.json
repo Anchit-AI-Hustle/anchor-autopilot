@@ -7,8 +7,54 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Industrial hard techno from the machine room. One new track every day, built on a 150+ BPM spine of distorted kicks, rumble and steel."
   },
-  "updated_at": "2026-09-24T20:29:43Z",
+  "updated_at": "2026-09-25T20:45:24Z",
   "drops": [
+    {
+      "id": "2026-09-25",
+      "date": "2026-09-25",
+      "title": "Rogue Frequency",
+      "lane": "rawstyle",
+      "lane_name": "Rawstyle Hybrid",
+      "bpm": 159,
+      "key": "F minor",
+      "family": "chrome",
+      "family_name": "Chrome",
+      "duration_s": 150,
+      "short_s": 45,
+      "cover": "covers/2026-09-25.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-25/ANCHOR-2026-09-25-rogue-frequency.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-09-25",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-09-25-rogue-frequency-short.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-25/ANCHOR-2026-09-25-rogue-frequency-short.mp4",
+      "youtube_url": "https://www.youtube.com/watch?v=eHOg3yspHHU",
+      "buffer_post_id": "6ab6dd61914867df71947a6f",
+      "status": "sent",
+      "post_at": "2026-09-25T20:45:21.292Z",
+      "qc": {
+        "bpm_est": 160.0,
+        "lufs": -11.19,
+        "warnings": [
+          "key is not clearly audible; kept the requested one"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-09-25T20:44:27Z",
+      "genre_line": "Rawstyle Hybrid, Hard Techno, Peak Time Techno",
+      "style_line": "Aggressive Techno, Hybrid Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#d7e0ea",
+      "caption": "hard techno, rawstyle hybrid, industrial techno, brutal distorted rawstyle kick with long controlled tail, reverse bass pressure, screeching lead stabs, festival techno energy, loud clean master, distorted synth screams, screeching supersaw stabs, instrumental, no vocals, club master, punchy mixdown, arranged as a complete track: filtered intro, build, main drop, breakdown, second drop, and an outro that strips back and resolves",
+      "seed": 800227931,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 32,
+        "render_s": 5392.9,
+        "threads": 4,
+        "model": "acestep-v15-sft-Q8_0.gguf",
+        "guidance": 5.0,
+        "source_file": null
+      }
+    },
     {
       "id": "2026-09-24",
       "date": "2026-09-24",
@@ -763,7 +809,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-25T08:57:09Z",
+    "checked_at": "2026-09-25T20:45:24Z",
     "total": 21,
     "postable": 20,
     "families": 9,
