@@ -83,6 +83,13 @@ def _mmss(s: float) -> str:
     return f"{int(s) // 60}:{int(s) % 60:02d}"
 
 
+def _word(term: str, text: str) -> bool:
+    """``term`` as a whole word or phrase: "warehouse" is not "house", "rapid" is not "rap",
+    "psychedelic" is not "trance". A plain substring test cost every warehouse-techno prompt
+    0.9 as if it asked for house music (found 2026-09-25)."""
+    return re.search(rf"(?<![a-z]){re.escape(term)}(?![a-z])", text) is not None
+
+
 def rate(song: dict) -> dict:
     """Score a song for this channel and show the whole working.
 
@@ -93,8 +100,8 @@ def rate(song: dict) -> dict:
     tags = song["tags"].lower()
     title = song["title"].lower()
     dur = song["duration_s"]
-    hits = [w for w in ON_FORMAT if w in tags]
-    misses = [w for w in OFF_FORMAT if w in tags]
+    hits = [w for w in ON_FORMAT if _word(w, tags)]
+    misses = [w for w in OFF_FORMAT if _word(w, tags)]
 
     # 1. genre --------------------------------------------------------------
     genre = 4.0 if not hits else min(4.0, 2.2 + 0.45 * len(hits))

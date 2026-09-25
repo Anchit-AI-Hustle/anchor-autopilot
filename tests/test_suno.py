@@ -587,3 +587,13 @@ def test_the_musical_key_is_never_shown_to_a_listener():
     tag = next(l for l in art.splitlines() if l.strip().startswith("tag = f"))
     assert "bpm" in tag.lower() and "key" not in tag.lower(), \
         f"the cover footer still carries the key: {tag.strip()}"
+
+
+def test_format_words_count_only_as_whole_words():
+    """Warehouse techno is not house music, and a psychedelic acid prompt is not trance."""
+    daily = song(tags="powerful bouncy hard techno, industrial warehouse techno, psychedelic acid techno, "
+                      "165 BPM, rapid rolling offbeat bassline")
+    genre = daily["factors"][0]
+    assert "but also" not in genre["note"] and genre["score"] == 4.0          # no off-format word found
+    assert daily["postable"]
+    assert "but also house" in song(tags="hard techno, deep house")["factors"][0]["note"]
