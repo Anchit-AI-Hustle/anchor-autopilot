@@ -2,30 +2,30 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-09-25",
-    "title": "Rogue Frequency",
-    "finished_at": "2026-09-25T20:45:24Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/36178189957",
+    "drop_id": "2026-09-26",
+    "title": "Detonate Iron",
+    "finished_at": "2026-09-26T19:59:50Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/36262640815",
     "error": null
   },
-  "next_post_at": "2026-09-26T17:30:00Z",
-  "streak": 2,
+  "next_post_at": "2026-09-27T17:30:00Z",
+  "streak": 3,
   "totals": {
-    "drops": 17
+    "drops": 18
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-09-25T20:45:24Z",
+  "updated_at": "2026-09-26T19:59:50Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
     "steps": 32,
     "model": "acestep-v15-sft-Q8_0.gguf",
     "guidance": 5.0,
-    "lm_ms": 85771,
-    "dit_ms": 4855066,
-    "vae_ms": 438465,
-    "total_s": 5392.9
+    "lm_ms": 83882,
+    "dit_ms": 4741435,
+    "vae_ms": 433290,
+    "total_s": 5272.0
   }
 }
