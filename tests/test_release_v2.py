@@ -245,6 +245,22 @@ def test_an_unconnected_instagram_account_is_a_note_not_a_failed_run(tmp_path, m
         raise BufferError("no Instagram channel connected in Buffer (connect @anchor_at2803 in Buffer first)")
     monkeypatch.setattr(Buffer, "instagram_channel", no_ig)
     res = pipeline.publish(p, tmp_path, "https://host/full.mp4", short_url="https://host/short.mp4", reel_url="https://host/reel.mp4")
-    assert [s["video_url"] for s in sent] == ["https://host/full.mp4", "https://host/short.mp4"]
-    assert res["youtube"]["post_id"] == "p1" and res["youtube_short"]["post_id"] == "p2"
+    # Buffer publishes Shorts only: the Short goes out, the full video waits for the channel's own
+    # credentials, and neither that nor the missing Instagram account fails the run
+    assert [s["video_url"] for s in sent] == ["https://host/short.mp4"]
+    assert res["youtube"]["status"] == pipeline.NEEDS_YT and res["youtube"]["error"] is None
+    assert res["youtube_short"]["post_id"] == "p1" and res["post_id"] == "p1"
     assert res["instagram"] == {"status": "not connected", "error": None} and res["error"] is None
+
+
+def test_a_mix_without_the_channel_credentials_waits_instead_of_failing(monkeypatch, tmp_path):
+    """A mix is long-form and Buffer publishes Shorts only: nothing is sent, nothing fails."""
+    from anchor.publish import Buffer
+    for k in ("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"):
+        monkeypatch.delenv(k, raising=False)
+    monkeypatch.setenv("BUFFER_API_KEY", "k")
+    monkeypatch.setattr(Buffer, "create_short", lambda *a, **k: pytest.fail("a mix must not go through Buffer"))
+    (tmp_path / "meta.json").write_text(json.dumps({"date": "2026-09-27", "title": "M", "video": {"size_bytes": 10}}))
+    res = pipeline.publish_mix(load_profile(), tmp_path, "https://host/mix.mp4")
+    assert res["youtube"]["status"] == pipeline.NEEDS_YT and res["error"] is None
+    assert json.loads((tmp_path / "publish.json").read_text())["status"] == pipeline.NEEDS_YT

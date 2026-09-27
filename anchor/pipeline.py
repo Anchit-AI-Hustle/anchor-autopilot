@@ -290,6 +290,11 @@ def release_notes(profile: Profile, meta: dict) -> str:
 
 
 # ---------------------------------------------------------------------- publish
+NEEDS_YT = "needs youtube credentials"
+NEEDS_YT_NOTE = ("Buffer publishes YouTube Shorts only; full-length videos go up once YT_CLIENT_ID, "
+                 "YT_CLIENT_SECRET and YT_REFRESH_TOKEN are set")
+
+
 def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool = False,
             now: bool = False, site_only: bool = False, reel_url: str | None = None,
             short_url: str | None = None) -> dict:
@@ -337,19 +342,15 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
         publish_at = None if now else schedule_for(post_at)
         publish_youtube_api(profile, drop_dir, meta, brief, publish_at, result, errors)
     elif buf:
-        try:
-            media = verify_media_url(media_url, expect_min_bytes=int(meta["full"]["full_169"]["size_bytes"] * 0.9))
-            yt_common["video_url"] = media["url"]
-            ch = buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
-            post = buf.create_short(ch["id"], **yt_common)          # same mutation; a 16:9 file is a video, not a Short
-            result["youtube"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
-                                 "external_link": post.get("externalLink"), "channel": {"id": ch["id"], "name": ch.get("name")},
-                                 "media": media, "via": "buffer"}
-            log(f"publish: YouTube post {post['id']} {post.get('status')} due {post.get('dueAt')}")
-        except BufferError as exc:
-            errors.append(f"youtube: {exc}")
-            result["youtube"] = {"error": str(exc)[:500]}
-        if short_url:
+        # Buffer publishes YouTube Shorts only (support.buffer.com, checked 2026-09-27): a
+        # full-length video sent through it never reaches the channel. The full video waits for
+        # the channel's own credentials; it is on the site and in the release meanwhile.
+        result["youtube"] = {"status": NEEDS_YT, "error": None, "via": None, "note": NEEDS_YT_NOTE}
+        log(f"publish: full video not sent: {NEEDS_YT_NOTE}")
+        if not short_url:
+            errors.append("youtube short: no Short to send, and Buffer can post nothing else to YouTube")
+            result["youtube_short"] = {"error": errors[-1]}
+        else:
             try:
                 media = verify_media_url(short_url, expect_min_bytes=int(meta["video"]["size_bytes"] * 0.9))
                 short_common["video_url"] = media["url"]
@@ -386,9 +387,13 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
             else:
                 errors.append(f"instagram: {exc}")
                 result["instagram"] = {"error": str(exc)[:500]}
-    # the fields older code and the status page read
+    # the fields older code and the status page read: the full video's post, or the Short's
+    # when the full video could not go out
     y = result["youtube"] or {}
-    result.update(post_id=y.get("post_id"), status=y.get("status") or ("error" if errors else None),
+    if not y.get("post_id") and (result["youtube_short"] or {}).get("post_id"):
+        y = result["youtube_short"]
+    result.update(post_id=y.get("post_id"),
+                  status=(y.get("status") if y.get("post_id") else None) or ("error" if errors else y.get("status")),
                   due_at=y.get("due_at"), external_link=y.get("external_link"), error="; ".join(errors) or None)
     write_json(drop_dir / "publish.json", result)
     if errors:
@@ -465,17 +470,10 @@ def publish_mix(profile: Profile, mix_dir: Path, media_url: str | None, *, dry_r
                     fn()
                 except YouTubeError as exc:
                     log(f"publish-mix: {step} failed: {exc}")
-        elif env("BUFFER_API_KEY") and media_url:
-            buf = Buffer(env("BUFFER_API_KEY") or "")
-            media = verify_media_url(media_url, expect_min_bytes=int(meta["video"]["size_bytes"] * 0.9))
-            ch = buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
-            post = buf.create_short(ch["id"], title=meta["title"], description=meta["description"], video_url=media["url"],
-                                    due_at=due, category_id=str(yt["category_id"]), privacy=yt["privacy"],
-                                    ai_generated=bool(yt["ai_generated"]), notify=bool(yt["notify_subscribers"]))
-            result["youtube"] = {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
-                                 "external_link": post.get("externalLink"), "via": "buffer"}
         else:
-            raise BufferError("neither YT_* credentials nor BUFFER_API_KEY with a media URL are set")
+            # a mix is long-form, and Buffer publishes Shorts only: it waits for the credentials
+            result["youtube"] = {"status": NEEDS_YT, "error": None, "via": None, "note": NEEDS_YT_NOTE}
+            log(f"publish-mix: not sent: {NEEDS_YT_NOTE}")
     except (BufferError, YouTubeError) as exc:
         result["error"] = str(exc)[:500]
         result["youtube"] = {"error": result["error"]}

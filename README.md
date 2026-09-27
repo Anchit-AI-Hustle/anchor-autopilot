@@ -76,8 +76,11 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
 - **Three posts a day from one record:** the full 16:9 track to YouTube as a video, the
   strongest 45 s to YouTube as a Short (the preview: shorter words, a pointer to the full
   track, #shorts, no second subscriber notification), and the full 9:16 to Instagram as a
-  Reel. All three go out in the same slot through Buffer (`BUFFER_INSTAGRAM_CHANNEL_ID` for
-  the Reel). `sync` follows the full track and the Short separately; the ledger shows both.
+  Reel, all in the same slot. The full track needs the channel's own credentials (`YT_*`,
+  below): Buffer publishes YouTube Shorts only, so without them the Short and the Reel go
+  out through Buffer and the full track waits on the site and in the release, marked
+  "needs youtube credentials" rather than failing the run. `sync` follows the full track
+  and the Short separately; the ledger shows both.
 - **Every record is its own record:** the day draws the lane, key, tempo, textures, mood,
   special moment, the length (`duration_range_s`, 135-170 s) and the arrangement shape
   (`music.SHAPES`: classic, early, peak, twice), so no two days share a timeline.
@@ -94,7 +97,8 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
   on your own machine, paste the printed refresh token into the repository secrets). The
   robot then uploads from disk with tags, category, AI disclosure, scheduled publish time,
   custom thumbnail and playlist, and the Short links its full track by id. Without them,
-  Buffer is used as before. Instagram always goes through Buffer.
+  Buffer carries the Short only (it cannot post long-form videos). Instagram always goes
+  through Buffer.
 - **The back catalogue keeps up:** `retitle.yml` (every Monday, or on demand) reads every
   upload on the channel and rewrites any title or description that is not in the search-led
   form, robot drops from the catalog and the hand uploads from `site/data/channel.json`.

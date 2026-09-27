@@ -108,7 +108,7 @@ def test_buffer_failure_still_releases_on_site(fast_profile, site_dir, tmp_path,
     d = tmp_path / "d"
     pipeline.make(fast_profile, "2026-09-21", d, engine_name="fixture", art_mode="procedural", catalog_path=cat_path)
     with pytest.raises(BufferError):
-        pipeline.publish(fast_profile, d, "https://example.com/v.mp4")
+        pipeline.publish(fast_profile, d, "https://example.com/v.mp4", short_url="https://example.com/s.mp4")
     assert read_json(d / "publish.json")["status"] == "error"
     drop = pipeline.record(fast_profile, d, repo="o/r", catalog_path=cat_path, status_path=status_path,
                            site_dir=site_dir)
