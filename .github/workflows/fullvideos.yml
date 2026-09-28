@@ -1,0 +1,88 @@
+name: Full videos (every Short has its full track on the channel)
+
+# Reads the channel with its own credentials (YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN)
+# and, for every public Short without a full video, links the full upload already there or
+# builds one from the released master and cover and uploads it (at most `max` a run: each
+# upload costs 1,600 of the channel's 10,000 daily API units). Each link is written to the
+# catalog as it lands, and each Short gets a "Full track:" line. Runs daily after the posts.
+on:
+  schedule:
+    - cron: "47 18 * * *"
+  workflow_dispatch:
+    inputs:
+      max:
+        description: "Uploads this run"
+        default: "2"
+      dry_run:
+        description: "List what would be linked or uploaded, change nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-drop            # never race the daily run over the catalog
+  cancel-in-progress: false
+
+env:
+  ROBOT_NAME: "Anchit Tandon"
+  ROBOT_EMAIL: "anchit.tandon@gmail.com"
+
+jobs:
+  fullvideos:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -r requirements.txt
+
+      - name: Link or upload the missing full videos
+        id: run
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$YT_REFRESH_TOKEN" ]; then
+            echo "::warning::YT_* secrets are not set: Buffer can post Shorts only, so the full videos wait. Add the secrets and this run uploads them."
+            echo "skipped=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          FLAGS=(--max "${{ inputs.max || '2' }}")
+          [ "${{ inputs.dry_run }}" = "true" ] && FLAGS+=(--dry-run)
+          python -m anchor fullvideos "${FLAGS[@]}" | tee fullvideos.json
+
+      - name: Commit the new links
+        if: ${{ always() && steps.run.outputs.skipped != 'true' && !inputs.dry_run }}
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data/catalog.json site/data/channel.json
+          git commit -m "fullvideos: every Short links its full track" || exit 0
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Summary
+        if: always()
+        run: |
+          [ -f fullvideos.json ] || { echo "No run (YT_* secrets not set)." >> "$GITHUB_STEP_SUMMARY"; exit 0; }
+          python - >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          import json
+          r = json.load(open("fullvideos.json"))
+          print("### Full videos\n")
+          for k, label in (("uploaded", "Uploaded"), ("linked_existing", "Linked to a full video already up"),
+                           ("left", "Left for the next run"), ("no_audio", "Need the full song from you"),
+                           ("errors", "Errors")):
+              if r.get(k):
+                  print(f"**{label}**: " + "; ".join(r[k]) + "\n")
+          EOF

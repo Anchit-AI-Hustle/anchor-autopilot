@@ -88,6 +88,11 @@ def main(argv: list[str] | None = None) -> int:
     vs.add_argument("--out", default="build/versions")
     vs.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
 
+    fv = sub.add_parser("fullvideos", help="every Short on the channel gets its full track as a video (Data API)")
+    fv.add_argument("--max", type=int, default=2, help="uploads this run (1,600 API units each; the channel has 10,000 a day)")
+    fv.add_argument("--dry-run", action="store_true", help="list what would be linked or uploaded, change nothing")
+    fv.add_argument("--out", default="build/fullvideos")
+    fv.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
     sub.add_parser("check", help="validate profile and site data")
     sub.add_parser("ledger", help="refresh the /ops ledger's upload rows from the catalog")
 
@@ -176,6 +181,11 @@ def main(argv: list[str] | None = None) -> int:
                 catalog.save(cat, CATALOG_PATH)
             done.append(e["id"])
         print(json.dumps({"stage": args.stage, "done": done}))
+    elif args.cmd == "fullvideos":
+        from . import fullvideos
+        out = fullvideos.run(profile, repo=args.repo, work=Path(args.out), limit=args.max, dry_run=args.dry_run)
+        print(json.dumps(out, indent=2, ensure_ascii=False))
+        return 1 if out["errors"] else 0
     elif args.cmd == "youtube-auth":
         from .youtube import authorize_interactively
         token = authorize_interactively(args.client_id, args.client_secret, args.port)

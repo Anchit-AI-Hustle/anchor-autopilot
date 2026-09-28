@@ -85,6 +85,15 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
   out through Buffer and the full track waits on the site and in the release, marked
   "needs youtube credentials" rather than failing the run. `sync` follows the full track
   and the Short separately; the ledger shows both.
+- **Every Short has its full track on the channel (`anchor/fullvideos.py`):** `fullvideos.yml`
+  runs every day after the posts. It reads the channel with the `YT_*` credentials and, for each
+  public Short with no full video, links the full upload already there (same name, longer than
+  70 s) or builds the full 16:9 video from the released master and cover (the same frame and
+  moving waveform as every full track) and uploads it, at most two a run (1,600 API units each).
+  Each link goes into the catalog as it lands and onto the Short as a "Full track:" line, so a
+  stopped run never uploads twice. A hand-made Short with no song on file is listed in the run
+  summary under "Need the full song from you". `python -m anchor fullvideos --dry-run` shows the
+  plan.
 - **Every record is its own record:** the day draws the lane, key, tempo, textures, mood,
   special moment, the length (`duration_range_s`, 135-170 s) and the arrangement shape
   (`music.SHAPES`: classic, early, peak, twice), so no two days share a timeline.
