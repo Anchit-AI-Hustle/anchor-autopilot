@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: daily-drop            # never race the daily run over the site data
+  group: uploads               # touches only uploads.json, so it never waits behind the daily run
   cancel-in-progress: false
 
 env:

@@ -6,7 +6,8 @@ name: Versions (one version of each record everywhere)
 # <name>-original.*, replaces the release files under their old names (so every link the
 # site has keeps working), and, with the channel's credentials (YT_CLIENT_ID,
 # YT_CLIENT_SECRET, YT_REFRESH_TOKEN), uploads the new video and Short with the old ones'
-# words and sets the old ones to private. Nothing is deleted anywhere. Every step is
+# words and sets the old ones to private (that step on demand only: Run workflow with
+# youtube ticked). Nothing is deleted anywhere. Every step is
 # written back to versions.json, so a second run does only what is left.
 on:
   push:
@@ -19,9 +20,9 @@ on:
         description: "One record id (YYYY-MM-DD); empty for every pending entry"
         default: ""
       youtube:
-        description: "Also swap the videos on YouTube (needs the YT_* secrets; the new uploads start from zero views)"
+        description: "Also swap the videos on YouTube (needs the YT_* secrets; the new uploads start from zero views; about 6 uploads fit in a day's API quota)"
         type: boolean
-        default: true
+        default: false
 
 permissions:
   contents: write
@@ -86,7 +87,9 @@ jobs:
           git commit -m "versions: new masters on the site and in the releases" || echo "nothing to commit"
 
       - name: Swap the videos on YouTube
-        if: ${{ github.event_name == 'push' || inputs.youtube }}
+        # on demand only: six records are twelve uploads, more than one day of the channel's
+        # 10,000 API units, so the swap runs when you choose (it resumes where it stopped)
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.youtube }}
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}

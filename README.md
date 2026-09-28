@@ -149,8 +149,10 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
   under 6 kHz alone) and `finish` (the craft pass). `versions.yml` runs on every change to
   that file: it builds each pending entry, keeps the first master in the release as
   `<name>-original.*`, replaces the release files under their old names with a `?v=` mark on
-  the site links so no cache plays the old one, and, with the `YT_*` secrets, uploads the new
-  video and Short with the old ones' words and sets the old ones to private. Nothing is ever
+  the site links so no cache plays the old one. The YouTube swap runs on demand (Actions ->
+  Versions -> Run workflow, youtube ticked; about six uploads fit in a day's API quota and it
+  resumes where it stopped): the new video and Short go up with the old ones' words and the
+  old ones are set to private. Nothing is ever
   deleted, a rebuild always starts from the kept original, and a run that stops halfway
   resumes where it stopped. The new uploads start from zero views; that is YouTube's rule
   (a video's audio cannot be swapped in place). `python -m anchor versions build --only
