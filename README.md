@@ -94,6 +94,10 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
   stopped run never uploads twice. A hand-made Short with no song on file is listed in the run
   summary under "Need the full song from you". `python -m anchor fullvideos --dry-run` shows the
   plan.
+- **One-off videos (`anchor/uploads.py`):** `site/data/uploads.json` lists videos that are not
+  daily drops, such as a lyric video, with the GitHub release that holds the file and thumbnail
+  and the words it goes up with. `uploads.yml` uploads every entry without a `youtube_url`
+  when the file changes and daily, with the `YT_*` credentials, then writes the link back.
 - **Every record is its own record:** the day draws the lane, key, tempo, textures, mood,
   special moment, the length (`duration_range_s`, 135-170 s) and the arrangement shape
   (`music.SHAPES`: classic, early, peak, twice), so no two days share a timeline.

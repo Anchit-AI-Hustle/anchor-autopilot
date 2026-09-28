@@ -1,0 +1,78 @@
+name: Uploads (one-off videos such as lyric videos)
+
+# Uploads every entry in site/data/uploads.json that has no youtube_url yet, from the GitHub
+# release named in the entry, with the channel's own credentials (YT_CLIENT_ID,
+# YT_CLIENT_SECRET, YT_REFRESH_TOKEN), then writes the link back. Runs when that file changes,
+# daily (so an entry whose file lands in its release later still goes up), and on demand.
+on:
+  push:
+    branches: [main]
+    paths:
+      - site/data/uploads.json
+  schedule:
+    - cron: "53 18 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-drop            # never race the daily run over the site data
+  cancel-in-progress: false
+
+env:
+  ROBOT_NAME: "Anchit Tandon"
+  ROBOT_EMAIL: "anchit.tandon@gmail.com"
+
+jobs:
+  uploads:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Upload what is pending
+        id: run
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$YT_REFRESH_TOKEN" ]; then
+            echo "::warning::YT_* secrets are not set; nothing can be uploaded without the channel's credentials."
+            echo "skipped=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          python -m anchor uploads | tee uploads.json
+
+      - name: Commit the new links
+        if: ${{ always() && steps.run.outputs.skipped != 'true' }}
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          git add site/data/uploads.json
+          git commit -m "uploads: new video on the channel" || exit 0
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+            sleep $((i * 5))
+          done
+          exit 1
+
+      - name: Summary
+        if: always()
+        run: |
+          [ -f uploads.json ] || { echo "No run (YT_* secrets not set)." >> "$GITHUB_STEP_SUMMARY"; exit 0; }
+          python - >> "$GITHUB_STEP_SUMMARY" <<'PY'
+          import json
+          r = json.load(open("uploads.json"))
+          print("### Uploads\n")
+          print("Uploaded: " + ("; ".join(r["uploaded"]) or "nothing pending") + "\n")
+          if r["errors"]:
+              print("Errors: " + "; ".join(r["errors"]) + "\n")
+          PY

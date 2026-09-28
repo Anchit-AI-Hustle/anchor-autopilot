@@ -93,6 +93,9 @@ def main(argv: list[str] | None = None) -> int:
     fv.add_argument("--dry-run", action="store_true", help="list what would be linked or uploaded, change nothing")
     fv.add_argument("--out", default="build/fullvideos")
     fv.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
+    up = sub.add_parser("uploads", help="upload the one-off videos in site/data/uploads.json (Data API)")
+    up.add_argument("--out", default="build/uploads")
+    up.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
     sub.add_parser("check", help="validate profile and site data")
     sub.add_parser("ledger", help="refresh the /ops ledger's upload rows from the catalog")
 
@@ -184,6 +187,11 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "fullvideos":
         from . import fullvideos
         out = fullvideos.run(profile, repo=args.repo, work=Path(args.out), limit=args.max, dry_run=args.dry_run)
+        print(json.dumps(out, indent=2, ensure_ascii=False))
+        return 1 if out["errors"] else 0
+    elif args.cmd == "uploads":
+        from . import uploads
+        out = uploads.run(profile, repo=args.repo, work=Path(args.out))
         print(json.dumps(out, indent=2, ensure_ascii=False))
         return 1 if out["errors"] else 0
     elif args.cmd == "youtube-auth":
