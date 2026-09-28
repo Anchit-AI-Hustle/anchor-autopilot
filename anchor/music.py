@@ -273,15 +273,27 @@ class Fallback:
             return wav, stats
 
 
-def get_engine(profile_music: dict, name: str | None = None):
-    name = name or env("ANCHOR_ENGINE") or profile_music.get("engine", "acestep_cpp")
+def engine_chain(profile_music: dict, name: str | None = None) -> list[str]:
+    """The engines to try, in order. ``[music] engines`` names the whole chain; the older
+    ``engine`` + ``fallback_engine`` pair still works. Naming one engine (the --engine flag
+    or ANCHOR_ENGINE) starts the chain there."""
+    chain = list(profile_music.get("engines") or
+                 [n for n in (profile_music.get("engine", "acestep_cpp"), profile_music.get("fallback_engine")) if n])
+    name = name or env("ANCHOR_ENGINE")
+    if name:
+        chain = chain[chain.index(name):] if name in chain else [name]
+    return list(dict.fromkeys(chain))
+
+
+def one_engine(profile_music: dict, name: str):
     if name == "fixture":
         return FixtureEngine()
+    if name == "elevenlabs":
+        from .elevenlabs import ElevenLabsEngine
+        return ElevenLabsEngine(model=profile_music.get("elevenlabs_model", "music_v2_5"))
     if name == "lyria":
         from .lyria import LyriaEngine
-        engine = LyriaEngine(wav=bool(profile_music.get("lyria_wav", False)))
-        fb = profile_music.get("fallback_engine")
-        return Fallback(engine, get_engine(profile_music, fb)) if fb and fb != "lyria" else engine
+        return LyriaEngine(wav=bool(profile_music.get("lyria_wav", False)))
     if name == "acestep_cpp":
         return AceStepCpp(
             bin_dir=env("ACESTEP_BIN", "vendor/acestep.cpp/build"),
@@ -296,3 +308,13 @@ def get_engine(profile_music: dict, name: str | None = None):
             timeout_s=int(env("ANCHOR_ENGINE_TIMEOUT", "5400")),
         )
     raise ValueError(f"unknown music engine {name!r}")
+
+
+def get_engine(profile_music: dict, name: str | None = None):
+    """The first engine of the chain, falling back along it: an engine without its key or
+    whose service fails hands the day to the next one, so a drop always ships."""
+    engines = [one_engine(profile_music, n) for n in engine_chain(profile_music, name)]
+    engine = engines[-1]
+    for primary in reversed(engines[:-1]):
+        engine = Fallback(primary, engine)
+    return engine

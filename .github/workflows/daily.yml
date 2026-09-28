@@ -160,6 +160,7 @@ jobs:
         env:
           DATE: ${{ steps.day.outputs.date }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
           ACESTEP_BIN: ${{ github.workspace }}/vendor/acestep.cpp/build
           ACESTEP_MODELS: ${{ github.workspace }}/vendor/models
           ANCHOR_VAE_CHUNK: "1024"

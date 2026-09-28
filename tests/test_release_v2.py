@@ -74,8 +74,10 @@ def test_lyria_engine_refuses_without_a_key_and_the_registry_falls_back(monkeypa
     with pytest.raises(Exception, match="GEMINI_API_KEY"):
         LyriaEngine(api_key="").check()
     p = load_profile()
-    eng = get_engine(p.music)                 # profile: lyria with acestep fallback
-    assert isinstance(eng, Fallback) and eng.primary.name == "lyria" and eng.secondary.name == "acestep_cpp"
+    eng = get_engine(p.music)                 # profile: elevenlabs, then lyria, then acestep
+    assert isinstance(eng, Fallback) and eng.primary.name == "elevenlabs"
+    assert eng.secondary.primary.name == "lyria" and eng.secondary.secondary.name == "acestep_cpp"
+    assert get_engine(p.music, "lyria").secondary.name == "acestep_cpp"   # naming one starts the chain there
     # the fallback actually runs the second engine when the first cannot start
     fb = Fallback(LyriaEngine(api_key=""), FixtureEngine())
     b = make_brief(p, "2026-09-22", []); b["duration_s"] = 12

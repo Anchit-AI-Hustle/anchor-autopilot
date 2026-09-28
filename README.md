@@ -65,9 +65,13 @@ Real generation needs acestep.cpp and the GGUF models (see `.github/workflows/da
 
 ## Engine and cadence (v2)
 
-- **Music engine:** `[music] engine = "lyria"` - Google Lyria 3.5 through the Gemini API
-  (`GEMINI_API_KEY` secret). `fallback_engine = "acestep_cpp"` runs when Lyria is unavailable.
-  There is no official Suno API; the Suno web app is never automated.
+- **Music engines, in order:** your own Suno songs first (published on your Suno profile;
+  see the queue below), then `[music] engines = ["elevenlabs", "lyria", "acestep_cpp"]`:
+  Eleven Music through the ElevenLabs API (`ELEVENLABS_API_KEY`, paid plan), Google Lyria 3.5
+  through the Gemini API (`GEMINI_API_KEY`), and the free engine on the runner. An engine
+  without its key, or whose service fails, hands the day to the next, so a drop always ships.
+  There is no public Suno API (Suno is taking partner applications); the Suno web app is never
+  automated. When Suno grants API access, it goes first in this list.
 - **Cadence:** `[schedule] every_days = 1`: one record every day. The cron fires at 13:07 UTC
   and the posts go live at 17:30 UTC; the four hours cover the CPU fallback engine and one
   retry. `every_days = 2` with `anchor_date` makes it every second day
