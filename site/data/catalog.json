@@ -985,7 +985,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-09-28T22:44:05Z",
+    "checked_at": "2026-09-29T09:59:05Z",
     "total": 21,
     "postable": 20,
     "families": 9,
@@ -1081,7 +1081,175 @@
         "group": "be9b114a-f658-465a-983b-759bacda940d",
         "group_size": 4,
         "group_pick": true,
-        "released_at": "released"
+        "released_at": "released",
+        "decision": {
+          "verdict": "released",
+          "reason": "released (on the site)"
+        }
+      },
+      {
+        "id": "324147b3-967b-4f51-8be4-f820d6e21341",
+        "title": "Crossing The Threshold",
+        "duration_s": 227.6,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful punchy distorted kick as dominant element with rawstyle character and controlled saturation, deep tight mono sub bass aligned with kick phase, clean low frequency response, minimal industrial percussion, mechanical rhythmic precision, subtle atmospheric tension layers.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging in mid and high frequencies, strict mono compatibility in sub bass, optimized for large sound system playback, club-ready mixdown, peak-time festival performance ready, Tomorrowland mainstage soun",
+        "model": "v4.5-all",
+        "plays": 16,
+        "upvotes": 3,
+        "created_at": "2026-02-24T20:08:35.845Z",
+        "image": "https://cdn2.suno.ai/image_large_324147b3-967b-4f51-8be4-f820d6e21341.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/324147b3-967b-4f51-8be4-f820d6e21341.m4a",
+        "video_url": "https://cdn1.suno.ai/324147b3-967b-4f51-8be4-f820d6e21341.mp4",
+        "url": "https://suno.com/song/324147b3-967b-4f51-8be4-f820d6e21341",
+        "rating": 8.6,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 3:47",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:47 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.9,
+            "max": 1.5,
+            "note": "16 plays and 3 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:47 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.6/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 3:47 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+            "title": "Crossing The Threshold",
+            "score": 0.992
+          }
+        ],
+        "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T19:26:18Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        }
+      },
+      {
+        "id": "d911518a-edb8-4009-a694-935add5470f9",
+        "title": "Silent Transmission",
+        "duration_s": 205.0,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful distorted rawstyle kick dominant, deep tight mono sub bass aligned with kick phase, minimal industrial percussion, subtle atmospheric tension pads.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging mids and highs, mono-compatible sub bass, club-ready mixdown, large sound system optimized, Tomorrowland mainstage quality, Berghain warehouse authority, Verknipt and Awakenings festival energy.\n\nVocals minimal hypnotic repetitive techno vocal phrases, breathy female or androgynous voice, emotionally neutral, immersi",
+        "model": "v4.5-all",
+        "plays": 15,
+        "upvotes": 1,
+        "created_at": "2026-02-24T20:15:24.869Z",
+        "image": "https://cdn2.suno.ai/image_large_d911518a-edb8-4009-a694-935add5470f9.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/d911518a-edb8-4009-a694-935add5470f9.m4a",
+        "video_url": "https://cdn1.suno.ai/d911518a-edb8-4009-a694-935add5470f9.mp4",
+        "url": "https://suno.com/song/d911518a-edb8-4009-a694-935add5470f9",
+        "rating": 8.3,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 3:25",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:25 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.6,
+            "max": 1.5,
+            "note": "15 plays and 1 upvote on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:25 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.3/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 3:25 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+            "title": "Silent Transmission",
+            "score": 0.96
+          }
+        ],
+        "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:00:22Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        }
       },
       {
         "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
@@ -1169,7 +1337,421 @@
         "group": "be9b114a-f658-465a-983b-759bacda940d",
         "group_size": 4,
         "group_pick": false,
-        "idea_posted": true
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway (it is in the queue, and the guard will skip it)"
+        }
+      },
+      {
+        "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
+        "title": "Stay With Me",
+        "duration_s": 218.8,
+        "tags": "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick dominant with clean punchy transient attack, deep mono sub bass tightly phase aligned with kick, driving warehouse groove, minimal industrial percussion, dark atmospheric tension, immersive hypnotic rhythm, emotional but controlled energy, modern European techno sound.\n\nProfessional clean master audio quality, studio-grade mastering, distortion-free output, no clipping, clean transient response, balanced frequency spectrum, tight low end with mono compatibility, wide stereo clarity in mids and highs, limiter controlled peaks, club-ready mixdown, optimized for large sound system playback, festival-ready audio clarity, suitable for warehouse and mainstage environments.",
+        "model": "v4.5-all",
+        "plays": 18,
+        "upvotes": 0,
+        "created_at": "2026-02-26T09:39:53.365Z",
+        "image": "https://cdn2.suno.ai/image_large_9981adbf-fbe3-4919-a021-82a2f3fb83a3.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/9981adbf-fbe3-4919-a021-82a2f3fb83a3.m4a",
+        "video_url": "https://cdn1.suno.ai/9981adbf-fbe3-4919-a021-82a2f3fb83a3.mp4",
+        "url": "https://suno.com/song/9981adbf-fbe3-4919-a021-82a2f3fb83a3",
+        "rating": 8.2,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, warehouse), 3:38",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak-time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:38 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.5,
+            "max": 1.5,
+            "note": "18 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak-time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:38 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.2/10. Postable: prompt names techno, industrial, warehouse, peak-time - straight down the middle of the channel. 3:38 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+            "title": "Stay With Me",
+            "score": 0.986
+          }
+        ],
+        "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:01:18Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        }
+      },
+      {
+        "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
+        "title": "Where It Begins",
+        "duration_s": 360.0,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Dark Minimal Techno, Modern Techno, Industrial Rave, Raw Techno, Hard Dance influence, cinematic techno atmosphere, aggressive, punchy, hypnotic, immersive, dense, powerful, professional, clean, loud, deep, driving, analog saturation character, digital precision, modern European techno sound.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, wide stereo imaging in mids and highs, tight mono-compatible sub bass, balanced frequency spectrum, club-ready mixdown, large sound system optimized, Tomorrowland mainstage playback quality, Berghain warehouse energy, Verknipt and Awakenings festival sound.\n\nDominant distorted techno kick with rawstyle character, deep sub bass aligned with kick phase, hypnotic",
+        "model": "v4.5-all",
+        "plays": 14,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:00:35.860Z",
+        "image": "https://cdn2.suno.ai/image_large_c0db60f4-c089-446a-8d7d-b1609f4c8d73.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/c0db60f4-c089-446a-8d7d-b1609f4c8d73.m4a",
+        "video_url": "https://cdn1.suno.ai/c0db60f4-c089-446a-8d7d-b1609f4c8d73.mp4",
+        "url": "https://suno.com/song/c0db60f4-c089-446a-8d7d-b1609f4c8d73",
+        "rating": 8.1,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 6:00",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "6:00 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "14 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "6:00 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.1/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 6:00 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+            "title": "Where It Begins",
+            "score": 0.956
+          }
+        ],
+        "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:03:18Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        }
+      },
+      {
+        "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
+        "title": "Robot Love",
+        "duration_s": 249.5,
+        "tags": "Hard Techno, Industrial Techno, Peak Time Techno, Hypnotic Industrial Techno, Warehouse Techno, Driving Techno, Mechanical Techno, Modern European Techno, aggressive but clean sound design, powerful distorted techno kick dominant, punchy transient attack, controlled saturation, deep mono sub bass phase aligned with kick, clean low frequency separation, tight low end response, hypnotic driving groove, minimal industrial percussion, metallic textures, atmospheric tension layers, immersive spatial depth.\n\nProfessional festival master audio quality, clean distortion free mastering, high loudness clarity without clipping, limiter controlled peaks, balanced frequency spectrum, wide stereo imaging mids and highs, mono compatible sub bass, precise transient control, club ready mixdown, optimized for large sound system playback, peak time festival performance ready, warehouse and festival environment optimized.\n\nVocals minimal hypnotic chant style, emotionally neutral, processed modern tech",
+        "model": "v4.5-all",
+        "plays": 14,
+        "upvotes": 0,
+        "created_at": "2026-02-25T16:09:44.014Z",
+        "image": "https://cdn2.suno.ai/image_large_b20ce676-a10d-4df9-8e62-1a121cbec080.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/b20ce676-a10d-4df9-8e62-1a121cbec080.m4a",
+        "video_url": "https://cdn1.suno.ai/b20ce676-a10d-4df9-8e62-1a121cbec080.mp4",
+        "url": "https://suno.com/song/b20ce676-a10d-4df9-8e62-1a121cbec080",
+        "rating": 8.1,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, warehouse), 4:09",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:09 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "14 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:09 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.1/10. Postable: prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel. 4:09 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+            "title": "Robot Love",
+            "score": 0.999
+          }
+        ],
+        "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:02:15Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        }
+      },
+      {
+        "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "title": "Stay With Me",
+        "duration_s": 254.0,
+        "tags": "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick dominant with clean punchy transient attack, deep mono sub bass tightly phase aligned with kick, driving warehouse groove, minimal industrial percussion, dark atmospheric tension, immersive hypnotic rhythm, emotional but controlled energy, modern European techno sound.\n\nProfessional clean master audio quality, studio-grade mastering, distortion-free output, no clipping, clean transient response, balanced frequency spectrum, tight low end with mono compatibility, wide stereo clarity in mids and highs, limiter controlled peaks, club-ready mixdown, optimized for large sound system playback, festival-ready audio clarity, suitable for warehouse and mainstage environments.",
+        "model": "v4.5-all",
+        "plays": 12,
+        "upvotes": 0,
+        "created_at": "2026-02-26T09:39:53.365Z",
+        "image": "https://cdn2.suno.ai/image_large_b5bdd361-ea65-47e3-99da-0551440c1c92.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/b5bdd361-ea65-47e3-99da-0551440c1c92.m4a",
+        "video_url": "https://cdn1.suno.ai/b5bdd361-ea65-47e3-99da-0551440c1c92.mp4",
+        "url": "https://suno.com/song/b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "rating": 8.0,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, warehouse), 4:14",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak-time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:14 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak-time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:14 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.0/10. Postable: prompt names techno, industrial, warehouse, peak-time - straight down the middle of the channel. 4:14 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
+            "title": "Stay With Me",
+            "score": 0.986
+          }
+        ],
+        "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
+      },
+      {
+        "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "title": "Crossing The Threshold",
+        "duration_s": 247.6,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful punchy distorted kick as dominant element with rawstyle character and controlled saturation, deep tight mono sub bass aligned with kick phase, clean low frequency response, minimal industrial percussion, mechanical rhythmic precision, subtle atmospheric tension layers.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging in mid and high frequencies, strict mono compatibility in sub bass, optimized for large sound system playback, club-ready mixdown, peak-time festival performance ready, Tomorrowland mainstage soun",
+        "model": "v4.5-all",
+        "plays": 10,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:08:35.846Z",
+        "image": "https://cdn2.suno.ai/image_large_92e63fb9-bc78-4004-971c-a3221ef0b359.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/92e63fb9-bc78-4004-971c-a3221ef0b359.m4a",
+        "video_url": "https://cdn1.suno.ai/92e63fb9-bc78-4004-971c-a3221ef0b359.mp4",
+        "url": "https://suno.com/song/92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "rating": 8.0,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 4:07",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:07 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "10 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:07 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.0/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 4:07 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "324147b3-967b-4f51-8be4-f820d6e21341",
+            "title": "Crossing The Threshold",
+            "score": 0.992
+          }
+        ],
+        "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
       },
       {
         "id": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
@@ -1257,7 +1839,175 @@
         "group": "be9b114a-f658-465a-983b-759bacda940d",
         "group_size": 4,
         "group_pick": false,
-        "idea_posted": true
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
+      },
+      {
+        "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "title": "Where It Begins",
+        "duration_s": 202.0,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Dark Minimal Techno, Modern Techno, Industrial Rave, Raw Techno, Hard Dance influence, cinematic techno atmosphere, aggressive, punchy, hypnotic, immersive, dense, powerful, professional, clean, loud, deep, driving, analog saturation character, digital precision, modern European techno sound.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, wide stereo imaging in mids and highs, tight mono-compatible sub bass, balanced frequency spectrum, club-ready mixdown, large sound system optimized, Tomorrowland mainstage playback quality, Berghain warehouse energy, Verknipt and Awakenings festival sound.\n\nDominant distorted techno kick with rawstyle character, deep sub bass aligned with kick phase, hypnotic",
+        "model": "v4.5-all",
+        "plays": 10,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:00:35.860Z",
+        "image": "https://cdn2.suno.ai/image_large_2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.m4a",
+        "video_url": "https://cdn1.suno.ai/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.mp4",
+        "url": "https://suno.com/song/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "rating": 8.0,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 3:22",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:22 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "10 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:22 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.0/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 3:22 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
+            "title": "Where It Begins",
+            "score": 0.956
+          }
+        ],
+        "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
+      },
+      {
+        "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "title": "Robot Love",
+        "duration_s": 250.9,
+        "tags": "Hard Techno, Industrial Techno, Peak Time Techno, Hypnotic Industrial Techno, Warehouse Techno, Driving Techno, Mechanical Techno, Modern European Techno, aggressive but clean sound design, powerful distorted techno kick dominant, punchy transient attack, controlled saturation, deep mono sub bass phase aligned with kick, clean low frequency separation, tight low end response, hypnotic driving groove, minimal industrial percussion, metallic textures, atmospheric tension layers, immersive spatial depth.\n\nProfessional festival master audio quality, clean distortion free mastering, high loudness clarity without clipping, limiter controlled peaks, balanced frequency spectrum, wide stereo imaging mids and highs, mono compatible sub bass, precise transient control, club ready mixdown, optimized for large sound system playback, peak time festival performance ready, warehouse and festival environment optimized.\n\nVocals minimal hypnotic chant style, emotionally neutral, processed modern tech",
+        "model": "v4.5-all",
+        "plays": 6,
+        "upvotes": 0,
+        "created_at": "2026-02-25T16:09:44.014Z",
+        "image": "https://cdn2.suno.ai/image_large_1cba5057-cc31-4a56-b7c1-db29ec259792.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/1cba5057-cc31-4a56-b7c1-db29ec259792.m4a",
+        "video_url": "https://cdn1.suno.ai/1cba5057-cc31-4a56-b7c1-db29ec259792.mp4",
+        "url": "https://suno.com/song/1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "rating": 7.9,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, warehouse), 4:10",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:10 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.1,
+            "max": 1.5,
+            "note": "6 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:10 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.9/10. Postable: prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel. 4:10 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
+            "title": "Robot Love",
+            "score": 0.999
+          }
+        ],
+        "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
       },
       {
         "id": "be9b114a-f658-465a-983b-759bacda940d",
@@ -1345,85 +2095,11 @@
         "group": "be9b114a-f658-465a-983b-759bacda940d",
         "group_size": 4,
         "group_pick": false,
-        "idea_posted": true
-      },
-      {
-        "id": "324147b3-967b-4f51-8be4-f820d6e21341",
-        "title": "Crossing The Threshold",
-        "duration_s": 227.6,
-        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful punchy distorted kick as dominant element with rawstyle character and controlled saturation, deep tight mono sub bass aligned with kick phase, clean low frequency response, minimal industrial percussion, mechanical rhythmic precision, subtle atmospheric tension layers.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging in mid and high frequencies, strict mono compatibility in sub bass, optimized for large sound system playback, club-ready mixdown, peak-time festival performance ready, Tomorrowland mainstage soun",
-        "model": "v4.5-all",
-        "plays": 16,
-        "upvotes": 3,
-        "created_at": "2026-02-24T20:08:35.845Z",
-        "image": "https://cdn2.suno.ai/image_large_324147b3-967b-4f51-8be4-f820d6e21341.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/324147b3-967b-4f51-8be4-f820d6e21341.m4a",
-        "video_url": "https://cdn1.suno.ai/324147b3-967b-4f51-8be4-f820d6e21341.mp4",
-        "url": "https://suno.com/song/324147b3-967b-4f51-8be4-f820d6e21341",
-        "rating": 7.7,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 3:47",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "3:47 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.9,
-            "max": 1.5,
-            "note": "16 plays and 3 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "3:47 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.7/10. Postable: techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9. 3:47 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
-            "title": "Crossing The Threshold",
-            "score": 0.992
-          }
-        ],
-        "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
-        "group_size": 2,
-        "group_pick": true,
-        "released_at": "2026-09-13T19:26:18Z"
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
       },
       {
         "id": "e7cf9992-0b49-4038-9b31-03f7c4290533",
@@ -1501,7 +2177,11 @@
         "group": "bba502a3-ebed-411a-8161-54153eca984b",
         "group_size": 2,
         "group_pick": true,
-        "released_at": "2026-09-13T20:59:25Z"
+        "released_at": "2026-09-13T20:59:25Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        }
       },
       {
         "id": "bba502a3-ebed-411a-8161-54153eca984b",
@@ -1578,631 +2258,11 @@
         ],
         "group": "bba502a3-ebed-411a-8161-54153eca984b",
         "group_size": 2,
-        "group_pick": false
-      },
-      {
-        "id": "d911518a-edb8-4009-a694-935add5470f9",
-        "title": "Silent Transmission",
-        "duration_s": 205.0,
-        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful distorted rawstyle kick dominant, deep tight mono sub bass aligned with kick phase, minimal industrial percussion, subtle atmospheric tension pads.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging mids and highs, mono-compatible sub bass, club-ready mixdown, large sound system optimized, Tomorrowland mainstage quality, Berghain warehouse authority, Verknipt and Awakenings festival energy.\n\nVocals minimal hypnotic repetitive techno vocal phrases, breathy female or androgynous voice, emotionally neutral, immersi",
-        "model": "v4.5-all",
-        "plays": 15,
-        "upvotes": 1,
-        "created_at": "2026-02-24T20:15:24.869Z",
-        "image": "https://cdn2.suno.ai/image_large_d911518a-edb8-4009-a694-935add5470f9.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/d911518a-edb8-4009-a694-935add5470f9.m4a",
-        "video_url": "https://cdn1.suno.ai/d911518a-edb8-4009-a694-935add5470f9.mp4",
-        "url": "https://suno.com/song/d911518a-edb8-4009-a694-935add5470f9",
-        "rating": 7.4,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 3:25",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "3:25 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.6,
-            "max": 1.5,
-            "note": "15 plays and 1 upvote on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "3:25 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.4/10. Postable: techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9. 3:25 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
-            "title": "Silent Transmission",
-            "score": 0.96
-          }
-        ],
-        "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
-        "group_size": 2,
-        "group_pick": true,
-        "released_at": "2026-09-13T21:00:22Z"
-      },
-      {
-        "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
-        "title": "Stay With Me",
-        "duration_s": 218.8,
-        "tags": "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick dominant with clean punchy transient attack, deep mono sub bass tightly phase aligned with kick, driving warehouse groove, minimal industrial percussion, dark atmospheric tension, immersive hypnotic rhythm, emotional but controlled energy, modern European techno sound.\n\nProfessional clean master audio quality, studio-grade mastering, distortion-free output, no clipping, clean transient response, balanced frequency spectrum, tight low end with mono compatibility, wide stereo clarity in mids and highs, limiter controlled peaks, club-ready mixdown, optimized for large sound system playback, festival-ready audio clarity, suitable for warehouse and mainstage environments.",
-        "model": "v4.5-all",
-        "plays": 18,
-        "upvotes": 0,
-        "created_at": "2026-02-26T09:39:53.365Z",
-        "image": "https://cdn2.suno.ai/image_large_9981adbf-fbe3-4919-a021-82a2f3fb83a3.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/9981adbf-fbe3-4919-a021-82a2f3fb83a3.m4a",
-        "video_url": "https://cdn1.suno.ai/9981adbf-fbe3-4919-a021-82a2f3fb83a3.mp4",
-        "url": "https://suno.com/song/9981adbf-fbe3-4919-a021-82a2f3fb83a3",
-        "rating": 7.2,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, warehouse), 3:38",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, warehouse, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "3:38 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.5,
-            "max": 1.5,
-            "note": "18 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, warehouse, peak-time"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "3:38 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.2/10. Postable: techno, industrial, warehouse, but also house - the off-format tags cost it 0.9. 3:38 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
-            "title": "Stay With Me",
-            "score": 0.986
-          }
-        ],
-        "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
-        "group_size": 2,
-        "group_pick": true,
-        "released_at": "2026-09-13T21:01:18Z"
-      },
-      {
-        "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
-        "title": "Where It Begins",
-        "duration_s": 360.0,
-        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Dark Minimal Techno, Modern Techno, Industrial Rave, Raw Techno, Hard Dance influence, cinematic techno atmosphere, aggressive, punchy, hypnotic, immersive, dense, powerful, professional, clean, loud, deep, driving, analog saturation character, digital precision, modern European techno sound.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, wide stereo imaging in mids and highs, tight mono-compatible sub bass, balanced frequency spectrum, club-ready mixdown, large sound system optimized, Tomorrowland mainstage playback quality, Berghain warehouse energy, Verknipt and Awakenings festival sound.\n\nDominant distorted techno kick with rawstyle character, deep sub bass aligned with kick phase, hypnotic",
-        "model": "v4.5-all",
-        "plays": 14,
-        "upvotes": 0,
-        "created_at": "2026-02-24T20:00:35.860Z",
-        "image": "https://cdn2.suno.ai/image_large_c0db60f4-c089-446a-8d7d-b1609f4c8d73.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/c0db60f4-c089-446a-8d7d-b1609f4c8d73.m4a",
-        "video_url": "https://cdn1.suno.ai/c0db60f4-c089-446a-8d7d-b1609f4c8d73.mp4",
-        "url": "https://suno.com/song/c0db60f4-c089-446a-8d7d-b1609f4c8d73",
-        "rating": 7.1,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 6:00",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "6:00 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.3,
-            "max": 1.5,
-            "note": "14 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "6:00 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.1/10. Postable: techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9. 6:00 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
-            "title": "Where It Begins",
-            "score": 0.956
-          }
-        ],
-        "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
-        "group_size": 2,
-        "group_pick": true,
-        "released_at": "2026-09-13T21:03:18Z"
-      },
-      {
-        "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
-        "title": "Stay With Me",
-        "duration_s": 254.0,
-        "tags": "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick dominant with clean punchy transient attack, deep mono sub bass tightly phase aligned with kick, driving warehouse groove, minimal industrial percussion, dark atmospheric tension, immersive hypnotic rhythm, emotional but controlled energy, modern European techno sound.\n\nProfessional clean master audio quality, studio-grade mastering, distortion-free output, no clipping, clean transient response, balanced frequency spectrum, tight low end with mono compatibility, wide stereo clarity in mids and highs, limiter controlled peaks, club-ready mixdown, optimized for large sound system playback, festival-ready audio clarity, suitable for warehouse and mainstage environments.",
-        "model": "v4.5-all",
-        "plays": 12,
-        "upvotes": 0,
-        "created_at": "2026-02-26T09:39:53.365Z",
-        "image": "https://cdn2.suno.ai/image_large_b5bdd361-ea65-47e3-99da-0551440c1c92.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/b5bdd361-ea65-47e3-99da-0551440c1c92.m4a",
-        "video_url": "https://cdn1.suno.ai/b5bdd361-ea65-47e3-99da-0551440c1c92.mp4",
-        "url": "https://suno.com/song/b5bdd361-ea65-47e3-99da-0551440c1c92",
-        "rating": 7.1,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, warehouse), 4:14",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, warehouse, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "4:14 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.3,
-            "max": 1.5,
-            "note": "12 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, warehouse, peak-time"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "4:14 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.1/10. Postable: techno, industrial, warehouse, but also house - the off-format tags cost it 0.9. 4:14 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
-            "title": "Stay With Me",
-            "score": 0.986
-          }
-        ],
-        "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
-        "group_size": 2,
         "group_pick": false,
-        "idea_posted": true
-      },
-      {
-        "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
-        "title": "Robot Love",
-        "duration_s": 249.5,
-        "tags": "Hard Techno, Industrial Techno, Peak Time Techno, Hypnotic Industrial Techno, Warehouse Techno, Driving Techno, Mechanical Techno, Modern European Techno, aggressive but clean sound design, powerful distorted techno kick dominant, punchy transient attack, controlled saturation, deep mono sub bass phase aligned with kick, clean low frequency separation, tight low end response, hypnotic driving groove, minimal industrial percussion, metallic textures, atmospheric tension layers, immersive spatial depth.\n\nProfessional festival master audio quality, clean distortion free mastering, high loudness clarity without clipping, limiter controlled peaks, balanced frequency spectrum, wide stereo imaging mids and highs, mono compatible sub bass, precise transient control, club ready mixdown, optimized for large sound system playback, peak time festival performance ready, warehouse and festival environment optimized.\n\nVocals minimal hypnotic chant style, emotionally neutral, processed modern tech",
-        "model": "v4.5-all",
-        "plays": 14,
-        "upvotes": 0,
-        "created_at": "2026-02-25T16:09:44.014Z",
-        "image": "https://cdn2.suno.ai/image_large_b20ce676-a10d-4df9-8e62-1a121cbec080.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/b20ce676-a10d-4df9-8e62-1a121cbec080.m4a",
-        "video_url": "https://cdn1.suno.ai/b20ce676-a10d-4df9-8e62-1a121cbec080.mp4",
-        "url": "https://suno.com/song/b20ce676-a10d-4df9-8e62-1a121cbec080",
-        "rating": 7.1,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, warehouse), 4:09",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, warehouse, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "4:09 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.3,
-            "max": 1.5,
-            "note": "14 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, warehouse, peak time"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "4:09 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.1/10. Postable: techno, industrial, warehouse, but also house - the off-format tags cost it 0.9. 4:09 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
-            "title": "Robot Love",
-            "score": 0.999
-          }
-        ],
-        "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
-        "group_size": 2,
-        "group_pick": true,
-        "released_at": "2026-09-13T21:02:15Z"
-      },
-      {
-        "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
-        "title": "Robot Love",
-        "duration_s": 250.9,
-        "tags": "Hard Techno, Industrial Techno, Peak Time Techno, Hypnotic Industrial Techno, Warehouse Techno, Driving Techno, Mechanical Techno, Modern European Techno, aggressive but clean sound design, powerful distorted techno kick dominant, punchy transient attack, controlled saturation, deep mono sub bass phase aligned with kick, clean low frequency separation, tight low end response, hypnotic driving groove, minimal industrial percussion, metallic textures, atmospheric tension layers, immersive spatial depth.\n\nProfessional festival master audio quality, clean distortion free mastering, high loudness clarity without clipping, limiter controlled peaks, balanced frequency spectrum, wide stereo imaging mids and highs, mono compatible sub bass, precise transient control, club ready mixdown, optimized for large sound system playback, peak time festival performance ready, warehouse and festival environment optimized.\n\nVocals minimal hypnotic chant style, emotionally neutral, processed modern tech",
-        "model": "v4.5-all",
-        "plays": 6,
-        "upvotes": 0,
-        "created_at": "2026-02-25T16:09:44.014Z",
-        "image": "https://cdn2.suno.ai/image_large_1cba5057-cc31-4a56-b7c1-db29ec259792.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/1cba5057-cc31-4a56-b7c1-db29ec259792.m4a",
-        "video_url": "https://cdn1.suno.ai/1cba5057-cc31-4a56-b7c1-db29ec259792.mp4",
-        "url": "https://suno.com/song/1cba5057-cc31-4a56-b7c1-db29ec259792",
-        "rating": 7.0,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, warehouse), 4:10",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, warehouse, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "4:10 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.1,
-            "max": 1.5,
-            "note": "6 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, warehouse, peak time"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "4:10 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.0/10. Postable: techno, industrial, warehouse, but also house - the off-format tags cost it 0.9. 4:10 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
-            "title": "Robot Love",
-            "score": 0.999
-          }
-        ],
-        "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
-        "group_size": 2,
-        "group_pick": false,
-        "idea_posted": true
-      },
-      {
-        "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
-        "title": "Crossing The Threshold",
-        "duration_s": 247.6,
-        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful punchy distorted kick as dominant element with rawstyle character and controlled saturation, deep tight mono sub bass aligned with kick phase, clean low frequency response, minimal industrial percussion, mechanical rhythmic precision, subtle atmospheric tension layers.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging in mid and high frequencies, strict mono compatibility in sub bass, optimized for large sound system playback, club-ready mixdown, peak-time festival performance ready, Tomorrowland mainstage soun",
-        "model": "v4.5-all",
-        "plays": 10,
-        "upvotes": 0,
-        "created_at": "2026-02-24T20:08:35.846Z",
-        "image": "https://cdn2.suno.ai/image_large_92e63fb9-bc78-4004-971c-a3221ef0b359.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/92e63fb9-bc78-4004-971c-a3221ef0b359.m4a",
-        "video_url": "https://cdn1.suno.ai/92e63fb9-bc78-4004-971c-a3221ef0b359.mp4",
-        "url": "https://suno.com/song/92e63fb9-bc78-4004-971c-a3221ef0b359",
-        "rating": 7.0,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 4:07",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "4:07 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.2,
-            "max": 1.5,
-            "note": "10 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "4:07 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.0/10. Postable: techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9. 4:07 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "324147b3-967b-4f51-8be4-f820d6e21341",
-            "title": "Crossing The Threshold",
-            "score": 0.992
-          }
-        ],
-        "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
-        "group_size": 2,
-        "group_pick": false,
-        "idea_posted": true
-      },
-      {
-        "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
-        "title": "Where It Begins",
-        "duration_s": 202.0,
-        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Dark Minimal Techno, Modern Techno, Industrial Rave, Raw Techno, Hard Dance influence, cinematic techno atmosphere, aggressive, punchy, hypnotic, immersive, dense, powerful, professional, clean, loud, deep, driving, analog saturation character, digital precision, modern European techno sound.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, wide stereo imaging in mids and highs, tight mono-compatible sub bass, balanced frequency spectrum, club-ready mixdown, large sound system optimized, Tomorrowland mainstage playback quality, Berghain warehouse energy, Verknipt and Awakenings festival sound.\n\nDominant distorted techno kick with rawstyle character, deep sub bass aligned with kick phase, hypnotic",
-        "model": "v4.5-all",
-        "plays": 10,
-        "upvotes": 0,
-        "created_at": "2026-02-24T20:00:35.860Z",
-        "image": "https://cdn2.suno.ai/image_large_2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.m4a",
-        "video_url": "https://cdn1.suno.ai/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.mp4",
-        "url": "https://suno.com/song/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
-        "rating": 7.0,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 3:22",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 3.1,
-            "max": 4.0,
-            "note": "techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "3:22 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.2,
-            "max": 1.5,
-            "note": "10 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "3:22 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
-          }
-        ],
-        "summary": "Rated 7.0/10. Postable: techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9. 3:22 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
-            "title": "Where It Begins",
-            "score": 0.956
-          }
-        ],
-        "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
-        "group_size": 2,
-        "group_pick": false,
-        "idea_posted": true
+        "decision": {
+          "verdict": "held",
+          "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
+        }
       },
       {
         "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
@@ -2217,16 +2277,16 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/568df3fe-272a-45db-92f6-f139b3e6d8dc.m4a",
         "video_url": "https://cdn1.suno.ai/568df3fe-272a-45db-92f6-f139b3e6d8dc.mp4",
         "url": "https://suno.com/song/568df3fe-272a-45db-92f6-f139b3e6d8dc",
-        "rating": 6.7,
+        "rating": 7.6,
         "postable": true,
         "slot": "full release",
         "verdict": "on format (techno, industrial, rawstyle), 2:02 - good for a Short",
         "factors": [
           {
             "name": "Genre fit",
-            "score": 3.1,
+            "score": 4.0,
             "max": 4.0,
-            "note": "techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9"
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
           },
           {
             "name": "Length",
@@ -2266,10 +2326,10 @@
           {
             "ok": true,
             "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
+            "detail": "4.0 against a 2.0 floor"
           }
         ],
-        "summary": "Rated 6.7/10. Postable: techno, industrial, rawstyle, but also house - the off-format tags cost it 0.9. 2:02 - just long enough for a full release. made on Suno v4.5-all - good, half a point behind v5.",
+        "summary": "Rated 7.6/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 2:02 - just long enough for a full release. made on Suno v4.5-all - good, half a point behind v5.",
         "similar": [
           {
             "id": "d911518a-edb8-4009-a694-935add5470f9",
@@ -2280,7 +2340,11 @@
         "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
         "group_size": 2,
         "group_pick": false,
-        "idea_posted": true
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
       },
       {
         "id": "d02466c4-239f-472f-b50d-eb5ea5c66c9b",
@@ -2295,16 +2359,16 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/d02466c4-239f-472f-b50d-eb5ea5c66c9b.m4a",
         "video_url": "https://cdn1.suno.ai/d02466c4-239f-472f-b50d-eb5ea5c66c9b.mp4",
         "url": "https://suno.com/song/d02466c4-239f-472f-b50d-eb5ea5c66c9b",
-        "rating": 6.6,
+        "rating": 7.5,
         "postable": true,
         "slot": "full release",
         "verdict": "on format (techno, industrial, acid), 2:46",
         "factors": [
           {
             "name": "Genre fit",
-            "score": 2.7,
+            "score": 3.6,
             "max": 4.0,
-            "note": "techno, industrial, acid, but also trance - the off-format tags cost it 0.9"
+            "note": "prompt names techno, industrial, acid - straight down the middle of the channel"
           },
           {
             "name": "Length",
@@ -2344,10 +2408,10 @@
           {
             "ok": true,
             "label": "Genre score clears the bar",
-            "detail": "2.7 against a 2.0 floor, pulled down by trance"
+            "detail": "3.6 against a 2.0 floor"
           }
         ],
-        "summary": "Rated 6.6/10. Postable: techno, industrial, acid, but also trance - the off-format tags cost it 0.9. 2:46 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "summary": "Rated 7.5/10. Postable: prompt names techno, industrial, acid - straight down the middle of the channel. 2:46 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
         "similar": [
           {
             "id": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
@@ -2358,7 +2422,11 @@
         "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
         "group_size": 2,
         "group_pick": true,
-        "released_at": "2026-09-13T21:04:02Z"
+        "released_at": "2026-09-13T21:04:02Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        }
       },
       {
         "id": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
@@ -2373,16 +2441,16 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb.m4a",
         "video_url": "https://cdn1.suno.ai/6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb.mp4",
         "url": "https://suno.com/song/6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
-        "rating": 6.5,
+        "rating": 7.4,
         "postable": true,
         "slot": "full release",
         "verdict": "on format (techno, industrial, acid), 2:38",
         "factors": [
           {
             "name": "Genre fit",
-            "score": 2.7,
+            "score": 3.6,
             "max": 4.0,
-            "note": "techno, industrial, acid, but also trance - the off-format tags cost it 0.9"
+            "note": "prompt names techno, industrial, acid - straight down the middle of the channel"
           },
           {
             "name": "Length",
@@ -2422,10 +2490,10 @@
           {
             "ok": true,
             "label": "Genre score clears the bar",
-            "detail": "2.7 against a 2.0 floor, pulled down by trance"
+            "detail": "3.6 against a 2.0 floor"
           }
         ],
-        "summary": "Rated 6.5/10. Postable: techno, industrial, acid, but also trance - the off-format tags cost it 0.9. 2:38 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "summary": "Rated 7.4/10. Postable: prompt names techno, industrial, acid - straight down the middle of the channel. 2:38 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
         "similar": [
           {
             "id": "d02466c4-239f-472f-b50d-eb5ea5c66c9b",
@@ -2436,7 +2504,11 @@
         "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
         "group_size": 2,
         "group_pick": false,
-        "idea_posted": true
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
       },
       {
         "id": "e7f16cd4-b99f-4246-a209-23eb0b304e8d",
@@ -2451,16 +2523,16 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/e7f16cd4-b99f-4246-a209-23eb0b304e8d.m4a",
         "video_url": "https://cdn1.suno.ai/e7f16cd4-b99f-4246-a209-23eb0b304e8d.mp4",
         "url": "https://suno.com/song/e7f16cd4-b99f-4246-a209-23eb0b304e8d",
-        "rating": 6.4,
+        "rating": 7.3,
         "postable": true,
         "slot": "Short only",
         "verdict": "on format (techno, industrial, warehouse), 1:42 - good for a Short",
         "factors": [
           {
             "name": "Genre fit",
-            "score": 3.1,
+            "score": 4.0,
             "max": 4.0,
-            "note": "techno, industrial, warehouse, but also house - the off-format tags cost it 0.9"
+            "note": "prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel"
           },
           {
             "name": "Length",
@@ -2500,10 +2572,10 @@
           {
             "ok": true,
             "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
+            "detail": "4.0 against a 2.0 floor"
           }
         ],
-        "summary": "Rated 6.4/10. Postable: techno, industrial, warehouse, but also house - the off-format tags cost it 0.9. 1:42 - carries a Short, thin as a full drop. made on Suno v4.5-all - good, half a point behind v5.",
+        "summary": "Rated 7.3/10. Postable: prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel. 1:42 - carries a Short, thin as a full drop. made on Suno v4.5-all - good, half a point behind v5.",
         "similar": [
           {
             "id": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
@@ -2514,7 +2586,11 @@
         "group": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
         "group_size": 2,
         "group_pick": true,
-        "released_at": "2026-09-13T21:04:42Z"
+        "released_at": "2026-09-13T21:04:42Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        }
       },
       {
         "id": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
@@ -2529,16 +2605,16 @@
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/2826d0d4-3c00-46f3-8c08-2e8a1ff9c022.m4a",
         "video_url": "https://cdn1.suno.ai/2826d0d4-3c00-46f3-8c08-2e8a1ff9c022.mp4",
         "url": "https://suno.com/song/2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
-        "rating": 5.9,
+        "rating": 6.8,
         "postable": true,
         "slot": "Short only",
         "verdict": "on format (techno, industrial, warehouse), 1:49 - good for a Short",
         "factors": [
           {
             "name": "Genre fit",
-            "score": 3.1,
+            "score": 4.0,
             "max": 4.0,
-            "note": "techno, industrial, warehouse, but also house - the off-format tags cost it 0.9"
+            "note": "prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel"
           },
           {
             "name": "Length",
@@ -2578,10 +2654,10 @@
           {
             "ok": true,
             "label": "Genre score clears the bar",
-            "detail": "3.1 against a 2.0 floor, pulled down by house"
+            "detail": "4.0 against a 2.0 floor"
           }
         ],
-        "summary": "Rated 5.9/10. Postable: techno, industrial, warehouse, but also house - the off-format tags cost it 0.9. 1:49 - carries a Short, thin as a full drop. made on Suno v4.5-all - good, half a point behind v5.",
+        "summary": "Rated 6.8/10. Postable: prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel. 1:49 - carries a Short, thin as a full drop. made on Suno v4.5-all - good, half a point behind v5.",
         "similar": [
           {
             "id": "e7f16cd4-b99f-4246-a209-23eb0b304e8d",
@@ -2591,7 +2667,11 @@
         ],
         "group": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
         "group_size": 2,
-        "group_pick": false
+        "group_pick": false,
+        "decision": {
+          "verdict": "held",
+          "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
+        }
       },
       {
         "id": "fe67ed44-93d0-4b7e-9f72-fc014bae0c8e",
@@ -2662,7 +2742,11 @@
         "similar": [],
         "group": null,
         "group_size": 1,
-        "group_pick": true
+        "group_pick": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "not on format: 1.6 against a 2.0 floor, pulled down by hip hop, rap"
+        }
       }
     ]
   }
