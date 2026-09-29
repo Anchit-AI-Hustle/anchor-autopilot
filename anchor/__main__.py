@@ -101,6 +101,8 @@ def main(argv: list[str] | None = None) -> int:
 
     h = sub.add_parser("has-drop", help="print yes/no: is there already a published drop for the date")
     h.add_argument("--date", default=None)
+    cm = sub.add_parser("can-make", help="print yes/no: is there a song from Suno or ElevenLabs for today (the reason goes to stderr)")
+    cm.add_argument("--date", default=None)
     cd = sub.add_parser("cadence", help="print yes/no: is the date a release day on the every-N-days schedule")
     cd.add_argument("--date", default=None)
 
@@ -215,6 +217,10 @@ def main(argv: list[str] | None = None) -> int:
         n = ledger.refresh(book, catalog.load(CATALOG_PATH))
         ledger.save(book, LEDGER_PATH)
         print(f"ledger: {len(book['entries'])} entries, {n} upload row(s) refreshed")
+    elif args.cmd == "can-make":
+        ok, why = pipeline.can_make(profile)
+        print(why, file=sys.stderr)
+        print("yes" if ok else "no")
     elif args.cmd == "cadence":
         day = args.date or pipeline.today_utc()
         print("yes" if pipeline.is_release_day(profile, day) else "no")

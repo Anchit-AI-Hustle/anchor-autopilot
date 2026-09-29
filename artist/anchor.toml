@@ -35,13 +35,12 @@ every_days = 1
 anchor_date = "2026-09-20"
 
 [music]
-# The engines, tried in order; one without its key, or whose service fails, hands the day to
-# the next, so a drop always ships. Your own Suno songs go out before any of them (see
-# [queue]): Suno has no public API, so the robot releases what you publish on your profile.
-# elevenlabs: Eleven Music through the ElevenLabs API (ELEVENLABS_API_KEY, paid plan).
-# lyria: Google's Lyria 3.5 through the Gemini API (GEMINI_API_KEY), SynthID-watermarked.
-# acestep_cpp: the free engine on the runner's CPU.
-engines = ["elevenlabs", "lyria", "acestep_cpp"]
+# Songs come from two places only (your call, 2026-09-29): your own Suno songs first (see
+# [queue]; Suno has no public API, so the robot releases what you publish on your profile),
+# then Eleven Music through the ElevenLabs API (ELEVENLABS_API_KEY, paid plan). With no new
+# Suno song and no ElevenLabs key the day is skipped (python -m anchor can-make), never
+# filled by another engine. lyria and acestep_cpp stay in the code for --engine tests only.
+engines = ["elevenlabs"]
 elevenlabs_model = "music_v2_5"
 duration_s = 150          # full track length when no range is set (tests, queued tracks)
 duration_range_s = [135, 170]   # the day's length is drawn from here, and its arrangement shape from music.SHAPES

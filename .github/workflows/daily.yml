@@ -76,6 +76,8 @@ jobs:
 
       - name: Pick the drop date
         id: day
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
         run: |
           DATE="${{ inputs.date }}"
           [ -z "$DATE" ] && DATE="$(date -u +%F)"
@@ -87,6 +89,9 @@ jobs:
           elif [ "${{ github.event_name }}" = "schedule" ] && [ "$(python -m anchor cadence --date "$DATE")" = "no" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "::notice::$DATE is an off-day on the schedule (schedule.every_days); nothing to do."
+          elif [ "${{ inputs.dry_run }}" != "true" ] && [ "$(python -m anchor can-make --date "$DATE" 2>can-make.txt)" = "no" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::No drop on $DATE: songs come only from Suno or ElevenLabs, and $(tail -n 1 can-make.txt). Publish a new song on Suno or add ELEVENLABS_API_KEY."
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi

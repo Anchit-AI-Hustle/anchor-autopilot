@@ -108,5 +108,5 @@ def fill(profile: Profile, songs: list[dict], queue_dir: Path, catalog_path: Pat
             res = queue_entry(song, queue_dir)
             log(f"autoqueue: {song['title']!r} (rated {song.get('rating')}) goes out next")
             return res["entry"]
-    log("autoqueue: nothing eligible on Suno; the engine renders today")
+    log("autoqueue: nothing eligible on Suno; ElevenLabs makes today's song if its key is set")
     return None

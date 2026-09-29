@@ -74,10 +74,10 @@ def test_lyria_engine_refuses_without_a_key_and_the_registry_falls_back(monkeypa
     with pytest.raises(Exception, match="GEMINI_API_KEY"):
         LyriaEngine(api_key="").check()
     p = load_profile()
-    eng = get_engine(p.music)                 # profile: elevenlabs, then lyria, then acestep
-    assert isinstance(eng, Fallback) and eng.primary.name == "elevenlabs"
-    assert eng.secondary.primary.name == "lyria" and eng.secondary.secondary.name == "acestep_cpp"
-    assert get_engine(p.music, "lyria").secondary.name == "acestep_cpp"   # naming one starts the chain there
+    eng = get_engine(p.music)                 # profile: ElevenLabs only (after your Suno songs)
+    assert eng.name == "elevenlabs" and not isinstance(eng, Fallback)
+    chain = {**p.music, "engines": ["elevenlabs", "lyria", "acestep_cpp"]}
+    assert get_engine(chain, "lyria").secondary.name == "acestep_cpp"   # naming one starts the chain there
     # the fallback actually runs the second engine when the first cannot start
     fb = Fallback(LyriaEngine(api_key=""), FixtureEngine())
     b = make_brief(p, "2026-09-22", []); b["duration_s"] = 12
@@ -266,3 +266,24 @@ def test_a_mix_without_the_channel_credentials_waits_instead_of_failing(monkeypa
     res = pipeline.publish_mix(load_profile(), tmp_path, "https://host/mix.mp4")
     assert res["youtube"]["status"] == pipeline.NEEDS_YT and res["error"] is None
     assert json.loads((tmp_path / "publish.json").read_text())["status"] == pipeline.NEEDS_YT
+
+
+# ------------------------------------------------------------ allowed sources
+def test_a_day_is_made_only_from_a_suno_song_or_elevenlabs(tmp_path, monkeypatch):
+    p = load_profile()
+    q = tmp_path / "queue"; q.mkdir()
+    cat = tmp_path / "catalog.json"; cat.write_text("{}")
+    monkeypatch.delenv("ELEVENLABS_API_KEY", raising=False)
+    monkeypatch.setenv("GEMINI_API_KEY", "set")          # Lyria has its key and still never runs
+    ok, why = pipeline.can_make(p, q, cat)
+    assert not ok and "ELEVENLABS_API_KEY" in why
+    monkeypatch.setenv("ELEVENLABS_API_KEY", "set")
+    assert pipeline.can_make(p, q, cat) == (True, "elevenlabs is ready")
+    monkeypatch.delenv("ELEVENLABS_API_KEY")
+    (q / "01-new-song.mp3").write_bytes(b"\0")
+    assert pipeline.can_make(p, q, cat) == (True, "a new Suno song is queued")
+
+
+def test_the_daily_run_skips_a_day_without_an_allowed_source():
+    wf = (Path(__file__).parent.parent / ".github/workflows/daily.yml").read_text()
+    assert "python -m anchor can-make" in wf and "ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}" in wf

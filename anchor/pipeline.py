@@ -52,6 +52,24 @@ def autofill(profile: Profile, queue_dir: Path, catalog_path: Path) -> None:
         log(f"autoqueue: skipped: {exc}")
 
 
+def can_make(profile: Profile, queue_dir: Path | None = None, catalog_path: Path = CATALOG_PATH) -> tuple[bool, str]:
+    """Whether today has a song from an allowed source: a new Suno song in the queue, or an
+    engine of the chain (ElevenLabs) that has its key. Nothing else ever makes a drop."""
+    queue_dir = queue_dir or QUEUE
+    if Path(catalog_path) == CATALOG_PATH:
+        autofill(profile, queue_dir, catalog_path)
+    if next_track(queue_dir):
+        return True, "a new Suno song is queued"
+    from .music import engine_chain, one_engine
+    for name in engine_chain(profile.music):
+        try:
+            one_engine(profile.music, name).check()
+            return True, f"{name} is ready"
+        except Exception as exc:          # noqa: BLE001 - a missing key is the answer, not an error
+            reason = str(exc)[:160]
+    return False, f"no new Suno song and {reason}"
+
+
 # ------------------------------------------------------------------------- make
 def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None = None,
          art_mode: str | None = None, retries: int = 1, catalog_path: Path = CATALOG_PATH,
