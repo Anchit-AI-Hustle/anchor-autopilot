@@ -27,7 +27,22 @@
     "full": "kbMQz4tWUtU",
     "short": "Y4OZbHAi2mc"
    },
-   "accent": "#d8742f"
+   "accent": "#d8742f",
+   "built": {
+    "duration_s": 187.24,
+    "loudness": {
+     "input_i": -14.1,
+     "input_tp": -1.8,
+     "input_lra": 8.0,
+     "input_thresh": -24.19
+    },
+    "built_at": "2026-09-29T08:29:04Z",
+    "short": {
+     "start_s": 49.9,
+     "match": 0.906,
+     "length_s": 45.2
+    }
+   }
   },
   {
    "id": "2026-09-15",
@@ -43,7 +58,22 @@
     "full": "22daVf0Cp4c",
     "short": "vezK0w3nmx8"
    },
-   "accent": "#f2f2f2"
+   "accent": "#f2f2f2",
+   "built": {
+    "duration_s": 149.6,
+    "loudness": {
+     "input_i": -14.16,
+     "input_tp": -1.8,
+     "input_lra": 10.0,
+     "input_thresh": -24.56
+    },
+    "built_at": "2026-09-29T08:29:24Z",
+    "short": {
+     "start_s": 29.6,
+     "match": 0.838,
+     "length_s": 45.2
+    }
+   }
   },
   {
    "id": "2026-09-13",
@@ -58,7 +88,22 @@
     "full": "erxuPLyK7uA",
     "short": "p7XE0YOwoTw"
    },
-   "accent": "#ff3b1f"
+   "accent": "#ff3b1f",
+   "built": {
+    "duration_s": 244.52,
+    "loudness": {
+     "input_i": -14.04,
+     "input_tp": -1.8,
+     "input_lra": 5.8,
+     "input_thresh": -24.1
+    },
+    "built_at": "2026-09-29T08:29:55Z",
+    "short": {
+     "start_s": 0.0,
+     "match": 0.849,
+     "length_s": 45.0
+    }
+   }
   },
   {
    "id": "2026-09-10",
@@ -79,7 +124,22 @@
     "full": "uM_4JEC03ik",
     "short": "SoCMir5uFxY"
    },
-   "accent": "#d7e0ea"
+   "accent": "#d7e0ea",
+   "built": {
+    "duration_s": 205.43,
+    "loudness": {
+     "input_i": -14.06,
+     "input_tp": -1.8,
+     "input_lra": 9.5,
+     "input_thresh": -24.44
+    },
+    "built_at": "2026-09-29T08:30:21Z",
+    "short": {
+     "start_s": 0.0,
+     "match": 0.93,
+     "length_s": 45.0
+    }
+   }
   },
   {
    "id": "2026-09-07",
@@ -94,7 +154,22 @@
     "full": "KBCM6KXVlgI",
     "short": "mvIMp8LqgTY"
    },
-   "accent": "#d8742f"
+   "accent": "#d8742f",
+   "built": {
+    "duration_s": 248.94,
+    "loudness": {
+     "input_i": -14.08,
+     "input_tp": -1.8,
+     "input_lra": 7.7,
+     "input_thresh": -24.16
+    },
+    "built_at": "2026-09-29T08:31:21Z",
+    "short": {
+     "start_s": 0.0,
+     "match": 0.979,
+     "length_s": 45.0
+    }
+   }
   },
   {
    "id": "2026-09-06",
@@ -109,7 +184,22 @@
     "full": "ZslHMH4TVtM",
     "short": "-E9qHH9MhTQ"
    },
-   "accent": "#d8742f"
+   "accent": "#d8742f",
+   "built": {
+    "duration_s": 218.54,
+    "loudness": {
+     "input_i": -14.05,
+     "input_tp": -1.8,
+     "input_lra": 5.9,
+     "input_thresh": -24.16
+    },
+    "built_at": "2026-09-29T08:31:55Z",
+    "short": {
+     "start_s": 0.0,
+     "match": 0.946,
+     "length_s": 45.0
+    }
+   }
   }
  ]
 }
