@@ -170,7 +170,7 @@ def build(profile: Profile, catalog: dict, day: str, period: str, out_dir: Path,
     lead = w["title"].split(" Mix")[0].split(" Monthly")[0]
     lane_phrase = f"{lead} · {len(chapters)} tracks · {int(round(duration_s / 60))} min"
     frame = frame_169(out_dir / "cover_art_raw.jpg", {"title": f"{'Monthly ' if period == 'month' else ''}Mix Vol. {vol}"},
-                      lane_phrase, profile.artist["name"], out_dir / "frame-169.jpg")
+                      lane_phrase, profile.artist["name"], out_dir / "frame-169.jpg", fam.accent)
     video = out_dir / f"{base}-full-169.mp4"
     info = render_motion(frame, mp3, video, fam.accent, crf=crf, timeout=5400)
     meta = {"kind": "mix", "period": period, "vol": vol, "date": day, "window": period_window(day, period),

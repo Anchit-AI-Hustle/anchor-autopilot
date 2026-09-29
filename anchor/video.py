@@ -26,6 +26,103 @@ VIZ_W, VIZ_H, VIZ_Y = 1080, 250, 1525   # between the meta line (1450) and the p
 SCOPE = 1180
 
 
+# ------------------------------------------------------------------ hologram
+# Every visual is a hologram: the art projected in light from an emitter on a dark stage,
+# scanlines through it, a colour fringe in the family accent, a glow, and a flicker that
+# follows the track. Cyan is the light; the family accent is the fringe, so consecutive
+# drops still differ.
+HOLO = (111, 246, 255)
+HOLO_HEX = "#6ff6ff"
+
+
+def _rgb(hex_: str) -> tuple[int, int, int]:
+    h = hex_.lstrip("#")
+    return tuple(int(h[i:i + 2], 16) for i in (0, 2, 4))
+
+
+def holo_art(cover, size: int, fringe: str = "#ff3bd4") -> Image.Image:
+    """The art as projected light: luminance tinted cyan, faint where the art is dark,
+    baked scanlines, feathered edges, an accent fringe offset to the left and a glow."""
+    src = cover if isinstance(cover, Image.Image) else Image.open(cover)
+    g = np.asarray(ImageEnhance.Contrast(src.convert("L").resize((size, size), Image.LANCZOS)).enhance(1.3),
+                   dtype=np.float32) / 255
+    yy, xx = np.mgrid[0:size, 0:size].astype(np.float32)
+    edge = np.minimum.reduce([xx, yy, size - 1 - xx, size - 1 - yy]) / (size * 0.06)
+    feather = np.clip(edge, 0, 1)
+    lines = np.where((np.arange(size) % 4) == 0, 0.45, 1.0)[:, None]
+
+    def layer(color, strength):
+        a = np.clip((0.22 + 0.78 * g) * feather * lines * strength, 0, 1)
+        rgb = np.stack([np.full_like(g, c) for c in color], -1) * (0.35 + 0.65 * g[..., None])
+        return Image.fromarray(np.dstack([rgb, a * 255]).clip(0, 255).astype(np.uint8), "RGBA")
+
+    base, fr = layer(HOLO, 0.92), layer(_rgb(fringe), 0.45)
+    out = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    out.alpha_composite(base.filter(ImageFilter.GaussianBlur(max(4, size // 60))))   # glow
+    out.alpha_composite(fr, (-max(3, size // 150), 0))                               # fringe
+    out.alpha_composite(base)
+    return out
+
+
+def holo_stage(w: int, h: int, emitter: tuple[int, int, int] | None = None,
+               beam_top: tuple[int, int, int] | None = None) -> Image.Image:
+    """The dark stage: a deep navy fall-off, a perspective grid on the floor, and (when
+    given) an emitter disc at (x, y, width) casting a beam up to (x, y, width)."""
+    yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+    d = np.sqrt(((xx - w / 2) / w) ** 2 + ((yy - h * 0.45) / h) ** 2)
+    base = np.clip(1.0 - 1.6 * d, 0, 1)[..., None] * np.array([10, 22, 38], np.float32)
+    img = Image.fromarray(base.clip(0, 255).astype(np.uint8), "RGB").convert("RGBA")
+    from PIL import ImageDraw
+    grid = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    gd = ImageDraw.Draw(grid)
+    horizon = int(h * 0.72)
+    for i in range(-12, 13):                                    # lines to the vanishing point
+        gd.line([(w / 2 + i * w / 10, h), (w / 2, horizon)], fill=(*HOLO, 26), width=2)
+    k = 1.0
+    while True:                                                 # rungs closing in on the horizon
+        y = horizon + (h - horizon) / k
+        if y - horizon < 3:
+            break
+        gd.line([(0, y), (w, y)], fill=(*HOLO, 22), width=2)
+        k *= 1.35
+    fade = Image.linear_gradient("L").resize((w, h - horizon))
+    mask = Image.new("L", (w, h), 0)
+    mask.paste(fade, (0, horizon))
+    img.alpha_composite(Image.composite(grid, Image.new("RGBA", (w, h), (0, 0, 0, 0)), mask))
+    if emitter and beam_top:
+        beam = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+        bd = ImageDraw.Draw(beam)
+        (ex, ey, ew), (tx, ty, tw) = emitter, beam_top
+        steps = 40
+        for j in range(steps):                                  # a soft trapezoid, brightest at the emitter
+            f = j / steps
+            y0, y1 = ey + (ty - ey) * f, ey + (ty - ey) * (f + 1 / steps)
+            half0, half1 = ew / 2 + (tw - ew) / 2 * f, ew / 2 + (tw - ew) / 2 * (f + 1 / steps)
+            bd.polygon([(ex - half0, y0), (ex + half0, y0), (tx + half1, y1), (tx - half1, y1)],
+                       fill=(*HOLO, int(46 * (1 - f) + 8)))
+        img.alpha_composite(beam.filter(ImageFilter.GaussianBlur(10)))
+        disc = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+        dd = ImageDraw.Draw(disc)
+        dd.ellipse([ex - ew / 2, ey - ew * 0.06, ex + ew / 2, ey + ew * 0.06], fill=(*HOLO, 170))
+        img.alpha_composite(disc.filter(ImageFilter.GaussianBlur(14)))
+        dd2 = ImageDraw.Draw(disc := Image.new("RGBA", (w, h), (0, 0, 0, 0)))
+        dd2.ellipse([ex - ew * 0.42, ey - ew * 0.035, ex + ew * 0.42, ey + ew * 0.035], fill=(235, 255, 255, 220))
+        img.alpha_composite(disc.filter(ImageFilter.GaussianBlur(3)))
+    return img
+
+
+def scanlines(w: int, h: int, out: Path) -> Path:
+    """A transparent sheet of dark scanlines, 8 px taller than the frame so it can roll."""
+    a = np.zeros((h + 8, w, 4), np.uint8)
+    a[::4, :, 3] = 60
+    a[1::4, :, 3] = 20
+    Image.fromarray(a, "RGBA").save(out)
+    return out
+
+
+FLICKER = "0.03*sin(t*41)*sin(t*9.7)"   # a hologram never holds perfectly still
+
+
 def _ff(c: str) -> str:
     return "0x" + c.lstrip("#")
 
@@ -48,18 +145,14 @@ def _viz(fam: Family) -> tuple[str, int, int]:
 
 
 def background(cover: Path, out: Path) -> None:
-    """Static blurred, darkened, vignetted backdrop (computed once, not per frame)."""
-    img = Image.open(cover).convert("RGB").resize((H, H), Image.LANCZOS)
-    left = (H - W) // 2
-    img = img.crop((left, 0, left + W, H)).filter(ImageFilter.GaussianBlur(38))
-    img = ImageEnhance.Brightness(img).enhance(0.62)
-    img = ImageEnhance.Color(img).enhance(1.3)
-    img = ImageEnhance.Contrast(img).enhance(1.08)
-    yy, xx = np.mgrid[0:H, 0:W].astype(np.float32)
-    d = np.sqrt(((xx - W / 2) / (W / 2)) ** 2 + ((yy - H / 2) / (H / 2)) ** 2)
-    mask = np.clip(1.15 - 0.55 * d ** 2, 0.25, 1.0)[..., None]
-    arr = np.asarray(img, dtype=np.float32) * mask
-    Image.fromarray(arr.clip(0, 255).astype(np.uint8)).save(out, quality=92)
+    """The Short's stage (computed once, not per frame): dark, a grid floor, and the art's
+    own colour as a faint haze behind the hologram so each record's stage differs."""
+    stage = holo_stage(W, H)
+    haze = Image.open(cover).convert("RGB").resize((W, W), Image.LANCZOS).filter(ImageFilter.GaussianBlur(90))
+    haze = ImageEnhance.Brightness(haze).enhance(0.28).convert("RGBA")
+    haze.putalpha(110)
+    stage.alpha_composite(haze, (0, COVER_Y + COVER // 2 - W // 2))
+    stage.convert("RGB").save(out, quality=92)
 
 
 PULSE_AMP = 30      # px the cover grows on each beat
@@ -105,7 +198,9 @@ def build_graph(fam: Family, bpm: int, duration: float, texts: dict[str, Path],
         f"color=c={_ff(fam.accent)}:s=900x6:r={FPS}[barfill]",
         f"color=c=0x2a2a2a:s=900x6:r={FPS}[bartrack]",
         f"[bartrack][barfill]overlay=x='-900+900*t/{duration:.3f}':y=0:shortest=1[bar]",
-        "[s2][bar]overlay=x=90:y=1812:shortest=1[s3]",
+        f"[s2]eq=brightness='{FLICKER}':eval=frame[s2f]",
+        "[s2f][3:v]overlay=x=0:y='-mod(t*24,8)':shortest=1[s2l]",
+        "[s2l][bar]overlay=x=90:y=1812:shortest=1[s3]",
         "[s3]"
         f"drawtext=fontfile='{mono}':textfile='{texts['artist']}':fontsize=44:fontcolor=0xF2F2F2:"
         f"x=(w-text_w)/2:y=150,"
@@ -138,10 +233,14 @@ def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: d
     graph = build_graph(fam, int(brief["bpm"]), duration, paths, beat_offset)
     bg = workdir / "background.jpg"
     background(cover_1080, bg)
+    holo = workdir / "cover-hologram.png"
+    holo_art(cover_1080, COVER, fam.accent2).save(holo)
+    lines = scanlines(W, H, workdir / "scanlines.png")
     run(["ffmpeg", "-y", "-hide_banner", "-v", "error",
          "-loop", "1", "-framerate", str(FPS), "-i", bg,
-         "-loop", "1", "-framerate", str(FPS), "-i", cover_1080,
+         "-loop", "1", "-framerate", str(FPS), "-i", holo,
          "-i", audio,
+         "-loop", "1", "-framerate", str(FPS), "-i", lines,
          "-filter_complex", graph, "-map", "[vout]", "-map", "[aout]",
          "-t", f"{duration:.3f}", "-r", str(FPS),
          "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-maxrate", "8M", "-bufsize", "16M",
@@ -176,69 +275,70 @@ def poster_frame(video: Path, out: Path, at: float = 3.0) -> None:
 # of a blurred field; vidIQ scored one at 27/100, and "too much empty space" alone cost 40
 # points of that. Nothing here leaves the frame empty.
 
-def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path) -> Path:
-    """The 16:9 frame and the thumbnail. Set for a phone: YouTube shows it at about 170 px
-    tall, so the title fills two thirds of the width in one or two lines and the genre line is
-    big enough to read at that size. Nothing smaller than 90 px goes on it."""
-    W2, H2 = 1920, 1080
-    cov = Image.open(cover).convert("RGB")
-    s = max(W2 / cov.width, H2 / cov.height)
-    bg = cov.resize((int(cov.width * s) + 1, int(cov.height * s) + 1), Image.LANCZOS)
-    x, y = (bg.width - W2) // 2, (bg.height - H2) // 2
-    bg = bg.crop((x, y, x + W2, y + H2))
+def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path,
+              fringe: str = "#ff3bd4") -> Path:
+    """The 16:9 frame and the thumbnail: the art as a hologram on the right, rising from its
+    emitter, the title and genre line glowing on the left. Set for a phone: YouTube shows it
+    at about 170 px tall, so the title is big and nothing smaller than 80 px goes on it."""
     from PIL import ImageDraw, ImageFont
-    scrim = Image.new("RGBA", (W2, H2), (0, 0, 0, 0))
-    sd = ImageDraw.Draw(scrim)
-    for i in range(1300):                                          # left-to-right fade: solid under the type, the art clear on the right
-        a = int(190 * max(0.0, 1 - i / 1300) ** 1.4)
-        sd.line([(i, 0), (i, H2)], fill=(9, 8, 8, a))
-    bg = Image.alpha_composite(bg.convert("RGBA"), scrim).convert("RGB")
-    d = ImageDraw.Draw(bg, "RGBA")
+    W2, H2 = 1920, 1080
+    art_size, ax, ay = 760, 1080, 90
+    ex, ey = ax + art_size // 2, 1000
+    stage = holo_stage(W2, H2, emitter=(ex, ey, 520), beam_top=(ex, ay + art_size - 40, art_size))
+    stage.alpha_composite(holo_art(cover, art_size, fringe), (ax, ay))
 
     def font(size):
         return ImageFont.truetype(str(FONTS / "Anton.ttf"), size)
 
-    # title: one line if it fits at 300, otherwise two lines split at the widest gap
+    probe = ImageDraw.Draw(stage)
+    room = 900
     title = brief["title"].upper()
     words = title.split()
-    lines, size = [title], 300
-    while d.textlength(lines[0], font=font(size)) > 1240 and size > 200:
+    lines, size = [title], 260
+    while probe.textlength(lines[0], font=font(size)) > room and size > 190:
         size -= 10
-    if d.textlength(title, font=font(size)) > 1240 and len(words) > 1:
+    if probe.textlength(title, font=font(size)) > room and len(words) > 1:
         best = min(range(1, len(words)), key=lambda k: abs(len(" ".join(words[:k])) - len(" ".join(words[k:]))))
-        lines, size = [" ".join(words[:best]), " ".join(words[best:])], 250
-        while max(d.textlength(l, font=font(size)) for l in lines) > 1240 and size > 150:
+        lines, size = [" ".join(words[:best]), " ".join(words[best:])], 220
+        while max(probe.textlength(l, font=font(size)) for l in lines) > room and size > 130:
             size -= 10
     f = font(size)
     line_h = int(size * 0.98)
-    block = len(lines) * line_h + 40 + int(size * 0.38)
+    subs = [f"{lane_phrase.upper()}  ·  {int(brief['bpm'])} BPM" if brief.get("bpm") else lane_phrase.upper()]
+    fs = font(max(84, int(size * 0.36)))
+    while probe.textlength(subs[0], font=fs) > room and fs.size > 84:
+        fs = font(fs.size - 6)
+    if probe.textlength(subs[0], font=fs) > room and brief.get("bpm"):   # genre, then the tempo under it
+        subs = [lane_phrase.upper(), f"{int(brief['bpm'])} BPM"]
+    while max(probe.textlength(t, font=fs) for t in subs) > room and fs.size > 60:
+        fs = font(fs.size - 4)
+    block = len(lines) * line_h + 40 + len(subs) * int(fs.size * 1.1)
     top = (H2 - block) // 2 - 20
+    glow = Image.new("RGBA", (W2, H2), (0, 0, 0, 0))
+    ink = Image.new("RGBA", (W2, H2), (0, 0, 0, 0))
+    gd, idr = ImageDraw.Draw(glow), ImageDraw.Draw(ink)
     for i, line in enumerate(lines):
         yy = top + i * line_h
-        d.text((104, yy + 8), line, font=f, fill=(0, 0, 0, 170))     # hard shadow: reads on any art
-        d.text((96, yy), line, font=f, fill=(246, 246, 244))
-    sub = f"{lane_phrase.upper()}  ·  {int(brief['bpm'])} BPM" if brief.get("bpm") else lane_phrase.upper()
-    fs = font(max(90, int(size * 0.38)))
-    while d.textlength(sub, font=fs) > 1240 and fs.size > 80:
-        fs = font(fs.size - 6)
+        gd.text((96, yy), line, font=f, fill=(*HOLO, 255))
+        idr.text((96, yy), line, font=f, fill=(240, 254, 255, 255))
     yy = top + len(lines) * line_h + 40
-    d.text((104, yy + 6), sub, font=fs, fill=(0, 0, 0, 170))
-    d.text((96, yy), sub, font=fs, fill=(226, 84, 40))
-    bg.save(out, quality=93)
+    for j, t in enumerate(subs):
+        gd.text((96, yy + j * int(fs.size * 1.1)), t, font=fs, fill=(*_rgb(fringe), 255))
+        idr.text((96, yy + j * int(fs.size * 1.1)), t, font=fs, fill=(*_rgb(fringe), 255))
+    stage.alpha_composite(glow.filter(ImageFilter.GaussianBlur(16)))
+    stage.alpha_composite(ink)
+    stage.convert("RGB").save(out, quality=93)
     return out
 
 
-def frame_916(cover: Path, out: Path) -> Path:
+def frame_916(cover: Path, out: Path, fringe: str = "#ff3bd4") -> Path:
+    """The 9:16 full-track frame: the hologram over its emitter, centred for a phone."""
     W2, H2 = 1080, 1920
-    cov = Image.open(cover).convert("RGB")
-    s = max(W2 / cov.width, H2 / cov.height)
-    bg = cov.resize((int(cov.width * s) + 1, int(cov.height * s) + 1), Image.LANCZOS)
-    x, y = (bg.width - W2) // 2, (bg.height - H2) // 2
-    bg = bg.crop((x, y, x + W2, y + H2)).filter(ImageFilter.GaussianBlur(30))
-    bg = ImageEnhance.Brightness(bg).enhance(0.45)
-    fg = cov.resize((1000, 1000), Image.LANCZOS)
-    bg.paste(fg, (40, (H2 - 1000) // 2))
-    bg.save(out, quality=93)
+    size, ay = 940, 330
+    ex, ey = W2 // 2, 1640
+    stage = holo_stage(W2, H2, emitter=(ex, ey, 620), beam_top=(ex, ay + size - 40, size))
+    stage.alpha_composite(holo_art(cover, size, fringe), ((W2 - size) // 2, ay))
+    stage.convert("RGB").save(out, quality=93)
     return out
 
 
@@ -260,24 +360,28 @@ def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 2
     (channel analytics, Sept 2026: 0:30 average view from impressions); something on screen
     that follows the kick keeps the listener with the track."""
     duration = media_summary(audio)["duration"]
-    r, g, b = (int(accent.lstrip("#")[i:i + 2], 16) / 255 for i in (0, 2, 4))
+    r, g, b = (c / 255 for c in HOLO)
+    lines = scanlines(1920, 1080, Path(out).with_suffix(".scanlines.png"))
     graph = ";".join([
-        "[0:v]format=yuv420p[bg]",
+        f"[0:v]format=yuv420p,eq=brightness='{FLICKER}':eval=frame[bg]",
         "[1:a]asplit=2[aout][aviz]",
         # drawn white and tinted afterwards: showwaves' cline mode mangles a coloured line
-        "[aviz]showwaves=s=1920x220:mode=cline:rate=30:colors=white|white:scale=sqrt,format=rgba,"
-        f"colorkey=0x000000:0.2:0.1,colorchannelmixer=rr={r:.3f}:gg={g:.3f}:bb={b:.3f}:aa=0.8[wave]",
-        "[bg][wave]overlay=x=0:y=852:shortest=1[s1]",
+        "[aviz]showwaves=s=960x180:mode=cline:rate=30:colors=white|white:scale=sqrt,format=rgba,"
+        f"colorkey=0x000000:0.2:0.1,colorchannelmixer=rr={r:.3f}:gg={g:.3f}:bb={b:.3f}:aa=0.55[wave]",
+        "[bg][wave]overlay=x=80:y=870:shortest=1[s1]",   # under the title; the hologram keeps its own side
+        "[s1][2:v]overlay=x=0:y='-mod(t*24,8)':shortest=1[s1l]",
         f"color=c={_ff(accent)}:s=1920x8:r=30[fill]",
-        "color=c=0x1a1a1a:s=1920x8:r=30[track]",
+        "color=c=0x0a1622:s=1920x8:r=30[track]",
         f"[track][fill]overlay=x='-1920+1920*t/{duration:.3f}':y=0:shortest=1[bar]",
-        "[s1][bar]overlay=x=0:y=1072:shortest=1,format=yuv420p[vout]",
+        "[s1l][bar]overlay=x=0:y=1072:shortest=1,format=yuv420p[vout]",
     ])
     run(["ffmpeg", "-y", "-hide_banner", "-v", "error", "-loop", "1", "-framerate", "30", "-i", frame,
-         "-i", audio, "-filter_complex", graph, "-map", "[vout]", "-map", "[aout]",
+         "-i", audio, "-loop", "1", "-framerate", "30", "-i", lines,
+         "-filter_complex", graph, "-map", "[vout]", "-map", "[aout]",
          "-t", f"{duration:.3f}", "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", str(crf),
          "-maxrate", "4M", "-bufsize", "8M", "-pix_fmt", "yuv420p",
          "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN, "-ar", "48000", "-movflags", "+faststart", out], timeout=timeout)
+    lines.unlink(missing_ok=True)
     info = media_summary(out)
     if abs(info["duration"] - duration) > 1.5:
         raise RuntimeError(f"full render truncated: {info['duration']:.1f}s vs audio {duration:.1f}s")
@@ -292,8 +396,9 @@ def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: st
     so nothing half-cropped shows through. ``cover`` is the finished square for the Reel.
     With ``accent`` the 16:9 moves (waveform + progress); without it, a still at 2 fps.
     """
-    f169 = frame_169(art_raw if art_raw.exists() else cover, brief, lane_phrase, artist, out_dir / "frame-169.jpg")
-    f916 = frame_916(cover, out_dir / "frame-916.jpg")
+    fringe = accent or "#ff3bd4"
+    f169 = frame_169(art_raw if art_raw.exists() else cover, brief, lane_phrase, artist, out_dir / "frame-169.jpg", fringe)
+    f916 = frame_916(cover, out_dir / "frame-916.jpg", fringe)
     v169 = out_dir / f"{base}-full-169.mp4"
     v916 = out_dir / f"{base}-full-916.mp4"
     i169 = render_motion(f169, audio, v169, accent, crf=23) if accent else render_still(f169, audio, v169, crf=23)

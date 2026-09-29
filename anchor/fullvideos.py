@@ -176,7 +176,7 @@ def build(profile: Profile, r: dict, repo: str, work: Path) -> tuple[Path, Path]
     phrase = seo.genre_phrase(lane) if lane else (r.get("lane_name") or "Techno")
     art = raw_art(profile, r, cover, work / f"{base}-art-raw.jpg") or plain_art(cover, work / f"{base}-art-plain.jpg")
     frame = frame_169(art, {"title": clean_title(r["title"]), "bpm": r.get("bpm")}, phrase,
-                      profile.artist["name"], work / f"{base}-frame-169.jpg")
+                      profile.artist["name"], work / f"{base}-frame-169.jpg", r.get("accent") or "#d8742f")
     video = work / f"{base}-full-169.mp4"
     render_motion(frame, mp3, video, r.get("accent") or "#d8742f", crf=23, timeout=3600)
     return video, frame
