@@ -88,6 +88,26 @@ def test_plan_includes_the_hand_made_shorts_channel_json_knows():
     assert not p["found"] and not p["todo"]
 
 
+def test_a_record_you_took_down_is_never_rebuilt_or_re_uploaded(tmp_path):
+    cat = catalog_with(tmp_path, [drop("2026-09-20", "Rupture Pulse", "S2"), drop("2026-09-27", "Overload Protocol", "S1")],
+                       channel={"withdrawn": ["Rupture Pulse"], "videos": {}})
+    yt = FakeYouTube([vid("S2", "Rupture Pulse", 45), vid("S1", "Overload Protocol", 45)])
+    p = fullvideos.plan(json.loads(cat.read_text()), yt.list, json.loads((tmp_path / "channel.json").read_text()))
+    assert [r["title"] for r in p["withdrawn"]] == ["Rupture Pulse"]
+    assert [r["title"] for r in p["todo"]] == ["Overload Protocol"]
+    out = fullvideos.run(PROFILE, repo="o/r", work=tmp_path / "w", api=yt, catalog_path=cat, dry_run=True)
+    assert out["withdrawn"] == ["Rupture Pulse"] and out["left"] == ["Overload Protocol"]
+    assert not yt.uploads
+
+
+def test_the_live_channel_file_keeps_rupture_pulse_off_youtube():
+    ch = json.loads((Path(__file__).parent.parent / "site/data/channel.json").read_text())
+    assert "Rupture Pulse" in ch["withdrawn"]
+    vs = json.loads((Path(__file__).parent.parent / "site/data/versions.json").read_text())
+    rp = next(e for e in vs["records"] if e["title"] == "Rupture Pulse")
+    assert "published" in rp       # so the Versions swap never re-uploads it
+
+
 def test_short_body_keeps_the_records_words_and_drops_links_and_footer():
     desc = ("Industrial Hard Techno at 154 BPM. An ANCHOR original, free download below.\n\n"
             "Steel on steel, and a drop that does not ask.\n\n"

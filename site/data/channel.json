@@ -1,6 +1,10 @@
 {
  "channel": "UCAKPJrMOwspkOXY1aLKaAkQ",
  "note": "The channel's uploads that the robot did not make, with the genre phrase and tempo each title carries. Read by 'anchor retitle'; robot drops come from the catalog.",
+ "withdrawn": [
+  "Rupture Pulse"
+ ],
+ "withdrawn_note": "Records you took off the channel. Full videos never rebuild or re-upload them.",
  "videos": {
   "kbMQz4tWUtU": {
    "title": "Rupture Pulse",

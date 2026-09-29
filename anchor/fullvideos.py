@@ -66,10 +66,14 @@ def plan(catalog: dict, videos: list[dict], channel: dict | None = None) -> dict
     for v in public.values():
         if v["id"] not in shorts and seconds(v.get("duration")) > SHORT_MAX_S:
             fulls.setdefault(key(v["title"]), []).append(v)
-    out = {"linked": [], "found": [], "todo": [], "no_audio": [], "not_public": []}
+    out = {"linked": [], "found": [], "todo": [], "no_audio": [], "not_public": [], "withdrawn": []}
+    withdrawn = {key(t) for t in (channel or {}).get("withdrawn", [])}
     for r in records(catalog, channel):
         sid = video_id(r.get("youtube_url"))
         if not sid:
+            continue
+        if key(r["title"]) in withdrawn:      # taken down by you: never rebuilt or re-uploaded
+            out["withdrawn"].append(r)
             continue
         if sid not in public:
             out["not_public"].append(r)
@@ -203,6 +207,7 @@ def run(profile: Profile, *, repo: str, work: Path, limit: int = 2, api=None,
     by_id = {v["id"]: v for v in videos}
     p = plan(catalog, videos, channel)
     done = {"linked_existing": [], "uploaded": [], "no_audio": [r["title"] for r in p["no_audio"]],
+            "withdrawn": [r["title"] for r in p["withdrawn"]],
             "left": [], "errors": []}
     if dry_run:
         done["found"] = [f"{r['title']} -> {v['id']}" for r, v in p["found"]]
