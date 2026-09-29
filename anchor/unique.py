@@ -137,6 +137,15 @@ def is_same_record(score: dict) -> bool:
     return score["envelope"] > AUDIO_MAX_SIMILARITY or score["sequence"] > SEQUENCE_MAX_SIMILARITY
 
 
+# Two different records this close already sound alike to the ear (2026-09-29: Null Monolith 0.70
+# and Afterburn 0.65 against Grid Blade), so a new take this close is sent back too.
+SOUND_ALIKE = 0.60
+
+
+def sounds_alike(score: dict) -> bool:
+    return max(score["envelope"], score["sequence"]) >= SOUND_ALIKE
+
+
 def released_prints(catalog_path: Path, work: Path, limit: int = 40) -> dict[str, dict]:
     """Prints of the released masters (cached as .npz next to the build)."""
     from .audio import decode

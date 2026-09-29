@@ -18,7 +18,7 @@ from .queue import QUEUE, mark_done, next_track
 from .publish import Buffer, BufferError, build_post_input, build_reel_input, schedule_for, verify_media_url
 from .seo import description as seo_description, genre_phrase, hook_title
 from .youtube import YouTube, YouTubeError, configured as youtube_configured, playlist_id
-from .unique import COVER_MIN_DISTANCE, check_audio, is_same_record, nearest_cover
+from .unique import COVER_MIN_DISTANCE, check_audio, is_same_record, nearest_cover, sounds_alike
 from .util import iso, log, read_json, utcnow, write_json
 from .video import poster_frame, render_full, render_short
 
@@ -97,7 +97,7 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         ok, fails, warns = quality_gate(stats_audio, brief)
         # a record that resembles one already out is a failed attempt, same as bad audio
         sim, twin, score = check_audio(raw, catalog_path, out_dir / "unique-audio")
-        if twin and is_same_record(score):
+        if twin and (is_same_record(score) or sounds_alike(score)):
             ok = False
             fails = [*fails, f"sounds like released drop {twin} (envelope {score['envelope']:.2f}, "
                              f"spectral sequence {score['sequence']:.2f})"]

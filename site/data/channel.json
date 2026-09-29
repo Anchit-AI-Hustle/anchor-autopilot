@@ -5,6 +5,11 @@
   "Rupture Pulse"
  ],
  "withdrawn_note": "Records you took off the channel. Full videos never rebuild or re-upload them.",
+ "sound_alikes": {
+  "Afterburn": "Grid Blade",
+  "Null Monolith": "Grid Blade"
+ },
+ "sound_alikes_note": "Songs that sound like an earlier record (audio prints 0.60 or closer, measured 2026-09-29: Null Monolith 0.70 and Afterburn 0.65 against Grid Blade). They stay on the channel but out of every playlist.",
  "videos": {
   "kbMQz4tWUtU": {
    "title": "Rupture Pulse",

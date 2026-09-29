@@ -59,6 +59,14 @@ jobs:
           [ "${{ inputs.dry_run }}" = "true" ] && FLAGS+=(--dry-run)
           python -m anchor fullvideos "${FLAGS[@]}" | tee fullvideos.json
 
+      - name: Keep the playlists clean (every full video in ANCHOR, no song twice, none left out)
+        if: ${{ steps.run.outputs.skipped != 'true' && !inputs.dry_run }}
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python -m anchor playlists | tee playlists.json
+
       - name: Commit the new links
         if: ${{ always() && steps.run.outputs.skipped != 'true' && !inputs.dry_run }}
         run: |

@@ -177,6 +177,33 @@ class YouTube:
                    {"snippet": {"playlistId": playlist_id, "resourceId": {"kind": "youtube#video", "videoId": video_id}}})
         log(f"youtube: {video_id} added to playlist {playlist_id}")
 
+    def playlists(self, channel_id: str) -> list[dict]:
+        """The channel's own playlists: id and title."""
+        out, token = [], None
+        while True:
+            params = {"part": "snippet", "channelId": channel_id, "maxResults": 50, **({"pageToken": token} if token else {})}
+            page = self._json("GET", "playlists", params)
+            out += [{"id": p["id"], "title": p["snippet"].get("title", "")} for p in page.get("items", [])]
+            token = page.get("nextPageToken")
+            if not token:
+                return out
+
+    def playlist_items(self, playlist_id: str) -> list[dict]:
+        """Every entry of a playlist in order: the entry's own id (what a removal needs) and its video."""
+        out, token = [], None
+        while True:
+            params = {"part": "snippet", "playlistId": playlist_id, "maxResults": 50, **({"pageToken": token} if token else {})}
+            page = self._json("GET", "playlistItems", params)
+            out += [{"item": i["id"], "video": i["snippet"]["resourceId"].get("videoId")} for i in page.get("items", [])]
+            token = page.get("nextPageToken")
+            if not token:
+                return out
+
+    def remove_from_playlist(self, item_id: str) -> None:
+        """Takes one entry out of a playlist. The video itself is untouched."""
+        self._json("DELETE", "playlistItems", {"id": item_id})
+        log(f"youtube: playlist entry {item_id} removed")
+
     # ------------------------------------------------------------ the catalogue
     def channel_videos(self, channel_id: str) -> list[dict]:
         """Every upload on the channel: id, title, description, tags, categoryId, duration."""

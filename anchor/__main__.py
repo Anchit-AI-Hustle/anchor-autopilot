@@ -88,6 +88,8 @@ def main(argv: list[str] | None = None) -> int:
     vs.add_argument("--out", default="build/versions")
     vs.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
 
+    pls = sub.add_parser("playlists", help="every full video in the ANCHOR playlist; no song twice, none you left out (Data API)")
+    pls.add_argument("--dry-run", action="store_true")
     fv = sub.add_parser("fullvideos", help="every Short on the channel gets its full track as a video (Data API)")
     fv.add_argument("--max", type=int, default=2, help="uploads this run (1,600 API units each; the channel has 10,000 a day)")
     fv.add_argument("--dry-run", action="store_true", help="list what would be linked or uploaded, change nothing")
@@ -189,6 +191,11 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "fullvideos":
         from . import fullvideos
         out = fullvideos.run(profile, repo=args.repo, work=Path(args.out), limit=args.max, dry_run=args.dry_run)
+        print(json.dumps(out, indent=2, ensure_ascii=False))
+        return 1 if out["errors"] else 0
+    elif args.cmd == "playlists":
+        from . import playlists
+        out = playlists.run(profile, dry_run=args.dry_run)
         print(json.dumps(out, indent=2, ensure_ascii=False))
         return 1 if out["errors"] else 0
     elif args.cmd == "uploads":
