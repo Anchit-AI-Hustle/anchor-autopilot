@@ -985,7 +985,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-10-01T10:18:28Z",
+    "checked_at": "2026-10-02T09:55:46Z",
     "total": 21,
     "postable": 20,
     "families": 9,
@@ -2184,6 +2184,88 @@
         }
       },
       {
+        "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "title": "Silent Transmission",
+        "duration_s": 122.7,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful distorted rawstyle kick dominant, deep tight mono sub bass aligned with kick phase, minimal industrial percussion, subtle atmospheric tension pads.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging mids and highs, mono-compatible sub bass, club-ready mixdown, large sound system optimized, Tomorrowland mainstage quality, Berghain warehouse authority, Verknipt and Awakenings festival energy.\n\nVocals minimal hypnotic repetitive techno vocal phrases, breathy female or androgynous voice, emotionally neutral, immersi",
+        "model": "v4.5-all",
+        "plays": 10,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:15:24.869Z",
+        "image": "https://cdn2.suno.ai/image_large_568df3fe-272a-45db-92f6-f139b3e6d8dc.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/568df3fe-272a-45db-92f6-f139b3e6d8dc.m4a",
+        "video_url": "https://cdn1.suno.ai/568df3fe-272a-45db-92f6-f139b3e6d8dc.mp4",
+        "url": "https://suno.com/song/568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "rating": 7.7,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 2:02 - good for a Short",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.2,
+            "max": 2.5,
+            "note": "2:02 - just long enough for a full release"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "10 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:02 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.7/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 2:02 - just long enough for a full release. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "d911518a-edb8-4009-a694-935add5470f9",
+            "title": "Silent Transmission",
+            "score": 0.96
+          }
+        ],
+        "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        }
+      },
+      {
         "id": "bba502a3-ebed-411a-8161-54153eca984b",
         "title": "Do It",
         "duration_s": 208.4,
@@ -2262,88 +2344,6 @@
         "decision": {
           "verdict": "held",
           "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
-        }
-      },
-      {
-        "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
-        "title": "Silent Transmission",
-        "duration_s": 122.7,
-        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful distorted rawstyle kick dominant, deep tight mono sub bass aligned with kick phase, minimal industrial percussion, subtle atmospheric tension pads.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging mids and highs, mono-compatible sub bass, club-ready mixdown, large sound system optimized, Tomorrowland mainstage quality, Berghain warehouse authority, Verknipt and Awakenings festival energy.\n\nVocals minimal hypnotic repetitive techno vocal phrases, breathy female or androgynous voice, emotionally neutral, immersi",
-        "model": "v4.5-all",
-        "plays": 9,
-        "upvotes": 0,
-        "created_at": "2026-02-24T20:15:24.869Z",
-        "image": "https://cdn2.suno.ai/image_large_568df3fe-272a-45db-92f6-f139b3e6d8dc.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/568df3fe-272a-45db-92f6-f139b3e6d8dc.m4a",
-        "video_url": "https://cdn1.suno.ai/568df3fe-272a-45db-92f6-f139b3e6d8dc.mp4",
-        "url": "https://suno.com/song/568df3fe-272a-45db-92f6-f139b3e6d8dc",
-        "rating": 7.6,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (techno, industrial, rawstyle), 2:02 - good for a Short",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 4.0,
-            "max": 4.0,
-            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
-          },
-          {
-            "name": "Length",
-            "score": 2.2,
-            "max": 2.5,
-            "note": "2:02 - just long enough for a full release"
-          },
-          {
-            "name": "Model",
-            "score": 1.2,
-            "max": 1.5,
-            "note": "made on Suno v4.5-all - good, half a point behind v5"
-          },
-          {
-            "name": "Traction",
-            "score": 0.2,
-            "max": 1.5,
-            "note": "9 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "2:02 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "4.0 against a 2.0 floor"
-          }
-        ],
-        "summary": "Rated 7.6/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 2:02 - just long enough for a full release. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [
-          {
-            "id": "d911518a-edb8-4009-a694-935add5470f9",
-            "title": "Silent Transmission",
-            "score": 0.96
-          }
-        ],
-        "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
-        "group_size": 2,
-        "group_pick": false,
-        "idea_posted": true,
-        "decision": {
-          "verdict": "held",
-          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         }
       },
       {
