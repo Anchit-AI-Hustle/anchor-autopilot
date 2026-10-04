@@ -73,6 +73,42 @@ def test_style_prompt_carries_all_nine_layers():
     assert len(cap) < 1400, "compressed prose, not the design headings"
 
 
+def test_every_brief_stays_compressed():
+    """Every day's prompt, in every lane, stays inside the budget, not just one sample day."""
+    p = load_profile()
+    start = date(2026, 10, 1)
+    for i in range(120):
+        b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
+        assert len(b["caption"]) < 1400, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
+
+
+DARK = ("dark", "menac", "oppressive", "dread", "cold", "hostile", "claustrophob", "gloom",
+        "dystopi", "paranoid", "brutal", "fury", "hollow", "exhausted", "grim")
+
+
+def test_songs_are_briefed_bouncy_and_fun():
+    """Anchit, 2026-10-04: songs must be more bouncy and more fun. Every lane's sound layers
+    carry bounce, the channel-wide feel rides in every prompt, and nothing the model is told
+    to make sounds dark or menacing (the genre and SEO lines are left alone)."""
+    p = load_profile()
+    feel = p.music["feel"]
+    assert "bouncy" in feel and "fun" in feel
+    assert "gloomy" in p.music["negative"] and "trance uplift" not in p.music["negative"]
+    for lane in p.lanes:
+        sound = " ".join([lane.caption, lane.era, lane.groove, lane.production,
+                          *lane.mood_arcs, *lane.special_moments, *lane.textures]).lower()
+        assert "bounc" in lane.caption.lower() and "bounc" in lane.groove.lower(), lane.id
+        hits = [w for w in DARK if w in sound]
+        assert not hits, f"lane {lane.id} still briefs {hits}"
+    start = date(2026, 10, 1)
+    for i in range(30):
+        b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
+        assert f"Feel: {feel}" in b["caption"], b["date"]
+        said = b["caption"].replace(feel, "").lower() + b["lyrics"].lower()
+        assert not [w for w in DARK if w in said], b["date"]
+        assert "bouncing bass" in b["caption"]
+
+
 def test_style_prompt_rotates_within_a_lane():
     """Two days in the same lane must not be the same record with a different date."""
     p = load_profile()

@@ -109,9 +109,9 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
     layers = [
         lane.caption,                                                   # 1 genre + core sound
         lane.era,                                                       # 2 era / sonic world
-        f"Mood: {mood}",                                                # 3 mood trajectory
+        f"Mood: {mood}. Feel: {music['feel']}",                         # 3 mood trajectory + the channel's feel
         f"{bpm} BPM, {lane.groove}",                                    # 4 tempo / rhythm
-        f"Instruments: distorted kick and sub bass carry it; {t0} sits under the intro, "
+        f"Instruments: punchy kick and bouncing bass carry it; {t0} sits under the intro, "
         f"{t1} arrives with the build, {t2} owns the breakdown",        # 5 instruments + entry
         music["vocals"],                                                # 6 vocals
         f"Production: {lane.production}; {music['mastering']}",         # 7 production

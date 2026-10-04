@@ -137,7 +137,7 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
             if not (len(colour) == 7 and colour.startswith("#")):
                 problems.append(f"family {fam.id}: colour {colour!r} must be #rrggbb")
     music = raw["music"]
-    for name in ("vocals", "mastering", "negative"):
+    for name in ("vocals", "mastering", "negative", "feel"):
         if not music.get(name):
             problems.append(f"music.{name} is missing")
     if not (10 <= int(music["duration_s"]) <= 600):
