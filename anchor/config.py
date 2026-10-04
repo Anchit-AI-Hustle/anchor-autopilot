@@ -33,6 +33,9 @@ class Lane:
     production: str = ""
     mood_arcs: tuple[str, ...] = ()
     special_moments: tuple[str, ...] = ()
+    # a retired lane is never drawn for a new day; it stays so records already out keep
+    # their own genre in titles, descriptions, mixes and the retitle
+    retired: bool = False
 
 
 @dataclass(frozen=True)
@@ -53,6 +56,11 @@ class Profile:
     families: tuple[Family, ...] = field(default_factory=tuple)
 
     # convenience accessors -------------------------------------------------
+    @property
+    def active_lanes(self) -> tuple[Lane, ...]:
+        """The lanes a new day is drawn from (retired lanes only describe past records)."""
+        return tuple(l for l in self.lanes if not l.retired)
+
     @property
     def artist(self) -> dict:
         return self.raw["artist"]
@@ -98,6 +106,7 @@ def load_profile(path: Path | str = PROFILE_PATH) -> Profile:
             era=l.get("era", ""), groove=l.get("groove", ""), production=l.get("production", ""),
             mood_arcs=tuple(l.get("mood_arcs", [])),
             special_moments=tuple(l.get("special_moments", [])),
+            retired=bool(l.get("retired", False)),
         )
         for l in raw["music"]["lanes"]
     )
@@ -115,6 +124,10 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
     problems = []
     if not lanes:
         problems.append("music.lanes is empty")
+    elif all(l.retired for l in lanes):
+        problems.append("music.lanes has no active lane (every lane is retired)")
+    if len({l.id for l in lanes}) != len(lanes):
+        problems.append("music.lanes has a duplicate id")
     if len(families) < 4:
         problems.append("visual.families needs at least 4 entries for rotation")
     for lane in lanes:
@@ -137,9 +150,12 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
             if not (len(colour) == 7 and colour.startswith("#")):
                 problems.append(f"family {fam.id}: colour {colour!r} must be #rrggbb")
     music = raw["music"]
-    for name in ("vocals", "mastering", "negative"):
+    for name in ("vocals", "mastering", "negative", "feel"):
         if not music.get(name):
             problems.append(f"music.{name} is missing")
+    voice = music.get("voice") or {}
+    if len(voice.get("whispers", [])) < 3 or not voice.get("shouts"):
+        problems.append("music.voice needs at least 3 whispers and 1 shout")
     if not (10 <= int(music["duration_s"]) <= 600):
         problems.append("music.duration_s must be 10-600")
     rng_s = music.get("duration_range_s")

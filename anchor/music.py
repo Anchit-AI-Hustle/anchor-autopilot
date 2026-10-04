@@ -32,10 +32,10 @@ SR = 48_000
 SECTION_DIRECTIONS = {
     "intro": "filtered kick alone, no sub bass yet, {t0} far back, tension only",
     "build": "hi-hats and {t1} enter, filter opening, pressure rising bar by bar",
-    "drop": "full distorted kick, sub bass in, {t1} on top, main hook at peak energy",
-    "breakdown": "kick and sub fully out for eight to sixteen bars, {t2} alone over a held drone, the room drops away, tension kept",
+    "drop": "full punchy kick, bouncing bassline in, {t1} on top, catchy main hook at peak energy, the whole room jumping",
+    "breakdown": "kick and sub fully out for eight to sixteen bars, {t2} alone over a held chord, the room drops away, a playful tease of the hook",
     "build2": "snare roll and riser, every element pulled back in",
-    "drop2": "harder than the first drop, everything at once",
+    "drop2": "bigger and bouncier than the first drop, everything at once",
     "outro": "kick and bass strip back, filter closing, {t0} last, resolve to silence",
 }
 
@@ -51,8 +51,8 @@ SHAPES = {
 }
 
 
-def arrangement(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic") -> list[tuple[str, str]]:
-    """The ordered sections for a track of this length, each with its direction.
+def section_names(duration_s: float, shape: str = "classic") -> list[str]:
+    """The ordered section names (``build2``, ``drop2`` kept distinct) for a track of this length.
 
     Sizes are chosen so each section gets roughly 8-16 bars at this channel's tempo, which
     is how the genre is actually built: filtered intro, build, drop, breakdown, drop, outro.
@@ -67,6 +67,12 @@ def arrangement(duration_s: float, textures: tuple[str, ...] = (), shape: str = 
     else:
         parts = ["intro", "build", "drop", "breakdown", "build2", "drop2", "breakdown",
                  "drop2", "outro"]
+    return list(parts)
+
+
+def arrangement(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic") -> list[tuple[str, str]]:
+    """The ordered sections for a track of this length, each with its direction."""
+    parts = section_names(duration_s, shape)
     tex = list(textures) or ["noise", "percussion", "drone"]
     while len(tex) < 3:
         tex.append(tex[-1])
@@ -89,6 +95,11 @@ def arc(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic
     tags = " -> ".join(tag for tag, _ in steps)
     last = steps[-1][1]
     return f"Arrangement: {tags}; {steps[0][1]} at the start, and the outro {last}"
+
+
+def _has_words(sheet: str) -> bool:
+    """True when the lyrics sheet has lines other than bracketed section tags."""
+    return any(line.strip() and not line.strip().startswith("[") for line in sheet.splitlines())
 
 
 class AceStepCpp:
@@ -134,7 +145,8 @@ class AceStepCpp:
             "duration": float(brief["duration_s"]),
             "keyscale": brief["key"],
             "timesignature": "4",
-            "vocal_language": "unknown",
+            # the sheet carries whispers and chants (brief.vocal_sheet): English words
+            "vocal_language": "en" if _has_words(brief.get("lyrics") or "") else "unknown",
             "seed": int(brief["seed"]),
             "inference_steps": self.steps,
             # CFG is what makes the model actually follow the caption. The turbo DiT is

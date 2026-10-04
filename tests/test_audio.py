@@ -64,3 +64,11 @@ def test_beat_phase_finds_the_grid():
         est = audio.beat_phase(x, bpm, sr)
         miss = min(abs(est - true_off), beat - abs(est - true_off))
         assert miss < 0.02, f"phase off by {miss * 1000:.0f} ms (est {est}, true {true_off})"
+
+
+
+def test_tempo_is_read_right_across_160_to_200_bpm():
+    """The channel now runs 160-200 BPM; the estimate must land on the real tempo, not half or a guess."""
+    for bpm in (160, 172, 185, 199, 200):
+        est = analyze(synth_techno(40, bpm, 3))["bpm_est"]
+        assert est is not None and abs(est - bpm) <= 0.5, (bpm, est)
