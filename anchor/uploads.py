@@ -35,7 +35,7 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
             video = fetch(RELEASES.format(repo=repo, tag=e["release"], file=e["file"]), work / e["file"], 1_000_000)
             up = api.upload(video, title=e["title"], description=e["description"], tags=e.get("tags") or [],
                             category_id=str(yt["category_id"]), privacy="public",
-                            ai_generated=bool(yt["ai_generated"]), notify=bool(yt["notify_subscribers"]))
+                            ai_generated=bool(yt["ai_generated"]), notify=bool(e.get("notify", yt["notify_subscribers"])))
         except Exception as exc:          # noqa: BLE001 - one entry's failure never stops the rest
             log(f"uploads: {e['id']}: {exc}")
             done["errors"].append(f"{e['id']}: {str(exc)[:300]}")
