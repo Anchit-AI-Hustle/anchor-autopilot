@@ -89,3 +89,29 @@ def test_the_lyric_video_entry_is_ready_to_go():
     assert len(e["description"]) <= 5000 and "[Chorus]" in e["description"]
     assert not any(c in e["description"] for c in "–—<>")
     assert e["file"].endswith(".mp4") and e["release"] == "extras-2026-09-28"
+
+
+def test_an_entry_can_go_up_without_telling_subscribers(tmp_path, monkeypatch):
+    """A Short goes up quietly; subscribers are told once, by the full track."""
+    path = setup(tmp_path, monkeypatch, [entry(1), entry(2, notify=False, playlist=False)])
+    api = FakeYouTube()
+    uploads.run(PROFILE, repo="o/r", work=tmp_path / "w", api=api, path=path)
+    assert api.uploads[0]["notify"] is bool(PROFILE.youtube["notify_subscribers"])
+    assert api.uploads[1]["notify"] is False
+    assert api.playlist == ["NEW1"]
+
+
+def test_fall_inside_full_track_and_short_are_ready_to_go():
+    """Anchit, 2026-10-04: put Fall Inside (the free ACE-Step test song) on YouTube."""
+    data = json.loads(uploads.UPLOADS_PATH.read_text())
+    full = next(x for x in data["uploads"] if x["id"] == "fall-inside-full-track")
+    short = next(x for x in data["uploads"] if x["id"] == "fall-inside-short")
+    for e in (full, short):
+        assert e["release"] == "drop-2026-10-04" and e["file"].startswith("ANCHOR-2026-10-04-fall-inside-")
+        assert e["title"] == "Fall Inside | Acid Techno 149 BPM | ANCHOR" and not e["youtube_url"]
+        assert len(e["description"]) <= 5000 and not any(c in e["description"] for c in "\u2013\u2014<>")
+        assert "AI use disclosed" in e["description"]
+    assert full["file"].endswith("-full-169.mp4") and full["thumbnail"].endswith("-frame-169.jpg")
+    assert "frame-169.jpg" != full["thumbnail"], "a name of its own: the daily run reuses frame-169.jpg"
+    assert short["file"].endswith("-short.mp4") and short["notify"] is False and short["playlist"] is False
+    assert "shorts" in short["tags"]
