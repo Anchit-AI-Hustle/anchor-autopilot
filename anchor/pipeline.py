@@ -53,8 +53,9 @@ def autofill(profile: Profile, queue_dir: Path, catalog_path: Path) -> None:
 
 
 def can_make(profile: Profile, queue_dir: Path | None = None, catalog_path: Path = CATALOG_PATH) -> tuple[bool, str]:
-    """Whether today has a song from an allowed source: a new Suno song in the queue, or an
-    engine of the chain (ElevenLabs) that has its key. Nothing else ever makes a drop."""
+    """Whether today has a song from an allowed source: a new Suno song in the queue, or a
+    free engine of the chain (ACE-Step, built later in the same run). Nothing else ever
+    makes a drop, and no paid engine is ever in the chain."""
     queue_dir = queue_dir or QUEUE
     if Path(catalog_path) == CATALOG_PATH:
         autofill(profile, queue_dir, catalog_path)
@@ -63,7 +64,10 @@ def can_make(profile: Profile, queue_dir: Path | None = None, catalog_path: Path
     from .music import engine_chain, one_engine
     for name in engine_chain(profile.music):
         try:
-            one_engine(profile.music, name).check()
+            eng = one_engine(profile.music, name)
+            if getattr(eng, "built_in_run", False):
+                return True, f"{name} is ready (free, open source; built in this run)"
+            eng.check()
             return True, f"{name} is ready"
         except Exception as exc:          # noqa: BLE001 - a missing key is the answer, not an error
             reason = str(exc)[:160]
