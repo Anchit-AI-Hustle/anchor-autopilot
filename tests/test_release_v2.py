@@ -13,7 +13,7 @@ from anchor import pipeline
 from anchor.brief import make_brief
 from anchor.config import load_profile
 from anchor.lyria import LyriaEngine, compose_input, parse_response
-from anchor.music import Fallback, FixtureEngine, get_engine
+from anchor.music import Fallback, FixtureEngine, engine_chain, get_engine
 from anchor.publish import build_reel_input
 from anchor.seo import description, hook_title, tags, youtube_title
 from anchor.unique import audio_similarity, cover_distance, envelope, nearest_cover
@@ -74,8 +74,8 @@ def test_lyria_engine_refuses_without_a_key_and_the_registry_falls_back(monkeypa
     with pytest.raises(Exception, match="GEMINI_API_KEY"):
         LyriaEngine(api_key="").check()
     p = load_profile()
-    eng = get_engine(p.music)                 # profile: ElevenLabs only (after your Suno songs)
-    assert eng.name == "elevenlabs" and not isinstance(eng, Fallback)
+    eng = get_engine(p.music)                 # profile: free ACE-Step only (after your Suno songs)
+    assert eng.name == "acestep_cpp" and not isinstance(eng, Fallback)
     chain = {**p.music, "engines": ["elevenlabs", "lyria", "acestep_cpp"]}
     assert get_engine(chain, "lyria").secondary.name == "acestep_cpp"   # naming one starts the chain there
     # the fallback actually runs the second engine when the first cannot start
@@ -269,21 +269,30 @@ def test_a_mix_without_the_channel_credentials_waits_instead_of_failing(monkeypa
 
 
 # ------------------------------------------------------------ allowed sources
-def test_a_day_is_made_only_from_a_suno_song_or_elevenlabs(tmp_path, monkeypatch):
+PAID_ENGINES = {"elevenlabs", "lyria", "thirdeye"}
+
+
+def test_songs_come_only_from_free_open_source_engines():
+    # Anchit's rule (2026-10-04): free or open-source tools only for music and video.
+    chain = engine_chain(load_profile().music)
+    assert chain == ["acestep_cpp"]
+    assert not PAID_ENGINES & set(chain)
+
+
+def test_a_day_is_made_from_a_suno_song_or_free_ace_step_and_never_a_paid_key(tmp_path, monkeypatch):
     p = load_profile()
     q = tmp_path / "queue"; q.mkdir()
     cat = tmp_path / "catalog.json"; cat.write_text("{}")
-    monkeypatch.delenv("ELEVENLABS_API_KEY", raising=False)
-    monkeypatch.setenv("GEMINI_API_KEY", "set")          # Lyria has its key and still never runs
-    ok, why = pipeline.can_make(p, q, cat)
-    assert not ok and "ELEVENLABS_API_KEY" in why
+    # Paid keys being present changes nothing: they are never used.
     monkeypatch.setenv("ELEVENLABS_API_KEY", "set")
-    assert pipeline.can_make(p, q, cat) == (True, "elevenlabs is ready")
-    monkeypatch.delenv("ELEVENLABS_API_KEY")
+    monkeypatch.setenv("GEMINI_API_KEY", "set")
+    # ACE-Step is built and downloaded later in the same run, so it counts as ready here.
+    assert pipeline.can_make(p, q, cat) == (True, "acestep_cpp is ready (free, open source; built in this run)")
     (q / "01-new-song.mp3").write_bytes(b"\0")
     assert pipeline.can_make(p, q, cat) == (True, "a new Suno song is queued")
 
 
-def test_the_daily_run_skips_a_day_without_an_allowed_source():
+def test_the_daily_run_never_hands_a_paid_key_to_the_make_step():
     wf = (Path(__file__).parent.parent / ".github/workflows/daily.yml").read_text()
-    assert "python -m anchor can-make" in wf and "ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}" in wf
+    assert "python -m anchor can-make" in wf
+    assert "ELEVENLABS_API_KEY" not in wf and "THIRD_EYE_API_KEY" not in wf and "REPLICATE_API_TOKEN" not in wf

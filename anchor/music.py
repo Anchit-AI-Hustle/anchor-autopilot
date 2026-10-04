@@ -93,6 +93,9 @@ def arc(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic
 
 class AceStepCpp:
     name = "acestep_cpp"
+    # Free and open source; the daily run builds the binary and downloads the models after
+    # it has decided the day can be made, so can-make treats it as ready before that.
+    built_in_run = True
 
     def __init__(self, bin_dir: str | Path, models_dir: str | Path, dit_model: str,
                  lm_model: str | None, steps: int = 8, shift: float = 3.0,

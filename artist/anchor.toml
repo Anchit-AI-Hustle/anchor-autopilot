@@ -35,12 +35,12 @@ every_days = 1
 anchor_date = "2026-09-20"
 
 [music]
-# Songs come from two places only (your call, 2026-09-29): your own Suno songs first (see
-# [queue]; Suno has no public API, so the robot releases what you publish on your profile),
-# then Eleven Music through the ElevenLabs API (ELEVENLABS_API_KEY, paid plan). With no new
-# Suno song and no ElevenLabs key the day is skipped (python -m anchor can-make), never
-# filled by another engine. lyria and acestep_cpp stay in the code for --engine tests only.
-engines = ["elevenlabs"]
+# Free or open-source tools only (your rule, 2026-10-04). Songs come from your own Suno
+# songs first (see [queue]; the robot releases what you publish on your profile), then
+# ACE-Step 1.5 (open source, MIT licence) running on the free GitHub runner through
+# acestep.cpp. Paid engines (ElevenLabs, Lyria, Replicate) stay in the code but are never
+# in this chain, and the daily run never receives their keys.
+engines = ["acestep_cpp"]
 elevenlabs_model = "music_v2_5"
 duration_s = 150          # full track length when no range is set (tests, queued tracks)
 duration_range_s = [135, 170]   # the day's length is drawn from here, and its arrangement shape from music.SHAPES
