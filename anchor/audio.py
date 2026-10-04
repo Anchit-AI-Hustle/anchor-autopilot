@@ -163,7 +163,7 @@ def _db(x: float) -> float:
     return float(20 * np.log10(max(x, 1e-9)))
 
 
-def estimate_bpm(mono: np.ndarray, sr: int = SR, lo: float = 110, hi: float = 190) -> float | None:
+def estimate_bpm(mono: np.ndarray, sr: int = SR, lo: float = 110, hi: float = 210) -> float | None:
     """Tempo via a comb over the onset-envelope autocorrelation (8 beat multiples, 0.1 BPM grid).
 
     Summing several multiples of the beat period removes the plateau ambiguity of a single

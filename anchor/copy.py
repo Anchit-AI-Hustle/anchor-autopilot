@@ -44,7 +44,7 @@ def facts(profile: Profile, brief: dict) -> dict:
     return {
         "title": brief["title"], "genre": lane.genre_line.split(",")[0].strip(),
         "mood": brief.get("mood"), "theme": brief.get("special"), "textures": brief.get("textures"),
-        "sung_hook": brief.get("hook"), "vocals": "sung hook" if brief.get("hook") else "instrumental",
+        "sung_hook": brief.get("hook"), "vocals": "sung hook" if brief.get("hook") else (brief.get("vocal_style") or "instrumental"),
     }
 
 

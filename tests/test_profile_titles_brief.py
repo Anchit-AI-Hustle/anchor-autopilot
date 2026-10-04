@@ -54,7 +54,7 @@ def test_brief_is_deterministic():
     b = make_brief(p, "2026-09-11", [])
     assert a == b
     assert a["post_at"] == "2026-09-11T17:30:00Z"
-    assert "[Instrumental]" not in a["caption"] and "instrumental" in a["caption"]
+    assert "[Instrumental]" not in a["caption"] and "Vocals: whispers" in a["caption"]
 
 
 def test_style_prompt_carries_all_nine_layers():
@@ -94,7 +94,8 @@ def test_songs_are_briefed_bouncy_and_fun():
     feel = p.music["feel"]
     assert "bouncy" in feel and "fun" in feel
     assert "gloomy" in p.music["negative"] and "trance uplift" not in p.music["negative"]
-    for lane in p.lanes:
+    assert "never dark" in feel
+    for lane in p.active_lanes:
         sound = " ".join([lane.caption, lane.era, lane.groove, lane.production,
                           *lane.mood_arcs, *lane.special_moments, *lane.textures]).lower()
         assert "bounc" in lane.caption.lower() and "bounc" in lane.groove.lower(), lane.id
@@ -132,7 +133,7 @@ def test_brief_rotation_rules_over_60_days():
         window = hist[i - 3:i]
         assert hist[i]["family"] not in {w["family"] for w in window}
         assert hist[i]["key"] not in {w["key"] for w in window}
-    assert len({h["lane"] for h in hist}) == len(p.lanes), "every lane gets airtime"
+    assert len({h["lane"] for h in hist}) == len(p.active_lanes), "every active lane gets airtime"
 
 
 def test_brief_description_and_bounds():
@@ -144,3 +145,61 @@ def test_brief_description_and_bounds():
     assert f"{b['bpm']} BPM" in b["description"] and b["key"] not in b["description"]
     assert "#hardtechno" in b["description"] and "AI use disclosed" in b["description"]
     assert len(b["youtube_title"]) <= 100
+
+
+def test_every_song_is_hard_acid_or_psychedelic_at_160_to_200_bpm():
+    """Anchit, 2026-10-04: hard techno and acid psychedelic vibes, 160-200 BPM, with bounce."""
+    p = load_profile()
+    for lane in p.active_lanes:
+        assert 160 <= lane.bpm[0] <= lane.bpm[1] <= 200, (lane.id, lane.bpm)
+        style = (lane.caption + " " + lane.genre_line).lower()
+        assert any(w in style for w in ("hard techno", "acid", "psychedelic", "hyper")), lane.id
+    lanes = " ".join(l.genre_line.lower() for l in p.active_lanes)
+    assert "acid techno" in lanes and "psychedelic techno" in lanes and "hard techno" in lanes
+    assert {l.bpm[1] for l in p.active_lanes} & set(range(195, 201)), "the top of the range is used"
+    start = date(2026, 10, 1)
+    seen = set()
+    for i in range(120):
+        b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
+        assert 160 <= b["bpm"] <= 200
+        seen.add(b["lane"])
+    assert seen == {l.id for l in p.active_lanes}
+
+
+def test_songs_whisper_in_the_quiet_parts_and_chant_the_title_in_the_drops():
+    """Anchit, 2026-10-04: whispers or lyrics as chants."""
+    from anchor.music import AceStepCpp
+    p = load_profile()
+    assert "vocals" not in p.music["negative"].split(", ") and "lyrics" not in p.music["negative"]
+    for i in range(1, 29):
+        b = make_brief(p, f"2026-10-{i:02d}", [])
+        sections = b["lyrics"].split("\n\n")
+        chant = b["title"].upper()
+        for sec in sections:
+            tag, *words = sec.split("\n")
+            assert tag.startswith("[") and tag.endswith("]") and words and all(w.strip() for w in words), sec
+            if tag.startswith("[drop "):
+                assert "shouted crowd chant" in tag and words[0] == f"{chant}! {chant}!"
+            if tag.startswith(("[intro ", "[breakdown ", "[outro ")):
+                assert "whispered voice" in tag and words[0] in p.music["voice"]["whispers"]
+        assert sum(1 for s_ in sections if s_.startswith("[drop ")) >= 1
+        assert b["vocal_style"] and "chant" in b["vocal_style"]
+        req = AceStepCpp("bin", "models", "dit", None).request(b)
+        assert req["vocal_language"] == "en" and req["lyrics"] == b["lyrics"]
+        assert len(b["lyrics"]) < 2500
+
+
+def test_records_already_out_keep_their_own_genre():
+    """The old lanes are retired, not rewritten: a drop on record as "industrial" still reads
+    Industrial Hard Techno in titles, mixes and the weekly retitle, and is never drawn again."""
+    from anchor.seo import genre_phrase
+    p = load_profile()
+    old = {"industrial": "Industrial Hard Techno", "rawstyle": "Rawstyle Hybrid", "hypnotic": "Hypnotic Techno",
+           "acid": "Acid Techno", "bunker": "Dark Techno", "cyber": "Cyberpunk Techno"}
+    for lane_id, phrase in old.items():
+        lane = p.lane(lane_id)
+        assert lane.retired and genre_phrase(lane) == phrase and lane not in p.active_lanes
+    assert not ({l.id for l in p.active_lanes} & set(old))
+    start = date(2026, 10, 1)
+    for i in range(60):
+        assert make_brief(p, (start + timedelta(days=i)).isoformat(), [])["lane"] not in old

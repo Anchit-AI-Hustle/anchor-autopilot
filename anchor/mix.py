@@ -124,7 +124,9 @@ def words(profile: Profile, chapters: list[dict], period: str, vol: int, duratio
     year = day[:4]
     minutes = int(round(duration_s / 60))
     kind = "Monthly Mix" if period == "month" else "Mix"
-    title = f"{lead} {kind} {year} | {name} Vol. {vol} | {len(chapters)} tracks, {minutes} min, 150+ BPM warehouse rave"
+    bpms = [int(c["bpm"]) for c in chapters if c.get("bpm")]
+    floor = min(bpms) // 10 * 10 if bpms else 150      # 150+ for the old records, 160+ for the bounce era
+    title = f"{lead} {kind} {year} | {name} Vol. {vol} | {len(chapters)} tracks, {minutes} min, {floor}+ BPM warehouse rave"
     if len(title) > 100:
         title = f"{lead} {kind} {year} | {name} Vol. {vol} | {minutes} min"
     lines = [f"{lead} mix, {minutes} minutes, {len(chapters)} original {name} tracks back to back. "

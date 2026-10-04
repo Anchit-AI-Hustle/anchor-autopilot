@@ -40,7 +40,7 @@ def test_lyria_prompt_carries_the_nine_layers_and_the_length_in_words():
     assert b["caption"] in text and b["lyrics"] in text
     mm, ss = divmod(b["duration_s"], 60)
     assert f"exactly {mm}:{ss:02d} ({b['duration_s']} seconds)" in text and f"{b['bpm']} BPM" in text and b["key"] in text
-    assert "Avoid:" in text and "trance uplift" in text
+    assert "Avoid:" in text and b["negative"] in text   # the whole avoid list rides along
 
 
 def test_length_and_arrangement_shape_are_drawn_for_the_day_so_records_do_not_share_a_timeline():
