@@ -48,3 +48,9 @@ def isolated_queue(tmp_path, monkeypatch):
     # saw the real catalogue would find its own fixture songs "already posted"
     monkeypatch.setattr("anchor.config.CATALOG_PATH", tmp_path / "_no_catalog.json")
     return q
+
+
+@pytest.fixture(autouse=True)
+def _no_lyric_models(monkeypatch):
+    """Vocal separation and transcription take minutes; the lyric tests switch them back on."""
+    monkeypatch.setenv("ANCHOR_LYRICS", "0")

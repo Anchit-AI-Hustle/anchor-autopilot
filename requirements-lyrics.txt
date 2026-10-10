@@ -1,0 +1,8 @@
+# Optional: timed lyrics for the full videos (vocal separation + word-level transcription).
+# Without these the videos are still made, as motion videos with no lyrics.
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch
+torchaudio
+soundfile
+demucs==4.1.0
+faster-whisper==1.2.1

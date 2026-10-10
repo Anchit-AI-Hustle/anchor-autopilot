@@ -6,7 +6,7 @@ import shutil
 from datetime import date as Date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import catalog, craft, ledger
+from . import catalog, craft, ledger, lyrics
 from .art import make_cover, og_card
 from .audio import (analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
@@ -231,8 +231,10 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     poster_frame(mp4, out_dir / "poster.jpg", min(3.0, length / 2))
     lane = profile.lane(brief["lane"])
     # the 16:9 frame sets its own type over the raw art; the 9:16 shows the finished cover
+    lines = lyrics.lines_for(mp3, out_dir / "lyrics", brief.get("lyrics_sung"))   # [] for an instrumental
     full = render_full(out_dir / "cover_art_raw.jpg", out_dir / "cover.jpg", mp3, out_dir, base, brief,
-                       genre_phrase(lane), profile.artist["name"], accent=fam.accent)
+                       genre_phrase(lane), profile.artist["name"], accent=fam.accent, fam=fam,
+                       cover_1080=out_dir / "cover_1080.jpg", handle=profile.artist["handle"], lines=lines)
 
     meta = {
         "brief": brief,
