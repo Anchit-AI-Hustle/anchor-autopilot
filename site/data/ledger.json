@@ -1,6 +1,95 @@
 {
   "entries": [
     {
+      "id": "mix-week-2026-10-11",
+      "date": "2026-10-11",
+      "title": "Hard Techno Mix 2026 | ANCHOR Vol. 1 | 4 tracks, 9 min, 160+ BPM warehouse rave",
+      "source": "mix",
+      "made_at": "2026-10-11T16:47:02Z",
+      "recorded_at": "2026-10-11T16:47:10Z",
+      "lane": "mix",
+      "bpm": null,
+      "family": null,
+      "accent": null,
+      "cover": "covers/mix-week-2026-10-11.jpg",
+      "engine": {
+        "name": "mix",
+        "model": null,
+        "render_s": null,
+        "fallback_from": null
+      },
+      "variants": [],
+      "files": [
+        {
+          "role": "mix master",
+          "file": "ANCHOR-week-mix-2026-10-11-vol-1.mp3",
+          "spec": "MP3 320k, -14.17 LUFS, 550 s"
+        },
+        {
+          "role": "full video 16:9",
+          "file": "ANCHOR-week-mix-2026-10-11-vol-1-full-169.mp4",
+          "spec": "1920x1080, 550 s"
+        },
+        {
+          "role": "thumbnail 16:9",
+          "file": "frame-169.jpg",
+          "spec": "1920x1080 frame"
+        }
+      ],
+      "uploads": [
+        {
+          "target": "youtube_full",
+          "file": "ANCHOR-week-mix-2026-10-11-vol-1-full-169.mp4",
+          "status": "needs youtube credentials",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "github_release",
+          "file": "ANCHOR-week-mix-2026-10-11-vol-1.mp3",
+          "status": "released",
+          "url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/mix-week-2026-10-11/ANCHOR-week-mix-2026-10-11-vol-1.mp3",
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "site",
+          "file": "cover_600.jpg",
+          "status": "listed",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        }
+      ],
+      "fields": [
+        {
+          "field": "tracks",
+          "value": "Turbo Grid (167 BPM) at 0 s, Liquid Cipher (167 BPM) at 152 s, Transmit Spiral (169 BPM) at 274 s, Lift Off (195 BPM) at 398 s",
+          "rule": "The period's released drops in tempo order, so the set climbs; each matched to -14 LUFS and joined with an eight-bar equal-power crossfade, the incoming record entering on its own downbeat. No time-stretching.",
+          "evidence": null,
+          "group": "record"
+        },
+        {
+          "field": "youtube title",
+          "value": "Hard Techno Mix 2026 | ANCHOR Vol. 1 | 4 tracks, 9 min, 160+ BPM warehouse rave",
+          "rule": "The genre phrase and the year first, then the artist and the volume, then what is inside: a mix is found by search, and every breakout mix in this niche is titled this way.",
+          "evidence": "79 chars",
+          "group": "content"
+        },
+        {
+          "field": "description",
+          "value": "Hard Techno mix, 9 minutes, 4 original ANCHOR tracks back to back. The week in one set, in tempo order. Free downloads of every track below.\n\nTracklist\n0:00 Turbo Grid (167 BPM)\n2:32 Liquid Cipher (167 BPM)\n4:33 Transmit Spiral (169 BPM)\n6:37 Lift Off (195 BPM)\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #technomix #rawstylehybrid",
+          "rule": "One search line, then the tracklist as chapters (a clock time per track, which is navigation, not hype), then the footer.",
+          "evidence": null,
+          "group": "content"
+        }
+      ]
+    },
+    {
       "id": "2026-10-10",
       "date": "2026-10-10",
       "title": "Liquid Cipher",
@@ -6314,5 +6403,5 @@
       "note": null
     }
   ],
-  "updated_at": "2026-10-10T19:20:23Z"
+  "updated_at": "2026-10-11T16:47:10Z"
 }
