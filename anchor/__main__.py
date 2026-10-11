@@ -90,6 +90,13 @@ def main(argv: list[str] | None = None) -> int:
 
     pls = sub.add_parser("playlists", help="every full video in the ANCHOR playlist; no song twice, none you left out (Data API)")
     pls.add_argument("--dry-run", action="store_true")
+    mo = sub.add_parser("motion", help="re-render a released song's full videos as motion graphics (beat punch-in, spectrum)")
+    mo.add_argument("--list", action="store_true", help="print the ids of every song with a master on its release")
+    mo.add_argument("--id", default=None)
+    mo.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
+    mo.add_argument("--out", default="build/motion")
+    mo.add_argument("--upload", action="store_true", help="replace the videos on the song's GitHub release")
+
     fv = sub.add_parser("fullvideos", help="every Short on the channel gets its full track as a video (Data API)")
     fv.add_argument("--max", type=int, default=2, help="uploads this run (1,600 API units each; the channel has 10,000 a day)")
     fv.add_argument("--dry-run", action="store_true", help="list what would be linked or uploaded, change nothing")
@@ -193,6 +200,15 @@ def main(argv: list[str] | None = None) -> int:
         out = fullvideos.run(profile, repo=args.repo, work=Path(args.out), limit=args.max, dry_run=args.dry_run)
         print(json.dumps(out, indent=2, ensure_ascii=False))
         return 1 if out["errors"] else 0
+    elif args.cmd == "motion":
+        from . import motion
+        if args.list:
+            print(json.dumps([d["id"] for d in motion.songs(read_json(CATALOG_PATH, {}) or {})]))
+            return 0
+        if not args.id:
+            raise SystemExit("motion: give --list or --id")
+        out = motion.run(profile, repo=args.repo, song_id=args.id, work=Path(args.out), do_upload=args.upload)
+        print(json.dumps(out, indent=2, ensure_ascii=False))
     elif args.cmd == "playlists":
         from . import playlists
         out = playlists.run(profile, dry_run=args.dry_run)

@@ -215,7 +215,8 @@ def build_graph(fam: Family, bpm: int, duration: float, texts: dict[str, Path],
 
 
 def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: dict,
-                 artist: str, handle: str, workdir: Path, beat_offset: float = 0.0) -> dict:
+                 artist: str, handle: str, workdir: Path, beat_offset: float = 0.0,
+                 crf: int = 21, maxrate: str = "8M") -> dict:
     workdir.mkdir(parents=True, exist_ok=True)
     duration = media_summary(audio)["duration"]
     texts = {
@@ -243,8 +244,8 @@ def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: d
          "-loop", "1", "-framerate", str(FPS), "-i", lines,
          "-filter_complex", graph, "-map", "[vout]", "-map", "[aout]",
          "-t", f"{duration:.3f}", "-r", str(FPS),
-         "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-maxrate", "8M", "-bufsize", "16M",
-         "-profile:v", "high",
+         "-c:v", "libx264", "-preset", "veryfast", "-crf", str(crf), "-maxrate", maxrate,
+         "-bufsize", f"{2 * int(maxrate[:-1])}M", "-profile:v", "high",
          "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN, "-ar", "48000",
          "-movflags", "+faststart", out], timeout=1800)
     info = media_summary(out)
@@ -354,23 +355,40 @@ def render_still(frame: Path, audio: Path, out: Path, crf: int = 23) -> dict:
     return info
 
 
-def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 23, timeout: int = 1800) -> dict:
-    """The 16:9 frame with the record moving on it: a waveform in the family accent along the
-    bottom and a thin progress bar. A still frame lost most viewers inside thirty seconds
-    (channel analytics, Sept 2026: 0:30 average view from impressions); something on screen
-    that follows the kick keeps the listener with the track."""
+def beat_pulse_expr(bpm: float, beat_offset: float = 0.0, amp: float = 1.0, t0: float = 0.0) -> str:
+    """0..amp pulse as an ffmpeg expression: amp exactly on the beat, gone before the next.
+    ``t0`` is the absolute time of the stream's frame 0 (a scene that starts mid-song)."""
+    beat = 60.0 / float(bpm)
+    return (f"{amp}*exp(-{PULSE_DECAY}*mod(t+{t0:.5f}+{beat:.5f}-{beat_offset:.4f},{beat:.5f})/{beat:.5f})")
+
+
+def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 23, timeout: int = 1800,
+                  bpm: float | None = None, beat_offset: float = 0.0) -> dict:
+    """The 16:9 frame as a motion-graphics video: the whole frame punches in on every beat (a
+    2.4 % zoom that settles before the next one) with a matching brightness flash, a live
+    spectrum in the family accent under the title, rolling scanlines, a flicker and a progress
+    bar. A still frame lost most viewers inside thirty seconds (channel analytics, Sept 2026:
+    0:30 average view from impressions); something that moves with the kick keeps them. Without
+    ``bpm`` (hand-made records of unknown tempo) the beat layers are left out and the spectrum,
+    scanlines and bar remain."""
     duration = media_summary(audio)["duration"]
-    r, g, b = (c / 255 for c in HOLO)
     lines = scanlines(1920, 1080, Path(out).with_suffix(".scanlines.png"))
+    a = _ff(accent)
+    if bpm:
+        punch = beat_pulse_expr(bpm, beat_offset)
+        # format before scale: a trailing format pins the link size and freezes the per-frame resize
+        bg = (f"[0:v]format=yuv420p,scale=w='1920*(1+0.024*({punch}))':h=-2:eval=frame,crop=1920:1080,"
+              f"eq=brightness='{FLICKER}+0.055*({punch})':eval=frame[bg]")
+    else:
+        bg = f"[0:v]format=yuv420p,eq=brightness='{FLICKER}':eval=frame[bg]"
     graph = ";".join([
-        f"[0:v]format=yuv420p,eq=brightness='{FLICKER}':eval=frame[bg]",
+        bg,
         "[1:a]asplit=2[aout][aviz]",
-        # drawn white and tinted afterwards: showwaves' cline mode mangles a coloured line
-        "[aviz]showwaves=s=960x180:mode=cline:rate=30:colors=white|white:scale=sqrt,format=rgba,"
-        f"colorkey=0x000000:0.2:0.1,colorchannelmixer=rr={r:.3f}:gg={g:.3f}:bb={b:.3f}:aa=0.55[wave]",
-        "[bg][wave]overlay=x=80:y=870:shortest=1[s1]",   # under the title; the hologram keeps its own side
+        f"[aviz]showfreqs=s=960x190:mode=bar:ascale=log:fscale=log:win_size=2048:averaging=2:colors={a}|{a},"
+        "format=rgba,colorkey=0x000000:0.25:0.15,colorchannelmixer=aa=0.8[wave]",
+        "[bg][wave]overlay=x=80:y=860:shortest=1[s1]",    # under the title; the hologram keeps its own side
         "[s1][2:v]overlay=x=0:y='-mod(t*24,8)':shortest=1[s1l]",
-        f"color=c={_ff(accent)}:s=1920x8:r=30[fill]",
+        f"color=c={a}:s=1920x8:r=30[fill]",
         "color=c=0x0a1622:s=1920x8:r=30[track]",
         f"[track][fill]overlay=x='-1920+1920*t/{duration:.3f}':y=0:shortest=1[bar]",
         "[s1l][bar]overlay=x=0:y=1072:shortest=1,format=yuv420p[vout]",
@@ -379,7 +397,7 @@ def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 2
          "-i", audio, "-loop", "1", "-framerate", "30", "-i", lines,
          "-filter_complex", graph, "-map", "[vout]", "-map", "[aout]",
          "-t", f"{duration:.3f}", "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", str(crf),
-         "-maxrate", "4M", "-bufsize", "8M", "-pix_fmt", "yuv420p",
+         "-maxrate", "3500k", "-bufsize", "7M", "-pix_fmt", "yuv420p",
          "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN, "-ar", "48000", "-movflags", "+faststart", out], timeout=timeout)
     lines.unlink(missing_ok=True)
     info = media_summary(out)
@@ -388,20 +406,56 @@ def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 2
     return info
 
 
+def master_beat_offset(audio: Path, bpm: float) -> float:
+    """The beat grid's phase in a whole master, so the pulses land on the kick."""
+    from .audio import beat_phase, decode
+    return beat_phase(decode(audio).mean(axis=1), float(bpm))
+
+
 def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: str, brief: dict,
-                lane_phrase: str, artist: str, accent: str | None = None) -> dict:
+                lane_phrase: str, artist: str, accent: str | None = None, *, fam: Family | None = None,
+                cover_1080: Path | None = None, handle: str | None = None,
+                beat_offset: float | None = None, lines: list[dict] | None = None) -> dict:
     """The 16:9 YouTube video and the 9:16 Reel, both verified against the audio length.
 
     ``art_raw`` is the artwork before the cover typography: the 16:9 frame sets its own title
     so nothing half-cropped shows through. ``cover`` is the finished square for the Reel.
-    With ``accent`` the 16:9 moves (waveform + progress); without it, a still at 2 fps.
+    Both move with the record: the 16:9 punches in on every beat with a live spectrum, and the
+    9:16 is the Short's design (beat-pulsed hologram cover, spectrum, title) for the whole
+    track. Without ``fam`` / ``cover_1080`` the 9:16 falls back to a still at 2 fps; without
+    ``accent`` the 16:9 does. Both are scene videos (``scenes.py``) when ``accent`` and a tempo are known, with the timed
+    ``lines`` as a caption.
     """
     fringe = accent or "#ff3bd4"
     f169 = frame_169(art_raw if art_raw.exists() else cover, brief, lane_phrase, artist, out_dir / "frame-169.jpg", fringe)
     f916 = frame_916(cover, out_dir / "frame-916.jpg", fringe)
     v169 = out_dir / f"{base}-full-169.mp4"
     v916 = out_dir / f"{base}-full-916.mp4"
-    i169 = render_motion(f169, audio, v169, accent, crf=23) if accent else render_still(f169, audio, v169, crf=23)
-    i916 = render_still(f916, audio, v916, crf=24)
+    bpm = brief.get("bpm")
+    if bpm and beat_offset is None:
+        beat_offset = master_beat_offset(audio, float(bpm))
+    if accent and bpm:
+        # the scene video: sections found in the audio, each with its own look, cut on the bar line
+        from . import scenes
+        from .ledger import clean_title
+        work = out_dir / "scene-work"
+        work.mkdir(parents=True, exist_ok=True)
+        tex = scenes.square(art_raw if art_raw.exists() else cover, work / "tex.jpg")
+        secs = scenes.song_sections(audio, float(bpm), beat_offset or 0.0)
+        title, sub = clean_title(brief["title"]), f"{lane_phrase} {int(round(float(bpm)))} BPM"
+        i169 = scenes.render_scene_video(tex, audio, v169, accent, secs, title, sub, work / "h", bpm=float(bpm),
+                                         beat_offset=beat_offset or 0.0, lines=lines)
+        i916 = scenes.render_scene_video(tex, audio, v916, accent, secs, title, sub, work / "v", bpm=float(bpm),
+                                         beat_offset=beat_offset or 0.0, lines=lines, vertical=True, crf=24)
+        return {"full_169": {"file": v169.name, **i169}, "full_916": {"file": v916.name, **i916},
+                "thumbnail": f169.name, "scenes": len(secs), "lyrics": len(lines or [])}
+    i169 = (render_motion(f169, audio, v169, accent, crf=23, bpm=bpm, beat_offset=beat_offset or 0.0)
+            if accent else render_still(f169, audio, v169, crf=23))
+    if fam is not None and cover_1080 is not None and Path(cover_1080).exists() and bpm:
+        # a whole track at the Short's 8 Mbit/s is 140 MB; the Reel is hosted on Pages and fetched by Instagram
+        i916 = render_short(cover_1080, audio, v916, fam, brief, artist, handle or "", out_dir / "video-work-full",
+                            beat_offset=beat_offset or 0.0, crf=24, maxrate="4M")
+    else:
+        i916 = render_still(f916, audio, v916, crf=24)
     return {"full_169": {"file": v169.name, **i169}, "full_916": {"file": v916.name, **i916},
             "thumbnail": f169.name}
