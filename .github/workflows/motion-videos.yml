@@ -1,0 +1,83 @@
+name: Motion videos (every released song, beat-reactive 16:9 and 9:16)
+
+# Re-renders the full 16:9 and the whole-track 9:16 of every song with a master on its release as
+# motion graphics (the frame punches in on every beat, a live spectrum, rolling scanlines; the 9:16
+# is the Short's hologram design for the whole track) and replaces the old still-frame videos on
+# the release. One job per song, a few at a time. New songs get these videos from the daily run.
+# Run it by hand: it changes nothing until you start it.
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "One song id (YYYY-MM-DD) to do alone; empty = every released song"
+        required: false
+        default: ""
+      upload:
+        description: "Replace the videos on each release (off = render only, check the artifacts)"
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: motion-videos
+  cancel-in-progress: false
+
+jobs:
+  list:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      ids: ${{ steps.ids.outputs.ids }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - id: ids
+        run: |
+          ONLY="${{ inputs.only }}"
+          if [ -n "$ONLY" ]; then IDS="[\"$ONLY\"]"; else IDS="$(python -m anchor motion --list)"; fi
+          echo "ids=$IDS" >> "$GITHUB_OUTPUT"
+          echo "$IDS"
+
+  render:
+    needs: list
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        id: ${{ fromJSON(needs.list.outputs.ids) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -r requirements.txt
+      - name: Lyric models (optional)
+        run: |
+          pip install -r requirements-lyrics.txt || echo "lyrics models unavailable, videos will be made without lyrics"
+      - name: Render (and replace the release videos)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        run: |
+          FLAGS=()
+          [ "${{ inputs.upload }}" = "true" ] && FLAGS+=(--upload)
+          python -m anchor motion --id "${{ matrix.id }}" --out "build/motion-${{ matrix.id }}" "${FLAGS[@]}"
+      - name: Keep the files when not uploading
+        if: ${{ inputs.upload != true }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: motion-${{ matrix.id }}
+          retention-days: 7
+          path: |
+            build/motion-${{ matrix.id }}/*-full-169.mp4
+            build/motion-${{ matrix.id }}/*-full-916.mp4
