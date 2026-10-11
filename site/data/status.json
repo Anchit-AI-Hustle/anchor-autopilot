@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-10-10",
-    "title": "Liquid Cipher",
-    "finished_at": "2026-10-10T19:20:23Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/38073155971",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-10-11T19:34:31Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/38161952989"
   },
   "next_post_at": "2026-10-11T17:30:00Z",
   "streak": 3,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-10-10T19:20:23Z",
+  "updated_at": "2026-10-11T19:34:31Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
