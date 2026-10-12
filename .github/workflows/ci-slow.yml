@@ -1,0 +1,40 @@
+name: CI slow suite (video renders and whole pipelines)
+
+# The pull request check (ci.yml) runs the fast tests only, about 10 seconds. This runs the slow ones
+# (the renders and the end-to-end pipeline) after every push to main, every night and on demand, one job per
+# test file so they finish in parallel. A red run here is a real failure: the fast check never hides it.
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "site/data/**"
+      - "site/covers/**"
+      - "site/og.jpg"
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-slow-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  slow:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        file: [test_pipeline, test_release_v2, test_fullvideos, test_scenes, test_mix_youtube, test_art_video, test_versions]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - run: python -m pytest -q -m slow -n 0 tests/${{ matrix.file }}.py
