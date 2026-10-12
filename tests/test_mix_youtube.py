@@ -11,6 +11,10 @@ from anchor.brief import make_brief
 from anchor.config import load_profile
 from anchor.music import synth_techno, write_wav
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 
 # ------------------------------------------------------------------- youtube api
 class FakeGoogle:
