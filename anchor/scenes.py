@@ -20,7 +20,7 @@ from __future__ import annotations
 import subprocess
 from pathlib import Path
 
-from . import lyrics as lyr, viz
+from . import fx, lyrics as lyr, viz
 from .audio import decode
 from .util import log
 from .video import AAC_CLEAN, _ff, beat_pulse_expr, media_summary, scanlines
@@ -87,7 +87,7 @@ def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: f
     Q = max(W, H)
     var = i
     beat = 60.0 / bpm
-    hue = ((var * 37) % 60) - 30             # a small swing: the scenes stay in the cover's own colours
+    hue = ((var * 37) % 24) - 12             # a small swing: the scenes stay in the cover's own colours
     sign = 1 if var % 2 == 0 else -1
     s = f"[t{i}]"
     L: list[str] = []
@@ -108,7 +108,7 @@ def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: f
               f"[qb{i}]hflip[qc{i}]", f"[qa{i}][qc{i}]hstack[tp{i}]",
               f"[tp{i}]split=2[ta{i}][tb{i}]", f"[tb{i}]vflip[bt{i}]",
               f"[ta{i}][bt{i}]vstack,scale=w='{W}*(1+0.05*({P}))':h=-2:eval=frame,crop={W}:{H},"
-              f"hue=h='{hue}+30*sin((t+{t0:.3f})*0.9)':s=1.3,eq=brightness='0.06*({P})':eval=frame{strobe}[x{i}]"]
+              f"hue=h='{hue}+10*sin((t+{t0:.3f})*0.9)':s=1.3,eq=brightness='0.06*({P})':eval=frame{strobe}[x{i}]"]
     elif look == "corridor":
         spd = 420 * (1 if var % 4 != 3 else -1)
         L += [f"{s}scale=1080:1080,split=4[ca{i}][cb{i}][cc{i}][cd{i}]",
@@ -116,10 +116,10 @@ def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: f
               f"[ca{i}][cf{i}][cc{i}]vstack=inputs=3[st{i}]",
               f"[st{i}]crop=1080:1080:0:'mod((t+{t0:.3f})*{spd}+1080*10,2160)',scale={W}:{H},"
               f"perspective=x0={W * 0.43:.0f}:y0={H * 0.5:.0f}:x1={W * 0.57:.0f}:y1={H * 0.5:.0f}:"
-              f"x2=-{W * 1.0:.0f}:y2={H}:x3={W * 2.0:.0f}:y3={H}:sense=destination:eval=init,split=2[fa{i}][fb{i}]",
+              f"x2=-{W * 1.0:.0f}:y2={H}:x3={W * 2.0:.0f}:y3={H}:sense=destination:eval=init,format=gbrp,split=2[fa{i}][fb{i}]",
               f"[fb{i}]vflip[fc{i}]", f"[fa{i}][fc{i}]blend=all_mode=lighten[fl{i}]",
-              f"[cd{i}]scale={Q}:{Q},crop={W}:{H},gblur=sigma=30,eq=brightness=-0.35[sk{i}]",
-              f"[sk{i}][fl{i}]blend=all_mode=lighten,"
+              f"[cd{i}]scale={Q}:{Q},crop={W}:{H},gblur=sigma=30,eq=brightness=-0.35,format=gbrp[sk{i}]",
+              f"[sk{i}][fl{i}]blend=all_mode=lighten,format=yuv420p,"
               f"eq=brightness='0.10*({P})':contrast=1.12:saturation=1.25:eval=frame,hue=h={hue}[x{i}]"]
     elif look == "glitch":
         L += [f"{s}scale=w='{Q}*(1.0+0.14*({P}))':h=-2:eval=frame,crop={W}:{H},"
@@ -164,7 +164,7 @@ def write_ass(path: Path, accent: str, W: int, H: int, secs: list[dict], lines: 
             "MarginV,Encoding",
             f"Style: Cap,Anton,{size},{lyr._bgr(accent)},&H00FFFFFF,&H00000000,&H90000000,0,0,0,0,100,100,1,0,1,5,3,2,"
             f"70,70,{mv},1",
-            f"Style: Title,Anton,{int(W * ((0.115 if not vert else 0.15) * (0.42 if lines else 1)))},&H00FFFFFF,&H00FFFFFF,&H00000000,&H90000000,0,0,0,"
+            f"Style: Title,Anton,{int(W * ((0.115 if not vert else 0.15) * 0.42))},&H00FFFFFF,&H00FFFFFF,&H00000000,&H90000000,0,0,0,"
             "0,100,100,3,0,1,4,3,5,60,60,0,1",
             f"Style: Sub,Anton,{int(W * (0.03 if not vert else 0.05))},{lyr._bgr(accent)},{lyr._bgr(accent)},&H00000000,"
             "&H90000000,0,0,0,0,100,100,6,0,1,2,2,5,60,60,0,1",
@@ -175,8 +175,7 @@ def write_ass(path: Path, accent: str, W: int, H: int, secs: list[dict], lines: 
     t0 = secs[0]["end"] if secs[0]["kind"] == "intro" else 6.0
     show = min(t0, 9.0)
     ty, sy = (0.72, 0.82) if not vert else (0.70, 0.78)
-    if lines:                                                   # the title sits at the top, clear of the card and the caption
-        ty, sy = (0.075, 0.125) if not vert else (0.085, 0.125)
+    ty, sy = (0.075, 0.125) if not vert else (0.085, 0.125)      # the title sits at the top, clear of the artwork and the caption
     ev.append(f"Dialogue: 3,{lyr._t(0.2)},{lyr._t(show)},Title,,0,0,0,,"
               f"{{\\pos({W // 2},{int(H * ty)})\\fad(500,500)}}{lyr._esc(title).upper()}")
     ev.append(f"Dialogue: 3,{lyr._t(0.5)},{lyr._t(show)},Sub,,0,0,0,,"
@@ -227,8 +226,7 @@ def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: lis
         parts += _scene(looks[i], i, W, H, sc, n0, n1, bpm, beat_offset, i == 0)
     parts.append("".join(f"[o{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=0[body]")
     bd = [(s["start"], s["end"]) for s in secs if s["kind"] == "breakdown"]
-    canvas_h = int(H * 0.5)
-    parts += [f"[body][3:v]overlay=x=0:y={H - canvas_h}:shortest=1[v2]"]
+    parts += [f"[3:v]scale={W}:{H}:flags=bilinear,format=rgba[fxl]", "[body][fxl]overlay=x=0:y=0:format=auto:shortest=1[v2]"]
     last = "v2"
     graph = parts
     graph.append(f"[{last}][2:v]overlay=x=0:y='-mod(t*24,8)':shortest=1[v3]")
@@ -242,7 +240,7 @@ def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: lis
     n_total = round(duration * FPS)
     cmd = ["ffmpeg", "-y", "-hide_banner", "-v", "error", "-loop", "1", "-framerate", str(FPS), "-i",
            str(Path(tex).resolve()), "-i", str(Path(audio).resolve()), "-loop", "1", "-framerate", str(FPS), "-i",
-           str(scan.resolve()), "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{W}x{canvas_h}", "-framerate",
+           str(scan.resolve()), "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{W // 2}x{H // 2}", "-framerate",
            str(FPS), "-i", "pipe:0", "-filter_complex", ";".join(graph), "-map", "[vout]", "-map", "1:a",
            "-t", f"{duration:.3f}", "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast", "-crf", str(crf),
            "-maxrate", "4M", "-bufsize", "8M", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN,
@@ -252,7 +250,7 @@ def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: lis
     with open(errf, "wb") as ef:
         proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=ef, cwd=str(work))
         try:
-            for raw in viz.frames(mono, FPS, n_total + 2, W, canvas_h, rgb, bd, base=int(H * 0.11)):
+            for raw in fx.frames(mono, FPS, n_total + 2, W, H, rgb, secs, bpm, beat_offset, base=int(H * 0.11)):
                 proc.stdin.write(raw)
         except (BrokenPipeError, OSError):
             pass
