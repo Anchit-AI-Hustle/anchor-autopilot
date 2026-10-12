@@ -15,6 +15,10 @@ from anchor.audio import SR, beat_phase, decode
 from anchor.config import CATALOG_PATH, load_profile
 from anchor.music import synth_techno, write_wav
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 BPM = 150
 BAR = 240 / BPM
 

@@ -6,6 +6,10 @@ import numpy as np
 from anchor import lyrics as L, scenes as SC, structure, viz
 from anchor.util import run
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 SR = 48_000
 
 

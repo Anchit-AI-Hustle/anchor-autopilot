@@ -9,7 +9,15 @@ from anchor.seo import description
 ROOT = Path(__file__).resolve().parents[1]
 META = json.load(open(ROOT / "tests/fixtures/drop-meta.json"))   # a real drop's meta.json, from an end-to-end run
 PROFILE = load_profile()
-CATALOG = json.load(open(ROOT / "site/data/catalog.json"))
+def _song(i, rating, chosen_id="f5207246"):
+    return {"id": f"{chosen_id if i == 0 else 'a0b1c2d%d' % i}-0000-4000-8000-00000000000{i}", "title": "Project Mayhem",
+            "group": "g1", "model": "v5", "duration_s": 180, "postable": i == 0, "rating": rating,
+            "verdict": "ok", "url": "https://suno.com/s/x", "checks": [] if i == 0 else [{"label": "twin", "ok": False}]}
+
+
+# a fixed catalogue of one Suno batch (four siblings, one released): the test must not depend on whatever the
+# live site/data/catalog.json holds on the day CI runs
+CATALOG = {"catalogue": {"songs": [_song(0, 9.0), _song(1, 7.0), _song(2, 6.0), _song(3, 5.0)]}}
 PUB = {"dry_run": False, "status": "scheduled", "post_id": "p1", "due_at": "2026-09-22T17:30:00Z",
        "youtube": {"post_id": "p1", "status": "scheduled", "due_at": "2026-09-22T17:30:00Z", "external_link": None},
        "instagram": {"error": "BUFFER_INSTAGRAM_CHANNEL_ID not set"},

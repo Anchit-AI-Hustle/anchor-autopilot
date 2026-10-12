@@ -10,6 +10,10 @@ from anchor.config import load_profile
 from anchor.music import synth_techno, write_wav
 from anchor.util import run as sh
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 PROFILE = load_profile()
 
 

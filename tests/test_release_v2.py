@@ -18,6 +18,10 @@ from anchor.publish import build_reel_input
 from anchor.seo import description, hook_title, tags, youtube_title
 from anchor.unique import audio_similarity, cover_distance, envelope, nearest_cover
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 
 # ------------------------------------------------------------------- cadence
 def test_the_channel_releases_every_day_and_every_second_day_is_one_setting_away():

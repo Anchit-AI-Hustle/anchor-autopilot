@@ -3,6 +3,10 @@ import json
 from anchor import pipeline
 from anchor.util import read_json
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 
 def test_full_drop_cycle_site_only(fast_profile, site_dir, tmp_path, monkeypatch):
     monkeypatch.delenv("CF_ACCOUNT_ID", raising=False)

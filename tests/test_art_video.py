@@ -8,6 +8,10 @@ from anchor.music import synth_techno, write_wav
 from anchor.util import media_summary
 from anchor.video import render_short
 
+import pytest
+
+pytestmark = pytest.mark.slow
+
 
 def test_procedural_cover_for_every_family(tmp_path):
     p = load_profile()
