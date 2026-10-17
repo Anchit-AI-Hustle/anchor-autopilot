@@ -543,7 +543,7 @@ def test_every_short_links_to_the_full_track():
     lines = describe(profile, brief)["description"].splitlines()
 
     # line one is the search line (genre, tempo, artist); the record's own words follow it
-    assert lines[0].startswith("Rawstyle Hybrid at 154 BPM.") and lines[2], "the search line, then the record"
+    assert lines[0].startswith("Rawstyle Hybrid.") and lines[2], "the search line, then the record"
     spec = 0
     link = next(i for i, l in enumerate(lines) if l.startswith("All tracks:"))
     assert spec < link, "genre and tempo, then the way in"
@@ -568,7 +568,7 @@ def test_the_musical_key_is_never_shown_to_a_listener():
     """A key tells a listener nothing. It stays in the data for QC, off every surface."""
     video = (ROOT / "anchor" / "video.py").read_text()
     meta = next(l for l in video.splitlines() if '"meta":' in l)
-    assert "bpm" in meta.lower() and "key" not in meta.lower(), \
+    assert "bpm" not in meta.lower() and "key" not in meta.lower(), \
         f"the burned-in meta line still carries the key: {meta.strip()}"
 
     from anchor.brief import describe
@@ -576,7 +576,7 @@ def test_the_musical_key_is_never_shown_to_a_listener():
     brief = {"bpm": 154, "key": "G# minor", "title": "Then Do It", "lane": "rawstyle", "short_s": 45}
     desc = describe(load_profile(PROFILE_PATH), brief)["description"]
     assert "G#" not in desc and "minor" not in desc, "the YouTube description must not name the key"
-    assert "154 BPM" in desc, "the tempo is still worth saying"
+    assert "BPM" not in desc, "no tempo shown to a listener"
 
     js = (SITE / "assets" / "app.js").read_text()
     assert "d.key" not in js, "the website must not print the key either"

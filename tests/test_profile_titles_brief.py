@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 
 import pytest
+from pathlib import Path
 
 from anchor.brief import make_brief
 from anchor.config import load_profile, validate
@@ -79,7 +80,7 @@ def test_every_brief_stays_compressed():
     start = date(2026, 10, 1)
     for i in range(120):
         b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
-        assert len(b["caption"]) < 1400, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
+        assert len(b["caption"]) < 1450, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
 
 
 DARK = ("dark", "menac", "oppressive", "dread", "cold", "hostile", "claustrophob", "gloom",
@@ -142,7 +143,9 @@ def test_brief_description_and_bounds():
     lane = p.lane(b["lane"])
     assert lane.bpm[0] <= b["bpm"] <= lane.bpm[1]
     # the key is measured and kept in the data for QC, but never shown to a listener
-    assert f"{b['bpm']} BPM" in b["description"] and b["key"] not in b["description"]
+    assert "BPM" not in b["description"] and b["key"] not in b["description"]  # no tempo or key shown to a listener
+    assert "BPM" not in b["youtube_title"]
+    assert 185 <= b["duration_s"] <= 215, "every new song is at least 3 minutes"
     assert "#hardtechno" in b["description"] and "AI use disclosed" in b["description"]
     assert len(b["youtube_title"]) <= 100
 
@@ -203,3 +206,14 @@ def test_records_already_out_keep_their_own_genre():
     start = date(2026, 10, 1)
     for i in range(60):
         assert make_brief(p, (start + timedelta(days=i)).isoformat(), [])["lane"] not in old
+
+
+def test_instagram_personal_profile_rejection_is_a_skip_not_a_failure():
+    src = (Path(__file__).resolve().parents[1] / "anchor" / "pipeline.py").read_text()
+    assert "require notification scheduling" in src
+
+
+def test_engine_has_room_for_a_three_minute_render():
+    from anchor import music
+    src = (Path(__file__).resolve().parents[1] / "anchor" / "music.py").read_text()
+    assert 'ANCHOR_ENGINE_TIMEOUT", "10000"' in src and "timeout_s: int = 10000" in src

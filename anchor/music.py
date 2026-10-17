@@ -111,7 +111,7 @@ class AceStepCpp:
     def __init__(self, bin_dir: str | Path, models_dir: str | Path, dit_model: str,
                  lm_model: str | None, steps: int = 8, shift: float = 3.0,
                  guidance: float = 1.0, threads: int | None = None,
-                 vae_chunk: int = 512, timeout_s: int = 5400):
+                 vae_chunk: int = 512, timeout_s: int = 10000):
         # absolute: the binaries run with cwd set to the drop folder, so a relative
         # path here would resolve against that folder instead of the repo
         self.bin_dir = Path(bin_dir).expanduser().resolve()
@@ -320,7 +320,7 @@ def one_engine(profile_music: dict, name: str):
             guidance=float(profile_music.get("guidance", 1.0)),
             threads=int(env("ACE_THREADS", "0") or 0) or None,
             vae_chunk=int(env("ANCHOR_VAE_CHUNK", "512")),
-            timeout_s=int(env("ANCHOR_ENGINE_TIMEOUT", "5400")),
+            timeout_s=int(env("ANCHOR_ENGINE_TIMEOUT", "10000")),
         )
     raise ValueError(f"unknown music engine {name!r}")
 

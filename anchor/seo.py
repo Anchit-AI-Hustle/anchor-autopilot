@@ -90,7 +90,7 @@ def youtube_title(title: str, lane: Lane | None = None, bpm: int | None = None, 
     comes first, so a phone shows it whole."""
     parts = [title]
     if lane is not None:
-        parts.append(f"{genre_phrase(lane)} {int(bpm)} BPM" if bpm else genre_phrase(lane))
+        parts.append(genre_phrase(lane))
     if artist:
         parts.append(artist)
     out = " | ".join(parts)
@@ -150,7 +150,7 @@ def description(profile: Profile, brief: dict, platform: str = "youtube") -> str
     cadence = "Made with AI music tools and my own hours. AI use disclosed."
     # the first line is the one YouTube shows under the title and the one search reads:
     # the genre phrase, the tempo, the artist, then the vibe copy below it
-    line = f"{genre_phrase(lane)} at {int(brief['bpm'])} BPM. An {name} original, free download below."
+    line = f"{genre_phrase(lane)}. An {name} original, free download below."
     handle = profile.artist.get("instagram_handle")
     free = f"Free download: {site}" + (f" · IG @{handle.lstrip('@')}" if handle else "")
     if platform == "instagram":

@@ -207,11 +207,27 @@ def test_retitle_rewrites_only_what_differs_and_is_idempotent(monkeypatch, tmp_p
                                           "youtube_url": "https://www.youtube.com/watch?v=robot1"}]}))
     r = retitle.run(p, catalog_path=cat, channel_path=channel, api=FakeApi())
     assert [u[0] for u in updates] == ["kbMQz4tWUtU", "robot1"] and r["same"] == ["done1"] and r["unknown"] == ["mystery"]
-    assert updates[0][1] == "Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR"
-    assert updates[0][2] == ("Industrial Hard Techno at 154 BPM. An ANCHOR original, free download below.\n\n"
+    assert updates[0][1] == "Rupture Pulse | Industrial Hard Techno | ANCHOR"
+    assert updates[0][2] == ("Industrial Hard Techno. An ANCHOR original, free download below.\n\n"
                              "Warehouse pressure with no off switch.\n\nAll tracks: https://p\nFree download: site\n\n#a #b #c")
-    assert updates[1][1] == "Cold Iron Sky | Acid Techno 150 BPM | ANCHOR" and updates[1][2].startswith("Acid Techno at 150 BPM. An ANCHOR original")
+    assert updates[1][1] == "Cold Iron Sky | Acid Techno | ANCHOR" and updates[1][2].startswith("Acid Techno. An ANCHOR original")
     # a second pass over the rewritten text changes nothing
     again = retitle.rewrite_description(updates[0][2], "Industrial Hard Techno", 154, "ANCHOR")
     assert again == updates[0][2]
     assert retitle.search_title("X" * 95, "Industrial Hard Techno", 154, "ANCHOR") == "X" * 95
+
+
+def test_retitle_never_shows_a_tempo():
+    from anchor import retitle
+    assert retitle.search_title("Then Do It", "Rawstyle Hybrid", 154, "ANCHOR") == "Then Do It | Rawstyle Hybrid | ANCHOR"
+    assert "BPM" not in retitle.search_line("Rawstyle Hybrid", 154, "ANCHOR")
+    old = "Rawstyle Hybrid at 154 BPM. An ANCHOR original, free download below.\n\nbody"
+    assert retitle.rewrite_description(old, "Rawstyle Hybrid", 154, "ANCHOR").startswith("Rawstyle Hybrid. An ANCHOR original")
+
+
+def test_upload_metadata_is_inside_what_youtube_accepts():
+    from anchor.youtube import clean_tags, clean_text
+    tags = [f"techno tag number {i}" for i in range(80)] + ["a,b", "<x>"]
+    out = clean_tags(tags)
+    assert sum(len(t) + (2 if " " in t else 0) + 1 for t in out) <= 500 and all("," not in t and "<" not in t for t in out)
+    assert "<" not in clean_text("a <b> c") and ">" not in clean_text("a <b> c")

@@ -223,7 +223,7 @@ def render_short(cover_1080: Path, audio: Path, out: Path, fam: Family, brief: d
         "artist": "  ".join(artist.upper()),
         "title": brief["title"].upper(),
         # No musical key on screen: it tells a listener nothing and eats the meta line.
-        "meta": f"{brief['lane_name'].upper()}  ·  {brief['bpm']} BPM",
+        "meta": f"{brief['lane_name'].upper()}",
         "footer": f"{handle}  ·  NEW TRACK EVERY DAY",
     }
     paths = {}
@@ -305,12 +305,10 @@ def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path
             size -= 10
     f = font(size)
     line_h = int(size * 0.98)
-    subs = [f"{lane_phrase.upper()}  ·  {int(brief['bpm'])} BPM" if brief.get("bpm") else lane_phrase.upper()]
+    subs = [lane_phrase.upper()]
     fs = font(max(84, int(size * 0.36)))
     while probe.textlength(subs[0], font=fs) > room and fs.size > 84:
         fs = font(fs.size - 6)
-    if probe.textlength(subs[0], font=fs) > room and brief.get("bpm"):   # genre, then the tempo under it
-        subs = [lane_phrase.upper(), f"{int(brief['bpm'])} BPM"]
     while max(probe.textlength(t, font=fs) for t in subs) > room and fs.size > 60:
         fs = font(fs.size - 4)
     block = len(lines) * line_h + 40 + len(subs) * int(fs.size * 1.1)
@@ -442,7 +440,7 @@ def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: st
         work.mkdir(parents=True, exist_ok=True)
         tex = scenes.square(art_raw if art_raw.exists() else cover, work / "tex.jpg")
         secs = scenes.song_sections(audio, float(bpm), beat_offset or 0.0)
-        title, sub = clean_title(brief["title"]), f"{lane_phrase} {int(round(float(bpm)))} BPM"
+        title, sub = clean_title(brief["title"]), f"{lane_phrase}"
         i169 = scenes.render_scene_video(tex, audio, v169, accent, secs, title, sub, work / "h", bpm=float(bpm),
                                          beat_offset=beat_offset or 0.0, lines=lines)
         i916 = scenes.render_scene_video(tex, audio, v916, accent, secs, title, sub, work / "v", bpm=float(bpm),

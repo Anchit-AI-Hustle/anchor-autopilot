@@ -53,7 +53,7 @@ def test_length_and_arrangement_shape_are_drawn_for_the_day_so_records_do_not_sh
     lo, hi = p.music["duration_range_s"]
     briefs = [make_brief(p, f"2026-10-{d:02d}", []) for d in range(1, 21)]
     lengths, shapes = {b["duration_s"] for b in briefs}, {b["shape"] for b in briefs}
-    assert all(lo <= b["duration_s"] <= hi for b in briefs) and len(lengths) > 5 and len(shapes) == len(SHAPES)
+    assert all(lo <= b["duration_s"] <= hi and b["duration_s"] >= 180 for b in briefs) and len(lengths) > 5 and len(shapes) == len(SHAPES)
     for b in briefs:
         tags = [t for t, _ in arrangement(b["duration_s"], tuple(b["textures"]), b["shape"])]
         assert tags[0] == "intro" and tags[-1] == "outro" and "drop" in tags and "breakdown" in tags
@@ -135,12 +135,12 @@ def test_seo_title_description_and_tags_carry_the_lane_and_tempo():
     b = make_brief(p, "2026-09-22", [])
     lane = p.lane(b["lane"])
     # the search phrase rides on the name: "Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR"
-    assert youtube_title(b["title"], lane, b["bpm"], "ANCHOR") == f"{b['title']} | {lane.genre_line.split(',')[0]} {b['bpm']} BPM | ANCHOR"
+    assert youtube_title(b["title"], lane, b["bpm"], "ANCHOR") == f"{b['title']} | {lane.genre_line.split(',')[0]} | ANCHOR"
     assert youtube_title(b["title"]) == b["title"] and len(youtube_title("X" * 120, lane, 150, "ANCHOR")) <= 100
     assert b["youtube_title"] == youtube_title(b["title"], lane, b["bpm"], "ANCHOR")
     d = description(p, b)
     head, vibe = d.split("\n\n")[:2]
-    assert head == f"{lane.genre_line.split(',')[0]} at {b['bpm']} BPM. An ANCHOR original, free download below."   # the search line first
+    assert head == f"{lane.genre_line.split(',')[0]}. An ANCHOR original, free download below."   # the search line first
     assert vibe[0].isupper() and vibe.endswith(".") and "BPM" not in vibe                                            # then the vibe
     assert "playlist?list=PLSA3gW62zSYE" in d and "AI use disclosed" in d and len(d) < 700
     ig = description(p, b, "instagram")

@@ -75,7 +75,7 @@ def test_measured_tempo_overrides_requested_bpm(fast_profile, site_dir, tmp_path
     meta = pl.make(fast_profile, "2026-09-23", tmp_path / "d", art_mode="procedural",
                    catalog_path=site_dir / "data" / "catalog.json")
     assert meta["brief"]["bpm"] == 150 and meta["brief"]["bpm_requested"] == brief["bpm"]
-    assert "150 BPM" in meta["brief"]["description"] and "150 bpm techno" in meta["brief"]["tags"]
+    assert "BPM" not in meta["brief"]["description"] and "150 bpm techno" in meta["brief"]["tags"]
 
 
 def test_dry_run_publish_never_calls_buffer(fast_profile, tmp_path, monkeypatch, site_dir):
