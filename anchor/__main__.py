@@ -203,7 +203,7 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "motion":
         from . import motion
         if args.list:
-            print(json.dumps([d["id"] for d in motion.songs(read_json(CATALOG_PATH, {}) or {})]))
+            print(json.dumps(motion.list_ids(read_json(CATALOG_PATH, {}) or {})))
             return 0
         if not args.id:
             raise SystemExit("motion: give --list or --id")

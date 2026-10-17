@@ -33,6 +33,17 @@ def songs(catalog: dict, legacy_path: Path | None = None) -> list[dict]:
     return out + [d for d in legacy if d["id"] not in have and d.get("audio_url") and d.get("bpm") and d.get("family")]
 
 
+ONLY_PATH = CATALOG_PATH.parent / "motion_only.json"
+
+
+def list_ids(catalog: dict, only_path: Path | None = None) -> list[str]:
+    """The songs a full motion run renders: every song, or only the ids in site/data/motion_only.json
+    when that lists any (a top-up run for songs added later, without re-rendering the rest)."""
+    ids = [d["id"] for d in songs(catalog)]
+    only = (read_json(only_path or ONLY_PATH, {}) or {}).get("ids") or []
+    return [i for i in ids if i in only] if only else ids
+
+
 def render_song(profile: Profile, r: dict, repo: str, work: Path) -> dict:
     """The two videos for one song, verified against its audio length. Returns their paths."""
     work.mkdir(parents=True, exist_ok=True)
