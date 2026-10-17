@@ -8,6 +8,8 @@ per song, in parallel.
 """
 from __future__ import annotations
 
+import json
+import shutil
 import subprocess
 from pathlib import Path
 
@@ -39,13 +41,19 @@ def render_song(profile: Profile, r: dict, repo: str, work: Path) -> dict:
     bpm = float(r["bpm"])
     offset = master_beat_offset(mp3, bpm)
     lines = lyrics.lines_for(mp3, work / "lyrics", r.get("lyrics"))
-    sub = f"{r.get('lane_name') or 'Techno'} {int(round(bpm))} BPM"
+    sub = f"{r.get('lane_name') or 'Techno'}"               # no tempo on any listener surface
     art = work / f"{base}-art-raw.jpg"
     info = scenes.render_scene_video(scenes.square(art if art.exists() else cover, work / "tex-v.jpg"), mp3, video916,
                                      r.get("accent") or fam.accent, scenes.song_sections(mp3, bpm, offset),
                                      fullvideos.clean_title(r["title"]), sub, work / "scene-work-v", bpm=bpm,
                                      beat_offset=offset, lines=lines, vertical=True, crf=24)
-    return {"id": r["id"], "full_169": video169, "full_916": video916, "tag": f"drop-{r['id']}", "reel": info, "lyrics": len(lines)}
+    frame = work / f"{base}-motion-frame-169.jpg"
+    if _frame and Path(_frame).exists():
+        shutil.copyfile(_frame, frame)
+    marker = work / f"{base}-motion.json"
+    marker.write_text(json.dumps({"id": r["id"], "lyrics_lines": len(lines), "bpm_on_screen": False}))
+    return {"id": r["id"], "full_169": video169, "full_916": video916, "tag": f"drop-{r['id']}", "reel": info,
+            "lyrics": len(lines), "extras": [p for p in (frame, marker) if p.exists()]}
 
 
 def upload(repo: str, tag: str, files: list[Path]) -> None:
@@ -62,6 +70,6 @@ def run(profile: Profile, *, repo: str, song_id: str, work: Path, do_upload: boo
         raise SystemExit(f"motion: no released song with id {song_id}")
     done = render_song(profile, r, repo, work)
     if do_upload:
-        upload(repo, done["tag"], [done["full_169"], done["full_916"]])
+        upload(repo, done["tag"], [done["full_169"], done["full_916"], *done["extras"]])
     return {"id": done["id"], "full_169": done["full_169"].name, "full_916": done["full_916"].name,
             "uploaded": do_upload}
