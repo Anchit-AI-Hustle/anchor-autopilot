@@ -124,7 +124,10 @@
       ],
       "notify": false,
       "playlist": true,
-      "replaces": []
+      "replaces": [],
+      "youtube_url": "https://www.youtube.com/watch?v=8P7KKxc3rjo",
+      "uploaded_at": "2026-10-17T19:37:02Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-09-28",
@@ -153,7 +156,10 @@
       "playlist": true,
       "replaces": [
         "fVUk-aqzKvw"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=scNryYmUFb0",
+      "uploaded_at": "2026-10-17T19:37:13Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-09-27",
@@ -180,7 +186,10 @@
       ],
       "notify": false,
       "playlist": true,
-      "replaces": []
+      "replaces": [],
+      "youtube_url": "https://www.youtube.com/watch?v=_5NcG4LeWzk",
+      "uploaded_at": "2026-10-17T19:37:26Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-09-26",
@@ -1076,5 +1085,57 @@
       "youtube_url": "https://www.youtube.com/watch?v=cJ7giocxlvU",
       "why": "render 1: movement drifted beside the beat and karaoke lit 0.2 s early; re-done on render 2, this one goes private"
     }
+  ],
+  "thumbs": [
+    "kKJKKgMD9NY",
+    "7BR2jAOfUJc",
+    "FCzjk1aLAtw",
+    "cJ7giocxlvU",
+    "LZCfgssUrRQ",
+    "eughYejQE3E",
+    "QIPY1Y02Ylg",
+    "44u-IjIQaW4",
+    "RCzctQb7CKs",
+    "7hUUNlgRTLg",
+    "ko2eD1Bt5-U",
+    "2BesUf3i3PI",
+    "2W0tBrygjKc",
+    "pVARktr-yp8",
+    "h4Zdpz4TIV0",
+    "zRSu22b-n7A",
+    "-3iSrbkpzVE",
+    "3QTQp7q5KPE",
+    "q7cxUlOhJnA",
+    "yoKc5Hy20UM",
+    "fVUk-aqzKvw",
+    "Khgrv1vy_7M",
+    "qgM0xoW3-no",
+    "H7xEJ9rht5U",
+    "INKAdxY9zSA",
+    "Bx9dp5QlptY",
+    "eHOg3yspHHU",
+    "Y4OZbHAi2mc",
+    "pHMWh6-BLvA",
+    "u6RY7hG7464",
+    "22daVf0Cp4c",
+    "JIdq5wX6XvE",
+    "oqYVZh7_b9U",
+    "vezK0w3nmx8",
+    "4qVgjdjG28A",
+    "d2IQmETLHaE",
+    "UOAa9W_iMI0",
+    "qhByr8pE9rw",
+    "ryLb7glh1KU",
+    "uM_4JEC03ik",
+    "7sBR72qq17E",
+    "GMaw3OsDnxQ",
+    "ZslHMH4TVtM",
+    "KBCM6KXVlgI",
+    "SoCMir5uFxY",
+    "JcU1YRpd9_U",
+    "-E9qHH9MhTQ",
+    "mvIMp8LqgTY",
+    "lHGYpSHK_BY",
+    "MoTQ0lp6pz4"
   ]
 }
