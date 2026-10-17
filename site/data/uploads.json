@@ -219,7 +219,10 @@
       "playlist": true,
       "replaces": [
         "QIPY1Y02Ylg"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=uAn6r3K5vwI",
+      "uploaded_at": "2026-10-17T23:22:23Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-10-12",
@@ -247,7 +250,10 @@
       "playlist": true,
       "replaces": [
         "eughYejQE3E"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=gYhJhFE3w2g",
+      "uploaded_at": "2026-10-17T23:22:34Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-09-25",
@@ -276,7 +282,10 @@
       "playlist": true,
       "replaces": [
         "qgM0xoW3-no"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=uEa-0eVEu9o",
+      "uploaded_at": "2026-10-17T23:22:44Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-09-22",
@@ -1000,6 +1009,62 @@
       "replaces": [
         "8P7KKxc3rjo"
       ]
+    },
+    {
+      "id": "motion-2026-10-17",
+      "release": "drop-2026-10-17",
+      "file": "ANCHOR-2026-10-17-sonic-reactor-full-169.mp4",
+      "thumbnail": "ANCHOR-2026-10-17-sonic-reactor-motion-frame-169.jpg",
+      "title": "Sonic Reactor | Acid Techno | ANCHOR",
+      "description": "Acid Techno. An ANCHOR original, free download below.\n\nMotion visualizer, made for this track.\n\nSonic Reactor. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+      "tags": [
+        "acid techno",
+        "psychedelic acid techno",
+        "hard acid techno",
+        "rave techno",
+        "techno 2026",
+        "techno",
+        "hard techno",
+        "techno visualizer",
+        "anchor techno",
+        "techno official visualizer",
+        "182 bpm techno",
+        "ai techno",
+        "techno full track"
+      ],
+      "notify": false,
+      "playlist": true,
+      "replaces": [
+        "kQ9vMIpeMCA"
+      ]
+    },
+    {
+      "id": "motion-2026-10-16",
+      "release": "drop-2026-10-16",
+      "file": "ANCHOR-2026-10-16-supersonic-current-full-169.mp4",
+      "thumbnail": "ANCHOR-2026-10-16-supersonic-current-motion-frame-169.jpg",
+      "title": "Supersonic Current | Hyper Techno | ANCHOR",
+      "description": "Hyper Techno. An ANCHOR original, free download below.\n\nMotion visualizer, made for this track.\n\nSupersonic Current. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+      "tags": [
+        "hypertechno",
+        "hyper techno",
+        "acid techno",
+        "hard techno",
+        "rave techno",
+        "techno",
+        "techno visualizer",
+        "anchor techno",
+        "techno official visualizer",
+        "180 bpm techno",
+        "techno 2026",
+        "ai techno",
+        "techno full track"
+      ],
+      "notify": false,
+      "playlist": true,
+      "replaces": [
+        "UdEm4uSLbRU"
+      ]
     }
   ],
   "superseded": [
@@ -1106,6 +1171,7 @@
     "pUMUDXLchYI",
     "7gvpPdvF4Fw",
     "9wE5wP90G_s",
-    "JHZsKSag1ZU"
+    "JHZsKSag1ZU",
+    "DpGckqbuvck"
   ]
 }
