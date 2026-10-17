@@ -210,3 +210,18 @@ def test_a_studio_upload_is_adopted_not_uploaded_again(tmp_path, monkeypatch):
     calls.clear()
     uploads.run(p, repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json", exists=lambda url: True)
     assert calls == []                                   # done once, never again
+
+
+def test_held_and_taken_down_songs_are_never_posted_again(monkeypatch):
+    import json as _j
+    from anchor import motion
+    from anchor.config import load_profile
+    legacy = uploads.UPLOADS_PATH.parent / "legacy_motion.json"
+    monkeypatch.setattr(motion, "LEGACY_PATH", legacy)
+    hold = _j.loads(legacy.read_text())["hold"]
+    assert {"2026-10-10", "2026-09-20", "2026-09-24", "2026-09-12"} <= set(hold)
+    catalog = {"drops": [{"id": "2026-10-10", "title": "Liquid Cipher", "date": "2026-10-10", "bpm": 167, "family": "prism",
+                          "lane": "rawstyle", "audio_url": "https://x/ANCHOR-2026-10-10-liquid-cipher.mp3"}]}
+    data = {"uploads": []}
+    added = uploads.queue_motion(load_profile(), data, catalog, "o/r", [], exists=lambda url: True)
+    assert "motion-2026-10-10" not in added

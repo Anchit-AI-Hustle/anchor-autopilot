@@ -50,5 +50,11 @@
       "cover": "legacy/ANCHOR-legacy-time-to-peak-cover.jpg",
       "audio_url": "https://raw.githubusercontent.com/Anchit-AI-Hustle/anchor-autopilot/main/site/legacy/ANCHOR-legacy-time-to-peak.mp3"
     }
-  ]
+  ],
+  "hold": {
+    "2026-10-10": "Liquid Cipher: full video held by Anchit (3.5/10)",
+    "2026-09-20": "Rupture Pulse: Anchit deleted its full video",
+    "2026-09-24": "Null Monolith: near-duplicate of Grid Blade, taken down",
+    "2026-09-12": "Grid Blade: near-duplicate of Null Monolith, taken down"
+  }
 }

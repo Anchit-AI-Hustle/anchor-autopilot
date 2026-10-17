@@ -44,10 +44,11 @@ def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos:
     from . import fullvideos, motion
     from .ledger import clean_title
     have = {e["id"] for e in data.setdefault("uploads", [])}
+    hold = (read_json(motion.LEGACY_PATH, {}) or {}).get("hold", {})   # songs Anchit took down or held: never re-post
     added = []
     for d in motion.songs(catalog):
         eid = f"motion-{d['id']}"
-        if eid in have:
+        if eid in have or d["id"] in hold:
             continue
         base = d["audio_url"].split("?")[0].rsplit("/", 1)[-1].rsplit(".", 1)[0]
         tag = f"drop-{d['id']}"
