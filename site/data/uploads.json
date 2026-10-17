@@ -101,95 +101,6 @@
       "replaces": []
     },
     {
-      "id": "motion-2026-10-09",
-      "release": "drop-2026-10-09",
-      "file": "ANCHOR-2026-10-09-transmit-spiral-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-09-transmit-spiral-motion-frame-169.jpg",
-      "title": "Transmit Spiral | Psychedelic Techno | ANCHOR",
-      "description": "Psychedelic Techno. An ANCHOR original, free download below.\n\nTransmit Spiral. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "psychedelic techno",
-        "hard techno",
-        "psy techno",
-        "hypnotic techno",
-        "acid techno",
-        "techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "169 bpm techno",
-        "techno 2026",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [
-        "CyZLpBz3ymk"
-      ],
-      "youtube_url": "https://www.youtube.com/watch?v=LZCfgssUrRQ",
-      "uploaded_at": "2026-10-17T14:00:12Z",
-      "replaced": true
-    },
-    {
-      "id": "motion-2026-10-08",
-      "release": "drop-2026-10-08",
-      "file": "ANCHOR-2026-10-08-lift-off-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-08-lift-off-motion-frame-169.jpg",
-      "title": "Lift Off | Hyper Techno | ANCHOR",
-      "description": "Hyper Techno. An ANCHOR original, free download below.\n\nLift Off. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "hypertechno",
-        "hyper techno",
-        "acid techno",
-        "hard techno",
-        "rave techno",
-        "techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "195 bpm techno",
-        "techno 2026",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [],
-      "youtube_url": "https://www.youtube.com/watch?v=FCzjk1aLAtw",
-      "uploaded_at": "2026-10-17T14:00:25Z",
-      "replaced": true
-    },
-    {
-      "id": "motion-2026-10-05",
-      "release": "drop-2026-10-05",
-      "file": "ANCHOR-2026-10-05-turbo-grid-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-05-turbo-grid-motion-frame-169.jpg",
-      "title": "Turbo Grid | Hard Techno | ANCHOR",
-      "description": "Hard Techno. An ANCHOR original, free download below.\n\nTurbo Grid. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "hard techno",
-        "hard bounce",
-        "bouncy techno",
-        "rave techno",
-        "hard techno 2026",
-        "techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "167 bpm techno",
-        "techno 2026",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [],
-      "youtube_url": "https://www.youtube.com/watch?v=cJ7giocxlvU",
-      "uploaded_at": "2026-10-17T14:00:36Z",
-      "replaced": true
-    },
-    {
       "id": "motion-2026-10-04",
       "release": "drop-2026-10-04",
       "file": "ANCHOR-2026-10-04-move-faster-full-169.mp4",
@@ -671,6 +582,21 @@
       "id": "motion-2026-10-12",
       "youtube_url": "https://www.youtube.com/watch?v=eughYejQE3E",
       "why": "first motion render had no lyrics (PyAV 16 broke transcription); re-done with lyrics, this one goes private"
+    },
+    {
+      "id": "motion-2026-10-09",
+      "youtube_url": "https://www.youtube.com/watch?v=LZCfgssUrRQ",
+      "why": "render 1: movement drifted beside the beat and karaoke lit 0.2 s early; re-done on render 2, this one goes private"
+    },
+    {
+      "id": "motion-2026-10-08",
+      "youtube_url": "https://www.youtube.com/watch?v=FCzjk1aLAtw",
+      "why": "render 1: movement drifted beside the beat and karaoke lit 0.2 s early; re-done on render 2, this one goes private"
+    },
+    {
+      "id": "motion-2026-10-05",
+      "youtube_url": "https://www.youtube.com/watch?v=cJ7giocxlvU",
+      "why": "render 1: movement drifted beside the beat and karaoke lit 0.2 s early; re-done on render 2, this one goes private"
     }
   ]
 }
