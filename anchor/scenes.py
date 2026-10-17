@@ -23,7 +23,7 @@ from pathlib import Path
 from . import fx, lyrics as lyr, viz
 from .audio import decode
 from .util import log
-from .video import AAC_CLEAN, _ff, beat_pulse_expr, media_summary, scanlines
+from .video import AAC_CLEAN, _ff, beat_pulse_expr, beat_step_expr, media_summary, scanlines
 
 FPS = 30
 # which looks each kind of section may take, in order of preference
@@ -87,6 +87,7 @@ def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: f
     Q = max(W, H)
     var = i
     beat = 60.0 / bpm
+    S = beat_step_expr(bpm, off, t0)          # beats so far, each one a surge that lands on the kick
     hue = ((var * 37) % 24) - 12             # a small swing: the scenes stay in the cover's own colours
     sign = 1 if var % 2 == 0 else -1
     s = f"[t{i}]"
@@ -95,32 +96,32 @@ def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: f
         C = int((min(W, H * 0.9)) * (0.62 if W > H else 0.8))
         L += [f"{s}split=2[ba{i}][ca{i}]",
               f"[ba{i}]scale={Q}:{Q},crop={W}:{H},gblur=sigma=40,"
-              f"eq=brightness='-0.2+0.08*({P})':saturation=1.3:eval=frame[bg{i}]",
-              f"[ca{i}]scale=w='{C}*(1+0.06*({P}))':h=-2:eval=frame[cd{i}]",
+              f"eq=brightness='-0.2+0.12*({P})':saturation=1.3:eval=frame[bg{i}]",
+              f"[ca{i}]scale=w='{C}*(1+0.09*({P}))':h=-2:eval=frame[cd{i}]",
               f"[bg{i}][cd{i}]overlay=x='({W}-w)/2':y='({H}-h)/2-{int(H * 0.07)}':format=auto:shortest=1[x{i}]"]
     elif look == "mirror":
         build = sc["kind"] == "build"
-        ang = (f"{sign}*((t+{t0:.4f})*0.25+0.35*({P}))" if not build
+        ang = (f"{sign}*({0.28 * beat:.5f}*({S})+0.06*({P}))" if not build
                else f"{sign}*(t*0.3+2.2*t*t/{dur:.3f}+0.2*({P}))")
         strobe = (f",eq=brightness='0.28*gt(mod(t/{beat:.5f}*(1+3*t/{dur:.3f}),1),0.82)':eval=frame" if build else "")
         L += [f"{s}scale=1620:1620,rotate=a='{ang}':ow=1620:oh=1620:c=black,crop=1080:1080,"
               f"scale={W // 2}:{H // 2}:force_original_aspect_ratio=increase,crop={W // 2}:{H // 2},split=2[qa{i}][qb{i}]",
               f"[qb{i}]hflip[qc{i}]", f"[qa{i}][qc{i}]hstack[tp{i}]",
               f"[tp{i}]split=2[ta{i}][tb{i}]", f"[tb{i}]vflip[bt{i}]",
-              f"[ta{i}][bt{i}]vstack,scale=w='{W}*(1+0.05*({P}))':h=-2:eval=frame,crop={W}:{H},"
-              f"hue=h='{hue}+10*sin((t+{t0:.3f})*0.9)':s=1.3,eq=brightness='0.06*({P})':eval=frame{strobe}[x{i}]"]
+              f"[ta{i}][bt{i}]vstack,scale=w='{W}*(1+0.08*({P}))':h=-2:eval=frame,crop={W}:{H},"
+              f"hue=h='{hue}+10*sin((t+{t0:.3f})*0.9)':s=1.3,eq=brightness='0.10*({P})':eval=frame{strobe}[x{i}]"]
     elif look == "corridor":
         spd = 420 * (1 if var % 4 != 3 else -1)
         L += [f"{s}scale=1080:1080,split=4[ca{i}][cb{i}][cc{i}][cd{i}]",
               f"[cb{i}]vflip[cf{i}]",
               f"[ca{i}][cf{i}][cc{i}]vstack=inputs=3[st{i}]",
-              f"[st{i}]crop=1080:1080:0:'mod((t+{t0:.3f})*{spd}+1080*10,2160)',scale={W}:{H},"
+              f"[st{i}]crop=1080:1080:0:'mod({spd * beat:.3f}*({S})+1080*10,2160)',scale={W}:{H},"
               f"perspective=x0={W * 0.43:.0f}:y0={H * 0.5:.0f}:x1={W * 0.57:.0f}:y1={H * 0.5:.0f}:"
               f"x2=-{W * 1.0:.0f}:y2={H}:x3={W * 2.0:.0f}:y3={H}:sense=destination:eval=init,format=gbrp,split=2[fa{i}][fb{i}]",
               f"[fb{i}]vflip[fc{i}]", f"[fa{i}][fc{i}]blend=all_mode=lighten[fl{i}]",
               f"[cd{i}]scale={Q}:{Q},crop={W}:{H},gblur=sigma=30,eq=brightness=-0.35,format=gbrp[sk{i}]",
               f"[sk{i}][fl{i}]blend=all_mode=lighten,format=yuv420p,"
-              f"eq=brightness='0.10*({P})':contrast=1.12:saturation=1.25:eval=frame,hue=h={hue}[x{i}]"]
+              f"eq=brightness='0.16*({P})':contrast=1.12:saturation=1.25:eval=frame,hue=h={hue}[x{i}]"]
     elif look == "glitch":
         L += [f"{s}scale=w='{Q}*(1.0+0.14*({P}))':h=-2:eval=frame,crop={W}:{H},"
               f"hue=h={hue}:s=1.05,split=3[ga{i}][gb{i}][gc{i}]",
@@ -141,7 +142,7 @@ def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: f
         L += [f"{s}split=2[ba{i}][ca{i}]",
               f"[ba{i}]scale=w='{Q}*(1.05+0.004*t)':h=-2:eval=frame,crop={W}:{H},gblur=sigma=28,"
               f"eq=brightness=-0.28:saturation=1.2,hue=h={hue}[bg{i}]",
-              f"[ca{i}]scale={C}:{C},format=rgba,rotate=a='(t+{t0:.3f})*0.35*{sign}':ow={int(C * 1.42)}:oh={int(C * 1.42)}:"
+              f"[ca{i}]scale={C}:{C},format=rgba,rotate=a='{0.35 * beat:.5f}*({S})*{sign}':ow={int(C * 1.42)}:oh={int(C * 1.42)}:"
               f"c=0x00000000[dk{i}]",
               f"[bg{i}][dk{i}]overlay=x='({W}-w)/2':y='({H}-h)/2-{int(H * 0.04)}':format=auto:shortest=1[x{i}]"]
     flash = "" if first else f",eq=brightness='0.7*exp(-14*t)':eval=frame"
@@ -162,7 +163,9 @@ def write_ass(path: Path, accent: str, W: int, H: int, secs: list[dict], lines: 
             "Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,"
             "Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,"
             "MarginV,Encoding",
-            f"Style: Cap,Anton,{size},{lyr._bgr(accent)},&H00FFFFFF,&H00000000,&H90000000,0,0,0,0,100,100,1,0,1,5,3,2,"
+            # the caption sits on a dark see-through box: the words stay readable over any scene, even one
+            # in the song's own accent colour
+            f"Style: Cap,Anton,{size},{lyr._bgr(accent)},&H00FFFFFF,&H48000000,&H48000000,0,0,0,0,100,100,1,0,3,12,0,2,"
             f"70,70,{mv},1",
             f"Style: Title,Anton,{int(W * ((0.115 if not vert else 0.15) * 0.42))},&H00FFFFFF,&H00FFFFFF,&H00000000,&H90000000,0,0,0,"
             "0,100,100,3,0,1,4,3,5,60,60,0,1",
@@ -195,7 +198,7 @@ def write_ass(path: Path, accent: str, W: int, H: int, secs: list[dict], lines: 
         t0_ = ln["start"] - 0.2
         t1_ = (lines[i + 1]["start"] - 0.2) if i + 1 < len(lines) else ln["end"] + 1.0
         t1_ = max(t1_, t0_ + 0.4)
-        parts, cursor = [], ln["start"]
+        parts, cursor = [], t0_                 # karaoke time counts from the event start, not the first word
         for wd, s, e in ln["words"]:
             lead = max(0, round((s - cursor) * 100))
             if lead:

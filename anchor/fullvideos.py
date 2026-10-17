@@ -182,7 +182,7 @@ def build(profile: Profile, r: dict, repo: str, work: Path) -> tuple[Path, Path]
     accent = r.get("accent") or "#d8742f"
     offset = master_beat_offset(mp3, bpm) if bpm else 0.0
     if bpm:                                                   # a scene video, cut on the bars; lyrics as a caption
-        lines = lyrics.lines_for(mp3, work / "lyrics", r.get("lyrics"))
+        lines = lyrics.lines_for(mp3, work / "lyrics", r.get("lyrics"), clean_title(r["title"]))
         secs = scenes.song_sections(mp3, bpm, offset)
         scenes.render_scene_video(scenes.square(art, work / "tex.jpg"), mp3, video, accent, secs,
                                   clean_title(r["title"]), f"{phrase}", work / "scene-work-h",

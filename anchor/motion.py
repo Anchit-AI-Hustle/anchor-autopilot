@@ -34,6 +34,9 @@ def songs(catalog: dict, legacy_path: Path | None = None) -> list[dict]:
 
 
 ONLY_PATH = CATALOG_PATH.parent / "motion_only.json"
+# 2: every movement (turns, scrolls, particles) surges on the kick instead of drifting at a constant
+# speed, and karaoke words light when they are sung (they lit 0.2 s early). Uploads wait for it.
+RENDER = 2
 
 
 def list_ids(catalog: dict, only_path: Path | None = None) -> list[str]:
@@ -58,7 +61,7 @@ def render_song(profile: Profile, r: dict, repo: str, work: Path) -> dict:
     video916 = work / f"{base}-full-916.mp4"
     bpm = float(r["bpm"])
     offset = master_beat_offset(mp3, bpm)
-    lines = lyrics.lines_for(mp3, work / "lyrics", r.get("lyrics"))
+    lines = lyrics.lines_for(mp3, work / "lyrics", r.get("lyrics"), fullvideos.clean_title(r["title"]))
     sub = f"{r.get('lane_name') or 'Techno'}"               # no tempo on any listener surface
     art = work / f"{base}-art-raw.jpg"
     info = scenes.render_scene_video(scenes.square(art if art.exists() else cover, work / "tex-v.jpg"), mp3, video916,
@@ -69,7 +72,7 @@ def render_song(profile: Profile, r: dict, repo: str, work: Path) -> dict:
     if _frame and Path(_frame).exists():
         shutil.copyfile(_frame, frame)
     marker = work / f"{base}-motion.json"
-    marker.write_text(json.dumps({"id": r["id"], "lyrics_lines": len(lines), "bpm_on_screen": False}))
+    marker.write_text(json.dumps({"id": r["id"], "lyrics_lines": len(lines), "bpm_on_screen": False, "render": RENDER}))
     return {"id": r["id"], "full_169": video169, "full_916": video916, "tag": f"drop-{r['id']}", "reel": info,
             "lyrics": len(lines), "extras": [p for p in (frame, marker) if p.exists()]}
 

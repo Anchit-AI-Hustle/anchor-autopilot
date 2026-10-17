@@ -19,6 +19,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+import numpy as np
+
 from .util import log
 
 MAX_WORDS = 7            # a line on screen
@@ -48,13 +50,17 @@ def vocal_stem(mp3: Path, work: Path) -> Path | None:
     return stem if stem.exists() else None
 
 
-def heard_words(audio: Path) -> list[tuple[str, float, float]]:
-    """(word, start, end) as sung, from faster-whisper. Empty when the model is unavailable."""
+def heard_words(audio: Path, title: str | None = None) -> list[tuple[str, float, float]]:
+    """(word, start, end) as sung, from faster-whisper. Empty when the model is unavailable.
+
+    No voice-activity filter: on a sung vocal it cut whole phrases out. The song's title is the
+    likeliest sung phrase, so it is given as a hint (it was heard as "Super Slonchic Kurt")."""
     try:
         from faster_whisper import WhisperModel
         model = WhisperModel("small", device="cpu", compute_type="int8")
-        segs, _info = model.transcribe(str(audio), language="en", word_timestamps=True, vad_filter=True,
-                                       condition_on_previous_text=False, beam_size=5)
+        hint = {"hotwords": title, "initial_prompt": f"{title}."} if title else {}
+        segs, _info = model.transcribe(str(audio), language="en", word_timestamps=True, vad_filter=False,
+                                       condition_on_previous_text=False, beam_size=5, **hint)
         out = []
         for s in segs:
             for w in s.words or []:
@@ -65,6 +71,103 @@ def heard_words(audio: Path) -> list[tuple[str, float, float]]:
     except Exception as exc:
         log(f"lyrics: transcription unavailable ({str(exc)[:120]})")
         return []
+
+
+ALIGN_PAD = 0.8          # seconds of vocal either side of a phrase given to the aligner
+ALIGN_MAX_SHIFT = 2.5    # an aligned word further than this from where Whisper heard it is not trusted
+VOICED_DB = -50.0        # a word whose span on the vocal stem is quieter than this was not sung there
+
+
+def _load_mono(path: Path, sr: int) -> np.ndarray:
+    import soundfile as sf
+    x, rate = sf.read(str(path), dtype="float32", always_2d=True)
+    x = x.mean(axis=1)
+    if rate != sr:
+        import torch
+        import torchaudio
+        x = torchaudio.functional.resample(torch.from_numpy(x), rate, sr).numpy()
+    return x
+
+
+def align(vocal: Path, words: list[tuple[str, float, float]]) -> list[tuple[str, float, float]]:
+    """Whisper's words, re-timed by forced alignment on the vocal stem (wav2vec2 CTC).
+
+    Whisper's word times drift: a phrase after silence starts up to a second early, which put the
+    karaoke ahead of the singer. The aligner places every letter on the vocal itself, phrase by
+    phrase. Any step that fails leaves Whisper's timing."""
+    if not words:
+        return words
+    try:
+        import torch
+        import torchaudio
+        import torchaudio.functional as F
+        bundle = torchaudio.pipelines.WAV2VEC2_ASR_BASE_960H
+        model = bundle.get_model().eval()
+        sr = bundle.sample_rate
+        idx = {c: i for i, c in enumerate(bundle.get_labels())}
+        x = _load_mono(vocal, sr)
+    except Exception as exc:                                  # noqa: BLE001 - no model: keep Whisper's times
+        log(f"lyrics: alignment unavailable ({str(exc)[:120]})")
+        return words
+    groups, cur = [], []
+    for w in words:
+        if cur and w[1] - cur[-1][2] > 1.5:
+            groups.append(cur)
+            cur = []
+        cur.append(w)
+    if cur:
+        groups.append(cur)
+    out: list[tuple[str, float, float]] = []
+    for g in groups:
+        a, b = max(0.0, g[0][1] - ALIGN_PAD), min(len(x) / sr, g[-1][2] + ALIGN_PAD)
+        toks, keep = [], []
+        for j, (t, _s, _e) in enumerate(g):
+            c = "".join(ch for ch in t.upper() if ch in idx and ch != "|")
+            if c:
+                keep.append((j, len(toks), len(c)))
+                toks += [idx[ch] for ch in c]
+        try:
+            seg = torch.from_numpy(x[int(a * sr):int(b * sr)].copy())[None]
+            with torch.inference_mode():
+                em, _ = model(seg)
+                em = torch.log_softmax(em, dim=-1)
+            if not toks or em.shape[1] < len(toks):
+                raise ValueError("phrase too short to align")
+            ali, sc = F.forced_align(em, torch.tensor([toks], dtype=torch.int32), blank=0)
+            spans = F.merge_tokens(ali[0], sc[0].exp())
+        except Exception:                                     # noqa: BLE001 - this phrase keeps Whisper's times
+            out += g
+            continue
+        fs = (b - a) / em.shape[1]
+        res = list(g)
+        for j, k0, n in keep:
+            sp = spans[k0:k0 + n]
+            s, e = a + sp[0].start * fs, a + sp[-1].end * fs
+            if abs(s - g[j][1]) <= ALIGN_MAX_SHIFT:
+                res[j] = (g[j][0], round(s, 3), round(max(e, s + 0.08), 3))
+        out += res
+    fixed, last = [], 0.0                                     # strictly forward in time
+    for w, s, e in out:
+        s = max(s, last)
+        fixed.append((w, s, max(e, s + 0.08)))
+        last = s + 0.02
+    return fixed
+
+
+def voiced(vocal: Path, words: list[tuple[str, float, float]], floor_db: float = VOICED_DB) -> list[tuple[str, float, float]]:
+    """Only the words that sit on actual singing: with the activity filter off, Whisper can
+    invent a word ("You") over an instrumental stretch."""
+    try:
+        x = _load_mono(vocal, 16000)
+    except Exception:                                         # noqa: BLE001
+        return words
+    keep = []
+    for w, s, e in words:
+        seg = x[max(0, int((s - 0.05) * 16000)):max(int((e + 0.05) * 16000), int(s * 16000) + 1600)]
+        db = 20 * np.log10(float(np.sqrt(np.mean(seg ** 2))) + 1e-9) if len(seg) else -99.0
+        if db >= floor_db:
+            keep.append((w, s, e))
+    return keep
 
 
 def snap_to_sheet(heard: list[tuple[str, float, float]], sheet: str) -> list[tuple[str, float, float]]:
@@ -137,11 +240,13 @@ def to_lines(words: list[tuple[str, float, float]], max_chars: int = MAX_CHARS) 
     return out
 
 
-def timed_lines(mp3: Path, work: Path, known: str | None = None) -> list[dict]:
+def timed_lines(mp3: Path, work: Path, known: str | None = None, title: str | None = None) -> list[dict]:
     if os.environ.get("ANCHOR_LYRICS", "1") == "0":            # tests and hosts without the models
         return []
     stem = vocal_stem(mp3, work)
-    heard = heard_words(stem or mp3)
+    heard = heard_words(stem or mp3, title)
+    if stem and heard:
+        heard = voiced(stem, align(stem, heard))
     if len(heard) < MIN_VOCAL_WORDS and not known:
         log(f"lyrics: {mp3.name}: {len(heard)} words heard, instrumental")
         return []
@@ -151,7 +256,7 @@ def timed_lines(mp3: Path, work: Path, known: str | None = None) -> list[dict]:
     return lines
 
 
-def lines_for(mp3: Path, work: Path, known: str | None = None) -> list[dict]:
+def lines_for(mp3: Path, work: Path, known: str | None = None, title: str | None = None) -> list[dict]:
     """``timed_lines`` that never raises and is cached beside the song, so a re-render of the
     same master reuses the transcription."""
     import json
@@ -159,7 +264,7 @@ def lines_for(mp3: Path, work: Path, known: str | None = None) -> list[dict]:
     try:
         if cache.exists():
             return [{**ln, "words": [tuple(w) for w in ln["words"]]} for ln in json.loads(cache.read_text())]
-        lines = timed_lines(mp3, work, known)
+        lines = timed_lines(mp3, work, known, title)
         work.mkdir(parents=True, exist_ok=True)
         cache.write_text(json.dumps(lines))
         return lines

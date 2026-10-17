@@ -360,6 +360,14 @@ def beat_pulse_expr(bpm: float, beat_offset: float = 0.0, amp: float = 1.0, t0: 
     return (f"{amp}*exp(-{PULSE_DECAY}*mod(t+{t0:.5f}+{beat:.5f}-{beat_offset:.4f},{beat:.5f})/{beat:.5f})")
 
 
+def beat_step_expr(bpm: float, beat_offset: float = 0.0, t0: float = 0.0) -> str:
+    """Beats elapsed as an ffmpeg expression, eased so each one is a surge that starts on the kick
+    and settles before the next: movement driven by it (a turn, a scroll) moves on the beat, not
+    at a constant speed beside it. ``t0`` is the absolute time of the stream's frame 0."""
+    b = f"((t+{t0:.5f}-{beat_offset:.4f})/{60.0 / float(bpm):.5f})"
+    return f"(floor({b})+1-pow(1-({b}-floor({b})),4))"
+
+
 def render_motion(frame: Path, audio: Path, out: Path, accent: str, crf: int = 23, timeout: int = 1800,
                   bpm: float | None = None, beat_offset: float = 0.0) -> dict:
     """The 16:9 frame as a motion-graphics video: the whole frame punches in on every beat (a

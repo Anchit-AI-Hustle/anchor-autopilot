@@ -7,6 +7,7 @@ the link back after each one, so a second run never uploads it twice.
 """
 from __future__ import annotations
 
+import json
 import re
 import urllib.request
 from pathlib import Path
@@ -118,6 +119,24 @@ def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos:
     return added
 
 
+def _marker(url: str) -> dict:
+    try:
+        with urllib.request.urlopen(url, timeout=30) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except Exception:                     # noqa: BLE001 - not there (yet)
+        return {}
+
+
+def ready(e: dict, repo: str, read=_marker) -> bool:
+    """A motion video goes up only once its release holds the current render (``motion.RENDER``):
+    an older render queued earlier waits for the re-render instead of going out."""
+    if not e["id"].startswith("motion-"):
+        return True
+    from . import motion
+    mk = read(RELEASES.format(repo=repo, tag=e["release"], file=e["file"].replace("-full-169.mp4", "-motion.json")))
+    return int(mk.get("render") or 1) >= motion.RENDER
+
+
 def pending(data: dict, hold: dict | None = None) -> list[dict]:
     """Entries still to go up. A held song never goes up, even if it was queued before the hold."""
     hold = _held() if hold is None else hold
@@ -126,7 +145,7 @@ def pending(data: dict, hold: dict | None = None) -> list[dict]:
 
 
 def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOADS_PATH,
-        catalog_path: Path = CATALOG_PATH, max_uploads: int = MAX_PER_RUN, exists=_on_release) -> dict:
+        catalog_path: Path = CATALOG_PATH, max_uploads: int = MAX_PER_RUN, exists=_on_release, read=_marker) -> dict:
     data = read_json(path, {"uploads": []}) or {"uploads": []}
     done = {"uploaded": [], "errors": [], "queued": [], "adopted": [], "private": []}
     yt = profile.youtube
@@ -150,7 +169,10 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
                 write_json(path, data)
             except Exception as exc:      # noqa: BLE001 - retried next run
                 log(f"uploads: {e['id']}: private failed: {exc}")
-    todo = pending(data)[:max_uploads]
+    waiting = [e["id"] for e in pending(data) if not ready(e, repo, read)]
+    if waiting:
+        log(f"uploads: waiting for the current motion render: {', '.join(waiting)}")
+    todo = [e for e in pending(data) if e["id"] not in waiting][:max_uploads]
     if not todo:
         log("uploads: nothing pending")
         return done

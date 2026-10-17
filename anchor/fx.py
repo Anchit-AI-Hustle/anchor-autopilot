@@ -88,6 +88,7 @@ class Layer:
         frac = ph - np.floor(ph)
         beat_i = int(np.floor(ph))
         p = float(np.exp(-PULSE_DECAY * frac))
+        step = (beat_i + 1.0 - (1.0 - frac) ** 4) * self.beat     # time, advanced in surges that land on the kick
         lv = self.levels[min(k, len(self.levels) - 1)]
         acc = np.zeros((self.h, self.w, 3), dtype=np.float32)
         S = self.scale
@@ -107,7 +108,7 @@ class Layer:
 
         if kind != "intro" or sec_t > 0.5:             # radial spectrum
             n = len(lv)
-            ang = np.arange(n) * 2 * np.pi / n + t * (0.12 if kind != "build" else 0.12 + 0.5 * sec_t)
+            ang = np.arange(n) * 2 * np.pi / n + (step * 0.12 if kind != "build" else t * (0.12 + 0.5 * sec_t))
             r0 = S * (0.24 + 0.03 * p)
             length = S * 0.30 * lv ** 1.0 * (1.3 if hit else 0.8)
             for f in np.linspace(0, 1, 14):
@@ -132,7 +133,7 @@ class Layer:
             amp = 0.75 + 0.25 * self.pb
         elif hit:
             rad = ((self.pr + (1.0 - np.exp(-3.0 * frac)) * 0.9 * self.pv) % 1.2) * S * 0.9
-            ang_p = self.pa + t * 0.15 * self.pv
+            ang_p = self.pa + step * 0.15 * self.pv
             amp = (0.7 + 0.3 * self.pb) * (0.6 + 0.8 * p)
         else:
             rad = (self.pr + 0.02 * np.sin(t * 0.4 + self.pa)) * S * 0.9
