@@ -40,6 +40,23 @@ def rewrite_description(text: str, genre: str, bpm: int | None, artist: str) -> 
     return search_line(genre, bpm, artist) + ("\n\n" + body if body else "")
 
 
+TEMPO_TITLE = re.compile(r"^(?P<name>.+?) \| (?P<genre>.+?) \d{2,3} BPM \| (?P<artist>.+)$")
+TEMPO_WORDS = re.compile(r"\s*(?:[·|,-]\s*)?\b\d{2,3} BPM\b", re.I)
+
+
+def strip_tempo(video: dict) -> tuple[str, str] | None:
+    """For a video the records do not know (a hand upload, a full video made before the catalogue kept its id):
+    take the tempo out of the words it already has. None when there is no tempo to take out."""
+    m = TEMPO_TITLE.match(video["title"])
+    title = f"{m['name']} | {m['genre']} | {m['artist']}" if m else TEMPO_WORDS.sub("", video["title"]).strip()
+    lines = [re.sub(r" at \d{2,3} BPM(?=\. An )", "", l) if SEARCH_LINE.match(l.strip()) else l
+             for l in video["description"].split("\n")]
+    desc = "\n".join(re.sub(r"( · )\d{2,3} BPM · ", r"\1", l) for l in lines)
+    if title == video["title"] and desc == video["description"]:
+        return None
+    return title[:MAX_TITLE], desc
+
+
 def facts(profile: Profile, video: dict, catalog: dict, channel: dict) -> tuple[str, str, int | None] | None:
     """(name, genre phrase, bpm) for a video, or None when nothing on record knows it."""
     known = channel.get("videos", {}).get(video["id"])
@@ -71,7 +88,14 @@ def run(profile: Profile, *, catalog_path: Path = CATALOG_PATH, channel_path: Pa
     for v in videos:
         f = facts(profile, v, catalog, channel)
         if not f:
-            unknown.append(v["id"])
+            fallback = strip_tempo(v)
+            if not fallback:
+                unknown.append(v["id"])
+                continue
+            title, desc = fallback
+            if not dry_run:
+                api.update_video(v, title=title, description=desc)
+            changed.append({"id": v["id"], "from": v["title"], "to": title})
             continue
         name, genre, bpm = f
         title = search_title(name, genre, bpm, artist)

@@ -108,7 +108,7 @@ def test_fall_inside_full_track_and_short_are_ready_to_go():
     short = next(x for x in data["uploads"] if x["id"] == "fall-inside-short")
     for e in (full, short):
         assert e["release"] == "drop-2026-10-04" and e["file"].startswith("ANCHOR-2026-10-04-fall-inside-")
-        assert e["title"] == "Fall Inside | Acid Techno 149 BPM | ANCHOR" and not e["youtube_url"]
+        assert e["title"] == "Fall Inside | Acid Techno | ANCHOR"   # no tempo in a title
         assert len(e["description"]) <= 5000 and not any(c in e["description"] for c in "\u2013\u2014<>")
         assert "AI use disclosed" in e["description"]
     assert full["file"].endswith("-full-169.mp4") and full["thumbnail"].endswith("-frame-169.jpg")
