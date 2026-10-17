@@ -101,35 +101,6 @@
       "replaces": []
     },
     {
-      "id": "motion-2026-10-04",
-      "release": "drop-2026-10-04",
-      "file": "ANCHOR-2026-10-04-move-faster-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-04-move-faster-motion-frame-169.jpg",
-      "title": "Move Faster | Psychedelic Techno | ANCHOR",
-      "description": "Psychedelic Techno. An ANCHOR original, free download below.\n\nMove Faster. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "psychedelic techno",
-        "hard techno",
-        "psy techno",
-        "hypnotic techno",
-        "acid techno",
-        "techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "166 bpm techno",
-        "techno 2026",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [],
-      "youtube_url": "https://www.youtube.com/watch?v=8P7KKxc3rjo",
-      "uploaded_at": "2026-10-17T19:37:02Z",
-      "replaced": true
-    },
-    {
       "id": "motion-2026-09-28",
       "release": "drop-2026-09-28",
       "file": "ANCHOR-2026-09-28-cold-bunker-full-169.mp4",
@@ -1084,6 +1055,11 @@
       "id": "motion-2026-10-05",
       "youtube_url": "https://www.youtube.com/watch?v=cJ7giocxlvU",
       "why": "render 1: movement drifted beside the beat and karaoke lit 0.2 s early; re-done on render 2, this one goes private"
+    },
+    {
+      "id": "motion-2026-10-04",
+      "youtube_url": "https://www.youtube.com/watch?v=8P7KKxc3rjo",
+      "why": "render 2: a sung line stayed on screen through instrumental stretches; re-done on render 3, this one goes private"
     }
   ],
   "thumbs": [
