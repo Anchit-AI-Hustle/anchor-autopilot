@@ -2,7 +2,7 @@
 
 ``retitle`` reads the channel through the Data API, works out each video's genre phrase and
 tempo (robot drops from the catalog, the hand uploads from site/data/channel.json), and
-rewrites the title to 'Name | Genre 154 BPM | ANCHOR' and the description to open with the
+rewrites the title to 'Name | Genre | ANCHOR' and the description to open with the
 search line. It changes only what differs, so running it every week costs nothing when the
 channel is already right, and a title edited by hand into the same form is left alone.
 """
@@ -23,12 +23,12 @@ SEARCH_LINE = re.compile(r"^.+?(?: at \d+ BPM)?\. An [A-Z]+ original, free downl
 
 
 def search_title(name: str, genre: str, bpm: int | None, artist: str) -> str:
-    out = f"{name} | {genre} {bpm} BPM | {artist}" if bpm else f"{name} | {genre} | {artist}"
+    out = f"{name} | {genre} | {artist}"          # no tempo on any listener surface (2026-10-17)
     return out if len(out) <= MAX_TITLE else name[:MAX_TITLE]
 
 
 def search_line(genre: str, bpm: int | None, artist: str) -> str:
-    return f"{genre} at {bpm} BPM. An {artist} original, free download below." if bpm else f"{genre}. An {artist} original, free download below."
+    return f"{genre}. An {artist} original, free download below."
 
 
 def rewrite_description(text: str, genre: str, bpm: int | None, artist: str) -> str:

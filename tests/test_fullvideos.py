@@ -247,3 +247,9 @@ def test_raw_art_redraws_the_clean_artwork_behind_a_released_cover(tmp_path):
     Image.new("RGB", (1440, 1440), (20, 200, 40)).save(other)
     assert fullvideos.raw_art(PROFILE, r, other, tmp_path / "raw2.jpg") is None
     assert fullvideos.raw_art(PROFILE, {**r, "art_source": "cloudflare-flux-1-schnell"}, other, tmp_path / "raw3.jpg") is None
+
+
+def test_short_body_drops_the_new_search_line_without_a_tempo():
+    desc = ("Industrial Hard Techno. An ANCHOR original, free download below.\n\n"
+            "Steel on steel, and a drop that does not ask.\n\nAll tracks: https://y\n\n#techno #shorts")
+    assert fullvideos.short_body(desc) == "Steel on steel, and a drop that does not ask."

@@ -404,7 +404,7 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
                                    "channel": {"id": ch["id"], "name": ch.get("name")}, "media": media}
             log(f"publish: Instagram reel {post['id']} {post.get('status')} due {post.get('dueAt')}")
         except BufferError as exc:
-            if "no Instagram channel connected" in str(exc):
+            if "no Instagram channel connected" in str(exc) or "require notification scheduling" in str(exc):
                 # the YouTube posts are the release; the Reel starts the day the account is connected
                 log(f"publish: Instagram skipped: {exc}")
                 result["instagram"] = {"status": "not connected", "error": None}
@@ -585,7 +585,7 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
     ledger.upsert(book, ledger.build_entry(profile, meta, pub, drop, cat))
     ledger.save(book, ledger_path)
     if catalog.history(cat)[0]["id"] == brief["id"]:  # newest drop becomes the social preview image
-        og_card(drop_dir / "cover.jpg", brief["title"], f"{brief['lane_name']} · {brief['bpm']} BPM",
+        og_card(drop_dir / "cover.jpg", brief["title"], f"{brief['lane_name']}",
                 profile.family(brief["family"]).accent, site_dir / "og.jpg", profile.artist["name"])
     next_day = (Date.fromisoformat(brief["date"]) + timedelta(days=1)).isoformat()
     catalog.update_status(

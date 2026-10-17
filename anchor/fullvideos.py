@@ -95,7 +95,7 @@ def short_body(description: str) -> str | None:
         lines = [l.strip() for l in para.strip().split("\n") if l.strip()]
         if not lines or any(FOOTER.match(l) for l in lines):
             continue
-        if re.search(r" BPM\. An \S+ original", lines[0]) or re.fullmatch(r".+ · .+", lines[0]):
+        if re.search(r"(?: at \d+ BPM)?\. An \S+ original", lines[0]) or re.fullmatch(r".+ · .+", lines[0]):
             continue
         text = " ".join(lines)
         if len(text.split()) >= 4:          # a sentence, not a stray title or label
@@ -185,7 +185,7 @@ def build(profile: Profile, r: dict, repo: str, work: Path) -> tuple[Path, Path]
         lines = lyrics.lines_for(mp3, work / "lyrics", r.get("lyrics"))
         secs = scenes.song_sections(mp3, bpm, offset)
         scenes.render_scene_video(scenes.square(art, work / "tex.jpg"), mp3, video, accent, secs,
-                                  clean_title(r["title"]), f"{phrase} {int(round(bpm))} BPM", work / "scene-work-h",
+                                  clean_title(r["title"]), f"{phrase}", work / "scene-work-h",
                                   bpm=bpm, beat_offset=offset, lines=lines)
     else:
         render_motion(frame, mp3, video, accent, crf=23, timeout=3600, bpm=None, beat_offset=0.0)

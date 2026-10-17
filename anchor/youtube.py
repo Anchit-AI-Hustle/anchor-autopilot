@@ -37,6 +37,27 @@ SCOPE = "https://www.googleapis.com/auth/youtube"
 REDIRECT = "http://127.0.0.1:{port}/"
 
 
+def clean_text(text: str) -> str:
+    """YouTube rejects '<' and '>' in a title or description (INVALID_REQUEST_METADATA)."""
+    return (text or "").replace("<", "(").replace(">", ")").strip()
+
+
+def clean_tags(tags: list[str], limit: int = 480) -> list[str]:
+    """Tags with no angle brackets or commas, each at most 30 characters, 480 characters in all (the API caps the total at 500)."""
+    out, used = [], 0
+    for t in tags:
+        t = clean_text(t).replace(",", " ").strip()[:30]
+        if not t or t in out:
+            continue
+        cost = len(t) + (2 if " " in t else 0) + 1
+        if used + cost > limit:
+            break
+        out.append(t)
+        used += cost
+    return out
+
+
+
 class YouTubeError(RuntimeError):
     pass
 
@@ -137,8 +158,8 @@ class YouTube:
                language: str = "en", notify: bool = True) -> dict:
         """One resumable-upload session, sent in one request. Scheduled videos go up private
         with ``publishAt``; YouTube flips them public at that time."""
-        snippet = {"title": title[:100], "description": description[:5000], "tags": tags[:60],
-                   "categoryId": str(category_id), "defaultLanguage": language, "defaultAudioLanguage": "zxx"}
+        snippet = {"title": clean_text(title)[:100], "description": clean_text(description)[:4900], "tags": clean_tags(tags),
+                   "categoryId": str(category_id), "defaultLanguage": language}
         status = {"selfDeclaredMadeForKids": False, "containsSyntheticMedia": bool(ai_generated),
                   "license": "youtube", "embeddable": True}
         if publish_at:
@@ -236,7 +257,7 @@ class YouTube:
     def update_video(self, video: dict, *, title: str, description: str, tags: list[str] | None = None) -> None:
         """videos.update replaces the whole snippet, so the category and tags ride along."""
         snippet = {"title": title[:100], "description": description[:5000], "categoryId": video.get("categoryId", "10"),
-                   "tags": (tags if tags is not None else video.get("tags") or [])[:60]}
+                   "tags": clean_tags(tags if tags is not None else video.get("tags") or [])}
         if video.get("language"):
             snippet["defaultLanguage"] = video["language"]
         self._json("PUT", "videos", {"part": "snippet"}, {"id": video["id"], "snippet": snippet})
