@@ -231,3 +231,13 @@ def test_upload_metadata_is_inside_what_youtube_accepts():
     out = clean_tags(tags)
     assert sum(len(t) + (2 if " " in t else 0) + 1 for t in out) <= 500 and all("," not in t and "<" not in t for t in out)
     assert "<" not in clean_text("a <b> c") and ">" not in clean_text("a <b> c")
+
+
+def test_retitle_takes_the_tempo_out_of_videos_the_records_do_not_know():
+    from anchor import retitle
+    v = {"id": "x", "title": "Fall Inside | Acid Techno 149 BPM | ANCHOR",
+         "description": "Acid Techno at 149 BPM. An ANCHOR original, free download below.\n\nbody\n\nAcid Techno · 149 BPM · ANCHOR"}
+    title, desc = retitle.strip_tempo(v)
+    assert title == "Fall Inside | Acid Techno | ANCHOR" and "BPM" not in desc and desc.splitlines()[0].startswith("Acid Techno. An ANCHOR")
+    assert retitle.strip_tempo({"id": "y", "title": "Cold Bunker | Rawstyle Hybrid | ANCHOR", "description": "ok"}) is None
+    assert retitle.strip_tempo({"id": "z", "title": "Odd 155 BPM Name", "description": ""})[0] == "Odd Name"
