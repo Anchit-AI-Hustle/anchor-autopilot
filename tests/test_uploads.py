@@ -328,3 +328,25 @@ def test_movement_surges_on_the_kick_and_karaoke_lights_when_sung(tmp_path):
     for look in ("mirror", "corridor", "spectrum"):
         g = ";".join(scenes._scene(look, 1, 1920, 1080, {"kind": "drop"}, 300, 600, 150, 0.05, False))
         assert "floor(" in g and "(t+10.0000)*0.25" not in g
+
+
+def test_every_old_full_video_of_the_song_goes_private_even_if_missed_when_queued(tmp_path, monkeypatch):
+    import json as _j
+    from anchor.config import load_profile
+    path = tmp_path / "uploads.json"
+    path.write_text(_j.dumps({"uploads": [{"id": "motion-2026-09-09", "release": "drop-2026-09-09", "file": "ANCHOR-x-full-169.mp4",
+                                            "title": "Let’s F*cking Go! | Rawstyle Hybrid | ANCHOR", "description": "d", "replaces": []}]}))
+    monkeypatch.setattr(uploads, "fetch", lambda url, dst, n: dst)
+    videos = [{"id": "OLD", "title": "Let's F*cking Go | Rawstyle Hybrid | ANCHOR", "duration": "PT2M47S", "privacy": "public", "description": ""},
+              {"id": "SHORT", "title": "Let's F*cking Go | Rawstyle Hybrid | ANCHOR", "duration": "PT45S", "privacy": "public", "description": ""}]
+    calls = []
+
+    class Api:
+        def channel_videos(self, cid): return videos
+        def upload(self, video, **k): calls.append("up"); return {"id": "NEW"}
+        def add_to_playlist(self, vid, pl): pass
+        def set_privacy(self, vid, privacy): calls.append((privacy, vid))
+
+    out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json",
+                      exists=lambda url: False, read=lambda url: {"render": 2})
+    assert calls == ["up", ("private", "OLD")] and out["private"] == ["OLD"]
