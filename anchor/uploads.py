@@ -7,6 +7,8 @@ the link back after each one, so a second run never uploads it twice.
 """
 from __future__ import annotations
 
+import re
+import urllib.request
 from pathlib import Path
 
 from .config import CATALOG_PATH, Profile
@@ -17,19 +19,73 @@ from .youtube import YouTube, playlist_id
 UPLOADS_PATH = CATALOG_PATH.parent / "uploads.json"
 
 
+MAX_PER_RUN = 3          # 1,600 API units each; the daily drop needs two more out of the channel's 10,000
+
+
+def seconds(iso_duration: str | None) -> int:
+    m = re.fullmatch(r"PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?", iso_duration or "")
+    return 0 if not m else int(m[1] or 0) * 3600 + int(m[2] or 0) * 60 + int(m[3] or 0)
+
+
+def _on_release(url: str) -> bool:
+    try:
+        req = urllib.request.Request(url, method="HEAD")
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return resp.status < 400
+    except Exception:                     # noqa: BLE001 - not there (yet)
+        return False
+
+
+def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos: list[dict], exists=_on_release) -> list[str]:
+    """One upload entry per song whose motion video is on its release (the render leaves a
+    ``-motion.json`` marker there): the new full video goes up, and the song's old full videos
+    on the channel (same name, a minute or longer, not the new one) are set to private after it."""
+    from . import fullvideos, motion
+    from .ledger import clean_title
+    have = {e["id"] for e in data.setdefault("uploads", [])}
+    added = []
+    for d in motion.songs(catalog):
+        eid = f"motion-{d['id']}"
+        if eid in have:
+            continue
+        base = d["audio_url"].split("?")[0].rsplit("/", 1)[-1].rsplit(".", 1)[0]
+        tag = f"drop-{d['id']}"
+        if not exists(RELEASES.format(repo=repo, tag=tag, file=f"{base}-motion.json")):
+            continue
+        title, desc, tags = fullvideos.words(profile, d, None)
+        name = clean_title(d["title"]).lower()
+        old = [v["id"] for v in videos if clean_title(v["title"].split(" | ")[0]).lower() == name
+               and seconds(v.get("duration")) >= 60 and v.get("privacy", "public") == "public"]
+        data["uploads"].append({"id": eid, "release": tag, "file": f"{base}-full-169.mp4",
+                                "thumbnail": f"{base}-motion-frame-169.jpg", "title": title, "description": desc,
+                                "tags": tags, "notify": False, "playlist": True, "replaces": old})
+        added.append(eid)
+    return added
+
+
 def pending(data: dict) -> list[dict]:
     return [e for e in data.get("uploads", []) if not e.get("youtube_url")]
 
 
-def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOADS_PATH) -> dict:
+def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOADS_PATH,
+        catalog_path: Path = CATALOG_PATH, max_uploads: int = MAX_PER_RUN, exists=_on_release) -> dict:
     data = read_json(path, {"uploads": []}) or {"uploads": []}
-    todo = pending(data)
-    done = {"uploaded": [], "errors": []}
+    done = {"uploaded": [], "errors": [], "queued": [], "private": []}
+    yt = profile.youtube
+    try:
+        api = api or YouTube()
+        videos = api.channel_videos(profile.artist["youtube_channel_id"])
+        done["queued"] = queue_motion(profile, data, read_json(catalog_path, {}) or {}, repo, videos, exists)
+        if done["queued"]:
+            write_json(path, data)
+            log(f"uploads: queued motion videos {', '.join(done['queued'])}")
+    except Exception as exc:              # noqa: BLE001 - the queued one-offs still go up
+        log(f"uploads: motion queue skipped: {exc}")
+    todo = pending(data)[:max_uploads]
     if not todo:
         log("uploads: nothing pending")
         return done
     api = api or YouTube()
-    yt = profile.youtube
     for e in todo:
         try:
             video = fetch(RELEASES.format(repo=repo, tag=e["release"], file=e["file"]), work / e["file"], 1_000_000)
@@ -50,6 +106,8 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
         pl = playlist_id(yt.get("playlist_url"))
         if pl and e.get("playlist", True):
             steps.append(("playlist", lambda: api.add_to_playlist(up["id"], pl)))
+        for vid in e.get("replaces") or []:
+            steps.append((f"private {vid}", lambda vid=vid: (api.set_privacy(vid, "private"), done["private"].append(vid))))
         for step, fn in steps:
             try:
                 fn()
