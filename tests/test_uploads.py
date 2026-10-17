@@ -285,8 +285,8 @@ def test_the_three_lyric_less_uploads_are_marked_for_redoing():
     import json as _j
     d = _j.loads(uploads.UPLOADS_PATH.read_text())
     assert {"44u-IjIQaW4", "QIPY1Y02Ylg", "eughYejQE3E", "LZCfgssUrRQ", "FCzjk1aLAtw", "cJ7giocxlvU"} <= uploads.superseded(d)
-    assert not {"motion-2026-10-16", "motion-2026-10-13", "motion-2026-10-12", "motion-2026-10-09", "motion-2026-10-08",
-                "motion-2026-10-05"} & {e["id"] for e in d["uploads"] if e.get("youtube_url")}
+    live = {e["youtube_url"] for e in d["uploads"] if e.get("youtube_url")}
+    assert not live & {s["youtube_url"] for s in d["superseded"]}       # a re-done video never counts as current
 
 
 def test_an_old_render_waits_for_the_beat_locked_one(tmp_path, monkeypatch):
@@ -402,3 +402,17 @@ def test_a_sung_line_leaves_the_screen_after_its_last_word(tmp_path):
     ass = scenes.write_ass(tmp_path / "a.ass", "#ff8800", 1920, 1080, secs, lines, "T", "S").read_text()
     caps = [l.split(",") for l in ass.splitlines() if ",Cap," in l]
     assert caps[0][2] == "0:00:16.00"                      # gone 1.2 s after "taking", not at 73.4 s
+
+
+def test_full_videos_never_repost_a_held_song_or_one_the_motion_uploader_owns():
+    from anchor import fullvideos
+    catalog = {"drops": [{"id": "2026-10-10", "title": "Liquid Cipher", "youtube_url": "https://youtube.com/shorts/SHORT1", "audio_url": "x"},
+                         {"id": "2026-10-17", "title": "Sonic Reactor", "youtube_url": "https://youtube.com/shorts/SHORT2", "audio_url": "x"},
+                         {"id": "2026-09-01", "title": "Other Song", "youtube_url": "https://youtube.com/shorts/SHORT3", "audio_url": "x"}]}
+    videos = [{"id": f"SHORT{i}", "title": "x", "duration": "PT45S", "privacy": "public"} for i in (1, 2, 3)]
+    p = fullvideos.plan(catalog, videos, {"withdrawn": []}, held={"2026-10-10"}, owned={"2026-10-17"})
+    assert [r["title"] for r in p["todo"]] == ["Other Song"]
+    assert [r["title"] for r in p["withdrawn"]] == ["Liquid Cipher"] and [r["title"] for r in p["owned"]] == ["Sonic Reactor"]
+    import inspect
+    src = inspect.getsource(fullvideos.run)
+    assert "legacy_motion.json" in src and "uploads.json" in src             # the live run passes both
