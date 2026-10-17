@@ -37,3 +37,32 @@ def test_no_models_means_no_lyrics_and_never_an_error(tmp_path, monkeypatch):
     monkeypatch.setenv("ANCHOR_LYRICS", "1")
     monkeypatch.setattr(L, "timed_lines", lambda *a, **k: (_ for _ in ()).throw(RuntimeError("no model")))
     assert L.lines_for(mp3, tmp_path / "w") == []
+
+
+def test_words_over_silence_are_dropped_and_alignment_never_breaks_a_render(tmp_path, monkeypatch):
+    import numpy as np
+    from anchor import lyrics as L
+    x = np.zeros(16000 * 4, dtype=np.float32)
+    x[16000:32000] = 0.2 * np.sin(np.arange(16000) / 5.0)          # singing from 1 s to 2 s, silence after
+    monkeypatch.setattr(L, "_load_mono", lambda path, sr: x)
+    words = [("let", 1.1, 1.4), ("go", 1.5, 1.9), ("you", 3.0, 3.3)]
+    assert [w[0] for w in L.voiced(tmp_path / "v.wav", words)] == ["let", "go"]
+    monkeypatch.setattr(L, "_load_mono", lambda path, sr: (_ for _ in ()).throw(RuntimeError("no audio")))
+    assert L.align(tmp_path / "v.wav", words) == words                 # no model or audio: Whisper's timing stays
+
+
+def test_the_title_is_the_transcription_hint(monkeypatch, tmp_path):
+    import sys
+    import types
+    from anchor import lyrics as L
+    seen = {}
+
+    class Model:
+        def __init__(self, *a, **k): pass
+        def transcribe(self, audio, **k):
+            seen.update(k)
+            return [], None
+
+    monkeypatch.setitem(sys.modules, "faster_whisper", types.SimpleNamespace(WhisperModel=Model))
+    assert L.heard_words(tmp_path / "v.wav", "Supersonic Current") == []
+    assert seen["hotwords"] == "Supersonic Current" and seen["vad_filter"] is False

@@ -155,7 +155,8 @@ def test_a_run_uploads_at_most_three_and_sets_the_replaced_video_private(tmp_pat
         def add_to_playlist(self, vid, pl): pass
         def set_privacy(self, vid, privacy): calls.append((privacy, vid))
 
-    out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json")
+    out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json",
+                      read=lambda url: {"render": 2})
     assert len(out["uploaded"]) == 3 and out["private"] == ["OLD0", "OLD1", "OLD2"]
     assert calls[0] == ("up", "f0.mp4") and calls[1] == ("private", "OLD0")      # old goes private only after the new is up
 
@@ -283,5 +284,47 @@ def test_a_song_held_after_it_was_queued_never_goes_up():
 def test_the_three_lyric_less_uploads_are_marked_for_redoing():
     import json as _j
     d = _j.loads(uploads.UPLOADS_PATH.read_text())
-    assert uploads.superseded(d) == {"44u-IjIQaW4", "QIPY1Y02Ylg", "eughYejQE3E"}
-    assert not {"motion-2026-10-16", "motion-2026-10-13", "motion-2026-10-12"} & {e["id"] for e in d["uploads"]}
+    assert {"44u-IjIQaW4", "QIPY1Y02Ylg", "eughYejQE3E", "LZCfgssUrRQ", "FCzjk1aLAtw", "cJ7giocxlvU"} <= uploads.superseded(d)
+    assert not {"motion-2026-10-16", "motion-2026-10-13", "motion-2026-10-12", "motion-2026-10-09", "motion-2026-10-08",
+                "motion-2026-10-05"} & {e["id"] for e in d["uploads"] if e.get("youtube_url")}
+
+
+def test_an_old_render_waits_for_the_beat_locked_one(tmp_path, monkeypatch):
+    import json as _j
+    from anchor import motion
+    from anchor.config import load_profile
+    assert motion.RENDER >= 2
+    path = tmp_path / "uploads.json"
+    path.write_text(_j.dumps({"uploads": [{"id": f"motion-{i}", "release": f"drop-{i}", "file": f"ANCHOR-{i}-full-169.mp4",
+                                            "title": "T", "description": "d", "replaces": []} for i in ("old", "new")]
+                              + [{"id": "lyric", "release": "x", "file": "l.mp4", "title": "L", "description": "d"}]}))
+    monkeypatch.setattr(uploads, "fetch", lambda url, dst, n: dst)
+    seen = []
+
+    class Api:
+        def channel_videos(self, cid): return []
+        def upload(self, video, **k): seen.append(video.name); return {"id": "N" + video.name}
+        def add_to_playlist(self, vid, pl): pass
+
+    marks = {"ANCHOR-old-motion.json": {"lyrics_lines": 4}, "ANCHOR-new-motion.json": {"render": 2}}
+    out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json",
+                      read=lambda url: marks.get(url.rsplit("/", 1)[-1], {}))
+    assert seen == ["ANCHOR-new-full-169.mp4", "l.mp4"]
+    assert not _j.loads(path.read_text())["uploads"][0].get("youtube_url")       # waits, goes up after the re-render
+
+
+def test_movement_surges_on_the_kick_and_karaoke_lights_when_sung(tmp_path):
+    from anchor import scenes
+    from anchor.video import beat_step_expr
+    e = beat_step_expr(120, 0.1, 0.0)
+    ev = lambda t: eval(e.replace("floor", "__import__('math').floor").replace("pow", "__import__('math').pow"), {"t": t})
+    assert abs(ev(0.1) - 0.0) < 1e-6 and abs(ev(0.6) - 1.0) < 1e-6         # one step per beat, landing on the kick
+    assert ev(0.35) > 0.9                                                    # most of the move is done half a beat after the kick
+    lines = [{"start": 10.0, "end": 11.0, "words": [("hey", 10.0, 10.4), ("you", 10.5, 11.0)]}]
+    secs = [{"kind": "intro", "start": 0.0, "end": 8.0}, {"kind": "drop", "start": 8.0, "end": 20.0}]
+    ass = scenes.write_ass(tmp_path / "a.ass", "#ff8800", 1920, 1080, secs, lines, "T", "S").read_text()
+    cap = [l for l in ass.splitlines() if ",Cap," in l][0]
+    assert cap.split(",")[1] == "0:00:09.80" and "{\\k20}{\\kf40}HEY" in cap   # 0.2 s lead before the first word lights
+    for look in ("mirror", "corridor", "spectrum"):
+        g = ";".join(scenes._scene(look, 1, 1920, 1080, {"kind": "drop"}, 300, 600, 150, 0.05, False))
+        assert "floor(" in g and "(t+10.0000)*0.25" not in g
