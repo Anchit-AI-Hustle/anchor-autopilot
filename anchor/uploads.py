@@ -37,6 +37,50 @@ def _on_release(url: str) -> bool:
         return False
 
 
+def _held() -> dict:
+    from . import motion
+    return (read_json(motion.LEGACY_PATH, {}) or {}).get("hold", {}) or {}
+
+
+def _vid(url: str | None) -> str:
+    return (url or "").rsplit("=", 1)[-1].rsplit("/", 1)[-1]
+
+
+def superseded(data: dict) -> set[str]:
+    """Videos this robot uploaded that were later found wanting (the first motion uploads had no
+    lyrics): they are re-done, and the old one goes private like any other old full video."""
+    return {_vid(s.get("youtube_url")) for s in data.get("superseded", []) if s.get("youtube_url")}
+
+
+def _same(videos: list[dict], title: str) -> list[dict]:
+    from .ledger import clean_title
+    name = clean_title(title.split(" | ")[0]).lower()
+    return [v for v in videos if clean_title(v["title"].split(" | ")[0]).lower() == name
+            and seconds(v.get("duration")) >= 60 and v.get("privacy", "public") == "public"]
+
+
+def _hand(videos: list[dict], data: dict) -> list[str]:
+    """Hand uploads in YouTube Studio: the motion line in the description, not one of ours."""
+    ours = superseded(data) | {_vid(e.get("youtube_url")) for e in data.get("uploads", []) if e.get("youtube_url")}
+    return [v["id"] for v in videos if MARK.lower() in (v.get("description") or "").lower() and v["id"] not in ours]
+
+
+def adopt_late(data: dict, videos: list[dict]) -> list[str]:
+    """A song already queued for the robot that Anchit then uploaded by hand in Studio is adopted,
+    never uploaded a second time."""
+    adopted = []
+    for e in pending(data):
+        if not e["id"].startswith("motion-"):
+            continue
+        same = _same(videos, e["title"])
+        hand = _hand(same, data)
+        if hand:
+            e.update(youtube_url=f"https://www.youtube.com/watch?v={hand[0]}", adopted=True,
+                     replaces=[v["id"] for v in same if v["id"] not in hand])
+            adopted.append(e["id"])
+    return adopted
+
+
 def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos: list[dict], exists=_on_release) -> list[str]:
     """One upload entry per song whose motion video is on its release (the render leaves a
     ``-motion.json`` marker there): the new full video goes up, and the song's old full videos
@@ -44,7 +88,7 @@ def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos:
     from . import fullvideos, motion
     from .ledger import clean_title
     have = {e["id"] for e in data.setdefault("uploads", [])}
-    hold = (read_json(motion.LEGACY_PATH, {}) or {}).get("hold", {})   # songs Anchit took down or held: never re-post
+    hold = _held()                        # songs Anchit took down or held: never re-post
     added = []
     for d in motion.songs(catalog):
         eid = f"motion-{d['id']}"
@@ -61,10 +105,8 @@ def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos:
             desc = "\n".join([search_line(d["genre"], None, profile.artist["name"]), *desc.split("\n")[1:]])
         lines = desc.split("\n")
         desc = "\n".join([lines[0], "", MARK, *lines[1:]])
-        name = clean_title(d["title"]).lower()
-        same = [v for v in videos if clean_title(v["title"].split(" | ")[0]).lower() == name
-                and seconds(v.get("duration")) >= 60 and v.get("privacy", "public") == "public"]
-        manual = [v["id"] for v in same if MARK.lower() in (v.get("description") or "").lower()]
+        same = _same(videos, clean_title(d["title"]))
+        manual = _hand(same, data)
         old = [v["id"] for v in same if v["id"] not in manual]
         entry = {"id": eid, "release": tag, "file": f"{base}-full-169.mp4",
                  "thumbnail": f"{base}-motion-frame-169.jpg", "title": title, "description": desc,
@@ -76,22 +118,26 @@ def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos:
     return added
 
 
-def pending(data: dict) -> list[dict]:
-    return [e for e in data.get("uploads", []) if not e.get("youtube_url")]
+def pending(data: dict, hold: dict | None = None) -> list[dict]:
+    """Entries still to go up. A held song never goes up, even if it was queued before the hold."""
+    hold = _held() if hold is None else hold
+    return [e for e in data.get("uploads", []) if not e.get("youtube_url")
+            and not (e["id"].startswith("motion-") and e["id"][len("motion-"):] in hold)]
 
 
 def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOADS_PATH,
         catalog_path: Path = CATALOG_PATH, max_uploads: int = MAX_PER_RUN, exists=_on_release) -> dict:
     data = read_json(path, {"uploads": []}) or {"uploads": []}
-    done = {"uploaded": [], "errors": [], "queued": [], "private": []}
+    done = {"uploaded": [], "errors": [], "queued": [], "adopted": [], "private": []}
     yt = profile.youtube
     try:
         api = api or YouTube()
         videos = api.channel_videos(profile.artist["youtube_channel_id"])
         done["queued"] = queue_motion(profile, data, read_json(catalog_path, {}) or {}, repo, videos, exists)
-        if done["queued"]:
+        done["adopted"] = adopt_late(data, videos)
+        if done["queued"] or done["adopted"]:
             write_json(path, data)
-            log(f"uploads: queued motion videos {', '.join(done['queued'])}")
+            log(f"uploads: queued {', '.join(done['queued']) or 'none'}; adopted from Studio {', '.join(done['adopted']) or 'none'}")
     except Exception as exc:              # noqa: BLE001 - the queued one-offs still go up
         log(f"uploads: motion queue skipped: {exc}")
     for e in data.get("uploads", []):     # a hand upload: its old videos go private here, cheaply
