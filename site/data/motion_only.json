@@ -1,14 +1,1 @@
-{
-  "note": "Top-up motion run: only these songs are rendered when the Motion videos workflow runs with no song id. Empty the list to render every song again.",
-  "ids": [
-    "legacy-pressure-spiral",
-    "legacy-absolute-force",
-    "legacy-cold-metal-floor",
-    "legacy-underground-fever-dream",
-    "legacy-crossing-the-line",
-    "legacy-no-control",
-    "legacy-cut-loose",
-    "legacy-kindness-needs-truth",
-    "legacy-time-to-peak"
-  ]
-}
+{"note": "Top-up motion run: only these songs are rendered when the Motion videos workflow runs with no song id. Empty list = render every song.", "ids": []}
