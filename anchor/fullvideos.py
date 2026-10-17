@@ -164,14 +164,15 @@ def build(profile: Profile, r: dict, repo: str, work: Path) -> tuple[Path, Path]
     audio_url = r["audio_url"].split("?")[0]
     base = audio_url.rsplit("/", 1)[-1].rsplit(".", 1)[0]
     mp3 = fetch(audio_url, work / f"{base}.{audio_url.rsplit('.', 1)[-1]}")
-    try:
-        cover = fetch(RELEASES.format(repo=repo, tag=f"drop-{r['id']}", file=f"{base}-cover.jpg"),
-                      work / f"{base}-cover.jpg", 20_000)
-    except (OSError, RuntimeError, KeyError):
-        local = SITE / (r.get("cover") or "")
-        if not r.get("cover") or not local.exists():
-            raise RuntimeError(f"{r['title']}: no cover on file")
+    local = SITE / (r.get("cover") or "")
+    if r.get("cover") and local.exists():                     # the site's cover is the current one (no tempo on it)
         cover = local
+    else:
+        try:
+            cover = fetch(RELEASES.format(repo=repo, tag=f"drop-{r['id']}", file=f"{base}-cover.jpg"),
+                          work / f"{base}-cover.jpg", 20_000)
+        except (OSError, RuntimeError, KeyError):
+            raise RuntimeError(f"{r['title']}: no cover on file")
     lane = lane_of(profile, r)
     phrase = seo.genre_phrase(lane) if lane else (r.get("lane_name") or "Techno")
     art = raw_art(profile, r, cover, work / f"{base}-art-raw.jpg") or plain_art(cover, work / f"{base}-art-plain.jpg")

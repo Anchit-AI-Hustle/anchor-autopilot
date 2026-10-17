@@ -584,9 +584,9 @@ def test_the_musical_key_is_never_shown_to_a_listener():
     # and off the artwork, which is the surface that outlives every other one: a cover is
     # burned into the Short, the 16:9 and the 9:16, and reprinting it means re-rendering all three.
     art = (ROOT / "scripts" / "art_from_audio.py").read_text()
-    tag = next(l for l in art.splitlines() if l.strip().startswith("tag = f"))
-    assert "bpm" in tag.lower() and "key" not in tag.lower(), \
-        f"the cover footer still carries the key: {tag.strip()}"
+    code = [l for l in art.splitlines() if not l.strip().startswith("#")]
+    assert not any("BPM" in l and "f\"" in l for l in code), "the cover footer must not carry the tempo"
+    assert not any("meta['key']" in l or 'meta["key"]' in l for l in code), "the cover footer must not carry the key"
 
 
 def test_format_words_count_only_as_whole_words():

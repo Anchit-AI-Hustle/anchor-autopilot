@@ -8,6 +8,7 @@ the link back after each one, so a second run never uploads it twice.
 from __future__ import annotations
 
 import json
+import os
 import re
 import urllib.request
 from pathlib import Path
@@ -153,7 +154,7 @@ def pending(data: dict, hold: dict | None = None) -> list[dict]:
 def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOADS_PATH,
         catalog_path: Path = CATALOG_PATH, max_uploads: int = MAX_PER_RUN, exists=_on_release, read=_marker) -> dict:
     data = read_json(path, {"uploads": []}) or {"uploads": []}
-    done = {"uploaded": [], "errors": [], "queued": [], "adopted": [], "private": []}
+    done = {"uploaded": [], "errors": [], "queued": [], "adopted": [], "thumbs": [], "private": []}
     yt = profile.youtube
     videos: list[dict] = []
     try:
@@ -161,7 +162,14 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
         videos = api.channel_videos(profile.artist["youtube_channel_id"])
         done["queued"] = queue_motion(profile, data, read_json(catalog_path, {}) or {}, repo, videos, exists)
         done["adopted"] = adopt_late(data, videos)
-        if done["queued"] or done["adopted"]:
+        try:                              # every older video gets a tempo-free thumbnail
+            from . import thumbs
+            if os.environ.get("ANCHOR_THUMBS", "1") == "0":
+                raise RuntimeError("off (ANCHOR_THUMBS=0)")
+            done["thumbs"] = thumbs.run(api, videos, data, repo, work / "thumbs", profile.artist["name"], MARK)
+        except Exception as exc:          # noqa: BLE001 - never blocks the uploads
+            log(f"uploads: thumbnails skipped: {exc}")
+        if done["queued"] or done["adopted"] or done.get("thumbs"):
             write_json(path, data)
             log(f"uploads: queued {', '.join(done['queued']) or 'none'}; adopted from Studio {', '.join(done['adopted']) or 'none'}")
     except Exception as exc:              # noqa: BLE001 - the queued one-offs still go up

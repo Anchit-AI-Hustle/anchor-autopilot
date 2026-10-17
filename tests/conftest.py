@@ -54,3 +54,4 @@ def isolated_queue(tmp_path, monkeypatch):
 def _no_lyric_models(monkeypatch):
     """Vocal separation and transcription take minutes; the lyric tests switch them back on."""
     monkeypatch.setenv("ANCHOR_LYRICS", "0")
+    monkeypatch.setenv("ANCHOR_THUMBS", "0")          # no thumbnail redraws (or network) unless a test asks
