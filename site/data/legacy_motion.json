@@ -49,6 +49,71 @@
       "family": "chrome",
       "cover": "legacy/ANCHOR-legacy-time-to-peak-cover.jpg",
       "audio_url": "https://raw.githubusercontent.com/Anchit-AI-Hustle/anchor-autopilot/main/site/legacy/ANCHOR-legacy-time-to-peak.mp3"
+    },
+    {
+      "id": "legacy-pressure-spiral",
+      "date": "2026-10-17",
+      "title": "Pressure Spiral",
+      "lane": "bounce",
+      "lane_name": "Hard Techno",
+      "genre": "Hard Techno",
+      "bpm": 153,
+      "family": "furnace",
+      "cover": "legacy/ANCHOR-legacy-pressure-spiral-cover.jpg",
+      "audio_url": "https://raw.githubusercontent.com/Anchit-AI-Hustle/anchor-autopilot/main/site/legacy/ANCHOR-legacy-pressure-spiral.mp3",
+      "audio_source": "YouTube Studio download of the channel's own video"
+    },
+    {
+      "id": "legacy-absolute-force",
+      "date": "2026-10-17",
+      "title": "Absolute Force",
+      "lane": "industrial",
+      "lane_name": "Industrial Techno",
+      "genre": "Industrial Techno",
+      "bpm": 105,
+      "family": "rust",
+      "cover": "legacy/ANCHOR-legacy-absolute-force-cover.jpg",
+      "audio_url": "https://raw.githubusercontent.com/Anchit-AI-Hustle/anchor-autopilot/main/site/legacy/ANCHOR-legacy-absolute-force.mp3",
+      "audio_source": "YouTube Studio download of the channel's own video"
+    },
+    {
+      "id": "legacy-cold-metal-floor",
+      "date": "2026-10-17",
+      "title": "Cold Metal Floor",
+      "lane": "industrial",
+      "lane_name": "Industrial Hard Techno",
+      "genre": "Industrial Hard Techno",
+      "bpm": 150,
+      "family": "chrome",
+      "cover": "legacy/ANCHOR-legacy-cold-metal-floor-cover.jpg",
+      "audio_url": "https://raw.githubusercontent.com/Anchit-AI-Hustle/anchor-autopilot/main/site/legacy/ANCHOR-legacy-cold-metal-floor.mp3",
+      "audio_source": "YouTube Studio download of the channel's own video"
+    },
+    {
+      "id": "legacy-underground-fever-dream",
+      "date": "2026-10-17",
+      "title": "Underground Fever Dream",
+      "lane": "bunker",
+      "lane_name": "Dark Techno",
+      "genre": "Dark Techno",
+      "bpm": 155,
+      "family": "void",
+      "cover": "legacy/ANCHOR-legacy-underground-fever-dream-cover.jpg",
+      "audio_url": "https://raw.githubusercontent.com/Anchit-AI-Hustle/anchor-autopilot/main/site/legacy/ANCHOR-legacy-underground-fever-dream.mp3",
+      "audio_source": "YouTube Studio download of the channel's own video"
+    },
+    {
+      "id": "legacy-crossing-the-line",
+      "date": "2026-10-17",
+      "title": "Crossing The Line",
+      "lane": "rawstyle",
+      "lane_name": "Peak Time Techno",
+      "genre": "Peak Time Techno",
+      "bpm": 125,
+      "family": "volt",
+      "cover": "legacy/ANCHOR-legacy-crossing-the-line-cover.jpg",
+      "audio_url": "https://raw.githubusercontent.com/Anchit-AI-Hustle/anchor-autopilot/main/site/legacy/ANCHOR-legacy-crossing-the-line.mp3",
+      "audio_source": "YouTube Studio download of the channel's own video"
     }
   ],
   "hold": {
