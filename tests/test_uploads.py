@@ -350,3 +350,44 @@ def test_every_old_full_video_of_the_song_goes_private_even_if_missed_when_queue
     out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json",
                       exists=lambda url: False, read=lambda url: {"render": 2})
     assert calls == ["up", ("private", "OLD")] and out["private"] == ["OLD"]
+
+
+def test_old_thumbnails_are_redrawn_without_the_tempo(tmp_path, monkeypatch):
+    from PIL import Image
+    from anchor import thumbs
+    assert thumbs.genre_of("Cold Bunker | Rawstyle Hybrid | ANCHOR") == "Rawstyle Hybrid"
+    assert thumbs.genre_of("Cold Bunker | Rawstyle Hybrid 155 BPM | ANCHOR") == "Rawstyle Hybrid"
+    cat = uploads.UPLOADS_PATH.parent / "catalog.json"                                 # the real one (conftest hides it)
+    src = thumbs.sources("o/r", cat)
+    assert {"coldbunker", "nocontrol", "fallinside"} <= set(src)                    # catalogue, older songs, one-off uploads
+    videos = [{"id": "FULL", "title": "Cold Bunker | Rawstyle Hybrid | ANCHOR", "privacy": "public", "description": "old"},
+              {"id": "SHORT", "title": "Cold Bunker | Rawstyle Hybrid | ANCHOR", "privacy": "public", "description": "old"},
+              {"id": "MOTION", "title": "Cold Bunker | Rawstyle Hybrid | ANCHOR", "privacy": "public", "description": uploads.MARK},
+              {"id": "GONE", "title": "Cold Bunker | Rawstyle Hybrid | ANCHOR", "privacy": "private", "description": ""},
+              {"id": "MIX", "title": "Some Mix | ANCHOR", "privacy": "public", "description": ""}]
+    sizes = {}
+
+    class Api:
+        def set_thumbnail(self, vid, image):
+            sizes[vid] = Image.open(image).size
+            assert Path(image).stat().st_size < 2_000_000                            # YouTube's limit
+
+    data = {"uploads": []}
+    out = thumbs.run(Api(), videos, data, "o/r", tmp_path, "ANCHOR", uploads.MARK, short_test=lambda v: v == "SHORT",
+                     catalog_path=cat)
+    assert out == ["FULL", "SHORT"] and sizes == {"FULL": (1920, 1080), "SHORT": (1080, 1920)}
+    assert thumbs.run(Api(), videos, data, "o/r", tmp_path, "ANCHOR", uploads.MARK, short_test=lambda v: False,
+                      catalog_path=cat) == []                                         # once
+
+
+def test_no_cover_carries_a_tempo():
+    import subprocess
+    import shutil
+    import pytest
+    from pathlib import Path
+    if not shutil.which("tesseract"):
+        pytest.skip("tesseract not installed")
+    site = uploads.UPLOADS_PATH.parent.parent
+    for f in sorted([*site.glob("covers/*.jpg"), *site.glob("legacy/*-cover.jpg")]):
+        text = subprocess.run(["tesseract", str(f), "-", "--psm", "11"], capture_output=True, text=True).stdout
+        assert "BPM" not in text.upper(), f.name
