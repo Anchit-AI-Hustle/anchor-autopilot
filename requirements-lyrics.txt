@@ -6,3 +6,6 @@ torchaudio
 soundfile
 demucs==4.1.0
 faster-whisper==1.2.1
+# faster-whisper 1.2.1 opens audio with av.open(..., metadata_errors=...), which PyAV 16+ removed: without this pin every
+# transcription failed ("unexpected keyword argument metadata_errors") and every song was treated as instrumental
+av<16
