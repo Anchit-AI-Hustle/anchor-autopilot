@@ -158,3 +158,26 @@ def test_a_run_uploads_at_most_three_and_sets_the_replaced_video_private(tmp_pat
     out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json")
     assert len(out["uploaded"]) == 3 and out["private"] == ["OLD0", "OLD1", "OLD2"]
     assert calls[0] == ("up", "f0.mp4") and calls[1] == ("private", "OLD0")      # old goes private only after the new is up
+
+
+def test_older_songs_get_motion_videos_and_keep_their_genre(tmp_path, monkeypatch):
+    import json as _j
+    from anchor import motion
+    from anchor.config import load_profile
+    monkeypatch.setattr(motion, "LEGACY_PATH", uploads.UPLOADS_PATH.parent / "legacy_motion.json")
+    legacy = _j.loads((uploads.UPLOADS_PATH.parent / "legacy_motion.json").read_text())["songs"]
+    ids = [d["id"] for d in motion.songs({"drops": []})]
+    assert ids == [d["id"] for d in legacy] and len(ids) == 4
+    for d in legacy:                                   # the files the render and the upload read are in the repo
+        base = d["audio_url"].rsplit("/", 1)[-1]
+        assert (uploads.UPLOADS_PATH.parent.parent / "legacy" / base).stat().st_size > 1_000_000
+        assert (uploads.UPLOADS_PATH.parent.parent / d["cover"]).exists()
+    p = load_profile()
+    videos = [{"id": "OLDK", "title": "Kindness Needs Truth | Industrial Techno | ANCHOR", "duration": "PT4M14S", "privacy": "public"},
+              {"id": "LYRIC", "title": "Kindness Needs Truth (Lyric Video) | ANCHOR", "duration": "PT4M14S", "privacy": "public"}]
+    data = {"uploads": []}
+    uploads.queue_motion(p, data, {"drops": []}, "o/r", videos, exists=lambda url: "kindness" in url)
+    e = data["uploads"][0]
+    assert e["title"] == "Kindness Needs Truth | Industrial Techno | ANCHOR" and e["replaces"] == ["OLDK"]   # the lyric video stays
+    assert e["description"].startswith("Industrial Techno. An ANCHOR original") and "BPM" not in e["description"]
+    assert e["release"] == "drop-legacy-kindness-needs-truth" and e["file"] == "ANCHOR-legacy-kindness-needs-truth-full-169.mp4"
