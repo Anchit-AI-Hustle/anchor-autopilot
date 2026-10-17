@@ -74,90 +74,6 @@
       "uploaded_at": "2026-10-17T08:38:29Z"
     },
     {
-      "id": "motion-2026-10-16",
-      "release": "drop-2026-10-16",
-      "file": "ANCHOR-2026-10-16-supersonic-current-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-16-supersonic-current-motion-frame-169.jpg",
-      "title": "Supersonic Current | Hyper Techno | ANCHOR",
-      "description": "Hyper Techno. An ANCHOR original, free download below.\n\nSupersonic Current. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "hypertechno",
-        "hyper techno",
-        "acid techno",
-        "hard techno",
-        "rave techno",
-        "techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "180 bpm techno",
-        "techno 2026",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [],
-      "youtube_url": "https://www.youtube.com/watch?v=44u-IjIQaW4",
-      "uploaded_at": "2026-10-17T10:34:31Z"
-    },
-    {
-      "id": "motion-2026-10-13",
-      "release": "drop-2026-10-13",
-      "file": "ANCHOR-2026-10-13-heavy-carbon-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-13-heavy-carbon-motion-frame-169.jpg",
-      "title": "Heavy Carbon | Hard Techno | ANCHOR",
-      "description": "Hard Techno. An ANCHOR original, free download below.\n\nHeavy Carbon. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "hard techno",
-        "hard bounce",
-        "bouncy techno",
-        "rave techno",
-        "hard techno 2026",
-        "techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "170 bpm techno",
-        "techno 2026",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [],
-      "youtube_url": "https://www.youtube.com/watch?v=QIPY1Y02Ylg",
-      "uploaded_at": "2026-10-17T10:34:39Z"
-    },
-    {
-      "id": "motion-2026-10-12",
-      "release": "drop-2026-10-12",
-      "file": "ANCHOR-2026-10-12-chamber-piston-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-12-chamber-piston-motion-frame-169.jpg",
-      "title": "Chamber Piston | Hard Groove Techno | ANCHOR",
-      "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nChamber Piston. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "hard groove techno",
-        "hard techno",
-        "berlin techno",
-        "groove techno",
-        "warehouse techno",
-        "techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "162 bpm techno",
-        "techno 2026",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [],
-      "youtube_url": "https://www.youtube.com/watch?v=eughYejQE3E",
-      "uploaded_at": "2026-10-17T10:34:47Z"
-    },
-    {
       "id": "motion-2026-10-10",
       "release": "drop-2026-10-10",
       "file": "ANCHOR-2026-10-10-liquid-cipher-full-169.mp4",
@@ -373,6 +289,23 @@
       "replaces": [
         "Khgrv1vy_7M"
       ]
+    }
+  ],
+  "superseded": [
+    {
+      "id": "motion-2026-10-16",
+      "youtube_url": "https://www.youtube.com/watch?v=44u-IjIQaW4",
+      "why": "first motion render had no lyrics (PyAV 16 broke transcription); re-done with lyrics, this one goes private"
+    },
+    {
+      "id": "motion-2026-10-13",
+      "youtube_url": "https://www.youtube.com/watch?v=QIPY1Y02Ylg",
+      "why": "first motion render had no lyrics (PyAV 16 broke transcription); re-done with lyrics, this one goes private"
+    },
+    {
+      "id": "motion-2026-10-12",
+      "youtube_url": "https://www.youtube.com/watch?v=eughYejQE3E",
+      "why": "first motion render had no lyrics (PyAV 16 broke transcription); re-done with lyrics, this one goes private"
     }
   ]
 }

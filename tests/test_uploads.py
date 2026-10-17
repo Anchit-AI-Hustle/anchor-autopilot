@@ -236,3 +236,52 @@ def test_a_top_up_motion_run_lists_only_the_new_songs(tmp_path, monkeypatch):
     assert motion.list_ids({"drops": []}, only) == ["legacy-cut-loose", "legacy-absolute-force"]
     only.write_text(_j.dumps({"ids": []}))
     assert len(motion.list_ids({"drops": []}, only)) == 9
+
+
+def test_a_lyric_less_motion_upload_is_redone_and_its_old_one_goes_private(tmp_path):
+    from anchor.config import load_profile
+    catalog = {"drops": [{"id": "2026-10-16", "title": "Supersonic Current", "date": "2026-10-16", "bpm": 180, "family": "neon",
+                          "lane": "hyper", "audio_url": "https://x/drop-2026-10-16/ANCHOR-2026-10-16-supersonic-current.mp3"}]}
+    videos = [{"id": "NOLYRICS", "title": "Supersonic Current | Hyper Techno | ANCHOR", "duration": "PT2M45S", "privacy": "public",
+               "description": "Hyper Techno.\n\n" + uploads.MARK}]
+    data = {"uploads": [], "superseded": [{"id": "motion-2026-10-16", "youtube_url": "https://www.youtube.com/watch?v=NOLYRICS"}]}
+    assert uploads.queue_motion(load_profile(), data, catalog, "o/r", videos, exists=lambda url: True) == ["motion-2026-10-16"]
+    e = data["uploads"][0]
+    assert not e.get("youtube_url") and not e.get("adopted") and e["replaces"] == ["NOLYRICS"]
+
+
+def test_a_queued_song_uploaded_by_hand_later_is_adopted_not_uploaded_twice(tmp_path, monkeypatch):
+    import json as _j
+    from anchor.config import load_profile
+    p = load_profile()
+    data = {"uploads": [{"id": "motion-2026-10-09", "release": "drop-2026-10-09", "file": "f.mp4",
+                         "title": "Transmit Spiral | Psychedelic Techno | ANCHOR", "description": "d", "replaces": ["OLD"]}]}
+    videos = [{"id": "OLD", "title": "Transmit Spiral | Psychedelic Techno | ANCHOR", "duration": "PT2M40S", "privacy": "public", "description": "old"},
+              {"id": "HAND", "title": "Transmit Spiral | Psychedelic Techno | ANCHOR", "duration": "PT2M40S", "privacy": "public",
+               "description": "Psychedelic Techno.\n\n" + uploads.MARK}]
+    path = tmp_path / "u.json"
+    path.write_text(_j.dumps(data))
+    calls = []
+
+    class Api:
+        def channel_videos(self, cid): return videos
+        def upload(self, *a, **k): calls.append("UPLOAD")
+        def set_privacy(self, vid, privacy): calls.append((privacy, vid))
+
+    out = uploads.run(p, repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json", exists=lambda url: False)
+    e = _j.loads(path.read_text())["uploads"][0]
+    assert out["adopted"] == ["motion-2026-10-09"] and e["youtube_url"].endswith("HAND") and e["replaces"] == ["OLD"]
+    assert calls == [("private", "OLD")]
+
+
+def test_a_song_held_after_it_was_queued_never_goes_up():
+    data = {"uploads": [{"id": "motion-2026-10-10", "youtube_url": None}, {"id": "motion-2026-10-09", "youtube_url": None},
+                        {"id": "lyric-video", "youtube_url": None}]}
+    assert [e["id"] for e in uploads.pending(data, {"2026-10-10": "held"})] == ["motion-2026-10-09", "lyric-video"]
+
+
+def test_the_three_lyric_less_uploads_are_marked_for_redoing():
+    import json as _j
+    d = _j.loads(uploads.UPLOADS_PATH.read_text())
+    assert uploads.superseded(d) == {"44u-IjIQaW4", "QIPY1Y02Ylg", "eughYejQE3E"}
+    assert not {"motion-2026-10-16", "motion-2026-10-13", "motion-2026-10-12"} & {e["id"] for e in d["uploads"]}
