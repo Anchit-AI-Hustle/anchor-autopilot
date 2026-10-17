@@ -156,7 +156,7 @@ def test_a_run_uploads_at_most_three_and_sets_the_replaced_video_private(tmp_pat
         def set_privacy(self, vid, privacy): calls.append((privacy, vid))
 
     out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json",
-                      read=lambda url: {"render": 2})
+                      read=lambda url: {"render": 3})
     assert len(out["uploaded"]) == 3 and out["private"] == ["OLD0", "OLD1", "OLD2"]
     assert calls[0] == ("up", "f0.mp4") and calls[1] == ("private", "OLD0")      # old goes private only after the new is up
 
@@ -306,7 +306,7 @@ def test_an_old_render_waits_for_the_beat_locked_one(tmp_path, monkeypatch):
         def upload(self, video, **k): seen.append(video.name); return {"id": "N" + video.name}
         def add_to_playlist(self, vid, pl): pass
 
-    marks = {"ANCHOR-old-motion.json": {"lyrics_lines": 4}, "ANCHOR-new-motion.json": {"render": 2}}
+    marks = {"ANCHOR-old-motion.json": {"lyrics_lines": 4}, "ANCHOR-new-motion.json": {"render": 3}}
     out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json",
                       read=lambda url: marks.get(url.rsplit("/", 1)[-1], {}))
     assert seen == ["ANCHOR-new-full-169.mp4", "l.mp4"]
@@ -348,7 +348,7 @@ def test_every_old_full_video_of_the_song_goes_private_even_if_missed_when_queue
         def set_privacy(self, vid, privacy): calls.append((privacy, vid))
 
     out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json",
-                      exists=lambda url: False, read=lambda url: {"render": 2})
+                      exists=lambda url: False, read=lambda url: {"render": 3})
     assert calls == ["up", ("private", "OLD")] and out["private"] == ["OLD"]
 
 
@@ -391,3 +391,14 @@ def test_no_cover_carries_a_tempo():
     for f in sorted([*site.glob("covers/*.jpg"), *site.glob("legacy/*-cover.jpg")]):
         text = subprocess.run(["tesseract", str(f), "-", "--psm", "11"], capture_output=True, text=True).stdout
         assert "BPM" not in text.upper(), f.name
+
+
+def test_a_sung_line_leaves_the_screen_after_its_last_word(tmp_path):
+    from anchor import motion, scenes
+    assert motion.RENDER >= 3
+    lines = [{"start": 11.9, "end": 14.8, "words": [("And", 11.9, 12.3), ("we", 12.4, 12.8), ("are", 12.9, 13.4), ("taking", 13.5, 14.8)]},
+             {"start": 73.6, "end": 74.9, "words": [("Welcome", 73.6, 74.1), ("to", 74.2, 74.4), ("Project", 74.5, 74.9)]}]
+    secs = [{"kind": "intro", "start": 0.0, "end": 8.0}, {"kind": "drop", "start": 8.0, "end": 90.0}]
+    ass = scenes.write_ass(tmp_path / "a.ass", "#ff8800", 1920, 1080, secs, lines, "T", "S").read_text()
+    caps = [l.split(",") for l in ass.splitlines() if ",Cap," in l]
+    assert caps[0][2] == "0:00:16.00"                      # gone 1.2 s after "taking", not at 73.4 s

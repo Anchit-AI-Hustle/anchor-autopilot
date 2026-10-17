@@ -28,6 +28,7 @@ MAX_CHARS = 24          # characters on one line at the video's lyric size
 MAX_SPAN = 4.2           # seconds one line may stay on screen
 BREAK_GAP = 0.9          # a pause this long always starts a new line
 MIN_WORD_PROB = 0.25     # below this the recogniser is guessing
+MAX_WORD = 2.0           # seconds one word may light for
 MIN_VOCAL_WORDS = 8      # fewer heard words than this: treat the track as instrumental
 
 
@@ -251,6 +252,7 @@ def timed_lines(mp3: Path, work: Path, known: str | None = None, title: str | No
         log(f"lyrics: {mp3.name}: {len(heard)} words heard, instrumental")
         return []
     words = snap_to_sheet(heard, known) if known else heard
+    words = [(w, s, min(e, s + MAX_WORD)) for w, s, e in words]   # an aligner smear is not a 10 s word
     lines = to_lines(words)
     log(f"lyrics: {mp3.name}: {len(words)} words in {len(lines)} lines" + (" (sheet-aligned)" if known else ""))
     return lines

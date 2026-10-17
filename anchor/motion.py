@@ -36,7 +36,9 @@ def songs(catalog: dict, legacy_path: Path | None = None) -> list[dict]:
 ONLY_PATH = CATALOG_PATH.parent / "motion_only.json"
 # 2: every movement (turns, scrolls, particles) surges on the kick instead of drifting at a constant
 # speed, and karaoke words light when they are sung (they lit 0.2 s early). Uploads wait for it.
-RENDER = 2
+# 3: a sung line leaves the screen 1.2 s after its last word (it stayed up through whole
+# instrumental stretches), and no word lights for more than 2 s.
+RENDER = 3
 
 
 def list_ids(catalog: dict, only_path: Path | None = None) -> list[str]:
