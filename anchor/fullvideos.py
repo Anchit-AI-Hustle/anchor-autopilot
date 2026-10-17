@@ -59,21 +59,26 @@ def records(catalog: dict, channel: dict | None = None) -> list[dict]:
     return out
 
 
-def plan(catalog: dict, videos: list[dict], channel: dict | None = None) -> dict:
+def plan(catalog: dict, videos: list[dict], channel: dict | None = None, held=(), owned=()) -> dict:
     public = {v["id"]: v for v in videos if v.get("privacy") == "public"}
     shorts = {video_id(r.get("youtube_url")) for r in records(catalog, channel)} - {None}
     fulls: dict[str, list[dict]] = {}
     for v in public.values():
         if v["id"] not in shorts and seconds(v.get("duration")) > SHORT_MAX_S:
             fulls.setdefault(key(v["title"]), []).append(v)
-    out = {"linked": [], "found": [], "todo": [], "no_audio": [], "not_public": [], "withdrawn": []}
+    out = {"linked": [], "found": [], "todo": [], "no_audio": [], "not_public": [], "withdrawn": [], "owned": []}
     withdrawn = {key(t) for t in (channel or {}).get("withdrawn", [])}
     for r in records(catalog, channel):
         sid = video_id(r.get("youtube_url"))
         if not sid:
             continue
-        if key(r["title"]) in withdrawn:      # taken down by you: never rebuilt or re-uploaded
+        if key(r["title"]) in withdrawn or r.get("id") in held:   # taken down or held: never re-uploaded
             out["withdrawn"].append(r)
+            continue
+        if r.get("id") in owned and not fulls.get(key(r["title"])):
+            # a song with a motion video queued is uploaded (and its old copies made private) by the
+            # Uploads job: a second full video from here made duplicates (Sonic Reactor, 2026-10-17)
+            out["owned"].append(r)
             continue
         if sid not in public:
             out["not_public"].append(r)
@@ -216,7 +221,11 @@ def run(profile: Profile, *, repo: str, work: Path, limit: int = 2, api=None,
     channel = read_json(channel_path, {}) or {}
     videos = api.channel_videos(profile.artist["youtube_channel_id"])
     by_id = {v["id"]: v for v in videos}
-    p = plan(catalog, videos, channel)
+    data = catalog_path.parent                # held songs and queued motion videos, beside the catalogue
+    held = set((read_json(data / "legacy_motion.json", {}) or {}).get("hold", {}))
+    owned = {e["id"][len("motion-"):] for e in (read_json(data / "uploads.json", {}) or {}).get("uploads", [])
+             if e["id"].startswith("motion-")}
+    p = plan(catalog, videos, channel, held, owned)
     done = {"linked_existing": [], "uploaded": [], "no_audio": [r["title"] for r in p["no_audio"]],
             "withdrawn": [r["title"] for r in p["withdrawn"]],
             "left": [], "errors": []}
