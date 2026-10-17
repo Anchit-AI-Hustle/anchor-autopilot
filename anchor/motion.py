@@ -20,10 +20,17 @@ from .versions import RELEASES, fetch
 from .video import master_beat_offset
 
 
-def songs(catalog: dict) -> list[dict]:
-    """Every robot drop whose master is on its release, newest first."""
+LEGACY_PATH = CATALOG_PATH.parent / "legacy_motion.json"
+
+
+def songs(catalog: dict, legacy_path: Path | None = None) -> list[dict]:
+    """Every robot drop whose master is on its release, newest first, then the older songs
+    listed in site/data/legacy_motion.json (full videos on the channel from before the robot)."""
     out = [d for d in catalog.get("drops", []) if d.get("audio_url") and d.get("bpm") and d.get("family")]
-    return sorted(out, key=lambda d: d.get("date") or d["id"], reverse=True)
+    out = sorted(out, key=lambda d: d.get("date") or d["id"], reverse=True)
+    have = {d["id"] for d in out}
+    legacy = (read_json(legacy_path or LEGACY_PATH, {}) or {}).get("songs", [])
+    return out + [d for d in legacy if d["id"] not in have and d.get("audio_url") and d.get("bpm") and d.get("family")]
 
 
 def render_song(profile: Profile, r: dict, repo: str, work: Path) -> dict:
@@ -57,7 +64,11 @@ def render_song(profile: Profile, r: dict, repo: str, work: Path) -> dict:
 
 
 def upload(repo: str, tag: str, files: list[Path]) -> None:
-    """Replace the release's still-frame videos (same file names) with the motion ones."""
+    """Replace the release's still-frame videos (same file names) with the motion ones. An older
+    song has no release yet, so one is made for it first."""
+    if subprocess.run(["gh", "release", "view", tag, "--repo", repo], capture_output=True).returncode != 0:
+        subprocess.run(["gh", "release", "create", tag, "--repo", repo, "--title", tag,
+                        "--notes", "Motion video for an older song (site/data/legacy_motion.json)."], check=True)
     subprocess.run(["gh", "release", "upload", tag, *map(str, files), "--clobber", "--repo", repo], check=True)
     log(f"motion: {tag}: {', '.join(f.name for f in files)} uploaded")
 

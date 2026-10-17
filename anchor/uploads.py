@@ -53,6 +53,10 @@ def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos:
         if not exists(RELEASES.format(repo=repo, tag=tag, file=f"{base}-motion.json")):
             continue
         title, desc, tags = fullvideos.words(profile, d, None)
+        if d.get("genre"):                    # an older song keeps the genre its old video had
+            from .retitle import search_line, search_title
+            title = search_title(clean_title(d["title"]), d["genre"], None, profile.artist["name"])
+            desc = "\n".join([search_line(d["genre"], None, profile.artist["name"]), *desc.split("\n")[1:]])
         name = clean_title(d["title"]).lower()
         old = [v["id"] for v in videos if clean_title(v["title"].split(" | ")[0]).lower() == name
                and seconds(v.get("duration")) >= 60 and v.get("privacy", "public") == "public"]
