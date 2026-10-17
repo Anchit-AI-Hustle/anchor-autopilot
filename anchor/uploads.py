@@ -19,6 +19,7 @@ from .youtube import YouTube, playlist_id
 UPLOADS_PATH = CATALOG_PATH.parent / "uploads.json"
 
 
+MARK = "Motion visualizer, made for this track."   # every new motion video says so in its description
 MAX_PER_RUN = 3          # 1,600 API units each; the daily drop needs two more out of the channel's 10,000
 
 
@@ -57,12 +58,19 @@ def queue_motion(profile: Profile, data: dict, catalog: dict, repo: str, videos:
             from .retitle import search_line, search_title
             title = search_title(clean_title(d["title"]), d["genre"], None, profile.artist["name"])
             desc = "\n".join([search_line(d["genre"], None, profile.artist["name"]), *desc.split("\n")[1:]])
+        lines = desc.split("\n")
+        desc = "\n".join([lines[0], "", MARK, *lines[1:]])
         name = clean_title(d["title"]).lower()
-        old = [v["id"] for v in videos if clean_title(v["title"].split(" | ")[0]).lower() == name
-               and seconds(v.get("duration")) >= 60 and v.get("privacy", "public") == "public"]
-        data["uploads"].append({"id": eid, "release": tag, "file": f"{base}-full-169.mp4",
-                                "thumbnail": f"{base}-motion-frame-169.jpg", "title": title, "description": desc,
-                                "tags": tags, "notify": False, "playlist": True, "replaces": old})
+        same = [v for v in videos if clean_title(v["title"].split(" | ")[0]).lower() == name
+                and seconds(v.get("duration")) >= 60 and v.get("privacy", "public") == "public"]
+        manual = [v["id"] for v in same if MARK.lower() in (v.get("description") or "").lower()]
+        old = [v["id"] for v in same if v["id"] not in manual]
+        entry = {"id": eid, "release": tag, "file": f"{base}-full-169.mp4",
+                 "thumbnail": f"{base}-motion-frame-169.jpg", "title": title, "description": desc,
+                 "tags": tags, "notify": False, "playlist": True, "replaces": old}
+        if manual:                            # already uploaded by hand in YouTube Studio: never upload it twice
+            entry.update(youtube_url=f"https://www.youtube.com/watch?v={manual[0]}", adopted=True)
+        data["uploads"].append(entry)
         added.append(eid)
     return added
 
@@ -85,6 +93,16 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
             log(f"uploads: queued motion videos {', '.join(done['queued'])}")
     except Exception as exc:              # noqa: BLE001 - the queued one-offs still go up
         log(f"uploads: motion queue skipped: {exc}")
+    for e in data.get("uploads", []):     # a hand upload: its old videos go private here, cheaply
+        if e.get("adopted") and not e.get("replaced") and api is not None:
+            try:
+                for vid in e.get("replaces") or []:
+                    api.set_privacy(vid, "private")
+                    done["private"].append(vid)
+                e["replaced"] = True
+                write_json(path, data)
+            except Exception as exc:      # noqa: BLE001 - retried next run
+                log(f"uploads: {e['id']}: private failed: {exc}")
     todo = pending(data)[:max_uploads]
     if not todo:
         log("uploads: nothing pending")
@@ -117,5 +135,7 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
                 fn()
             except Exception as exc:      # noqa: BLE001 - cosmetic legs, logged
                 log(f"uploads: {e['id']}: {step} failed: {exc}")
+        e["replaced"] = True
+        write_json(path, data)
         done["uploaded"].append(f"{e['id']} -> {up['id']}")
     return done
