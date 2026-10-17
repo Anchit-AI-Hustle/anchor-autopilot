@@ -181,3 +181,32 @@ def test_older_songs_get_motion_videos_and_keep_their_genre(tmp_path, monkeypatc
     assert e["title"] == "Kindness Needs Truth | Industrial Techno | ANCHOR" and e["replaces"] == ["OLDK"]   # the lyric video stays
     assert e["description"].startswith("Industrial Techno. An ANCHOR original") and "BPM" not in e["description"]
     assert e["release"] == "drop-legacy-kindness-needs-truth" and e["file"] == "ANCHOR-legacy-kindness-needs-truth-full-169.mp4"
+
+
+def test_a_studio_upload_is_adopted_not_uploaded_again(tmp_path, monkeypatch):
+    import json as _j
+    from anchor.config import load_profile
+    p = load_profile()
+    catalog = {"drops": [{"id": "2026-09-28", "title": "Cold Bunker", "date": "2026-09-28", "bpm": 155, "family": "prism",
+                          "lane": "rawstyle", "audio_url": "https://x/drop-2026-09-28/ANCHOR-2026-09-28-cold-bunker.mp3"}]}
+    videos = [{"id": "OLD", "title": "Cold Bunker | Rawstyle Hybrid | ANCHOR", "duration": "PT2M30S", "privacy": "public", "description": "old"},
+              {"id": "NEW", "title": "Cold Bunker | Rawstyle Hybrid | ANCHOR", "duration": "PT2M30S", "privacy": "public",
+               "description": "Rawstyle Hybrid. An ANCHOR original\n\n" + uploads.MARK}]
+    data = {"uploads": []}
+    uploads.queue_motion(p, data, catalog, "o/r", videos, exists=lambda url: True)
+    e = data["uploads"][0]
+    assert e["adopted"] and e["youtube_url"].endswith("NEW") and e["replaces"] == ["OLD"] and uploads.MARK in e["description"]
+    path = tmp_path / "u.json"
+    path.write_text(_j.dumps(data))
+    calls = []
+
+    class Api:
+        def channel_videos(self, cid): return videos
+        def upload(self, *a, **k): calls.append("UPLOAD")
+        def set_privacy(self, vid, privacy): calls.append((privacy, vid))
+
+    out = uploads.run(p, repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json", exists=lambda url: True)
+    assert calls == [("private", "OLD")] and out["private"] == ["OLD"] and not out["uploaded"]
+    calls.clear()
+    uploads.run(p, repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json", exists=lambda url: True)
+    assert calls == []                                   # done once, never again
