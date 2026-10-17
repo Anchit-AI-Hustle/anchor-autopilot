@@ -26,6 +26,7 @@ from .util import log
 from .video import AAC_CLEAN, _ff, beat_pulse_expr, beat_step_expr, media_summary, scanlines
 
 FPS = 30
+LINGER = 1.2              # seconds a sung line stays up after its last word
 # which looks each kind of section may take, in order of preference
 LOOKS = {
     "intro": ["card", "glitch"],
@@ -196,7 +197,9 @@ def write_ass(path: Path, accent: str, W: int, H: int, secs: list[dict], lines: 
                   f"{{\\fad(120,300)}}// {label}{n}")
     for i, ln in enumerate(lines):
         t0_ = ln["start"] - 0.2
-        t1_ = (lines[i + 1]["start"] - 0.2) if i + 1 < len(lines) else ln["end"] + 1.0
+        last = max(e for _w, _s, e in ln["words"])
+        # off the screen once it has been sung: through an instrumental stretch the frame stays clear
+        t1_ = min((lines[i + 1]["start"] - 0.2) if i + 1 < len(lines) else 1e9, last + LINGER)
         t1_ = max(t1_, t0_ + 0.4)
         parts, cursor = [], t0_                 # karaoke time counts from the event start, not the first word
         for wd, s, e in ln["words"]:
