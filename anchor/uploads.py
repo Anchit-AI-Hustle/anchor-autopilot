@@ -53,10 +53,16 @@ def superseded(data: dict) -> set[str]:
     return {_vid(s.get("youtube_url")) for s in data.get("superseded", []) if s.get("youtube_url")}
 
 
-def _same(videos: list[dict], title: str) -> list[dict]:
+def _key(title: str) -> str:
+    """A song's name for matching videos: letters and digits only, so "Let’s F*cking Go!" and
+    "Let's F*cking Go" are the same song."""
     from .ledger import clean_title
-    name = clean_title(title.split(" | ")[0]).lower()
-    return [v for v in videos if clean_title(v["title"].split(" | ")[0]).lower() == name
+    return re.sub(r"[^a-z0-9]+", "", clean_title(title.split(" | ")[0]).lower())
+
+
+def _same(videos: list[dict], title: str) -> list[dict]:
+    name = _key(title)
+    return [v for v in videos if _key(v["title"]) == name
             and seconds(v.get("duration")) >= 60 and v.get("privacy", "public") == "public"]
 
 
@@ -149,6 +155,7 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
     data = read_json(path, {"uploads": []}) or {"uploads": []}
     done = {"uploaded": [], "errors": [], "queued": [], "adopted": [], "private": []}
     yt = profile.youtube
+    videos: list[dict] = []
     try:
         api = api or YouTube()
         videos = api.channel_videos(profile.artist["youtube_channel_id"])
@@ -177,7 +184,9 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
         log("uploads: nothing pending")
         return done
     api = api or YouTube()
-    for e in todo:
+    for e in todo:                        # the song's full videos on the channel right now all go private after it
+        if e["id"].startswith("motion-") and videos:
+            e["replaces"] = list(dict.fromkeys([*(e.get("replaces") or []), *(v["id"] for v in _same(videos, e["title"]))]))
         try:
             video = fetch(RELEASES.format(repo=repo, tag=e["release"], file=e["file"]), work / e["file"], 1_000_000)
             up = api.upload(video, title=e["title"], description=e["description"], tags=e.get("tags") or [],
