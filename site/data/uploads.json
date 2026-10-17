@@ -194,68 +194,6 @@
       "replaced": true
     },
     {
-      "id": "motion-2026-10-17",
-      "release": "drop-2026-10-17",
-      "file": "ANCHOR-2026-10-17-sonic-reactor-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-17-sonic-reactor-motion-frame-169.jpg",
-      "title": "Sonic Reactor | Acid Techno | ANCHOR",
-      "description": "Acid Techno. An ANCHOR original, free download below.\n\nMotion visualizer, made for this track.\n\nSonic Reactor. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "acid techno",
-        "psychedelic acid techno",
-        "hard acid techno",
-        "rave techno",
-        "techno 2026",
-        "techno",
-        "hard techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "182 bpm techno",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [
-        "7BR2jAOfUJc"
-      ],
-      "youtube_url": "https://www.youtube.com/watch?v=kQ9vMIpeMCA",
-      "uploaded_at": "2026-10-17T21:03:19Z",
-      "replaced": true
-    },
-    {
-      "id": "motion-2026-10-16",
-      "release": "drop-2026-10-16",
-      "file": "ANCHOR-2026-10-16-supersonic-current-full-169.mp4",
-      "thumbnail": "ANCHOR-2026-10-16-supersonic-current-motion-frame-169.jpg",
-      "title": "Supersonic Current | Hyper Techno | ANCHOR",
-      "description": "Hyper Techno. An ANCHOR original, free download below.\n\nMotion visualizer, made for this track.\n\nSupersonic Current. The full track, start to finish.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-      "tags": [
-        "hypertechno",
-        "hyper techno",
-        "acid techno",
-        "hard techno",
-        "rave techno",
-        "techno",
-        "techno visualizer",
-        "anchor techno",
-        "techno official visualizer",
-        "180 bpm techno",
-        "techno 2026",
-        "ai techno",
-        "techno full track"
-      ],
-      "notify": false,
-      "playlist": true,
-      "replaces": [
-        "44u-IjIQaW4"
-      ],
-      "youtube_url": "https://www.youtube.com/watch?v=UdEm4uSLbRU",
-      "uploaded_at": "2026-10-17T21:03:28Z",
-      "replaced": true
-    },
-    {
       "id": "motion-2026-10-13",
       "release": "drop-2026-10-13",
       "file": "ANCHOR-2026-10-13-heavy-carbon-full-169.mp4",
@@ -1098,6 +1036,16 @@
     {
       "id": "motion-2026-10-04",
       "youtube_url": "https://www.youtube.com/watch?v=8P7KKxc3rjo",
+      "why": "render 2: a sung line stayed on screen through instrumental stretches; re-done on render 3, this one goes private"
+    },
+    {
+      "id": "motion-2026-10-17",
+      "youtube_url": "https://www.youtube.com/watch?v=kQ9vMIpeMCA",
+      "why": "render 2: a sung line stayed on screen through instrumental stretches; re-done on render 3, this one goes private"
+    },
+    {
+      "id": "motion-2026-10-16",
+      "youtube_url": "https://www.youtube.com/watch?v=UdEm4uSLbRU",
       "why": "render 2: a sung line stayed on screen through instrumental stretches; re-done on render 3, this one goes private"
     }
   ],
