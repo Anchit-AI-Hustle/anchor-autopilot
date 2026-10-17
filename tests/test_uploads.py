@@ -167,7 +167,7 @@ def test_older_songs_get_motion_videos_and_keep_their_genre(tmp_path, monkeypatc
     monkeypatch.setattr(motion, "LEGACY_PATH", uploads.UPLOADS_PATH.parent / "legacy_motion.json")
     legacy = _j.loads((uploads.UPLOADS_PATH.parent / "legacy_motion.json").read_text())["songs"]
     ids = [d["id"] for d in motion.songs({"drops": []})]
-    assert ids == [d["id"] for d in legacy] and len(ids) == 4
+    assert ids == [d["id"] for d in legacy] and len(ids) == 9
     for d in legacy:                                   # the files the render and the upload read are in the repo
         base = d["audio_url"].rsplit("/", 1)[-1]
         assert (uploads.UPLOADS_PATH.parent.parent / "legacy" / base).stat().st_size > 1_000_000
@@ -225,3 +225,14 @@ def test_held_and_taken_down_songs_are_never_posted_again(monkeypatch):
     data = {"uploads": []}
     added = uploads.queue_motion(load_profile(), data, catalog, "o/r", [], exists=lambda url: True)
     assert "motion-2026-10-10" not in added
+
+
+def test_a_top_up_motion_run_lists_only_the_new_songs(tmp_path, monkeypatch):
+    import json as _j
+    from anchor import motion
+    monkeypatch.setattr(motion, "LEGACY_PATH", uploads.UPLOADS_PATH.parent / "legacy_motion.json")
+    only = tmp_path / "only.json"
+    only.write_text(_j.dumps({"ids": ["legacy-cut-loose", "legacy-absolute-force"]}))
+    assert motion.list_ids({"drops": []}, only) == ["legacy-cut-loose", "legacy-absolute-force"]
+    only.write_text(_j.dumps({"ids": []}))
+    assert len(motion.list_ids({"drops": []}, only)) == 9
