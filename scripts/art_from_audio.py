@@ -173,9 +173,7 @@ def frame(im, meta, bottom_type=False):
     # the catalogue claims disagrees with the audio on three of the four tracks a
     # Krumhansl-Schmuckler profile is confident about, and three more come back ambiguous.
     # An unreliable number burned into permanent artwork is worse than no number.
-    tag = f"{meta['bpm']} BPM"
-    hot = p["hot"] if not light else (122, 38, 8)      # the bone ground washes out the accent
-    d.text((S - M - d.textbbox((0,0), tag, font=fm)[2], yf), tag, font=fm, fill=(*hot, 255))
+    # No tempo either: no listener surface carries a BPM (titles, thumbnails, covers, frames).
     return im
 
 def new(meta):
@@ -381,11 +379,17 @@ def main(argv=None) -> int:
     ap.add_argument("--dates", default="", help="comma separated; default every drop")
     ap.add_argument("--work", default="build-art")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--legacy", default="", help="older songs (site/data/legacy_motion.json ids), comma separated")
     args = ap.parse_args(argv)
 
     cat = json.loads(CATALOG.read_text(encoding="utf-8"))
     want = [d.strip() for d in args.dates.split(",") if d.strip()]
     drops = [d for d in cat["drops"] if not want or d["date"] in want]
+    if args.legacy:
+        ids = {i.strip() for i in args.legacy.split(",") if i.strip()}
+        legacy = json.loads((SITE / "data" / "legacy_motion.json").read_text(encoding="utf-8"))["songs"]
+        drops = [{**d, "key": d.get("key", ""), "out": SITE / d["cover"],
+                  "audio_url": str(SITE / "legacy" / Path(d["audio_url"]).name)} for d in legacy if d["id"] in ids]
     drops.sort(key=lambda d: d["date"])
     if not drops:
         print("no drops matched", file=sys.stderr)
@@ -394,12 +398,14 @@ def main(argv=None) -> int:
     work = Path(args.work)
     for drop in drops:
         date, title = drop["date"], drop["title"]
-        audio = fetch(drop["audio_url"], work / Path(drop["audio_url"]).name)
+        audio = (Path(drop["audio_url"]) if not drop["audio_url"].startswith("http")
+                 else fetch(drop["audio_url"], work / Path(drop["audio_url"]).name))
         m = measure(decode(audio))
         form = choose(title, m)
         fn, palette = FORMS[form]
         meta = dict(palette=palette, title=title, bpm=drop["bpm"], key=drop["key"],
-                    onsets=m["onsets"], noisiness=m["noisiness"], seed=int(date.replace("-", "")))
+                    onsets=m["onsets"], noisiness=m["noisiness"],
+                    seed=int(date.replace("-", "")) + (sum(map(ord, drop["id"])) if drop.get("out") else 0))
         print(f"{date}  {title[:24]:24} {form:10} {palette:9} "
               f"sub {m['sub_pct']:4.1f}%  centroid {m['centroid']:5.0f}Hz  "
               f"onsets {m['onsets']:4}  flat {m['noisiness']:.3f}")
@@ -408,7 +414,7 @@ def main(argv=None) -> int:
         im = fn(meta, m)
         im = grain(im, m["noisiness"], meta["seed"])
         im = frame(im, meta, bottom_type=form in ("horizon", "doorway", "colonnade"))
-        dest = SITE / "covers" / f"{date}.jpg"
+        dest = drop.get("out") or SITE / "covers" / f"{date}.jpg"
         dest.parent.mkdir(parents=True, exist_ok=True)
         im.resize((OUT, OUT), Image.LANCZOS).save(dest, quality=92, subsampling=0, optimize=True)
     return 0
