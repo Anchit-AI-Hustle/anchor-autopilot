@@ -157,7 +157,7 @@ def test_a_run_uploads_at_most_three_and_sets_the_replaced_video_private(tmp_pat
 
     out = uploads.run(load_profile(), repo="o/r", work=tmp_path, api=Api(), path=path, catalog_path=tmp_path / "none.json",
                       read=lambda url: {"render": 3})
-    assert len(out["uploaded"]) == 3 and out["private"] == ["OLD0", "OLD1", "OLD2"]
+    assert uploads.MAX_PER_RUN == 4 and len(out["uploaded"]) == 4 and out["private"] == ["OLD0", "OLD1", "OLD2", "OLD3"]
     assert calls[0] == ("up", "f0.mp4") and calls[1] == ("private", "OLD0")      # old goes private only after the new is up
 
 
