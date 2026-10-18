@@ -1639,6 +1639,27 @@
   },
   "mixes": [
     {
+      "id": "mix-week-2026-10-18",
+      "period": "week",
+      "vol": 2,
+      "date": "2026-10-18",
+      "title": "Hard Groove Techno Mix 2026 | ANCHOR Vol. 2 | 4 tracks, 10 min, 160+ BPM warehouse rave",
+      "tracks": [
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-16",
+        "2026-10-17"
+      ],
+      "duration_s": 621.0,
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/mix-week-2026-10-18/ANCHOR-week-mix-2026-10-18-vol-2.mp3",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/mix-week-2026-10-18/ANCHOR-week-mix-2026-10-18-vol-2-full-169.mp4",
+      "cover": "covers/mix-week-2026-10-18.jpg",
+      "youtube_url": "https://youtu.be/r2g_KV7cP0c",
+      "post_id": "r2g_KV7cP0c",
+      "status": "scheduled",
+      "created_at": "2026-10-18T14:39:41Z"
+    },
+    {
       "id": "mix-week-2026-10-11",
       "period": "week",
       "vol": 1,
