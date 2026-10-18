@@ -22,7 +22,7 @@ UPLOADS_PATH = CATALOG_PATH.parent / "uploads.json"
 
 
 MARK = "Motion visualizer, made for this track."   # every new motion video says so in its description
-MAX_PER_RUN = 3          # 1,600 API units each; the daily drop needs two more out of the channel's 10,000
+MAX_PER_RUN = 4          # 1,600 API units each (+50 thumbnail): 4 = 6,600, plus the daily drop's two (3,200) = 9,800 of the channel's 10,000
 
 
 def seconds(iso_duration: str | None) -> int:
