@@ -678,7 +678,10 @@
       "playlist": true,
       "replaces": [
         "KBCM6KXVlgI"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=XXMvPUt2dyg",
+      "uploaded_at": "2026-10-19T22:39:58Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-09-06",
@@ -706,9 +709,11 @@
       "notify": false,
       "playlist": true,
       "replaces": [
-        "ZslHMH4TVtM",
         "ZslHMH4TVtM"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=HxdqBFOMH2g",
+      "uploaded_at": "2026-10-19T22:40:08Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-09-05",
@@ -735,9 +740,11 @@
       "notify": false,
       "playlist": true,
       "replaces": [
-        "ryLb7glh1KU",
         "ryLb7glh1KU"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=j3DM9NSp6No",
+      "uploaded_at": "2026-10-19T22:40:22Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-09-04",
@@ -765,9 +772,11 @@
       "notify": false,
       "playlist": true,
       "replaces": [
-        "GMaw3OsDnxQ",
         "GMaw3OsDnxQ"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=zkBN2hY1n2U",
+      "uploaded_at": "2026-10-19T22:40:30Z",
+      "replaced": true
     },
     {
       "id": "motion-legacy-no-control",
@@ -1207,6 +1216,8 @@
     "7gvpPdvF4Fw",
     "9wE5wP90G_s",
     "JHZsKSag1ZU",
-    "DpGckqbuvck"
+    "DpGckqbuvck",
+    "10bWk0pHvy0",
+    "DT74Ik4dgu8"
   ]
 }
