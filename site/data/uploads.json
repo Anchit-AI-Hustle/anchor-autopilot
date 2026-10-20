@@ -804,7 +804,10 @@
       "playlist": true,
       "replaces": [
         "q7cxUlOhJnA"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=Kni5cVpzRQI",
+      "uploaded_at": "2026-10-20T21:56:26Z",
+      "replaced": true
     },
     {
       "id": "motion-legacy-cut-loose",
@@ -833,7 +836,10 @@
       "playlist": true,
       "replaces": [
         "yoKc5Hy20UM"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=dAlA8tBjwlA",
+      "uploaded_at": "2026-10-20T21:56:35Z",
+      "replaced": true
     },
     {
       "id": "motion-legacy-kindness-needs-truth",
@@ -859,7 +865,12 @@
       ],
       "notify": false,
       "playlist": true,
-      "replaces": []
+      "replaces": [
+        "9wE5wP90G_s"
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=7sfuTHTeEA8",
+      "uploaded_at": "2026-10-20T21:56:48Z",
+      "replaced": true
     },
     {
       "id": "motion-legacy-time-to-peak",
@@ -888,7 +899,10 @@
       "playlist": true,
       "replaces": [
         "qhByr8pE9rw"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=kPfZ8vk0_sw",
+      "uploaded_at": "2026-10-20T21:56:55Z",
+      "replaced": true
     },
     {
       "id": "motion-legacy-pressure-spiral",
@@ -1218,6 +1232,7 @@
     "JHZsKSag1ZU",
     "DpGckqbuvck",
     "10bWk0pHvy0",
-    "DT74Ik4dgu8"
+    "DT74Ik4dgu8",
+    "ZZ0Kkc5ffK4"
   ]
 }
