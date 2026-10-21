@@ -930,7 +930,10 @@
       "playlist": true,
       "replaces": [
         "4qVgjdjG28A"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=nYPAmoPDvpM",
+      "uploaded_at": "2026-10-21T22:00:44Z",
+      "replaced": true
     },
     {
       "id": "motion-legacy-absolute-force",
@@ -958,7 +961,10 @@
       "playlist": true,
       "replaces": [
         "7sBR72qq17E"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=Uh4CBwhVbzg",
+      "uploaded_at": "2026-10-21T22:00:59Z",
+      "replaced": true
     },
     {
       "id": "motion-legacy-cold-metal-floor",
@@ -1011,7 +1017,12 @@
       ],
       "notify": false,
       "playlist": true,
-      "replaces": []
+      "replaces": [
+        "JHZsKSag1ZU"
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=GkVboJWq9ZM",
+      "uploaded_at": "2026-10-21T22:01:14Z",
+      "replaced": true
     },
     {
       "id": "motion-legacy-crossing-the-line",
@@ -1038,7 +1049,12 @@
       ],
       "notify": false,
       "playlist": true,
-      "replaces": []
+      "replaces": [
+        "DpGckqbuvck"
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=AvSYfmqMq-Y",
+      "uploaded_at": "2026-10-21T22:01:28Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-10-04",
@@ -1233,6 +1249,8 @@
     "DpGckqbuvck",
     "10bWk0pHvy0",
     "DT74Ik4dgu8",
-    "ZZ0Kkc5ffK4"
+    "ZZ0Kkc5ffK4",
+    "aObrRZ-_5T8",
+    "8oh9Sgbyg4M"
   ]
 }
