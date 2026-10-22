@@ -1082,7 +1082,10 @@
       "playlist": true,
       "replaces": [
         "8P7KKxc3rjo"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=dneIFB_hbHM",
+      "uploaded_at": "2026-10-22T21:56:56Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-10-17",
@@ -1110,7 +1113,10 @@
       "playlist": true,
       "replaces": [
         "kQ9vMIpeMCA"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=rxv-b2UWI7U",
+      "uploaded_at": "2026-10-22T21:57:05Z",
+      "replaced": true
     },
     {
       "id": "motion-2026-10-16",
@@ -1138,7 +1144,10 @@
       "playlist": true,
       "replaces": [
         "UdEm4uSLbRU"
-      ]
+      ],
+      "youtube_url": "https://www.youtube.com/watch?v=0Vh63mdXS-0",
+      "uploaded_at": "2026-10-22T21:57:13Z",
+      "replaced": true
     }
   ],
   "superseded": [
@@ -1251,6 +1260,7 @@
     "DT74Ik4dgu8",
     "ZZ0Kkc5ffK4",
     "aObrRZ-_5T8",
-    "8oh9Sgbyg4M"
+    "8oh9Sgbyg4M",
+    "X9QExkHGv1c"
   ]
 }
