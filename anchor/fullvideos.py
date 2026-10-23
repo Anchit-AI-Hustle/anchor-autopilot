@@ -82,7 +82,7 @@ def plan(catalog: dict, videos: list[dict], channel: dict | None = None, held=()
             continue
         if sid not in public:
             out["not_public"].append(r)
-        elif r.get("youtube_full_url"):
+        elif r.get("youtube_full_url") or seconds(public[sid].get("duration")) > SHORT_MAX_S:  # its own video is already the full track
             out["linked"].append(r)
         elif fulls.get(key(r["title"])):
             out["found"].append((r, fulls[key(r["title"])][0]))
