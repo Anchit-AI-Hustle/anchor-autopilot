@@ -84,6 +84,11 @@ def test_plan_sorts_every_short_and_never_takes_a_short_for_a_full_track():
     assert [r["title"] for r in p["no_audio"]] == ["Pull Under"]
 
 
+def test_a_drop_whose_own_video_is_full_length_never_gets_a_second_one():
+    p = fullvideos.plan({"drops": [drop("2026-10-23", "Today", "F1")]}, [vid("F1", "Today | Hard Techno | ANCHOR", 210)])
+    assert [r["id"] for r in p["linked"]] == ["2026-10-23"] and not p["todo"] and not p["found"]
+
+
 def test_plan_includes_the_hand_made_shorts_channel_json_knows():
     channel = {"videos": {"H1": {"title": "Overload The Human Eye", "genre": "Cyberpunk Hard Techno", "bpm": None, "kind": "short"},
                           "V1": {"title": "Pressure Spiral", "genre": "Industrial Techno", "bpm": 150, "kind": "video"}}}
