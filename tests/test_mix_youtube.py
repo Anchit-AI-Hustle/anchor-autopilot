@@ -95,6 +95,30 @@ def test_publish_takes_the_api_road_when_the_channel_credentials_are_set(monkeyp
     assert pub["youtube"]["external_link"] == "https://youtu.be/vid1"
 
 
+def test_an_api_drop_records_its_full_track_so_no_second_full_video_is_made(fast_profile, site_dir, tmp_path, monkeypatch):
+    """The API road uploads the full track and the Short. The catalogue keeps both, and the Full
+    videos job counts the drop as done instead of uploading a duplicate (Hyper Turbine, Comet)."""
+    from anchor import fullvideos
+    g = FakeGoogle()
+    monkeypatch.setattr(youtube, "_http", g)
+    for k in ("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"):
+        monkeypatch.setenv(k, "x")
+    monkeypatch.delenv("BUFFER_API_KEY", raising=False)
+    cat_path, status_path = site_dir / "data" / "catalog.json", site_dir / "data" / "status.json"
+    d = tmp_path / "d"
+    pipeline.make(fast_profile, "2026-10-21", d, engine_name="fixture", art_mode="procedural", catalog_path=cat_path)
+    pipeline.publish(fast_profile, d, "https://host/full.mp4", short_url="https://host/short.mp4", now=True)
+    drop = pipeline.record(fast_profile, d, repo="o/r", catalog_path=cat_path, status_path=status_path, site_dir=site_dir)
+    kept = next(x for x in json.loads(cat_path.read_text())["drops"] if x["id"] == drop["id"])
+    assert kept["youtube_url"] == kept["youtube_full_url"] == "https://youtu.be/vid1"
+    assert kept["youtube_short_url"] == "https://youtu.be/vid2" and kept["buffer_short_post_id"] == "vid2"
+    assert kept["youtube_via"] == "youtube_api"
+    videos = [{"id": "vid1", "title": kept["title"], "duration": "PT3M30S", "privacy": "public"},
+              {"id": "vid2", "title": kept["title"], "duration": "PT45S", "privacy": "public"}]
+    plan = fullvideos.plan(json.loads(cat_path.read_text()), videos)
+    assert [r["id"] for r in plan["linked"]] == [drop["id"]] and not plan["todo"] and not plan["found"]
+
+
 def test_sync_asks_youtube_itself_for_api_posts(monkeypatch, tmp_path):
     g = FakeGoogle()
     monkeypatch.setattr(youtube, "_http", g)
