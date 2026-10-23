@@ -53,7 +53,7 @@ env:
 jobs:
   make:
     runs-on: ubuntu-24.04
-    timeout-minutes: 210
+    timeout-minutes: 350   # the CPU music engine can run past 3.5 h; 210 cancelled the 10-18 and 10-22 drops
     outputs:
       date: ${{ steps.day.outputs.date }}
       skip: ${{ steps.day.outputs.skip }}
@@ -72,7 +72,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          bash scripts/install-ffmpeg.sh
 
       - name: Pick the drop date
         id: day
@@ -383,7 +383,7 @@ jobs:
 
   report-failure:
     needs: [make, pages, publish]
-    if: failure() && inputs.dry_run != true
+    if: (failure() || cancelled()) && inputs.dry_run != true
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
@@ -399,7 +399,7 @@ jobs:
       - name: Mark the failed run on the status page
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          STAGE: ${{ needs.make.result == 'failure' && 'make' || (needs.pages.result == 'failure' && 'pages' || 'publish') }}
+          STAGE: ${{ needs.make.result != 'success' && 'make' || (needs.pages.result != 'success' && 'pages' || 'publish') }}
         run: |
           python -m anchor fail --stage "$STAGE" --error "The $STAGE stage failed. Open the run log for details." --run-url "$RUN_URL"
           git config user.name "$ROBOT_NAME"
