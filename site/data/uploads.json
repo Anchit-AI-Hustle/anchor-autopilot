@@ -126,11 +126,13 @@
       "notify": false,
       "playlist": true,
       "replaces": [
-        "fVUk-aqzKvw"
+        "fVUk-aqzKvw",
+        "scNryYmUFb0"
       ],
       "render2_copy": "scNryYmUFb0",
-      "uploaded_at": "2026-10-17T19:37:13Z",
-      "replaced": true
+      "uploaded_at": "2026-10-23T21:36:57Z",
+      "replaced": true,
+      "youtube_url": "https://www.youtube.com/watch?v=EB0P5EUmU9w"
     },
     {
       "id": "motion-2026-09-27",
@@ -157,10 +159,13 @@
       ],
       "notify": false,
       "playlist": true,
-      "replaces": [],
+      "replaces": [
+        "_5NcG4LeWzk"
+      ],
       "render2_copy": "_5NcG4LeWzk",
-      "uploaded_at": "2026-10-17T19:37:26Z",
-      "replaced": true
+      "uploaded_at": "2026-10-23T21:37:12Z",
+      "replaced": true,
+      "youtube_url": "https://www.youtube.com/watch?v=xZOoMkIEpG4"
     },
     {
       "id": "motion-2026-09-26",
@@ -187,11 +192,13 @@
       "notify": false,
       "playlist": true,
       "replaces": [
-        "Khgrv1vy_7M"
+        "Khgrv1vy_7M",
+        "pUMUDXLchYI"
       ],
       "render2_copy": "pUMUDXLchYI",
-      "uploaded_at": "2026-10-17T21:03:06Z",
-      "replaced": true
+      "uploaded_at": "2026-10-23T21:37:24Z",
+      "replaced": true,
+      "youtube_url": "https://www.youtube.com/watch?v=bPzONIswyn8"
     },
     {
       "id": "motion-2026-10-13",
