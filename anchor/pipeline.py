@@ -567,6 +567,7 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         "buffer_post_id": pub.get("post_id"),
         "buffer_short_post_id": (pub.get("youtube_short") or {}).get("post_id"),
         "youtube_via": (pub.get("youtube") or {}).get("via"),
+        "youtube_full_url": (pub.get("youtube") or {}).get("external_link") if (pub.get("youtube") or {}).get("via") == "youtube_api" else None,  # API road: the drop's own full track, so Full videos never adds a second
         "short_status": (pub.get("youtube_short") or {}).get("status"),
         "status": status,
         "error": pub.get("error"),
