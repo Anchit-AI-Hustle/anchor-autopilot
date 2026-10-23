@@ -39,7 +39,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: bash scripts/install-ffmpeg.sh
       - run: pip install -r requirements.txt
 
       - name: Link or upload the missing full videos
