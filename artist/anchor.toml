@@ -29,6 +29,12 @@ never_titles = []
 [schedule]
 # Publish time in UTC. 17:30 UTC = 23:00 IST = 19:30 CEST = 13:30 ET.
 post_time_utc = "17:30"
+# More than one song a day (Anchit, 2026-10-24): the day's second song (drop id
+# YYYY-MM-DD-2, made by the 11:07 UTC run) goes live at 21:30 UTC = 03:00 IST = 17:30 ET.
+# Two a day is the YouTube API ceiling: a song costs ~3,300 of the 10,000 daily quota units
+# (full video 1,600 + Short 1,600 + thumbnail and playlist), so a third would leave nothing
+# for retries and the Uploads job.
+extra_post_times_utc = ["21:30"]
 # One release every day: the full track as a video and the strongest 45 s as a Short, in
 # the same slot. every_days = 2 makes it every second day, counted from anchor_date.
 every_days = 1
