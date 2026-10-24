@@ -179,9 +179,10 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
         problems.append("music.short_s must be 15-175 (YouTube Shorts max 3 min)")
     if int(music["short_s"]) > int(music["duration_s"]):
         problems.append("music.short_s cannot exceed duration_s")
-    hh, _, mm = raw["schedule"]["post_time_utc"].partition(":")
-    if not (hh.isdigit() and mm.isdigit() and 0 <= int(hh) < 24 and 0 <= int(mm) < 60):
-        problems.append("schedule.post_time_utc must be HH:MM")
+    for t in [raw["schedule"]["post_time_utc"], *raw["schedule"].get("extra_post_times_utc", [])]:
+        hh, _, mm = str(t).partition(":")
+        if not (hh.isdigit() and mm.isdigit() and 0 <= int(hh) < 24 and 0 <= int(mm) < 60):
+            problems.append(f"schedule post time {t!r} must be HH:MM")
     if problems:
         raise ValueError("artist profile invalid:\n- " + "\n- ".join(problems))
 
