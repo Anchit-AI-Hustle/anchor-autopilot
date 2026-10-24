@@ -2,15 +2,20 @@ name: Drop (daily)
 
 on:
   schedule:
-    # Two songs a day (Anchit, 2026-10-24). GitHub can start a scheduled run hours late (13:07 began
-    # at 16:31 on 2026-10-24) and a drop takes ~2.5 h; the daily-drop group runs them one after the
-    # other, so the second song always sees the first in the catalogue.
-    - cron: "7 7 * * *"    # 07:07 UTC (12:37 IST): the day's first song, live at 17:30 UTC (23:00 IST)
-    - cron: "7 11 * * *"   # 11:07 UTC (16:37 IST): the second song, drop id YYYY-MM-DD-2, live at 21:30 UTC
+    # As many songs a day as the YouTube quota allows (Anchit, 2026-10-24: "max possible"). Every
+    # run makes the day's next missing song (anchor next-drop: YYYY-MM-DD, -2 ... -5) if the quota
+    # budget still has room, so a late or cancelled run never skips or repeats a song. The runs
+    # sit inside one YouTube quota day (it resets at 07:00/08:00 UTC) and the daily-drop group
+    # runs them one after the other (~2.5 h each).
+    - cron: "37 7 * * *"   # 07:37 UTC (13:07 IST)
+    - cron: "37 10 * * *"  # 10:37 UTC (16:07 IST)
+    - cron: "37 13 * * *"  # 13:37 UTC (19:07 IST)
+    - cron: "37 16 * * *"  # 16:37 UTC (22:07 IST)
+    - cron: "37 19 * * *"  # 19:37 UTC (01:07 IST)
   workflow_dispatch:
     inputs:
       date:
-        description: "Drop id: YYYY-MM-DD (the day's first song) or YYYY-MM-DD-2 (its second). Default: today's first"
+        description: "Drop id: YYYY-MM-DD, YYYY-MM-DD-2 ... -5. Default: today's next song if the YouTube quota allows"
         required: false
         default: ""
       publish_now:
@@ -82,9 +87,14 @@ jobs:
         run: |
           DATE="${{ inputs.date }}"
           if [ -z "$DATE" ]; then
-            DATE="$(date -u +%F)"
-            # the 11:07 UTC schedule makes the day's second song
-            if [ "${{ github.event.schedule }}" = "7 11 * * *" ]; then DATE="$DATE-2"; fi
+            # the day's next missing song, if the YouTube quota budget has room for it
+            DATE="$(python -m anchor next-drop 2>next-drop.txt)"
+            echo "::notice::$(tail -n 1 next-drop.txt)"
+            if [ "$DATE" = "none" ]; then
+              echo "date=none" >> "$GITHUB_OUTPUT"
+              echo "skip=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
           fi
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           if [ "${{ inputs.dry_run }}" != "true" ] && [ "${{ inputs.force }}" != "true" ] \

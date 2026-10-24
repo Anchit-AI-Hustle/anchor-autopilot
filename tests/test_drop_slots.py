@@ -1,5 +1,6 @@
-"""Two songs a day (Anchit, 2026-10-24): drop ids YYYY-MM-DD and YYYY-MM-DD-2, each its own
-record, name, lane, seed and post time. Nothing here touches the network."""
+"""Several songs a day (Anchit, 2026-10-24): drop ids YYYY-MM-DD, -2 ... -5, each its own
+record, name, lane, seed and post time, as many as the YouTube quota allows. Nothing here
+touches the network."""
 import subprocess
 from datetime import date, timedelta
 from pathlib import Path
@@ -28,11 +29,12 @@ def test_drop_ids():
 
 def test_each_slot_has_its_own_post_time():
     p = load_profile()
-    assert p.schedule["post_time_utc"] == "17:30" and p.schedule["extra_post_times_utc"] == ["21:30"]
-    assert post_time(p, "2026-10-25").strftime("%H:%M") == "17:30"
-    assert post_time(p, "2026-10-25", 2).strftime("%H:%M") == "21:30"
-    assert post_time(p, "2026-10-25-2").strftime("%H:%M") == "21:30"
-    assert post_time(p, "2026-10-25-3").strftime("%H:%M") == "21:30", "a slot past the list keeps the last time"
+    assert p.schedule["post_time_utc"] == "17:30"
+    assert p.schedule["extra_post_times_utc"] == ["19:30", "21:30", "23:00", "23:45"]
+    times = [post_time(p, "2026-10-25" + ("" if n == 1 else f"-{n}")).strftime("%H:%M") for n in range(1, 6)]
+    assert times == ["17:30", "19:30", "21:30", "23:00", "23:45"]
+    assert post_time(p, "2026-10-25", 2).strftime("%H:%M") == "19:30"
+    assert post_time(p, "2026-10-25-9").strftime("%H:%M") == "23:45", "a slot past the list keeps the last time"
 
 
 def test_the_first_song_of_a_day_is_unchanged():
@@ -48,26 +50,26 @@ def test_the_second_song_is_a_different_record_the_same_day():
              "family": first["family"], "key": first["key"]}]
     second = make_brief(p, "2026-10-25-2", hist)
     assert second["id"] == "2026-10-25-2" and second["date"] == "2026-10-25" and second["slot"] == 2
-    assert second["post_at"] == "2026-10-25T21:30:00Z"
+    assert second["post_at"] == "2026-10-25T19:30:00Z"
     assert second["title"] != first["title"] and second["seed"] != first["seed"]
     assert second["lane"] != first["lane"], "never the same genre twice in a row, even within a day"
     assert second["family"] != first["family"] and second["key"] != first["key"]
 
 
-def test_sixty_days_of_two_songs_never_repeat_a_title_or_a_genre_back_to_back():
+def test_sixty_days_of_five_songs_never_repeat_a_title_or_a_genre_back_to_back():
     p = load_profile()
     hist, titles = [], []
     start = date(2026, 10, 25)
     for i in range(60):
         day = (start + timedelta(days=i)).isoformat()
-        for drop_id in (day, f"{day}-2"):
+        for drop_id in (day, *(f"{day}-{n}" for n in range(2, 6))):
             b = make_brief(p, drop_id, hist)
             if hist:
                 assert b["lane"] != hist[0]["lane"], drop_id
             hist.insert(0, {"id": b["id"], "date": b["date"], "title": b["title"], "lane": b["lane"],
                             "family": b["family"], "key": b["key"]})
             titles.append(b["title"])
-    assert len(titles) == len(set(t.lower() for t in titles)) == 120
+    assert len(titles) == len(set(t.lower() for t in titles)) == 300
     assert {h["lane"] for h in hist} == {l.id for l in p.active_lanes}
 
 
@@ -96,25 +98,38 @@ def _pick_step() -> str:
     return textwrap.dedent(block.split("run: |\n", 1)[1])
 
 
-def test_two_schedules_and_the_second_makes_slot_two():
+def test_five_schedules_inside_one_quota_day_one_after_the_other():
     head = WORKFLOW.split("workflow_dispatch:", 1)[0]
-    assert re.findall(r'- cron: "([^"]+)"', head) == ["7 7 * * *", "7 11 * * *"]
-    assert "group: daily-drop\n  cancel-in-progress: false" in WORKFLOW, "the two runs go one after the other"
+    crons = re.findall(r'- cron: "([^"]+)"', head)
+    assert crons == ["37 7 * * *", "37 10 * * *", "37 13 * * *", "37 16 * * *", "37 19 * * *"]
+    hours = [int(c.split()[1]) for c in crons]
+    assert hours[0] >= 7 and hours[-1] + 3 <= 24, "all runs start after the Pacific reset and finish the same UTC day"
+    assert "group: daily-drop\n  cancel-in-progress: false" in WORKFLOW, "the runs go one after the other"
+    for other in ("fullvideos.yml", "uploads.yml"):
+        text = (ROOT / ".github" / "workflows" / other).read_text()
+        hour = int(re.search(r'- cron: "\d+ (\d+) ', text).group(1))
+        assert hour < 7, f"{other} runs before the day's drops, so a pending drop never cancels it"
 
 
-@pytest.mark.parametrize("schedule,date_input,want", [
-    ("7 7 * * *", "", "{today}"),
-    ("7 11 * * *", "", "{today}-2"),
-    ("", "2026-10-25-2", "2026-10-25-2"),
-    ("", "2026-10-25", "2026-10-25"),
+@pytest.mark.parametrize("date_input,next_drop,want", [
+    ("", "2026-10-25-3", "2026-10-25-3"),
+    ("", "none", "none"),
+    ("2026-10-25-2", "ignored", "2026-10-25-2"),
 ])
-def test_the_pick_step_names_the_drop(tmp_path, schedule, date_input, want):
-    """Run the workflow's own shell for the date line, with GitHub's expressions filled in."""
+def test_the_pick_step_names_the_drop(tmp_path, date_input, next_drop, want):
+    """Run the workflow's own shell for the date line, with a stand-in for `python -m anchor next-drop`."""
     run = _pick_step()
-    head = run.split("echo \"date=$DATE\"")[0]
-    script = (head.replace("${{ inputs.date }}", date_input)
-                  .replace("${{ github.event.schedule }}", schedule)) + 'echo "$DATE"\n'
-    out = subprocess.run(["bash", "-c", script], capture_output=True, text=True, check=True).stdout.strip()
-    today = subprocess.run(["date", "-u", "+%F"], capture_output=True, text=True).stdout.strip()
-    assert out == want.format(today=today)
-    split_drop_id(out)
+    head = run.split("if [ \"${{ inputs.dry_run }}\"")[0]
+    shim = tmp_path / "python"
+    shim.write_text(f"#!/bin/sh\necho 'why' >&2\necho {next_drop}\n")
+    shim.chmod(0o755)
+    out_file = tmp_path / "out"
+    script = head.replace("${{ inputs.date }}", date_input)
+    env = {"PATH": f"{tmp_path}:/usr/bin:/bin", "GITHUB_OUTPUT": str(out_file)}
+    subprocess.run(["bash", "-c", script], capture_output=True, text=True, check=True, cwd=tmp_path, env=env)
+    lines = dict(l.split("=", 1) for l in out_file.read_text().splitlines())
+    assert lines["date"] == want
+    if want == "none":
+        assert lines["skip"] == "true"
+    else:
+        split_drop_id(want)

@@ -114,6 +114,8 @@ def main(argv: list[str] | None = None) -> int:
     cm.add_argument("--date", default=None)
     cd = sub.add_parser("cadence", help="print yes/no: is the date a release day on the every-N-days schedule")
     cd.add_argument("--date", default=None)
+    nd = sub.add_parser("next-drop", help="print the drop id the next run should make today, or none (the reason goes to stderr)")
+    nd.add_argument("--date", default=None)
 
     args = ap.parse_args(argv)
     profile = load_profile()
@@ -247,6 +249,17 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "cadence":
         day = args.date or pipeline.today_utc()
         print("yes" if pipeline.is_release_day(profile, day) else "no")
+    elif args.cmd == "next-drop":
+        from datetime import datetime, timezone
+        from . import quota
+        day = args.date or pipeline.today_utc()
+        sched = profile.schedule
+        slots = min(1 + len(sched.get("extra_post_times_utc", [])), int(sched.get("max_drops_per_day", 9)))
+        drop_id, why = quota.next_drop(catalog.load(CATALOG_PATH).get("drops", []), day, slots,
+                                       int(profile.youtube.get("daily_quota_budget", 9500)), datetime.now(timezone.utc),
+                                       shorts_via_buffer=profile.youtube.get("shorts_via", "buffer") == "buffer")
+        print(why, file=sys.stderr)
+        print(drop_id or "none")
     elif args.cmd == "has-drop":
         day = args.date or pipeline.today_utc()
         drops = catalog.load(CATALOG_PATH).get("drops", [])

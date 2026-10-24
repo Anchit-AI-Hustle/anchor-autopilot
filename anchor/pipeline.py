@@ -372,7 +372,19 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
         # the channel's own credentials: upload from disk, with tags, thumbnail, playlist and
         # a scheduled publish time; the Short then links the full track by id
         publish_at = None if now else schedule_for(post_at)
-        publish_youtube_api(profile, drop_dir, meta, brief, publish_at, result, errors)
+        short_sender = None
+        if buf and short_url and profile.youtube.get("shorts_via", "buffer") == "buffer":
+            # the Short through Buffer: it posts to YouTube without our API quota, which halves
+            # what a song costs and lets the channel carry more songs a day (anchor/quota.py)
+            def short_sender(description: str) -> dict:
+                media = verify_media_url(short_url, expect_min_bytes=int(meta["video"]["size_bytes"] * 0.9))
+                chan = buf.youtube_channel(profile.artist["youtube_channel_id"], env("BUFFER_CHANNEL_ID"))
+                post = buf.create_short(chan["id"], **{**short_common, "description": description, "video_url": media["url"]})
+                log(f"publish: YouTube Short {post['id']} via Buffer, {post.get('status')} due {post.get('dueAt')}")
+                return {"post_id": post["id"], "status": post.get("status"), "due_at": post.get("dueAt"),
+                        "external_link": post.get("externalLink"),
+                        "channel": {"id": chan["id"], "name": chan.get("name")}, "media": media, "via": "buffer"}
+        publish_youtube_api(profile, drop_dir, meta, brief, publish_at, result, errors, short_sender=short_sender)
     elif buf:
         # Buffer publishes YouTube Shorts only (support.buffer.com, checked 2026-09-27): a
         # full-length video sent through it never reaches the channel. The full video waits for
@@ -434,8 +446,10 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
 
 
 def publish_youtube_api(profile: Profile, drop_dir: Path, meta: dict, brief: dict, publish_at: datetime | None,
-                        result: dict, errors: list) -> None:
-    """The full track, then the Short, straight to the channel. Each leg fails on its own."""
+                        result: dict, errors: list, short_sender=None) -> None:
+    """The full track, then the Short, straight to the channel. Each leg fails on its own.
+    With ``short_sender`` (Buffer) the Short goes that way first and through the API only if
+    Buffer refuses it, so a Buffer outage costs quota, never the Short."""
     yt = profile.youtube
     files = meta["files"]
     api = YouTube()
@@ -465,6 +479,13 @@ def publish_youtube_api(profile: Profile, drop_dir: Path, meta: dict, brief: dic
         if full:
             brief["full_video_url"] = full["url"]
             brief["description_short"] = seo_description(profile, brief, "short")
+        if short_sender is not None:
+            try:
+                result["youtube_short"] = short_sender(brief.get("description_short") or brief["description"])
+                return
+            except BufferError as exc:
+                log(f"publish: Short via Buffer failed ({exc}); sending it through the API")
+                result["short_buffer_error"] = str(exc)[:300]
         short = api.upload(drop_dir / files["short"], title=brief["youtube_title"],
                            description=brief.get("description_short") or brief["description"],
                            tags=[*tags, "shorts"], notify=False, **common)
@@ -577,6 +598,8 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         "youtube_via": (pub.get("youtube") or {}).get("via"),
         "youtube_full_url": (pub.get("youtube") or {}).get("external_link") if (pub.get("youtube") or {}).get("via") == "youtube_api" else None,  # API road: the drop's own full track, so Full videos never adds a second
         "short_status": (pub.get("youtube_short") or {}).get("status"),
+        "short_via": (pub.get("youtube_short") or {}).get("via"),
+        "short_buffer_failed": bool(pub.get("short_buffer_error")),
         "status": status,
         "error": pub.get("error"),
         "post_at": pub.get("due_at") or brief["post_at"],
@@ -633,8 +656,9 @@ def sync(profile: Profile, *, limit: int = 7, catalog_path: Path = CATALOG_PATH,
         for id_field, (status_field, link_field) in POSTS.items():
             if not drop.get(id_field) or (drop.get(status_field) == "sent" and drop.get(link_field)):
                 continue
+            via = (drop.get("short_via") or drop.get("youtube_via")) if id_field == "buffer_short_post_id" else drop.get("youtube_via")
             try:
-                if drop.get("youtube_via") == "youtube_api":
+                if via == "youtube_api":
                     if not api:
                         continue
                     st = api.video_status(drop[id_field])

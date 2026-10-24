@@ -10,7 +10,7 @@ on:
     paths:
       - site/data/uploads.json
   schedule:
-    - cron: "53 18 * * *"
+    - cron: "53 5 * * *"   # before the day's drops, spending the last of the Pacific day's quota
   workflow_dispatch:
 
 permissions:
