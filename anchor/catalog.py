@@ -23,15 +23,20 @@ def load(path: Path = CATALOG_PATH, profile: Profile | None = None) -> dict:
     return data
 
 
+def _order(d: dict) -> tuple[str, str]:
+    """Newest first by date, and within a day by drop id ("2026-10-25-2" after "2026-10-25")."""
+    return d.get("date", ""), d.get("id") or d.get("date", "")
+
+
 def history(catalog: dict) -> list[dict]:
-    return sorted(catalog.get("drops", []), key=lambda d: d.get("date", ""), reverse=True)
+    return sorted(catalog.get("drops", []), key=_order, reverse=True)
 
 
 def upsert(catalog: dict, drop: dict) -> dict:
     clean = {k: drop.get(k) for k in DROP_FIELDS if k in drop}
     drops = [d for d in catalog.get("drops", []) if d.get("id") != clean["id"]]
     drops.append(clean)
-    catalog["drops"] = sorted(drops, key=lambda d: d.get("date", ""), reverse=True)
+    catalog["drops"] = sorted(drops, key=_order, reverse=True)
     catalog["updated_at"] = iso(utcnow())
     return catalog
 

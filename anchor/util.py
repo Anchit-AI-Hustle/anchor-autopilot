@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import random
+import re
 import subprocess
 import sys
 import time
@@ -24,6 +25,18 @@ def seed_from(*parts: object) -> int:
 
 def rng(*parts: object) -> random.Random:
     return random.Random(seed_from(*parts))
+
+
+DROP_ID = re.compile(r"^(\d{4}-\d{2}-\d{2})(?:-([2-9]))?$")
+
+
+def split_drop_id(drop_id: str) -> tuple[str, int]:
+    """A drop id is its date ("2026-10-25", the day's first song) or the date and a slot
+    ("2026-10-25-2", the second). Returns (date, slot) and refuses anything else."""
+    m = DROP_ID.match(drop_id or "")
+    if not m:
+        raise ValueError(f"drop id must be YYYY-MM-DD or YYYY-MM-DD-N (N 2-9), got {drop_id!r}")
+    return m.group(1), int(m.group(2) or 1)
 
 
 def run(cmd: list[str], *, timeout: int | None = None, cwd: Path | None = None,

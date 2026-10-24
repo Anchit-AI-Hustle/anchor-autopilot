@@ -11,20 +11,31 @@ from . import originality
 from .config import Lane, Profile
 from .music import SHAPES, arc, arrangement, section_names, structure
 from .titles import make_title
-from .util import iso, rng, seed_from
+from .util import iso, rng, seed_from, split_drop_id
 
 
-def post_time(profile: Profile, day: str) -> datetime:
-    hh, mm = (int(x) for x in profile.schedule["post_time_utc"].split(":"))
+def post_time(profile: Profile, day: str, slot: int = 1) -> datetime:
+    """When a drop goes live: the day's first song at schedule.post_time_utc, later songs of
+    the same day at schedule.extra_post_times_utc in order (Anchit, 2026-10-24: several songs
+    a day). ``day`` may also be a drop id ("2026-10-25-2"), which carries its own slot."""
+    day, id_slot = split_drop_id(day)
+    slot = max(slot, id_slot)
+    times = [profile.schedule["post_time_utc"], *profile.schedule.get("extra_post_times_utc", [])]
+    hh, mm = (int(x) for x in times[min(slot, len(times)) - 1].split(":"))
     d = Date.fromisoformat(day)
     return datetime(d.year, d.month, d.day, hh, mm, tzinfo=timezone.utc)
 
 
 def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0) -> dict:
-    """Build the brief for ``day`` (YYYY-MM-DD). ``history`` is newest-first."""
-    Date.fromisoformat(day)  # validates the format
-    r = rng("anchor-brief", day)
-    past = [d for d in history if d.get("date", "") < day]
+    """Build the brief for drop ``day``: a date (YYYY-MM-DD, the day's first song) or a date
+    and slot (YYYY-MM-DD-2, its second). ``history`` is newest-first. Everything is seeded by
+    the drop id, so the second song of a day is a different record, never a re-roll."""
+    drop_id = day
+    day, slot = split_drop_id(drop_id)
+    Date.fromisoformat(day)  # validates the date
+    r = rng("anchor-brief", drop_id)
+    # earlier drops, including an earlier slot of the same day
+    past = [d for d in history if (d.get("date", ""), d.get("id") or d.get("date", "")) < (day, drop_id)]
     recent = past[:3]
 
     # sound lane: weighted, never the same lane two days running, recent lanes down-weighted
@@ -62,16 +73,17 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     # never a title that is already a song anywhere (MusicBrainz, iTunes, Deezer), not just
     # on this channel (Anchit, 2026-10-24)
     check, title_report = originality.checker(), {}
-    title = make_title(profile.titles, rng("anchor-title", day), used_titles, recent_titles,
+    title = make_title(profile.titles, rng("anchor-title", drop_id), used_titles, recent_titles,
                        taken=check, report=title_report)
-    lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", day),
+    lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", drop_id),
                          mode=lane.voice)
 
     brief = {
-        "id": day,
+        "id": drop_id,
         "date": day,
+        "slot": slot,
         "attempt": attempt,
-        "seed": seed_from("anchor-audio", day, attempt) % 2_000_000_000,
+        "seed": seed_from("anchor-audio", drop_id, attempt) % 2_000_000_000,
         "title": title,
         "lane": lane.id,
         "lane_name": lane.name,
@@ -91,7 +103,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "short_s": int(profile.music["short_s"]),
         "genre_line": lane.genre_line,
         "style_line": lane.style_line,
-        "post_at": iso(post_time(profile, day)),
+        "post_at": iso(post_time(profile, day, slot)),
     }
     if check is not None:
         brief["title_check"] = title_report

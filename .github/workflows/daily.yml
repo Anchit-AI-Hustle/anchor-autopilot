@@ -2,12 +2,15 @@ name: Drop (daily)
 
 on:
   schedule:
-    - cron: "7 9 * * *"    # 09:07 UTC (14:37 IST). The posts go live at 17:30 UTC (23:00 IST). GitHub can start
-                           # a scheduled run hours late (13:07 began at 16:31 on 2026-10-24), and a drop takes ~2.5 h.
+    # Two songs a day (Anchit, 2026-10-24). GitHub can start a scheduled run hours late (13:07 began
+    # at 16:31 on 2026-10-24) and a drop takes ~2.5 h; the daily-drop group runs them one after the
+    # other, so the second song always sees the first in the catalogue.
+    - cron: "7 7 * * *"    # 07:07 UTC (12:37 IST): the day's first song, live at 17:30 UTC (23:00 IST)
+    - cron: "7 11 * * *"   # 11:07 UTC (16:37 IST): the second song, drop id YYYY-MM-DD-2, live at 21:30 UTC
   workflow_dispatch:
     inputs:
       date:
-        description: "Drop date YYYY-MM-DD (default: today in UTC)"
+        description: "Drop id: YYYY-MM-DD (the day's first song) or YYYY-MM-DD-2 (its second). Default: today's first"
         required: false
         default: ""
       publish_now:
@@ -78,7 +81,11 @@ jobs:
         id: day
         run: |
           DATE="${{ inputs.date }}"
-          [ -z "$DATE" ] && DATE="$(date -u +%F)"
+          if [ -z "$DATE" ]; then
+            DATE="$(date -u +%F)"
+            # the 11:07 UTC schedule makes the day's second song
+            if [ "${{ github.event.schedule }}" = "7 11 * * *" ]; then DATE="$DATE-2"; fi
+          fi
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           if [ "${{ inputs.dry_run }}" != "true" ] && [ "${{ inputs.force }}" != "true" ] \
              && [ "$(python -m anchor has-drop --date "$DATE")" = "yes" ]; then
