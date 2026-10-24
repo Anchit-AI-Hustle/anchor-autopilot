@@ -29,12 +29,12 @@ never_titles = []
 [schedule]
 # Publish time in UTC. 17:30 UTC = 23:00 IST = 19:30 CEST = 13:30 ET.
 post_time_utc = "17:30"
-# More than one song a day (Anchit, 2026-10-24): the day's second song (drop id
-# YYYY-MM-DD-2, made by the 11:07 UTC run) goes live at 21:30 UTC = 03:00 IST = 17:30 ET.
-# Two a day is the YouTube API ceiling: a song costs ~3,300 of the 10,000 daily quota units
-# (full video 1,600 + Short 1,600 + thumbnail and playlist), so a third would leave nothing
-# for retries and the Uploads job.
-extra_post_times_utc = ["21:30"]
+# As many songs a day as YouTube allows (Anchit, 2026-10-24: "max possible"). Each run makes
+# the day's next song (YYYY-MM-DD, -2, -3, -4, -5) while the quota budget allows (anchor/quota.py):
+# five a day while the Shorts go through Buffer (~1,700 API units a song), two when they cannot
+# (~3,300). Later songs go live at these times, in order: 01:00, 03:00, 04:30, 05:15 IST.
+extra_post_times_utc = ["19:30", "21:30", "23:00", "23:45"]
+max_drops_per_day = 5
 # One release every day: the full track as a video and the strongest 45 s as a Short, in
 # the same slot. every_days = 2 makes it every second day, counted from anchor_date.
 every_days = 1
@@ -443,6 +443,11 @@ category_id = "10"        # Music
 privacy = "public"
 ai_generated = true       # YouTube "AI use" disclosure: always on
 notify_subscribers = true
+# YouTube Data API units the robot may spend per day (Google's limit is 10,000, reset at
+# midnight Pacific); the rest is headroom for the Uploads, sync and playlist jobs.
+daily_quota_budget = 9500
+# The Short goes through Buffer (no API quota) and through the API only if Buffer refuses it.
+shorts_via = "buffer"
 # The Shorts go up before the full-length videos exist, so every Short says so on its
 # own line, high in the description where YouTube shows it before the "more" fold.
 # short_note is gone: it said "Full song out soon" on every Short long after the full tracks
