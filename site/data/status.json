@@ -2,30 +2,30 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-10-21",
-    "title": "Comet",
-    "finished_at": "2026-10-21T20:04:23Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/39648565857",
+    "drop_id": "2026-10-23",
+    "title": "Sector Furnace",
+    "finished_at": "2026-10-24T00:32:58Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40030386713",
     "error": null
   },
-  "next_post_at": "2026-10-22T17:30:00Z",
+  "next_post_at": "2026-10-24T17:30:00Z",
   "streak": 2,
   "totals": {
-    "drops": 31
+    "drops": 32
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-10-21T20:04:23Z",
+  "updated_at": "2026-10-24T00:32:58Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
     "steps": 32,
     "model": "acestep-v15-sft-Q8_0.gguf",
     "guidance": 5.0,
-    "lm_ms": 155158,
-    "dit_ms": 5477334,
-    "vae_ms": 555755,
-    "total_s": 6205.4
+    "lm_ms": 195913,
+    "dit_ms": 6268166,
+    "vae_ms": 818517,
+    "total_s": 7307.7
   }
 }
