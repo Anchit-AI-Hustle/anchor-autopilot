@@ -2,30 +2,30 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-10-23",
-    "title": "Sector Furnace",
-    "finished_at": "2026-10-24T00:32:58Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40030386713",
+    "drop_id": "2026-10-24",
+    "title": "Collide Afterburn",
+    "finished_at": "2026-10-24T19:25:10Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40111983399",
     "error": null
   },
-  "next_post_at": "2026-10-24T17:30:00Z",
+  "next_post_at": "2026-10-25T17:30:00Z",
   "streak": 2,
   "totals": {
-    "drops": 32
+    "drops": 33
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-10-24T00:32:58Z",
+  "updated_at": "2026-10-24T19:25:10Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
     "steps": 32,
     "model": "acestep-v15-sft-Q8_0.gguf",
     "guidance": 5.0,
-    "lm_ms": 195913,
-    "dit_ms": 6268166,
-    "vae_ms": 818517,
-    "total_s": 7307.7
+    "lm_ms": 240835,
+    "dit_ms": 7791755,
+    "vae_ms": 614672,
+    "total_s": 8671.0
   }
 }

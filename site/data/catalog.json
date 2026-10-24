@@ -5,10 +5,66 @@
     "youtube_url": "https://www.youtube.com/@AT_ANCHOR",
     "site_url": "https://anchor.anchit-tandon.com",
     "tagline": "Official tracks and releases by ANCHOR",
-    "bio": "Hard techno, acid and psychedelic bounce at 160 to 200 BPM, with whispers and crowd chants. One new track every day."
+    "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-10-24T00:32:58Z",
+  "updated_at": "2026-10-24T19:25:10Z",
   "drops": [
+    {
+      "id": "2026-10-24",
+      "date": "2026-10-24",
+      "title": "Collide Afterburn",
+      "lane": "acidpsy",
+      "lane_name": "Acid Psychedelic Techno",
+      "bpm": 180,
+      "key": "G minor",
+      "family": "furnace",
+      "family_name": "Furnace",
+      "duration_s": 214,
+      "short_s": 45,
+      "cover": "covers/2026-10-24.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24/ANCHOR-2026-10-24-collide-afterburn.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-10-24",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-10-24-collide-afterburn-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24/ANCHOR-2026-10-24-collide-afterburn-short.mp4",
+      "youtube_url": "https://youtu.be/AoMBDouFW8s",
+      "buffer_post_id": "AoMBDouFW8s",
+      "status": "public",
+      "post_at": "2026-10-24T17:30:00Z",
+      "qc": {
+        "bpm_est": 180.0,
+        "lufs": -14.14,
+        "warnings": [
+          "key is not clearly audible; kept the requested one"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-10-24T19:22:26Z",
+      "genre_line": "Acid Techno, Psychedelic Techno, Hard Techno",
+      "style_line": "Acid Techno, Psychedelic Techno, Bouncy Acid, Rave Techno",
+      "error": null,
+      "accent": "#ff3b1f",
+      "caption": "acid techno, psychedelic hard techno, squelchy bouncing 303 acid line with wild slides and filter sweeps, punchy kick, rolling off-beat bass, trippy echoes. Acid techno lineage from 1990s rave parties, psychedelic and fast for 2020s hard dancefloors. Mood: bouncy and driving, the acid line getting sillier and wilder every section, then cut. Feel: bouncy, fun and psychedelic, never dark. 182 BPM, fast four-on-the-floor with a bouncing off-beat bass, the 303 riding sixteenths with slides and accents. Instruments: punchy kick and bouncing bass carry it; cowbell shuffles sits under the intro, rising filter tension arrives with the build, trippy delay throws owns the breakdown. Vocals: whispers in the quiet parts, shouted crowd chants in the drops, never sung. Production: 303 squelchy and centred with psychedelic delay throws, kick punchy and dominant, chants dry; club master, sub-bass harmonics audible on small speakers, kick with a clear click, wide textures over a centred kick and sub, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, cowbell shuffles far back, tension only at the start, and the outro kick and bass strip back, filter closing, cowbell shuffles last, resolve to silence. Special moment: the 303 filter opens fully for the first time only on the second drop.",
+      "seed": 191619734,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 32,
+        "render_s": 8671.0,
+        "threads": 4,
+        "model": "acestep-v15-sft-Q8_0.gguf",
+        "guidance": 5.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24/ANCHOR-2026-10-24-collide-afterburn-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24/ANCHOR-2026-10-24-collide-afterburn-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/AoMBDouFW8s",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://youtu.be/V_CP5DM4l3k",
+      "buffer_short_post_id": "V_CP5DM4l3k",
+      "short_status": "public"
+    },
     {
       "id": "2026-10-23",
       "date": "2026-10-23",
@@ -1617,7 +1673,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-10-24T08:16:47Z",
+    "checked_at": "2026-10-24T19:25:10Z",
     "total": 2,
     "postable": 2,
     "families": 0,
