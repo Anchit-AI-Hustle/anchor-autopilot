@@ -55,7 +55,7 @@ def test_brief_is_deterministic():
     b = make_brief(p, "2026-09-11", [])
     assert a == b
     assert a["post_at"] == "2026-09-11T17:30:00Z"
-    assert "[Instrumental]" not in a["caption"] and "Vocals: whispers" in a["caption"]
+    assert "[Instrumental]" not in a["caption"] and "Vocals: " in a["caption"]
 
 
 def test_style_prompt_carries_all_nine_layers():
@@ -65,7 +65,7 @@ def test_style_prompt_carries_all_nine_layers():
     lane = p.lane(b["lane"])
     cap = b["caption"]
     for layer in (lane.caption, lane.era, "Mood: " + b["mood"], f"{b['bpm']} BPM", lane.groove,
-                  "Instruments:", p.music["vocals"], "Production: " + lane.production,
+                  "Instruments:", lane.vocals or p.music["vocals"], "Production: " + lane.production,
                   "Arrangement:", "Special moment: " + b["special"]):
         assert layer in cap, f"layer missing from style prompt: {layer[:40]}"
     for t in b["textures"]:
@@ -183,8 +183,11 @@ def test_songs_whisper_in_the_quiet_parts_and_chant_the_title_in_the_drops():
             assert tag.startswith("[") and tag.endswith("]") and words and all(w.strip() for w in words), sec
             if tag.startswith("[drop "):
                 assert "shouted crowd chant" in tag and words[0] == f"{chant}! {chant}!"
-            if tag.startswith(("[intro ", "[breakdown ", "[outro ")):
+            rap = p.lane(b["lane"]).voice == "rap"
+            if tag.startswith(("[intro ", "[outro ")) or (tag.startswith("[breakdown ") and not rap):
                 assert "whispered voice" in tag and words[0] in p.music["voice"]["whispers"]
+            if rap and tag.startswith(("[build ", "[breakdown ")):
+                assert "rap verse" in tag and len(words) == 4 and all(w in p.music["voice"]["rap"] for w in words)
         assert sum(1 for s_ in sections if s_.startswith("[drop ")) >= 1
         assert b["vocal_style"] and "chant" in b["vocal_style"]
         req = AceStepCpp("bin", "models", "dit", None).request(b)
