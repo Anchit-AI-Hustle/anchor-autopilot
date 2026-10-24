@@ -161,3 +161,27 @@ def test_queue_track_is_released_without_generating(fast_profile, tmp_path, site
     assert abs(meta["brief"]["duration_s"] - 40) < 1.5
     assert (out / meta["files"]["short"]).exists() and (out / meta["files"]["mp3"]).exists()
     assert not track.exists() and (queue / "done" / track.name).exists()   # never posted twice
+
+
+def test_a_queued_song_whose_title_already_exists_goes_out_under_an_original_title(fast_profile, tmp_path, site_dir, monkeypatch):
+    """Anchit, 2026-10-24: no title may be a song that already exists. A Suno song called
+    "Project Mayhem" (taken, says the catalogue check) is released under the day's verified
+    original title, and the file still leaves the queue so it is never posted twice."""
+    from anchor import originality, pipeline
+    from anchor.music import SR, synth_techno, write_wav
+
+    monkeypatch.setenv("ANCHOR_TITLE_CHECK", "1")
+    asked = []
+    monkeypatch.setattr(originality, "taken", lambda t: asked.append(t) or t == "Project Mayhem")
+    queue = tmp_path / "queue"
+    queue.mkdir()
+    track = queue / "02_project-mayhem.wav"
+    write_wav(track, synth_techno(40, 150, 7), SR)
+    out = tmp_path / "drop"
+    meta = pipeline.make(fast_profile, "2026-09-20", out, art_mode="procedural",
+                         catalog_path=site_dir / "data" / "catalog.json", queue_dir=queue)
+    b = meta["brief"]
+    assert b["suno_title"] == "Project Mayhem" and b["title"] != "Project Mayhem"
+    assert b["title"] in asked and "Project Mayhem" in asked and b["title_check"]["verified"] is True
+    assert b["title"] in b["youtube_title"] and "Project Mayhem" not in b["youtube_title"]
+    assert not track.exists() and (queue / "done" / track.name).exists()

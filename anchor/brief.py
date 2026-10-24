@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from datetime import date as Date, datetime, timezone
 
+from . import originality
 from .config import Lane, Profile
 from .music import SHAPES, arc, arrangement, section_names, structure
 from .titles import make_title
@@ -58,8 +59,13 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
 
     used_titles = [d.get("title", "") for d in history] + list(profile.artist["existing_titles"])
     recent_titles = [d.get("title", "") for d in past[:10]] + list(profile.artist["existing_titles"])
-    title = make_title(profile.titles, rng("anchor-title", day), used_titles, recent_titles)
-    lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", day))
+    # never a title that is already a song anywhere (MusicBrainz, iTunes, Deezer), not just
+    # on this channel (Anchit, 2026-10-24)
+    check, title_report = originality.checker(), {}
+    title = make_title(profile.titles, rng("anchor-title", day), used_titles, recent_titles,
+                       taken=check, report=title_report)
+    lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", day),
+                         mode=lane.voice)
 
     brief = {
         "id": day,
@@ -75,11 +81,11 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "family_name": family.name,
         "caption": style["caption"],
         "lyrics": lyrics,
-        "vocal_style": "whispers and a shouted crowd chant",
+        "vocal_style": "rap verses and a shouted title chant hook" if lane.voice == "rap" else "whispers and a shouted crowd chant",
         "textures": style["textures"],
         "mood": style["mood"],
         "special": style["special"],
-        "negative": profile.music["negative"],
+        "negative": lane.negative or profile.music["negative"],
         "duration_s": duration_s,
         "shape": shape,
         "short_s": int(profile.music["short_s"]),
@@ -87,6 +93,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "style_line": lane.style_line,
         "post_at": iso(post_time(profile, day)),
     }
+    if check is not None:
+        brief["title_check"] = title_report
     brief.update(describe(profile, brief))
     return brief
 
@@ -103,15 +111,24 @@ VOICE = {
     "drop2": ("shouted crowd chant", "chant"),
     "outro": ("whispered voice", "whisper"),
 }
+# A rap lane raps where the chant lanes whisper over a building groove; the drops still chant
+# the title, so the hook is the name of the record on every lane.
+VOICE_RAP = {**VOICE,
+             "build": ("rap verse, confident flow on the beat", "rap"),
+             "breakdown": ("rap verse, laid-back flow over the groove", "rap"),
+             "build2": ("rap verse, faster flow building to the hook", "rap")}
 
 
-def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[str, ...], shape: str, r) -> str:
+def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[str, ...], shape: str, r,
+                mode: str = "chant") -> str:
     """The lyrics field: every section's tag and direction, then its words.
 
     The drops chant the song's own title (so the record is named after what the crowd
     shouts) with a shout from the pool; the quiet sections whisper a line from the pool.
     Three whispers are drawn for the day and reused, so the song has a few phrases that
-    come back rather than a new line every section. Every choice comes from ``r``.
+    come back rather than a new line every section. A rap lane (``mode="rap"``) raps four
+    bars in each build and breakdown, drawn without repeats from the profile's own bars.
+    Every choice comes from ``r``.
     """
     voice = profile.music["voice"]
     whispers = r.sample(list(voice["whispers"]), k=3)
@@ -123,13 +140,21 @@ def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[s
         "chant": lambda i: f"{chant}! {chant}!\n{shout.capitalize()}! {shout.capitalize()}! {shout.capitalize()}!",
         "shout": lambda i: f"{shout.capitalize()}! {shout.capitalize()}!",
     }
+    voices = VOICE
+    if mode == "rap":
+        bank = list(voice["rap"])
+        bars = r.sample(bank, k=min(12, len(bank)))
+        words["rap"] = lambda i: "\n".join(bars[(4 * i + j) % len(bars)] for j in range(4))
+        voices = VOICE_RAP
     names = section_names(duration_s, shape)
-    out, quiet = [], 0
+    out, quiet, verse = [], 0, 0
     for (tag, direction), name in zip(arrangement(duration_s, textures, shape), names):
-        delivery, kind = VOICE.get(name, ("whispered voice", "whisper"))
-        line = words[kind](quiet)
+        delivery, kind = voices.get(name, ("whispered voice", "whisper"))
+        line = words[kind](verse if kind == "rap" else quiet)
         if kind == "whisper":
             quiet += 1
+        if kind == "rap":
+            verse += 1
         out.append(f"[{tag} - {direction}, {delivery}]\n{line}")
     return "\n\n".join(out)
 
@@ -159,7 +184,7 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
         f"{bpm} BPM, {lane.groove}",                                    # 4 tempo / rhythm
         f"Instruments: punchy kick and bouncing bass carry it; {t0} sits under the intro, "
         f"{t1} arrives with the build, {t2} owns the breakdown",        # 5 instruments + entry
-        music["vocals"],                                                # 6 vocals
+        lane.vocals or music["vocals"],                                 # 6 vocals
         f"Production: {lane.production}; {music['mastering']}",         # 7 production
         arc(duration_s, textures, shape),                               # 8 arrangement arc
         f"Special moment: {special}",                                   # 9 special moment

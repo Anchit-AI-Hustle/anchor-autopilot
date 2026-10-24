@@ -6,7 +6,7 @@ import shutil
 from datetime import date as Date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import catalog, craft, ledger, lyrics
+from . import catalog, craft, ledger, lyrics, originality
 from .art import make_cover, og_card
 from .audio import (analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
@@ -270,7 +270,15 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
     audio = decode(raw)
     stats_audio = analyze(audio)
     brief = make_brief(profile, day, hist or [], 0)
-    brief["title"] = queued["title"]
+    # your own Suno title, unless a song by that name already exists somewhere: then it goes
+    # out under the day's verified original title instead (Anchit, 2026-10-24). The queue's
+    # name guard (released_at, done/) still stops the file coming back under its old name.
+    check = originality.checker()
+    if check is not None and check(queued["title"]):
+        log(f"queue: {queued['title']!r} is already a song elsewhere; releasing it as {brief['title']!r}")
+        brief["suno_title"] = queued["title"]
+    else:
+        brief["title"] = queued["title"]
     brief["duration_s"] = stats_audio["duration_s"]
     brief["source"], brief["source_file"] = "queue", src.name
     if queued.get("caption"):

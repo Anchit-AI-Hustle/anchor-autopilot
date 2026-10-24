@@ -36,6 +36,13 @@ class Lane:
     # a retired lane is never drawn for a new day; it stays so records already out keep
     # their own genre in titles, descriptions, mixes and the retitle
     retired: bool = False
+    # how the lane is voiced (Anchit, 2026-10-24: rap and hip hop lanes): "chant" = whispers
+    # and a shouted title chant (the channel default), "rap" = rap verses in the builds and
+    # breakdowns with the title chanted as the hook. ``vocals`` and ``negative`` replace the
+    # channel-wide lines for this lane when set (a rap lane cannot ban "rap verses").
+    voice: str = "chant"
+    vocals: str = ""
+    negative: str = ""
 
 
 @dataclass(frozen=True)
@@ -107,6 +114,7 @@ def load_profile(path: Path | str = PROFILE_PATH) -> Profile:
             mood_arcs=tuple(l.get("mood_arcs", [])),
             special_moments=tuple(l.get("special_moments", [])),
             retired=bool(l.get("retired", False)),
+            voice=l.get("voice", "chant"), vocals=l.get("vocals", ""), negative=l.get("negative", ""),
         )
         for l in raw["music"]["lanes"]
     )
@@ -143,6 +151,10 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
             problems.append(f"lane {lane.id}: needs at least one mood_arc and one special_moment")
         if len(lane.textures) < 3:
             problems.append(f"lane {lane.id}: needs at least 3 textures for the arrangement")
+        if lane.voice not in ("chant", "rap"):
+            problems.append(f"lane {lane.id}: voice must be chant or rap")
+        if lane.voice == "rap" and not (lane.vocals and lane.negative):
+            problems.append(f"lane {lane.id}: a rap lane needs its own vocals and negative lines")
     for fam in families:
         if fam.viz not in {"bars", "line", "wave", "scope"}:
             problems.append(f"family {fam.id}: viz {fam.viz!r} not supported")
@@ -156,6 +168,8 @@ def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -
     voice = music.get("voice") or {}
     if len(voice.get("whispers", [])) < 3 or not voice.get("shouts"):
         problems.append("music.voice needs at least 3 whispers and 1 shout")
+    if any(l.voice == "rap" and not l.retired for l in lanes) and len(voice.get("rap", [])) < 12:
+        problems.append("music.voice.rap needs at least 12 bars for the rap lanes")
     if not (10 <= int(music["duration_s"]) <= 600):
         problems.append("music.duration_s must be 10-600")
     rng_s = music.get("duration_range_s")
