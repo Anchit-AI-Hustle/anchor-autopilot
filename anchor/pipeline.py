@@ -19,7 +19,7 @@ from .publish import Buffer, BufferError, build_post_input, build_reel_input, sc
 from .seo import description as seo_description, genre_phrase, hook_title
 from .youtube import YouTube, YouTubeError, configured as youtube_configured, playlist_id
 from .unique import COVER_MIN_DISTANCE, check_audio, is_same_record, nearest_cover, sounds_alike
-from .util import iso, log, read_json, utcnow, write_json
+from .util import iso, log, read_json, split_drop_id, utcnow, write_json
 from .video import poster_frame, render_full, render_short
 
 
@@ -678,6 +678,7 @@ def is_release_day(profile: Profile, day: str) -> bool:
     every = int(profile.schedule.get("every_days", 1))
     if every <= 1:
         return True
+    day = split_drop_id(day)[0]
     anchor = Date.fromisoformat(profile.schedule.get("anchor_date", day))
     return (Date.fromisoformat(day) - anchor).days % every == 0
 
