@@ -2,8 +2,8 @@ name: Drop (daily)
 
 on:
   schedule:
-    - cron: "7 13 * * *"   # 13:07 UTC (18:37 IST). The posts go live at 17:30 UTC (23:00 IST); four hours
-                           # covers the CPU fallback engine (about 90 min) plus a retry if the first take fails QC.
+    - cron: "7 9 * * *"    # 09:07 UTC (14:37 IST). The posts go live at 17:30 UTC (23:00 IST). GitHub can start
+                           # a scheduled run hours late (13:07 began at 16:31 on 2026-10-24), and a drop takes ~2.5 h.
   workflow_dispatch:
     inputs:
       date:
