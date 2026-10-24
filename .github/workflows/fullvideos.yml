@@ -7,7 +7,7 @@ name: Full videos (every Short has its full track on the channel)
 # catalog as it lands, and each Short gets a "Full track:" line. Runs daily after the posts.
 on:
   schedule:
-    - cron: "47 18 * * *"
+    - cron: "47 5 * * *"   # before the day's drops (07:37 UTC on): the daily-drop group never cancels it
   workflow_dispatch:
     inputs:
       max:
