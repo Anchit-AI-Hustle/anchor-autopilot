@@ -93,7 +93,7 @@ def _sentence(text: str) -> str:
 
 
 def fallback(profile: Profile, brief: dict, r: random.Random | None = None) -> dict:
-    r = r or rng("anchor-copy", brief["date"])
+    r = r or rng("anchor-copy", brief.get("id") or brief["date"])
     lane = profile.lane(brief["lane"])
     # the brief's mood and theme are written for the music engine and can name sections; only the clean ones are quoted
     quotes = [_sentence(brief.get(k)) for k in ("mood", "special")]
