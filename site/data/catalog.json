@@ -7,8 +7,64 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-10-24T19:25:10Z",
+  "updated_at": "2026-10-24T22:53:38Z",
   "drops": [
+    {
+      "id": "2026-10-24-2",
+      "date": "2026-10-24",
+      "title": "Unlock Mirage",
+      "lane": "hardtech",
+      "lane_name": "Hard Tech",
+      "bpm": 166,
+      "key": "F minor",
+      "family": "void",
+      "family_name": "Void",
+      "duration_s": 202,
+      "short_s": 45,
+      "cover": "covers/2026-10-24-2.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24-2/ANCHOR-2026-10-24-unlock-mirage.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-10-24-2",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-10-24-unlock-mirage-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24-2/ANCHOR-2026-10-24-unlock-mirage-short.mp4",
+      "youtube_url": "https://youtu.be/FywWuiVTgYI",
+      "buffer_post_id": "FywWuiVTgYI",
+      "status": "public",
+      "post_at": "2026-10-24T21:30:00Z",
+      "qc": {
+        "bpm_est": 166.0,
+        "lufs": -14.38,
+        "warnings": [
+          "key is not clearly audible; kept the requested one"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-10-24T22:51:19Z",
+      "genre_line": "Hard Tech, Hard Techno, Peak Time Techno",
+      "style_line": "Hard Tech, Bouncy Hard Techno, Tech House Groove, Rave Techno",
+      "error": null,
+      "accent": "#f2f2f2",
+      "caption": "hard tech, hard techno, swung tech house groove, hard distorted kick, bouncy rolling bassline, chopped vocal stabs, shouted chant hook. Mid-2020s hard tech: tech house swing pushed to hard techno speed, bright and playful. Mood: playful and loose, getting harder every drop, then a sudden cheeky stop. Feel: bouncy, fun and psychedelic, never dark. 166 BPM, fast four-on-the-floor with a swung tech house shuffle, a rolling bassline bouncing on every off-beat, vocal chops on the upbeats. Instruments: punchy kick and bouncing bass carry it; filtered clap rolls sits under the intro, pitched cowbell accents arrives with the build, rave organ hits owns the breakdown. Vocals: whispers in the quiet parts, shouted crowd chants in the drops, never sung. Production: Punchy and clean, distorted kick up front, bassline centred and bouncy, vocal chops dry and close; club master, sub-bass harmonics audible on small speakers, kick with a clear click, wide textures over a centred kick and sub, real dynamics. Arrangement: intro -> drop -> breakdown -> build -> drop -> outro; filtered kick alone, no sub bass yet, filtered clap rolls far back, tension only at the start, and the outro kick and bass strip back, filter closing, filtered clap rolls last, resolve to silence. Special moment: the groove drops to just kick and vocal chop for one bar before the final drop.",
+      "seed": 459790014,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 32,
+        "render_s": 8554.6,
+        "threads": 4,
+        "model": "acestep-v15-sft-Q8_0.gguf",
+        "guidance": 5.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24-2/ANCHOR-2026-10-24-unlock-mirage-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24-2/ANCHOR-2026-10-24-unlock-mirage-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/FywWuiVTgYI",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://youtu.be/cMoROOOBHDc",
+      "buffer_short_post_id": "cMoROOOBHDc",
+      "short_status": "public"
+    },
     {
       "id": "2026-10-24",
       "date": "2026-10-24",
@@ -28,7 +84,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24/ANCHOR-2026-10-24-collide-afterburn-short.mp4",
       "youtube_url": "https://youtu.be/AoMBDouFW8s",
       "buffer_post_id": "AoMBDouFW8s",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-24T17:30:00Z",
       "qc": {
         "bpm_est": 180.0,
@@ -63,7 +119,7 @@
       "youtube_via": "youtube_api",
       "youtube_short_url": "https://youtu.be/V_CP5DM4l3k",
       "buffer_short_post_id": "V_CP5DM4l3k",
-      "short_status": "public"
+      "short_status": "sent"
     },
     {
       "id": "2026-10-23",
@@ -1673,7 +1729,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-10-24T19:25:10Z",
+    "checked_at": "2026-10-24T22:53:38Z",
     "total": 2,
     "postable": 2,
     "families": 0,
