@@ -1,0 +1,86 @@
+# Put a drop that is already live on YouTube into the catalogue when the Drop run published it
+# but could not commit the catalogue (2026-10-24-3: the branch moved during a 4.5 h render).
+# Nothing here uploads anything: it reads the drop's files from the original run and the
+# publish result the run logged, records the drop and commits.
+name: Record a published drop
+
+on:
+  workflow_dispatch:
+    inputs:
+      run_id:
+        description: "Drop (daily) run id that made and published the drop"
+        required: true
+      date:
+        description: "Drop id, e.g. 2026-10-24-3"
+        required: true
+      publish_json:
+        description: "The publish result JSON from that run's publish step log"
+        required: true
+
+permissions:
+  contents: write
+  actions: read
+
+concurrency:
+  group: daily-drop            # never race a drop
+  cancel-in-progress: false
+
+env:
+  ROBOT_NAME: "Anchit Tandon"
+  ROBOT_EMAIL: "anchit.tandon@gmail.com"
+
+jobs:
+  record:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      DATE: ${{ inputs.date }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ inputs.run_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: drop-${{ inputs.date }}
+          path: build/${{ inputs.date }}
+          run-id: ${{ inputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Record the drop
+        env:
+          PUBLISH_JSON: ${{ inputs.publish_json }}
+        run: |
+          python - <<'PY'
+          import json, os, pathlib
+          pub = json.loads(os.environ["PUBLISH_JSON"])
+          assert pub.get("youtube", {}).get("post_id"), "the publish result has no YouTube video id"
+          pathlib.Path(f"build/{os.environ['DATE']}/publish.json").write_text(json.dumps(pub, indent=2))
+          PY
+          BASE="https://anchit-ai-hustle.github.io/anchor-autopilot/media"
+          FULL916="$(ls "build/$DATE" | grep -m1 'full-916.mp4$' || true)"
+          python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
+            ${FULL916:+--short-url "$BASE/$FULL916"} --run-url "$RUN_URL"
+          python -m anchor check
+
+      - name: Commit the catalog (triggers the website deploy)
+        run: |
+          git config user.name "$ROBOT_NAME"
+          git config user.email "$ROBOT_EMAIL"
+          TITLE="$(python -c "import json;print(json.load(open('build/$DATE/meta.json'))['brief']['title'])")"
+          git add site/data site/covers site/og.jpg
+          git commit -q -m "drop: $DATE · $TITLE (recorded after publish)" || { echo "nothing to commit"; exit 0; }
+          for i in 1 2 3 4; do
+            git pull --rebase -q origin "${GITHUB_REF_NAME:-main}" && git push -q origin "HEAD:${GITHUB_REF_NAME:-main}" && exit 0
+            git rebase --abort 2>/dev/null || true
+            sleep $((i * 5))
+          done
+          exit 1
