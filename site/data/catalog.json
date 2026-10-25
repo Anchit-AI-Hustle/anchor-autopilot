@@ -7,8 +7,64 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-10-25T05:39:54Z",
+  "updated_at": "2026-10-25T22:09:39Z",
   "drops": [
+    {
+      "id": "2026-10-25",
+      "date": "2026-10-25",
+      "title": "Elastic Orbit",
+      "lane": "psy",
+      "lane_name": "Psychedelic Hard Techno",
+      "bpm": 166,
+      "key": "A minor",
+      "family": "volt",
+      "family_name": "Volt",
+      "duration_s": 215,
+      "short_s": 45,
+      "cover": "covers/2026-10-25.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-25/ANCHOR-2026-10-25-elastic-orbit.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-10-25",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-10-25-elastic-orbit-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-25/ANCHOR-2026-10-25-elastic-orbit-short.mp4",
+      "youtube_url": "https://youtu.be/sRAEKTjoHZc",
+      "buffer_post_id": "sRAEKTjoHZc",
+      "status": "public",
+      "post_at": "2026-10-25T17:30:00Z",
+      "qc": {
+        "bpm_est": 166.7,
+        "lufs": -14.34,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-10-25T22:07:39Z",
+      "genre_line": "Psychedelic Techno, Hard Techno, Peak Time Techno",
+      "style_line": "Psychedelic Techno, Acid Techno, Hypnotic Techno, Rave Techno",
+      "error": null,
+      "accent": "#b6ff00",
+      "caption": "psychedelic hard techno, hypnotic acid techno, rolling bouncy kick and bass, swirling phased acid sequences, trippy delays, whispered voices, euphoric rave energy. Psychedelic rave lineage, 1990s acid colours over a modern hard techno low end. Mood: hypnotic and euphoric, tension that blooms into pure joy. Feel: bouncy, fun and psychedelic, never dark. 166 BPM, fast four-on-the-floor, rolling sixteenth bass bouncing off the kick, swung percussion. Instruments: punchy kick and bouncing bass carry it; ping-pong acid delays sits under the intro, bubbling resonant squelches arrives with the build, reversed whisper echoes owns the breakdown. Vocals: whispers in the quiet parts, shouted crowd chants in the drops, never sung. Production: Wide and swirling, kick and bass dry and centred, acid and whispers in ping-pong delay and phaser; club master, sub-bass harmonics audible on small speakers, kick with a clear click, wide textures over a centred kick and sub, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, ping-pong acid delays far back, tension only at the start, and the outro kick and bass strip back, filter closing, ping-pong acid delays last, resolve to silence. Special moment: the acid sequence speeds into a swirl for the last two bars of each build.",
+      "seed": 238301511,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 32,
+        "render_s": 7382.6,
+        "threads": 4,
+        "model": "acestep-v15-sft-Q8_0.gguf",
+        "guidance": 5.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-25/ANCHOR-2026-10-25-elastic-orbit-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-25/ANCHOR-2026-10-25-elastic-orbit-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/sRAEKTjoHZc",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=FesI36JJtNw",
+      "buffer_short_post_id": "6ade7e1e6887a2efc128705b",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false
+    },
     {
       "id": "2026-10-24-3",
       "date": "2026-10-24",
@@ -28,7 +84,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24-3/ANCHOR-2026-10-24-compress-vector-short.mp4",
       "youtube_url": "https://youtu.be/w8YVWN_bOlg",
       "buffer_post_id": "w8YVWN_bOlg",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-24T21:30:00Z",
       "qc": {
         "bpm_est": 164.0,
@@ -84,7 +140,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-24-2/ANCHOR-2026-10-24-unlock-mirage-short.mp4",
       "youtube_url": "https://youtu.be/FywWuiVTgYI",
       "buffer_post_id": "FywWuiVTgYI",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-24T21:30:00Z",
       "qc": {
         "bpm_est": 166.0,
@@ -119,7 +175,7 @@
       "youtube_via": "youtube_api",
       "youtube_short_url": "https://youtu.be/cMoROOOBHDc",
       "buffer_short_post_id": "cMoROOOBHDc",
-      "short_status": "public"
+      "short_status": "sent"
     },
     {
       "id": "2026-10-24",
@@ -1785,7 +1841,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-10-25T08:34:34Z",
+    "checked_at": "2026-10-25T22:09:39Z",
     "total": 2,
     "postable": 2,
     "families": 0,
