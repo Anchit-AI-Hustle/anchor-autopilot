@@ -62,7 +62,7 @@ def next_cost(drops: list[dict], shorts_via_buffer: bool = True) -> int:
 def next_drop(drops: list[dict], day: str, slots: int, budget: int, now: datetime,
               shorts_via_buffer: bool = True) -> tuple[str | None, str]:
     """The drop id the next run should make for ``day``, or None and why not."""
-    done = {d.get("id") for d in drops if d.get("status") not in ("dry-run", "error")}
+    done = {d.get("id") for d in drops if d.get("status") not in ("dry-run", "error", "planned")}
     ids = [day] + [f"{day}-{n}" for n in range(2, slots + 1)]
     todo = next((i for i in ids if i not in done), None)
     if todo is None:
@@ -72,3 +72,28 @@ def next_drop(drops: list[dict], day: str, slots: int, budget: int, now: datetim
         return None, (f"YouTube quota: {spent} units used today (Pacific day), the next song needs ~{nxt}, "
                       f"budget {budget}; it waits for the reset at midnight Pacific")
     return todo, f"{todo}: {spent} + ~{nxt} of {budget} units"
+
+
+def plan(drops: list[dict], day: str, slots: int, budget: int, now: datetime,
+         shorts_via_buffer: bool = True) -> tuple[list[str], str]:
+    """Every drop id one run should make for ``day`` at once, in order: the day's missing
+    slots, as many as the quota budget still has room for (renders run side by side, so a
+    late start never costs the day its songs)."""
+    done = {d.get("id") for d in drops if d.get("status") not in ("dry-run", "error", "planned")}
+    ids = [day] + [f"{day}-{n}" for n in range(2, slots + 1)]
+    todo = [i for i in ids if i not in done]
+    if not todo:
+        return [], f"all {slots} songs for {day} are out"
+    spent, each = used(drops, now), next_cost(drops, shorts_via_buffer)
+    room = max(0, (budget - spent) // each)
+    if room == 0:
+        return [], (f"YouTube quota: {spent} units used today (Pacific day), a song needs ~{each}, "
+                    f"budget {budget}; it waits for the reset at midnight Pacific")
+    picked = todo[:room]
+    return picked, f"{', '.join(picked)}: {spent} + {len(picked)} x ~{each} of {budget} units"
+
+
+def room_for_one(drops: list[dict], budget: int, now: datetime, shorts_via_buffer: bool = True) -> tuple[bool, str]:
+    """Whether one more song fits today's budget (checked again before each publish)."""
+    spent, each = used(drops, now), next_cost(drops, shorts_via_buffer)
+    return spent + each <= budget, f"{spent} + ~{each} of {budget} units"
