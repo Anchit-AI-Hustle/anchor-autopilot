@@ -70,7 +70,11 @@ jobs:
       full916: ${{ steps.make.outputs.full916 }}
       title: ${{ steps.make.outputs.title }}
     steps:
+      # the branch as it is NOW, not as it was when this run was queued: a run that waited
+      # hours behind the previous drop must see that drop (next-drop, titles, catalogue)
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - uses: actions/setup-python@v5
         with:
@@ -312,7 +316,11 @@ jobs:
       PAGE_URL: ${{ needs.pages.outputs.page_url }}
       RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
     steps:
+      # the branch as it is NOW, not as it was when this run was queued: a run that waited
+      # hours behind the previous drop must see that drop (next-drop, titles, catalogue)
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - uses: actions/setup-python@v5
         with:
@@ -382,13 +390,23 @@ jobs:
         run: |
           git config user.name "$ROBOT_NAME"
           git config user.email "$ROBOT_EMAIL"
-          # queue too: a released song is stamped in queue/queue.json, and if that stamp
-          # is not committed the next run fetches and posts the same track again
-          git add site/data site/covers site/og.jpg queue
-          git commit -m "drop: $DATE · $TITLE" || { echo "nothing to commit"; exit 0; }
-          for i in 1 2 3 4; do
-            git pull --rebase -q origin main && git push origin HEAD:main && exit 0
+          BRANCH="${GITHUB_REF_NAME:-main}"
+          for i in 1 2 3 4 5; do
+            # queue too: a released song is stamped in queue/queue.json, and if that stamp
+            # is not committed the next run fetches and posts the same track again
+            git add site/data site/covers site/og.jpg queue
+            git commit -q -m "drop: $DATE · $TITLE" || { echo "nothing to commit"; exit 0; }
+            git push -q origin "HEAD:$BRANCH" && exit 0
+            # the branch moved while this drop rendered (another drop, the Uploads or Sync
+            # job): never merge two catalogues by hand; take the latest branch and record
+            # this drop on top of it again (record is an upsert by drop id)
+            echo "::notice::$BRANCH moved; recording $DATE again on top of it (attempt $i)"
             sleep $((i * 5))
+            git fetch -q origin "$BRANCH"
+            git reset -q --hard "origin/$BRANCH"
+            python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
+              --short-url "${PAGE_URL%/}/media/$FULL916" --run-url "$RUN_URL"
+            if [ -f "build/$DATE/queue.json" ]; then cp "build/$DATE/queue.json" queue/queue.json; fi
           done
           exit 1
 
@@ -404,7 +422,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
+      # the branch as it is NOW, not as it was when this run was queued: a run that waited
+      # hours behind the previous drop must see that drop (next-drop, titles, catalogue)
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
 
       - uses: actions/setup-python@v5
         with:
