@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-10-24-3",
-    "title": "Compress Vector",
-    "finished_at": "2026-10-25T05:39:54Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40136187104",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-10-25T17:35:49Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40194373257"
   },
   "next_post_at": "2026-10-25T17:30:00Z",
   "streak": 1,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-10-25T05:39:54Z",
+  "updated_at": "2026-10-25T17:35:49Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
