@@ -35,6 +35,9 @@ post_time_utc = "17:30"
 # (~3,300). Later songs go live at these times, in order: 01:00, 03:00, 04:30, 05:15 IST.
 extra_post_times_utc = ["19:30", "21:30", "23:00", "23:45"]
 max_drops_per_day = 5
+# "when_ready": every song goes public the moment it is uploaded (Anchit, 2026-10-26: "live as soon
+# as ready"); "scheduled": at the post times above.
+go_live = "when_ready"
 # One release every day: the full track as a video and the strongest 45 s as a Short, in
 # the same slot. every_days = 2 makes it every second day, counted from anchor_date.
 every_days = 1
