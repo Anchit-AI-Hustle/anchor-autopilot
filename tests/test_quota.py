@@ -227,3 +227,42 @@ def test_only_the_queued_song_carries_its_stamp_back(tmp_path, monkeypatch):
     (qdir / "queue.json").write_text(json.dumps({"a.m4a": {"title": "A"}}))
     main(["queue-stamp", "--build", str(b), "--drops", "2026-10-25-2"])     # the queued song was not posted
     assert "released_at" not in json.loads((qdir / "queue.json").read_text())["a.m4a"]
+
+
+def test_a_song_goes_live_the_moment_it_is_uploaded(monkeypatch, tmp_path):
+    """Anchit, 2026-10-26: live as soon as ready, not at the 23:00 IST slot."""
+    from anchor.config import load_profile as lp
+    p = lp()
+    assert p.schedule["go_live"] == "when_ready"
+    buf = FakeBuffer()
+    from test_mix_youtube import FakeGoogle
+    from anchor import pipeline, youtube
+    from anchor.brief import make_brief
+
+    def run(mode):
+        g = FakeGoogle()
+        monkeypatch.setattr(youtube, "_http", g)
+        for k in ("YT_CLIENT_ID", "YT_CLIENT_SECRET", "YT_REFRESH_TOKEN"):
+            monkeypatch.setenv(k, "x")
+        monkeypatch.setenv("BUFFER_API_KEY", "k")
+        monkeypatch.setattr(pipeline, "Buffer", lambda key: buf)
+        monkeypatch.setattr(pipeline, "verify_media_url", lambda url, **kw: {"url": url, "bytes": 10})
+        prof = lp()
+        prof.schedule["go_live"] = mode
+        d = tmp_path / mode
+        d.mkdir()
+        b = make_brief(prof, "2030-01-01-3", [])           # a slot far in the future
+        for name in ("a-full-169.mp4", "a-short.mp4", "frame-169.jpg"):
+            (d / name).write_bytes(b"\x00" * 10)
+        (d / "meta.json").write_text(json.dumps({"brief": b, "full": {}, "video": {"size_bytes": 10},
+                                                 "files": {"full_169": "a-full-169.mp4", "short": "a-short.mp4",
+                                                           "thumbnail": "frame-169.jpg"}}))
+        res = pipeline.publish(prof, d, "https://host/a-full-169.mp4", short_url="https://host/a-short.mp4")
+        meta = [json.loads(c[3]) for c in g.calls if c[0] == "POST" and "/upload/youtube/v3/videos" in c[1]]
+        return res, meta[0]["status"], buf.shorts[-1]
+
+    res, status, short = run("when_ready")
+    assert "publishAt" not in status and status["privacyStatus"] == "public" and res["youtube"]["status"] == "public"
+    assert not short.get("due_at"), "the Short goes out now too"
+    res, status, short = run("scheduled")
+    assert status["privacyStatus"] == "private" and status["publishAt"].startswith("2030-01-01")
