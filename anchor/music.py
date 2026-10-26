@@ -82,7 +82,10 @@ def arrangement(duration_s: float, textures: tuple[str, ...] = (), shape: str = 
 
 def structure(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic") -> str:
     """The lyrics-field arrangement: one bracketed section per line, direction attached."""
-    return "\n".join(f"[{tag} - {direction}]" for tag, direction in arrangement(duration_s, textures, shape))
+    # bare tags only: the planner sings any words written into a tag (2026-10-25), so the
+    # per-section directions stay out of the sheet; arc() puts the shape into the caption
+    from .brief import section_tag
+    return "\n".join(f"[{section_tag(tag)}]" for tag, _direction in arrangement(duration_s, textures, shape))
 
 
 def arc(duration_s: float, textures: tuple[str, ...] = (), shape: str = "classic") -> str:

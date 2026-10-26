@@ -6,7 +6,7 @@ import json
 import sys
 from pathlib import Path
 
-from . import catalog, ledger, pipeline, queue
+from . import catalog, ledger, lyriccheck, pipeline, queue
 from .brief import make_brief
 from .config import CATALOG_PATH, LEDGER_PATH, STATUS_PATH, env, load_profile
 from .util import read_json
@@ -317,6 +317,11 @@ def main(argv: list[str] | None = None) -> int:
         day = args.date or pipeline.today_utc()
         drops = catalog.load(CATALOG_PATH).get("drops", [])
         done = any(d.get("id") == day and d.get("status") not in ("dry-run", "error", "planned") for d in drops)
+        if not done and lyriccheck.unchecked(Path("build") / day):
+            # a take rendered before every take was listened to (Anchit, 2026-10-26): it is not
+            # posted unless it was heard by hand and listed in site/data/lyrics_verified.json
+            print(f"{day}: rendered without the lyric check and not verified by hand; held back", file=sys.stderr)
+            done = True
         print("yes" if done else "no")
     return 0
 

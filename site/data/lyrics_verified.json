@@ -1,0 +1,11 @@
+{
+  "note": "Drops rendered before every take was listened to (2026-10-26) are posted only when heard and listed here. Checked with anchor/lyriccheck.py (faster-whisper small) on the release mp3.",
+  "ids": ["2026-10-26-4"],
+  "heard": {
+    "2026-10-26-4": "Friction Prism: 'Close your eyes. The colors in. Hey, hey, hey' - no production notes"
+  },
+  "held": {
+    "2026-10-26": "Axis Relay sings 'far back, tension only' (the intro direction)",
+    "2026-10-26-3": "Kinetic Carbon sings 'alone over a held chord, the room drops away, a playful tease of the hook' and 'everything at once'"
+  }
+}

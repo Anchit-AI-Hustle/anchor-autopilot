@@ -144,7 +144,7 @@ def test_rap_lanes_rap_and_never_ban_rap():
             assert "rap verse" not in b["lyrics"] and "rap verses" in b["negative"]
             continue
         assert "rap verses" not in b["negative"] and lane.vocals in b["caption"]
-        verses = [s for s in b["lyrics"].split("\n\n") if "rap verse" in s.split("\n")[0]]
+        verses = [s for s in b["lyrics"].split("\n\n") if s.split("\n")[0] == "[Verse]"]
         assert verses, b["date"]
         lines = [w for v in verses for w in v.split("\n")[1:]]
         assert len(lines) == len(set(lines)) or len(verses) > 3, "no bar repeats inside a song"
