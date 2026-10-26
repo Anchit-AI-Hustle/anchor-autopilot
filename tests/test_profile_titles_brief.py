@@ -69,8 +69,8 @@ def test_style_prompt_carries_all_nine_layers():
                   "Arrangement:", "Special moment: " + b["special"]):
         assert layer in cap, f"layer missing from style prompt: {layer[:40]}"
     for t in b["textures"]:
-        assert t in cap and t in b["lyrics"], "the day's textures are placed in both sheets"
-    assert b["lyrics"].splitlines()[0].startswith("[intro - "), "songwriter gets section directions"
+        assert t in cap and t not in b["lyrics"], "textures go to the arranger (caption), never into the sung sheet"
+    assert b["lyrics"].splitlines()[0] == "[Intro]", "the sheet carries bare tags: a direction in a tag gets sung"
     assert len(cap) < 1400, "compressed prose, not the design headings"
 
 
@@ -181,14 +181,15 @@ def test_songs_whisper_in_the_quiet_parts_and_chant_the_title_in_the_drops():
         for sec in sections:
             tag, *words = sec.split("\n")
             assert tag.startswith("[") and tag.endswith("]") and words and all(w.strip() for w in words), sec
-            if tag.startswith("[drop "):
-                assert "shouted crowd chant" in tag and words[0] == f"{chant}! {chant}!"
+            assert " - " not in tag and "," not in tag, f"a direction in a tag gets sung: {tag}"
+            if tag == "[Drop]":
+                assert words[0] == f"{chant}! {chant}!"
             rap = p.lane(b["lane"]).voice == "rap"
-            if tag.startswith(("[intro ", "[outro ")) or (tag.startswith("[breakdown ") and not rap):
-                assert "whispered voice" in tag and words[0] in p.music["voice"]["whispers"]
-            if rap and tag.startswith(("[build ", "[breakdown ")):
-                assert "rap verse" in tag and len(words) == 4 and all(w in p.music["voice"]["rap"] for w in words)
-        assert sum(1 for s_ in sections if s_.startswith("[drop ")) >= 1
+            if tag in ("[Intro]", "[Outro]") or (tag == "[Breakdown]" and not rap):
+                assert words[0] in p.music["voice"]["whispers"]
+            if tag == "[Verse]":
+                assert rap and len(words) == 4 and all(w in p.music["voice"]["rap"] for w in words)
+        assert sum(1 for s_ in sections if s_.startswith("[Drop]")) >= 1
         assert b["vocal_style"] and "chant" in b["vocal_style"]
         req = AceStepCpp("bin", "models", "dit", None).request(b)
         assert req["vocal_language"] == "en" and req["lyrics"] == b["lyrics"]
