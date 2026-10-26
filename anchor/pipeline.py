@@ -342,7 +342,10 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
     brief = meta["brief"]
     yt = profile.youtube
     post_at = datetime.fromisoformat(brief["post_at"].replace("Z", "+00:00"))
-    due = None if now else schedule_for(post_at)
+    # go_live = "when_ready" (Anchit, 2026-10-26): every song goes public the moment it is uploaded,
+    # not at its slot time; "scheduled" keeps the post times
+    when_ready = str(profile.schedule.get("go_live", "scheduled")) == "when_ready"
+    due = None if (now or when_ready) else schedule_for(post_at)
     yt_common = dict(title=brief["youtube_title"], description=brief["description"], video_url=media_url,
                      due_at=due, category_id=str(yt["category_id"]), privacy=yt["privacy"],
                      ai_generated=bool(yt["ai_generated"]), notify=bool(yt["notify_subscribers"]))
@@ -371,7 +374,7 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
     if youtube_configured():
         # the channel's own credentials: upload from disk, with tags, thumbnail, playlist and
         # a scheduled publish time; the Short then links the full track by id
-        publish_at = None if now else schedule_for(post_at)
+        publish_at = due
         short_sender = None
         if buf and short_url and profile.youtube.get("shorts_via", "buffer") == "buffer":
             # the Short through Buffer: it posts to YouTube without our API quota, which halves
@@ -602,7 +605,8 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         "short_buffer_failed": bool(pub.get("short_buffer_error")),
         "status": status,
         "error": pub.get("error"),
-        "post_at": pub.get("due_at") or brief["post_at"],
+        # a song that went public on upload (go_live = "when_ready") shows when it actually went out
+        "post_at": pub.get("due_at") or (pub.get("created_at") if pub.get("status") == "public" else None) or brief["post_at"],
         "qc": {"bpm_est": meta["qc"]["audio"].get("bpm_est"), "lufs": meta["loudness"]["after"]["input_i"],
                "warnings": meta["qc"]["warnings"]},
         "art_source": meta["art"]["source"],
