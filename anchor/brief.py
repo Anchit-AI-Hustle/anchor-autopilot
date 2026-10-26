@@ -131,6 +131,13 @@ VOICE_RAP = {**VOICE,
              "build2": ("rap verse, faster flow building to the hook", "rap")}
 
 
+def section_tag(tag: str, kind: str = "") -> str:
+    """The tag a lyrics sheet uses for a section: a rap section is a Verse, the rest keep their name."""
+    if kind == "rap":
+        return "Verse"
+    return {"build": "Build-Up"}.get(tag, tag.capitalize())
+
+
 def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[str, ...], shape: str, r,
                 mode: str = "chant") -> str:
     """The lyrics field: every section's tag and direction, then its words.
@@ -167,7 +174,10 @@ def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[s
             quiet += 1
         if kind == "rap":
             verse += 1
-        out.append(f"[{tag} - {direction}, {delivery}]\n{line}")
+        # a bare section tag: a direction or delivery note written into the sheet gets SUNG
+        # (2026-10-25: "for eight to sixteen bars ... rap verse, laid back flow over the groove").
+        # The arrangement and the delivery live in the caption (lane vocals, arc) instead.
+        out.append(f"[{section_tag(tag, kind)}]\n{line}")
     return "\n\n".join(out)
 
 
