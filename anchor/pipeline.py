@@ -6,7 +6,7 @@ import shutil
 from datetime import date as Date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import catalog, craft, ledger, lyrics, originality
+from . import catalog, craft, ledger, lyriccheck, lyrics, originality
 from .art import make_cover, og_card
 from .audio import (analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
@@ -115,7 +115,18 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             ok, fails = False, [*fails, *shape_fails]
         elif shape_fails:
             warns = [*warns, *(f"shipped anyway on the last take: {f}" for f in shape_fails)]
+        # the song may sing only its written words, never its production notes (Anchit, 2026-10-26):
+        # every take is listened to, and one that sings a direction is made again, never shipped
+        heard = {"checked": False, "notes": []}
+        if stats.get("engine") != "fixture" and lyriccheck.enabled():
+            heard = lyriccheck.check(raw, brief.get("lyrics"), brief.get("title"))
+            if heard["notes"]:
+                ok = False
+                fails = [*fails, f"sings its production notes: {'; '.join(heard['notes'][:4])}"]
+            elif not heard["checked"]:
+                warns = [*warns, "lyrics not checked: the recogniser was unavailable"]
         attempts_log.append({"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns,
+                             "heard": (heard.get("heard") or "")[:600] or None,
                              "craft": {k: v for k, v in shape.items() if k != "breakdowns"} | {"breakdowns": len(shape["breakdowns"])},
                              "nearest_audio": {"id": twin, "similarity": round(sim, 3),
                                                "envelope": round(score["envelope"], 3), "sequence": round(score["sequence"], 3)}})
@@ -294,8 +305,13 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
         f"{brief['key']} | {brief['duration_s']:.0f}s from {src.name}")
     ok, fails, warns = quality_gate(stats_audio, brief)
     warn = list(warns) + ([f"kept despite: {'; '.join(fails)}"] if fails else [])
+    heard = {"heard": None}
+    if lyriccheck.enabled():
+        heard = lyriccheck.check(raw, None, queued.get("title"))
+        if heard["notes"]:
+            warn.append(f"your Suno song sings what look like production notes: {'; '.join(heard['notes'][:4])}")
     attempts_log = [{"attempt": 0, "seed": brief["seed"], "ok": True, "fail": [], "warn": warn,
-                     "source": src.name}]
+                     "source": src.name, "heard": (heard.get("heard") or "")[:600] or None}]
     meta = finish(profile, brief, raw, stats_audio,
                   {"engine": "queue", "source_file": src.name}, attempts_log, out_dir, art_mode)
     mark_done(src, src.parent / "done")
