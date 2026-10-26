@@ -2,30 +2,30 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-10-25-2",
-    "title": "Transmit Pressure",
-    "finished_at": "2026-10-26T03:17:20Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40238214548",
+    "drop_id": "2026-10-26-4",
+    "title": "Friction Prism",
+    "finished_at": "2026-10-26T12:12:47Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40286578742",
     "error": null
   },
-  "next_post_at": "2026-10-26T17:30:00Z",
+  "next_post_at": "2026-10-27T17:30:00Z",
   "streak": 2,
   "totals": {
-    "drops": 37
+    "drops": 38
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-10-26T03:17:20Z",
+  "updated_at": "2026-10-26T12:12:47Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
     "steps": 32,
     "model": "acestep-v15-sft-Q8_0.gguf",
     "guidance": 5.0,
-    "lm_ms": 229367,
-    "dit_ms": 7545842,
-    "vae_ms": 584776,
-    "total_s": 8383.2
+    "lm_ms": 174703,
+    "dit_ms": 6129783,
+    "vae_ms": 601480,
+    "total_s": 6924.6
   }
 }
