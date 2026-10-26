@@ -146,3 +146,84 @@ def test_a_buffer_failure_falls_back_to_the_api_and_is_remembered(monkeypatch, t
     assert '"short_buffer_failed": bool(pub.get("short_buffer_error"))' in src
     assert quota.next_cost([{"youtube_via": "youtube_api", "short_via": "youtube_api", "short_buffer_failed": True,
                              "created_at": "2026-10-25T10:00:00Z"}]) == quota.COST_API_SHORT
+
+
+# ------------------------------------------- one run plans the whole day (renders side by side)
+def test_the_plan_is_every_missing_song_the_quota_allows():
+    assert quota.plan([], "2026-10-25", 5, 9500, NOW)[0] == ["2026-10-25", "2026-10-25-2", "2026-10-25-3",
+                                                             "2026-10-25-4", "2026-10-25-5"]
+    done = [drop("2026-10-25", "2026-10-25T10:10:00Z"), drop("2026-10-25-3", "2026-10-25T13:10:00Z")]
+    ids, why = quota.plan(done, "2026-10-25", 5, 9500, NOW)
+    assert ids == ["2026-10-25-2", "2026-10-25-4", "2026-10-25-5"] and "3400" in why
+    failed = [drop("2026-10-25", "2026-10-25T10:10:00Z", short_via="youtube_api", failed=True)]
+    assert quota.plan(failed, "2026-10-25", 5, 9500, NOW)[0] == ["2026-10-25-2"], "3,300 a song after a Buffer failure"
+    full = [drop(i, "2026-10-25T10:10:00Z") for i in ("2026-10-25", "2026-10-25-2", "2026-10-25-3", "2026-10-25-4", "2026-10-25-5")]
+    assert quota.plan(full, "2026-10-25", 5, 9500, NOW) == ([], "all 5 songs for 2026-10-25 are out")
+    api = [drop(f"2026-10-24-{n}", "2026-10-25T10:10:00Z", short_via="youtube_api") for n in (2, 3)]
+    ids, why = quota.plan(api, "2026-10-25", 5, 6000, NOW)
+    assert ids == [] and "midnight Pacific" in why
+
+
+def test_one_more_song_fits_until_the_budget_is_spent():
+    spent = [drop(f"2026-10-25-{n}", "2026-10-25T10:10:00Z") for n in (2, 3, 4, 5)]
+    assert quota.room_for_one(spent, 9500, NOW)[0] is True          # 6,800 + 1,700
+    assert quota.room_for_one(spent + [drop("2026-10-25", "2026-10-25T11:00:00Z")], 9500, NOW)[0] is False
+
+
+def test_reserve_holds_the_earlier_songs_so_parallel_songs_differ(tmp_path, monkeypatch):
+    """The 3rd song of a plan, rendered on its own runner, sees songs 1 and 2 as history."""
+    from anchor.brief import make_brief
+    from anchor.__main__ import main
+    cat = tmp_path / "catalog.json"
+    cat.write_text(json.dumps({"drops": []}))
+    monkeypatch.setattr("anchor.__main__.CATALOG_PATH", cat, raising=False)
+    plan = ["2026-10-25", "2026-10-25-2", "2026-10-25-3"]
+    main(["reserve", "--plan", json.dumps(plan), "--drop", "2026-10-25-3"])
+    held = json.loads(cat.read_text())["drops"]
+    assert [d["id"] for d in held] == ["2026-10-25-2", "2026-10-25"] and {d["status"] for d in held} == {"planned"}
+    p = load_profile()
+    # exactly the briefs the other runners make for themselves
+    first = make_brief(p, "2026-10-25", [])
+    second = make_brief(p, "2026-10-25-2", [{k: first[k] for k in ("id", "date", "title", "lane", "family", "key")}])
+    assert held[1]["title"] == first["title"] and held[0]["title"] == second["title"]
+    from anchor import catalog
+    third = make_brief(p, "2026-10-25-3", catalog.history(json.loads(cat.read_text())))
+    assert third["lane"] != second["lane"] and third["title"] not in (first["title"], second["title"])
+    main(["reserve", "--plan", json.dumps(plan), "--drop", "2026-10-25"])     # the first song holds nothing new
+    assert len(json.loads(cat.read_text())["drops"]) == 2
+    # planned songs never count as made or as spent quota
+    assert quota.plan(held, "2026-10-25", 5, 9500, NOW)[0][:2] == ["2026-10-25", "2026-10-25-2"]
+
+
+def test_the_cli_plans_the_day(tmp_path, monkeypatch, capsys):
+    cat = tmp_path / "catalog.json"
+    cat.write_text(json.dumps({"drops": []}))
+    monkeypatch.setattr("anchor.__main__.CATALOG_PATH", cat, raising=False)
+    from anchor.__main__ import main
+    main(["plan-drops", "--date", "2026-10-25"])
+    assert json.loads(capsys.readouterr().out) == ["2026-10-25", "2026-10-25-2", "2026-10-25-3", "2026-10-25-4", "2026-10-25-5"]
+    main(["quota-ok"])
+    assert capsys.readouterr().out.strip() == "yes"
+
+
+def test_only_the_queued_song_carries_its_stamp_back(tmp_path, monkeypatch):
+    """Every runner ships queue.json; only the song that came from the queue may stamp it, and
+    a song queued from the site during the render is kept."""
+    from anchor import queue as qmod
+    from anchor.__main__ import main
+    qdir = tmp_path / "queue"
+    qdir.mkdir()
+    monkeypatch.setattr(qmod, "QUEUE", qdir)
+    (qdir / "queue.json").write_text(json.dumps({"a.m4a": {"title": "A"}, "new.m4a": {"title": "New"}}))
+    b = tmp_path / "build"
+    for d, eng, q in (("2026-10-25", "queue", {"a.m4a": {"title": "A", "released_at": "2026-10-25T12:00:00Z"}}),
+                      ("2026-10-25-2", "acestep", {"a.m4a": {"title": "A"}})):
+        (b / d).mkdir(parents=True)
+        (b / d / "meta.json").write_text(json.dumps({"engine": {"engine": eng}}))
+        (b / d / "queue.json").write_text(json.dumps(q))
+    main(["queue-stamp", "--build", str(b), "--drops", "2026-10-25", "2026-10-25-2"])
+    q = json.loads((qdir / "queue.json").read_text())
+    assert q["a.m4a"]["released_at"] == "2026-10-25T12:00:00Z" and q["new.m4a"] == {"title": "New"}
+    (qdir / "queue.json").write_text(json.dumps({"a.m4a": {"title": "A"}}))
+    main(["queue-stamp", "--build", str(b), "--drops", "2026-10-25-2"])     # the queued song was not posted
+    assert "released_at" not in json.loads((qdir / "queue.json").read_text())["a.m4a"]

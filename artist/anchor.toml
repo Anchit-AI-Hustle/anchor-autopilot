@@ -29,8 +29,8 @@ never_titles = []
 [schedule]
 # Publish time in UTC. 17:30 UTC = 23:00 IST = 19:30 CEST = 13:30 ET.
 post_time_utc = "17:30"
-# As many songs a day as YouTube allows (Anchit, 2026-10-24: "max possible"). Each run makes
-# the day's next song (YYYY-MM-DD, -2, -3, -4, -5) while the quota budget allows (anchor/quota.py):
+# As many songs a day as YouTube allows (Anchit, 2026-10-24: "max possible"). One run renders
+# the day's songs side by side (YYYY-MM-DD, -2, -3, -4, -5) as the quota budget allows (anchor/quota.py):
 # five a day while the Shorts go through Buffer (~1,700 API units a song), two when they cannot
 # (~3,300). Later songs go live at these times, in order: 01:00, 03:00, 04:30, 05:15 IST.
 extra_post_times_utc = ["19:30", "21:30", "23:00", "23:45"]

@@ -2,20 +2,17 @@ name: Drop (daily)
 
 on:
   schedule:
-    # As many songs a day as the YouTube quota allows (Anchit, 2026-10-24: "max possible"). Every
-    # run makes the day's next missing song (anchor next-drop: YYYY-MM-DD, -2 ... -5) if the quota
-    # budget still has room, so a late or cancelled run never skips or repeats a song. The runs
-    # sit inside one YouTube quota day (it resets at 07:00/08:00 UTC) and the daily-drop group
-    # runs them one after the other (~2.5 h each).
-    - cron: "37 7 * * *"   # 07:37 UTC (13:07 IST)
-    - cron: "37 10 * * *"  # 10:37 UTC (16:07 IST)
-    - cron: "37 13 * * *"  # 13:37 UTC (19:07 IST)
-    - cron: "37 16 * * *"  # 16:37 UTC (22:07 IST)
-    - cron: "37 19 * * *"  # 19:37 UTC (01:07 IST)
+    # As many songs a day as the YouTube quota allows (Anchit, 2026-10-24: "max possible"). One
+    # run plans the day's missing songs (anchor plan-drops: YYYY-MM-DD, -2 ... -5, as many as the
+    # quota budget has room for) and renders them side by side, one runner each, so a render of
+    # up to 5 h or a schedule GitHub starts hours late still yields the whole day (2026-10-25:
+    # five runs one after the other made one song). The later runs only fill what failed.
+    - cron: "37 8 * * *"   # 08:37 UTC (14:07 IST): after the YouTube quota reset (07:00 UTC summer, 08:00 winter)
+    - cron: "37 13 * * *"  # 13:37 UTC: remakes any song the first run could not make
   workflow_dispatch:
     inputs:
       date:
-        description: "Drop id: YYYY-MM-DD, YYYY-MM-DD-2 ... -5. Default: today's next song if the YouTube quota allows"
+        description: "Drop id: YYYY-MM-DD, YYYY-MM-DD-2 ... -5. Default: every song today still needs, as the YouTube quota allows"
         required: false
         default: ""
       publish_now:
@@ -59,19 +56,49 @@ env:
   ROBOT_EMAIL: "anchit.tandon@gmail.com"
 
 jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    outputs:
+      drops: ${{ steps.plan.outputs.drops }}
+      count: ${{ steps.plan.outputs.count }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - run: pip install -r requirements.txt
+
+      - name: Plan the day's songs
+        id: plan
+        run: |
+          if [ -n "${{ inputs.date }}" ]; then
+            DROPS="[\"${{ inputs.date }}\"]"
+          else
+            # every song today still needs, as many as the YouTube quota budget has room for
+            DROPS="$(python -m anchor plan-drops 2>plan.txt)"
+            echo "::notice::$(tail -n 1 plan.txt)"
+          fi
+          echo "drops=$DROPS" >> "$GITHUB_OUTPUT"
+          echo "count=$(python -c "import json,sys;print(len(json.loads(sys.argv[1])))" "$DROPS")" >> "$GITHUB_OUTPUT"
+
   make:
+    needs: plan
+    if: needs.plan.outputs.count != '0'
     runs-on: ubuntu-24.04
     timeout-minutes: 350   # the CPU music engine can run past 3.5 h; 210 cancelled the 10-18 and 10-22 drops
-    outputs:
-      date: ${{ steps.day.outputs.date }}
-      skip: ${{ steps.day.outputs.skip }}
-      short: ${{ steps.make.outputs.short }}
-      full169: ${{ steps.make.outputs.full169 }}
-      full916: ${{ steps.make.outputs.full916 }}
-      title: ${{ steps.make.outputs.title }}
+    strategy:
+      fail-fast: false     # one song failing its checks never stops the others
+      matrix:
+        drop: ${{ fromJSON(needs.plan.outputs.drops) }}
     steps:
       # the branch as it is NOW, not as it was when this run was queued: a run that waited
-      # hours behind the previous drop must see that drop (next-drop, titles, catalogue)
+      # hours behind the previous drop must see that drop (titles, catalogue)
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
@@ -88,18 +115,10 @@ jobs:
 
       - name: Pick the drop date
         id: day
+        env:
+          DATE: ${{ matrix.drop }}
+          PLAN: ${{ needs.plan.outputs.drops }}
         run: |
-          DATE="${{ inputs.date }}"
-          if [ -z "$DATE" ]; then
-            # the day's next missing song, if the YouTube quota budget has room for it
-            DATE="$(python -m anchor next-drop 2>next-drop.txt)"
-            echo "::notice::$(tail -n 1 next-drop.txt)"
-            if [ "$DATE" = "none" ]; then
-              echo "date=none" >> "$GITHUB_OUTPUT"
-              echo "skip=true" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-          fi
           echo "date=$DATE" >> "$GITHUB_OUTPUT"
           if [ "${{ inputs.dry_run }}" != "true" ] && [ "${{ inputs.force }}" != "true" ] \
              && [ "$(python -m anchor has-drop --date "$DATE")" = "yes" ]; then
@@ -113,6 +132,17 @@ jobs:
             echo "::warning::No drop on $DATE: songs come only from Suno or the free ACE-Step engine, and $(tail -n 1 can-make.txt)."
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
+            # only the first song of the plan may take a queued Suno song, so two runners
+            # never release the same track
+            FIRST="$(python -c "import json,sys;print(json.loads(sys.argv[1])[0])" "$PLAN")"
+            if [ "$DATE" = "$FIRST" ] && [ "${{ inputs.ignore_queue }}" != "true" ]; then
+              echo "noq=" >> "$GITHUB_OUTPUT"
+            else
+              echo "noq=--no-queue" >> "$GITHUB_OUTPUT"
+            fi
+            # the songs planned before this one render on other runners at the same time:
+            # hold their briefs here so this song still differs in lane, title, key and look
+            python -m anchor reserve --plan "$PLAN" --drop "$DATE"
           fi
 
       - name: Fingerprint the CPU (native builds are CPU specific)
@@ -191,15 +221,10 @@ jobs:
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: |
           export ACE_THREADS="$(nproc)"
-          NOQ=""
-          [ "${{ inputs.ignore_queue }}" = "true" ] && NOQ="--no-queue"
-          python -m anchor make --date "$DATE" --out "build/$DATE" $NOQ
+          python -m anchor make --date "$DATE" --out "build/$DATE" ${{ steps.day.outputs.noq }}
           python - >> "$GITHUB_OUTPUT" <<EOF
           import json
           m = json.load(open("build/$DATE/meta.json"))
-          print("short=" + m["files"]["short"])
-          print("full169=" + m["files"]["full_169"])
-          print("full916=" + m["files"]["full_916"])
           print("title=" + m["brief"]["title"])
           EOF
           python - >> "$GITHUB_STEP_SUMMARY" <<EOF
@@ -223,6 +248,25 @@ jobs:
           # track was offered again the next day. Ship it with the drop.
           cp queue/queue.json "build/${{ steps.day.outputs.date }}/queue.json"
 
+      - name: Publish the release files
+        if: steps.day.outputs.skip != 'true' && inputs.dry_run != true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DATE: ${{ steps.day.outputs.date }}
+          TITLE: ${{ steps.make.outputs.title }}
+        run: |
+          D="build/$DATE"
+          B="$(python -c "import json;print(json.load(open('$D/meta.json'))['files']['base'])")"
+          FILES=("$D/$B.mp3" "$D/$B.flac" "$D/$B-short.mp4" "$D/$B-full-169.mp4" "$D/$B-full-916.mp4" "$D/$B-cover.jpg" "$D/frame-169.jpg")
+          if gh release view "drop-$DATE" >/dev/null 2>&1; then
+            gh release upload "drop-$DATE" "${FILES[@]}" --clobber
+          else
+            gh release create "drop-$DATE" "${FILES[@]}" --title "$TITLE · ANCHOR" \
+              --notes-file "$D/release_notes.md" --target "$GITHUB_SHA"
+          fi
+
+      # only after the release exists, so a song whose files never reached the release page
+      # never goes on to YouTube with links to nothing
       - name: Upload drop files
         if: steps.day.outputs.skip != 'true'
         uses: actions/upload-artifact@v4
@@ -244,26 +288,10 @@ jobs:
             build/${{ steps.day.outputs.date }}/cover_600.jpg
             build/${{ steps.day.outputs.date }}/poster.jpg
 
-      - name: Publish the release files
-        if: steps.day.outputs.skip != 'true' && inputs.dry_run != true
-        env:
-          GH_TOKEN: ${{ github.token }}
-          DATE: ${{ steps.day.outputs.date }}
-          TITLE: ${{ steps.make.outputs.title }}
-        run: |
-          D="build/$DATE"
-          B="$(python -c "import json;print(json.load(open('$D/meta.json'))['files']['base'])")"
-          FILES=("$D/$B.mp3" "$D/$B.flac" "$D/$B-short.mp4" "$D/$B-full-169.mp4" "$D/$B-full-916.mp4" "$D/$B-cover.jpg" "$D/frame-169.jpg")
-          if gh release view "drop-$DATE" >/dev/null 2>&1; then
-            gh release upload "drop-$DATE" "${FILES[@]}" --clobber
-          else
-            gh release create "drop-$DATE" "${FILES[@]}" --title "$TITLE · ANCHOR" \
-              --notes-file "$D/release_notes.md" --target "$GITHUB_SHA"
-          fi
-
   pages:
-    needs: make
-    if: needs.make.outputs.skip != 'true' && inputs.dry_run != true
+    needs: [plan, make]
+    # the songs that made it go out even when another song of the day failed its checks
+    if: ${{ !cancelled() && needs.plan.outputs.count != '0' && inputs.dry_run != true }}
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     environment:
@@ -271,53 +299,55 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     outputs:
       page_url: ${{ steps.deploy.outputs.page_url }}
+      made: ${{ steps.media.outputs.made }}
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: drop-${{ needs.make.outputs.date }}
-          path: drop
+          pattern: drop-*
+          path: drops
 
       - name: Assemble the media host (latest drops only)
+        id: media
         env:
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-          DATE: ${{ needs.make.outputs.date }}
         run: |
-          mkdir -p public/media
-          cp drop/*-short.mp4 drop/*-full-169.mp4 drop/*-full-916.mp4 public/media/
-          # keep the two previous drops online too, in case a scheduled post is still pending
-          for tag in $(gh release list --limit 6 --json tagName -q '.[].tagName' | grep '^drop-' | grep -vx "drop-$DATE" | head -2); do
-            gh release download "$tag" --pattern '*.mp4' --dir public/media --clobber || true
+          mkdir -p public/media drops
+          MADE="$(ls drops | sed 's/^drop-//' | sort | tr '\n' ' ')"
+          echo "made=$MADE" >> "$GITHUB_OUTPUT"
+          [ -n "$MADE" ] || { echo "::warning::no song made it through its checks"; exit 0; }
+          for d in drops/drop-*; do cp "$d"/*-short.mp4 "$d"/*-full-169.mp4 "$d"/*-full-916.mp4 public/media/; done
+          # keep the previous drops online too, in case a scheduled post is still pending
+          for tag in $(gh release list --limit 10 --json tagName -q '.[].tagName' | grep '^drop-' | head -6); do
+            [ -d "drops/$tag" ] || gh release download "$tag" --pattern '*.mp4' --dir public/media --clobber || true
           done
           printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
           printf '<!doctype html><meta charset="utf-8"><title>ANCHOR media</title><meta http-equiv="refresh" content="0;url=https://anchor.anchit-tandon.com/">' > public/index.html
           ls -la public/media
 
       - uses: actions/configure-pages@v5
+        if: steps.media.outputs.made != ''
 
       - uses: actions/upload-pages-artifact@v3
+        if: steps.media.outputs.made != ''
         with:
           path: public
 
       - id: deploy
+        if: steps.media.outputs.made != ''
         uses: actions/deploy-pages@v4
 
   publish:
-    needs: [make, pages]
-    if: needs.make.outputs.skip != 'true' && inputs.dry_run != true
+    needs: [plan, make, pages]
+    if: ${{ !cancelled() && needs.pages.result == 'success' && needs.pages.outputs.made != '' && inputs.dry_run != true }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 150   # up to 5 full-length uploads, Shorts and Reels, one after the other
     env:
-      DATE: ${{ needs.make.outputs.date }}
-      SHORT: ${{ needs.make.outputs.short }}
-      FULL169: ${{ needs.make.outputs.full169 }}
-      FULL916: ${{ needs.make.outputs.full916 }}
-      TITLE: ${{ needs.make.outputs.title }}
+      MADE: ${{ needs.pages.outputs.made }}
       PAGE_URL: ${{ needs.pages.outputs.page_url }}
       RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
     steps:
-      # the branch as it is NOW, not as it was when this run was queued: a run that waited
-      # hours behind the previous drop must see that drop (next-drop, titles, catalogue)
+      # the branch as it is NOW, not as it was when this run was queued
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
@@ -331,8 +361,14 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: drop-${{ needs.make.outputs.date }}
-          path: build/${{ needs.make.outputs.date }}
+          pattern: drop-*
+          path: dl
+
+      - name: Lay out the songs that were made
+        run: |
+          mkdir -p build
+          for d in dl/drop-*; do mv "$d" "build/${d#dl/drop-}"; done
+          ls build
 
       - name: Refresh earlier posts (YouTube status and links)
         env:
@@ -342,9 +378,9 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: python -m anchor sync
 
-      # YouTube: the channel's own credentials (YT_*) when set, with tags, thumbnail, playlist
-      # and the Short linking its full track; Buffer otherwise. Instagram: always Buffer.
-      - name: Publish the full track and the Short to YouTube and the Reel to Instagram
+      # Each song in turn: YouTube with the channel's own credentials (YT_*), the Short through
+      # Buffer, then recorded at once so the quota check before the next song counts it.
+      - name: Publish each song to YouTube (full track and Short) and Instagram, and record it
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
@@ -353,60 +389,73 @@ jobs:
           BUFFER_CHANNEL_ID: ${{ secrets.BUFFER_CHANNEL_ID }}
           BUFFER_INSTAGRAM_CHANNEL_ID: ${{ secrets.BUFFER_INSTAGRAM_CHANNEL_ID }}
         run: |
-          MEDIA="${PAGE_URL%/}/media/$FULL169"
-          SHORTURL="${PAGE_URL%/}/media/$SHORT"
-          REEL="${PAGE_URL%/}/media/$FULL916"
-          FLAGS=()
-          if [ -z "$BUFFER_API_KEY" ] && [ -z "$YT_REFRESH_TOKEN" ]; then
-            FLAGS+=(--site-only)
-            echo "::warning::neither YT_* nor BUFFER_API_KEY is set: releasing on the website only."
-          fi
-          [ "${{ inputs.publish_now }}" = "true" ] && FLAGS+=(--now)
-          if ! python -m anchor publish --drop "build/$DATE" --media-url "$MEDIA" --short-url "$SHORTURL" --reel-url "$REEL" "${FLAGS[@]}"; then
-            echo "PUBLISH_FAILED=1" >> "$GITHUB_ENV"
-            echo "::error::Publishing failed on at least one platform; the drop is still released on the website. See publish.json in the drop artifact."
-          fi
-
-      - name: Sync the Suno catalogue (ratings + postable decisions)
-        run: python -m anchor suno-sync || echo "::warning::Suno sync failed; keeping the last catalogue"
-
-      - name: Record the drop on anchor.anchit-tandon.com
-        run: |
-          python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
-            --short-url "${PAGE_URL%/}/media/$FULL916" --run-url "$RUN_URL"
+          : > published.txt
+          for DATE in $MADE; do
+            if [ "$(python -m anchor has-drop --date "$DATE")" = "yes" ]; then
+              echo "::notice::$DATE is already out (a re-run); not posting it again."
+              continue
+            fi
+            if [ "$(python -m anchor quota-ok 2>quota.txt)" != "yes" ]; then
+              echo "::warning::$DATE not posted: YouTube quota $(tail -n 1 quota.txt). It is on the release page; post it after the reset."
+              continue
+            fi
+            f() { python -c "import json,sys;print(json.load(open('build/$DATE/meta.json'))['files'][sys.argv[1]])" "$1"; }
+            FULL169="$(f full_169)"; SHORT="$(f short)"; FULL916="$(f full_916)"
+            FLAGS=()
+            if [ -z "$BUFFER_API_KEY" ] && [ -z "$YT_REFRESH_TOKEN" ]; then
+              FLAGS+=(--site-only)
+              echo "::warning::neither YT_* nor BUFFER_API_KEY is set: releasing on the website only."
+            fi
+            [ "${{ inputs.publish_now }}" = "true" ] && FLAGS+=(--now)
+            if ! python -m anchor publish --drop "build/$DATE" --media-url "${PAGE_URL%/}/media/$FULL169" \
+                 --short-url "${PAGE_URL%/}/media/$SHORT" --reel-url "${PAGE_URL%/}/media/$FULL916" "${FLAGS[@]}"; then
+              echo "PUBLISH_FAILED=1" >> "$GITHUB_ENV"
+              echo "::error::$DATE: publishing failed on at least one platform; see publish.json in the drop artifact."
+            fi
+            python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
+              --short-url "${PAGE_URL%/}/media/$FULL916" --run-url "$RUN_URL"
+            echo "$DATE" >> published.txt
+          done
           python -m anchor check
 
-      - name: Restore the queue stamp written while rendering
-        run: |
-          f="build/$DATE/queue.json"
-          if [ -f "$f" ]; then
-            cp "$f" queue/queue.json
-            echo "queue stamp restored from the make job"
-          else
-            echo "::warning::no queue stamp in the artifact - a released track may be offered again"
-          fi
+      - name: Sync the Suno catalogue (ratings + postable decisions)
+        if: ${{ !cancelled() }}
+        run: python -m anchor suno-sync || echo "::warning::Suno sync failed; keeping the last catalogue"
 
-      - name: Commit the catalog (triggers the website deploy)
+      - name: Restore the queue stamp written while rendering
+        if: ${{ !cancelled() }}
         run: |
+          # only a published song that came from the Suno queue carries the stamp
+          [ -s published.txt ] && python -m anchor queue-stamp --drops $(cat published.txt) || true
+
+      # also after a failure part-way through the songs: every song already posted is recorded
+      - name: Commit the catalog (triggers the website deploy)
+        if: ${{ !cancelled() }}
+        run: |
+          [ -s published.txt ] || { echo "nothing was published"; exit 0; }
           git config user.name "$ROBOT_NAME"
           git config user.email "$ROBOT_EMAIL"
           BRANCH="${GITHUB_REF_NAME:-main}"
+          TITLES="$(for DATE in $(cat published.txt); do python -c "import json;print(json.load(open('build/$DATE/meta.json'))['brief']['title'])"; done | paste -sd ',' | sed 's/,/, /g')"
           for i in 1 2 3 4 5; do
             # queue too: a released song is stamped in queue/queue.json, and if that stamp
             # is not committed the next run fetches and posts the same track again
             git add site/data site/covers site/og.jpg queue
-            git commit -q -m "drop: $DATE · $TITLE" || { echo "nothing to commit"; exit 0; }
+            git commit -q -m "drop: $(paste -sd ' ' published.txt) · $TITLES" || { echo "nothing to commit"; exit 0; }
             git push -q origin "HEAD:$BRANCH" && exit 0
-            # the branch moved while this drop rendered (another drop, the Uploads or Sync
-            # job): never merge two catalogues by hand; take the latest branch and record
-            # this drop on top of it again (record is an upsert by drop id)
-            echo "::notice::$BRANCH moved; recording $DATE again on top of it (attempt $i)"
+            # the branch moved while the songs rendered (the Uploads or Sync job): never merge
+            # two catalogues by hand; take the latest branch and record the songs on top of
+            # it again (record is an upsert by drop id)
+            echo "::notice::$BRANCH moved; recording the songs again on top of it (attempt $i)"
             sleep $((i * 5))
             git fetch -q origin "$BRANCH"
             git reset -q --hard "origin/$BRANCH"
-            python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
-              --short-url "${PAGE_URL%/}/media/$FULL916" --run-url "$RUN_URL"
-            if [ -f "build/$DATE/queue.json" ]; then cp "build/$DATE/queue.json" queue/queue.json; fi
+            for DATE in $(cat published.txt); do
+              FULL916="$(python -c "import json;print(json.load(open('build/$DATE/meta.json'))['files']['full_916'])")"
+              python -m anchor record --drop "build/$DATE" --repo "$GITHUB_REPOSITORY" \
+                --short-url "${PAGE_URL%/}/media/$FULL916" --run-url "$RUN_URL"
+            done
+            python -m anchor queue-stamp --drops $(cat published.txt) || true
           done
           exit 1
 
@@ -417,13 +466,11 @@ jobs:
           exit 1
 
   report-failure:
-    needs: [make, pages, publish]
+    needs: [plan, make, pages, publish]
     if: (failure() || cancelled()) && inputs.dry_run != true
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
-      # the branch as it is NOW, not as it was when this run was queued: a run that waited
-      # hours behind the previous drop must see that drop (next-drop, titles, catalogue)
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}

@@ -3,6 +3,7 @@ render, the previous drop committed meanwhile, the rebase hit conflicts and the 
 reached the catalogue). Runs the workflow's own shell against a real local git origin."""
 import re
 import subprocess
+import sys
 import textwrap
 from pathlib import Path
 
@@ -20,8 +21,8 @@ def git(cwd, *args):
 
 
 def test_every_job_checks_out_the_branch_as_it_is_now():
-    assert WORKFLOW.count("uses: actions/checkout@v4") == 3
-    assert WORKFLOW.count("uses: actions/checkout@v4\n        with:\n          ref: ${{ github.ref }}") == 3
+    assert WORKFLOW.count("uses: actions/checkout@v4") == 4
+    assert WORKFLOW.count("uses: actions/checkout@v4\n        with:\n          ref: ${{ github.ref }}") == 4
 
 
 def test_a_moved_main_is_recorded_on_top_not_merged(tmp_path):
@@ -48,13 +49,21 @@ def test_a_moved_main_is_recorded_on_top_not_merged(tmp_path):
     (work / "site" / "data" / "catalog.json").write_text('["2026-10-24-3", "2026-10-24"]\n')
     (work / "site" / "og.jpg").write_bytes(b"og-3")
     (work / "build" / "2026-10-24-3").mkdir(parents=True)
+    (work / "build" / "2026-10-24-3" / "meta.json").write_text(
+        '{"brief": {"title": "Compress Vector"}, "files": {"full_916": "x-full-916.mp4"}}')
+    (work / "published.txt").write_text("2026-10-24-3\n")
+    (work / ".git" / "info" / "exclude").write_text("build/\npublished.txt\n")
 
     # stand-in for `python -m anchor record`: an upsert of this drop into whatever catalogue is there
     bin_dir = tmp_path / "bin"; bin_dir.mkdir()
-    (bin_dir / "python").write_text(textwrap.dedent("""\
-        #!/usr/bin/env python3
-        import json, sys
-        assert sys.argv[1:3] == ["-m", "anchor"] and sys.argv[3] == "record", sys.argv
+    (bin_dir / "python").write_text(textwrap.dedent(f"""\
+        #!{sys.executable}
+        import json, os, sys
+        if sys.argv[1:3] != ["-m", "anchor"]:
+            os.execv({sys.executable!r}, [{sys.executable!r}, *sys.argv[1:]])
+        if sys.argv[3] == "queue-stamp":
+            sys.exit(0)
+        assert sys.argv[3] == "record", sys.argv
         p = "site/data/catalog.json"
         c = json.load(open(p))
         c = ["2026-10-24-3"] + [d for d in c if d != "2026-10-24-3"]
@@ -64,13 +73,13 @@ def test_a_moved_main_is_recorded_on_top_not_merged(tmp_path):
     (bin_dir / "python").chmod(0o755)
     (bin_dir / "sleep").write_text("#!/bin/sh\nexit 0\n"); (bin_dir / "sleep").chmod(0o755)
 
-    env = {"PATH": f"{bin_dir}:/usr/bin:/bin", "HOME": str(tmp_path), "DATE": "2026-10-24-3", "TITLE": "Compress Vector",
+    env = {"PATH": f"{bin_dir}:/usr/bin:/bin", "HOME": str(tmp_path), "MADE": "2026-10-24-3",
            "ROBOT_NAME": "r", "ROBOT_EMAIL": "r@r", "GITHUB_REF_NAME": "main", "GITHUB_REPOSITORY": "o/r",
-           "PAGE_URL": "https://p/", "FULL916": "x-full-916.mp4", "RUN_URL": "https://run"}
+           "PAGE_URL": "https://p/", "RUN_URL": "https://run"}
     res = subprocess.run(["bash", "-e", "-c", _step("Commit the catalog (triggers the website deploy)")],
                          cwd=work, env=env, capture_output=True, text=True)
     assert res.returncode == 0, res.stdout + res.stderr
-    assert "recording 2026-10-24-3 again" in res.stdout
+    assert "recording the songs again" in res.stdout
 
     git(other, "pull", "-q")
     assert (other / "site" / "data" / "catalog.json").read_text() == '["2026-10-24-3", "2026-10-24-2", "2026-10-24"]\n'

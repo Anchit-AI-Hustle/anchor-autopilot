@@ -116,6 +116,16 @@ def main(argv: list[str] | None = None) -> int:
     cd.add_argument("--date", default=None)
     nd = sub.add_parser("next-drop", help="print the drop id the next run should make today, or none (the reason goes to stderr)")
     nd.add_argument("--date", default=None)
+    pd = sub.add_parser("plan-drops", help="print the JSON list of drop ids one run makes side by side today (the reason goes to stderr)")
+    pd.add_argument("--date", default=None)
+    rs = sub.add_parser("reserve", help="add the briefs of the drops planned before this one to the local catalogue (never committed), "
+                                        "so songs rendered side by side still differ in lane, title, key and look")
+    rs.add_argument("--plan", required=True, help="the JSON list from plan-drops")
+    rs.add_argument("--drop", required=True)
+    sub.add_parser("quota-ok", help="print yes/no: does one more song fit today's YouTube quota budget (the reason goes to stderr)")
+    qs = sub.add_parser("queue-stamp", help="carry the released_at stamp of a published queued Suno song into queue/queue.json")
+    qs.add_argument("--drops", nargs="*", default=[], help="drop ids that were published in this run")
+    qs.add_argument("--build", default="build")
 
     args = ap.parse_args(argv)
     profile = load_profile()
@@ -260,10 +270,53 @@ def main(argv: list[str] | None = None) -> int:
                                        shorts_via_buffer=profile.youtube.get("shorts_via", "buffer") == "buffer")
         print(why, file=sys.stderr)
         print(drop_id or "none")
+    elif args.cmd in ("plan-drops", "quota-ok"):
+        from datetime import datetime, timezone
+        from . import quota
+        sched = profile.schedule
+        slots = min(1 + len(sched.get("extra_post_times_utc", [])), int(sched.get("max_drops_per_day", 9)))
+        drops = catalog.load(CATALOG_PATH).get("drops", [])
+        budget = int(profile.youtube.get("daily_quota_budget", 9500))
+        via_buffer = profile.youtube.get("shorts_via", "buffer") == "buffer"
+        if args.cmd == "plan-drops":
+            ids, why = quota.plan(drops, args.date or pipeline.today_utc(), slots, budget,
+                                  datetime.now(timezone.utc), shorts_via_buffer=via_buffer)
+            print(why, file=sys.stderr)
+            print(json.dumps(ids))
+        else:
+            ok, why = quota.room_for_one(drops, budget, datetime.now(timezone.utc), shorts_via_buffer=via_buffer)
+            print(why, file=sys.stderr)
+            print("yes" if ok else "no")
+    elif args.cmd == "reserve":
+        planned = json.loads(args.plan)
+        before = planned[:planned.index(args.drop)] if args.drop in planned else []
+        cat = catalog.load(CATALOG_PATH)
+        for drop_id in before:
+            b = make_brief(profile, drop_id, catalog.history(cat))
+            catalog.upsert(cat, {"id": b["id"], "date": b["date"], "title": b["title"], "lane": b["lane"],
+                                 "family": b["family"], "key": b["key"], "bpm": b["bpm"], "status": "planned"})
+            print(f"reserved {drop_id}: {b['title']!r} ({b['lane']}, {b['key']})", file=sys.stderr)
+        catalog.save(cat, CATALOG_PATH)
+    elif args.cmd == "queue-stamp":
+        # only a song that went out from the queue carries a stamp worth keeping; every other
+        # runner shipped the queue as it found it, and copying that back would erase the stamp
+        from .util import write_json
+        path = queue.QUEUE / "queue.json"
+        current = read_json(path, {}) or {}
+        for drop_id in args.drops:
+            d = Path(args.build) / drop_id
+            meta = read_json(d / "meta.json", {}) or {}
+            if (meta.get("engine") or {}).get("engine") != "queue":
+                continue
+            for name, entry in (read_json(d / "queue.json", {}) or {}).items():
+                if entry.get("released_at") and not (current.get(name) or {}).get("released_at"):
+                    current[name] = {**(current.get(name) or {}), **entry}
+                    print(f"queue: {entry.get('title')!r} stamped released by {drop_id}", file=sys.stderr)
+        write_json(path, current)
     elif args.cmd == "has-drop":
         day = args.date or pipeline.today_utc()
         drops = catalog.load(CATALOG_PATH).get("drops", [])
-        done = any(d.get("id") == day and d.get("status") not in ("dry-run", "error") for d in drops)
+        done = any(d.get("id") == day and d.get("status") not in ("dry-run", "error", "planned") for d in drops)
         print("yes" if done else "no")
     return 0
 

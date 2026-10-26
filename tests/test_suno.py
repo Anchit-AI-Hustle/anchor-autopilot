@@ -411,7 +411,7 @@ def test_the_daily_workflow_carries_the_stamp_between_jobs():
     wf = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
     assert 'cp queue/queue.json "build/' in wf, "the make job must ship the stamp it wrote"
     assert "build/${{ steps.day.outputs.date }}/queue.json" in wf, "and upload it"
-    assert 'cp "$f" queue/queue.json' in wf, "the publish job must restore it before committing"
+    assert "anchor queue-stamp --drops" in wf, "the publish job must restore it before committing"
     assert wf.index("Restore the queue stamp") < wf.index("Commit the catalog"), \
         "restoring after the commit would be pointless"
 

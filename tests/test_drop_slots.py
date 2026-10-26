@@ -92,18 +92,11 @@ def test_cadence_reads_a_drop_id(monkeypatch):
 WORKFLOW = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
 
 
-def _pick_step() -> str:
-    """The shell of the "Pick the drop date" step (id: day), dedented."""
-    block = WORKFLOW.split("id: day\n", 1)[1].split("\n      - name:", 1)[0]
-    return textwrap.dedent(block.split("run: |\n", 1)[1])
-
-
-def test_five_schedules_inside_one_quota_day_one_after_the_other():
+def test_one_run_a_day_after_the_quota_reset_and_a_backup_that_fills_gaps():
     head = WORKFLOW.split("workflow_dispatch:", 1)[0]
     crons = re.findall(r'- cron: "([^"]+)"', head)
-    assert crons == ["37 7 * * *", "37 10 * * *", "37 13 * * *", "37 16 * * *", "37 19 * * *"]
-    hours = [int(c.split()[1]) for c in crons]
-    assert hours[0] >= 7 and hours[-1] + 3 <= 24, "all runs start after the Pacific reset and finish the same UTC day"
+    assert crons == ["37 8 * * *", "37 13 * * *"]
+    assert all(int(c.split()[1]) >= 8 for c in crons), "after the Pacific quota reset all year (08:00 UTC in winter)"
     assert "group: daily-drop\n  cancel-in-progress: false" in WORKFLOW, "the runs go one after the other"
     for other in ("fullvideos.yml", "uploads.yml"):
         text = (ROOT / ".github" / "workflows" / other).read_text()
@@ -111,25 +104,44 @@ def test_five_schedules_inside_one_quota_day_one_after_the_other():
         assert hour < 7, f"{other} runs before the day's drops, so a pending drop never cancels it"
 
 
-@pytest.mark.parametrize("date_input,next_drop,want", [
-    ("", "2026-10-25-3", "2026-10-25-3"),
-    ("", "none", "none"),
-    ("2026-10-25-2", "ignored", "2026-10-25-2"),
+def test_the_songs_render_side_by_side():
+    make = WORKFLOW.split("\n  make:\n", 1)[1].split("\n  pages:\n", 1)[0]
+    assert "fail-fast: false" in make and "drop: ${{ fromJSON(needs.plan.outputs.drops) }}" in make
+    assert "anchor reserve --plan" in make, "each runner holds the earlier songs' briefs"
+    pages = WORKFLOW.split("\n  pages:\n", 1)[1].split("\n  publish:\n", 1)[0]
+    publish = WORKFLOW.split("\n  publish:\n", 1)[1].split("\n  report-failure:\n", 1)[0]
+    for job in (pages, publish):
+        assert "!cancelled()" in job and "pattern: drop-*" in job, "the songs that made it go out even if one failed"
+    assert publish.index("anchor has-drop") < publish.index("anchor quota-ok") < publish.index("anchor publish"), \
+        "a re-run never posts a song twice, and the quota is checked before every song"
+    assert make.index("Publish the release files") < make.index("Upload drop files"), \
+        "a song reaches YouTube only after its release page exists"
+    commit = publish.split("- name: Commit the catalog", 1)[1]
+    assert "if: ${{ !cancelled() }}" in commit, "songs already posted are recorded even if a later one fails"
+
+
+def _plan_step() -> str:
+    block = WORKFLOW.split("id: plan\n", 1)[1].split("\n  make:", 1)[0]
+    return textwrap.dedent(block.split("run: |\n", 1)[1])
+
+
+@pytest.mark.parametrize("date_input,planned,want", [
+    ("", '["2026-10-25", "2026-10-25-2", "2026-10-25-3"]', ["2026-10-25", "2026-10-25-2", "2026-10-25-3"]),
+    ("", "[]", []),
+    ("2026-10-25-2", "ignored", ["2026-10-25-2"]),
 ])
-def test_the_pick_step_names_the_drop(tmp_path, date_input, next_drop, want):
-    """Run the workflow's own shell for the date line, with a stand-in for `python -m anchor next-drop`."""
-    run = _pick_step()
-    head = run.split("if [ \"${{ inputs.dry_run }}\"")[0]
+def test_the_plan_step_lists_the_drops(tmp_path, date_input, planned, want):
+    """Run the workflow's own plan shell with a stand-in for `python -m anchor plan-drops`."""
+    import json
+    import sys
     shim = tmp_path / "python"
-    shim.write_text(f"#!/bin/sh\necho 'why' >&2\necho {next_drop}\n")
+    shim.write_text(f"#!/bin/sh\nif [ \"$1\" = \"-m\" ]; then echo 'why' >&2; echo '{planned}'; else exec {sys.executable} \"$@\"; fi\n")
     shim.chmod(0o755)
     out_file = tmp_path / "out"
-    script = head.replace("${{ inputs.date }}", date_input)
+    script = _plan_step().replace("${{ inputs.date }}", date_input)
     env = {"PATH": f"{tmp_path}:/usr/bin:/bin", "GITHUB_OUTPUT": str(out_file)}
-    subprocess.run(["bash", "-c", script], capture_output=True, text=True, check=True, cwd=tmp_path, env=env)
+    subprocess.run(["bash", "-e", "-c", script], capture_output=True, text=True, check=True, cwd=tmp_path, env=env)
     lines = dict(l.split("=", 1) for l in out_file.read_text().splitlines())
-    assert lines["date"] == want
-    if want == "none":
-        assert lines["skip"] == "true"
-    else:
-        split_drop_id(want)
+    assert json.loads(lines["drops"]) == want and lines["count"] == str(len(want))
+    for d in want:
+        split_drop_id(d)
