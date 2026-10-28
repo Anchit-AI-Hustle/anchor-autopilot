@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-10-28-4",
-    "title": "Pierce Trampoline",
-    "finished_at": "2026-10-28T20:35:48Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40715422684",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-10-28T20:36:21Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40715422684"
   },
   "next_post_at": "2026-10-29T17:30:00Z",
   "streak": 4,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-10-28T20:35:48Z",
+  "updated_at": "2026-10-28T20:36:21Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
