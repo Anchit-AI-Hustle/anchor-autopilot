@@ -68,7 +68,10 @@ steps = 32        # sft range is 32-50; 32 keeps the render inside the runner bu
 guidance = 5.0    # real CFG: the lever turbo never had
 shift = 3.0
 
-keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B minor", "F# minor", "C# minor", "G# minor"]
+# minor and major keys (Anchit, 2026-10-31: "different melodies, sounds, everything"): every key
+# was minor before, so every song sat in the same colour; bouncy and fun often wants major
+keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B minor", "F# minor", "C# minor", "G# minor",
+        "C major", "D major", "E major", "F major", "G major", "A major", "Bb major", "Eb major"]
 # The style prompt is composed layer by layer (genre -> era -> mood arc -> tempo/groove ->
 # instruments and when they enter -> vocals -> production -> arrangement arc -> special
 # moment), then compressed into prose; see brief.compose_style. These two lines are the
@@ -81,7 +84,7 @@ vocals = "Vocals: whispers in the quiet parts, shouted crowd chants in the drops
 # What the channel's best records share (measured 2026-09-23): the kick's click and the bass's
 # harmonics carry on a phone speaker, the textures are wide while kick and sub stay centred,
 # and the record falls away and comes back rather than holding one level.
-mastering = "club master, sub-bass harmonics audible on small speakers, kick with a clear click, wide textures over a centred kick and sub, real dynamics"
+mastering = "club master, sub audible on phones, clear kick click, mono low end, real dynamics"
 # Bouncy, fun and psychedelic, never dark (Anchit, 2026-10-04): gloom and stiffness are
 # named in the negative so the LM steers away from them.
 feel = "bouncy, fun and psychedelic, never dark"
@@ -117,6 +120,37 @@ best_of = 2
 [music.renderers.cpu]
 takes = 2
 best_of = 1
+
+# The sound of each song, drawn fresh every time (Anchit, 2026-10-31: "different melodies,
+# sounds, everything"). Before, every prompt said "punchy kick and bouncing bass carry it" and
+# the rest came from five lane lists, so songs in one lane sounded like one song. Now each song
+# gets its own lead sound, bass, drum kit, melody shape and chord feel; a lead or melody comes
+# back only after PALETTE_GAP songs, and no two songs ever share the whole set.
+[music.palette]
+leads = ["plucky detuned saw lead", "glassy FM bell lead", "squelchy 303 acid lead", "hoover synth lead",
+  "chopped vocal chop lead", "bright brass stab lead", "whistling sine lead", "talkbox synth lead",
+  "wide supersaw stab lead", "gritty reese lead", "bubbly square wave lead", "marimba-like mallet lead",
+  "pitched rave piano stabs", "laser zap lead", "wobbly vibrato lead", "steel drum synth lead",
+  "rubbery pluck lead", "ringing sync lead", "chiptune arpeggio lead", "flutey pan pipe lead",
+  "funky clav synth lead", "bright organ stab lead", "chorused string synth lead", "kazoo-like buzz lead"]
+basses = ["bouncing rubber sub bass", "bouncing distorted rolling bass", "bouncing acid 303 bass",
+  "bouncing reverse bass", "bouncing FM growl bass", "bouncing octave-jumping bass",
+  "bouncing slap synth bass", "bouncing wobble bass", "bouncing off-beat pluck bass",
+  "bouncing saw stab bass", "bouncing gliding 808 bass", "bouncing chunky square bass"]
+drums = ["crisp punchy kick with shuffled hats", "big distorted kick with rolling toms",
+  "tight clicky kick with tambourine shakes", "booming tail kick with snappy claps",
+  "short bouncy kick with cowbell accents", "warehouse kick with metallic rimshots",
+  "rumbling kick with bongo fills", "clean round kick with handclap stacks",
+  "hard kick with breakbeat snare fills", "tight kick with ride cymbal shimmer"]
+melodies = ["a two-note call and response hook", "a rising arpeggio in triplets",
+  "a falling riff that lands on the downbeat", "a pentatonic riff that loops with a twist",
+  "an octave-jumping hook", "a syncopated stabbing riff", "a sing-along five-note hook",
+  "a spiralling sequence that climbs each bar", "a bouncy off-beat skank riff",
+  "a question and answer melody between lead and bass", "a slow wide melody over the fast beat",
+  "a staccato hook that stops and starts"]
+chords = ["bright uplifting chords", "warm feel-good chords", "playful major chords with a twist",
+  "dreamy suspended chords", "bold power chords", "cheeky chromatic chords", "glowing open fifths",
+  "sunny chords that lift at the end"]
 
 [music.voice]
 # Words for the whispers and chants. The chant in every drop is the song's own title, so the
