@@ -111,7 +111,7 @@ def test_songs_are_briefed_bouncy_and_fun():
         assert f"Feel: {feel}" in b["caption"], b["date"]
         said = b["caption"].replace(feel, "").lower() + b["lyrics"].lower()
         assert not [w for w in DARK if w in said], b["date"]
-        assert "bouncing bass" in b["caption"]
+        assert "bouncing" in b["caption"] and " bass" in b["caption"]
 
 
 def test_style_prompt_rotates_within_a_lane():

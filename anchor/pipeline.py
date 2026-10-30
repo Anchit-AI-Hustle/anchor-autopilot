@@ -717,6 +717,7 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
                                  "family_name", "duration_s", "short_s", "genre_line", "style_line",
                                  "caption", "seed")},
         "theme": brief.get("theme"),
+        "sound": brief.get("sound"),
         "engine": {"name": meta["engine"].get("engine"), "steps": meta["engine"].get("steps"),
                    "render_s": meta["engine"].get("total_s"), "threads": meta["engine"].get("threads"),
                    "model": meta["engine"].get("model"), "guidance": meta["engine"].get("guidance"),

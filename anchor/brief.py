@@ -88,7 +88,9 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
     theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,
                         used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]))
-    style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape, story=theme.idea)
+    sound = pick_palette(profile, rng("anchor-sound", drop_id), past)
+    style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape, story=theme.idea,
+                          sound=sound)
 
     used_titles = [d.get("title", "") for d in history] + list(profile.artist["existing_titles"])
     recent_titles = [d.get("title", "") for d in past[:10]] + list(profile.artist["existing_titles"])
@@ -115,6 +117,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "lane": lane.id,
         "lane_name": lane.name,
         "theme": theme.id,
+        "sound": sound,
         "theme_name": theme.name,
         "theme_idea": theme.idea,
         "genre_group": lane.group or "any",
@@ -218,8 +221,34 @@ def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[s
     return "\n\n".join(out)
 
 
+PALETTE_PARTS = ("lead", "bass", "drums", "melody", "chords")
+PALETTE_GAP = 8          # a lead sound or a melody shape comes back only after this many songs
+
+
+def pick_palette(profile: Profile, r, history: list[dict], gap: int = PALETTE_GAP) -> dict | None:
+    """The sound of one song: a lead, a bass, a drum kit, a melody shape and a chord feel from
+    ``[music.palette]``. No lead or melody of the last ``gap`` songs, no bass, kit or chords of
+    the last few, and never the exact set of an earlier song. None without a palette."""
+    pal = profile.music.get("palette")
+    if not pal:
+        return None
+    banks = {"lead": pal["leads"], "bass": pal["basses"], "drums": pal["drums"], "melody": pal["melodies"],
+             "chords": pal["chords"]}
+    gaps = {"lead": gap, "melody": gap, "bass": 4, "drums": 4, "chords": 3}
+    past = [d.get("sound") or {} for d in history]
+    seen = {tuple(p.get(k) for k in PALETTE_PARTS) for p in past if p}
+    for _ in range(200):
+        out = {}
+        for part, bank in banks.items():
+            recent = {p.get(part) for p in past[:gaps[part]]}
+            out[part] = r.choice([x for x in bank if x not in recent] or list(bank))
+        if tuple(out[k] for k in PALETTE_PARTS) not in seen:
+            return out
+    return out
+
+
 def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int, shape: str = "classic",
-                  story: str = "") -> dict:
+                  story: str = "", sound: dict | None = None) -> dict:
     """The producer's brief, written the way a strong Suno/ACE-Step prompt is written.
 
     Nine layers, in this order, then compressed into prose: genre -> era/aesthetic -> mood
@@ -242,8 +271,11 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
         lane.era,                                                       # 2 era / sonic world
         f"Mood: {mood}{f', about {story}' if story else ''}. Feel: {music['feel']}",   # 3 mood + what it is about
         f"{bpm} BPM, {lane.groove}",                                    # 4 tempo / rhythm
-        f"Instruments: punchy kick and bouncing bass carry it; {t0} sits under the intro, "
-        f"{t1} arrives with the build, {t2} owns the breakdown",        # 5 instruments + entry
+        (f"Instruments: {sound['drums']}, {sound['bass']}, {sound['lead']} playing {sound['melody']} "
+         f"over {sound['chords']}; {t0} intro, {t1} build, {t2} breakdown"
+         if sound else
+         f"Instruments: punchy kick and bouncing bass carry it; {t0} sits under the intro, "
+         f"{t1} arrives with the build, {t2} owns the breakdown"),      # 5 instruments + entry
         lane.vocals or music["vocals"],                                 # 6 vocals
         f"Production: {lane.production}; {music['mastering']}",         # 7 production
         arc(duration_s, textures, shape),                               # 8 arrangement arc
