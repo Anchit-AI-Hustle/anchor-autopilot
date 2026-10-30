@@ -187,12 +187,12 @@ def test_the_mac_renders_the_big_model_and_the_cpu_keeps_the_small_one(fast_prof
     music = fast_profile.music
     mac, cpu, plain = renderer_settings(music, "mac"), renderer_settings(music, "cpu"), renderer_settings(music, "")
     assert mac["dit_model"] == "acestep-v15-xl-sftturbo50-Q8_0" and mac["lm_model"] == "acestep-5Hz-lm-4B-Q8_0"
-    assert mac["steps"] == 8 and mac["takes"] == 4 and mac["best_of"] == 2
+    assert mac["steps"] == 8 and mac["takes"] == 6 and mac["best_of"] == 2
     assert cpu["dit_model"] == plain["dit_model"] == "acestep-v15-sft-Q8_0" and cpu["best_of"] == 1
     with pytest.raises(ValueError):
         renderer_settings(music, "gpu-cluster")
     monkeypatch.setenv("ANCHOR_RENDERER", "mac")
-    assert pipeline.take_plan(fast_profile, retries=1) == (4, 2)
+    assert pipeline.take_plan(fast_profile, retries=1) == (6, 2)
     from anchor.music import one_engine
     eng = one_engine(music, "acestep_cpp")
     assert eng.dit_model == "acestep-v15-xl-sftturbo50-Q8_0.gguf" and eng.steps == 8 and eng.shift == 3.0
