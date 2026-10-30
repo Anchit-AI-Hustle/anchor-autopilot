@@ -239,3 +239,30 @@ def test_the_master_resamples_without_soxr_on_an_ffmpeg_that_lacks_it(monkeypatc
     monkeypatch.setattr(audio, "_RESAMPLER", None)
     monkeypatch.setattr(audio.subprocess, "run", lambda *a, **k: sp.CompletedProcess(a, 0, b"", b""))
     assert audio.resampler() == "resampler=soxr"
+
+
+def test_a_title_the_singer_cannot_say_is_replaced_on_the_next_take(fast_profile, site_dir, tmp_path, monkeypatch):
+    """2026-10-31 dry run on the Mac: "Bolts And Boogie" was heard as boats, balls, bold on all
+    four takes; the run then failed instead of holding the slot."""
+    from anchor import lyriccheck
+    monkeypatch.setenv("ANCHOR_SONG_GATE", "1")
+    monkeypatch.setattr(lyriccheck, "enabled", lambda: True)
+    titles = []
+
+    def check(raw, sheet, title):
+        titles.append(title)
+        return {"heard": "x", "notes": [], "misheard": [title.split()[0].lower()], "checked": True}
+    monkeypatch.setattr(lyriccheck, "check", check)
+
+    class Engine(FixtureEngine):
+        name = "acestep_cpp"
+
+        def generate(self, brief, out_dir):
+            wav, stats = super().generate(brief, out_dir)
+            return wav, {**stats, "engine": "acestep_cpp"}
+    monkeypatch.setattr(pipeline, "get_engine", lambda *a, **k: Engine())
+    with pytest.raises(pipeline.SongGateHeld) as held:
+        pipeline.make(fast_profile, "2026-10-31", tmp_path / "d", art_mode="procedural",
+                      catalog_path=site_dir / "data" / "catalog.json", use_queue=False, retries=2)
+    assert len(titles) == 3 and len(set(titles)) == 3, titles
+    assert all("title sung wrong" in a["fail"][-1] for a in held.value.attempts), "held, not a red run"

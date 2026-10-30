@@ -169,14 +169,14 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
     # a slot held by an earlier run gets new seeds in the next one, never the same takes again
     salt = env("ANCHOR_SEED_SALT", "")
     gate_on = songgate.enabled()
-    attempts_log, take_s, passing = [], [], []
+    attempts_log, take_s, passing, misheard_titles = [], [], [], []
     for attempt in range(takes):
         if attempt and not time_for_another_take(deadline, take_s):
             log(f"make: no time for take {attempt + 1} before the job's limit (slowest take "
                 f"{max(take_s) / 60:.0f} min); stopping")
             break
         started = time.monotonic()
-        brief = make_brief(profile, day, hist, attempt)
+        brief = make_brief(profile, day, hist, attempt, avoid_titles=tuple(misheard_titles))
         if salt:
             brief["seed"] = seed_from("anchor-audio", day, attempt, salt) % 2_000_000_000
         log(f"brief: {brief['title']!r} | {brief['lane_name']} | {brief['bpm']} BPM | {brief['key']} | "
@@ -213,9 +213,12 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
                 fails = [*fails, f"sings its production notes: {'; '.join(heard['notes'][:4])}"]
             if heard.get("misheard"):
                 # standard English pronunciation, always (Anchit, 2026-10-30): a title word the
-                # recogniser never hears as itself was sung wrong, so the take is made again
+                # recogniser never hears as itself was sung wrong, so the take is made again, and
+                # under another of the theme's names: "Bolts And Boogie" came out "boats", "balls",
+                # "bold" on all four takes of 2026-10-31 while every other word was clear
                 ok = False
                 fails = [*fails, f"title sung wrong, not standard English: {', '.join(heard['misheard'])}"]
+                misheard_titles.append(brief["title"])
             if not heard["checked"]:
                 warns = [*warns, "lyrics not checked: the recogniser was unavailable"]
         entry = {"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns,
@@ -242,7 +245,7 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             if len(passing) >= best_of:
                 break
     if not passing:
-        if any(a.get("song_gate") for a in attempts_log):
+        if gate_on or any(a.get("song_gate") for a in attempts_log):
             raise SongGateHeld(f"no take passed the song gate in {len(take_s)} take{'' if len(take_s) == 1 else 's'}",
                                attempts_log)
         raise QualityError(f"track failed QC after {len(take_s)} attempts: {attempts_log}")

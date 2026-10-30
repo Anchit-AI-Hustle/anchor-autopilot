@@ -45,7 +45,8 @@ def slot_lanes(profile: Profile, day: str, slot: int) -> tuple[Lane, ...]:
     return picked or active
 
 
-def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0) -> dict:
+def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0,
+               avoid_titles: tuple[str, ...] = ()) -> dict:
     """Build the brief for drop ``day``: a date (YYYY-MM-DD, the day's first song) or a date
     and slot (YYYY-MM-DD-2, its second). ``history`` is newest-first. Everything is seeded by
     the drop id, so the second song of a day is a different record, never a re-roll."""
@@ -93,6 +94,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
                           sound=sound)
 
     used_titles = [d.get("title", "") for d in history] + list(profile.artist["existing_titles"])
+    # a name the singer could not say clearly on an earlier take is not tried again for this song
+    used_titles += list(avoid_titles)
     recent_titles = [d.get("title", "") for d in past[:10]] + list(profile.artist["existing_titles"])
     # never a title that is already a song anywhere (MusicBrainz, iTunes, Deezer), not just
     # on this channel (Anchit, 2026-10-24)
