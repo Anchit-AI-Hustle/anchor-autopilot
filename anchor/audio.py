@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+import wave
 from pathlib import Path
 
 import numpy as np
@@ -79,6 +80,24 @@ def ends_abruptly(audio: np.ndarray, sr: int = SR, tail_s: float = 1.0,
     return bool(drop < margin_db), round(float(drop), 2)
 
 
+_RESAMPLER: str | None = None
+
+
+def resampler() -> str:
+    """The aresample engine for the master: SoX's (soxr) where ffmpeg has it, otherwise ffmpeg's
+    own at a long filter. Homebrew's ffmpeg on the Mac renderer is built without soxr, and a
+    master that asked for it failed outright (found 2026-10-30)."""
+    global _RESAMPLER
+    if _RESAMPLER is None:
+        probe = subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=mono", "-t", "0.05",
+                                "-af", "aresample=96000:resampler=soxr", "-f", "null", "-"], capture_output=True)
+        _RESAMPLER = ("resampler=soxr" if probe.returncode == 0
+                      else "resampler=swr:filter_size=128:phase_shift=10:cutoff=0.97")
+        if probe.returncode:
+            log("master: this ffmpeg has no soxr; resampling with swr (filter_size 128)")
+    return _RESAMPLER
+
+
 def master(src: Path, dst: Path, lufs: float = -11.0, tp: float = -1.0,
            outro_fade_s: float = 0.0) -> dict:
     """Gain + true-peak-safe limiter, iterated until loudness is within 0.4 LU of the target.
@@ -111,9 +130,10 @@ def master(src: Path, dst: Path, lufs: float = -11.0, tp: float = -1.0,
                 f"{tail_db} dB down - fading the last {outro_fade_s:.1f}s and trimming the padding")
 
     for _ in range(3):
-        chain = (f"highpass=f=22,volume={gain:.2f}dB,aresample=192000:resampler=soxr,"
+        rs = resampler()
+        chain = (f"highpass=f=22,volume={gain:.2f}dB,aresample=192000:{rs},"
                  f"alimiter=limit={ceiling:.4f}:attack=4:release=60:level=0,"
-                 f"aresample={SR}:resampler=soxr{fade}")
+                 f"aresample={SR}:{rs}{fade}")
         run(["ffmpeg", "-y", "-hide_banner", "-v", "error", "-i", src, "-af", chain,
              *cut, "-ar", str(SR), "-c:a", "pcm_s16le", dst], quiet=True)
         after = loudness(dst)
@@ -121,9 +141,47 @@ def master(src: Path, dst: Path, lufs: float = -11.0, tp: float = -1.0,
         if abs(miss) <= 0.4:
             break
         gain += miss
+    trimmed = trim_tail(dst)
     return {"before": before, "after": after, "gain_db": round(gain, 2),
             "tail_db": tail_db, "outro_fade_s": outro_fade_s if fade else 0.0,
-            "music_end_s": end or None}
+            "music_end_s": end or None, "tail_trimmed_s": trimmed}
+
+
+def trim_tail(path: Path, floor_db: float = -50.0, keep_s: float = 0.4, fade_s: float = 0.3,
+              frame: int = 2048, hop: int = 512) -> float:
+    """Cut the dead air after the music stops; returns the seconds cut (0 when there is none).
+
+    Everything after the last frame louder than ``floor_db`` dBFS goes, except ``keep_s`` of it,
+    with a ``fade_s`` fade so the cut never clicks. A model asked for N seconds pads its render
+    with silence, and the song gate fails a take that ends in more than 3 s under -50 dBFS:
+    4 of the 6 engine drops of 2026-10-16 to 10-24 did, with 3.9 to 8.3 s of it (Anchit,
+    2026-10-24: top quality always). A track that plays to its last frame is left as it is.
+    """
+    audio = decode(path)
+    mono = audio.mean(axis=1)
+    if len(mono) < frame * 4:
+        return 0.0
+    starts = np.arange(0, len(mono) - frame + 1, hop)
+    sq = np.concatenate([[0.0], np.cumsum(mono.astype(np.float64) ** 2)])
+    rms = np.sqrt((sq[starts + frame] - sq[starts]) / frame + 1e-12)
+    live = np.where(20 * np.log10(rms + 1e-9) > floor_db)[0]
+    if not len(live):
+        return 0.0
+    end = min(len(mono), int(starts[live[-1]] + frame + keep_s * SR))
+    cut = (len(mono) - end) / SR
+    if cut < 0.25:
+        return 0.0
+    out = audio[:end].astype(np.float64)
+    n = min(len(out), int(fade_s * SR))
+    out[-n:] *= np.linspace(1.0, 0.0, n)[:, None]
+    pcm = (np.clip(out, -1, 1) * 32767).astype("<i2")
+    with wave.open(str(path), "wb") as w:
+        w.setnchannels(2)
+        w.setsampwidth(2)
+        w.setframerate(SR)
+        w.writeframes(pcm.tobytes())
+    log(f"master: cut {cut:.1f} s of dead air after the music (song gate: at most 3 s under {floor_db:.0f} dBFS)")
+    return round(cut, 2)
 
 
 def probe_duration(path: Path) -> float:

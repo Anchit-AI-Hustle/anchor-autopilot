@@ -57,3 +57,6 @@ def _no_lyric_models(monkeypatch):
     monkeypatch.setenv("ANCHOR_TITLE_CHECK", "0")      # no catalogue lookups (network) unless a test asks
     monkeypatch.setenv("ANCHOR_LYRIC_CHECK", "0")      # no listening to takes (minutes) unless a test asks
     monkeypatch.setenv("ANCHOR_THUMBS", "0")          # no thumbnail redraws (or network) unless a test asks
+    monkeypatch.setenv("ANCHOR_SONG_GATE", "0")       # the fixture engine is a test tone; the gate tests switch it on
+    for name in ("ANCHOR_RENDERER", "ANCHOR_TAKES", "ANCHOR_BEST_OF", "ANCHOR_SEED_SALT", "ANCHOR_MAKE_DEADLINE"):
+        monkeypatch.delenv(name, raising=False)         # a run's renderer settings never leak into a test

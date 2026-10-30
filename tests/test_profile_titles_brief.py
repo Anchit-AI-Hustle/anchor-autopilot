@@ -45,7 +45,8 @@ def _history(p, days):
     for i in range(days):
         day = (start + timedelta(days=i)).isoformat()
         b = make_brief(p, day, hist)
-        hist.insert(0, {"date": day, "title": b["title"], "lane": b["lane"], "family": b["family"], "key": b["key"]})
+        hist.insert(0, {"date": day, "title": b["title"], "lane": b["lane"], "family": b["family"], "key": b["key"],
+                        "genre_group": b["genre_group"]})
     return hist
 
 
@@ -134,7 +135,10 @@ def test_brief_rotation_rules_over_60_days():
         window = hist[i - 3:i]
         assert hist[i]["family"] not in {w["family"] for w in window}
         assert hist[i]["key"] not in {w["key"] for w in window}
-    assert len({h["lane"] for h in hist}) == len(p.active_lanes), "every active lane gets airtime"
+    # each day's first song cycles the genre groups (schedule.slot_groups); every lane of every
+    # group is covered over full five-song days in test_genres_every_day.py
+    assert {h["genre_group"] for h in hist} == {l.group for l in p.active_lanes}, "every genre leads some days"
+    assert len({h["lane"] for h in hist}) >= len(p.active_lanes) - 2
 
 
 def test_brief_description_and_bounds():

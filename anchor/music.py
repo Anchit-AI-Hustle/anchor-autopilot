@@ -313,6 +313,7 @@ def one_engine(profile_music: dict, name: str):
         from .lyria import LyriaEngine
         return LyriaEngine(wav=bool(profile_music.get("lyria_wav", False)))
     if name == "acestep_cpp":
+        profile_music = renderer_settings(profile_music)
         return AceStepCpp(
             bin_dir=env("ACESTEP_BIN", "vendor/acestep.cpp/build"),
             models_dir=env("ACESTEP_MODELS", "vendor/models"),
@@ -326,6 +327,18 @@ def one_engine(profile_music: dict, name: str):
             timeout_s=int(env("ANCHOR_ENGINE_TIMEOUT", "10000")),
         )
     raise ValueError(f"unknown music engine {name!r}")
+
+
+def renderer_settings(profile_music: dict, renderer: str | None = None) -> dict:
+    """The music settings for the machine this run renders on. ``[music.renderers.<name>]``
+    (ANCHOR_RENDERER) replaces the model and sampler lines of ``[music]``: the Mac's GPU runs
+    the 4B XL DiT with the 4B planner at 50 steps (Anchit, 2026-10-29: "use the Mac GPU"), the
+    GitHub CPU keeps the 2B settings it can finish in time."""
+    renderer = renderer or env("ANCHOR_RENDERER", "")
+    over = (profile_music.get("renderers") or {}).get(renderer) if renderer else None
+    if renderer and over is None:
+        raise ValueError(f"unknown renderer {renderer!r}; [music.renderers] has {sorted(profile_music.get('renderers') or {})}")
+    return {**profile_music, **(over or {})}
 
 
 def get_engine(profile_music: dict, name: str | None = None):

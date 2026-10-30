@@ -42,6 +42,11 @@ go_live = "when_ready"
 # the same slot. every_days = 2 makes it every second day, counted from anchor_date.
 every_days = 1
 anchor_date = "2026-09-20"
+# Each song of the day comes from one genre group, so every day has hard tech, psy, rap and hip
+# hop (Anchit, 2026-10-29: "all songs for all genres as asked"). The order turns one step a day,
+# so the first slot (the one that most often makes it) is a different genre each day. "any"
+# draws from every active lane, the combinations included.
+slot_groups = ["hardtech", "psy", "rap", "hiphop", "any"]
 
 [music]
 # Free or open-source tools only (your rule, 2026-10-04). Songs come from your own Suno
@@ -62,6 +67,7 @@ lm_model = "acestep-5Hz-lm-0.6B-Q8_0"
 steps = 32        # sft range is 32-50; 32 keeps the render inside the runner budget
 guidance = 5.0    # real CFG: the lever turbo never had
 shift = 3.0
+
 keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B minor", "F# minor", "C# minor", "G# minor"]
 # The style prompt is composed layer by layer (genre -> era -> mood arc -> tempo/groove ->
 # instruments and when they enter -> vocals -> production -> arrangement arc -> special
@@ -79,7 +85,7 @@ mastering = "club master, sub-bass harmonics audible on small speakers, kick wit
 # Bouncy, fun and psychedelic, never dark (Anchit, 2026-10-04): gloom and stiffness are
 # named in the negative so the LM steers away from them.
 feel = "bouncy, fun and psychedelic, never dark"
-negative = "sung melody, pop vocals, rap verses, ballad singing, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
+negative = "sung melody, pop vocals, rap verses, ballad singing, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
 # A model asked for N seconds renders N seconds and stops mid-bar. The arrangement (see
 # music.structure) is the real fix; this is the safety net, and it only fires when the
 # track is measurably still at full level on its last second.
@@ -91,6 +97,26 @@ outro_fade_s = 3.0
 # with the transients intact.
 loudness_lufs = -14.0     # integrated loudness of the master = YouTube's playback level
 true_peak_db = -1.5
+
+# Where a run renders decides how big a model it can afford (Anchit, 2026-10-29: "use the Mac
+# GPU"; songs were low quality). The daily run picks "mac" when the Mac runner is online, and
+# the lines above (2B DiT, 0.6B planner, 32 steps) stay the GitHub CPU fallback. Takes are
+# rendered until best_of of them pass the song gate, and the best passing take ships.
+[music.renderers.mac]
+# the 4B XL DiT with SFT weights merged into turbo (8 steps), and the 4B planner, the strongest at
+# composition and melody. Measured on the M5, 2026-10-30: about 6 min a take where the XL SFT at
+# 50 steps took 22 min for a take that measured no better, so four takes fit where one did.
+dit_model = "acestep-v15-xl-sftturbo50-Q8_0"
+lm_model = "acestep-5Hz-lm-4B-Q8_0"
+steps = 8
+guidance = 1.0
+shift = 3.0
+takes = 4
+best_of = 2
+
+[music.renderers.cpu]
+takes = 2
+best_of = 1
 
 [music.voice]
 # Words for the whispers and chants. The chant in every drop is the song's own title, so the
@@ -138,6 +164,7 @@ rap = [
 # bouncy and fun, never dark, with whispers and chanted hooks.
 [[music.lanes]]
 id = "bounce"
+group = "hardtech"
 name = "Hard Bounce Techno"
 bpm = ["160", "168"]
 weight = 3
@@ -154,6 +181,7 @@ special_moments = ["the bassline drops out for one bar and the crowd chant fills
 
 [[music.lanes]]
 id = "rawbounce"
+group = "hardtech"
 name = "Rawstyle Bounce"
 bpm = ["165", "175"]
 weight = 2
@@ -170,6 +198,7 @@ special_moments = ["a pitched kick roll that climbs a full octave into the secon
 
 [[music.lanes]]
 id = "psy"
+group = "psy"
 name = "Psychedelic Hard Techno"
 bpm = ["165", "178"]
 weight = 2
@@ -186,6 +215,7 @@ special_moments = ["a whispered phrase that circles around the head before the d
 
 [[music.lanes]]
 id = "acidpsy"
+group = "psy"
 name = "Acid Psychedelic Techno"
 bpm = ["168", "182"]
 weight = 3
@@ -202,6 +232,7 @@ special_moments = ["the 303 filter opens fully for the first time only on the se
 
 [[music.lanes]]
 id = "hardgroove"
+group = "hardtech"
 name = "Hard Groove Bounce"
 bpm = ["160", "166"]
 weight = 1
@@ -218,6 +249,7 @@ special_moments = ["the rumble tail bounces through the whole off-beat in the fi
 
 [[music.lanes]]
 id = "hyper"
+group = "hardtech"
 name = "Hyper Acid Techno"
 bpm = ["185", "200"]
 weight = 1
@@ -342,6 +374,7 @@ special_moments = ["a glitch stutter that freezes the whole track for half a bar
 # a half-time swing at double tempo (80-86 felt) and switches into four-on-the-floor drops.
 [[music.lanes]]
 id = "hardtech"
+group = "hardtech"
 name = "Hard Tech"
 bpm = ["160", "168"]
 weight = 2
@@ -358,6 +391,7 @@ special_moments = ["the groove drops to just kick and vocal chop for one bar bef
 
 [[music.lanes]]
 id = "psytech"
+group = "psy"
 name = "Psychedelic Hard Tech"
 bpm = ["162", "172"]
 weight = 1
@@ -374,6 +408,7 @@ special_moments = ["the acid line rises a full octave under the final drop", "a 
 
 [[music.lanes]]
 id = "raptechno"
+group = "rap"
 name = "Rap Hard Techno"
 bpm = ["160", "170"]
 weight = 2
@@ -389,10 +424,11 @@ production = "Punchy and bright, rap vocal dry and centred, chant hook doubled a
 mood_arcs = ["confident and grinning, building to a crowd-wide jump, ending triumphant", "playful bars over a rolling groove, exploding into a hands-up hook, landing on one shout", "laid-back swagger at first, getting louder every hook, ending on a cheeky stop"]
 special_moments = ["the beat cuts out for one bar and the rapper keeps going alone", "a scratched record cut that leads straight into the last hook", "the crowd chant answers the rapper in call and response"]
 vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
-negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
+negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
 
 [[music.lanes]]
 id = "hiphoptechno"
+group = "hiphop"
 name = "Hip Hop Hard Techno"
 bpm = ["160", "172"]
 weight = 2
@@ -408,10 +444,11 @@ production = "Warm and punchy, rap vocal dry and centred, snare crisp, kick big 
 mood_arcs = ["head-nodding swagger, switching into a full-room jump, ending with a grin", "playful bars over a lazy swing, then the drop flips it into a rave", "cool and confident, getting wilder at every switch, landing on one big hook"]
 special_moments = ["the beat switches from half-time to four-on-the-floor on a single scratch", "a two-bar 808 slide that pulls the room into the last drop", "the rapper counts the drop in and the whole crowd shouts the hook"]
 vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
-negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
+negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
 
 [[music.lanes]]
 id = "psyrap"
+group = "rap"
 name = "Psychedelic Rap Techno"
 bpm = ["165", "178"]
 weight = 1
@@ -427,7 +464,49 @@ production = "Wide and colourful, acid lines swirling around a dry centred rap v
 mood_arcs = ["curious and colourful, spiralling up into a full-room jump, ending wide-eyed", "playful bars over a bubbling acid line, exploding into a psychedelic hook", "dreamy and swaying, sharpening into a hands-up rave, ending on one bright stab"]
 special_moments = ["a tape-stop on the beat while the rap carries on, then everything slams back", "the acid line rises a full octave under the final hook", "the rap voice is swallowed by a phaser for one bar, then snaps back dry"]
 vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
-negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
+negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
+
+# Every genre Anchit asked for, every day (2026-10-24 and 2026-10-29: hard tech, psy, rap, hip hop
+# and their combinations): [schedule] slot_groups gives each of the day's songs a group.
+[[music.lanes]]
+id = "hardtechrap"
+group = "rap"
+name = "Hard Tech Rap"
+bpm = ["160", "168"]
+weight = 2
+voice = "rap"
+caption = "rap over hard tech, swung hard groove, distorted punchy kick, bouncy rolling bassline, catchy synth lead hook, confident rap verses, chanted title hook"
+textures = ["swung tech house percussion", "chopped vocal stabs", "rubbery bass plucks", "rave organ chords", "snare rolls into hooks", "vocal ad-lib echoes"]
+genre_line = "Hard Tech, Rap Techno, Hard Techno"
+style_line = "Hard Tech Rap, Rave Rap, Bouncy Hard Techno, Tech House Groove"
+tags = ["hard tech", "hard tech rap", "rap techno", "rave rap", "hard techno 2026"]
+era = "Mid-2020s hard tech crossover: swung tech house groove pushed to hard techno tempo with English rave rap"
+groove = "fast swung four-on-the-floor, a rolling bassline bouncing on every off-beat, the rap riding the swing"
+production = "Punchy and bright, rap vocal dry and centred, lead hook in the upper mids, kick dry and up front"
+mood_arcs = ["cheeky swagger, building to a crowd-wide jump, ending on a grin", "laid-back bars over a swinging groove, exploding into a hands-up hook", "confident from bar one, louder at every hook, landing on one shout"]
+special_moments = ["the groove drops to just kick and rap for two bars before the hook slams back", "a chopped vocal stab answers every line of the last verse", "the bassline climbs an octave under the final hook"]
+vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
+negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
+
+[[music.lanes]]
+id = "psyhiphop"
+group = "hiphop"
+name = "Psychedelic Hip Hop Techno"
+bpm = ["160", "170"]
+weight = 2
+voice = "rap"
+caption = "psychedelic hip hop meets hard techno, boom bap verses with swirling acid switching to bouncy four-on-the-floor drops, 808 bass, rap verses, chanted title hook"
+textures = ["swirling 303 acid lines", "crisp boom bap snares", "rubbery 808 slides", "phasing psychedelic leads", "scratched record cuts", "tape-stop effects"]
+genre_line = "Psychedelic Hip Hop, Hip Hop Techno, Hard Techno"
+style_line = "Psychedelic Hip Hop, Boom Bap Rave, Acid Techno, Rave Rap"
+tags = ["psychedelic hip hop", "hip hop techno", "acid hip hop", "rap techno", "hard techno"]
+era = "Mid-2020s psychedelic hip hop rave, boom bap swing flipping into hard techno drops"
+groove = "half-time boom bap swing in the verses, bouncing four-on-the-floor with rolling acid in the drops"
+production = "Warm and wide, rap vocal dry and centred, acid swirling around it, kick big in the drops"
+mood_arcs = ["hazy head-nodding cool, flipping into a full-room jump, ending wide-eyed", "playful bars over a bubbling acid swing, then the drop turns it into a rave", "dreamy and swaying, sharpening at every switch, landing on one bright hook"]
+special_moments = ["a tape-stop on the boom bap, then the four-on-the-floor slams in", "the acid line bends up a full octave under the last hook", "the rapper's last line echoes into the drop through a phaser"]
+vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
+negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove"
 
 [titles]
 # Title patterns: V = verb, N = noun, A = adjective, P = particle ("Pull Under").

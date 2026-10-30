@@ -43,6 +43,8 @@ class Lane:
     voice: str = "chant"
     vocals: str = ""
     negative: str = ""
+    # the genre group a day's slot draws from (schedule.slot_groups): hardtech, psy, rap, hiphop
+    group: str = ""
 
 
 @dataclass(frozen=True)
@@ -115,6 +117,7 @@ def load_profile(path: Path | str = PROFILE_PATH) -> Profile:
             special_moments=tuple(l.get("special_moments", [])),
             retired=bool(l.get("retired", False)),
             voice=l.get("voice", "chant"), vocals=l.get("vocals", ""), negative=l.get("negative", ""),
+            group=l.get("group", ""),
         )
         for l in raw["music"]["lanes"]
     )

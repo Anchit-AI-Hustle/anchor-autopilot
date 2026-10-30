@@ -26,6 +26,25 @@ def post_time(profile: Profile, day: str, slot: int = 1) -> datetime:
     return datetime(d.year, d.month, d.day, hh, mm, tzinfo=timezone.utc)
 
 
+def slot_group(profile: Profile, day: str, slot: int) -> str:
+    """The genre group of a day's ``slot`` (1-based): schedule.slot_groups turned one step a day,
+    so every day has each group once and a different group leads each day."""
+    groups = list(profile.schedule.get("slot_groups") or [])
+    if not groups:
+        return "any"
+    turn = Date.fromisoformat(day).toordinal()
+    return groups[(turn + slot - 1) % len(groups)]
+
+
+def slot_lanes(profile: Profile, day: str, slot: int) -> tuple[Lane, ...]:
+    """The active lanes a slot may draw from: its genre group's, or all of them for "any" (and
+    for a group with no active lane, so a slot never comes up empty)."""
+    group = slot_group(profile, day, slot)
+    active = profile.active_lanes
+    picked = tuple(l for l in active if l.group == group) if group != "any" else ()
+    return picked or active
+
+
 def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0) -> dict:
     """Build the brief for drop ``day``: a date (YYYY-MM-DD, the day's first song) or a date
     and slot (YYYY-MM-DD-2, its second). ``history`` is newest-first. Everything is seeded by
@@ -42,7 +61,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     last_lane = past[0]["lane"] if past else None
     recent_lanes = [d.get("lane") for d in recent]
     lanes, weights = [], []
-    active = profile.active_lanes
+    active = slot_lanes(profile, day, slot)
     for lane in active:
         if lane.id == last_lane and len(active) > 1:
             continue
@@ -87,6 +106,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "title": title,
         "lane": lane.id,
         "lane_name": lane.name,
+        "genre_group": lane.group or "any",
         "bpm": bpm,
         "key": key,
         "family": family.id,

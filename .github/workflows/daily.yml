@@ -31,11 +31,17 @@ on:
         description: "Generate with the model even if your own tracks are queued (for testing the engine)"
         type: boolean
         default: false
+      renderer:
+        description: "Where the songs render: auto (the Mac GPU when it is online, else GitHub's CPU), mac or cpu"
+        type: choice
+        options: [auto, mac, cpu]
+        default: auto
 
 permissions:
   contents: write
   pages: write
   id-token: write
+  actions: write   # the Mac watch: cancel a run whose Mac never picked it up and start it on GitHub's CPU
 
 concurrency:
   group: daily-drop
@@ -52,6 +58,13 @@ env:
     Qwen3-Embedding-0.6B-Q8_0.gguf:784144960
     vae-BF16.gguf:337420928
   MODELS_CACHE_KEY: acestep15-gguf-q8-sft-lm06-v1
+  # the Mac renderer's models (Anchit, 2026-10-29: "use the Mac GPU"): the 4B XL DiT (sftturbo50) and the 4B
+  # planner, kept on the Mac in ~/anchor-gpu/models between runs (tools/mac-runner-setup.sh)
+  MAC_MODEL_FILES: >-
+    acestep-v15-xl-sftturbo50-Q8_0.gguf:5305828768
+    acestep-5Hz-lm-4B-Q8_0.gguf:4457323648
+    Qwen3-Embedding-0.6B-Q8_0.gguf:784144960
+    vae-BF16.gguf:337420928
   ROBOT_NAME: "Anchit Tandon"
   ROBOT_EMAIL: "anchit.tandon@gmail.com"
 
@@ -62,6 +75,8 @@ jobs:
     outputs:
       drops: ${{ steps.plan.outputs.drops }}
       count: ${{ steps.plan.outputs.count }}
+      renderer: ${{ steps.where.outputs.renderer }}
+      runs_on: ${{ steps.where.outputs.runs_on }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -87,11 +102,69 @@ jobs:
           echo "drops=$DROPS" >> "$GITHUB_OUTPUT"
           echo "count=$(python -c "import json,sys;print(len(json.loads(sys.argv[1])))" "$DROPS")" >> "$GITHUB_OUTPUT"
 
+      # The Mac's GPU renders the big model (4B XL + 4B planner, best of several takes) when it
+      # is online: its heartbeat (tools/mac-heartbeat.sh, every 5 min while the runner is up)
+      # stamps the repo variable ANCHOR_MAC_SEEN. Older than 20 min means asleep or off, and the
+      # songs render on GitHub's CPU with the smaller model, as before.
+      - name: Pick where the songs render
+        id: where
+        env:
+          SEEN: ${{ vars.ANCHOR_MAC_SEEN }}
+          WANT: ${{ inputs.renderer || 'auto' }}
+        run: |
+          case "$SEEN" in ''|*[!0-9]*) SEEN=0 ;; esac
+          AGE=$(( $(date +%s) - SEEN ))
+          if [ "$WANT" = "mac" ] || { [ "$WANT" = "auto" ] && [ "$AGE" -le 1200 ]; }; then
+            echo "renderer=mac" >> "$GITHUB_OUTPUT"
+            echo 'runs_on=["self-hosted","macOS","ARM64","anchor-mac"]' >> "$GITHUB_OUTPUT"
+            echo "::notice::Rendering on the Mac GPU (last heartbeat ${AGE}s ago)"
+          else
+            echo "renderer=cpu" >> "$GITHUB_OUTPUT"
+            echo 'runs_on="ubuntu-24.04"' >> "$GITHUB_OUTPUT"
+            echo "::notice::Rendering on GitHub's CPU (Mac heartbeat $([ "$SEEN" = 0 ] && echo never || echo "${AGE}s ago"))"
+          fi
+
+  # A Mac run whose Mac never picks up the work (asleep, lid closed) would wait in the queue for
+  # a day and hold every later run behind it (concurrency group daily-drop). After 20 min with
+  # no song started this cancels the run and starts it again on GitHub's CPU.
+  mac-watch:
+    needs: plan
+    if: needs.plan.outputs.count != '0' && needs.plan.outputs.renderer == 'mac'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - name: Wait for the Mac to start a song
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          DATE: ${{ inputs.date }}
+          FORCE: ${{ inputs.force || false }}
+          DRY: ${{ inputs.dry_run || false }}
+          NOW_: ${{ inputs.publish_now || false }}
+          IGNQ: ${{ inputs.ignore_queue || false }}
+        run: |
+          for i in $(seq 1 40); do
+            STARTED="$(gh api "repos/$GH_REPO/actions/runs/$RUN_ID/jobs?per_page=50" \
+              -q '[.jobs[] | select(.name | startswith("make")) | select(.status != "queued" and .status != "waiting")] | length')"
+            [ "${STARTED:-0}" -gt 0 ] && { echo "The Mac started rendering."; exit 0; }
+            sleep 30
+          done
+          echo "::warning::The Mac did not pick up the songs in 20 min; starting them again on GitHub's CPU."
+          gh workflow run daily.yml --ref "$GITHUB_REF_NAME" -f renderer=cpu -f date="$DATE" -f force="$FORCE" \
+            -f dry_run="$DRY" -f publish_now="$NOW_" -f ignore_queue="$IGNQ"
+          gh run cancel "$RUN_ID"
+
   make:
     needs: plan
     if: needs.plan.outputs.count != '0'
-    runs-on: ubuntu-24.04
-    timeout-minutes: 350   # the CPU music engine can run past 3.5 h; 210 cancelled the 10-18 and 10-22 drops
+    # the Mac (self-hosted, label anchor-mac) or GitHub's CPU, as the plan picked
+    runs-on: ${{ fromJSON(needs.plan.outputs.runs_on) }}
+    # the CPU music engine can run past 3.5 h (210 cancelled the 10-18 and 10-22 drops); the Mac
+    # renders a take in minutes, so two hours is a hung Mac, not a slow one
+    timeout-minutes: ${{ needs.plan.outputs.renderer == 'mac' && 120 || 350 }}
+    env:
+      ANCHOR_RENDERER: ${{ needs.plan.outputs.renderer }}
     strategy:
       fail-fast: false     # one song failing its checks never stops the others
       matrix:
@@ -113,6 +186,8 @@ jobs:
           pip install -r requirements.txt
           # the recogniser that listens to every take for sung production notes (anchor/lyriccheck.py)
           pip install "faster-whisper==1.2.1" "av<16" soundfile
+          # the song gate that measures every take against Anchit's own songs (anchor/songgate.py)
+          pip install -r requirements-gate.txt
           bash scripts/install-ffmpeg.sh
 
       - name: Cache the speech model (faster-whisper small)
@@ -154,7 +229,7 @@ jobs:
           fi
 
       - name: Fingerprint the CPU (native builds are CPU specific)
-        if: steps.day.outputs.skip != 'true'
+        if: steps.day.outputs.skip != 'true' && env.ANCHOR_RENDERER != 'mac'
         id: cpu
         # the model name alone is not enough: runners sharing a model name expose different
         # instruction sets, and a build made for one died with SIGILL on another (2026-09-23)
@@ -163,7 +238,7 @@ jobs:
           echo "hash=$( (grep -m1 'model name' /proc/cpuinfo; grep -m1 '^flags' /proc/cpuinfo) | sha256sum | cut -c1-12)" >> "$GITHUB_OUTPUT"
 
       - name: Restore acestep.cpp build
-        if: steps.day.outputs.skip != 'true'
+        if: steps.day.outputs.skip != 'true' && env.ANCHOR_RENDERER != 'mac'
         id: bin
         uses: actions/cache/restore@v4
         with:
@@ -171,7 +246,7 @@ jobs:
           key: acestep-bin-${{ env.ACESTEP_CPP_REF }}-${{ steps.cpu.outputs.hash }}
 
       - name: Build acestep.cpp (CPU)
-        if: steps.day.outputs.skip != 'true' && steps.bin.outputs.cache-hit != 'true'
+        if: steps.day.outputs.skip != 'true' && env.ANCHOR_RENDERER != 'mac' && steps.bin.outputs.cache-hit != 'true'
         run: |
           rm -rf vendor/acestep.cpp
           git clone --recurse-submodules "$ACESTEP_CPP_REPO" vendor/acestep.cpp
@@ -183,14 +258,14 @@ jobs:
           ls -la build/ace-synth build/ace-lm
 
       - name: Save acestep.cpp build
-        if: steps.day.outputs.skip != 'true' && steps.bin.outputs.cache-hit != 'true'
+        if: steps.day.outputs.skip != 'true' && env.ANCHOR_RENDERER != 'mac' && steps.bin.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           path: vendor/acestep.cpp/build
           key: acestep-bin-${{ env.ACESTEP_CPP_REF }}-${{ steps.cpu.outputs.hash }}
 
       - name: Restore models
-        if: steps.day.outputs.skip != 'true'
+        if: steps.day.outputs.skip != 'true' && env.ANCHOR_RENDERER != 'mac'
         id: models
         uses: actions/cache/restore@v4
         with:
@@ -198,7 +273,7 @@ jobs:
           key: ${{ env.MODELS_CACHE_KEY }}
 
       - name: Download ACE-Step 1.5 GGUF models (MIT licence)
-        if: steps.day.outputs.skip != 'true' && steps.models.outputs.cache-hit != 'true'
+        if: steps.day.outputs.skip != 'true' && env.ANCHOR_RENDERER != 'mac' && steps.models.outputs.cache-hit != 'true'
         run: |
           mkdir -p vendor/models
           for entry in $MODEL_FILES; do
@@ -210,11 +285,35 @@ jobs:
           ls -la vendor/models
 
       - name: Save models
-        if: steps.day.outputs.skip != 'true' && steps.models.outputs.cache-hit != 'true'
+        if: steps.day.outputs.skip != 'true' && env.ANCHOR_RENDERER != 'mac' && steps.models.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
         with:
           path: vendor/models
           key: ${{ env.MODELS_CACHE_KEY }}
+
+      - name: The Mac's engine and models (Metal build, 4B XL DiT, 4B planner)
+        if: steps.day.outputs.skip != 'true' && env.ANCHOR_RENDERER == 'mac'
+        run: |
+          G="$HOME/anchor-gpu"
+          if [ "$(git -C "$G/acestep.cpp" rev-parse HEAD 2>/dev/null)" != "$ACESTEP_CPP_REF" ] || [ ! -x "$G/acestep.cpp/build/ace-synth" ]; then
+            rm -rf "$G/acestep.cpp"
+            git clone --recurse-submodules "$ACESTEP_CPP_REPO" "$G/acestep.cpp"
+            git -C "$G/acestep.cpp" checkout "$ACESTEP_CPP_REF"
+            git -C "$G/acestep.cpp" submodule update --init --recursive
+            cmake -S "$G/acestep.cpp" -B "$G/acestep.cpp/build" -DCMAKE_BUILD_TYPE=Release
+            cmake --build "$G/acestep.cpp/build" --config Release -j "$(sysctl -n hw.ncpu)" --target ace-synth ace-lm
+          fi
+          mkdir -p "$G/models"
+          for entry in $MAC_MODEL_FILES; do
+            f="${entry%%:*}"; want="${entry##*:}"
+            [ "$(stat -f %z "$G/models/$f" 2>/dev/null)" = "$want" ] && continue
+            curl -fL --retry 5 --retry-delay 10 -o "$G/models/$f" "https://huggingface.co/$HF_REPO/resolve/main/$f"
+            got="$(stat -f %z "$G/models/$f")"
+            [ "$got" = "$want" ] || { echo "::error::$f is $got bytes, expected $want"; exit 1; }
+          done
+          echo "ACESTEP_BIN=$G/acestep.cpp/build" >> "$GITHUB_ENV"
+          echo "ACESTEP_MODELS=$G/models" >> "$GITHUB_ENV"
+          echo "ACE_THREADS=$(sysctl -n hw.ncpu)" >> "$GITHUB_ENV"
 
       - name: Make the drop (brief, track, master, cover, full videos, Short)
         if: steps.day.outputs.skip != 'true'
@@ -222,14 +321,35 @@ jobs:
         env:
           DATE: ${{ steps.day.outputs.date }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          ACESTEP_BIN: ${{ github.workspace }}/vendor/acestep.cpp/build
-          ACESTEP_MODELS: ${{ github.workspace }}/vendor/models
           ANCHOR_VAE_CHUNK: "1024"
+          # a slot the song gate held in an earlier run gets new seeds in this one
+          ANCHOR_SEED_SALT: ${{ github.run_id }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
         run: |
-          export ACE_THREADS="$(nproc)"
-          python -m anchor make --date "$DATE" --out "build/$DATE" ${{ steps.day.outputs.noq }}
+          if [ "$ANCHOR_RENDERER" != "mac" ]; then
+            export ACESTEP_BIN="$GITHUB_WORKSPACE/vendor/acestep.cpp/build" ACESTEP_MODELS="$GITHUB_WORKSPACE/vendor/models"
+            export ACE_THREADS="$(nproc)"
+          fi
+          # no new take starts that would run past the job's limit (take times are measured)
+          LIMIT_MIN=$([ "$ANCHOR_RENDERER" = "mac" ] && echo 115 || echo 340)
+          export ANCHOR_MAKE_DEADLINE=$(( $(date +%s) + LIMIT_MIN * 60 ))
+          RC=0
+          if [ "$ANCHOR_RENDERER" = "mac" ]; then
+            # the Mac stays awake while it renders (a closed lid still sleeps it)
+            caffeinate -i python -m anchor make --date "$DATE" --out "build/$DATE" ${{ steps.day.outputs.noq }} || RC=$?
+          else
+            python -m anchor make --date "$DATE" --out "build/$DATE" ${{ steps.day.outputs.noq }} || RC=$?
+          fi
+          if [ "$RC" = 3 ]; then
+            # the hard song gate: no take was good enough, so this song is held, not posted
+            echo "held=true" >> "$GITHUB_OUTPUT"
+            WHY="$(python -c "import json;print('; '.join(json.load(open('build/$DATE/held.json'))['why'][:5]))")"
+            echo "::warning::$DATE held by the song gate (nothing posted): $WHY"
+            printf '### %s held by the song gate\n\nNothing was posted. %s\n' "$DATE" "$WHY" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          [ "$RC" = 0 ] || exit "$RC"
           python - >> "$GITHUB_OUTPUT" <<EOF
           import json
           m = json.load(open("build/$DATE/meta.json"))
@@ -249,7 +369,7 @@ jobs:
           EOF
 
       - name: Carry the queue stamp out of this job
-        if: steps.day.outputs.skip != 'true'
+        if: steps.day.outputs.skip != 'true' && steps.make.outputs.held != 'true'
         run: |
           # anchor make stamps released_at into queue/queue.json, but the job that COMMITS
           # is a different runner with a fresh checkout, so the stamp died here and the same
@@ -257,7 +377,7 @@ jobs:
           cp queue/queue.json "build/${{ steps.day.outputs.date }}/queue.json"
 
       - name: Publish the release files
-        if: steps.day.outputs.skip != 'true' && inputs.dry_run != true
+        if: steps.day.outputs.skip != 'true' && inputs.dry_run != true && steps.make.outputs.held != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           DATE: ${{ steps.day.outputs.date }}
@@ -276,7 +396,7 @@ jobs:
       # only after the release exists, so a song whose files never reached the release page
       # never goes on to YouTube with links to nothing
       - name: Upload drop files
-        if: steps.day.outputs.skip != 'true'
+        if: steps.day.outputs.skip != 'true' && steps.make.outputs.held != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: drop-${{ steps.day.outputs.date }}
