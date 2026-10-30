@@ -124,24 +124,67 @@ def hear(audio: Path, title: str | None = None, model_size: str = "small") -> st
                            check=True, capture_output=True)
             samples, _sr = sf.read(str(wav), dtype="float32")
         model = WhisperModel(model_size, device="cpu", compute_type="int8")
-        hint = {"initial_prompt": f"{title}."} if title else {}
+        # no hint with the title: a prompt makes the recogniser spell the title right even when
+        # the singer says it wrong, and the pronunciation check below needs to hear what was sung
         segs, _info = model.transcribe(samples, language="en", vad_filter=False,
-                                       condition_on_previous_text=False, **hint)
+                                       condition_on_previous_text=False)
         return " ".join(s.text.strip() for s in segs)
     except Exception as exc:                          # noqa: BLE001
         log(f"lyriccheck: transcription failed ({str(exc)[:160]})")
         return None
 
 
+def _close(a: str, b: str) -> float:
+    from difflib import SequenceMatcher
+    return SequenceMatcher(None, a, b).ratio()
+
+
+def misheard_title(heard: str, title: str | None, min_ratio: float = 0.8, min_exact: float = 0.75) -> list[str]:
+    """The words of the title that were not sung as standard English (Anchit, 2026-10-30:
+    "kinetic", "carbon" were pronounced wrong). The title is the chant of every drop, sung many
+    times. A word is sung wrong when the recogniser never hears it as itself, or when most of
+    what it hears near it is a variant: Kinetic Carbon (2026-10-26-3) was heard as "kinetic" 9
+    times and "kinected" 4 times. Short words (under 4 letters) are not judged."""
+    words = [w for w in _words(title or "") if len(w) >= 4]
+    if not words:
+        return []
+    seq = _words(heard)
+    # the recogniser may glue or split a sung word: also look at each pair of heard words joined
+    cands = seq + [a + b for a, b in zip(seq, seq[1:])]
+    bad = []
+    for w in words:
+        if not any(_close(w, h) >= min_ratio for h in cands):
+            bad.append(w)
+            continue
+        joined, i = [], 0                      # a sung word heard split in two counts as itself
+        while i < len(seq):
+            if i + 1 < len(seq) and seq[i] + seq[i + 1] == w:
+                joined.append(w)
+                i += 2
+            else:
+                joined.append(seq[i])
+                i += 1
+        near = [h for h in joined if len(h) >= 3 and _close(w, h) >= 0.6]
+        exact = sum(1 for h in near if h == w or h.rstrip("s") == w)
+        if near and exact / len(near) < min_exact:
+            bad.append(w)
+    return bad
+
+
 def check(audio: Path, sheet: str | None, title: str | None = None) -> dict:
-    """{"heard": text or None, "notes": [sung production notes], "checked": bool}."""
+    """{"heard": text or None, "notes": [sung production notes], "misheard": [title words sung
+    wrong], "checked": bool}."""
     heard = hear(audio, title)
     if heard is None:
-        return {"heard": None, "notes": [], "checked": False}
+        return {"heard": None, "notes": [], "misheard": [], "checked": False}
     notes = sung_notes(heard, sheet)
+    sung = sung_lines(sheet)
+    # the title is judged only when the sheet sings it (a queued song's sheet may be unknown)
+    misheard = misheard_title(heard, title) if title and any(title.lower() in ln.lower() for ln in sung) else []
     log(f"lyriccheck: {len(_words(heard))} words heard; "
-        + (f"SINGS PRODUCTION NOTES: {notes}" if notes else "only the written lyrics"))
-    return {"heard": heard, "notes": notes, "checked": True}
+        + (f"SINGS PRODUCTION NOTES: {notes}" if notes else "only the written lyrics")
+        + (f"; TITLE SUNG WRONG: {misheard}" if misheard else ""))
+    return {"heard": heard, "notes": notes, "misheard": misheard, "checked": True}
 
 
 VERIFIED = Path(__file__).resolve().parent.parent / "site" / "data" / "lyrics_verified.json"

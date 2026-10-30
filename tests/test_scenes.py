@@ -106,3 +106,21 @@ def test_title_sits_at_the_top_when_lyrics_are_shown(tmp_path):
         ass = scenes.write_ass(tmp_path / "a.ass", "#e8582f", W, H, secs, lines, "Kindness Needs Truth", "Slow Techno 95 BPM").read_text()
         ys = [int(m) for m in re.findall(r"Title,,0,0,0,,\{\\pos\(\d+,(\d+)\)", ass)]
         assert ys and all(y < 0.2 * H for y in ys), (W, H, ys)
+
+
+def test_every_sung_word_lands_big_when_it_is_sung(tmp_path):
+    """Kinetic lyrics (Anchit, 2026-10-30): the line runs small as a karaoke eyebrow and each word
+    lands huge under it at the moment it is sung, title words in the accent colour, long words
+    shrunk to stay inside the frame."""
+    words = [("cause", 3.0, 3.3), ("the", 3.35, 3.5), ("kinetic", 3.6, 4.3), ("carbon", 4.4, 5.2)]
+    lines = L.to_lines(words)
+    secs = [{"start": 0.0, "end": 2.0, "kind": "intro"}, {"start": 2.0, "end": 12.0, "kind": "drop"}]
+    for W, H in ((1920, 1080), (1080, 1920)):
+        ass = SC.write_ass(tmp_path / "k.ass", "#ff4040", W, H, secs, lines, "Kinetic Carbon", "Hard Tech").read_text()
+        heroes = [ln.split(",", 9) for ln in ass.splitlines() if ",Hero," in ln]
+        assert [h[9].rsplit("}", 1)[1] for h in heroes] == ["CAUSE", "THE", "KINETIC", "CARBON"]
+        assert heroes[0][1] == "0:00:02.97" and heroes[1][1] == heroes[0][2], "each word holds until the next one lands"
+        assert "\\1c&H004040FF" in heroes[2][9] and "\\1c" not in heroes[0][9], "title words in the accent colour"
+        assert len([ln for ln in ass.splitlines() if ",Halo," in ln]) == 4
+    assert SC.hero_size("SUPERCALIFRAGILISTIC", 1080, 250) * 0.5 * 20 <= 1080 * 0.86 + 1
+    assert SC.hero_size("GO", 1920, 230) == 230

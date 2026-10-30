@@ -157,17 +157,25 @@ def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: f
 def write_ass(path: Path, accent: str, W: int, H: int, secs: list[dict], lines: list[dict],
               title: str, sub: str, handle: str = "") -> Path:
     vert = H > W
-    size = 74 if vert else 86
-    mv = int(H * (0.20 if vert else 0.17))
+    cap = 58 if vert else 54                     # the eyebrow line
+    hero = 250 if vert else 230                  # the word being sung; long words shrink to fit
+    left = int(W * (0.075 if vert else 0.065))
+    eye_y, hero_y = (int(H * 0.38), int(H * 0.38) + 74) if vert else (int(H * 0.34), int(H * 0.34) + 66)
     head = ["[Script Info]", "ScriptType: v4.00+", f"PlayResX: {W}", f"PlayResY: {H}", "WrapStyle: 0",
             "ScaledBorderAndShadow: yes", "", "[V4+ Styles]",
             "Format: Name,Fontname,Fontsize,PrimaryColour,SecondaryColour,OutlineColour,BackColour,Bold,Italic,"
             "Underline,StrikeOut,ScaleX,ScaleY,Spacing,Angle,BorderStyle,Outline,Shadow,Alignment,MarginL,MarginR,"
             "MarginV,Encoding",
-            # the caption sits on a dark see-through box: the words stay readable over any scene, even one
-            # in the song's own accent colour
-            f"Style: Cap,Anton,{size},{lyr._bgr(accent)},&H00FFFFFF,&H48000000,&H48000000,0,0,0,0,100,100,1,0,3,12,0,2,"
-            f"70,70,{mv},1",
+            # kinetic lyrics (Anchit, 2026-10-30: "improve lyrical videos", after a 4K kinetic-type
+            # reference): the sung line runs small as a karaoke eyebrow, and every word lands huge
+            # beneath it the moment it is sung. A soft dark halo under both keeps them readable over
+            # any scene, even one in the song's own accent colour
+            f"Style: Cap,Anton,{cap},{lyr._bgr(accent)},&H00FFFFFF,&H50000000,&H64000000,0,0,0,0,100,100,2,0,1,4,2,7,"
+            f"0,0,0,1",
+            f"Style: Hero,Anton,{hero},&H00FFFFFF,&H00FFFFFF,&H30000000,&H64000000,0,0,0,0,100,100,1,0,1,6,4,7,"
+            f"0,0,0,1",
+            f"Style: Halo,Anton,{hero},&HA0000000,&HA0000000,&HA0000000,&HFF000000,0,0,0,0,100,100,1,0,1,26,0,7,"
+            f"0,0,0,1",
             f"Style: Title,Anton,{int(W * ((0.115 if not vert else 0.15) * 0.42))},&H00FFFFFF,&H00FFFFFF,&H00000000,&H90000000,0,0,0,"
             "0,100,100,3,0,1,4,3,5,60,60,0,1",
             f"Style: Sub,Anton,{int(W * (0.03 if not vert else 0.05))},{lyr._bgr(accent)},{lyr._bgr(accent)},&H00000000,"
@@ -208,9 +216,42 @@ def write_ass(path: Path, accent: str, W: int, H: int, secs: list[dict], lines: 
                 parts.append(f"{{\\k{lead}}}")
             parts.append(f"{{\\kf{max(1, round((e - s) * 100))}}}{lyr._esc(wd).upper()} ")
             cursor = e
-        ev.append(f"Dialogue: 4,{lyr._t(t0_)},{lyr._t(t1_)},Cap,,0,0,0,,{{\\fad(150,100)}}{''.join(parts)}")
+        ev.append(f"Dialogue: 4,{lyr._t(t0_)},{lyr._t(t1_)},Cap,,0,0,0,,"
+                  f"{{\\pos({left},{eye_y})\\fad(150,100)}}{''.join(parts)}")
+        ev += hero_words(ln, t1_, left, hero_y, W, hero, accent, title)
     path.write_text("\n".join(head + ev) + "\n", encoding="utf-8")
     return path
+
+
+def hero_size(word: str, W: int, base: int) -> int:
+    """The hero word's font size: ``base``, smaller for a long word so it never leaves the frame
+    (Anton caps run about 0.5 em wide)."""
+    room = W * 0.86
+    return int(max(70, min(base, room / max(1, len(word)) / 0.5)))
+
+
+def hero_words(ln: dict, line_end: float, x: int, y: int, W: int, base: int, accent: str, title: str) -> list[str]:
+    """One event per sung word: it lands big the moment it is sung (a quick scale-down and
+    unblur from 135 %) and holds until the next word, the last one until the line leaves.
+    Words of the song's title land in the accent colour."""
+    out = []
+    words = ln["words"]
+    title_words = {w.strip(".,!?'").lower() for w in (title or "").split()}
+    for k, (wd, s, e) in enumerate(words):
+        t0 = max(0.0, s - 0.03)
+        t1 = words[k + 1][1] - 0.03 if k + 1 < len(words) else line_end
+        if t1 - t0 < 0.08:
+            continue
+        size = hero_size(wd, W, base)
+        txt = lyr._esc(wd).upper()
+        colour = f"\\1c{lyr._bgr(accent)}" if wd.strip(".,!?'").lower() in title_words else ""
+        pop = (f"\\fs{size}\\fscx135\\fscy135\\blur9\\alpha&HFF&"
+               f"\\t(0,130,\\fscx100\\fscy100\\blur0\\alpha&H00&)\\fad(0,90)")
+        halo = (f"\\fs{size}\\fscx135\\fscy135\\blur22\\1a&HFF&\\3a&HFF&"
+                f"\\t(0,130,\\fscx100\\fscy100\\3a&H68&)\\fad(0,90)")
+        out.append(f"Dialogue: 5,{lyr._t(t0)},{lyr._t(t1)},Halo,,0,0,0,,{{\\pos({x},{y}){halo}}}{txt}")
+        out.append(f"Dialogue: 6,{lyr._t(t0)},{lyr._t(t1)},Hero,,0,0,0,,{{\\pos({x},{y}){pop}{colour}}}{txt}")
+    return out
 
 
 def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: list[dict], title: str, sub: str,

@@ -51,7 +51,7 @@ def test_no_sheet_carries_a_direction_any_more():
 def test_the_check_is_off_in_tests_and_reports_when_it_cannot_listen(monkeypatch, tmp_path):
     assert not lyriccheck.enabled()
     monkeypatch.setattr(lyriccheck, "hear", lambda *a, **k: None)
-    assert lyriccheck.check(tmp_path / "x.wav", "[Intro]\nhi") == {"heard": None, "notes": [], "checked": False}
+    assert lyriccheck.check(tmp_path / "x.wav", "[Intro]\nhi") == {"heard": None, "notes": [], "misheard": [], "checked": False}
 
 
 @pytest.mark.slow
@@ -116,3 +116,38 @@ def test_the_shipped_verified_list_holds_the_songs_that_sang_their_notes():
     import json
     v = json.loads(lyriccheck.VERIFIED.read_text())
     assert "2026-10-26-4" in v["ids"] and not set(v["held"]) & set(v["ids"])
+
+
+def test_a_title_sung_wrong_is_caught_and_a_title_sung_right_passes():
+    """Anchit, 2026-10-30: "kinetic", "carbon" were pronounced wrong. The title is chanted many
+    times; a word the recogniser never hears as itself was not sung as standard English."""
+    wrong = "Close your eyes. Kee-neh-tick car-bee-on, hands up. Kinny tech car rubin, hands up."
+    assert lyriccheck.misheard_title(wrong, "Kinetic Carbon") == ["kinetic", "carbon"]
+    right = "Close your eyes. Kinetic carbon, hands up. Kinetic carbon!"
+    assert lyriccheck.misheard_title(right, "Kinetic Carbon") == []
+    assert lyriccheck.misheard_title("friction prism friction prism", "Friction Prism") == []
+    assert lyriccheck.misheard_title("anything", "Go Up") == [], "words under four letters are not judged"
+    assert lyriccheck.misheard_title("over drive overdrive", "Overdrive") == [], "a word split in two still counts"
+
+
+def test_the_title_is_only_judged_when_the_sheet_sings_it(monkeypatch, tmp_path):
+    monkeypatch.setattr(lyriccheck, "hear", lambda *a, **k: "kee neh tick hands up")
+    sheet = "[Drop]\nKinetic Carbon\nhands up"
+    assert lyriccheck.check(tmp_path / "x.wav", sheet, "Kinetic Carbon")["misheard"] == ["kinetic", "carbon"]
+    assert lyriccheck.check(tmp_path / "x.wav", None, "Kinetic Carbon")["misheard"] == [], "unknown sheet (a queued song)"
+
+
+# faster-whisper small, no title hint, on the released masters (2026-10-30)
+HEARD_KINETIC_CARBON = ("Breathe it in. Never stop moving, never stop moving. Kinetic carbon Kinetic carbon Ay Ay Ay "
+                        "Never stop movin' Kinetic carbon Kinetic carbon Carbon Kinetic Carbon Kinetic Carbon Kinetic "
+                        "carbon Kinetic carbon Kinected carbon, Kinected carbon Kinected carbon, kinected carbon Feel the acid.")
+HEARD_PISTON_VOLTAGE = ("Let it melt Breathe it in, breathe it in Pistons, voltage, piston, voltage Pistons, voltage, "
+                        "piston, voltage Go! Breathe it in. Go! Piston voltage, piston voltage Go! Let it melt.")
+HEARD_COMMAND_VORTEX = ("Bounce on board, check, come on board, check, bounce, bounce, bounce, bounce Let it be taxed "
+                        "When I go for a text Bounce on, bounce on, run, run, bounce on Let it boot text Close your eyes.")
+
+
+def test_the_released_songs_that_sang_their_title_wrong_are_caught():
+    assert lyriccheck.misheard_title(HEARD_KINETIC_CARBON, "Kinetic Carbon") == ["kinetic"], "4 of 13 were 'kinected'"
+    assert lyriccheck.misheard_title(HEARD_COMMAND_VORTEX, "Command Vortex") == ["command", "vortex"]
+    assert lyriccheck.misheard_title(HEARD_PISTON_VOLTAGE, "Piston Voltage") == [], "sung right, plurals and all"

@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        file: [test_pipeline, test_release_v2, test_fullvideos, test_scenes, test_mix_youtube, test_art_video, test_versions]
+        file: [test_pipeline, test_release_v2, test_fullvideos, test_scenes, test_mix_youtube, test_art_video, test_versions, test_song_gate, test_lyriccheck]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -36,5 +36,5 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: bash scripts/install-ffmpeg.sh
-      - run: pip install -r requirements.txt -r requirements-dev.txt
+      - run: pip install -r requirements.txt -r requirements-dev.txt -r requirements-gate.txt
       - run: python -m pytest -q -m slow -n 0 tests/${{ matrix.file }}.py

@@ -3,13 +3,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from pathlib import Path
 
 from . import catalog, ledger, lyriccheck, pipeline, queue
 from .brief import make_brief
 from .config import CATALOG_PATH, LEDGER_PATH, STATUS_PATH, env, load_profile
-from .util import read_json
+from .util import read_json, write_json as save_json
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -137,8 +138,19 @@ def main(argv: list[str] | None = None) -> int:
     elif args.cmd == "make":
         day = args.date or pipeline.today_utc()
         out = Path(args.out or f"build/{day}")
-        meta = pipeline.make(profile, day, out, engine_name=args.engine, art_mode=args.art,
-                             retries=args.retries, use_queue=not args.no_queue)
+        deadline = float(os.environ["ANCHOR_MAKE_DEADLINE"]) if os.environ.get("ANCHOR_MAKE_DEADLINE") else None
+        try:
+            meta = pipeline.make(profile, day, out, engine_name=args.engine, art_mode=args.art,
+                                 retries=args.retries, use_queue=not args.no_queue, deadline=deadline)
+        except pipeline.SongGateHeld as held:
+            # the hard gate (Anchit, 2026-10-24 and 2026-10-29): no take was good enough, so this
+            # slot posts nothing. Exit 3 tells the workflow "held", not "broken"; the next run
+            # renders it again with new seeds
+            out.mkdir(parents=True, exist_ok=True)
+            reasons = sorted({r for a in held.attempts for r in ((a.get("song_gate") or {}).get("fails") or a.get("fail") or [])})
+            save_json(out / "held.json", {"id": day, "reason": str(held), "why": reasons, "attempts": held.attempts})
+            print(f"{day}: held by the song gate: {held}; " + "; ".join(reasons[:6]), file=sys.stderr)
+            return 3
         print(json.dumps({"out": str(out), "title": meta["brief"]["title"], "files": meta["files"]}))
     elif args.cmd == "publish":
         res = pipeline.publish(profile, Path(args.drop), args.media_url, dry_run=args.dry_run, now=args.now,

@@ -121,7 +121,7 @@ def test_the_songs_render_side_by_side():
 
 
 def _plan_step() -> str:
-    block = WORKFLOW.split("id: plan\n", 1)[1].split("\n  make:", 1)[0]
+    block = WORKFLOW.split("id: plan\n", 1)[1].split("\n  make:", 1)[0].split("\n      - name:", 1)[0]
     return textwrap.dedent(block.split("run: |\n", 1)[1])
 
 

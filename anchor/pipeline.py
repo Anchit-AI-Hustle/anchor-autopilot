@@ -3,10 +3,11 @@ from __future__ import annotations
 
 import re
 import shutil
+import time
 from datetime import date as Date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import catalog, craft, ledger, lyriccheck, lyrics, originality
+from . import catalog, craft, ledger, lyriccheck, lyrics, originality, songgate
 from .art import make_cover, og_card
 from .audio import (analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
@@ -19,12 +20,79 @@ from .publish import Buffer, BufferError, build_post_input, build_reel_input, sc
 from .seo import description as seo_description, genre_phrase, hook_title
 from .youtube import YouTube, YouTubeError, configured as youtube_configured, playlist_id
 from .unique import COVER_MIN_DISTANCE, check_audio, is_same_record, nearest_cover, sounds_alike
-from .util import iso, log, read_json, split_drop_id, utcnow, write_json
+from .util import iso, log, read_json, seed_from, split_drop_id, utcnow, write_json
 from .video import poster_frame, render_full, render_short
 
 
 class QualityError(RuntimeError):
     pass
+
+
+class SongGateHeld(QualityError):
+    """No take passed QC and the song gate, so this slot posts nothing (Anchit, 2026-10-24 and
+    2026-10-29: a hard gate; only songs that pass go out). ``attempts`` is the attempts log,
+    each take with its gate measures and reasons."""
+
+    def __init__(self, message: str, attempts: list | None = None):
+        super().__init__(message)
+        self.attempts = attempts or []
+
+
+def master_take(profile: Profile, raw: Path, work: Path) -> dict:
+    """The finishing pass and the master of one take: what the song gate hears is what ships."""
+    work.mkdir(parents=True, exist_ok=True)
+    # the finishing pass: audible on a phone, wide above the bass, mono below it; a record
+    # already in the channel's range passes through untouched
+    enhanced = work / "enhanced.wav"
+    finish_info = craft.enhance_file(raw, enhanced)
+    log(f"craft: finishing pass tone {finish_info.get('tone', 0)} width {finish_info.get('spread', 0)}; phone share "
+        f"{finish_info['before']['phone_share']} -> {finish_info['after']['phone_share']}, width "
+        f"{finish_info['before']['width']} -> {finish_info['after']['width']}")
+    master_wav = work / "master.wav"
+    loud = master(enhanced, master_wav, float(profile.music["loudness_lufs"]),
+                  float(profile.music["true_peak_db"]),
+                  outro_fade_s=float(profile.music.get("outro_fade_s", 0.0)))
+    return {"master_wav": master_wav, "loud": loud, "finish_info": finish_info}
+
+
+def gate_take(mastered: dict, engine: str | None = None) -> dict | None:
+    """The song gate's verdict on a mastered take, or None when the gate is off (the tests) or
+    the engine is the test-tone fixture. A take the gate cannot read is a fail, never a pass."""
+    if not songgate.enabled() or engine == "fixture":
+        return None
+    try:
+        result = songgate.check(mastered["master_wav"])
+    except Exception as exc:          # noqa: BLE001
+        result = {"verdict": "FAIL", "measures": {},
+                  "fails": [{"check": "read", "value": None, "limit": None, "unit": "",
+                             "why": f"the gate could not measure it: {str(exc)[:160]}", "songs_range": [None, None]}]}
+    log(f"song gate: {result['verdict']} {songgate.reasons(result) or ''}")
+    return result
+
+
+def gate_note(result: dict) -> dict:
+    return {"verdict": result["verdict"], "measures": result.get("measures"), "fails": songgate.reasons(result),
+            "score": songgate.score(result.get("measures") or {})}
+
+
+def time_for_another_take(deadline: float | None, take_s: list[float], margin_s: float = 1500.0) -> bool:
+    """Is there time for one more take before the job's limit? The slowest take so far, plus a
+    tenth, plus ``margin_s`` for the cover, the videos and the upload of the files."""
+    if not deadline or not take_s:
+        return True
+    return time.time() + max(take_s) * 1.1 + margin_s < deadline
+
+
+def take_plan(profile: Profile, retries: int) -> tuple[int, int]:
+    """(takes, best_of): how many takes a slot may render, and after how many passing takes it
+    stops and keeps the best. The renderer the run picked sets them ([music.renderers]: the
+    Mac GPU renders up to six and keeps the best of three; the CPU fallback stops at the first
+    pass); ANCHOR_TAKES / ANCHOR_BEST_OF win over that, and ``retries`` is the default."""
+    from .music import renderer_settings
+    music = renderer_settings(profile.music)
+    takes = int(env("ANCHOR_TAKES", "") or music.get("takes") or retries + 1)
+    best_of = int(env("ANCHOR_BEST_OF", "") or music.get("best_of") or 1)
+    return max(1, takes), max(1, best_of)
 
 
 def slug(text: str) -> str:
@@ -77,7 +145,13 @@ def can_make(profile: Profile, queue_dir: Path | None = None, catalog_path: Path
 # ------------------------------------------------------------------------- make
 def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None = None,
          art_mode: str | None = None, retries: int = 1, catalog_path: Path = CATALOG_PATH,
-         queue_dir: Path | None = None, use_queue: bool = True) -> dict:
+         queue_dir: Path | None = None, use_queue: bool = True, deadline: float | None = None) -> dict:
+    """One drop: your next queued Suno song, or the best take the engine makes.
+
+    Every take goes through QC, the lyric check and then the song gate (Anchit: a hard gate,
+    2026-10-24, confirmed 2026-10-29). Takes are rendered until ``best_of`` of them pass or the
+    takes or the time (``deadline``, epoch seconds) run out, and the passing take with the
+    best gate score ships. When none passes, SongGateHeld says why and nothing ships."""
     # resolved here, not in the signature, so tests can point the queue somewhere empty
     queue_dir = queue_dir or QUEUE
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -91,11 +165,22 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
     if queued:
         return make_from_queue(profile, day, out_dir, queued, art_mode=art_mode, hist=hist)
     engine = get_engine(profile.music, engine_name)
-    attempts_log = []
-    for attempt in range(retries + 1):
+    takes, best_of = take_plan(profile, retries)
+    # a slot held by an earlier run gets new seeds in the next one, never the same takes again
+    salt = env("ANCHOR_SEED_SALT", "")
+    gate_on = songgate.enabled()
+    attempts_log, take_s, passing = [], [], []
+    for attempt in range(takes):
+        if attempt and not time_for_another_take(deadline, take_s):
+            log(f"make: no time for take {attempt + 1} before the job's limit (slowest take "
+                f"{max(take_s) / 60:.0f} min); stopping")
+            break
+        started = time.monotonic()
         brief = make_brief(profile, day, hist, attempt)
+        if salt:
+            brief["seed"] = seed_from("anchor-audio", day, attempt, salt) % 2_000_000_000
         log(f"brief: {brief['title']!r} | {brief['lane_name']} | {brief['bpm']} BPM | {brief['key']} | "
-            f"{brief['family_name']} | seed {brief['seed']}")
+            f"{brief['family_name']} | seed {brief['seed']} | take {attempt + 1} of {takes}")
         raw, stats = engine.generate(brief, out_dir / f"gen-{attempt}")
         stats_audio = analyze(decode(raw))
         ok, fails, warns = quality_gate(stats_audio, brief)
@@ -106,12 +191,15 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             fails = [*fails, f"sounds like released drop {twin} (envelope {score['envelope']:.2f}, "
                              f"spectral sequence {score['sequence']:.2f})"]
         # the craft the channel's best records share: a real breakdown, and a sound that moves.
-        # A take without them is sent back while seeds remain; on the last take it ships with a
-        # warning, because a daily channel that misses a day loses more than a weaker record costs
+        # With the song gate on, the gate is the judge (it measures drops, movement and sections
+        # against Anchit's own songs) and these are notes; without it a take is sent back while
+        # takes remain and the last one ships with a warning
         shape = craft.measure(decode(raw))
         # the fixture engine is a test tone loop with no arrangement to judge
         shape_fails = [] if stats.get("engine") == "fixture" else craft.gate(shape)
-        if shape_fails and attempt < retries:
+        if gate_on and shape_fails:
+            warns = [*warns, *(f"craft: {f}" for f in shape_fails)]
+        elif shape_fails and attempt < takes - 1:
             ok, fails = False, [*fails, *shape_fails]
         elif shape_fails:
             warns = [*warns, *(f"shipped anyway on the last take: {f}" for f in shape_fails)]
@@ -123,18 +211,50 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             if heard["notes"]:
                 ok = False
                 fails = [*fails, f"sings its production notes: {'; '.join(heard['notes'][:4])}"]
-            elif not heard["checked"]:
+            if heard.get("misheard"):
+                # standard English pronunciation, always (Anchit, 2026-10-30): a title word the
+                # recogniser never hears as itself was sung wrong, so the take is made again
+                ok = False
+                fails = [*fails, f"title sung wrong, not standard English: {', '.join(heard['misheard'])}"]
+            if not heard["checked"]:
                 warns = [*warns, "lyrics not checked: the recogniser was unavailable"]
-        attempts_log.append({"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns,
-                             "heard": (heard.get("heard") or "")[:600] or None,
-                             "craft": {k: v for k, v in shape.items() if k != "breakdowns"} | {"breakdowns": len(shape["breakdowns"])},
-                             "nearest_audio": {"id": twin, "similarity": round(sim, 3),
-                                               "envelope": round(score["envelope"], 3), "sequence": round(score["sequence"], 3)}})
-        log(f"QC attempt {attempt}: {'PASS' if ok else 'FAIL'} {fails or ''} {warns or ''}")
+        entry = {"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns,
+                 "heard": (heard.get("heard") or "")[:600] or None,
+                 "craft": {k: v for k, v in shape.items() if k != "breakdowns"} | {"breakdowns": len(shape["breakdowns"])},
+                 "nearest_audio": {"id": twin, "similarity": round(sim, 3),
+                                   "envelope": round(score["envelope"], 3), "sequence": round(score["sequence"], 3)}}
+        attempts_log.append(entry)
+        mastered, gate_score = None, 0.0
         if ok:
-            break
-    else:
-        raise QualityError(f"track failed QC after {retries + 1} attempts: {attempts_log}")
+            mastered = master_take(profile, raw, out_dir / f"take-{attempt}")
+            gate = gate_take(mastered, stats.get("engine"))
+            if gate is not None:
+                entry["song_gate"] = gate_note(gate)
+                gate_score = entry["song_gate"]["score"]
+                if gate["verdict"] != "PASS":
+                    ok = entry["ok"] = False
+                    fails = entry["fail"] = [*fails, *(f"song gate: {r}" for r in songgate.reasons(gate))]
+        take_s.append(time.monotonic() - started)
+        log(f"QC take {attempt + 1}: {'PASS' if ok else 'FAIL'} {fails or ''} {warns or ''}")
+        if ok:
+            passing.append({"score": gate_score, "attempt": attempt, "brief": brief, "raw": raw, "stats": stats,
+                            "stats_audio": stats_audio, "mastered": mastered})
+            if len(passing) >= best_of:
+                break
+    if not passing:
+        if any(a.get("song_gate") for a in attempts_log):
+            raise SongGateHeld(f"no take passed the song gate in {len(take_s)} take{'' if len(take_s) == 1 else 's'}",
+                               attempts_log)
+        raise QualityError(f"track failed QC after {len(take_s)} attempts: {attempts_log}")
+    best = max(passing, key=lambda c: (c["score"], -c["attempt"]))
+    brief, raw, stats, stats_audio = best["brief"], best["raw"], best["stats"], best["stats_audio"]
+    for a in attempts_log:
+        a["chosen"] = a["attempt"] == best["attempt"]
+    if len(passing) > 1:
+        log(f"make: {len(passing)} takes passed; keeping take {best['attempt'] + 1} (gate score {best['score']})")
+    # the shipped take last, so every reader of attempts[-1] reads the take that went out
+    attempts_log.append(attempts_log.pop(next(i for i, a in enumerate(attempts_log) if a["chosen"])))
+    chosen = best["mastered"]
 
     # a song that sings a hook is called by its hook; a name from the word list is the
     # fallback, not the default ("Welcome to Project Mayhem" x6 is why that one is Project Mayhem)
@@ -169,24 +289,19 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             brief["key"] = key
             brief.update(describe(profile, brief))
 
-    return finish(profile, brief, raw, stats_audio, stats, attempts_log, out_dir, art_mode)
+    return finish(profile, brief, raw, stats_audio, stats, attempts_log, out_dir, art_mode, mastered=chosen)
 
 
 def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: dict,
-           attempts_log: list, out_dir: Path, art_mode: str | None) -> dict:
-    """Master, cut the Short, draw the cover, render the video, write the drop files."""
+           attempts_log: list, out_dir: Path, art_mode: str | None, mastered: dict | None = None) -> dict:
+    """Master (unless the take was mastered for the song gate already), cut the Short, draw the
+    cover, render the video, write the drop files."""
     base = asset_base(profile, brief)
     master_wav = out_dir / "master.wav"
-    # the finishing pass: audible on a phone, wide above the bass, mono below it; a record
-    # already in the channel's range passes through untouched
-    enhanced = out_dir / "enhanced.wav"
-    finish_info = craft.enhance_file(raw, enhanced)
-    log(f"craft: finishing pass tone {finish_info.get('tone', 0)} width {finish_info.get('spread', 0)}; phone share "
-        f"{finish_info['before']['phone_share']} -> {finish_info['after']['phone_share']}, width "
-        f"{finish_info['before']['width']} -> {finish_info['after']['width']}")
-    loud = master(enhanced, master_wav, float(profile.music["loudness_lufs"]),
-                  float(profile.music["true_peak_db"]),
-                  outro_fade_s=float(profile.music.get("outro_fade_s", 0.0)))
+    mastered = mastered or master_take(profile, raw, out_dir / "take")
+    if Path(mastered["master_wav"]) != master_wav:
+        shutil.copy(mastered["master_wav"], master_wav)
+    finish_info, loud = mastered["finish_info"], mastered["loud"]
     mp3 = out_dir / f"{base}.mp3"
     flac = out_dir / f"{base}.flac"
     encode_flac(master_wav, flac)
@@ -312,8 +427,15 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
             warn.append(f"your Suno song sings what look like production notes: {'; '.join(heard['notes'][:4])}")
     attempts_log = [{"attempt": 0, "seed": brief["seed"], "ok": True, "fail": [], "warn": warn,
                      "source": src.name, "heard": (heard.get("heard") or "")[:600] or None}]
+    # your own Suno songs set the gate's limits (all nine pass), so for them the gate is a note
+    mastered = master_take(profile, raw, out_dir / "take-queue")
+    gate = gate_take(mastered, "queue")
+    if gate is not None:
+        attempts_log[0]["song_gate"] = gate_note(gate)
+        if gate["verdict"] != "PASS":
+            warn.append("song gate: " + "; ".join(songgate.reasons(gate)))
     meta = finish(profile, brief, raw, stats_audio,
-                  {"engine": "queue", "source_file": src.name}, attempts_log, out_dir, art_mode)
+                  {"engine": "queue", "source_file": src.name}, attempts_log, out_dir, art_mode, mastered=mastered)
     mark_done(src, src.parent / "done")
     return meta
 
