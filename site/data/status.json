@@ -2,30 +2,30 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-10-29-5",
-    "title": "Current Protocol",
-    "finished_at": "2026-10-29T20:45:49Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/40902004222",
+    "drop_id": "2026-10-30-5",
+    "title": "Engage Nebula",
+    "finished_at": "2026-10-30T18:14:01Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41079069607",
     "error": null
   },
-  "next_post_at": "2026-10-30T17:30:00Z",
-  "streak": 5,
+  "next_post_at": "2026-10-31T17:30:00Z",
+  "streak": 6,
   "totals": {
-    "drops": 56
+    "drops": 61
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-10-29T20:45:49Z",
+  "updated_at": "2026-10-30T18:14:01Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
     "steps": 32,
     "model": "acestep-v15-sft-Q8_0.gguf",
     "guidance": 5.0,
-    "lm_ms": 207172,
-    "dit_ms": 7591223,
-    "vae_ms": 645942,
-    "total_s": 8469.3
+    "lm_ms": 209052,
+    "dit_ms": 7215855,
+    "vae_ms": 580156,
+    "total_s": 8030.6
   }
 }
