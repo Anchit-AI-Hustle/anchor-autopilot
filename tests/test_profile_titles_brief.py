@@ -4,6 +4,7 @@ import pytest
 from pathlib import Path
 
 from anchor.brief import make_brief
+from anchor import themes
 from anchor.config import load_profile, validate
 from anchor.titles import make_title
 from anchor.util import rng
@@ -72,7 +73,8 @@ def test_style_prompt_carries_all_nine_layers():
     for t in b["textures"]:
         assert t in cap and t not in b["lyrics"], "textures go to the arranger (caption), never into the sung sheet"
     assert b["lyrics"].splitlines()[0] == "[Intro]", "the sheet carries bare tags: a direction in a tag gets sung"
-    assert len(cap) < 1400, "compressed prose, not the design headings"
+    # 1500: the song's theme (artist/themes.toml, 2026-10-31) adds one short "about ..." clause
+    assert len(cap) < 1500, "compressed prose, not the design headings"
 
 
 def test_every_brief_stays_compressed():
@@ -81,7 +83,7 @@ def test_every_brief_stays_compressed():
     start = date(2026, 10, 1)
     for i in range(120):
         b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
-        assert len(b["caption"]) < 1450, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
+        assert len(b["caption"]) < 1550, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
 
 
 DARK = ("dark", "menac", "oppressive", "dread", "cold", "hostile", "claustrophob", "gloom",
@@ -189,10 +191,11 @@ def test_songs_whisper_in_the_quiet_parts_and_chant_the_title_in_the_drops():
             if tag == "[Drop]":
                 assert words[0] == f"{chant}! {chant}!"
             rap = p.lane(b["lane"]).voice == "rap"
+            theme = next(t for t in themes.load() if t.id == b["theme"])
             if tag in ("[Intro]", "[Outro]") or (tag == "[Breakdown]" and not rap):
-                assert words[0] in p.music["voice"]["whispers"]
+                assert words[0] in theme.whispers, "the quiet lines are the song's own theme's"
             if tag == "[Verse]":
-                assert rap and len(words) == 4 and all(w in p.music["voice"]["rap"] for w in words)
+                assert rap and len(words) == 4 and all(w in theme.rap for w in words)
         assert sum(1 for s_ in sections if s_.startswith("[Drop]")) >= 1
         assert b["vocal_style"] and "chant" in b["vocal_style"]
         req = AceStepCpp("bin", "models", "dit", None).request(b)

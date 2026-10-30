@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from datetime import date as Date, datetime, timezone
 
-from . import originality
+from . import originality, themes
 from .config import Lane, Profile
 from .music import SHAPES, arc, arrangement, section_names, structure
 from .titles import make_title
@@ -85,17 +85,25 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     lo, hi = profile.music.get("duration_range_s") or (profile.music["duration_s"], profile.music["duration_s"])
     duration_s = r.randint(int(lo), int(hi))
     shape = r.choice(list(SHAPES))
-    style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape)
+    # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
+    theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,
+                        used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]))
+    style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape, story=theme.idea)
 
     used_titles = [d.get("title", "") for d in history] + list(profile.artist["existing_titles"])
     recent_titles = [d.get("title", "") for d in past[:10]] + list(profile.artist["existing_titles"])
     # never a title that is already a song anywhere (MusicBrainz, iTunes, Deezer), not just
     # on this channel (Anchit, 2026-10-24)
     check, title_report = originality.checker(), {}
-    title = make_title(profile.titles, rng("anchor-title", drop_id), used_titles, recent_titles,
-                       taken=check, report=title_report)
+    # the name comes from the theme, sharing no word with any earlier ANCHOR title (Anchit,
+    # 2026-10-31); only when every title of the theme is taken does the old word list name it
+    title = themes.title(theme, rng("anchor-title", drop_id), used_titles, taken=check, report=title_report,
+                         recent_titles=[d.get("title", "") for d in past])
+    if title is None:
+        title = make_title(profile.titles, rng("anchor-title", drop_id), used_titles, recent_titles,
+                           taken=check, report=title_report)
     lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", drop_id),
-                         mode=lane.voice)
+                         mode=lane.voice, theme=theme)
 
     brief = {
         "id": drop_id,
@@ -106,6 +114,9 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "title": title,
         "lane": lane.id,
         "lane_name": lane.name,
+        "theme": theme.id,
+        "theme_name": theme.name,
+        "theme_idea": theme.idea,
         "genre_group": lane.group or "any",
         "bpm": bpm,
         "key": key,
@@ -159,7 +170,7 @@ def section_tag(tag: str, kind: str = "") -> str:
 
 
 def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[str, ...], shape: str, r,
-                mode: str = "chant") -> str:
+                mode: str = "chant", theme=None) -> str:
     """The lyrics field: every section's tag and direction, then its words.
 
     The drops chant the song's own title (so the record is named after what the crowd
@@ -167,21 +178,27 @@ def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[s
     Three whispers are drawn for the day and reused, so the song has a few phrases that
     come back rather than a new line every section. A rap lane (``mode="rap"``) raps four
     bars in each build and breakdown, drawn without repeats from the profile's own bars.
-    Every choice comes from ``r``.
+    Every choice comes from ``r``. With a ``theme`` (anchor.themes) the whispers, the shout and
+    the rap bars are the theme's own, so the words are about something and differ song to song.
     """
     voice = profile.music["voice"]
-    whispers = r.sample(list(voice["whispers"]), k=3)
-    shout = r.choice(list(voice["shouts"]))
+    pool_w = list(theme.whispers) if theme else list(voice["whispers"])
+    pool_s = list(theme.chants) if theme else list(voice["shouts"])
+    whispers = r.sample(pool_w, k=min(4, len(pool_w)))
+    shout = r.choice(pool_s)
     chant = title.upper()
+    # the intro line comes back in the outro, so the song opens and closes on the same words;
+    # the build and the breakdown each sing two lines of their own
+    quiet_lines = [whispers[0], f"{whispers[2]}\n{whispers[3 % len(whispers)]}", whispers[0]]
     words = {
-        "whisper": lambda i: whispers[i % len(whispers)],
-        "whisper2": lambda i: f"{whispers[1]}, {whispers[1]}",
+        "whisper": lambda i: quiet_lines[i] if i < len(quiet_lines) else whispers[i % len(whispers)],
+        "whisper2": lambda i: f"{whispers[1]}\n{whispers[1]}, {whispers[1]}",
         "chant": lambda i: f"{chant}! {chant}!\n{shout.capitalize()}! {shout.capitalize()}! {shout.capitalize()}!",
         "shout": lambda i: f"{shout.capitalize()}! {shout.capitalize()}!",
     }
     voices = VOICE
     if mode == "rap":
-        bank = list(voice["rap"])
+        bank = list(theme.rap) if theme else list(voice["rap"])
         bars = r.sample(bank, k=min(12, len(bank)))
         words["rap"] = lambda i: "\n".join(bars[(4 * i + j) % len(bars)] for j in range(4))
         voices = VOICE_RAP
@@ -189,7 +206,7 @@ def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[s
     out, quiet, verse = [], 0, 0
     for (tag, direction), name in zip(arrangement(duration_s, textures, shape), names):
         delivery, kind = voices.get(name, ("whispered voice", "whisper"))
-        line = words[kind](verse if kind == "rap" else quiet)
+        line = whispers[0] if name == "outro" and kind == "whisper" else words[kind](verse if kind == "rap" else quiet)
         if kind == "whisper":
             quiet += 1
         if kind == "rap":
@@ -201,7 +218,8 @@ def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[s
     return "\n\n".join(out)
 
 
-def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int, shape: str = "classic") -> dict:
+def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int, shape: str = "classic",
+                  story: str = "") -> dict:
     """The producer's brief, written the way a strong Suno/ACE-Step prompt is written.
 
     Nine layers, in this order, then compressed into prose: genre -> era/aesthetic -> mood
@@ -222,7 +240,7 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
     layers = [
         lane.caption,                                                   # 1 genre + core sound
         lane.era,                                                       # 2 era / sonic world
-        f"Mood: {mood}. Feel: {music['feel']}",                         # 3 mood trajectory + the channel's feel
+        f"Mood: {mood}{f', about {story}' if story else ''}. Feel: {music['feel']}",   # 3 mood + what it is about
         f"{bpm} BPM, {lane.groove}",                                    # 4 tempo / rhythm
         f"Instruments: punchy kick and bouncing bass carry it; {t0} sits under the intro, "
         f"{t1} arrives with the build, {t2} owns the breakdown",        # 5 instruments + entry
