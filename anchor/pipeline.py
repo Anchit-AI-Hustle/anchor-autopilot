@@ -716,6 +716,7 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         **{k: brief[k] for k in ("id", "date", "title", "lane", "lane_name", "bpm", "key", "family",
                                  "family_name", "duration_s", "short_s", "genre_line", "style_line",
                                  "caption", "seed")},
+        "theme": brief.get("theme"),
         "engine": {"name": meta["engine"].get("engine"), "steps": meta["engine"].get("steps"),
                    "render_s": meta["engine"].get("total_s"), "threads": meta["engine"].get("threads"),
                    "model": meta["engine"].get("model"), "guidance": meta["engine"].get("guidance"),

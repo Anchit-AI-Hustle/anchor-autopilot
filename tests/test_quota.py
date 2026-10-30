@@ -184,11 +184,12 @@ def test_reserve_holds_the_earlier_songs_so_parallel_songs_differ(tmp_path, monk
     p = load_profile()
     # exactly the briefs the other runners make for themselves
     first = make_brief(p, "2026-10-25", [])
-    second = make_brief(p, "2026-10-25-2", [{k: first[k] for k in ("id", "date", "title", "lane", "family", "key")}])
+    second = make_brief(p, "2026-10-25-2", [{k: first[k] for k in ("id", "date", "title", "lane", "family", "key", "theme")}])
     assert held[1]["title"] == first["title"] and held[0]["title"] == second["title"]
     from anchor import catalog
     third = make_brief(p, "2026-10-25-3", catalog.history(json.loads(cat.read_text())))
     assert third["lane"] != second["lane"] and third["title"] not in (first["title"], second["title"])
+    assert len({first["theme"], second["theme"], third["theme"]}) == 3, "songs rendered side by side have their own themes"
     main(["reserve", "--plan", json.dumps(plan), "--drop", "2026-10-25"])     # the first song holds nothing new
     assert len(json.loads(cat.read_text())["drops"]) == 2
     # planned songs never count as made or as spent quota

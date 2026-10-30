@@ -75,7 +75,9 @@ def lyric_bank() -> list[str]:
         voice = load_profile().music["voice"]
     except Exception:                                 # noqa: BLE001 - no profile: nothing extra allowed
         return []
-    return [*voice.get("whispers", []), *voice.get("shouts", []), *voice.get("rap", [])]
+    from . import themes
+    theme_lines = [line for t in themes.load() for line in (*t.whispers, *t.chants, *t.rap)]
+    return [*voice.get("whispers", []), *voice.get("shouts", []), *voice.get("rap", []), *theme_lines]
 
 
 def sung_lines(sheet: str | None) -> list[str]:

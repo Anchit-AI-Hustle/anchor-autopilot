@@ -306,7 +306,8 @@ def main(argv: list[str] | None = None) -> int:
         for drop_id in before:
             b = make_brief(profile, drop_id, catalog.history(cat))
             catalog.upsert(cat, {"id": b["id"], "date": b["date"], "title": b["title"], "lane": b["lane"],
-                                 "family": b["family"], "key": b["key"], "bpm": b["bpm"], "status": "planned"})
+                                 "family": b["family"], "key": b["key"], "bpm": b["bpm"], "theme": b["theme"],
+                                 "status": "planned"})
             print(f"reserved {drop_id}: {b['title']!r} ({b['lane']}, {b['key']})", file=sys.stderr)
         catalog.save(cat, CATALOG_PATH)
     elif args.cmd == "queue-stamp":
