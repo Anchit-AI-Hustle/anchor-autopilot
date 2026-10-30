@@ -177,9 +177,22 @@ jobs:
           ref: ${{ github.ref }}
 
       - uses: actions/setup-python@v5
+        if: env.ANCHOR_RENDERER != 'mac'
         with:
           python-version: "3.12"
           cache: pip
+
+      # setup-python cannot install into a self-hosted Mac (it writes to /Users/runner): the
+      # Mac uses Homebrew's Python 3.12 in a venv kept between runs
+      - name: Python 3.12 on the Mac
+        if: env.ANCHOR_RENDERER == 'mac'
+        run: |
+          PY=/opt/homebrew/bin/python3.12
+          [ -x "$PY" ] || brew install python@3.12
+          VENV="$HOME/anchor-gpu/runner-venv"
+          [ -x "$VENV/bin/python" ] || "$PY" -m venv "$VENV"
+          echo "$VENV/bin" >> "$GITHUB_PATH"
+          "$VENV/bin/python" --version
 
       - name: Install dependencies
         run: |

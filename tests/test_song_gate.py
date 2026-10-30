@@ -206,6 +206,9 @@ def test_the_workflow_picks_the_mac_only_when_it_is_awake():
     assert 'if [ "$RC" = 3 ]' in text and text.count("steps.make.outputs.held != 'true'") == 3
     assert "ANCHOR_SEED_SALT: ${{ github.run_id }}" in text and "requirements-gate.txt" in text
     assert "acestep-v15-xl-sftturbo50-Q8_0.gguf:5305828768" in text, "the Mac's DiT, with its byte size from the model repo"
+    make = text.split("\n  make:\n", 1)[1].split("\n  pages:\n", 1)[0]
+    assert "if: env.ANCHOR_RENDERER != 'mac'\n        with:\n          python-version" in make, "setup-python only off the Mac"
+    assert "/opt/homebrew/bin/python3.12" in make and 'echo "$VENV/bin" >> "$GITHUB_PATH"' in make
 
 
 def test_the_mac_setup_script_only_lets_the_daily_workflow_on_main_use_the_mac():
