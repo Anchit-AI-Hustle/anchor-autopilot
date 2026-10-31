@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-10-31-2",
-    "title": "Who Started The Dance",
-    "finished_at": "2026-10-31T20:20:10Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41183306407",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-10-31T20:20:32Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41183306407"
   },
   "next_post_at": "2026-11-01T17:30:00Z",
   "streak": 7,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-10-31T20:20:10Z",
+  "updated_at": "2026-10-31T20:20:32Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
