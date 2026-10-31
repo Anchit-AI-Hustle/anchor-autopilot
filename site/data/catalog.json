@@ -7,8 +7,74 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-10-30T18:14:00Z",
+  "updated_at": "2026-10-31T20:20:10Z",
   "drops": [
+    {
+      "id": "2026-10-31-2",
+      "date": "2026-10-31",
+      "title": "Who Started The Dance",
+      "lane": "acidpsy",
+      "lane_name": "Acid Psychedelic Techno",
+      "bpm": 172,
+      "key": "A minor",
+      "family": "void",
+      "family_name": "Void",
+      "duration_s": 202,
+      "short_s": 45,
+      "cover": "covers/2026-10-31-2.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31-2/ANCHOR-2026-10-31-who-started-the-dance.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-10-31-2",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-10-31-who-started-the-dance-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31-2/ANCHOR-2026-10-31-who-started-the-dance-short.mp4",
+      "youtube_url": "https://youtu.be/OaLaVCYvtug",
+      "buffer_post_id": "OaLaVCYvtug",
+      "status": "public",
+      "post_at": "2026-10-31T20:19:57Z",
+      "qc": {
+        "bpm_est": 172.0,
+        "lufs": -14.08,
+        "warnings": [
+          "craft: no breakdown (needs 8 s at least 8 dB under the peak; the channel's top record has two)"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-10-31T09:25:34Z",
+      "genre_line": "Acid Techno, Psychedelic Techno, Hard Techno",
+      "style_line": "Acid Techno, Psychedelic Techno, Bouncy Acid, Rave Techno",
+      "error": null,
+      "accent": "#f2f2f2",
+      "caption": "acid techno, psychedelic hard techno, squelchy bouncing 303 acid line with wild slides and filter sweeps, punchy kick, rolling off-beat bass, trippy echoes. Acid techno lineage from 1990s rave parties, psychedelic and fast for 2020s hard dancefloors. Mood: nervous fun, sharpening into euphoria, leaving on a single held note, about a detective trying to find out who started the dance and ending up dancing. Feel: bouncy, fun and psychedelic, never dark. 172 BPM, fast four-on-the-floor with a bouncing off-beat bass, the 303 riding sixteenths with slides and accents. Instruments: clean round kick with handclap stacks, bouncing wobble bass, rubbery pluck lead playing a slow wide melody over the fast beat over playful major chords with a twist; bouncing 303 slides intro, cowbell shuffles build, rubbery acid squelches breakdown. Vocals: whispers in the quiet parts, shouted crowd chants in the drops, never sung. Production: 303 squelchy and centred with psychedelic delay throws, kick punchy and dominant, chants dry; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> outro; filtered kick alone, no sub bass yet, bouncing 303 slides far back, tension only at the start, and the outro kick and bass strip back, filter closing, bouncing 303 slides last, resolve to silence. Special moment: the 303 filter opens fully for the first time only on the second drop.",
+      "seed": 329963792,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 8,
+        "render_s": 407.1,
+        "threads": 10,
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "guidance": 1.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31-2/ANCHOR-2026-10-31-who-started-the-dance-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31-2/ANCHOR-2026-10-31-who-started-the-dance-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/OaLaVCYvtug",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=nsIOvq-o6c4",
+      "buffer_short_post_id": "6ae64d7537c1acd2a0cb6fc9",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "detective",
+      "sound": {
+        "lead": "rubbery pluck lead",
+        "bass": "bouncing wobble bass",
+        "drums": "clean round kick with handclap stacks",
+        "melody": "a slow wide melody over the fast beat",
+        "chords": "playful major chords with a twist"
+      }
+    },
     {
       "id": "2026-10-30-5",
       "date": "2026-10-30",
@@ -28,7 +94,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-30-5/ANCHOR-2026-10-30-engage-nebula-short.mp4",
       "youtube_url": "https://youtu.be/pR0PKK_7A-A",
       "buffer_post_id": "pR0PKK_7A-A",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-30T18:13:49Z",
       "qc": {
         "bpm_est": 163.0,
@@ -86,7 +152,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-30-4/ANCHOR-2026-10-30-rubber-turbine-short.mp4",
       "youtube_url": "https://youtu.be/vMhoobd8cQo",
       "buffer_post_id": "vMhoobd8cQo",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-30T18:13:35Z",
       "qc": {
         "bpm_est": 169.9,
@@ -144,7 +210,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-30-3/ANCHOR-2026-10-30-sector-orbit-short.mp4",
       "youtube_url": "https://youtu.be/WL5aQuze65U",
       "buffer_post_id": "WL5aQuze65U",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-30T18:13:23Z",
       "qc": {
         "bpm_est": 184.4,
@@ -200,7 +266,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-30-2/ANCHOR-2026-10-30-lucid-cipher-short.mp4",
       "youtube_url": "https://youtu.be/OaG6OZ-Z2VQ",
       "buffer_post_id": "OaG6OZ-Z2VQ",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-30T18:13:03Z",
       "qc": {
         "bpm_est": 156.0,
@@ -258,7 +324,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-30/ANCHOR-2026-10-30-afterburn-chrome-short.mp4",
       "youtube_url": "https://youtu.be/mIBv1NkM3Iw",
       "buffer_post_id": "mIBv1NkM3Iw",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-30T18:12:48Z",
       "qc": {
         "bpm_est": 166.0,
@@ -3273,7 +3339,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-10-31T09:49:25Z",
+    "checked_at": "2026-10-31T20:20:11Z",
     "total": 2,
     "postable": 2,
     "families": 0,
