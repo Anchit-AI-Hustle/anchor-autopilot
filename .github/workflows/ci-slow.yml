@@ -28,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        file: [test_pipeline, test_release_v2, test_fullvideos, test_scenes, test_mix_youtube, test_art_video, test_versions, test_song_gate, test_lyriccheck]
+        file: [test_pipeline, test_release_v2, test_fullvideos, test_scenes, test_mix_youtube, test_art_video, test_versions, test_song_gate, test_lyriccheck, test_mixbalance]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

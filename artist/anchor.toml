@@ -85,6 +85,8 @@ vocals = "Vocals: whispers in the quiet parts, shouted crowd chants in the drops
 # harmonics carry on a phone speaker, the textures are wide while kick and sub stay centred,
 # and the record falls away and comes back rather than holding one level.
 mastering = "club master, lead and chords loud over the drums, sub audible on phones, real dynamics"
+melody_target = 0.84          # held notes vs hits; Anchit's Suno songs 0.805 to 0.918 (anchor.mixbalance)
+max_drum_cut_db = 6.0
 # Bouncy, fun and psychedelic, never dark (Anchit, 2026-10-04): gloom and stiffness are
 # named in the negative so the LM steers away from them.
 feel = "bouncy, fun and psychedelic, never dark"
