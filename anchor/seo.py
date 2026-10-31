@@ -151,10 +151,10 @@ def description(profile: Profile, brief: dict, platform: str = "youtube") -> str
     # the first line is the one YouTube shows under the title and the one search reads:
     # the genre phrase, the tempo, the artist, then the vibe copy below it
     line = f"{genre_phrase(lane)}. An {name} original, free download below."
-    # what the song is about (its theme, artist/themes.toml), in one plain line under the genre
+    # what the song is about (its theme, artist/themes.toml) opens the copy, under the search line
     idea = (brief.get("theme_idea") or "").strip()
     if idea:
-        line += f"\nA song about {idea}."
+        body = f"A song about {idea}. {body}"
     handle = profile.artist.get("instagram_handle")
     free = f"Free download: {site}" + (f" · IG @{handle.lstrip('@')}" if handle else "")
     if platform == "instagram":
