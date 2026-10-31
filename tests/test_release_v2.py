@@ -142,6 +142,7 @@ def test_seo_title_description_and_tags_carry_the_lane_and_tempo():
     head, vibe = d.split("\n\n")[:2]
     assert head == f"{lane.genre_line.split(',')[0]}. An ANCHOR original, free download below."   # the search line first
     assert vibe[0].isupper() and vibe.endswith(".") and "BPM" not in vibe                                            # then the vibe
+    assert vibe.startswith(f"A song about {b['theme_idea']}."), "what the song is about opens the copy"
     assert "playlist?list=PLSA3gW62zSYE" in d and "AI use disclosed" in d and len(d) < 700
     ig = description(p, b, "instagram")
     assert "#hardtechno" in ig and "playlist" not in ig and len(ig) <= 2200
