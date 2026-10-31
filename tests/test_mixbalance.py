@@ -37,6 +37,7 @@ def _write(path: Path, y: np.ndarray, sr: int) -> None:
         w.writeframes(np.stack([pcm, pcm], 1).tobytes())
 
 
+@pytest.mark.slow
 def test_drums_come_down_and_the_melody_share_goes_up(tmp_path):
     pytest.importorskip("librosa")
     sr, secs = 22050, 30
