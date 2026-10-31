@@ -105,6 +105,22 @@ true_peak_db = -1.5
 # GPU"; songs were low quality). The daily run picks "mac" when the Mac runner is online, and
 # the lines above (2B DiT, 0.6B planner, 32 steps) stay the GitHub CPU fallback. Takes are
 # rendered until best_of of them pass the song gate, and the best passing take ships.
+# Anchit's nine Suno songs (2026-09-04 to 09-14): the timbre reference for the Mac's takes
+# (ace-synth --ref-audio). They set the song gate's limits; the gate passes all nine. A take
+# leans on one of them for its tone only; melody, words and arrangement stay its own, and the
+# audio check still sends back anything that sounds like a released record.
+reference_songs = [
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-04/ANCHOR-2026-09-04-then-do-it.mp3",
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-05/ANCHOR-2026-09-05-silent-transmission.mp3",
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-06/ANCHOR-2026-09-06-stay-with-me.mp3",
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-07/ANCHOR-2026-09-07-robot-love.mp3",
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-08/ANCHOR-2026-09-08-where-it-begins.mp3",
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-09/ANCHOR-2026-09-09-let-s-fucking-go.mp3",
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-10/ANCHOR-2026-09-10-signal-detected.mp3",
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-13/ANCHOR-2026-09-13-project-mayhem.mp3",
+  "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-09-14/ANCHOR-2026-09-14-crossing-the-threshold.mp3",
+]
+
 [music.renderers.mac]
 # the 4B XL DiT with SFT weights merged into turbo (8 steps), and the 4B planner, the strongest at
 # composition and melody. Measured on the M5, 2026-10-30: about 6 min a take where the XL SFT at

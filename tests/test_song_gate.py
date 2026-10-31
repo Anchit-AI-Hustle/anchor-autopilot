@@ -266,3 +266,23 @@ def test_a_title_the_singer_cannot_say_is_replaced_on_the_next_take(fast_profile
                       catalog_path=site_dir / "data" / "catalog.json", use_queue=False, retries=2)
     assert len(titles) == 3 and len(set(titles)) == 3, titles
     assert all("title sung wrong" in a["fail"][-1] for a in held.value.attempts), "held, not a red run"
+
+
+def test_mac_takes_lean_on_anchits_own_songs_for_their_tone(tmp_path, monkeypatch):
+    """ace-synth --ref-audio with one of Anchit's nine Suno songs (2026-10-31: "songs need to be
+    improved much more"). Picked by seed, so the takes of a song lean on different references."""
+    from anchor.music import AceStepCpp
+    refs = tmp_path / "refs"
+    refs.mkdir()
+    for n in ("a.mp3", "b.mp3", "c.wav", "notes.txt"):
+        (refs / n).write_bytes(b"x")
+    eng = AceStepCpp("bin", "models", "dit", None, ref_dir=refs)
+    picked = {eng.reference({"seed": s}).name for s in range(30)}
+    assert picked == {"a.mp3", "b.mp3", "c.wav"}
+    assert AceStepCpp("bin", "models", "dit", None).reference({"seed": 1}) is None, "no references: plain text to music"
+    assert AceStepCpp("bin", "models", "dit", None, ref_dir=tmp_path / "missing").reference({"seed": 1}) is None
+    from anchor.config import load_profile
+    songs = load_profile().music["reference_songs"]
+    assert len(songs) == 9 and all(u.endswith(".mp3") and "/releases/download/drop-2026-09-" in u for u in songs)
+    text = (Path(__file__).resolve().parent.parent / ".github" / "workflows" / "daily.yml").read_text()
+    assert 'echo "ANCHOR_REF_DIR=$G/refs" >> "$GITHUB_ENV"' in text

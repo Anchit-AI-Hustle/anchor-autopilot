@@ -114,7 +114,7 @@ class AceStepCpp:
     def __init__(self, bin_dir: str | Path, models_dir: str | Path, dit_model: str,
                  lm_model: str | None, steps: int = 8, shift: float = 3.0,
                  guidance: float = 1.0, threads: int | None = None,
-                 vae_chunk: int = 512, timeout_s: int = 10000):
+                 vae_chunk: int = 512, timeout_s: int = 10000, ref_dir: str | Path | None = None):
         # absolute: the binaries run with cwd set to the drop folder, so a relative
         # path here would resolve against that folder instead of the repo
         self.bin_dir = Path(bin_dir).expanduser().resolve()
@@ -129,6 +129,10 @@ class AceStepCpp:
         self.threads = threads or os.cpu_count() or 2
         self.vae_chunk = vae_chunk
         self.timeout_s = timeout_s
+        # Anchit's own Suno songs as the timbre reference (Anchit, 2026-10-31: "songs need to be
+        # improved much more"): ace-synth --ref-audio conditions the DiT on the tone of a record
+        # he made and likes, while the melody, words and arrangement stay the song's own
+        self.ref_dir = Path(ref_dir).expanduser() if ref_dir else None
 
     def check(self) -> None:
         missing = [str(p) for p in (self.bin_dir / "ace-synth", self.models_dir / self.dit_model)
@@ -166,6 +170,14 @@ class AceStepCpp:
             req["lm_negative_prompt"] = brief.get("negative", "")
         return req
 
+    def reference(self, brief: dict) -> Path | None:
+        """The reference song for this take: one of the files in ``ref_dir``, picked by the
+        take's seed, so each take of a song may lean on a different one of Anchit's songs."""
+        if not self.ref_dir or not self.ref_dir.is_dir():
+            return None
+        refs = sorted(p for p in self.ref_dir.iterdir() if p.suffix.lower() in (".mp3", ".wav", ".flac"))
+        return refs[int(brief["seed"]) % len(refs)] if refs else None
+
     def generate(self, brief: dict, out_dir: Path) -> tuple[Path, dict]:
         self.check()
         out_dir.mkdir(parents=True, exist_ok=True)
@@ -184,8 +196,13 @@ class AceStepCpp:
             synth_input = "gen0.json"
             if not (out_dir / synth_input).exists():
                 raise RuntimeError("ace-lm finished but gen0.json was not written")
+        ref = self.reference(brief)
+        if ref:
+            stats["ref_audio"] = ref.name
+            log(f"acestep.cpp: timbre reference {ref.name}")
         proc = run([self.bin_dir / "ace-synth", "--models", self.models_dir, "--request", synth_input,
-                    "--vae-chunk", str(self.vae_chunk), "--vae-overlap", "64"],
+                    "--vae-chunk", str(self.vae_chunk), "--vae-overlap", "64",
+                    *(["--ref-audio", str(ref)] if ref else [])],
                    cwd=out_dir, env=proc_env, timeout=self.timeout_s)
         (out_dir / "ace-synth.log").write_text(proc.stdout)
         stats["dit_ms"] = _ms(proc.stdout, r"\[DiT-Generate\] Total: ([\d.]+) ms")
@@ -325,6 +342,7 @@ def one_engine(profile_music: dict, name: str):
             threads=int(env("ACE_THREADS", "0") or 0) or None,
             vae_chunk=int(env("ANCHOR_VAE_CHUNK", "512")),
             timeout_s=int(env("ANCHOR_ENGINE_TIMEOUT", "10000")),
+            ref_dir=env("ANCHOR_REF_DIR", "") or profile_music.get("ref_dir") or None,
         )
     raise ValueError(f"unknown music engine {name!r}")
 
