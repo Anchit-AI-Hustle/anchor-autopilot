@@ -44,22 +44,23 @@ def master_take(profile: Profile, raw: Path, work: Path) -> dict:
     # the finishing pass: audible on a phone, wide above the bass, mono below it; a record
     # already in the channel's range passes through untouched
     enhanced = work / "enhanced.wav"
-    mix_info = None
-    target = profile.music.get("melody_target")
-    if target and songgate.enabled():
-        # drums under the lead and chords before the finishing pass (anchor.mixbalance)
-        from . import mixbalance
-        balanced = work / "balanced.wav"
-        try:
-            mix_info = mixbalance.balance(raw, balanced, float(target),
-                                          float(profile.music.get("max_drum_cut_db", 6.0)))
-            raw = balanced
-        except Exception as exc:      # noqa: BLE001  a take is never lost to the mix step
-            log(f"mix: left as rendered ({exc})")
     finish_info = craft.enhance_file(raw, enhanced)
     log(f"craft: finishing pass tone {finish_info.get('tone', 0)} width {finish_info.get('spread', 0)}; phone share "
         f"{finish_info['before']['phone_share']} -> {finish_info['after']['phone_share']}, width "
         f"{finish_info['before']['width']} -> {finish_info['after']['width']}")
+    mix_info = None
+    target = profile.music.get("melody_target")
+    if target and songgate.enabled():
+        # drums under the lead and chords after the finishing pass, which on run 41183306407
+        # took a balanced take from 0.837 back to 0.716 (anchor.mixbalance)
+        from . import mixbalance
+        balanced = work / "balanced.wav"
+        try:
+            mix_info = mixbalance.balance(enhanced, balanced, float(target),
+                                          float(profile.music.get("max_drum_cut_db", 6.0)))
+            enhanced = balanced
+        except Exception as exc:      # noqa: BLE001  a take is never lost to the mix step
+            log(f"mix: left as finished ({exc})")
     master_wav = work / "master.wav"
     loud = master(enhanced, master_wav, float(profile.music["loudness_lufs"]),
                   float(profile.music["true_peak_db"]),
