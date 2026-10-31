@@ -327,6 +327,15 @@ jobs:
           echo "ACESTEP_BIN=$G/acestep.cpp/build" >> "$GITHUB_ENV"
           echo "ACESTEP_MODELS=$G/models" >> "$GITHUB_ENV"
           echo "ACE_THREADS=$(sysctl -n hw.ncpu)" >> "$GITHUB_ENV"
+          # Anchit's own Suno songs, the timbre references (artist/anchor.toml [music] reference_songs)
+          mkdir -p "$G/refs"
+          python - <<'PY' | while read -r url; do f="$G/refs/$(basename "${url%%\?*}")"; [ -s "$f" ] || curl -fsSL --retry 3 -o "$f" "$url"; done
+          import tomllib
+          for u in tomllib.load(open("artist/anchor.toml", "rb"))["music"].get("reference_songs", []):
+              print(u)
+          PY
+          ls "$G/refs"
+          echo "ANCHOR_REF_DIR=$G/refs" >> "$GITHUB_ENV"
 
       - name: Make the drop (brief, track, master, cover, full videos, Short)
         if: steps.day.outputs.skip != 'true'
