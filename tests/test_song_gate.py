@@ -290,6 +290,7 @@ def test_mac_takes_lean_on_anchits_own_songs_for_their_tone(tmp_path, monkeypatc
     assert 'echo "ANCHOR_REF_DIR=$G/refs" >> "$GITHUB_ENV"' in text
 
 
+@pytest.mark.slow
 def test_a_song_that_cuts_to_silence_in_the_middle_fails():
     """Anchit, 2026-11-01: songs are breaking in between. Who Started The Dance cut to digital
     silence for 0.3 s at 2:08; none of his nine Suno songs ever does."""
