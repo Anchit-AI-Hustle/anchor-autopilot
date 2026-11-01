@@ -26,6 +26,11 @@ MOVES = ("Stomp", "Bounce", "Shuffle", "Groove", "Party", "Jump", "Hop", "Parade
          "Shake", "Swing", "Rave", "Disco", "Strut", "Jam", "Twirl", "Skip")
 MOVE_GAP = 10
 COMMON = {m.lower() for m in MOVES} | {"dance", "club", "night"}
+# words the singer has got wrong on real takes (lyric check, 2026-10-30 to 11-01): consonant
+# clusters and rare words come out as other words, so no title uses them
+HARD_WORDS = {"bolt", "boogie", "cog", "wheel", "screwdriver", "strut", "magnifying", "glass", "fuse", "torche",
+              "torch", "stairwell", "puddle", "season", "wellie", "welly", "wind", "carbon", "kinetic", "piston",
+              "voltage", "vortex"}
 
 
 @dataclass(frozen=True)
@@ -68,14 +73,19 @@ def own_words(titles: list[str]) -> set[str]:
 
 
 def pick(themes: tuple[Theme, ...], r, history: list[dict], recent: int = RECENT,
-         used_titles: list[str] | None = None) -> Theme:
+         used_titles: list[str] | None = None, avoid_titles: tuple[str, ...] = ()) -> Theme:
     """A theme none of the last ``recent`` songs used (the least recently used one when all
     were); ``history`` is newest first. With ``used_titles``, a theme with no name left is
     passed over while another has one."""
     last = [d.get("theme") for d in history[:recent] if d.get("theme")]
+    if avoid_titles:
+        # a title the singer got wrong moves the song to another theme, not to the same
+        # theme's next noun (2026-10-31: Bolts, Cog Wheel, Screwdriver all failed in a row)
+        bad = set().union(*(words(a) for a in avoid_titles)) - COMMON
+        themes = tuple(t for t in themes if not bad & set().union(*(words(c) for c in (*t.titles, *t.nouns)))) or themes
     if used_titles is not None:
         used = own_words(used_titles)
-        live = tuple(t for t in themes if any(not words(c) & used for c in (*t.titles, *t.nouns)))
+        live = tuple(t for t in themes if any(not words(c) & (used | HARD_WORDS) for c in (*t.titles, *t.nouns)))
         themes = live or themes
     fresh = [t for t in themes if t.id not in last]
     if fresh:
@@ -107,7 +117,7 @@ def title(theme: Theme, r, used_titles: list[str], taken: Callable[[str], bool |
     rejected, checks = [], 0
     for cand in candidates(theme, r):
         w = words(cand)
-        if " ".join(cand.lower().split()) in exact or w & used or w & recent_moves:
+        if " ".join(cand.lower().split()) in exact or w & used or w & recent_moves or w & HARD_WORDS:
             continue
         if taken is not None:
             if checks >= max_checks:

@@ -137,3 +137,20 @@ def test_two_months_of_five_songs_a_day_all_get_a_theme_name():
         titles.add(name)
         hist.insert(0, {"theme": t.id, "title": name})
     assert fallback == 0, fallback
+
+
+def test_no_title_uses_a_word_the_singer_got_wrong():
+    import random
+    for t in themes.load():
+        for i in range(5):
+            name = themes.title(t, random.Random(i), [])
+            assert name is None or not themes.words(name) & themes.HARD_WORDS, name
+
+
+def test_a_misheard_title_moves_the_song_to_another_theme():
+    import random
+    ts = themes.load()
+    shop = next(t for t in ts if t.id == "robot-workshop")
+    for i in range(20):
+        t = themes.pick(ts, random.Random(i), [], avoid_titles=("Bolts And Boogie",))
+        assert t.id != shop.id
