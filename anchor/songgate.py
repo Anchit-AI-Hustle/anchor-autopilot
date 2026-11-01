@@ -35,6 +35,10 @@ CHECKS = {
     "most_different_parts": ("max", -0.2545, "no part sounds different from the rest (one loop start to finish)", ""),
     "section_changes": ("min", 7.1, "too few section changes", ""),
     "silent_tail_s": ("max", 3.0, "ends in dead air", " s"),
+    # Anchit, 2026-11-01: "songs are breaking in between". Half the songs of 10-23 to 10-31 cut
+    # to digital silence mid-song (Who Started The Dance: 0.3 s at 2:08); none of his nine do
+    "silence_holes": ("max", 0, "the music cuts to silence in the middle", ""),
+    "breaks": ("max", 4, "the music keeps breaking off in the middle", ""),
 }
 REFERENCE = {  # the nine Suno songs: weakest and strongest value
     "noise_score": (0.0156, 0.0434),
@@ -44,6 +48,8 @@ REFERENCE = {  # the nine Suno songs: weakest and strongest value
     "most_different_parts": (-0.502, -0.277),
     "section_changes": (8, 17),
     "silent_tail_s": (0.0, 2.2),
+    "silence_holes": (0, 0),
+    "breaks": (0, 4),
 }
 
 
@@ -59,6 +65,31 @@ def _checkerboard(n):
     sign[:n, n:] = -1
     sign[n:, :n] = -1
     return g * sign
+
+
+def holes_and_breaks(y, sr):
+    """(silence_holes, breaks) away from the ends: holes are runs of digital silence (every
+    sample under -80 dBFS) longer than 20 ms, from 5 s in to 5 s before the end; breaks are
+    0.2 s or longer where 50 ms windows sit 18 dB or more under the median of the 4 s around
+    them, from 10 s in to 10 s before the end. Anchit's nine songs: no holes, 0 to 4 breaks."""
+    from scipy.ndimage import median_filter
+    edge = int(5 * sr)
+    quiet = np.abs(y) < 1e-4
+    flips = np.flatnonzero(np.diff(np.concatenate([[0], quiet.astype(np.int8), [0]])))
+    holes = sum(1 for a, b in zip(flips[::2], flips[1::2]) if b - a > 0.02 * sr and edge < a < len(y) - edge)
+    hop = int(0.05 * sr)
+    n = len(y) // hop
+    db = 20 * np.log10(np.sqrt((y[:n * hop].reshape(n, hop) ** 2).mean(axis=1) + 1e-12) + 1e-9)
+    low = db < median_filter(db, size=81, mode="nearest") - 18
+    breaks, run = 0, 0
+    for i in range(200, max(200, n - 200)):
+        if low[i]:
+            run += 1
+            continue
+        breaks += run >= 4
+        run = 0
+    breaks += run >= 4
+    return int(holes), int(breaks)
 
 
 def measure(path):
@@ -115,6 +146,8 @@ def measure(path):
         m["section_changes"] = 0
         m["most_different_parts"] = 1.0
 
+    m["silence_holes"], m["breaks"] = holes_and_breaks(y, sr)
+
     # dead air at the end
     fr = 20 * np.log10(librosa.feature.rms(y=y, frame_length=2048, hop_length=hop)[0] + 1e-9)
     loud = np.where(fr > -50)[0]
@@ -125,7 +158,9 @@ def measure(path):
 def judge(m):
     fails = []
     for name, (direction, limit, words, unit) in CHECKS.items():
-        v = m[name]
+        v = m.get(name)
+        if v is None:                 # measured before this check existed
+            continue
         bad = v < limit if direction == "min" else v > limit
         if bad:
             lo, hi = REFERENCE[name]

@@ -22,6 +22,12 @@ from .util import log
 # Phrases a direction, tag or delivery note is made of; anything the arranger is told and the
 # singer must never say. Built from the live directions (music.SECTION_DIRECTIONS and the brief's
 # VOICE tables) plus the stock words of a lyric sheet.
+# directions the arranger was given before 2026-11-01 (the no-breaks change): records already out
+# may still sing them, so they stay in the vocabulary
+RETIRED_DIRECTIONS = [
+    "kick and sub fully out for eight to sixteen bars, {t2} alone over a held chord, the room drops away, a playful tease of the hook",
+    "kick and bass strip back, filter closing, {t0} last, resolve to silence",
+]
 STOCK_NOTES = [
     "rap verse", "verse one", "verse two", "pre chorus", "build up", "the drop", "breakdown",
     "instrumental", "eight bars", "sixteen bars", "eight to sixteen bars", "bar by bar",
@@ -61,7 +67,7 @@ def _grams(words: list[str], n: int = 3) -> set[tuple[str, ...]]:
 def note_vocabulary() -> list[str]:
     """Every production note the sheet or the arranger could carry."""
     from . import brief, music
-    notes = list(STOCK_NOTES) + list(music.SECTION_DIRECTIONS.values())
+    notes = list(STOCK_NOTES) + list(music.SECTION_DIRECTIONS.values()) + list(RETIRED_DIRECTIONS)
     for table in (brief.VOICE, brief.VOICE_RAP):
         notes += [delivery for delivery, _kind in table.values()]
     # the {t0}/{t1}/{t2} texture slots are filled per song; the words around them still count
