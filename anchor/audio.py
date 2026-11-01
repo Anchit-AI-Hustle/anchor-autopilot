@@ -221,6 +221,15 @@ def _db(x: float) -> float:
     return float(20 * np.log10(max(x, 1e-9)))
 
 
+def same_octave(est: float, target: float) -> float:
+    """A measured tempo moved to the octave of the one asked for: a 95 BPM hip hop beat with a
+    double-time techno drop reads as 190, and is still published as the 95 BPM it is."""
+    for f in (0.5, 2.0):
+        if abs(est * f - target) < abs(est - target) and abs(est * f - target) <= 0.06 * target:
+            return round(est * f, 1)
+    return est
+
+
 def estimate_bpm(mono: np.ndarray, sr: int = SR, lo: float = 110, hi: float = 210) -> float | None:
     """Tempo via a comb over the onset-envelope autocorrelation (8 beat multiples, 0.1 BPM grid).
 

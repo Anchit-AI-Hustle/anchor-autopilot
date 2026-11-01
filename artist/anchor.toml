@@ -87,6 +87,9 @@ vocals = "Vocals: whispers in the quiet parts, shouted crowd chants in the drops
 mastering = "club master, lead and chords loud over the drums, sub audible on phones, real dynamics"
 melody_target = 0.84          # held notes vs hits; Anchit's Suno songs 0.805 to 0.918 (anchor.mixbalance)
 max_drum_cut_db = 6.0
+# Anchit's Suno songs are all warehouse techno: as a timbre reference they pulled every genre
+# toward the same sound, so a take leans only on songs of its own genre group (anchor.music)
+ref_groups = { hardtech = ["2026-09-04", "2026-09-05", "2026-09-06", "2026-09-07", "2026-09-08", "2026-09-09", "2026-09-14"], psy = ["2026-09-10", "2026-09-13"] }
 # Bouncy, fun and psychedelic, never dark (Anchit, 2026-10-04): gloom and stiffness are
 # named in the negative so the LM steers away from them.
 feel = "bouncy, fun and psychedelic, never dark"
@@ -170,6 +173,71 @@ chords = ["bright uplifting chords", "warm feel-good chords", "playful major cho
   "dreamy suspended chords", "bold power chords", "cheeky chromatic chords", "glowing open fifths",
   "sunny chords that lift at the end"]
 
+# Each genre group draws its sounds from its own bank (Anchit, 2026-11-01: complete beats and
+# sounds as per the genres). The lists above are the fallback for a lane with no group.
+[music.palette.hardtech]
+leads = ["screeching rawstyle lead", "hoover synth lead", "detuned supersaw stab lead", "distorted acid 303 lead",
+  "pitched rave piano stabs", "trance-gated supersaw lead", "laser zap lead", "gritty reese lead",
+  "bright brass stab lead", "chopped vocal chop lead"]
+basses = ["rumble bass filling every off-beat after the kick", "reverse bass pulling into every kick",
+  "off-beat bouncing saw bass", "distorted rolling mid bass", "hoover bass stabs on the off-beat",
+  "acid 303 bass running sixteenths"]
+drums = ["pounding distorted kick, rumbling tail, off-beat open hats",
+  "pitched rawstyle kick, reverse tail, snare rolls",
+  "hard groove kick, swung congas, clipped percussion",
+  "hard bounce kick, short bouncy tail, tambourine shuffle",
+  "industrial kick, metallic hits, rolling sixteenth hats",
+  "hyper kick, trance-gated hats, snare builds"]
+melodies = ["a two-note call and response hook", "a rising arpeggio in triplets", "an octave-jumping hook",
+  "a syncopated stabbing riff", "a sing-along five-note hook", "a falling riff that lands on the downbeat"]
+chords = ["euphoric rave chords", "bold power chords", "glowing open fifths", "bright uplifting chords",
+  "big trance chords that lift at the end"]
+
+[music.palette.psy]
+leads = ["squelchy 303 acid lead", "twisting FM psy lead", "phased resonant sweep lead", "acid arpeggio lead",
+  "flanged alien zap lead", "bubbling resonant sequence", "glassy FM bell lead", "wobbling formant lead"]
+basses = ["rolling psytrance bass, three sixteenths per kick", "galloping triplet psy bass",
+  "squelchy acid 303 bass with slides", "rolling FM bass locked to the kick", "rolling off-beat psytech bass"]
+drums = ["tight psy kick, swung off-beat hats, shaker sixteenths",
+  "punchy psy kick, crisp sixteenth hats, tribal toms",
+  "deep psytech kick, snappy claps, rolling bongos",
+  "full-on psy kick, gated noise sweeps, snare rolls",
+  "minimal psy kick, clicky percussion, reversed cymbals"]
+melodies = ["a spiralling sequence that climbs each bar", "a hypnotic three-note riff that slowly opens its filter",
+  "a call and response between the acid line and the lead", "a phased sixteenth-note sequence that morphs",
+  "a rising arpeggio in triplets", "a question and answer melody between lead and bass"]
+chords = ["dreamy suspended chords", "glowing open fifths", "shimmering modal pad drones",
+  "phrygian chords that lift to major", "bright psychedelic major chords"]
+
+[music.palette.rap]
+leads = ["catchy whistle synth hook", "brass stab hook", "plucky detuned saw hook", "chopped vocal chop hook",
+  "talkbox synth hook", "pitched rave piano stabs", "funky clav synth hook", "squelchy acid hook"]
+basses = ["bouncing off-beat rolling bass", "gliding 808 bass under the kick", "rubber sub bass under the rap",
+  "rolling acid bass", "punchy saw stab bass"]
+drums = ["punchy techno kick, trap hi-hat rolls",
+  "four-on-the-floor kick, cracking backbeat snare, swung hats",
+  "hard tech kick, chopped breakbeat fills, off-beat open hats",
+  "pounding kick, 808 snare, shaker loop, hat stutters",
+  "bouncy kick, rimshots, open hat skips"]
+melodies = ["a short catchy hook between the rap lines", "a two-note call and response hook",
+  "a syncopated stabbing riff", "a sing-along five-note hook", "a staccato hook that stops and starts"]
+chords = ["bright uplifting chords", "warm feel-good chords", "bold power chords", "playful major chords with a twist"]
+
+[music.palette.hiphop]
+leads = ["squelchy acid synth riff", "psychedelic phased synth lead", "chopped piano stabs", "bright bell lead",
+  "warm Rhodes keys", "breathy flute loop", "funky clav riff", "brass stab hook"]
+basses = ["long gliding 808 bass", "deep sub bass following the kick", "funky slap synth bass",
+  "warm rubbery bassline", "distorted 808 bass"]
+drums = ["boom bap drums: punchy kick, cracking backbeat snare, swung hats",
+  "trap drums: booming 808 kick, clap on three, rolling triplet hats",
+  "head-nod boom bap, rimshots, scratched fills",
+  "bouncy West Coast drums, handclaps, tambourine",
+  "trap drums, stuttered hat rolls, snare rolls"]
+melodies = ["a laid-back looping riff", "a two-note call and response hook", "a slow wide melody over the beat",
+  "a pentatonic riff that loops with a twist", "a short sampled-sounding loop"]
+chords = ["warm soulful seventh chords", "sunny soul chords", "dreamy suspended chords", "playful major chords with a twist"]
+
+
 [music.voice]
 # Words for the whispers and chants. The chant in every drop is the song's own title, so the
 # record is named after what the crowd shouts; whispers and shouts rotate from these lists.
@@ -252,7 +320,7 @@ special_moments = ["a pitched kick roll that climbs a full octave into the secon
 id = "psy"
 group = "psy"
 name = "Psychedelic Hard Techno"
-bpm = ["165", "178"]
+bpm = ["160", "168"]
 weight = 2
 caption = "psychedelic hard techno, hypnotic acid techno, rolling bouncy kick and bass, swirling phased acid sequences, trippy delays, whispered voices, euphoric rave energy"
 textures = ["swirling phaser sweeps", "ping-pong acid delays", "trippy filtered arps", "bubbling resonant squelches", "reversed whisper echoes", "shimmering noise risers"]
@@ -260,7 +328,7 @@ genre_line = "Psychedelic Techno, Hard Techno, Peak Time Techno"
 style_line = "Psychedelic Techno, Acid Techno, Hypnotic Techno, Rave Techno"
 tags = ["psychedelic techno", "hard techno", "psy techno", "hypnotic techno", "acid techno"]
 era = "Psychedelic rave lineage, 1990s acid colours over a modern hard techno low end"
-groove = "fast four-on-the-floor, rolling sixteenth bass bouncing off the kick, swung percussion"
+groove = "kick on every beat, a bouncing rolling bassline between the kicks, swung off-beat hats"
 production = "Wide and swirling, kick and bass dry and centred, acid and whispers in ping-pong delay and phaser"
 mood_arcs = ["trippy and playful, spiralling into a kaleidoscope, landing softly with a smile", "floating then bouncing, the colours getting brighter every drop", "hypnotic and euphoric, tension that blooms into pure joy"]
 special_moments = ["a whispered phrase that circles around the head before the drop", "the acid sequence speeds into a swirl for the last two bars of each build", "everything but the kick melts into a delay wash for one bar"]
@@ -269,7 +337,7 @@ special_moments = ["a whispered phrase that circles around the head before the d
 id = "acidpsy"
 group = "psy"
 name = "Acid Psychedelic Techno"
-bpm = ["168", "182"]
+bpm = ["166", "176"]
 weight = 3
 caption = "acid techno, psychedelic hard techno, squelchy bouncing 303 acid line with wild slides and filter sweeps, punchy kick, rolling off-beat bass, trippy echoes"
 textures = ["rubbery acid squelches", "bouncing 303 slides", "trippy delay throws", "snappy claps", "rising filter tension", "cowbell shuffles"]
@@ -277,7 +345,7 @@ genre_line = "Acid Techno, Psychedelic Techno, Hard Techno"
 style_line = "Acid Techno, Psychedelic Techno, Bouncy Acid, Rave Techno"
 tags = ["acid techno", "psychedelic acid techno", "hard acid techno", "rave techno", "techno 2026"]
 era = "Acid techno lineage from 1990s rave parties, psychedelic and fast for 2020s hard dancefloors"
-groove = "fast four-on-the-floor with a bouncing off-beat bass, the 303 riding sixteenths with slides and accents"
+groove = "four-on-the-floor, a bouncing rolling psy bassline, the 303 riding sixteenths with slides"
 production = "303 squelchy and centred with psychedelic delay throws, kick punchy and dominant, chants dry"
 mood_arcs = ["sly and squelching, growing giddy and manic, ending in a happy resonant squeal", "bouncy and driving, the acid line getting sillier and wilder every section, then cut", "nervous fun, sharpening into euphoria, leaving on a single held note"]
 special_moments = ["the 303 filter opens fully for the first time only on the second drop", "one breakdown where the acid line bounces alone under a whisper", "a resonance peak that squeals across the final bar"]
@@ -453,7 +521,7 @@ genre_line = "Psychedelic Hard Tech, Psychedelic Techno, Hard Techno"
 style_line = "Psy Hard Tech, Acid Techno, Bouncy Hard Techno, Rave Techno"
 tags = ["psychedelic hard tech", "psy techno", "hard tech", "acid techno", "hard techno 2026"]
 era = "Mid-2020s hard tech swing crossed with psychedelic acid techno, colourful and fast"
-groove = "fast four-on-the-floor with a swung shuffle, an acid bassline bouncing on every off-beat, delay chops on the upbeats"
+groove = "swung psytech four-on-the-floor, a bouncing rolling off-beat bassline, delay chops on the upbeats"
 production = "Wide and colourful, kick dry and up front, acid lines swirling around a centred bouncy bass"
 mood_arcs = ["curious and swinging, spiralling into a full-room jump, ending wide-eyed", "playful from the first bar, melting into a psychedelic hands-up drop, landing on one bright stab", "loose and groovy, getting more colourful every drop, then a cheeky stop"]
 special_moments = ["the acid line rises a full octave under the final drop", "a tape-stop on the whole track for one beat, then everything slams back", "the delay chops spin around the room for two bars before the second drop"]
@@ -482,16 +550,16 @@ negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled 
 id = "hiphoptechno"
 group = "hiphop"
 name = "Hip Hop Hard Techno"
-bpm = ["160", "172"]
+bpm = ["172", "186"]
 weight = 2
 voice = "rap"
-caption = "hip hop meets hard techno, half-time boom bap verses switching to bouncy four-on-the-floor drops, rubbery sub bass, rap verses, chanted title hook"
+caption = "hip hop meets hard techno, half-time boom bap verses, bouncing rubbery 808, rap verses, chanted title hook, four-on-the-floor drops"
 textures = ["crisp boom bap snares", "vinyl crackle loops", "scratched record cuts", "rubbery 808 slides", "brass stab samples", "vocal ad-lib echoes"]
 genre_line = "Hip Hop Techno, Hard Techno, Rap"
 style_line = "Hip Hop Techno, Boom Bap Rave, Bouncy Hard Techno, Rave Rap"
 tags = ["hip hop techno", "techno hip hop", "hip hop rave", "rap techno", "hard techno"]
 era = "Mid-2020s hip hop crossover rave, boom bap swing into hard techno drops"
-groove = "half-time boom bap swing in the verses, bouncing four-on-the-floor in the drops"
+groove = "half-time boom bap verses, backbeat snare, swung hats, the 808 bouncing under the rap; four-on-the-floor drops"
 production = "Warm and punchy, rap vocal dry and centred, snare crisp, kick big in the drops"
 mood_arcs = ["head-nodding swagger, switching into a full-room jump, ending with a grin", "playful bars over a lazy swing, then the drop flips it into a rave", "cool and confident, getting wilder at every switch, landing on one big hook"]
 special_moments = ["the beat switches from half-time to four-on-the-floor on a single scratch", "a two-bar 808 slide that pulls the room into the last drop", "the rapper counts the drop in and the whole crowd shouts the hook"]
@@ -544,16 +612,16 @@ negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled 
 id = "psyhiphop"
 group = "hiphop"
 name = "Psychedelic Hip Hop Techno"
-bpm = ["160", "170"]
+bpm = ["176", "190"]
 weight = 2
 voice = "rap"
-caption = "psychedelic hip hop meets hard techno, boom bap verses with swirling acid switching to bouncy four-on-the-floor drops, 808 bass, rap verses, chanted title hook"
+caption = "psychedelic hip hop meets hard techno, half-time trap verses, bouncing gliding 808, swirling acid, rap verses, chanted title hook, four-on-the-floor drops"
 textures = ["swirling 303 acid lines", "crisp boom bap snares", "rubbery 808 slides", "phasing psychedelic leads", "scratched record cuts", "tape-stop effects"]
 genre_line = "Psychedelic Hip Hop, Hip Hop Techno, Hard Techno"
 style_line = "Psychedelic Hip Hop, Boom Bap Rave, Acid Techno, Rave Rap"
 tags = ["psychedelic hip hop", "hip hop techno", "acid hip hop", "rap techno", "hard techno"]
 era = "Mid-2020s psychedelic hip hop rave, boom bap swing flipping into hard techno drops"
-groove = "half-time boom bap swing in the verses, bouncing four-on-the-floor with rolling acid in the drops"
+groove = "half-time trap verses, backbeat clap, triplet hats, the 808 bouncing under the rap; four-on-the-floor drops"
 production = "Warm and wide, rap vocal dry and centred, acid swirling around it, kick big in the drops"
 mood_arcs = ["hazy head-nodding cool, flipping into a full-room jump, ending wide-eyed", "playful bars over a bubbling acid swing, then the drop turns it into a rave", "dreamy and swaying, sharpening at every switch, landing on one bright hook"]
 special_moments = ["a tape-stop on the boom bap, then the four-on-the-floor slams in", "the acid line bends up a full octave under the last hook", "the rapper's last line echoes into the drop through a phaser"]

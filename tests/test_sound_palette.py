@@ -37,3 +37,50 @@ def test_keys_are_minor_and_major():
     p = load_profile()
     got = {make_brief(p, (date(2026, 11, 1) + timedelta(days=n)).isoformat(), [])["key"].split()[-1] for n in range(30)}
     assert got == {"major", "minor"}
+
+
+def test_each_genre_group_draws_its_own_beat_and_sounds():
+    """Anchit, 2026-11-01: complete beats and sounds as per the genres."""
+    import random
+    from anchor.brief import pick_palette
+    p = load_profile()
+    pal = p.music["palette"]
+    for group in ("hardtech", "psy", "rap", "hiphop"):
+        bank = pal[group]
+        for _ in range(20):
+            s = pick_palette(p, random.Random(_), [], group=group)
+            assert s["drums"] in bank["drums"] and s["bass"] in bank["basses"] and s["lead"] in bank["leads"]
+    assert any("boom bap" in d or "trap" in d for d in pal["hiphop"]["drums"])
+    assert "808" in " ".join(pal["hiphop"]["basses"])
+    assert any("psy" in d for d in pal["psy"]["drums"])
+    assert any("rawstyle" in d or "rumbl" in d for d in pal["hardtech"]["drums"])
+
+
+def test_a_brief_carries_its_genre_groups_sound():
+    from datetime import date, timedelta
+    from anchor.brief import make_brief
+    p = load_profile()
+    for i in range(30):
+        b = make_brief(p, (date(2026, 11, 1) + timedelta(days=i)).isoformat(), [])
+        group = p.lane(b["lane"]).group
+        if group in p.music["palette"] and isinstance(p.music["palette"][group], dict):
+            assert b["sound"]["drums"] in p.music["palette"][group]["drums"], (b["lane"], b["sound"])
+
+
+def test_the_timbre_reference_matches_the_genre(tmp_path):
+    from anchor.music import AceStepCpp
+    for name in ("ANCHOR-2026-09-04-then-do-it.mp3", "ANCHOR-2026-09-10-signal-detected.mp3"):
+        (tmp_path / name).write_bytes(b"x")
+    groups = load_profile().music["ref_groups"]
+    eng = AceStepCpp(tmp_path, tmp_path, "d", "l", ref_dir=tmp_path, ref_groups=groups)
+    assert eng.reference({"seed": 3, "genre_group": "hardtech"}).name.startswith("ANCHOR-2026-09-04")
+    assert eng.reference({"seed": 3, "genre_group": "psy"}).name.startswith("ANCHOR-2026-09-10")
+    assert eng.reference({"seed": 3, "genre_group": "hiphop"}) is None
+    assert eng.reference({"seed": 3, "genre_group": "rap"}) is None
+
+
+def test_a_half_time_beat_keeps_its_tempo():
+    from anchor.audio import same_octave
+    assert same_octave(90.0, 180) == 180.0
+    assert same_octave(176.0, 176) == 176.0
+    assert same_octave(150.0, 172) == 150.0

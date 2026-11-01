@@ -83,7 +83,8 @@ def test_every_brief_stays_compressed():
     start = date(2026, 10, 1)
     for i in range(120):
         b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
-        assert len(b["caption"]) < 1550, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
+        # 1600: each genre group names its own drums and bass (2026-11-01); acestep.cpp does not truncate
+        assert len(b["caption"]) < 1600, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
 
 
 DARK = ("dark", "menac", "oppressive", "dread", "cold", "hostile", "claustrophob", "gloom",
