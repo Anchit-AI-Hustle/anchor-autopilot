@@ -7,7 +7,7 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-10-31T20:20:10Z",
+  "updated_at": "2026-11-01T02:55:24Z",
   "drops": [
     {
       "id": "2026-10-31-2",
@@ -28,7 +28,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31-2/ANCHOR-2026-10-31-who-started-the-dance-short.mp4",
       "youtube_url": "https://youtu.be/OaLaVCYvtug",
       "buffer_post_id": "OaLaVCYvtug",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-10-31T20:19:57Z",
       "qc": {
         "bpm_est": 172.0,
@@ -73,6 +73,74 @@
         "drums": "clean round kick with handclap stacks",
         "melody": "a slow wide melody over the fast beat",
         "chords": "playful major chords with a twist"
+      }
+    },
+    {
+      "id": "2026-10-31",
+      "date": "2026-10-31",
+      "title": "Clock Spins Backward",
+      "lane": "rawbounce",
+      "lane_name": "Rawstyle Bounce",
+      "bpm": 150,
+      "key": "F minor",
+      "family": "chrome",
+      "family_name": "Chrome",
+      "duration_s": 215,
+      "short_s": 45,
+      "cover": "covers/2026-10-31.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31/ANCHOR-2026-10-31-clock-spins-backward.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-10-31",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-10-31-clock-spins-backward-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31/ANCHOR-2026-10-31-clock-spins-backward-short.mp4",
+      "youtube_url": "https://youtu.be/2HMAArLJaXQ",
+      "buffer_post_id": "2HMAArLJaXQ",
+      "status": "public",
+      "post_at": "2026-11-01T02:55:09Z",
+      "qc": {
+        "bpm_est": 150.0,
+        "lufs": -14.06,
+        "warnings": [
+          "tempo landed at 150.0 BPM (asked 173)",
+          "craft: no breakdown (needs 8 s at least 8 dB under the peak; the channel's top record has two)",
+          "key is not clearly audible; kept the requested one"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-01T02:51:51Z",
+      "genre_line": "Rawstyle Hybrid, Hard Techno, Peak Time Techno",
+      "style_line": "Bouncy Rawstyle, Hard Bounce, Festival Techno, Driving Techno",
+      "error": null,
+      "accent": "#d7e0ea",
+      "caption": "rawstyle hybrid, hard bounce, hard techno, pitched rawstyle kick with a short bouncy tail, reverse bass bouncing on the off-beat, playful lead hook. Mid-2020s festival hard techno crossed with Dutch rawstyle and hard bounce, loud and bright. Mood: hyped from the start, building into a crowd-wide jump, ending on a victory stab, about a time machine that only travels to the best night of every decade. Feel: bouncy, fun and psychedelic, never dark. 173 BPM, fast four-on-the-floor with a reverse bass bouncing on every off-beat, snare rolls into every drop. Instruments: pitched rawstyle kick, reverse tail, snare rolls, reverse bass pulling into every kick, detuned supersaw stab lead playing a two-note call and response hook over big trance chords that lift at the end; crowd-hype siren leads intro, pitched kick rolls build, bouncy lead chirps breakdown. Vocals: whispers in the quiet parts, shouted crowd chants in the drops, never sung. Production: Loud and bright, kick tail short and bouncy, lead hook in the upper mids, wide stereo; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, crowd-hype siren leads far back, tension only at the start, and the outro kick and bass strip back, filter closing, crowd-hype siren leads last, resolve to silence. Special moment: a pitched kick roll that climbs a full octave into the second drop.",
+      "seed": 317667420,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 8,
+        "render_s": 332.5,
+        "threads": 10,
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "guidance": 1.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31/ANCHOR-2026-10-31-clock-spins-backward-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-10-31/ANCHOR-2026-10-31-clock-spins-backward-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/2HMAArLJaXQ",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=4MpV598JyDQ",
+      "buffer_short_post_id": "6ae6aa1937c1acd2a0e35d03",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "time-machine",
+      "sound": {
+        "lead": "detuned supersaw stab lead",
+        "bass": "reverse bass pulling into every kick",
+        "drums": "pitched rawstyle kick, reverse tail, snare rolls",
+        "melody": "a two-note call and response hook",
+        "chords": "big trance chords that lift at the end"
       }
     },
     {
@@ -3339,7 +3407,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-10-31T20:20:11Z",
+    "checked_at": "2026-11-01T02:55:25Z",
     "total": 2,
     "postable": 2,
     "families": 0,
