@@ -424,6 +424,19 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
         brief["title"] = queued["title"]
     brief["duration_s"] = stats_audio["duration_s"]
     brief["source"], brief["source_file"] = "queue", src.name
+    # a queued take of the robot's own (Anchit, 2026-11-01: "if this is not on youtube add it")
+    # keeps the genre, theme and lyrics it was made with, not the day's slot
+    if queued.get("lane"):
+        lane = profile.lane(queued["lane"])
+        brief.update(lane=lane.id, lane_name=lane.name, genre_group=lane.group or "any",
+                     genre_line=lane.genre_line, style_line=lane.style_line)
+    if queued.get("theme"):
+        from . import themes
+        t = next((t for t in themes.load() if t.id == queued["theme"]), None)
+        if t:
+            brief.update(theme=t.id, theme_name=t.name, theme_idea=t.idea)
+    if queued.get("lyrics"):
+        brief["lyrics"] = queued["lyrics"]
     if queued.get("caption"):
         brief["caption"] = queued["caption"]
     est = stats_audio.get("bpm_est")

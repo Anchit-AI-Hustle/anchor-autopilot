@@ -116,5 +116,16 @@
     "duration_s": 102.1,
     "queued_at": "2026-09-13T14:10:47Z",
     "released_at": "2026-09-13T21:04:42Z"
+  },
+  "01-rain-on-the-main-stage.mp3": {
+    "title": "Rain On The Main Stage",
+    "source": "anchor",
+    "lane": "hardtechrap",
+    "theme": "festival-mud",
+    "lyrics": "[Intro]\nlet the rain come down\n\n[Drop]\nRAIN ON THE MAIN STAGE! RAIN ON THE MAIN STAGE!\nRain! Rain! Rain!\n\n[Verse]\nRaincoat flapping like a flag in the wind\nSunday tomorrow and the mud says stay\nStranger gave me a poncho and a grin\nLost my left wellie in the second song\n\n[Verse]\nTen thousand people and a single puddle\nField turned to chocolate and we swimming in it\nRain on the lights making rainbows for free\nBoots full of water but the bass still dry\n\n[Drop]\nRAIN ON THE MAIN STAGE! RAIN ON THE MAIN STAGE!\nRain! Rain! Rain!\n\n[Outro]\nlet the rain come down",
+    "caption": "rap over hard tech, swung hard groove, distorted punchy kick, bouncy rolling bassline, catchy synth lead hook, confident rap verses, chanted title hook. Mid-2020s hard tech crossover: swung tech house groove pushed to hard techno tempo with English rave rap. Mood: confident from bar one, louder at every hook, landing on one shout, about a rainy field, wellies stuck in the mud, and the best set of the weekend. Feel: bouncy, fun and psychedelic, never dark. 166 BPM, fast swung four-on-the-floor, a rolling bassline bouncing on every off-beat, the rap riding the swing. Instruments: four-on-the-floor kick, cracking backbeat snare, swung hats, rubber sub bass under the rap, plucky detuned saw hook playing a syncopated stabbing riff over warm feel-good chords; rubbery bass plucks intro, vocal ad-lib echoes build, swung tech house percussion breakdown. Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro. Production: Punchy and bright, rap vocal dry and centred, lead hook in the upper mids, kick dry and up front; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> drop -> breakdown -> build -> drop -> outro; filtered kick alone, no sub bass yet, rubbery bass plucks far back, tension only at the start, and the outro kick and bass strip back, filter closing, rubbery bass plucks last, resolve to silence. Special moment: the bassline climbs an octave under the final hook.",
+    "note": "Mac GPU take from the genre-true A/B of 2026-11-01 (song gate PASS 0.797, 0 silence holes, 3 breaks); Anchit asked for it on YouTube",
+    "queued_at": "2026-11-01T16:30:00Z",
+    "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/extras-2026-11-01/ANCHOR-Rain-On-The-Main-Stage-2026-11-01.mp3"
   }
 }

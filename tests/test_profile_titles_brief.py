@@ -196,7 +196,9 @@ def test_songs_whisper_in_the_quiet_parts_and_chant_the_title_in_the_drops():
             if tag in ("[Intro]", "[Outro]") or (tag == "[Breakdown]" and not rap):
                 assert words[0] in theme.whispers, "the quiet lines are the song's own theme's"
             if tag == "[Verse]":
-                assert rap and len(words) == 4 and all(w in theme.rap for w in words)
+                # four bars of the theme's rap, then the title sung once (2026-11-01: the drop chant is
+                # often not sung, so the title closes every verse too)
+                assert rap and len(words) == 5 and all(w in theme.rap for w in words[:4]) and words[4] == b["title"]
         assert sum(1 for s_ in sections if s_.startswith("[Drop]")) >= 1
         assert b["vocal_style"] and "chant" in b["vocal_style"]
         req = AceStepCpp("bin", "models", "dit", None).request(b)
