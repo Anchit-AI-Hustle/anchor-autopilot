@@ -15,7 +15,8 @@ from anchor.music import FixtureEngine, renderer_settings, synth_techno, write_w
 # Anchit's own Suno songs measure between these (the gate's REFERENCE), so a take that sits
 # inside them passes every check
 SUNO_LIKE = {"duration_s": 210.0, "noise_score": 0.03, "melody_share": 0.85, "sound_movement": 0.2,
-             "loud_quiet_range_db": 9.0, "most_different_parts": -0.4, "section_changes": 10, "silent_tail_s": 0.5}
+             "loud_quiet_range_db": 9.0, "most_different_parts": -0.4, "section_changes": 10, "silent_tail_s": 0.5,
+             "silence_holes": 0, "breaks": 1}
 
 
 def test_the_limits_are_the_publish_checks_own():
@@ -24,7 +25,8 @@ def test_the_limits_are_the_publish_checks_own():
     assert {k: v[:2] for k, v in songgate.CHECKS.items()} == {
         "noise_score": ("max", 0.0462), "melody_share": ("min", 0.7937), "sound_movement": ("min", 0.1296),
         "loud_quiet_range_db": ("min", 6.76), "most_different_parts": ("max", -0.2545),
-        "section_changes": ("min", 7.1), "silent_tail_s": ("max", 3.0)}
+        "section_changes": ("min", 7.1), "silent_tail_s": ("max", 3.0),
+        "silence_holes": ("max", 0), "breaks": ("max", 4)}
 
 
 def test_a_song_like_take_passes_and_each_miss_is_named():
@@ -286,3 +288,26 @@ def test_mac_takes_lean_on_anchits_own_songs_for_their_tone(tmp_path, monkeypatc
     assert len(songs) == 9 and all(u.endswith(".mp3") and "/releases/download/drop-2026-09-" in u for u in songs)
     text = (Path(__file__).resolve().parent.parent / ".github" / "workflows" / "daily.yml").read_text()
     assert 'echo "ANCHOR_REF_DIR=$G/refs" >> "$GITHUB_ENV"' in text
+
+
+@pytest.mark.slow
+def test_a_song_that_cuts_to_silence_in_the_middle_fails():
+    """Anchit, 2026-11-01: songs are breaking in between. Who Started The Dance cut to digital
+    silence for 0.3 s at 2:08; none of his nine Suno songs ever does."""
+    sr = 22050
+    t = np.arange(sr * 60) / sr
+    y = 0.3 * np.sin(2 * np.pi * 110 * t) * (0.6 + 0.4 * (np.sin(2 * np.pi * 2.5 * t) > 0))
+    assert songgate.holes_and_breaks(y, sr) == (0, 0)
+    broken = y.copy()
+    for at in (20.0, 31.0, 44.5):
+        broken[int(at * sr):int((at + 0.3) * sr)] = 0.0
+    holes, breaks = songgate.holes_and_breaks(broken, sr)
+    assert holes == 3 and breaks == 3
+    fails = songgate.judge({**SUNO_LIKE, "silence_holes": holes})
+    assert [f["check"] for f in fails] == ["silence_holes"]
+    assert songgate.judge({**SUNO_LIKE, "breaks": 6})[0]["why"] == "the music keeps breaking off in the middle"
+
+
+def test_a_take_measured_before_the_new_checks_is_still_judged():
+    old = {k: v for k, v in SUNO_LIKE.items() if k not in ("silence_holes", "breaks")}
+    assert songgate.judge(old) == []
