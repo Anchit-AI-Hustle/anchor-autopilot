@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-10-31",
-    "title": "Clock Spins Backward",
-    "finished_at": "2026-11-01T02:55:24Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41262522827",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-01T15:59:33Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41321121943"
   },
   "next_post_at": "2026-11-01T17:30:00Z",
   "streak": 8,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-01T02:55:24Z",
+  "updated_at": "2026-11-01T15:59:33Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
