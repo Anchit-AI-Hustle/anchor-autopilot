@@ -163,6 +163,26 @@ def test_queue_track_is_released_without_generating(fast_profile, tmp_path, site
     assert not track.exists() and (queue / "done" / track.name).exists()   # never posted twice
 
 
+def test_a_queued_take_keeps_its_own_genre_theme_and_lyrics(fast_profile, tmp_path, site_dir):
+    """Anchit, 2026-11-01: a Mac take he liked goes out with the genre and words it was made with."""
+    import json
+    from anchor import pipeline
+    from anchor.music import SR, synth_techno, write_wav
+
+    queue = tmp_path / "queue"
+    queue.mkdir()
+    write_wav(queue / "01-rain-on-the-main-stage.wav", synth_techno(40, 166, 3), SR)
+    lane = next(l for l in fast_profile.lanes if l.id == "hardtechrap")
+    (queue / "queue.json").write_text(json.dumps({"01-rain-on-the-main-stage.wav": {
+        "title": "Rain On The Main Stage", "lane": lane.id, "theme": "festival-mud",
+        "lyrics": "[Intro]\nlet the rain come down"}}))
+    meta = pipeline.make(fast_profile, "2026-09-20", tmp_path / "drop", art_mode="procedural",
+                         catalog_path=site_dir / "data" / "catalog.json", queue_dir=queue)
+    b = meta["brief"]
+    assert b["title"] == "Rain On The Main Stage" and b["lane"] == "hardtechrap" and b["lane_name"] == lane.name
+    assert b["theme"] == "festival-mud" and b["lyrics"].startswith("[Intro]\nlet the rain")
+
+
 def test_a_queued_song_whose_title_already_exists_goes_out_under_an_original_title(fast_profile, tmp_path, site_dir, monkeypatch):
     """Anchit, 2026-10-24: no title may be a song that already exists. A Suno song called
     "Project Mayhem" (taken, says the catalogue check) is released under the day's verified

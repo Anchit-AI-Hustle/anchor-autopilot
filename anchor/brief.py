@@ -221,6 +221,11 @@ def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[s
         # a bare section tag: a direction or delivery note written into the sheet gets SUNG
         # (2026-10-25: "for eight to sixteen bars ... rap verse, laid back flow over the groove").
         # The arrangement and the delivery live in the caption (lane vocals, arc) instead.
+        # the title is also sung in the quiet parts and the verses: the drop chant is often
+        # left unsung or comes out as "hey hey" (2026-11-01, Feathers And Drums: every verse
+        # line heard word for word, the drop chant heard as "hey hey hey")
+        if kind in ("rap", "shout") or (kind == "whisper" and name not in ("intro", "outro")):
+            line = f"{line}\n{title}"
         out.append(f"[{section_tag(tag, kind)}]\n{line}")
     return "\n\n".join(out)
 
