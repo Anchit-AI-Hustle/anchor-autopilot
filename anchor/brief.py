@@ -88,7 +88,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     shape = r.choice(list(SHAPES))
     # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
     theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,
-                        used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]))
+                        used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
+                        avoid_titles=tuple(avoid_titles))
     sound = pick_palette(profile, rng("anchor-sound", drop_id), past, group=lane.group or "")
     style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape, story=theme.idea,
                           sound=sound)
