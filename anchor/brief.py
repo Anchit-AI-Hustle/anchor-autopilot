@@ -89,7 +89,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
     theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,
                         used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]))
-    sound = pick_palette(profile, rng("anchor-sound", drop_id), past)
+    sound = pick_palette(profile, rng("anchor-sound", drop_id), past, group=lane.group or "")
     style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape, story=theme.idea,
                           sound=sound)
 
@@ -228,13 +228,18 @@ PALETTE_PARTS = ("lead", "bass", "drums", "melody", "chords")
 PALETTE_GAP = 8          # a lead sound or a melody shape comes back only after this many songs
 
 
-def pick_palette(profile: Profile, r, history: list[dict], gap: int = PALETTE_GAP) -> dict | None:
+def pick_palette(profile: Profile, r, history: list[dict], gap: int = PALETTE_GAP,
+                 group: str = "") -> dict | None:
     """The sound of one song: a lead, a bass, a drum kit, a melody shape and a chord feel from
-    ``[music.palette]``. No lead or melody of the last ``gap`` songs, no bass, kit or chords of
-    the last few, and never the exact set of an earlier song. None without a palette."""
+    ``[music.palette.<group>]`` (the lane's genre group: a hip hop song gets boom bap or trap
+    drums and an 808, a psy song a rolling psy bassline), else ``[music.palette]``. No lead or
+    melody of the last ``gap`` songs, no bass, kit or chords of the last few, and never the
+    exact set of an earlier song. None without a palette."""
     pal = profile.music.get("palette")
     if not pal:
         return None
+    if isinstance(pal.get(group), dict):
+        pal = pal[group]
     banks = {"lead": pal["leads"], "bass": pal["basses"], "drums": pal["drums"], "melody": pal["melodies"],
              "chords": pal["chords"]}
     gaps = {"lead": gap, "melody": gap, "bass": 4, "drums": 4, "chords": 3}

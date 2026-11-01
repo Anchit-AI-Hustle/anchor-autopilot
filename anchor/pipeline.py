@@ -9,7 +9,7 @@ from pathlib import Path
 
 from . import catalog, craft, ledger, lyriccheck, lyrics, originality, songgate
 from .art import make_cover, og_card
-from .audio import (analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
+from .audio import (same_octave, analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
 from .brief import describe, make_brief, post_time
 from .copy import write as write_copy
@@ -285,6 +285,7 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
 
     # the model treats BPM as guidance; publish the tempo the track actually has
     est = stats_audio.get("bpm_est")
+    est = same_octave(est, brief["bpm"]) if est else est
     if est and abs(est - brief["bpm"]) > 1.0:
         log(f"tempo landed at {est} BPM (asked {brief['bpm']}); metadata follows the audio")
         brief["bpm_requested"] = brief["bpm"]

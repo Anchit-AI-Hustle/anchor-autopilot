@@ -114,7 +114,8 @@ class AceStepCpp:
     def __init__(self, bin_dir: str | Path, models_dir: str | Path, dit_model: str,
                  lm_model: str | None, steps: int = 8, shift: float = 3.0,
                  guidance: float = 1.0, threads: int | None = None,
-                 vae_chunk: int = 512, timeout_s: int = 10000, ref_dir: str | Path | None = None):
+                 vae_chunk: int = 512, timeout_s: int = 10000, ref_dir: str | Path | None = None,
+                 ref_groups: dict | None = None):
         # absolute: the binaries run with cwd set to the drop folder, so a relative
         # path here would resolve against that folder instead of the repo
         self.bin_dir = Path(bin_dir).expanduser().resolve()
@@ -133,6 +134,8 @@ class AceStepCpp:
         # improved much more"): ace-synth --ref-audio conditions the DiT on the tone of a record
         # he made and likes, while the melody, words and arrangement stay the song's own
         self.ref_dir = Path(ref_dir).expanduser() if ref_dir else None
+        # genre group -> parts of the reference file names that belong to it (None: any file)
+        self.ref_groups = {k: tuple(v) for k, v in ref_groups.items()} if ref_groups is not None else None
 
     def check(self) -> None:
         missing = [str(p) for p in (self.bin_dir / "ace-synth", self.models_dir / self.dit_model)
@@ -176,6 +179,10 @@ class AceStepCpp:
         if not self.ref_dir or not self.ref_dir.is_dir():
             return None
         refs = sorted(p for p in self.ref_dir.iterdir() if p.suffix.lower() in (".mp3", ".wav", ".flac"))
+        if self.ref_groups is not None:
+            # only songs of the take's own genre group; a group with none renders without one
+            keys = self.ref_groups.get(brief.get("genre_group") or "", ())
+            refs = [p for p in refs if any(k in p.name for k in keys)]
         return refs[int(brief["seed"]) % len(refs)] if refs else None
 
     def generate(self, brief: dict, out_dir: Path) -> tuple[Path, dict]:
@@ -343,6 +350,7 @@ def one_engine(profile_music: dict, name: str):
             vae_chunk=int(env("ANCHOR_VAE_CHUNK", "512")),
             timeout_s=int(env("ANCHOR_ENGINE_TIMEOUT", "10000")),
             ref_dir=env("ANCHOR_REF_DIR", "") or profile_music.get("ref_dir") or None,
+            ref_groups=profile_music.get("ref_groups"),
         )
     raise ValueError(f"unknown music engine {name!r}")
 
