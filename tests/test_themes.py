@@ -118,7 +118,14 @@ def test_a_week_of_songs_has_a_theme_title_and_words_of_its_own():
     assert len(set(titles)) == len(titles) == 35
     moves = [t.split()[-1] for t in titles if t.split()[-1] in themes.MOVES]
     assert all(a != b for a, b in zip(moves, moves[1:])), "a move never names two songs in a row"
-    assert max(lines.values()) <= 2, lines.most_common(3)
+    # a mantra is meant to come back (2026-11-02: shlokas in the psy songs); every other line is
+    # the song's own and appears in at most two songs of a week
+    mantras = {m for st in p.music["lyric_styles"].values() for m in st.get("mantras", [])}
+    bank = {b for st in p.music["lyric_styles"].values() for b in st.get("bars", [])}
+    own = [(l, n) for l, n in lines.items() if l not in mantras | bank]
+    assert max(n for _, n in own) <= 2, sorted(own, key=lambda x: -x[1])[:5]
+    # a genre's bank (MC bars, gangster and heavy verses) is walked in turn: at most three a week
+    assert max(n for l, n in lines.items() if l in bank) <= 3
 
 
 def test_two_months_of_five_songs_a_day_all_get_a_theme_name():
@@ -150,7 +157,7 @@ def test_no_title_uses_a_word_the_singer_got_wrong():
 def test_a_misheard_title_moves_the_song_to_another_theme():
     import random
     ts = themes.load()
-    shop = next(t for t in ts if t.id == "robot-workshop")
+    shop = next(t for t in ts if t.id == "festival-mud")
     for i in range(20):
-        t = themes.pick(ts, random.Random(i), [], avoid_titles=("Bolts And Boogie",))
+        t = themes.pick(ts, random.Random(i), [], avoid_titles=("Dancing In The Mud",))
         assert t.id != shop.id

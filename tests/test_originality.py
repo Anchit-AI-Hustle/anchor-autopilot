@@ -133,7 +133,7 @@ def test_rap_lanes_rap_and_never_ban_rap():
         if lane.voice != "rap":
             assert lane.vocals == "" and lane.negative == ""
             continue
-        assert "rap verses" not in lane.negative and "sung melody" in lane.negative
+        assert "rap verses" not in lane.negative and "robotic vocals" in lane.negative
         assert "rap" in lane.vocals.lower() and "chant" in lane.vocals
     bars = p.music["voice"]["rap"]
     assert len(bars) == len(set(bars)) >= 24
@@ -143,7 +143,7 @@ def test_rap_lanes_rap_and_never_ban_rap():
         if lane.voice != "rap":
             assert "rap verse" not in b["lyrics"] and "rap verses" in b["negative"]
             continue
-        assert "rap verses" not in b["negative"] and lane.vocals in b["caption"]
+        assert "rap verses" not in b["negative"] and lane.vocals.split("}")[1] in b["caption"]
         verses = [s for s in b["lyrics"].split("\n\n") if s.split("\n")[0] == "[Verse]"]
         assert verses, b["date"]
         # every verse ends on the title (2026-11-01); the bars themselves never repeat

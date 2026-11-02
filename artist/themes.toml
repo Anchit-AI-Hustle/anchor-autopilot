@@ -16,6 +16,11 @@
 # Rules the tests hold every theme to: plain words of at most three syllables in a title, no
 # title word ever used in an earlier ANCHOR title, no line shared between two themes, no
 # production words a singer could mistake for lyrics, fun and never dark.
+#
+# 2026-11-02 (Anchit: lyrics too robotic, not about machines): every theme is a moment in
+# people's lives; the six sung lines are three rhymed couplets of 4 to 8 syllables, the rap is
+# six rhymed couplets in a person's own voice.
+
 
 [[theme]]
 id = "last-train"
@@ -23,22 +28,9 @@ name = "Last Train Home"
 idea = "the last train left an hour ago and nobody on the floor cares"
 titles = ["Missed The Last Train", "Platform Party", "Nobody Takes The Train", "Ticket In My Sock"]
 nouns = ["Platform", "Night Bus", "Ticket", "Train Times", "Turnstile", "Night Owl", "Station Clock", "Subway", "Carriage", "Lost Property", "Ticket Gate", "Night Shift", "Ticket Hall", "Overground", "Last Stop", "Penny Arcade"]
-whispers = ["the station lights are off", "we missed it on purpose", "let the city wait", "one more song then home", "the clock forgot us", "home can wait till morning"]
-chants = ["stay", "one more", "not yet", "keep going"]
-rap = [
-  "Last train gone and I never even checked",
-  "Phone on two percent but the night got charge",
-  "Mates in a circle doing laps round the speaker",
-  "Somebody shouting that the bus comes at six",
-  "Shoes full of confetti from a party down the hall",
-  "We could have gone home but the kick said no",
-  "City asleep while the windows keep shaking",
-  "Doorman nodding like he knows the plan",
-  "Taxi light green but we waving it past",
-  "Morning on the way and we saving it a seat",
-  "Every song better than the bed back home",
-  "Station is closed but the dance floor open",
-]
+whispers = ["the last train left at one", "and we have only just begun", "you said you'd leave at ten", "then you danced with me again", "we'll walk the long way home", "nobody here is on their own"]
+chants = ["one more hour", "don't go home", "stay right here", "all night long"]
+rap = ["Missed the last train by a minute and a half", "Watched the doors close and I couldn't help but laugh", "Phone on two percent and my jacket on a chair", "Ask me if I'm leaving, I'll be standing right there", "Night bus at four if we really need a ride", "Till then I'm on the floor with my friends by my side", "Station lights are fading at the far end of the street", "We don't need a timetable, we only need the beat", "Strangers on the platform turning into a crew", "Swapping names and stories like we always knew", "When the sun comes up we will find a way back", "Right now there's no reason to be looking back"]
 
 [[theme]]
 id = "rooftop-sunrise"
@@ -46,22 +38,9 @@ name = "Rooftop Sunrise"
 idea = "dancing on a roof as the sky turns pink"
 titles = ["Pink Sky Stomp", "Sunrise On The Roof", "Morning Turns Pink", "Up Where The Pigeons Dance"]
 nouns = ["Rooftop", "Sunrise", "Pink Sky", "Water Tank", "Chimney", "Skyline", "Pigeon", "Fire Escape", "Morning Gold", "Sky Deck", "Antenna", "Skylight", "Daybreak", "Rooftop Garden", "Satellite Dish", "Weather Vane"]
-whispers = ["the sky is turning pink", "say hello to the sun", "we beat the morning here", "warm light on our faces", "the whole town still asleep", "first light, first jump"]
-chants = ["sunrise", "hello sun", "up up", "shine"]
-rap = [
-  "Up on the roof where the cables meet the clouds",
-  "Sky going pink like a strawberry milkshake",
-  "Birds waking up and they joining the song",
-  "Sun peeking over like it wants to come in",
-  "Shadows getting long on the water tank",
-  "Coffee in one hand and the other in the air",
-  "City below us still rubbing its eyes",
-  "We been here all night and the view just got better",
-  "Gold on the windows of the tower next door",
-  "Pigeons on the railing doing two step slow",
-  "Hug the morning like an old good friend",
-  "Night said goodbye and the day said jump",
-]
+whispers = ["we climbed up after three", "just the stars, the crew and me", "the sky is turning pink", "it's later than you think", "hold on, the sun is near", "the best part starts right here"]
+chants = ["sun is up", "hands to the sky", "here it comes", "good morning"]
+rap = ["Climbed the fire escape with a speaker in my bag", "Six of us up top and nobody's lagging", "City's still asleep, only bakeries awake", "Up all night and still got one more song to make", "Pigeons on the ledge nodding heads to the sound", "Skyline turning gold all the way around", "Phone keeps buzzing, I'll get back to it at noon", "Right now I'm saying hello to the sun, goodbye to the moon", "Paper cups of coffee in the early morning breeze", "Laughing at the night we had and begging one more please", "Look how far we came from the bottom of the stairs", "Top of the world and not a single care"]
 
 [[theme]]
 id = "festival-mud"
@@ -69,45 +48,9 @@ name = "Festival Mud"
 idea = "a rainy field, wellies stuck in the mud, and the best set of the weekend"
 titles = ["Dancing In The Mud", "Rain On The Main Stage", "Rain On The Tents", "Muddy Boots Parade"]
 nouns = ["Mud Pie", "Tent Pole", "Raincoat", "Poncho", "Main Stage", "Campsite", "Tent Peg", "Flag Pole", "Wristband", "Mud Bath", "Glowstick", "Hay Bale", "Bucket Hat", "Big Top", "Sleeping Bag", "Field Kitchen"]
-whispers = ["let the rain come down", "we came here to get wet", "the field is a mirror", "every drop is a drum", "mud up to our knees", "the clouds are dancing too"]
-chants = ["splash", "rain", "jump in", "louder"]
-rap = [
-  "Raincoat flapping like a flag in the wind",
-  "Boots full of water but the bass still dry",
-  "Tent fell down and we laughing about it",
-  "Glitter on the cheeks getting washed by the sky",
-  "Ten thousand people and a single puddle",
-  "Lost my left wellie in the second song",
-  "Flags in the air with our names on the back",
-  "Rain on the lights making rainbows for free",
-  "Stranger gave me a poncho and a grin",
-  "Field turned to chocolate and we swimming in it",
-  "Weather report wrong and we dancing anyway",
-  "Sunday tomorrow and the mud says stay",
-]
-
-[[theme]]
-id = "space-rave"
-name = "Rave In Orbit"
-idea = "a party on a space station where nobody touches the floor"
-titles = ["Zero Gravity Party", "Moonwalk Club", "Floating Dance Floor", "Party Past The Moon"]
-nouns = ["Moonwalk", "Rocket", "Comet", "Space Suit", "Satellite", "Stardust", "Launch Pad", "Moon Base", "Galaxy", "Helmet", "Astronaut", "Meteor", "Orbit Ring", "Space Dust", "Moon Boot", "Star Map"]
-whispers = ["no floor up here", "float with me", "the earth is turning blue", "stars on every side", "the moon is our speaker", "drift a little higher"]
-chants = ["lift", "float", "blast", "up"]
-rap = [
-  "Countdown done and the boots leave the ground",
-  "Earth in the window like a disco ball",
-  "Helmet off, hair floating, no gravity rules",
-  "Dancing on the ceiling cause the ceiling is the floor",
-  "Comets passing by and they waving at the crew",
-  "Moon looking jealous it was not invited",
-  "Spin one time and I spin for a minute",
-  "Water drops floating like a slow motion rain",
-  "Mission control asking why the ship is shaking",
-  "Radio crackling with a hundred thousand cheers",
-  "Stars blinking on like they dancing in rhythm",
-  "Back to the planet when the playlist ends",
-]
+whispers = ["the rain came in at nine", "we said that's fine, that's fine", "my boots are lost somewhere", "and I don't even care", "your poncho, my old hat", "we'll laugh about all that"]
+chants = ["let it pour", "we don't mind", "come on rain", "still here"]
+rap = ["Raincoat flapping like a flag in the wind", "Mud up to my knees and I can't stop the grin", "Lost my left boot somewhere in the second song", "Hopping on one foot and still singing along", "Stranger gave me a poncho and a cup of tea", "Now she's dancing in the front row next to me", "Ten thousand people with their boots in the ground", "Everybody jumping when the bass comes round", "Tent fell over and we didn't even flinch", "Every single one of us is soaked to the inch", "Sunday morning we'll be steaming in the sun", "Tell me where you've ever had this much fun"]
 
 [[theme]]
 id = "night-market"
@@ -115,22 +58,9 @@ name = "Night Market"
 idea = "street food stalls, neon signs and a speaker set up between the noodle carts"
 titles = ["Noodles At Midnight", "Neon Food Stall", "Street Food Shuffle", "Spice Market Bounce"]
 nouns = ["Noodle", "Lantern", "Dumpling", "Chilli", "Food Cart", "Spice", "Mango", "Street Stall", "Hot Sauce", "Tea Cup", "Sugar Cane", "Skewer", "Paper Lantern", "Fortune Cookie", "Bubble Tea", "Sweet Corn"]
-whispers = ["smell the spice in the air", "lanterns swaying slow", "one more plate please", "the street is our kitchen", "steam in the neon light", "come hungry, leave dancing"]
-chants = ["more", "spicy", "taste it", "hey"]
-rap = [
-  "Chilli on my tongue and a beat in my feet",
-  "Lanterns hanging low like a sky full of mangoes",
-  "Uncle at the grill keeping time with a spatula",
-  "Neon sign blinking every time the bass hits",
-  "Plastic stools dancing on the wet street",
-  "Dumplings in a basket and the night is long",
-  "Auntie in the corner doing moves from the eighties",
-  "Sauce on my shirt and I wearing it proud",
-  "Steam from the pots making clouds round the crowd",
-  "Every stall cooking to the same loud rhythm",
-  "Pay with a smile and a little shoulder shimmy",
-  "Market closes late and the party closes never",
-]
+whispers = ["the smoke from every stall", "the music over all", "we share a plate of three", "you save the last for me", "the lanterns swing so slow", "I never want to go"]
+chants = ["one more bite", "hot hot hot", "bring the spice", "pass it round"]
+rap = ["Lanterns on a string from the corner to the wall", "Speaker by the noodle stall playing for us all", "Chilli on my fingers and a mango in my hand", "Auntie at the counter nodding head to the band", "Paper plates and plastic stools out on the street", "Everybody eating and moving their feet", "You said try the dumplings, I said try them twice", "Every single stall is the best one at this price", "Steam coming up in the orange light", "Feels like the whole town is out tonight", "Sweet tea, hot sauce and a friend I just met", "Best night of the year and it isn't over yet"]
 
 [[theme]]
 id = "monsoon"
@@ -138,45 +68,9 @@ name = "Monsoon"
 idea = "the first big rain of the season and the whole street dancing in it"
 titles = ["First Rain Of June", "Monsoon Street Party", "Thunder Says Dance", "Umbrellas Upside Down"]
 nouns = ["Monsoon", "Paper Boat", "Rain Cloud", "Downpour", "Thunder", "Umbrella", "Raindrop", "Chai", "Wet Street", "Rainbow", "Gumboot", "Rain Dance", "Rain Dance", "Drizzle", "Tin Roof", "Storm Drain"]
-whispers = ["smell the wet earth", "here comes the rain", "thunder in the distance", "the street is shining", "puddles full of light", "the clouds are breaking open"]
-chants = ["rain", "thunder", "dance", "now"]
-rap = [
-  "Clouds rolling in like they own the whole city",
-  "First drop lands and the kids run outside",
-  "Thunder keeping time like a drummer in the sky",
-  "Rooftops ringing like a thousand tin drums",
-  "Paper boats racing down the side of the road",
-  "Chai on the stove and the windows all open",
-  "Lightning took a photo of the whole street jumping",
-  "Hair soaked through and we never felt better",
-  "Wind in the trees doing waves like a crowd",
-  "Umbrella flipped over so we wearing it as a hat",
-  "Heat finally gone and the dancing begins",
-  "Whole town singing with the rain on the roof",
-]
-
-[[theme]]
-id = "arcade"
-name = "Arcade Night"
-idea = "a neon arcade where every machine plays the same tune and the high score is the dance"
-titles = ["Insert Coin Dance", "High Score Hustle", "Pinball Brain", "Player Two Ready"]
-nouns = ["Pinball", "Joystick", "High Score", "Coin Slot", "Claw Machine", "Bonus Round", "Pixel", "Player Two", "Arcade", "Token", "Air Hockey", "Prize Ticket", "Dance Mat", "Power Up", "Extra Life", "Bumper Car"]
-whispers = ["press start", "one more coin", "the lights are blinking", "level up slowly", "game on", "beat your own score"]
-chants = ["game on", "level up", "combo", "again"]
-rap = [
-  "Pocket full of coins and a head full of pixels",
-  "Joystick in my hand like it was always mine",
-  "Pinball flipping to the rhythm of the room",
-  "Claw machine missing but it missing on beat",
-  "Top of the scoreboard with my three letter name",
-  "Neon on the carpet making maps for the feet",
-  "Player two joining and we breaking the record",
-  "Bonus round started and the whole place jumping",
-  "Lives running out but we never game over",
-  "Every button glowing like a candy shop",
-  "Tickets coming out like a paper waterfall",
-  "Prize at the counter is a rubber duck crown",
-]
+whispers = ["the first rain hits the street", "and pulls us to our feet", "your hair is soaking wet", "the best day of the year yet", "the thunder counts us in", "let the rain dance begin"]
+chants = ["let it rain", "dance in it", "here it comes", "rain rain rain"]
+rap = ["Smell of the first rain coming up from the road", "Whole street stepping out like they dropped a heavy load", "Kids with paper boats racing down the drain", "Grandpa on the porch singing out to the rain", "Chai on the corner and the tin roofs drum", "Everybody shouting that the season has come", "Umbrellas upside down, we don't need them tonight", "Clothes stuck to our skin and the feeling is right", "Thunder in the distance keeping time with the bass", "Rainwater running like a smile on my face", "When the clouds roll on we'll be sitting on the stairs", "Talking about the night the whole street danced out there"]
 
 [[theme]]
 id = "beach-bonfire"
@@ -184,22 +78,9 @@ name = "Beach Bonfire"
 idea = "a fire on the sand, waves keeping time and the tide coming in to dance"
 titles = ["Fire On The Sand", "Tide Comes In Dancing", "Barefoot Bonfire", "Salt In My Hair"]
 nouns = ["Bonfire", "Seashell", "Sandcastle", "Tide", "Driftwood", "Seagull", "Flip Flop", "Beach Hut", "Sea Breeze", "Shoreline", "Beach Ball", "Surfboard", "Rock Pool", "Marshmallow", "Lifeguard", "Tide Pool"]
-whispers = ["feel the sand", "the waves keep time", "sparks go up to the stars", "warm fire, wild sea", "the tide is listening", "stay till the fire is low"]
-chants = ["waves", "fire", "barefoot", "higher"]
-rap = [
-  "Sparks going up like a firework slow",
-  "Sand in my shoes so I took them off",
-  "Ocean on the left and the speaker on the right",
-  "Moon on the water like a spotlight free",
-  "Tide sneaking in to steal a little rhythm",
-  "Guitar case full of snacks and a lighter",
-  "Crabs on the side doing sideways steps",
-  "Wind full of salt and the smoke smells sweet",
-  "Feet in the water and the heart in the fire",
-  "Stars coming out cause they heard about the party",
-  "Boat in the distance flashing lights back",
-  "Waves say again and we jumping again",
-]
+whispers = ["the fire on the sand", "your shoes are in your hand", "the tide is coming in", "it wants to dance again", "the salt is in my hair", "the summer's everywhere"]
+chants = ["closer in", "light it up", "feel the waves", "one more song"]
+rap = ["Driftwood stacked high and the sparks in the air", "Salt on my skin and the sand in my hair", "Somebody's guitar and somebody's speaker", "Sea breeze getting cooler but the fire's getting deeper", "Waves coming in like they want to join the crew", "Barefoot on the shoreline, it's me and it's you", "Marshmallows burning while we talk about the year", "Every friend I've got is sitting right here", "Moon on the water like a light on the floor", "Tide pulling back and then asking for more", "Sunrise coming soon but we don't want to sleep", "Making memories that we're gonna keep"]
 
 [[theme]]
 id = "road-trip"
@@ -207,45 +88,9 @@ name = "Road Trip"
 idea = "windows down on an empty highway at night with the volume all the way up"
 titles = ["Windows Down Highway", "Gas Station Disco", "Miles Of Bounce", "Shotgun Seat Dance"]
 nouns = ["Highway", "Road Trip", "Gas Station", "Dashboard", "Hitchhike", "Mile Marker", "Rear View", "Motel", "Road Sign", "Back Seat", "Cruise Control", "Road Map", "Truck Stop", "Sunroof", "Hood Ornament", "Drive Thru"]
-whispers = ["windows down", "the road is ours", "white lines flying by", "turn it up a little", "no map tonight", "the next town is calling"]
-chants = ["drive", "faster", "go go", "turn it up"]
-rap = [
-  "Tank full of fuel and a bag full of snacks",
-  "Highway so empty that the road lines sing",
-  "Hand out the window riding waves in the wind",
-  "Gas station lights like a spaceship landing",
-  "Map on the floor cause the bass knows the way",
-  "Every exit sign saying keep it going",
-  "Dashboard shaking and the mirrors all blurry",
-  "Truck driver honking every time it bounces",
-  "Sunrise ahead and the night in the rear",
-  "Shotgun seat dancing with the seatbelt on",
-  "Hundred more miles and a hundred more songs",
-  "Next town ready cause we coming in loud",
-]
-
-[[theme]]
-id = "laundromat"
-name = "Laundromat"
-idea = "a late night laundromat where the washing machines spin in time"
-titles = ["Spin Cycle Party", "Washing Machine Bounce", "Bubbles In The Dryer", "Clean Socks Club"]
-nouns = ["Laundry", "Spin Cycle", "Soap Suds", "Tumble Dryer", "Sock", "Clothes Line", "Bubble", "Coin Wash", "Fabric", "Bleach", "Washing Line", "Peg Basket", "Lint", "Ironing Board", "Fresh Linen", "Hamper"]
-whispers = ["round and round", "the dryer is warm", "bubbles on the glass", "fold it later", "the machines are humming", "soft and clean and loud"]
-chants = ["spin", "round", "rinse", "bubbles"]
-rap = [
-  "Coins in the slot and the drum starts turning",
-  "Washing machine thumping like a kick from a club",
-  "Socks doing laps behind the round glass door",
-  "Bubbles on the floor and we skating on them",
-  "Dryer so warm it is a sauna with a beat",
-  "Folding my shirts on the two and the four",
-  "Midnight lights buzzing like a choir of bees",
-  "Lost a sock somewhere and I found a new move",
-  "Every machine running on the same beat",
-  "Lady with a basket nodding at the rhythm",
-  "Clean on the outside and wild on the inside",
-  "Spin cycle done and the dance cycle starting",
-]
+whispers = ["the windows all the way down", "we're leaving this old town", "your feet up on the dash", "the music makes us laugh", "the road goes on and on", "we'll drive into the dawn"]
+chants = ["turn it up", "keep on driving", "windows down", "louder now"]
+rap = ["Windows all the way down on an empty highway", "Singing every word like it's the only thing to say", "Gas station snacks and a map we never read", "Following the white lines wherever they lead", "You got the music, I got the wheel", "Ain't nothing better than the way we feel", "Motel sign glowing at the edge of the night", "We could stop here but the road feels right", "Back seat full of jackets and the stars out wide", "Best friends forever on a midnight ride", "When we hit the coast we'll run into the sea", "Right now it's the road and the radio and me"]
 
 [[theme]]
 id = "birthday-chaos"
@@ -253,22 +98,9 @@ name = "Surprise Party"
 idea = "a surprise party that got way bigger than planned"
 titles = ["Surprise Got Out Of Hand", "Cake On The Ceiling", "Balloon Avalanche", "Party Hats On Everyone"]
 nouns = ["Birthday", "Balloon", "Party Hat", "Candle", "Cake Slice", "Streamer", "Gift Wrap", "Party Popper", "Frosting", "Wish", "Bunting", "Sparkler", "Jelly", "Party Bag", "Musical Chair", "Name Card"]
-whispers = ["shh they are coming", "lights off, hide", "here we go", "make a wish", "the cake is shaking", "nobody go home yet"]
-chants = ["surprise", "cake", "party", "woo"]
-rap = [
-  "Lights went on and the room went off",
-  "Balloons on the floor like a rubber ocean",
-  "Cake got a candle for every single beat",
-  "Neighbours came over and they brought more neighbours",
-  "Streamers on the fan making rainbows spin",
-  "Guest of honour dancing on a kitchen chair",
-  "Party hat sideways and the grin straight up",
-  "Gifts in a pile that is taller than me",
-  "Somebody popped one and the whole place jumped",
-  "Frosting on my nose and I keeping it there",
-  "Planned for ten people and we hit three hundred",
-  "Make a wish twice cause the first one came true",
-]
+whispers = ["we hid behind the door", "then everybody hit the floor", "the cake is on the wall", "we're having the best time of all", "one candle, then a few", "the wish is all for you"]
+chants = ["surprise", "happy day", "make a wish", "blow them out"]
+rap = ["Lights off, everybody hiding in the hall", "Heard the key turn and we jumped out and all", "Shouting surprise and the look on her face", "Ten more friends came and they took over the place", "Neighbours knocking, now they're dancing too", "Streamers on the ceiling and the party's brand new", "Somebody dropped the cake and we laughed till we cried", "Frosting on the speaker and the door open wide", "Party hats on everybody, even on the dog", "This was meant to be a dinner, now it's the talk of the block", "Midnight comes and we're still singing the song", "Best surprise ever and it's going all night long"]
 
 [[theme]]
 id = "snow-day"
@@ -276,22 +108,9 @@ name = "Snow Day"
 idea = "school cancelled, snow everywhere and a speaker on the sledge"
 titles = ["Snow Day Stomp", "Sledge Run Bounce", "Snowball Fight Club", "Frozen Pond Party"]
 nouns = ["Snowball", "Sledge", "Snowman", "Igloo", "Snowflake", "Mittens", "Ski Lift", "Hot Cocoa", "Pompom", "Ice Rink", "Snow Angel", "Toboggan", "Earmuff", "Icicle", "Snowplough", "Woolly Hat"]
-whispers = ["school is cancelled", "white on every roof", "breath like little clouds", "slide with me", "pink nose, warm heart", "the hill is waiting"]
-chants = ["snow", "slide", "faster", "whee"]
-rap = [
-  "Woke up and the whole town painted white",
-  "Gloves on the hands and the boots on the beat",
-  "Snowman in the yard with a speaker for a head",
-  "Sledge down the hill like a bass line sliding",
-  "Snowball flying like a ball on a mission",
-  "Hot cocoa waiting but we not done yet",
-  "Footprints in a circle where we dancing all day",
-  "Ice on the pond and we spinning in socks",
-  "Teacher on the radio said stay at home",
-  "Cheeks going red like a light on the mixer",
-  "Hat with a pompom bouncing up and down",
-  "Snow keeps falling and we keep on jumping",
-]
+whispers = ["the snow came down all night", "the whole world's soft and white", "no school, no work today", "the whole street's out to play", "your nose is pink and red", "we'll race down to the shed"]
+chants = ["snow day", "let it snow", "come outside", "jump right in"]
+rap = ["Woke up to a message saying school is closed", "Snow up to the window and the road is all froze", "Woolly hat, mittens and my brother's old sledge", "Racing down the hill to the hedge at the edge", "Snowball fight with the whole street in the lane", "Faces all pink and we're laughing again", "Hot cocoa waiting on the kitchen stool", "Best day of the winter and it's better than school", "Snow angels lying in a line on the ground", "Somebody's speaker playing loud all around", "Toes are numb but nobody wants to go in", "One more run down the hill, let the dancing begin"]
 
 [[theme]]
 id = "carnival"
@@ -299,114 +118,9 @@ name = "Carnival"
 idea = "a street carnival with drums, feathers and a parade that never ends"
 titles = ["Feathers And Drums", "Parade Never Ends", "Confetti Cannon", "Samba In The Street"]
 nouns = ["Carnival", "Feather", "Parade", "Confetti", "Samba", "Steel Drum", "Costume", "Mardi Gras", "Glitter", "Float", "Tambourine", "Sequin", "Stilt Walker", "Maraca", "Paper Crown", "Brass Band"]
-whispers = ["hear the drums coming", "feathers in the wind", "the parade is near", "colours everywhere", "follow the music", "everyone is invited"]
-chants = ["parade", "drums", "feathers", "olé"]
-rap = [
-  "Drums down the road like a thunder that smiles",
-  "Feathers on the hats taller than the lampposts",
-  "Confetti in the air like a rainbow snowing",
-  "Float going by with a speaker on the roof",
-  "Grandma in sequins and she leading the line",
-  "Whistles going off every time the bass lands",
-  "Face paint glowing under a golden sun",
-  "Every balcony waving every flag they got",
-  "Dancing in a line that is a mile long",
-  "Kids on the shoulders and they bouncing too",
-  "Sun going down but the parade keeps rolling",
-  "Street is a stage and the whole town performing",
-]
-
-[[theme]]
-id = "robot-workshop"
-name = "Robot Workshop"
-idea = "a workshop of little robots who switch on and learn to dance"
-titles = ["Robots Learning To Dance", "Beep Boop Party", "Metal Friends", "Tin Toy Rave"]
-nouns = ["Gear", "Tin Robot", "Tin Toy", "Spanner", "Workbench", "Robot Arm", "Spring", "Oil Can", "Gadget", "Toolbox", "Circuit Board", "Battery", "Spring Coil", "Spare Parts", "Rivet", "Gear Box"]
-whispers = ["switch it on", "the gears are waking", "beep, beep, hello", "oil the joints", "teach it how to move", "it learned to smile"]
-chants = ["beep", "boogie", "switch on", "robot"]
-rap = [
-  "Screwdriver turning and the eyes light up",
-  "Little tin robot taking first steps slow",
-  "Gears clicking round on the one two three",
-  "Antenna wiggling when the bass comes through",
-  "Wind up key turning like a dance floor clock",
-  "Workbench shaking with a hundred little feet",
-  "Sparks from the solder looking like fireflies",
-  "Taught it the moonwalk and it walked to the moon",
-  "Spring in the legs and a smile on the screen",
-  "Bolts going loose cause the moves too strong",
-  "Factory whistle blowing like a party horn",
-  "Whole crew dancing in a row of chrome",
-]
-
-[[theme]]
-id = "jungle-canopy"
-name = "Jungle Canopy"
-idea = "a party in the treetops with monkeys, vines and fireflies"
-titles = ["Monkeys On The Mixer", "Treetop Bounce", "Vine Swing Groove", "Firefly Forest"]
-nouns = ["Treetop", "Monkey", "Vine", "Parrot", "Toucan", "Firefly", "Jungle", "Banana", "Tree Frog", "Canopy", "Rope Bridge", "Waterfall", "Jungle Drum", "Leaf Hat", "Mango Tree", "Treehouse"]
-whispers = ["listen to the trees", "fireflies are blinking", "swing from vine to vine", "green all around", "the forest is breathing", "frogs are singing low"]
-chants = ["swing", "jungle", "hoo hoo", "climb"]
-rap = [
-  "Up in the leaves where the sun gets in green",
-  "Monkey on the left stealing beats and bananas",
-  "Vines like ropes and we swinging on the one",
-  "Parrots in the branches shouting every word",
-  "River down below keeping time with the rocks",
-  "Fireflies flashing like a light show free",
-  "Frogs on the lily pads jumping in rhythm",
-  "Toucan with a beak like a megaphone",
-  "Rain in the canopy going pitter on the leaves",
-  "Treehouse shaking but the treehouse strong",
-  "Moon through the leaves like a disco ball",
-  "Whole forest dancing till the morning birds",
-]
-
-[[theme]]
-id = "underwater"
-name = "Under The Sea Floor"
-idea = "a rave at the bottom of the ocean with glowing fish and bubbles for lights"
-titles = ["Bubble Light Show", "Deep Sea Disco", "Jellyfish Glow", "Coral Reef Bounce"]
-nouns = ["Jellyfish", "Coral", "Seahorse", "Octopus", "Deep Sea", "Starfish", "Sea Turtle", "Bubble Wrap", "Lagoon", "Pearl", "Sea Shell", "Anchovy", "Kelp", "Submarine", "Clownfish", "Sea Urchin"]
-whispers = ["dive with me", "bubbles going up", "the fish are glowing", "breathe slow down here", "blue on every side", "the ocean is dancing"]
-chants = ["dive", "bubbles", "glow", "splash"]
-rap = [
-  "Down past the boats where the sunlight fades",
-  "Jellyfish glowing like a lamp with a groove",
-  "Octopus playing four decks at once",
-  "Bubbles going up like a lift to the surface",
-  "Sea turtle cruising with a very old smile",
-  "Coral in colours that the land never seen",
-  "Crab on the bass and it pinching every note",
-  "Whale singing low and the floor starts rolling",
-  "Seahorse bouncing like it born for this",
-  "Shells on the sand making shakers for free",
-  "Current pulling everybody into the circle",
-  "Tide going out but the party stays deep",
-]
-
-[[theme]]
-id = "time-machine"
-name = "Time Machine"
-idea = "a time machine that only travels to the best night of every decade"
-titles = ["Back To Every Party", "Decade Hopper", "Clock Spins Backward", "Tomorrow Was Yesterday"]
-nouns = ["Time Warp", "Decade", "Cassette", "Rewind", "Pocket Watch", "Tomorrow", "Yesterday", "Flashback", "Hourglass", "Century", "Sundial", "Calendar", "Time Loop", "Time Loop", "Grandfather Clock", "Old Photo"]
-whispers = ["set the date", "hold on tight", "the years are spinning", "every night at once", "a minute is a year", "we have been here before"]
-chants = ["rewind", "again", "warp", "time"]
-rap = [
-  "Pulled the big lever and the clock went wild",
-  "Seventies glitter then the eighties neon",
-  "Nineties warehouse with a smiley face flag",
-  "Future party where the walls are made of light",
-  "Same friends dancing in a different year",
-  "Hair changing style every second song",
-  "Pocket watch spinning like a record on a deck",
-  "Cassette in my hand and a laser on my wrist",
-  "Every decade asking can we come too",
-  "Grandad at the bar and he dancing like me",
-  "Back to the start and the start is the best",
-  "Time is a circle so we dancing in circles",
-]
+whispers = ["the drums are coming near", "the whole town's gathered here", "the feathers in the sun", "the dancing has begun", "your hand, the crowd, the street", "we're moving to one beat"]
+chants = ["ole ole", "follow the drums", "everybody move", "here we go"]
+rap = ["Float coming round with the speakers stacked high", "Feathers on the dancers reaching up to the sky", "Steel drums ringing and the brass band blowing", "Whole street shaking and the music keeps going", "Glitter on my cheeks and confetti in my hair", "Grandma in the window throwing sweets in the air", "Strangers holding hands in a long samba line", "Feels like the city is a friend of mine", "Every single year we come back to this street", "Same old corner and the same old beat", "Sun going down but the parade keeps rolling", "Ain't nobody here even thinking of going"]
 
 [[theme]]
 id = "kitchen-party"
@@ -414,22 +128,9 @@ name = "Kitchen Party"
 idea = "everyone ends up in the kitchen and the pots become drums"
 titles = ["Pots And Pans Parade", "Whole Crew In The Kitchen", "Fridge Door Disco", "Spatula Solo"]
 nouns = ["Kitchen", "Spatula", "Kettle", "Toaster", "Saucepan", "Fridge", "Frying Pan", "Teaspoon", "Oven Glove", "Pancake", "Rolling Pin", "Egg Timer", "Tea Towel", "Cookie Jar", "Sugar Bowl", "Lunch Box"]
-whispers = ["everyone ends up here", "the kettle is singing", "pass the salt", "warm bread, loud beats", "the oven is a heater", "nobody leaves the kitchen"]
-chants = ["clang", "cook", "stir it", "yum"]
-rap = [
-  "Party in the lounge but the crowd in the kitchen",
-  "Pots on the hooks and we playing them like drums",
-  "Toaster popping up right on the beat",
-  "Fridge door open for a disco light",
-  "Spoons on the knees doing old school tricks",
-  "Somebody frying and it smelling like gold",
-  "Dancing round the table in the tiny space",
-  "Kettle on the boil with a whistle for a singer",
-  "Dishes can wait cause the rhythm cannot",
-  "Mum in the doorway and she joining in",
-  "Flour in the air like a smoke machine",
-  "Best room in the house is the one with the snacks",
-]
+whispers = ["we left the living room", "the kitchen's full, make room", "the kettle's on again", "for you and all your friends", "the pots become the drums", "and everybody comes"]
+chants = ["pots and pans", "everybody in", "one more round", "turn it up"]
+rap = ["Every party ends up in the kitchen by the fridge", "Twenty people squeezed in where you could fit a bridge", "Somebody's on the counter with a spoon and a pan", "Banging out a rhythm like a one-man band", "Toast going round and the kettle's on boil", "Chips in a bowl and a pizza in the foil", "Best talks of the night by the sink and the bin", "Doorbell keeps ringing, let the next lot in", "Fairy lights hanging over the cooker", "Dancing with my mates and we're getting no younger", "Living room's empty and the sofa's alone", "Kitchen is the dance floor and it's feeling like home"]
 
 [[theme]]
 id = "skate-park"
@@ -437,68 +138,9 @@ name = "Skate Park"
 idea = "boards, ramps and tricks landing on the beat"
 titles = ["Kickflip On The Kick", "Half Pipe Hop", "Skate Park Sunset", "Grind The Rail"]
 nouns = ["Kickflip", "Half Pipe", "Skateboard", "Ollie", "Grind Rail", "Skate Park", "Knee Pad", "Wheelie", "Ramp", "Deck Tape", "Bowl Ride", "Grip Tape", "Tail Slide", "Kick Turn", "Shin Pad", "Street Plaza"]
-whispers = ["drop in slow", "roll with me", "land it clean", "wheels on concrete", "one more try", "the ramp is calling"]
-chants = ["kickflip", "ollie", "land it", "roll"]
-rap = [
-  "Board under feet and the wheels going round",
-  "Up on the ramp then I fly for a second",
-  "Kickflip landing right on the snare",
-  "Grind down the rail like a needle on a record",
-  "Skinned up knees but the grin still clean",
-  "Crew on the bench and they clapping on the two",
-  "Sunset on the bowl painting everything orange",
-  "Fell off twice and I got back up thrice",
-  "Wheels sing louder when the speed goes up",
-  "Helmet with stickers from a hundred good days",
-  "Ollie so high that the birds said hi",
-  "Park lights on and we rolling till they off",
-]
-
-[[theme]]
-id = "lost-luggage"
-name = "Lost Luggage"
-idea = "the airline lost the bags, so the whole terminal starts a party"
-titles = ["Baggage Claim Bounce", "Gate Change Shuffle", "Delayed Again Dance", "Carousel Of Bags"]
-nouns = ["Suitcase", "Baggage", "Boarding Pass", "Departure", "Passport", "Jet Lag", "Check In", "Runway", "Gate", "Carousel", "Trolley", "Duty Free", "Tray Table", "Seat Belt", "Air Mile", "Window Blind"]
-whispers = ["flight delayed again", "the bags are lost", "make the most of it", "terminal lights", "boarding in an hour", "we are going nowhere fast"]
-chants = ["boarding", "delayed", "jet set", "fly"]
-rap = [
-  "Bag went to Lisbon and I stuck in the lounge",
-  "Belt going round with a single lonely shoe",
-  "Gate number changing like a game of tag",
-  "Pilot on the speaker saying stretch your legs",
-  "Whole terminal stretching on the four count",
-  "Duty free perfume making clouds of sweet",
-  "Neck pillow bouncing like a bassline cushion",
-  "Trolley race down the long shiny floor",
-  "Strangers from six countries dancing as a team",
-  "Boarding pass waving like a little white flag",
-  "Plane finally ready but we asking for one more",
-  "Wheels up later with the whole crew humming",
-]
-
-[[theme]]
-id = "power-cut"
-name = "Power Cut"
-idea = "the power goes out in the whole building and the party moves to torches and candles"
-titles = ["Candle Party", "Candle Light Stomp", "When The Lights Went Out", "Blackout Block Party"]
-nouns = ["Blackout", "Candle", "Candle Light", "Lights Out", "Glow Stick", "Flashlight", "Glow Stick", "Matchbox", "Lantern Glow", "Power Cut", "Lamp Light", "Night Light", "Tea Light", "Battery Pack", "Fairy Light", "Moon Glow"]
-whispers = ["the lights went out", "grab a torch", "candles on the stairs", "we still have the beat", "the whole block is singing", "make your own light"]
-chants = ["lights", "torches up", "glow", "together"]
-rap = [
-  "Fuse went pop and the building went quiet",
-  "Speaker on batteries saving the night",
-  "Torches on the ceiling making stars indoors",
-  "Neighbours in the stairwell with candles and snacks",
-  "Everybody singing cause the music got low",
-  "Phone lights waving like a sea of fireflies",
-  "Kids on the landing doing shadow puppets",
-  "Lift is stuck so we dancing on the stairs",
-  "Old man upstairs with a drum from his youth",
-  "Street outside quiet but the hearts lit up",
-  "Lights coming back and we turn them back off",
-  "Best party yet and it cost no power",
-]
+whispers = ["the sun is getting low", "we've got one more trick to show", "you fall, you laugh, you stand", "I hold out my hand", "the wheels go round and round", "we're flying off the ground"]
+chants = ["one more try", "land it", "let's go", "send it"]
+rap = ["Board under my arm and my headphones on", "Skate park after school till the daylight's gone", "Kickflip on the kick and the crowd goes wild", "Little kid watching with the biggest smile", "Fell three times but I'm getting back up", "Bottle of water and a sticker on my cup", "Half pipe shining in the evening sun", "Every single fall is a part of the fun", "Crew on the bench clapping every landing", "Shoes all scuffed but I'm still standing", "Lights come on and we're the last ones here", "Same time tomorrow, same place next year"]
 
 [[theme]]
 id = "train-of-strangers"
@@ -506,65 +148,116 @@ name = "Strangers Train"
 idea = "a long night train where a carriage full of strangers becomes one crew"
 titles = ["Carriage Number Nine", "Strangers On The Seats", "Sleeper Car Groove", "Rails Keep Rolling"]
 nouns = ["Sleeper Car", "Railway", "Conductor", "Bunk Bed", "Night Train", "Window Seat", "Train Track", "Whistle", "Dining Car", "Tunnel", "Signal Box", "Level Crossing", "Luggage Rack", "Ticket Stub", "Steam Engine", "Branch Line"]
-whispers = ["listen to the rails", "next stop nowhere", "the carriage is swaying", "say your name", "fields going by", "we met an hour ago"]
-chants = ["all aboard", "choo choo", "rolling", "next stop"]
-rap = [
-  "Rails going clack like a beat from the past",
-  "Strangers on the seats and the snacks getting shared",
-  "Conductor with a hat that is two sizes big",
-  "Window showing fields going gold in the moonlight",
-  "Carriage swaying like it heard the song",
-  "Swapped my sandwich for a story and a laugh",
-  "Bunk beds shaking in the sleeper car",
-  "Tunnel coming up and we shouting in the echo",
-  "Lady from the north teaching steps from home",
-  "Village lights waving as we rolling by",
-  "Got off as friends though we got on as strangers",
-  "Train keeps going and the song keeps going",
-]
+whispers = ["a train full of strangers", "now we're friends and dancers", "your seat, my seat, the aisle", "it's been a while, a while", "the window shows the moon", "we'll be arriving soon"]
+chants = ["all aboard", "next stop", "one more song", "keep rolling"]
+rap = ["Night train out of the city at nine", "Carriage full of strangers and a seat next to mine", "Somebody's playing music on a little speaker", "Whole carriage nodding and it's getting sweeter", "Swapping snacks and stories with a family from the coast", "Old man by the window turns out he dances the most", "Lights of little towns going past in a blur", "Asked her where she's going and she said wherever", "Conductor walks through and he joins in too", "Tickets in the air and the whole train's a crew", "Morning at the station and we all say goodbye", "Strangers when we left and friends by the time we arrive"]
 
 [[theme]]
-id = "garden-glow"
-name = "Night Garden"
-idea = "a garden at night where the flowers glow and the bees forgot to sleep"
-titles = ["Glow In The Garden", "Sunflowers At Midnight", "Bees Forgot To Sleep", "Petal Storm"]
-nouns = ["Sunflower", "Rose Bush", "Honeybee", "Garden", "Petal", "Watering Can", "Lily Pad", "Daisy", "Greenhouse", "Moth", "Tulip", "Ladybird", "Bird Bath", "Hedgehog", "Wheelbarrow", "Seed Packet"]
-whispers = ["the flowers are glowing", "soft grass under feet", "smell the roses", "the moths are dancing", "grow a little taller", "the garden is awake"]
-chants = ["bloom", "buzz", "grow", "petals"]
-rap = [
-  "Sunflowers turning to the light on the stage",
-  "Bees doing laps cause they never went home",
-  "Petals in the air like confetti from the trees",
-  "Grass so soft that the jumps land gentle",
-  "Moths round the lamp in a perfect circle",
-  "Snail in the corner moving one beat late",
-  "Rose bush swaying with the wind on the high end",
-  "Hose pipe spraying like a fountain show",
-  "Frog on the stone with a very deep voice",
-  "Seeds in my pocket for the next big night",
-  "Moon on the pond making ripples on the four",
-  "Garden gate open so the whole street walks in",
-]
+id = "friday-night"
+name = "Friday Night"
+idea = "five o'clock on a Friday, the week is over and the whole city comes alive"
+titles = ["Friday Finally", "Clocked Out Early", "Payday Weekend", "Week Is Over", "Shoes Off Friday"]
+nouns = ["Payday", "Tie Loose", "Coffee Cup", "Staircase", "Inbox", "Paycheck", "Commute", "Weekday", "Briefcase", "Stapler", "Overtime", "Timesheet", "Clipboard", "Notepad", "Pen Lid", "Filing Tray"]
+whispers = ["it's five o'clock at last", "the week is in the past", "your tie is in your bag", "the weekend's in the bag", "the city's switching on", "the working week is gone"]
+chants = ["it's friday", "we're free", "clock out", "all weekend"]
+rap = ["Five o'clock Friday and the office door slams", "Throwing off my shoes and I'm making no plans", "Bus full of people with the same big grin", "Week was a mountain but tonight we win", "Payday in my pocket and my friends on the phone", "Meet me on the corner, I ain't going home", "Boss can call Monday, I won't hear a thing", "Right now I'm dancing and I'm ready to sing", "City lights blinking like they know what we need", "Two days of freedom and we're taking the lead", "Every single Friday feels like the first", "Shake off the week and let the good times burst"]
 
 [[theme]]
-id = "detective"
-name = "Dance Floor Detective"
-idea = "a detective trying to find out who started the dance and ending up dancing"
-titles = ["Who Started The Dance", "Case Of The Missing Beat", "Footprints On The Floor", "Follow The Clues"]
-nouns = ["Detective", "Clue", "Fingerprint", "Trench Coat", "Footprint", "Suspect", "Alibi", "Magnifier", "Case File", "Witness", "Hunch", "Mystery", "Secret Door", "Paper Trail", "Hidden Room", "Stakeout"]
-whispers = ["follow the footprints", "someone started this", "every clue says dance", "case closed", "look a little closer", "the answer is the beat"]
-chants = ["clue", "case closed", "who", "suspect"]
-rap = [
-  "Coat with a collar and a notebook full of steps",
-  "Footprints on the floor going round in a circle",
-  "Every suspect here got an alibi of dancing",
-  "Magnifying glass on the speaker cone",
-  "Fingerprints on the lights from a hundred hands",
-  "Witness in the corner says the bass did it",
-  "Followed the rhythm down a long bright hall",
-  "Clue in the cloakroom was a glitter shoe",
-  "Interviewed the DJ and he just said jump",
-  "Notebook getting full of nothing but grooves",
-  "Case got solved when I started moving",
-  "Guilty of dancing and the jury agrees",
-]
+id = "strangers-to-friends"
+name = "Strangers To Friends"
+idea = "a stranger next to you on the floor becomes your best friend by sunrise"
+titles = ["Strangers By Midnight", "Friends By Sunrise", "Never Asked Your Name", "Two Strangers Dancing"]
+nouns = ["Nickname", "Shoulder", "Hello", "Stairway", "Doorway", "Smiley", "Welcome", "Hug", "Pen Pal", "Ice Breaker", "Small Talk", "Shy Smile", "Tiny Dancer", "Free Spirit", "Good Vibe"]
+whispers = ["I never asked your name", "but you dance just the same", "we met beside the stage", "now we're on the same page", "by sunrise you'll be mine", "my friend until the end of time"]
+chants = ["hello friend", "you and me", "come closer", "together"]
+rap = ["Didn't know your name when the first song played", "By the fourth one we were laughing like we always stayed", "You had glitter on your face and a smile for the room", "Told me you were leaving but you said that too soon", "Shared a bottle of water and a story or two", "Turns out we grew up two streets from you", "Swapping numbers at the bar with a pen on a hand", "Promise we'll meet up and we both understand", "Sun coming up and we're hugging at the door", "Strangers at midnight, best friends at four", "Every time I hear this song I'll think of that night", "Funny how a stranger can just feel right"]
+
+[[theme]]
+id = "summer-heat"
+name = "Summer Nights"
+idea = "a warm summer night when the air is soft and nobody wants to go home"
+titles = ["Summer Never Ends", "Warm Night Air", "Barefoot In July", "Long Hot Summer"]
+nouns = ["Summer", "Ice Lolly", "Heatwave", "Sandal", "Firefly", "Picnic", "Lemonade", "Sun Hat", "Ice Cream", "Sun Cream", "Hammock", "Sprinkler", "Barbecue", "Sunglasses", "Ice Cube", "Lilo", "Shade Tree", "Sun Lounger", "Cool Box"]
+whispers = ["the air is soft and warm", "we're dancing in a swarm", "the night is long in June", "we're singing to the moon", "your skin is gold and bright", "we'll stay out all night"]
+chants = ["summer", "feel the heat", "don't go in", "stay outside"]
+rap = ["Heatwave in the city and the windows open wide", "Every single neighbour has a speaker outside", "Ice lolly melting faster than I can eat", "Sandals on the pavement and the music in my feet", "Garden hose fight and we're laughing in the spray", "Wish that every night could be a night like today", "Fireflies blinking in the bushes by the wall", "Summer's got a way of making room for us all", "Picnic blanket stretched on the grass by the river", "Sun goes down slow like it's ready to deliver", "Long warm night and nobody wants it to end", "Same time next summer, I'll be here with my friends"]
+
+[[theme]]
+id = "hometown-crew"
+name = "Hometown Crew"
+idea = "coming back to your hometown and dancing with the friends you grew up with"
+titles = ["Back In My Hometown", "Same Streets Again", "Where We Grew Up", "Old Crew Reunion"]
+nouns = ["Hometown", "Bus Route", "Football Pitch", "Postcode", "Playground", "Footbridge", "Bus Shelter", "Old Pub", "Canal", "Allotment"]
+whispers = ["the same old corner shop", "the same old bus stop", "you haven't changed a bit", "we always knew we'd fit", "the town is small, I know", "it's still the place to go"]
+chants = ["home again", "old crew", "we're back", "same streets"]
+rap = ["Back in my hometown on a Saturday night", "Same old corner shop with the flickering light", "Rang up the crew and they all said yes", "Turned up in trainers in our Saturday best", "Walked past the school where we used to sit and wait", "Shouting our names by the old school gate", "Chip shop on the high street still open till two", "Everybody asking how life's treating you", "We went different ways but we never went far", "Singing every word in the back of the car", "Same streets, same jokes, same old songs", "This is the place where my heart belongs"]
+
+[[theme]]
+id = "let-it-go"
+name = "Let It Go"
+idea = "a long hard week finally lifting off your shoulders on the dance floor"
+titles = ["Let It All Go", "Lighter Than Air", "Shake It Off Tonight", "Leave It On The Floor"]
+nouns = ["Deep Breath", "Heavy Bag", "Kite", "Wing", "Spring Clean", "Weightless", "Sunbeam", "Clear Sky", "Easy Breezy", "Exhale", "Glide"]
+whispers = ["I left it at the door", "I don't need it anymore", "the weight is falling down", "my feet are off the ground", "breathe out, it's all okay", "tomorrow's far away"]
+chants = ["let it go", "breathe out", "feel it lift", "fly free"]
+rap = ["Week was heavy like a bag full of stones", "Left it at the door with my keys and my phone", "First beat drops and my shoulders come down", "First time in days I can smile and not frown", "Every little worry going up like smoke", "Laughing at the stuff that was a bad joke", "Friends all around me with their hands in the air", "Telling me the trouble isn't even there", "Lighter than a feather and I'm floating on the floor", "Didn't know I needed this until I walked through the door", "Monday can wait, I'm not thinking of then", "Right now I'm breathing and I'm living again"]
+
+[[theme]]
+id = "best-friends"
+name = "Best Friends"
+idea = "you and your best friend on the dance floor, same as when you were kids"
+titles = ["Best Friends Forever", "Partners In Crime", "Side By Side", "You And Me Again"]
+nouns = ["Sleepover", "Inside Joke", "Mixtape", "Treehouse", "Shared Fries", "Pinky Promise", "Sidekick", "Twin Soul", "Snack Run", "Popcorn", "Comic Book", "Board Game", "Chalk Drawing", "Hopscotch"]
+whispers = ["you and me since we were ten", "we're doing it again", "you know my every move", "you always find the groove", "whatever comes our way", "we'll dance it all away"]
+chants = ["you and me", "side by side", "best friends", "always"]
+rap = ["Known you since the day we swapped our lunch at school", "Still the only one who thinks my dancing's cool", "Same old jokes and the same secret handshake", "You still eat the biggest piece of my birthday cake", "Every single dance floor, you were next to me", "Every single heartbreak, you were there to see", "Pillow forts and sleepovers turned into this", "Front row together, there's no night we miss", "Photo booth strip in my wallet from the start", "You're the one who always knows what's in my heart", "Old and grey one day we'll be dancing just the same", "Two kids from the corner with a lifelong game"]
+
+[[theme]]
+id = "over-you"
+name = "Over You"
+idea = "dancing a broken heart back together with your friends all around you"
+titles = ["Dance It Out", "Over You Tonight", "Heart Back Together", "Better Without You"]
+nouns = ["Heartbeat", "Mascara", "Text Message", "Tissue", "Locket", "Lipstick", "Night Out", "Brave Face", "Tear Drop", "Moving On", "Brand New Me", "Lucky Charm", "New Chapter"]
+whispers = ["I cried till half past two", "now I'm dancing over you", "my friends are by my side", "I've got nothing left to hide", "I'm stronger than before", "you won't hear me cry no more"]
+chants = ["over you", "dance it out", "I'm okay", "moving on"]
+rap = ["Took your photo off the wall and I put on my shoes", "Called up my girls and said I've got nothing to lose", "Mascara on my cheek but I'm wiping it away", "Tonight is for me and I'm here to stay", "Every song you loved, I'm dancing to it now", "Didn't think I'd make it but I'm making it somehow", "Phone keeps lighting up, I'm leaving it face down", "Best friends round me in a circle on the ground", "Heart was in pieces, now it's beating loud", "Look at me shining in the middle of the crowd", "Thank you for the lesson and the tears and the rain", "I'm dancing on my own and I'm whole again"]
+
+[[theme]]
+id = "city-lights"
+name = "City Lights"
+idea = "walking through the city at night with the lights on and the whole town awake"
+titles = ["City Never Sleeps", "Lights On Main Street", "Downtown Tonight", "Walk The Avenue"]
+nouns = ["Streetlight", "Skyscraper", "Crosswalk", "Bus Lane", "Avenue", "Billboard", "Fountain", "Rickshaw", "Doorman", "Night Tram", "Riverside"]
+whispers = ["the streets are full of light", "the city's up all night", "we walk from end to end", "the night's our oldest friend", "the taxis hum along", "the city sings our song"]
+chants = ["downtown", "lights on", "city's awake", "all of us"]
+rap = ["Walking through the city with the lights all on", "Every corner playing a different song", "Crosswalk beeping like it's keeping the time", "Shop windows glowing in a long bright line", "Taxi drivers singing with their windows down", "Feels like a party in the middle of town", "Corner cafe open and the coffee's still hot", "Everybody out showing what they got", "Fountain in the square with the water in the air", "Strangers dancing like they don't have a care", "Skyline watching over all of us below", "City never sleeps and now I know"]
+
+[[theme]]
+id = "last-song"
+name = "Last Song"
+idea = "the lights come up for the last song and nobody wants it to end"
+titles = ["One More Song", "Lights Come Up", "Not Done Yet", "Last Song Of The Night"]
+nouns = ["Encore", "Coat Check", "Cloakroom", "Party Bus", "Velvet Rope", "Guest List", "Final Bow", "Curtain Call", "Slow Dance", "Big Finish", "Goodnight"]
+whispers = ["the lights are coming up", "but we don't want to stop", "one more, just one more", "we'll keep on dancing on the floor", "hold me close tonight", "before they turn on every light"]
+chants = ["one more song", "not yet", "don't stop", "encore"]
+rap = ["House lights flicker and the DJ waves goodbye", "Whole room shouting one more, give it one more try", "Coat check queue is long but nobody's in it", "Everybody dancing every second of the minute", "Glitter on the floor and my feet are on fire", "One last song and we're lifting it higher", "Security smiling cause they know how it goes", "Nobody leaves till the last note goes", "Arms round my friends in a circle so tight", "Singing every word of the last song of the night", "Out on the pavement and we're still in a ring", "Tell me when's the next one, I'll be there to sing"]
+
+[[theme]]
+id = "first-night-out"
+name = "First Night Out"
+idea = "the first big night out after a long time stuck at home, and it feels brand new"
+titles = ["Back Out Again", "First Night Out", "Like The First Time", "Missed This Feeling"]
+nouns = ["Bus Fare", "Selfie", "Pocket Money", "Night Air", "Lip Gloss", "Cologne", "Night Bag", "Clutch Bag", "Heels", "Bow Tie"]
+whispers = ["I put my best shirt on", "it's been so long, so long", "the music hits my chest", "I'm dancing like the rest", "I missed this, I missed you", "it feels like something new"]
+chants = ["we're back", "missed this", "feels so good", "out again"]
+rap = ["Best shirt ironed and my dancing shoes on", "Been stuck at home for a year, now that's gone", "Queue round the corner and I'm buzzing in line", "Door stamp on my hand and the feeling is mine", "First beat hits and I'm shaking all over", "Hugging every friend like a lucky four leaf clover", "Forgot how it feels when the bass comes through", "Forgot how it feels to be dancing with you", "Sweat on my forehead and a smile on my face", "Nowhere in the world I'd rather be than this place", "Taxi home at sunrise and I'm already planning", "Next weekend, same place, I'll be standing"]
+
+[[theme]]
+id = "walk-home"
+name = "Walk Home At Dawn"
+idea = "walking home at sunrise with your shoes in your hand and the birds singing"
+titles = ["Shoes In My Hand", "Walking Home At Dawn", "Birds Are Singing", "Morning After Glow"]
+nouns = ["Dawn", "Birdsong", "Dew", "Croissant", "Pavement", "Robin", "Blackbird", "Sun Up", "Bin Day", "Sparrow", "Hedgehog", "Postman", "Daisy Chain", "Picket Fence", "Cobbles"]
+whispers = ["my shoes are in my hand", "the sunrise feels so grand", "the birds are up with me", "as happy as can be", "the streets are gold and new", "I'm walking home with you"]
+chants = ["morning", "here's the sun", "almost home", "good day"]
+rap = ["Shoes in my hand and the pavement is warm", "Birds singing loud like the morning is born", "Bakery opening, we're buying the first bread", "Still got the music going round in my head", "You're telling me the story of the night we had", "Laughing so hard that it's making me glad", "Milk on a doorstep and a cat on a wall", "Morning's got a way of forgiving it all", "Golden light coming down the end of the road", "Feels like we're carrying the lightest load", "Front gate creaking and I'm finally home", "Best walk ever and I wasn't alone"]

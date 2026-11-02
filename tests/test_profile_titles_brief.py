@@ -67,14 +67,14 @@ def test_style_prompt_carries_all_nine_layers():
     lane = p.lane(b["lane"])
     cap = b["caption"]
     for layer in (lane.caption, lane.era, "Mood: " + b["mood"], f"{b['bpm']} BPM", lane.groove,
-                  "Instruments:", lane.vocals or p.music["vocals"], "Production: " + lane.production,
+                  "Instruments:", (lane.vocals or (p.music["lyric_styles"].get(lane.group or "") or {}).get("vocals") or p.music["vocals"]).split("{")[0], "natural", "Production: " + lane.production,
                   "Arrangement:", "Special moment: " + b["special"]):
         assert layer in cap, f"layer missing from style prompt: {layer[:40]}"
     for t in b["textures"]:
         assert t in cap and t not in b["lyrics"], "textures go to the arranger (caption), never into the sung sheet"
     assert b["lyrics"].splitlines()[0] == "[Intro]", "the sheet carries bare tags: a direction in a tag gets sung"
     # 1500: the song's theme (artist/themes.toml, 2026-10-31) adds one short "about ..." clause
-    assert len(cap) < 1500, "compressed prose, not the design headings"
+    assert len(cap) < 1560, "compressed prose, not the design headings"  # 2026-11-02: the voice is named
 
 
 def test_every_brief_stays_compressed():
@@ -84,7 +84,7 @@ def test_every_brief_stays_compressed():
     for i in range(120):
         b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
         # 1600: each genre group names its own drums and bass (2026-11-01); acestep.cpp does not truncate
-        assert len(b["caption"]) < 1600, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
+        assert len(b["caption"]) < 1700, f"{b['date']} ({b['lane']}): {len(b['caption'])} chars"
 
 
 DARK = ("dark", "menac", "oppressive", "dread", "cold", "hostile", "claustrophob", "gloom",
@@ -194,11 +194,13 @@ def test_songs_whisper_in_the_quiet_parts_and_chant_the_title_in_the_drops():
             rap = p.lane(b["lane"]).voice == "rap"
             theme = next(t for t in themes.load() if t.id == b["theme"])
             if tag in ("[Intro]", "[Outro]") or (tag == "[Breakdown]" and not rap):
-                assert words[0] in theme.whispers, "the quiet lines are the song's own theme's"
+                mantras = (p.music["lyric_styles"].get(p.lane(b["lane"]).group or "") or {}).get("mantras", [])
+                assert words[0] in (*theme.whispers, *mantras), "the quiet lines are the song's own theme's (or its genre's shlokas)"
             if tag == "[Verse]":
                 # four bars of the theme's rap, then the title sung once (2026-11-01: the drop chant is
                 # often not sung, so the title closes every verse too)
-                assert rap and len(words) == 5 and all(w in theme.rap for w in words[:4]) and words[4] == b["title"]
+                bank = (*theme.rap, *(p.music["lyric_styles"].get(p.lane(b["lane"]).group or "") or {}).get("bars", []))
+                assert rap and len(words) == 5 and all(w in bank for w in words[:4]) and words[4] == b["title"]
         assert sum(1 for s_ in sections if s_.startswith("[Drop]")) >= 1
         assert b["vocal_style"] and "chant" in b["vocal_style"]
         req = AceStepCpp("bin", "models", "dit", None).request(b)
