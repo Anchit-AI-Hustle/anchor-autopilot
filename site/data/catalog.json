@@ -7,7 +7,7 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-01T21:03:44Z",
+  "updated_at": "2026-11-02T02:18:54Z",
   "drops": [
     {
       "id": "2026-11-01-4",
@@ -28,7 +28,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-01-4/ANCHOR-2026-11-01-rain-on-the-tents-short.mp4",
       "youtube_url": "https://youtu.be/VdLmqNodkbk",
       "buffer_post_id": "VdLmqNodkbk",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-01T21:03:32Z",
       "qc": {
         "bpm_est": 172.0,
@@ -92,7 +92,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-01-3/ANCHOR-2026-11-01-balloon-avalanche-short.mp4",
       "youtube_url": "https://youtu.be/l7mMw6qQKyQ",
       "buffer_post_id": "l7mMw6qQKyQ",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-01T21:03:19Z",
       "qc": {
         "bpm_est": 174.0,
@@ -141,6 +141,72 @@
       }
     },
     {
+      "id": "2026-11-01-2",
+      "date": "2026-11-01",
+      "title": "Sleeper Car Groove",
+      "lane": "raptechno",
+      "lane_name": "Rap Hard Techno",
+      "bpm": 165,
+      "key": "G major",
+      "family": "prism",
+      "family_name": "Prism",
+      "duration_s": 207,
+      "short_s": 45,
+      "cover": "covers/2026-11-01-2.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-01-2/ANCHOR-2026-11-01-sleeper-car-groove.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-01-2",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-01-sleeper-car-groove-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-01-2/ANCHOR-2026-11-01-sleeper-car-groove-short.mp4",
+      "youtube_url": "https://youtu.be/VnwddraBgL4",
+      "buffer_post_id": "VnwddraBgL4",
+      "status": "public",
+      "post_at": "2026-11-02T02:18:44Z",
+      "qc": {
+        "bpm_est": 165.0,
+        "lufs": -14.1,
+        "warnings": [
+          "key is not clearly audible; kept the requested one"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-02T02:16:48Z",
+      "genre_line": "Rap Techno, Hard Techno, Rave Rap",
+      "style_line": "Rave Rap, Bouncy Hard Techno, Hip Hop Techno, Driving Techno",
+      "error": null,
+      "accent": "#f4f4f6",
+      "caption": "rap over hard techno, punchy kick, bouncy off-beat bassline, confident rap verses, chanted title hook, euphoric rave energy. Mid-2020s rave rap: confident English rap riding hard techno, bright and festival-ready. Mood: confident and grinning, building to a crowd-wide jump, ending triumphant, about a long night train where a carriage full of strangers becomes one crew. Feel: bouncy, fun and psychedelic, never dark. 168 BPM, fast four-on-the-floor, bassline bouncing on every off-beat, rap riding the hi-hats in sixteenths. Instruments: pounding kick, 808 snare, shaker loop, rolling hats, rubber sub bass under the rap, brass stab hook playing a syncopated stabbing riff over warm feel-good chords; bouncy sub plucks intro, snare rolls into hooks build, sirens behind the hook breakdown. Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro. Production: Punchy and bright, rap vocal dry and centred, chant hook doubled and wide; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, bouncy sub plucks far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, bouncy sub plucks last, a smooth fade out. Special moment: the rapper doubles up the flow over the full beat for one bar.",
+      "seed": 331056096,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 32,
+        "render_s": 8349.5,
+        "threads": 4,
+        "model": "acestep-v15-sft-Q8_0.gguf",
+        "guidance": 5.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-01-2/ANCHOR-2026-11-01-sleeper-car-groove-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-01-2/ANCHOR-2026-11-01-sleeper-car-groove-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/VnwddraBgL4",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=BoOKN2pXby4",
+      "buffer_short_post_id": "6ae7f30b48ce42a6b43c306c",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "train-of-strangers",
+      "sound": {
+        "lead": "brass stab hook",
+        "bass": "rubber sub bass under the rap",
+        "drums": "pounding kick, 808 snare, shaker loop, rolling hats",
+        "melody": "a syncopated stabbing riff",
+        "chords": "warm feel-good chords"
+      }
+    },
+    {
       "id": "2026-11-01",
       "date": "2026-11-01",
       "title": "Rain On The Main Stage",
@@ -159,7 +225,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-01/ANCHOR-2026-11-01-rain-on-the-main-stage-short.mp4",
       "youtube_url": "https://youtu.be/Wvne2RXKu1E",
       "buffer_post_id": "Wvne2RXKu1E",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-01T21:03:05Z",
       "qc": {
         "bpm_est": 170.0,
@@ -3602,7 +3668,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-01T21:03:46Z",
+    "checked_at": "2026-11-02T02:18:56Z",
     "total": 2,
     "postable": 2,
     "families": 0,
