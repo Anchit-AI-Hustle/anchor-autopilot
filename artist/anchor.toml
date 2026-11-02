@@ -80,7 +80,7 @@ keys = ["F minor", "G minor", "A minor", "D minor", "E minor", "C minor", "B min
 # Whispers and chants (Anchit, 2026-10-04): words are whispered in the quiet sections and
 # shouted as short crowd chants in the drops (brief.vocal_sheet writes them under each
 # section of the lyrics sheet). Never a sung melody.
-vocals = "Vocals: whispers in the quiet parts, shouted crowd chants in the drops, never sung"
+vocals = "Vocals: {singer}, natural English, real breaths, short sung lines in the quiet parts, the crowd sings the title in the drops"
 # What the channel's best records share (measured 2026-09-23): the kick's click and the bass's
 # harmonics carry on a phone speaker, the textures are wide while kick and sub stay centred,
 # and the record falls away and comes back rather than holding one level.
@@ -93,7 +93,7 @@ ref_groups = { hardtech = ["2026-09-04", "2026-09-05", "2026-09-06", "2026-09-07
 # Bouncy, fun and psychedelic, never dark (Anchit, 2026-10-04): gloom and stiffness are
 # named in the negative so the LM steers away from them.
 feel = "bouncy, fun and psychedelic, never dark"
-negative = "sung melody, pop vocals, rap verses, ballad singing, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
+negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, rap verses, ballad singing, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
 # A model asked for N seconds renders N seconds and stops mid-bar. The arrangement (see
 # music.structure) is the real fix; this is the safety net, and it only fires when the
 # track is measurably still at full level on its last second.
@@ -238,11 +238,101 @@ melodies = ["a laid-back looping riff", "a two-note call and response hook", "a 
 chords = ["warm soulful seventh chords", "sunny soul chords", "dreamy suspended chords", "playful major chords with a twist"]
 
 
+# Each genre's own voice (Anchit, 2026-11-02: "proper emotion generating or wacky gangster verses
+# or hardcore heavy bars or chats and whispers of shlokas etc - based on genre"). The theme's
+# rhymed couplets carry the emotion in every genre; these add the genre's character
+# (anchor.brief.vocal_sheet). Lines are couplets: 0-1, 2-3 and so on rhyme or belong together.
+[music.lyric_styles.psy]
+vocals = "Vocals: {singer}, singing warm emotional lines, a deep calm voice whispering and chanting Sanskrit shlokas and mantras, natural breaths"
+mantras = ["om namah shivaya", "om namah shivaya, shivaya",
+  "om mani padme hum", "om mani padme hum, om",
+  "asato ma sad gamaya", "tamaso ma jyotir gamaya",
+  "mrityor ma amritam gamaya", "om shanti shanti shanti",
+  "lokah samastah sukhino bhavantu", "may all beings everywhere be free",
+  "hare krishna hare krishna", "krishna krishna hare hare",
+  "hare rama hare rama", "rama rama hare hare",
+  "om gam ganapataye namaha", "om gam, om gam",
+  "aham brahmasmi", "tat tvam asi",
+  "har har mahadev", "bam bam bhole"]
+shouts = ["har har mahadev", "bam bam bhole", "om shanti", "jai jai", "om"]
+
+[music.lyric_styles.hardtech]
+vocals = "Vocals: {singer}, natural English, short emotional lines in the quiet parts, a hardcore MC shouting heavy hype bars in the builds, the crowd chanting the title"
+bars = ["Front row, back row, every single soul", "One kick hits and we lose control",
+  "Make some noise if you came to go hard", "Leave your worries at the door with your guard",
+  "Heavy kick rolling like a train on the rails", "Hands to the ceiling and nobody fails",
+  "Bass so deep you can feel it in your teeth", "Ground is shaking from the floor beneath",
+  "No sleep, no stop, we ride till the light", "Hardest crew in the building tonight",
+  "Sweat in my eyes and I'm still on the beat", "Hard to the core from my head to my feet",
+  "When the kick comes back let me see you jump", "Every heart in the room going thump thump thump",
+  "This one's for the ravers who never sit down", "Hardcore crew from all over town",
+  "Turn it up louder, we can take some more", "Make the whole building shake to the core",
+  "Here comes the pressure, here comes the heat", "Nobody standing still on their feet",
+  "Raw and loud and we like it that way", "Hard beats only till the break of day",
+  "Shout it to the back, let the whole room hear", "Hardest night of the year is right here",
+  "Lights go low and the whole room roars", "Feet hit the ground like a thousand doors",
+  "Built for the weekend and made for the noise", "Same old ravers with the same old joys",
+  "Hit me with the kick and I'll give you the bounce", "Every single second is the one that counts",
+  "From the back of the queue to the front of the stage", "Every single raver is the same age",
+  "Grab your mates and lock your arms tight", "We're not going home till the morning light",
+  "One more time, give me one more drop", "Hardcore crowd and we never stop"]
+shouts = ["harder", "go hard", "hardcore", "louder", "jump", "make some noise", "hands up"]
+
+[music.lyric_styles.rap]
+bars = ["Pulled up on a scooter with the bell going ding", "Chain made of bottle caps, I'm the neighbourhood king",
+  "Pockets full of biscuits and a mango in my hand", "Walked in like a boss with a whole brass band",
+  "Bodyguard's my cousin and he's four foot two", "Still nobody messing with the snack crew",
+  "Rolling with my squad in a shopping trolley", "Wheels all squeaking but we rolling so jolly",
+  "Mob boss of the dance floor, we run the whole block", "Business card says boss and it's written in chalk",
+  "Counting all my money and it's all in small change", "Bought a gold tooth sticker, call me rich and strange",
+  "Big boss energy in my slippers and my robe", "Most wanted on the dance floor all across the globe",
+  "Getaway ride is a bicycle with a basket", "Stole the whole show and I didn't even ask it",
+  "Crew so fresh that the lemons get jealous", "Smoother than the butter on the toast of the fellas",
+  "Tab at the corner shop longer than a list", "Moves on the floor that you just can't resist",
+  "Kingpin of the kitchen when the toast pops up", "Running this party from the bottom to the top",
+  "Sunglasses on and it's midnight in the hall", "Can't see a thing but I'm dancing through it all",
+  "Rolled in late with a cape made of curtains", "Big boss moves and I'm feeling so certain",
+  "Ice on my wrist, it's a lolly from the freezer", "Melting on the dance floor, I'm a real crowd pleaser",
+  "Hired a limo but it turned up as a tractor", "Still the main star, call me the lead actor",
+  "Bling on my teeth from a Christmas cracker", "Smoothest in the game, I'm a dance floor hacker",
+  "My crew's so big that we came in two buses", "Bouncer took one look and he joined us, no fusses",
+  "Godfather of grooves with a cheese sandwich", "Making offers on the floor that you can't resist"]
+
+[music.lyric_styles.hiphop]
+mix_story = true
+bars = ["Came up from the corner with a dream in my chest", "Every single day I was putting it to the test",
+  "Heavy on the bass and I'm heavy on the truth", "Every word I say is the proof of my youth",
+  "They said I couldn't, now they're saying my name", "Same kid from the block but I'm changing the game",
+  "Pen hits the paper like a hammer on stone", "Building something big that I can call my own",
+  "Every single knock only made me stand tall", "Back against the wall and I'm breaking the wall",
+  "No shortcuts, no handouts, just the grind and the sweat", "Haven't even started and you ain't seen nothing yet",
+  "Worked every shift so the dream could stay alive", "Now I'm on the stage and I'm here to thrive",
+  "Heart full of fire and my feet on the ground", "Whole city listening when I'm making this sound",
+  "Words hit heavy like the bass in a jeep", "Every line I write is a promise I keep",
+  "Real recognise real and I see it in you", "Stand up with me and we'll make it through",
+  "Started with a beat and a borrowed mic", "Now the whole crowd singing every line I write",
+  "Pressure makes diamonds and I've had a lot", "Giving this crowd every line that I got",
+  "Wrote my first rhyme on the back of a bus ticket", "Now I'm in the arena and I'm here to kick it",
+  "Ran through the rain with a dream on my back", "Never looked down, never once looked back",
+  "Ten years of no and a hundred closed doors", "Now every single room I walk in is ours",
+  "Kept my head down when they laughed at the plan", "Now they're in the front row clapping their hands",
+  "Every scar I got is a page of my book", "Read it if you want but you better take a look",
+  "Shoulders heavy but my heart stays light", "Carrying the whole crew into the night"]
+
 [music.voice]
 # Words for the whispers and chants. The chant in every drop is the song's own title, so the
 # record is named after what the crowd shouts; whispers and shouts rotate from these lists.
 whispers = ["let it melt", "deeper now", "close your eyes", "feel the acid", "lose control", "we fly tonight", "breathe it in", "follow the light", "inside the sound", "higher and higher", "never stop moving", "let the colours in"]
 shouts = ["jump", "hey", "bounce", "go", "hands up", "louder", "again", "move"]
+# The voice of each song (2026-11-02, Anchit: voices too robotic). One is drawn per song and
+# named in the caption the way ACE-Step reads vocals: type, timbre and delivery as keywords.
+singers = ["warm female vocal, breathy and close", "soulful male vocal, warm and a little raspy",
+  "bright female vocal, joyful and clear", "smooth male vocal, relaxed and friendly",
+  "powerful female vocal, big and free", "soft female vocal, intimate and sweet",
+  "husky male vocal, easy and smiling", "airy female vocal, light and dreamy"]
+rappers = ["confident male rapper, playful conversational flow", "female rapper, sharp and playful flow",
+  "laid-back male rapper, warm voice, easy flow", "energetic male rapper, crisp clear words",
+  "smooth female rapper, relaxed confident flow", "upbeat male rapper, friendly storytelling flow"]
 # Rap bars for the rap and hip hop lanes (voice = "rap"), written for ANCHOR (2026-10-24):
 # twelve are drawn for a song and rapped four to a verse, the title still chanted in the drops.
 rap = [
@@ -543,8 +633,8 @@ groove = "fast four-on-the-floor, bassline bouncing on every off-beat, rap ridin
 production = "Punchy and bright, rap vocal dry and centred, chant hook doubled and wide"
 mood_arcs = ["confident and grinning, building to a crowd-wide jump, ending triumphant", "playful bars over a rolling groove, exploding into a hands-up hook, landing on one shout", "laid-back swagger at first, getting louder every hook, ending on one big hook"]
 special_moments = ["the rapper doubles up the flow over the full beat for one bar", "a scratched record cut that leads straight into the last hook", "the crowd chant answers the rapper in call and response"]
-vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
-negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
+vocals = "Vocals: {rapper}, wacky playful gangster verses full of jokes and swagger, natural English, the title sung at the end of each verse, the crowd chants it in the drops"
+negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
 
 [[music.lanes]]
 id = "hiphoptechno"
@@ -563,8 +653,8 @@ groove = "half-time boom bap verses, backbeat snare, swung hats, the 808 bouncin
 production = "Warm and punchy, rap vocal dry and centred, snare crisp, kick big in the drops"
 mood_arcs = ["head-nodding swagger, switching into a full-room jump, ending with a grin", "playful bars over a lazy swing, then the drop flips it into a rave", "cool and confident, getting wilder at every switch, landing on one big hook"]
 special_moments = ["the beat switches from half-time to four-on-the-floor on a single scratch", "a two-bar 808 slide that pulls the room into the last drop", "the rapper counts the drop in and the whole crowd shouts the hook"]
-vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
-negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
+vocals = "Vocals: {rapper}, hard-hitting heavy bars, raw and confident, natural English, the title sung at the end of each verse, the crowd chants it in the drops"
+negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
 
 [[music.lanes]]
 id = "psyrap"
@@ -583,8 +673,8 @@ groove = "fast four-on-the-floor, a rolling acid bassline bouncing on every off-
 production = "Wide and colourful, acid lines swirling around a dry centred rap vocal, kick tight and up front"
 mood_arcs = ["curious and colourful, spiralling up into a full-room jump, ending wide-eyed", "playful bars over a bubbling acid line, exploding into a psychedelic hook", "dreamy and swaying, sharpening into a hands-up rave, ending on one bright stab"]
 special_moments = ["a riser under the last rap line, then everything slams back", "the acid line rises a full octave under the final hook", "the rap voice is swallowed by a phaser for one bar, then snaps back dry"]
-vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
-negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
+vocals = "Vocals: {rapper}, wacky playful gangster verses full of jokes and swagger, natural English, the title sung at the end of each verse, the crowd chants it in the drops"
+negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
 
 # Every genre Anchit asked for, every day (2026-10-24 and 2026-10-29: hard tech, psy, rap, hip hop
 # and their combinations): [schedule] slot_groups gives each of the day's songs a group.
@@ -605,8 +695,8 @@ groove = "fast swung four-on-the-floor, a rolling bassline bouncing on every off
 production = "Punchy and bright, rap vocal dry and centred, lead hook in the upper mids, kick dry and up front"
 mood_arcs = ["cheeky swagger, building to a crowd-wide jump, ending on a grin", "laid-back bars over a swinging groove, exploding into a hands-up hook", "confident from bar one, louder at every hook, landing on one shout"]
 special_moments = ["the groove drops to just kick and rap for two bars before the hook slams back", "a chopped vocal stab answers every line of the last verse", "the bassline climbs an octave under the final hook"]
-vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
-negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
+vocals = "Vocals: {rapper}, wacky playful gangster verses full of jokes and swagger, natural English, the title sung at the end of each verse, the crowd chants it in the drops"
+negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
 
 [[music.lanes]]
 id = "psyhiphop"
@@ -625,8 +715,8 @@ groove = "half-time trap verses, backbeat clap, triplet hats, the 808 bouncing u
 production = "Warm and wide, rap vocal dry and centred, acid swirling around it, kick big in the drops"
 mood_arcs = ["hazy head-nodding cool, flipping into a full-room jump, ending wide-eyed", "playful bars over a bubbling acid swing, then the drop turns it into a rave", "dreamy and swaying, sharpening at every switch, landing on one bright hook"]
 special_moments = ["a scratch fill on the boom bap, then the four-on-the-floor slams in", "the acid line bends up a full octave under the last hook", "the rapper's last line echoes into the drop through a phaser"]
-vocals = "Vocals: English rap verses in the builds and breakdown, the title shouted as the drop chant, whispered intro and outro"
-negative = "sung melody, pop vocals, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
+vocals = "Vocals: {rapper}, hard-hitting heavy bars, raw and confident, natural English, the title sung at the end of each verse, the crowd chants it in the drops"
+negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, dark horror drones, gloomy menacing atmosphere, stiff robotic groove, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
 
 [titles]
 # Title patterns: V = verb, N = noun, A = adjective, P = particle ("Pull Under").

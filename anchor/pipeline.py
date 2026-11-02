@@ -594,14 +594,23 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
                                    "external_link": post.get("externalLink"),
                                    "channel": {"id": ch["id"], "name": ch.get("name")}, "media": media}
             log(f"publish: Instagram reel {post['id']} {post.get('status')} due {post.get('dueAt')}")
+            if not due:
+                # 2026-11-02: Reels had stopped with nothing on record, because only the create call
+                # was kept. Buffer fetches and posts a shareNow Reel within minutes, so wait for the
+                # outcome and keep Instagram's own answer (sent with a link, or the error)
+                result["instagram"].update(reel_outcome(buf, post["id"]))
+            if result["instagram"].get("status") == "error":
+                warn(f"Instagram Reel {post['id']} failed in Buffer: {result['instagram'].get('error')}")
         except BufferError as exc:
             if "no Instagram channel connected" in str(exc) or "require notification scheduling" in str(exc):
-                # the YouTube posts are the release; the Reel starts the day the account is connected
-                log(f"publish: Instagram skipped: {exc}")
-                result["instagram"] = {"status": "not connected", "error": None}
+                # the YouTube posts are the release, so the drop still goes out, but loudly: a silent
+                # skip is how the Reels stopped for a week unseen (2026-11-02)
+                warn(f"Instagram Reel NOT posted: {exc}. Fix in Buffer: reconnect @anchor_at2803 as an "
+                     "Instagram Business or Creator account with automatic publishing")
+                result["instagram"] = {"status": "not connected", "error": str(exc)[:500]}
             else:
                 errors.append(f"instagram: {exc}")
-                result["instagram"] = {"error": str(exc)[:500]}
+                result["instagram"] = {"status": "error", "error": str(exc)[:500]}
     # the fields older code and the status page read: the full video's post, or the Short's
     # when the full video could not go out
     y = result["youtube"] or {}
@@ -614,6 +623,36 @@ def publish(profile: Profile, drop_dir: Path, media_url: str, *, dry_run: bool =
     if errors:
         raise BufferError("; ".join(errors))
     return result
+
+
+def warn(msg: str) -> None:
+    """A GitHub Actions warning: shows on the run's summary page, not only deep in the log.
+    The command must start its line, so it is printed bare, then logged with the time."""
+    print(f"::warning::{msg}", flush=True)
+    log(f"WARNING: {msg}")
+
+
+def reel_outcome(buf, post_id: str, wait_s: int = 240, every_s: int = 20, sleep=None) -> dict:
+    """Polls a Buffer post until Instagram has it (status sent, with its link) or refused it
+    (status error, with Buffer's message). Returns only the fields it learned."""
+    import time as _time
+    sleep = sleep or _time.sleep
+    waited = 0
+    while True:
+        try:
+            p = buf.post(post_id)
+        except BufferError as exc:
+            log(f"publish: Instagram reel {post_id} status check failed: {exc}")
+            return {}
+        status = p.get("status")
+        if status in ("sent", "error") or waited >= wait_s:
+            out = {"status": status, "external_link": p.get("externalLink"), "sent_at": p.get("sentAt")}
+            if p.get("error"):
+                out["error"] = (p["error"].get("message") or str(p["error"]))[:500]
+            log(f"publish: Instagram reel {post_id} {status} {p.get('externalLink') or ''}".rstrip())
+            return out
+        sleep(every_s)
+        waited += every_s
 
 
 def publish_youtube_api(profile: Profile, drop_dir: Path, meta: dict, brief: dict, publish_at: datetime | None,
@@ -762,6 +801,8 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         "youtube_url": pub.get("external_link"),
         "youtube_short_url": (pub.get("youtube_short") or {}).get("external_link"),
         "instagram_url": (pub.get("instagram") or {}).get("external_link"),
+        "instagram_status": (pub.get("instagram") or {}).get("status"),
+        "instagram_error": (pub.get("instagram") or {}).get("error"),
         "full_video_url": f"https://github.com/{repo}/releases/download/{tag}/{files['full_169']}" if repo and files.get("full_169") else None,
         "reel_url": f"https://github.com/{repo}/releases/download/{tag}/{files['full_916']}" if repo and files.get("full_916") else None,
         "hook": brief.get("hook"),

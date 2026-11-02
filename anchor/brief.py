@@ -109,7 +109,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         title = make_title(profile.titles, rng("anchor-title", drop_id), used_titles, recent_titles,
                            taken=check, report=title_report)
     lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", drop_id),
-                         mode=lane.voice, theme=theme)
+                         mode=lane.voice, theme=theme, group=lane.group or "",
+                         rotate=Date.fromisoformat(day).toordinal() * 3 + (slot - 1) * 7)
 
     brief = {
         "id": drop_id,
@@ -176,54 +177,88 @@ def section_tag(tag: str, kind: str = "") -> str:
     return {"build": "Build-Up"}.get(tag, tag.capitalize())
 
 
-def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[str, ...], shape: str, r,
-                mode: str = "chant", theme=None) -> str:
-    """The lyrics field: every section's tag and direction, then its words.
+def _couplets(lines: list[str], r, k: int | None = None, rotate: int | None = None) -> list[str]:
+    """Rhymed couplets (lines 0-1, 2-3, ...) drawn as pairs, each joined as two sung lines.
+    With ``rotate`` a genre bank is walked in turn from that point (consecutive songs start
+    further on), so a week of songs spreads over the whole bank instead of drawing the same
+    favourite couplets again."""
+    pairs = [lines[i:i + 2] for i in range(0, len(lines) - 1, 2)]
+    if rotate is not None and pairs:
+        start = rotate % len(pairs)
+        pairs = (pairs[start:] + pairs[:start])[:k or len(pairs)]
+    else:
+        pairs = r.sample(pairs, k=min(k or len(pairs), len(pairs)))
+    return ["\n".join(dict.fromkeys(p)) for p in pairs]
 
-    The drops chant the song's own title (so the record is named after what the crowd
-    shouts) with a shout from the pool; the quiet sections whisper a line from the pool.
-    Three whispers are drawn for the day and reused, so the song has a few phrases that
-    come back rather than a new line every section. A rap lane (``mode="rap"``) raps four
-    bars in each build and breakdown, drawn without repeats from the profile's own bars.
-    Every choice comes from ``r``. With a ``theme`` (anchor.themes) the whispers, the shout and
-    the rap bars are the theme's own, so the words are about something and differ song to song.
+
+def vocal_sheet(profile: Profile, title: str, duration_s: int, textures: tuple[str, ...], shape: str, r,
+                mode: str = "chant", theme=None, group: str = "", rotate: int = 0) -> str:
+    """The lyrics field: every section's tag, then its words.
+
+    The words are a person's (Anchit, 2026-11-02: "lyrics and voices too robotic ... proper
+    humanized song lyrics based on the genre ... emotion generating or wacky gangster verses or
+    hardcore heavy bars or chants and whispers of shlokas"). The theme gives three rhymed
+    couplets about a moment in people's lives (artist/themes.toml); the genre group adds its
+    own voice from ``[music.lyric_styles.<group>]``:
+      psy       Sanskrit shlokas and mantras whispered and chanted in the intro, breakdown, outro
+      hardtech  hardcore heavy MC bars in the builds and heavy shouts in the drops
+      rap       wacky gangster verses, two couplets a verse
+      hiphop    heavy bars: one story couplet of the theme, one heavy couplet, every verse
+    The drops chant the title; the title also closes the breakdown, the shouted build and every
+    verse, because a drop chant is often left unsung. Every choice comes from ``r``.
     """
     voice = profile.music["voice"]
+    style = (profile.music.get("lyric_styles") or {}).get(group) or {}
     pool_w = list(theme.whispers) if theme else list(voice["whispers"])
-    pool_s = list(theme.chants) if theme else list(voice["shouts"])
-    whispers = r.sample(pool_w, k=min(4, len(pool_w)))
+    # the drops answer the title with the theme's own crowd shouts, so they differ song to song
+    pool_s = list(theme.chants if theme else voice["shouts"])
+    sung = _couplets(pool_w, r, 3) if theme else [r.choice(pool_w) for _ in range(3)]
+    while len(sung) < 3:
+        sung.append(sung[-1])
     shout = r.choice(pool_s)
     chant = title.upper()
-    # the intro line comes back in the outro, so the song opens and closes on the same words;
-    # the build and the breakdown each sing two lines of their own
-    quiet_lines = [whispers[0], f"{whispers[2]}\n{whispers[3 % len(whispers)]}", whispers[0]]
+    quiet_lines = [sung[0], sung[2], sung[0]]      # the intro couplet comes back in the outro
+    build = sung[1]
+    if style.get("mantras"):
+        # psy: the quiet parts whisper and chant shlokas, the build sings the theme's couplet
+        m = _couplets(style["mantras"], r, 2, rotate=rotate)
+        quiet_lines = [m[0], f"{m[1] if len(m) > 1 else m[0]}\n{sung[2]}", m[0]]
+    mc = None
+    if style.get("bars") and mode != "rap":
+        # hard techno: an MC's heavy bars drive the builds
+        mc = _couplets(style["bars"], r, 2, rotate=rotate)
+        build = mc[0]
     words = {
-        "whisper": lambda i: quiet_lines[i] if i < len(quiet_lines) else whispers[i % len(whispers)],
-        "whisper2": lambda i: f"{whispers[1]}\n{whispers[1]}, {whispers[1]}",
+        "whisper": lambda i: quiet_lines[i] if i < len(quiet_lines) else quiet_lines[-1],
+        "whisper2": lambda i: build,
         "chant": lambda i: f"{chant}! {chant}!\n{shout.capitalize()}! {shout.capitalize()}! {shout.capitalize()}!",
-        "shout": lambda i: f"{shout.capitalize()}! {shout.capitalize()}!",
+        "shout": lambda i: mc[-1] if mc else f"{shout.capitalize()}! {shout.capitalize()}!",
     }
     voices = VOICE
     if mode == "rap":
-        bank = list(theme.rap) if theme else list(voice["rap"])
-        bars = r.sample(bank, k=min(12, len(bank)))
-        words["rap"] = lambda i: "\n".join(bars[(4 * i + j) % len(bars)] for j in range(4))
+        story = _couplets(list(theme.rap) if theme else list(voice["rap"]), r)
+        if style.get("bars") and style.get("mix_story"):
+            heavy = _couplets(style["bars"], r, rotate=rotate)   # hip hop: story then a heavy couplet
+            verses = [f"{story[i % len(story)]}\n{heavy[i % len(heavy)]}" for i in range(6)]
+        elif style.get("bars"):
+            gang = _couplets(style["bars"], r, rotate=rotate)   # rap: a wacky gangster couplet
+            verses = [f"{gang[i % len(gang)]}\n{story[i % len(story)]}" for i in range(6)]   # then the story
+        else:
+            verses = [f"{story[(2 * i) % len(story)]}\n{story[(2 * i + 1) % len(story)]}" for i in range(6)]
+        words["rap"] = lambda i: verses[i % len(verses)]
         voices = VOICE_RAP
     names = section_names(duration_s, shape)
     out, quiet, verse = [], 0, 0
     for (tag, direction), name in zip(arrangement(duration_s, textures, shape), names):
-        delivery, kind = voices.get(name, ("whispered voice", "whisper"))
-        line = whispers[0] if name == "outro" and kind == "whisper" else words[kind](verse if kind == "rap" else quiet)
+        delivery, kind = voices.get(name, ("sung voice", "whisper"))
+        line = quiet_lines[0] if name == "outro" and kind == "whisper" else words[kind](verse if kind == "rap" else quiet)
         if kind == "whisper":
             quiet += 1
         if kind == "rap":
             verse += 1
         # a bare section tag: a direction or delivery note written into the sheet gets SUNG
-        # (2026-10-25: "for eight to sixteen bars ... rap verse, laid back flow over the groove").
-        # The arrangement and the delivery live in the caption (lane vocals, arc) instead.
-        # the title is also sung in the quiet parts and the verses: the drop chant is often
-        # left unsung or comes out as "hey hey" (2026-11-01, Feathers And Drums: every verse
-        # line heard word for word, the drop chant heard as "hey hey hey")
+        # (2026-10-25). The title also closes the breakdown, the shouted build and every verse:
+        # the drop chant is often left unsung (2026-11-01, Feathers And Drums).
         if kind in ("rap", "shout") or (kind == "whisper" and name not in ("intro", "outro")):
             line = f"{line}\n{title}"
         out.append(f"[{section_tag(tag, kind)}]\n{line}")
@@ -279,6 +314,11 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
     textures = tuple(r.sample(list(lane.textures), k=3))
     mood = r.choice(lane.mood_arcs)
     special = r.choice(lane.special_moments)
+    # a human voice named the way ACE-Step reads it (2026-11-02): drawn after the other picks so
+    # the textures, mood and moment of a day stay what they were
+    voice = music.get("voice", {})
+    singer = r.choice(voice.get("singers") or ["warm natural human vocal"])
+    rapper = r.choice(voice.get("rappers") or ["natural human rapper"])
     t0, t1, t2 = textures
     layers = [
         lane.caption,                                                   # 1 genre + core sound
@@ -290,7 +330,8 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
          if sound else
          f"Instruments: punchy kick and bouncing bass carry it; {t0} sits under the intro, "
          f"{t1} arrives with the build, {t2} owns the breakdown"),      # 5 instruments + entry
-        lane.vocals or music["vocals"],                                 # 6 vocals
+        (lane.vocals or ((music.get("lyric_styles") or {}).get(lane.group or "") or {}).get("vocals")
+         or music["vocals"]).format(singer=singer, rapper=rapper),     # 6 vocals: a person
         f"Production: {lane.production}; {music['mastering']}",         # 7 production
         arc(duration_s, textures, shape),                               # 8 arrangement arc
         f"Special moment: {special}",                                   # 9 special moment
