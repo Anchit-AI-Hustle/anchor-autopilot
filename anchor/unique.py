@@ -17,6 +17,8 @@ distorted kick and a sub, and they all correlate above 0.75.
 from __future__ import annotations
 
 import json
+import os
+import shutil
 import urllib.request
 from pathlib import Path
 
@@ -147,8 +149,14 @@ def sounds_alike(score: dict) -> bool:
 
 
 def released_prints(catalog_path: Path, work: Path, limit: int = 40) -> dict[str, dict]:
-    """Prints of the released masters (cached as .npz next to the build)."""
+    """Prints of the released masters, cached as .npz. On the Mac the cache is shared across
+    builds (~/.cache/anchor/prints, or ANCHOR_PRINTS_CACHE), so each release is fetched once,
+    not once per song (2026-11-02: one blackholed GitHub download address held a song for
+    20 minutes because the download had no timeout)."""
     from .audio import decode
+    shared = os.environ.get("ANCHOR_PRINTS_CACHE") or str(Path.home() / ".cache" / "anchor" / "prints")
+    if Path(shared).is_dir():
+        work = Path(shared)
     work.mkdir(parents=True, exist_ok=True)
     out: dict[str, dict] = {}
     try:
@@ -168,13 +176,23 @@ def released_prints(catalog_path: Path, work: Path, limit: int = 40) -> dict[str
         mp3 = work / f"{key}.mp3"
         try:
             if not mp3.exists():
-                urllib.request.urlretrieve(url, mp3)
+                fetch(url, mp3)
             pr = prints(decode(mp3).mean(axis=1))
         except Exception:      # noqa: BLE001 - a missing release must not block the drop
             continue
         np.savez(npz, **pr)
         out[did] = pr
     return out
+
+
+def fetch(url: str, dst: Path, timeout: float = 30) -> None:
+    """Download with a timeout on every connect and read, so one unreachable address costs
+    seconds, never the run. Written to a .part file first, so a cut download is never cached."""
+    part = dst.with_suffix(dst.suffix + ".part")
+    req = urllib.request.Request(url, headers={"User-Agent": "anchor-autopilot/1.0"})
+    with urllib.request.urlopen(req, timeout=timeout) as resp, open(part, "wb") as f:
+        shutil.copyfileobj(resp, f)
+    part.replace(dst)
 
 
 def check_audio(wav: Path, catalog_path: Path, work: Path) -> tuple[float, str | None, dict]:

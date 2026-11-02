@@ -312,3 +312,19 @@ def test_a_new_master_is_printed_again_for_the_uniqueness_check(tmp_path):
         cat.write_text(json.dumps({"drops": [{"id": "2026-09-13", "audio_url": url}]}))
         assert "2026-09-13" in unique.released_prints(cat, tmp_path / "prints")
     assert {p.name for p in (tmp_path / "prints").glob("*.npz")} == {"2026-09-13.npz", "2026-09-13-v202609231853.npz"}
+
+
+def test_print_downloads_have_a_timeout_and_a_shared_cache(tmp_path, monkeypatch):
+    """2026-11-02: a download with no timeout held a song for 20 minutes on one dead address."""
+    import inspect
+    from anchor import unique
+    src = inspect.getsource(unique.fetch)
+    assert "timeout=timeout" in src and ".part" in src
+    assert "urlretrieve" not in inspect.getsource(unique.released_prints)
+    shared = tmp_path / "shared"
+    shared.mkdir()
+    monkeypatch.setenv("ANCHOR_PRINTS_CACHE", str(shared))
+    cat = tmp_path / "catalog.json"
+    cat.write_text('{"drops": []}')
+    assert unique.released_prints(cat, tmp_path / "build-prints") == {}
+    assert not (tmp_path / "build-prints").exists()
