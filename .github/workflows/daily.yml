@@ -161,8 +161,9 @@ jobs:
     # the Mac (self-hosted, label anchor-mac) or GitHub's CPU, as the plan picked
     runs-on: ${{ fromJSON(needs.plan.outputs.runs_on) }}
     # the CPU music engine can run past 3.5 h (210 cancelled the 10-18 and 10-22 drops); the Mac
-    # renders a take in minutes, so two hours is a hung Mac, not a slow one
-    timeout-minutes: ${{ needs.plan.outputs.renderer == 'mac' && 120 || 350 }}
+    # renders a take in minutes, but a Mac short of memory (2026-11-02: 129 browser processes, load
+    # 900) took 2 h for one song and the old 120 min limit killed it minutes before it was done
+    timeout-minutes: ${{ needs.plan.outputs.renderer == 'mac' && 240 || 350 }}
     env:
       ANCHOR_RENDERER: ${{ needs.plan.outputs.renderer }}
     strategy:
