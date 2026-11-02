@@ -3,8 +3,8 @@
     "result": "failed",
     "stage": "make",
     "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-02T23:15:49Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41523174806"
+    "finished_at": "2026-11-02T23:26:16Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41537380565"
   },
   "next_post_at": "2026-11-02T17:30:00Z",
   "streak": 9,
@@ -14,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-02T23:15:49Z",
+  "updated_at": "2026-11-02T23:26:16Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
