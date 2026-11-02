@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-01-2",
-    "title": "Sleeper Car Groove",
-    "finished_at": "2026-11-02T02:18:55Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41337048032",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-02T20:53:44Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41503616185"
   },
   "next_post_at": "2026-11-02T17:30:00Z",
   "streak": 9,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-02T02:18:55Z",
+  "updated_at": "2026-11-02T20:53:44Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
