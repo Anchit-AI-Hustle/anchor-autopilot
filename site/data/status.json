@@ -1,29 +1,32 @@
 {
   "last_run": {
-    "result": "failed",
-    "stage": "make",
-    "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-02T23:26:16Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41537380565"
+    "result": "ok",
+    "stage": "done",
+    "drop_id": "2026-11-02-3",
+    "title": "Parade Never Ends",
+    "finished_at": "2026-11-03T10:11:37Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41544078848",
+    "error": null
   },
-  "next_post_at": "2026-11-02T17:30:00Z",
+  "next_post_at": "2026-11-03T17:30:00Z",
   "streak": 9,
   "totals": {
-    "drops": 67
+    "drops": 68
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-02T23:26:16Z",
+  "updated_at": "2026-11-03T10:11:37Z",
   "engine": {
     "engine": "acestep_cpp",
-    "threads": 4,
-    "steps": 32,
-    "model": "acestep-v15-sft-Q8_0.gguf",
-    "guidance": 5.0,
-    "lm_ms": 217810,
-    "dit_ms": 7465155,
-    "vae_ms": 640453,
-    "total_s": 8349.5
+    "threads": 10,
+    "steps": 8,
+    "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+    "guidance": 1.0,
+    "lm_ms": 73288,
+    "ref_audio": "ANCHOR-2026-09-10-signal-detected.mp3",
+    "dit_ms": 95663,
+    "vae_ms": 90169,
+    "total_s": 364.8
   }
 }
