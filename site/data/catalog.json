@@ -7,7 +7,7 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-03T21:42:42Z",
+  "updated_at": "2026-11-04T01:58:50Z",
   "drops": [
     {
       "id": "2026-11-03-4",
@@ -28,7 +28,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-03-4/ANCHOR-2026-11-03-walk-the-avenue-short.mp4",
       "youtube_url": "https://youtu.be/o_LRxAEUTcM",
       "buffer_post_id": "o_LRxAEUTcM",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-03T21:42:28Z",
       "qc": {
         "bpm_est": 164.0,
@@ -96,7 +96,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-03-3/ANCHOR-2026-11-03-spatula-solo-short.mp4",
       "youtube_url": "https://youtu.be/j6qCu_n4HFo",
       "buffer_post_id": "j6qCu_n4HFo",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-03T21:42:12Z",
       "qc": {
         "bpm_est": 166.1,
@@ -139,6 +139,74 @@
         "drums": "industrial kick, metallic hits, rolling sixteenth hats",
         "melody": "an octave-jumping hook",
         "chords": "bold power chords"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
+    {
+      "id": "2026-11-03-2",
+      "date": "2026-11-03",
+      "title": "Fridge Door Disco",
+      "lane": "hardtech",
+      "lane_name": "Hard Tech",
+      "bpm": 164,
+      "key": "Eb major",
+      "family": "volt",
+      "family_name": "Volt",
+      "duration_s": 211,
+      "short_s": 45,
+      "cover": "covers/2026-11-03-2.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-03-2/ANCHOR-2026-11-03-fridge-door-disco.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-03-2",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-03-fridge-door-disco-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-03-2/ANCHOR-2026-11-03-fridge-door-disco-short.mp4",
+      "youtube_url": "https://youtu.be/7OZYgjHp74E",
+      "buffer_post_id": "7OZYgjHp74E",
+      "status": "public",
+      "post_at": "2026-11-04T01:58:06Z",
+      "qc": {
+        "bpm_est": 164.0,
+        "lufs": -14.07,
+        "warnings": [
+          "key is not clearly audible; kept the requested one"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-04T00:55:15Z",
+      "genre_line": "Hard Tech, Hard Techno, Peak Time Techno",
+      "style_line": "Hard Tech, Bouncy Hard Techno, Tech House Groove, Rave Techno",
+      "error": null,
+      "accent": "#b6ff00",
+      "caption": "hard tech, hard techno, swung tech house groove, hard distorted kick, bouncy rolling bassline, chopped vocal stabs, shouted chant hook. Mid-2020s hard tech: tech house swing pushed to hard techno speed, bright and playful. Mood: groovy from bar one, tightening into a hands-up jump, landing on one big stab, about everyone ends up in the kitchen and the pots become drums. Feel: bouncy, fun and psychedelic, never dark. 161 BPM, fast four-on-the-floor with a swung tech house shuffle, a rolling bassline bouncing on every off-beat, vocal chops on the upbeats. Instruments: hyper kick, fast rolling hats, snare builds, reverse bass pulling into every kick, gritty reese lead playing a falling riff that lands on the downbeat over euphoric rave chords; swung shaker loops intro, pitched cowbell accents build, plucky tech house bass breakdown. Vocals: soulful male vocal, warm and a little raspy, natural English, short emotional lines in the quiet parts, a hardcore MC shouting heavy hype bars in the builds, the crowd chanting the title. Production: Punchy and clean, distorted kick up front, bassline centred and bouncy, vocal chops dry and close; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, swung shaker loops far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, swung shaker loops last, a smooth fade out. Special moment: the groove drops to just kick and vocal chop for one bar before the final drop.",
+      "seed": 182407853,
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 32,
+        "render_s": 5191.0,
+        "threads": 4,
+        "model": "acestep-v15-sft-Q8_0.gguf",
+        "guidance": 5.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-03-2/ANCHOR-2026-11-03-fridge-door-disco-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-03-2/ANCHOR-2026-11-03-fridge-door-disco-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/7OZYgjHp74E",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=gyBcvt11FEQ",
+      "buffer_short_post_id": "6aea915616e63068f189b478",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "kitchen-party",
+      "sound": {
+        "lead": "gritty reese lead",
+        "bass": "reverse bass pulling into every kick",
+        "drums": "hyper kick, fast rolling hats, snare builds",
+        "melody": "a falling riff that lands on the downbeat",
+        "chords": "euphoric rave chords"
       },
       "instagram_status": "not connected",
       "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
@@ -3871,7 +3939,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-03T21:42:43Z",
+    "checked_at": "2026-11-04T01:58:51Z",
     "total": 2,
     "postable": 2,
     "families": 0,
