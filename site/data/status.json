@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-04-3",
-    "title": "Cool Box Hop",
-    "finished_at": "2026-11-04T21:27:19Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41867841461",
-    "error": null
+    "result": "failed",
+    "stage": "publish",
+    "error": "The publish stage failed. Open the run log for details.",
+    "finished_at": "2026-11-04T21:27:45Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/41867841461"
   },
   "next_post_at": "2026-11-05T17:30:00Z",
   "streak": 11,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-04T21:27:19Z",
+  "updated_at": "2026-11-04T21:27:45Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
