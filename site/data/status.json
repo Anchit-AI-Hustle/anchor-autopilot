@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-05-3",
-    "title": "Half Pipe Hop",
-    "finished_at": "2026-11-05T22:27:57Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42067306801",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-05T22:28:21Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42067306801"
   },
   "next_post_at": "2026-11-06T17:30:00Z",
   "streak": 12,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-05T22:27:57Z",
+  "updated_at": "2026-11-05T22:28:21Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
