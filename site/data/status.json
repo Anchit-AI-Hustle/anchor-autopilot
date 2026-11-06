@@ -2,30 +2,30 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-05-5",
-    "title": "Two Strangers Dancing",
-    "finished_at": "2026-11-06T03:23:04Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42106664123",
+    "drop_id": "2026-11-06-4",
+    "title": "Board Game Jam",
+    "finished_at": "2026-11-06T21:25:18Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42249927584",
     "error": null
   },
-  "next_post_at": "2026-11-06T17:30:00Z",
+  "next_post_at": "2026-11-07T17:30:00Z",
   "streak": 13,
   "totals": {
-    "drops": 77
+    "drops": 78
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-06T03:23:04Z",
+  "updated_at": "2026-11-06T21:25:18Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
     "steps": 32,
     "model": "acestep-v15-sft-Q8_0.gguf",
     "guidance": 5.0,
-    "lm_ms": 206550,
-    "dit_ms": 6843276,
-    "vae_ms": 597621,
-    "total_s": 7672.5
+    "lm_ms": 229672,
+    "dit_ms": 7264568,
+    "vae_ms": 631714,
+    "total_s": 8152.5
   }
 }
