@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-06-4",
-    "title": "Board Game Jam",
-    "finished_at": "2026-11-06T21:25:18Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42249927584",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-07T15:21:48Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42384500055"
   },
   "next_post_at": "2026-11-07T17:30:00Z",
   "streak": 13,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-06T21:25:18Z",
+  "updated_at": "2026-11-07T15:21:48Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
