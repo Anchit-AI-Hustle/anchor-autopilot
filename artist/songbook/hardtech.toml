@@ -1,0 +1,619 @@
+# ANCHOR songbook - hardtech group (hard bounce, rawstyle bounce, hard groove, hyper acid)
+
+[[songs]]
+id = "keep-your-lanyard"
+title = "Keep Your Lanyard"
+form = "revolt"
+groups = ["hardtech"]
+voice = "chesty female alto with a punk snarl, shouted verses, a terrace-chant hook she spits back at the crowd"
+about = "a warehouse picker quits after six years and walks out with the night crew behind her"
+lyrics = """
+[Intro: spoken]
+Badge number four-oh-nine, signing off
+
+[Verse 1]
+Six years scanning boxes under strip lights at Gate Nine
+You timed my toilet breaks and called it keeping us in line
+I missed my cousin's mehndi for a Sunday double shift
+You said the team's a family, then you docked me when I was sick
+
+[Pre-Chorus]
+So here's the vest, still warm, and the pen you said I stole
+Here's my locker key, I'm walking out whole
+
+[Chorus]
+Keep your lanyard, keep the clock on the wall
+Keep the bonus you promised and never paid at all
+I gave you my mornings, my back and my name
+Keep your lanyard, I won't wear it again
+
+[Drop]
+
+[Verse 2]
+Car park at eleven and the night crew's at the fence
+Raju from Packing starts a slow clap, then it all makes sense
+Ten of us are laughing like we're kids let out of school
+Somebody's mum is calling, somebody's breaking a rule
+
+[Bridge]
+Tomorrow there's rent and no plan on the page
+But tonight I'm not a number, and I'm not afraid
+
+[Drop: crowd chants]
+Keep your lanyard
+
+[Final Chorus]
+Keep your lanyard, there's ten of us out here
+Keep the clock, keep the cameras, keep the fear
+We gave you our mornings, our backs and our names
+Keep your lanyard, we won't wear it again
+
+[Outro: shouted]
+Four-oh-nine, signing off for good
+"""
+
+[[songs]]
+id = "window-down-brother"
+title = "Window Down, Brother"
+form = "story"
+groups = ["hardtech"]
+voice = "warm male tenor, slightly hoarse, soft and close in the verses, belting the chorus with a catch in the throat"
+about = "an older brother drives his silent fourteen-year-old brother up their late dad's mountain road three days after the funeral"
+lyrics = """
+[Intro: half-spoken]
+Seat back, shoes off, you were always the passenger
+
+[Verse 1]
+Three days after the funeral, Dad's old car still smells of his cigarettes
+A cassette stuck in the deck that neither of us can eject
+You're fourteen with your hood up, counting trucks and saying nothing
+So I take the mountain road he took us on, the long way, just for something
+
+[Pre-Chorus]
+Mile sixty, you finally ask me where we're going
+I say I don't know, the first true thing I've told you
+
+[Chorus]
+Window down, brother, let the cold come in
+Shout his name at the valley, let it shout back again
+We don't have to be okay before the tank runs dry
+Window down, brother, scream it at the sky
+
+[Drop]
+
+[Verse 2]
+Dhaba at midnight, you eat his half of the parathas
+The tape unjams and blasts his worst old song, the one he'd sing at us
+You know every single word, you must have listened every day
+Then you cry so hard the trucker at the next table looks away
+
+[Bridge]
+At the top there's no grave, just a fence and a view
+He brought us here when you were four, you don't remember, but I do
+
+[Drop]
+
+[Final Chorus]
+Window down, brother, empty lot, take the wheel
+Two hands at ten and two, the way he made it feel
+We don't have to be okay, we just have to drive
+Window down, brother, he's still in the ride
+
+[Outro]
+Seat back, shoes off, I'm the passenger now
+"""
+
+[[songs]]
+id = "bench-my-best-friend"
+title = "Bench My Best Friend"
+form = "argument"
+groups = ["hardtech"]
+voice = "strong, slightly nasal female mezzo, whistle-sharp and clipped in the verses, soaring and unsteady on the chorus"
+about = "a team captain has to choose between winning the final and dropping the best friend she's played beside since she was eight"
+lyrics = """
+[Intro: spoken]
+Team sheet's due at nine. The pen's been in my hand an hour.
+
+[Verse 1]
+We learned to pass against her garage wall when we were eight
+She'd wait for me at practice even when I made her late
+Now she's half a step behind and she's been that way since May
+And the whole squad sees it, and they're waiting on what I'll say
+
+[Pre-Chorus]
+The captain says a final isn't something you can share
+The kid says she's the reason you were ever standing there
+
+[Chorus]
+Do I bench my best friend and win it on my own
+Or play her for the love of it and lose it and go home
+Everybody wants a captain till the captain has to choose
+Bench my best friend, so tell me what I'd rather lose
+
+[Drop]
+
+[Verse 2]
+I find her at the bus stop with her boots tied to her bag
+She already knows, she says "you've gone quiet, that's a flag"
+She says "if it was me, I'd do it, and I'd hate it, and I'd stay
+Put the new girl on the left, and I'll scream for her all day"
+
+[Bridge]
+Being liked is easy when you never have to choose
+She just taught me how to win by showing me how to lose
+
+[Drop: crowd chants]
+Captain's call
+
+[Final Chorus]
+So I bench my best friend and she's loudest in the stands
+Her voice gone by halftime, my number on her hands
+We win it by a goal and I run straight past the cup
+Bench my best friend, then I run and lift her up
+
+[Outro: spoken]
+Your boots are in my bag. Next season, left wing.
+"""
+
+[[songs]]
+id = "our-town-won"
+title = "Our Town Won"
+form = "celebration"
+groups = ["hardtech"]
+voice = "big open-throated male baritone, gospel-trained, joyful, shouting ad-libs like the leader of a street parade"
+about = "the under-nineteen team from a sugar-mill town wins the state final and the whole town floods the street"
+lyrics = """
+[Intro: shouted]
+Final whistle! Final whistle!
+
+[Chorus]
+Ring the temple bell, bang the shutter of the shop
+Our town won, and the whole street just won't stop
+Nobody knew our name on the highway sign
+Our town won, and tonight that name is mine
+
+[Verse 1]
+Twelve kids from the sugar mill, boots tied up with string
+Coach drove the bus himself with a cracked windscreen and a prayer
+Lost the semi last year on a penalty in the air
+Now the chemist's handing sweets out and the barber's on the roof
+The aunty who hates noise is banging steel plates, that's the proof
+
+[Drop]
+
+[Verse 2]
+Rafiq's mum is crying in her nightie at the gate
+His sister films it sideways, the whole town's up late
+A tractor's leading the parade down Station Road
+Fifty scooters honking in a key nobody's ever known
+
+[Pre-Chorus]
+They said nothing happens here, nothing ever will
+Well, something's happening here, and it's happening still
+
+[Chorus]
+Ring the temple bell, bang the shutter of the shop
+Our town won, and the whole street just won't stop
+
+[Bridge: half-sung]
+Tomorrow it's the mill again, the dust and the early bus
+But nobody can take tonight away from us
+
+[Drop: crowd chants]
+Our town won
+
+[Final Chorus]
+Ring the temple bell, let the whole district hear
+Our town won, and we'll tell it every year
+Paint our name on the highway, letters ten feet high
+Our town won, and nobody's sleeping tonight
+"""
+
+[[songs]]
+id = "your-idea-my-name"
+title = "Your Idea, My Name"
+form = "confession"
+groups = ["hardtech"]
+voice = "soft husky male baritone, close-mic, almost spoken in the verses, breaking into a strained shout on the chorus"
+about = "a man admits he stole a colleague's idea at work, got promoted on it, and finally gives it back"
+lyrics = """
+[Intro: whispered]
+Dev, you never found out. That's the worst part.
+
+[Verse 1]
+You drew it on a napkin at the Friday chai stall
+Three arrows and a circle, said it's nothing at all
+Monday in the boardroom I said it like it was mine
+The boss leaned back and nodded, and I didn't say a line
+
+[Pre-Chorus]
+I got the corner desk, the title and the raise
+You got moved to Pune and then you got thirty days
+
+[Chorus]
+It was your idea, my name on the slide
+Your idea, my name, and I've got nowhere to hide
+I've been rich for a year on a napkin you drew
+Your idea, my name, and it's eating me through
+
+[Drop]
+
+[Verse 2]
+I saw you at your brother's wedding, serving at the stall
+You hugged me like a brother, asked after my mum and all
+You said "you deserved it, man, you always had the voice"
+I nodded and I swallowed and I made the coward's choice
+
+[Bridge: building, then shouted]
+So I'm saying it loud where the speakers can't lie
+In front of all these strangers, Dev, it was never mine
+
+[Drop]
+
+[Final Chorus]
+It was your idea, I sent the board the napkin
+Your name's back on the slide, whatever else happens
+I was rich for a year on a thing that you drew
+Your idea, my name, and I'm giving it back to you
+
+[Outro: spoken]
+Your move, Dev. Call me if you want.
+"""
+
+[[songs]]
+id = "mud-to-the-knees"
+title = "Mud To The Knees"
+form = "vibe"
+groups = ["hardtech"]
+voice = "wild, festival-hoarse young female soprano, shouting the chant, laughing between lines"
+about = "four in the morning at a rained-out festival and nobody wants to go home"
+lyrics = """
+[Intro: shouted over rain]
+Lost my shoe at the second stage
+
+[Chorus]
+Mud to the knees, rain in my teeth
+Mud to the knees, still on my feet
+
+[Drop]
+
+[Verse]
+Glitter's running, tent's gone flat
+Somebody's wearing my brother's hat
+Lost my friends by the chai van
+Found ten more, all holding hands
+Four a.m. and the sky goes grey
+Nobody here wants to go away
+
+[Chorus]
+Mud to the knees, rain in my teeth
+Mud to the knees, still on my feet
+
+[Drop: crowd chants]
+Mud to the knees
+
+[Bridge]
+Hold up your boots if you lost your car
+Nobody knows where the exits are
+
+[Drop]
+
+[Final Chorus]
+Mud to the knees, sun in my eyes
+Mud to the knees, morning arrives
+
+[Outro: laughing]
+Found my shoe. Wearing it anyway.
+"""
+
+[[songs]]
+id = "let-the-neighbours-talk"
+title = "Let The Neighbours Talk"
+form = "revolt"
+groups = ["hardtech"]
+voice = "gritty female contralto, low and smoky, spitting the verses, roaring the hook"
+about = "a daughter who quit engineering to play drums answers the colony gossip, and her mother, with the garage shutter up"
+lyrics = """
+[Intro: spoken]
+Sharma aunty's at the window again
+
+[Verse 1]
+I cut my hair short in the bathroom on a Tuesday night
+Sold my engineering books and bought a drum kit, painted white
+Practise in the garage with the shutter halfway down
+Every beat's a headline in this nosy little town
+
+[Pre-Chorus]
+Ma says "what will people say", she's asked me for ten years
+Well, Ma, let me answer that, so everybody hears
+
+[Chorus]
+Let the neighbours talk, let the aunties keep the score
+Let them count the boys who walk me to the door
+I'm not your rishta photo, I'm not your saving grace
+Let the neighbours talk, they can say it to my face
+
+[Drop]
+
+[Verse 2]
+Six months on, her nephew's wedding needs a drummer, and she rings
+Calls me "beta" sweetly like she never said those things
+I quote her double rate, she pays it, every rupee
+And I let the cymbals ring so the whole lane hears me
+
+[Bridge]
+And Ma, I saw you in the doorway while I played
+You were tapping on the steel rail, and you weren't afraid
+
+[Drop: crowd chants]
+Let them talk
+
+[Final Chorus]
+Let the neighbours talk, Ma, let them talk all night
+We'll keep the garage light on so they get the story right
+I'm not your rishta photo, I'm your daughter on the stage
+Let the neighbours talk, we'll give them something to say
+
+[Outro: shouted]
+Window's open, aunty, come and dance
+"""
+
+[[songs]]
+id = "split-the-fare"
+title = "Split The Fare"
+form = "dialogue"
+groups = ["hardtech"]
+voice = "husky female alto lead, tired and close-mic at 5am, answered on his verses by a gentle, slightly nasal male tenor"
+about = "two exes run into each other at the club and share a taxi home at dawn, two weeks after the breakup"
+lyrics = """
+[Intro: her, spoken]
+You're going east too? Fine. Get in.
+
+[Verse 1: her]
+Five a.m., the club lights up and everyone looks wrecked
+You're by the kerb still wearing the jacket I bought you, I expect
+Two weeks since you packed your mugs, and I've told everyone I'm fine
+Driver's playing old film songs, I'm staring at the line
+
+[Verse 2: him]
+I didn't come to find you, I just needed somewhere loud
+You danced like nothing hurt you, and I swear that I was proud
+I kept your charger, sorry, and the plant is doing fine
+I talk to it on Sundays 'cause it's half yours, half mine
+
+[Chorus: both]
+We can split the fare, we can split the night
+Split the last of the gum and the morning light
+We don't have to fix it, we don't have to care
+Just for twenty minutes, let's split the fare
+
+[Drop]
+
+[Verse 3: her]
+Don't say it like that, like we're friends who'll be okay
+You don't get to be sweet now, that was months ago, not today
+
+[Verse 4: him]
+Then I'll say nothing, I'll just hold the door at your gate
+I'll pay my half and walk the rest, I'm good at being late
+
+[Bridge: her]
+Is this the part where you ask to come up?
+
+[Bridge: him]
+No, this is the part where I learn to shut up
+
+[Drop]
+
+[Final Chorus: both]
+So we split the fare, and we split the past
+Half for the first time, half for the last
+Keep the plant alive, keep the jacket, I don't care
+Goodnight, you, at least we split the fare
+
+[Outro: her, spoken]
+Text me when you're home. Just that.
+"""
+
+[[songs]]
+id = "you-should-see-them"
+title = "You Should See Them"
+form = "letter"
+groups = ["hardtech"]
+voice = "tender male falsetto that rises into a full-chest soulful tenor, a little gravel on the long notes"
+about = "a letter from backstage to his late grandmother, who dragged every shy uncle onto the dance floor at family weddings"
+lyrics = """
+[Intro: spoken softly]
+Nani, it's me. They gave me the big stage.
+
+[Verse 1]
+You used to drag the uncles up at every wedding in the lane
+Dupatta round your neck, your bangles keeping time like rain
+You'd say the ones who sit and stare are the ones who need it most
+Then you'd pull them by the wrist and spill your tea on the host
+
+[Pre-Chorus]
+I'm writing from backstage on a plastic chair
+Your photo's in my wallet, your laugh is in the air
+
+[Chorus]
+You should see them, Nani, thirty thousand on their feet
+Every shy one, every stiff one, finding out they've got a beat
+I do what you did at weddings, only louder, only longer
+You should see them, Nani, I wish you could see them
+
+[Drop]
+
+[Verse 2]
+I wasn't there in March, I was stuck at an airport gate
+They held the phone up to your ear and I sang, but it was late
+Mum says you smiled at the second line, I'll never know
+So I'm singing it again tonight to everyone below
+
+[Bridge]
+If there's a wedding up there, save me a place
+Pull me by the wrist, spill the tea on my face
+
+[Drop: crowd chants]
+You should see them
+
+[Final Chorus]
+You should see them, Nani, there's an old man near the front
+Dancing with his eyes shut, wrist up, like he's never done it once
+I do what you did at weddings, and tonight I didn't miss
+You should see them, Nani, I think you see them
+
+[Outro: spoken]
+Bangles on. The tea's on me.
+"""
+
+[[songs]]
+id = "loser-buys-chai"
+title = "Loser Buys Chai"
+form = "story"
+groups = ["hardtech"]
+voice = "bright, cocky male tenor with a rough street edge, half-shouted verses, a grin you can hear"
+about = "two childhood rivals have raced bikes up the same hill for twenty years, and run one last race before one of them emigrates"
+lyrics = """
+[Intro: shouted]
+Three, two... you cheat, Arjun!
+
+[Verse 1]
+Nine years old, two bikes, one hill, a bet we couldn't pay
+First one up to Pappu's stall at six, the loser buys the chai
+I had a Hero with no brakes, you had a racer with a bell
+You won the first two hundred times, and my knees remember well
+
+[Pre-Chorus]
+Exams, first jobs, first girls, the hill was always there
+Every Sunday, six a.m., same road, same dare
+
+[Chorus]
+Loser buys chai, pedal till your lungs burn
+Loser buys chai, and tomorrow's your turn
+Twenty years of mornings and I'm still behind your wheel
+Loser buys chai, and the loser pays for real
+
+[Drop]
+
+[Verse 2]
+Now you've got a visa, Toronto, Thursday night
+Your bags are by the door, your dad's not taking it right
+Last race, Sunday, both of us are thirty-one and slow
+Halfway up you brake and wave me past, and I say no
+
+[Bridge]
+So we walk the last bit, pushing, wheel to wheel
+Pappu pours two cups and says, "so who's paying for this deal?"
+
+[Drop: crowd chants]
+Loser buys chai
+
+[Final Chorus]
+Loser buys chai, I'll keep your cup warm
+I'll race your empty shadow up the hill in every storm
+Twenty years of mornings and I never once came first
+Loser buys chai, come home, and I'll pay the first
+
+[Outro: spoken]
+Six a.m. Sunday. Video call. Bring your own cup.
+"""
+
+[[songs]]
+id = "same-corner-ten-years"
+title = "Same Corner, Ten Years"
+form = "celebration"
+groups = ["hardtech"]
+voice = "sunny female soprano, quick and playful, half-laughing in the verses, big bright belts in the chorus"
+about = "school friends reunite at the corner shop where they bunked tuition, ten years on, and leave a drink for the one who's gone"
+lyrics = """
+[Intro: spoken, laughing]
+Who's that? No way. No way!
+
+[Verse 1]
+Same corner where we bunked tuition every Thursday at four
+Same bench with our initials scratched in, same shop, same door
+Kavya flew in from Dubai, Rohan drove six hours with his son
+Tanu's still loud, Ishaan's still late, and nobody's changed, not one
+
+[Chorus]
+Same corner, ten years, same cheap orange fizz
+Same jokes, same fights about whose fault it is
+We went off and got lives, we got rent, we got tired
+Same corner, ten years, and we're seventeen on fire
+
+[Drop]
+
+[Verse 2]
+Someone finds the old phone with the song we used to play
+The speaker's cracked, the battery's dying, we sing it anyway
+The shop uncle swears he never told on us, we know he lied
+He laughs until he's crying, so we let it slide
+
+[Bridge]
+Sameer's not here, he's been gone two years this June
+We leave a fizz on the bench for him and we hum his tune
+
+[Drop: crowd chants]
+Same corner
+
+[Final Chorus]
+Same corner, ten years, one fizz left on the seat
+Same jokes, same songs, same chalk dust on our feet
+We went off and got lives, but we came back here to say
+Same corner, ten years, same time next year, okay?
+
+[Outro]
+Thursday at four. Bring Sameer's song.
+"""
+
+[[songs]]
+id = "sober-at-the-barrier"
+title = "Sober At The Barrier"
+form = "confession"
+groups = ["hardtech"]
+voice = "weathered raspy female alto, intimate and low in the verses, her voice cracking wide open in the chorus"
+about = "eight months sober, a woman goes to her first festival without a drink and stands at the front for the whole set"
+lyrics = """
+[Intro: whispered]
+Eight months. Two hundred and forty-one days.
+
+[Verse 1]
+I used to need three drinks before I'd even find the gate
+I'd lose my phone, my friends, my shoes, and tell myself it's great
+Wake up on a stranger's floor with glitter in a cut
+Tell my sister I was fine and keep the curtains shut
+
+[Pre-Chorus]
+Tonight my hands are shaking and there's nothing in my cup
+Just water and my sister's text that says "don't give it up"
+
+[Chorus]
+I'm sober at the barrier and I'm scared out of my skin
+Every kick is hitting harder, I can feel it coming in
+I never heard a drum like this, never stood this near
+Sober at the barrier, and I'm finally here
+
+[Drop]
+
+[Verse 2]
+The old crew finds me by the speakers, Jess holds out a pill
+Says "one, for old times", and the old me says I will
+But I shake my head, and she just tucks it in her coat
+And dances next to me all night and doesn't make a joke
+
+[Bridge: quiet, then building]
+I'm not proud yet, I'm just present, I'm just here
+I can taste the rain, I can name everyone near
+
+[Drop]
+
+[Final Chorus]
+I'm sober at the barrier and I'll remember this
+Every face, every flare, every stranger's raised fist
+I'll wake up in my own bed and I'll know what I did
+Sober at the barrier, still that wild kid
+
+[Outro: spoken]
+Two hundred and forty-two. Text my sister.
+"""

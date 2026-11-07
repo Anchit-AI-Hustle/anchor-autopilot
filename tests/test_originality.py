@@ -127,7 +127,7 @@ def test_hard_tech_psy_rap_and_hip_hop_all_get_airtime():
     assert 15 <= rap_days <= 45, rap_days
 
 
-def test_rap_lanes_rap_and_never_ban_rap():
+def test_rap_lanes_rap_and_never_ban_rap(no_songbook):
     p = load_profile()
     for lane in p.active_lanes:
         if lane.voice != "rap":
@@ -150,3 +150,10 @@ def test_rap_lanes_rap_and_never_ban_rap():
         lines = [w for v in verses for w in v.split("\n")[1:] if w != b["title"]]
         assert len(lines) == len(set(lines)) or len(verses) > 3, "no bar repeats inside a song"
         assert f"{b['title'].upper()}! {b['title'].upper()}!" in b["lyrics"], "the title is still the hook"
+
+
+@pytest.fixture
+def no_songbook(monkeypatch):
+    """The line-pool sheet (anchor.brief.vocal_sheet) is now the fallback for an empty songbook."""
+    from anchor import songbook
+    monkeypatch.setattr(songbook, "load", lambda *a, **k: ())

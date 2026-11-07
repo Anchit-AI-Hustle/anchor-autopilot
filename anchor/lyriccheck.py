@@ -83,6 +83,8 @@ def lyric_bank() -> list[str]:
         return []
     from . import themes
     theme_lines = [line for t in themes.load() for line in (*t.whispers, *t.chants, *t.rap)]
+    from . import songbook
+    theme_lines += [line for s in songbook.load() for line in s.sung_lines()]
     styles = load_profile().music.get("lyric_styles") or {}
     style_lines = [line for st in styles.values() for key in ("mantras", "bars", "shouts") for line in st.get(key, [])]
     return [*voice.get("whispers", []), *voice.get("shouts", []), *voice.get("rap", []), *theme_lines, *style_lines]
