@@ -8,6 +8,7 @@ from __future__ import annotations
 from datetime import date as Date, datetime, timezone
 
 from . import originality, themes
+from . import songbook
 from .config import Lane, Profile
 from .music import SHAPES, arc, arrangement, section_names, structure
 from .titles import make_title
@@ -86,31 +87,47 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     lo, hi = profile.music.get("duration_range_s") or (profile.music["duration_s"], profile.music["duration_s"])
     duration_s = r.randint(int(lo), int(hi))
     shape = r.choice(list(SHAPES))
-    # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
-    theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,
-                        used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
-                        avoid_titles=tuple(avoid_titles))
+    # the song itself: a whole song from the songbook, written by a songwriter and used once
+    # (Anchit, 2026-11-07: "proper theme selection and lyrics ... written as humans ... choose
+    # the song name based on theme and lyrics"); the line-pool themes only when the book is dry
+    check, title_report = originality.checker(), {}
+    song = songbook.pick(songbook.load(), lane.group or "any", rng("anchor-song", drop_id), history,
+                         used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
+                         avoid_titles=tuple(avoid_titles), taken=check, report=title_report)
+    theme = None
+    if song is None:
+        # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
+        theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,
+                            used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
+                            avoid_titles=tuple(avoid_titles))
     sound = pick_palette(profile, rng("anchor-sound", drop_id), past, group=lane.group or "")
-    style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape, story=theme.idea,
-                          sound=sound)
+    style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape,
+                          story=song.about if song else theme.idea, sound=sound,
+                          vocals=songbook.vocals_line(song) if song else None)
 
     used_titles = [d.get("title", "") for d in history] + list(profile.artist["existing_titles"])
     # a name the singer could not say clearly on an earlier take is not tried again for this song
     used_titles += list(avoid_titles)
     recent_titles = [d.get("title", "") for d in past[:10]] + list(profile.artist["existing_titles"])
     # never a title that is already a song anywhere (MusicBrainz, iTunes, Deezer), not just
-    # on this channel (Anchit, 2026-10-24)
-    check, title_report = originality.checker(), {}
-    # the name comes from the theme, sharing no word with any earlier ANCHOR title (Anchit,
-    # 2026-10-31); only when every title of the theme is taken does the old word list name it
-    title = themes.title(theme, rng("anchor-title", drop_id), used_titles, taken=check, report=title_report,
-                         recent_titles=[d.get("title", "") for d in past])
+    # on this channel (Anchit, 2026-10-24); a songbook song is named by its own hook
+    if song is not None:
+        title = song.title
+        title_report.update(source="songbook", song=song.id)
+    else:
+        # the name comes from the theme, sharing no word with any earlier ANCHOR title (Anchit,
+        # 2026-10-31); only when every title of the theme is taken does the old word list name it
+        title = themes.title(theme, rng("anchor-title", drop_id), used_titles, taken=check, report=title_report,
+                             recent_titles=[d.get("title", "") for d in past])
     if title is None:
         title = make_title(profile.titles, rng("anchor-title", drop_id), used_titles, recent_titles,
                            taken=check, report=title_report)
-    lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", drop_id),
-                         mode=lane.voice, theme=theme, group=lane.group or "",
-                         rotate=Date.fromisoformat(day).toordinal() * 3 + (slot - 1) * 7)
+    if song is not None:
+        lyrics = song.lyrics
+    else:
+        lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", drop_id),
+                             mode=lane.voice, theme=theme, group=lane.group or "",
+                             rotate=Date.fromisoformat(day).toordinal() * 3 + (slot - 1) * 7)
 
     brief = {
         "id": drop_id,
@@ -121,10 +138,11 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "title": title,
         "lane": lane.id,
         "lane_name": lane.name,
-        "theme": theme.id,
+        "theme": song.id if song else theme.id,
         "sound": sound,
-        "theme_name": theme.name,
-        "theme_idea": theme.idea,
+        "theme_name": song.title if song else theme.name,
+        "theme_idea": song.about if song else theme.idea,
+        "form": song.form if song else "chant",
         "genre_group": lane.group or "any",
         "bpm": bpm,
         "key": key,
@@ -132,7 +150,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "family_name": family.name,
         "caption": style["caption"],
         "lyrics": lyrics,
-        "vocal_style": "rap verses and a shouted title chant hook" if lane.voice == "rap" else "whispers and a shouted crowd chant",
+        "vocal_style": (song.voice if song else
+                        "rap verses and a shouted title chant hook" if lane.voice == "rap" else "whispers and a shouted crowd chant"),
         "textures": style["textures"],
         "mood": style["mood"],
         "special": style["special"],
@@ -297,7 +316,7 @@ def pick_palette(profile: Profile, r, history: list[dict], gap: int = PALETTE_GA
 
 
 def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int, shape: str = "classic",
-                  story: str = "", sound: dict | None = None) -> dict:
+                  story: str = "", sound: dict | None = None, vocals: str | None = None) -> dict:
     """The producer's brief, written the way a strong Suno/ACE-Step prompt is written.
 
     Nine layers, in this order, then compressed into prose: genre -> era/aesthetic -> mood
@@ -330,8 +349,8 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
          if sound else
          f"Instruments: punchy kick and bouncing bass carry it; {t0} sits under the intro, "
          f"{t1} arrives with the build, {t2} owns the breakdown"),      # 5 instruments + entry
-        (lane.vocals or ((music.get("lyric_styles") or {}).get(lane.group or "") or {}).get("vocals")
-         or music["vocals"]).format(singer=singer, rapper=rapper),     # 6 vocals: a person
+        vocals or (lane.vocals or ((music.get("lyric_styles") or {}).get(lane.group or "") or {}).get("vocals")
+                   or music["vocals"]).format(singer=singer, rapper=rapper),   # 6 vocals: a person
         f"Production: {lane.production}; {music['mastering']}",         # 7 production
         arc(duration_s, textures, shape),                               # 8 arrangement arc
         f"Special moment: {special}",                                   # 9 special moment

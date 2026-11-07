@@ -67,12 +67,13 @@ def test_style_prompt_carries_all_nine_layers():
     lane = p.lane(b["lane"])
     cap = b["caption"]
     for layer in (lane.caption, lane.era, "Mood: " + b["mood"], f"{b['bpm']} BPM", lane.groove,
-                  "Instruments:", (lane.vocals or (p.music["lyric_styles"].get(lane.group or "") or {}).get("vocals") or p.music["vocals"]).split("{")[0], "natural", "Production: " + lane.production,
+                  "Instruments:", "Vocals: " + b["vocal_style"], "natural", "Production: " + lane.production,
                   "Arrangement:", "Special moment: " + b["special"]):
         assert layer in cap, f"layer missing from style prompt: {layer[:40]}"
     for t in b["textures"]:
         assert t in cap and t not in b["lyrics"], "textures go to the arranger (caption), never into the sung sheet"
-    assert b["lyrics"].splitlines()[0] == "[Intro]", "the sheet carries bare tags: a direction in a tag gets sung"
+    first = b["lyrics"].splitlines()[0]
+    assert first.startswith("[") and ":" not in first, "the sheet carries bare tags: a direction in a tag gets sung"
     # 1500: the song's theme (artist/themes.toml, 2026-10-31) adds one short "about ..." clause
     assert len(cap) < 1560, "compressed prose, not the design headings"  # 2026-11-02: the voice is named
 
@@ -110,7 +111,9 @@ def test_songs_are_briefed_bouncy_and_fun():
     for i in range(30):
         b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
         assert f"Feel: {feel}" in b["caption"], b["date"]
-        said = b["caption"].replace(feel, "").lower() + b["lyrics"].lower()
+        # a songbook song's words are a person's and may be dark (a revolt, a confession, 2026-11-07);
+        # the sound the model is told to make never is
+        said = b["caption"].replace(feel, "").lower()
         assert not [w for w in DARK if w in said], b["date"]
         assert "bouncing" in b["caption"] and " bass" in b["caption"]
 
@@ -176,7 +179,7 @@ def test_every_song_is_hard_acid_or_psychedelic_at_160_to_200_bpm():
     assert seen == {l.id for l in p.active_lanes}
 
 
-def test_songs_whisper_in_the_quiet_parts_and_chant_the_title_in_the_drops():
+def test_songs_whisper_in_the_quiet_parts_and_chant_the_title_in_the_drops(no_songbook):
     """Anchit, 2026-10-04: whispers or lyrics as chants."""
     from anchor.music import AceStepCpp
     p = load_profile()
@@ -233,3 +236,10 @@ def test_engine_has_room_for_a_three_minute_render():
     from anchor import music
     src = (Path(__file__).resolve().parents[1] / "anchor" / "music.py").read_text()
     assert 'ANCHOR_ENGINE_TIMEOUT", "10000"' in src and "timeout_s: int = 10000" in src
+
+
+@pytest.fixture
+def no_songbook(monkeypatch):
+    """The line-pool sheet (anchor.brief.vocal_sheet) is now the fallback for an empty songbook."""
+    from anchor import songbook
+    monkeypatch.setattr(songbook, "load", lambda *a, **k: ())

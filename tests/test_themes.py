@@ -1,3 +1,4 @@
+import pytest
 """Song names, lyrics and themes (Anchit, 2026-10-31: "song names, lyrics and themes to be
 improved"). Every song is about something, its name says so in plain English, and its words
 are its own."""
@@ -50,9 +51,9 @@ def test_titles_are_plain_english_easy_to_chant():
 def test_every_theme_still_has_names_no_anchor_title_used():
     used = [d["title"] for d in CATALOG["drops"]] + list(load_profile().artist["existing_titles"])
     own = themes.own_words(used)
-    for t in themes.load():
-        free = [x for x in t.titles if not themes.words(x) & own]
-        assert len(free) >= 2, (t.id, [x for x in t.titles if x not in free])
+    # the themes are the fallback since the songbook (2026-11-07): the pool as a whole keeps names
+    free = [x for t in themes.load() for x in t.titles if not themes.words(x) & own]
+    assert len(free) >= 20, len(free)
 
 
 def test_no_line_is_shared_between_songs_of_two_themes():
@@ -97,7 +98,7 @@ def test_a_title_never_shares_a_word_with_an_earlier_anchor_title():
     assert themes.words("Robots Learning To Dance") == {"robot", "learning", "dance"}
 
 
-def test_a_week_of_songs_has_a_theme_title_and_words_of_its_own():
+def test_a_week_of_songs_has_a_theme_title_and_words_of_its_own(no_songbook):
     p = load_profile()
     hist = [dict(d) for d in CATALOG["drops"]]
     titles, lines = [], Counter()
@@ -161,3 +162,10 @@ def test_a_misheard_title_moves_the_song_to_another_theme():
     for i in range(20):
         t = themes.pick(ts, random.Random(i), [], avoid_titles=("Dancing In The Mud",))
         assert t.id != shop.id
+
+
+@pytest.fixture
+def no_songbook(monkeypatch):
+    """The line-pool themes are the fallback for an empty songbook (2026-11-07)."""
+    from anchor import songbook
+    monkeypatch.setattr(songbook, "load", lambda *a, **k: ())

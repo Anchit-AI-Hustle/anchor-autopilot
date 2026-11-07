@@ -435,6 +435,11 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
         t = next((t for t in themes.load() if t.id == queued["theme"]), None)
         if t:
             brief.update(theme=t.id, theme_name=t.name, theme_idea=t.idea)
+        from . import songbook
+        song = songbook.find(queued["theme"])
+        if song is not None:
+            brief.update(theme=song.id, theme_name=song.title, theme_idea=song.about, form=song.form,
+                         vocal_style=song.voice)
     if queued.get("lyrics"):
         brief["lyrics"] = queued["lyrics"]
     if queued.get("caption"):
