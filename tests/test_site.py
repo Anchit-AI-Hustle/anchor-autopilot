@@ -100,3 +100,28 @@ def test_site_data_files_valid():
     for rel in ("favicon.svg", "og.jpg", "assets/hero-default.jpg", "assets/fonts/anton-400.woff2",
                 "assets/fonts/jbmono-400.woff2", "assets/fonts/jbmono-700.woff2", "robots.txt", "sitemap.xml"):
         assert (SITE / rel).exists(), rel
+
+
+def test_the_cloudflare_twin_serves_the_same_site_and_functions():
+    """Anchit, 2026-11-09: deploy on Vercel and Cloudflare too; each must serve alone."""
+    import re
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1]
+    cfg = (root / "wrangler.jsonc").read_text()
+    assert '"directory": "./site"' in cfg and '"run_worker_first": true' in cfg
+    worker = (root / "cloudflare" / "worker.js").read_text()
+    assert 'from "../site/api/media.js"' in worker and 'from "../site/api/suno.js"' in worker
+    assert "/^\\/media\\/" in worker                                     # the /media rewrite Vercel does
+    assert set((root / "site" / ".assetsignore").read_text().split()) == {"api", "vercel.json"}
+    tag = re.search(r"const TAG = /(.+?)/;", (root / "site" / "api" / "media.js").read_text()).group(1)
+    assert re.match(tag.replace("\\d", r"\d"), "drop-2026-11-08-4") and re.match(tag.replace("\\d", r"\d"), "drop-2026-11-08")
+
+
+def test_the_sync_with_suno_page_is_linked_from_the_homepage():
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[1] / "site"
+    home = (root / "index.html").read_text()
+    assert 'href="/suno/"' in home and "Sync with Suno" in home
+    page = (root / "suno" / "index.html").read_text()
+    for need in ("/assets/suno.js", "Lyrical + motion + 3D", "Lyrical + cinematic", "f-yt", "f-desc", "f-tags", "sy-audio", "sy-video"):
+        assert need in page, need

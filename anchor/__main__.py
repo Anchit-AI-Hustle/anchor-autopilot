@@ -58,6 +58,9 @@ def main(argv: list[str] | None = None) -> int:
     qa.add_argument("--song", required=True, help="Suno song id, song URL, or text containing one")
     qa.add_argument("--handle", default=None)
     qa.add_argument("--force", action="store_true", help="release it even if it is another take of a song already out (the audio gate still runs)")
+    qf = sub.add_parser("queue-form", help="queue the songs ticked on the Sync with Suno page (an issue body)")
+    qf.add_argument("--body-file", required=True)
+    qf.add_argument("--handle", default=None)
     qp = sub.add_parser("queue-plan", help="every public Suno song: released, queued, eligible or held, and why")
     qp.add_argument("--handle", default=None)
     qp.add_argument("--offline", action="store_true", help="use the synced catalogue instead of reading Suno")
@@ -169,11 +172,23 @@ def main(argv: list[str] | None = None) -> int:
         # what the robot will do with each song, written where the site can show it
         from . import autoqueue
         plan = {r["id"]: {"verdict": r["verdict"], "reason": r["reason"]} for r in autoqueue.plan(profile, cat["catalogue"]["songs"])}
+        from . import sunopost
         for song in cat["catalogue"]["songs"]:
             song["decision"] = plan.get(song["id"])
+            song["post"] = sunopost.defaults(profile, song)      # what the Sync with Suno page prefills
+        cat["catalogue"]["lanes"] = [{"id": l.id, "name": l.name} for l in profile.active_lanes]
         catalog.save(cat, CATALOG_PATH)
         c = cat["catalogue"]
         print(json.dumps({"total": c["total"], "postable": c["postable"], "checked_at": c["checked_at"]}))
+    elif args.cmd == "queue-form":
+        from . import sunopost
+        picks = sunopost.parse_form(Path(args.body_file).read_text())
+        if not picks:
+            raise SystemExit("queue-form: no Sync with Suno selection in that text")
+        handle = args.handle or profile.artist.get("suno_handle", "anchor_at")
+        done = sunopost.queue_selection(profile, handle, picks, queue.QUEUE)
+        print(json.dumps({"queued": [d for d in done if d.get("queued")], "skipped": [d for d in done if d.get("skipped")],
+                          "waiting": len(queue.pending()) + len(queue.reserved())}, ensure_ascii=False))
     elif args.cmd == "queue-add":
         from . import suno
         handle = args.handle or profile.artist.get("suno_handle", "anchor_at")

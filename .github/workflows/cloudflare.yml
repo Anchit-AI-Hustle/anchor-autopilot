@@ -1,0 +1,39 @@
+name: Cloudflare deploy (standalone twin of the Vercel site)
+
+# Anchit, 2026-11-09: "push and deploy on github and vercel and cloudflare too". The same site/
+# and the same two functions (cloudflare/worker.js imports site/api/*.js) as a Cloudflare Worker,
+# able to serve on its own if Vercel is down. Needs CLOUDFLARE_API_TOKEN (Workers edit) and
+# CLOUDFLARE_ACCOUNT_ID as repo secrets; without them it says so and skips.
+on:
+  push:
+    branches: [main]
+    paths: ["site/**", "cloudflare/**", "wrangler.jsonc", ".github/workflows/cloudflare.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudflare-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Deploy the Worker
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            npx -y wrangler@4.158.0 deploy --dry-run --outdir /tmp/cf
+            echo "::warning::CLOUDFLARE_API_TOKEN is not set: built and checked the Worker, did not deploy"
+            exit 0
+          fi
+          npx -y wrangler@4.158.0 deploy

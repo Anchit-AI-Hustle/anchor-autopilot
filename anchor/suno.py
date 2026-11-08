@@ -70,13 +70,79 @@ def _payload(html: str) -> list[dict]:
     return songs
 
 
-def fetch(handle: str, timeout: int = 40) -> list[dict]:
-    req = urllib.request.Request(PROFILE_URL.format(handle=handle), headers={"User-Agent": UA})
+API = "https://studio-api.prod.suno.com/api"
+UUID = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+
+
+def _get_json(url: str, timeout: int = 40) -> dict:
+    req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "application/json"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
-        html = r.read().decode("utf-8", "replace")
-    songs = _payload(html)
+        return json.loads(r.read().decode("utf-8", "replace"))
+
+
+def _clip(obj: dict) -> dict | None:
+    """One song from Suno's public clip JSON (the same object the profile page renders)."""
+    sid = obj.get("id")
+    if not sid or obj.get("status") != "complete":
+        return None
+    meta = obj.get("metadata") or {}
+    media = obj.get("media_urls") or []
+    # the API's own audio_url is ".../api/forbidden" without a login; the m4a in media_urls plays
+    audio = next((u["url"] for u in media if u.get("url", "").endswith(".m4a")), None)
+    if not audio and "forbidden" not in (obj.get("audio_url") or "forbidden"):
+        audio = obj["audio_url"]
+    return {
+        "id": sid,
+        "title": _plain(obj.get("title")) or "Untitled",
+        "duration_s": round(float(meta.get("duration") or obj.get("duration") or 0), 1),
+        "tags": _plain(meta.get("tags")),
+        "lyrics": (meta.get("prompt") or "").replace("\r\n", "\n").strip(),
+        "model": obj.get("major_model_version") or obj.get("model_name") or "",
+        "plays": int(obj.get("play_count") or 0),
+        "upvotes": int(obj.get("upvote_count") or 0),
+        "created_at": obj.get("created_at") or "",
+        "image": obj.get("image_large_url") or obj.get("image_url") or "",
+        "audio_url": audio,
+        "video_url": obj.get("video_url") or "",
+        "url": f"https://suno.com/song/{sid}",
+    }
+
+
+def fetch(handle: str, timeout: int = 40, max_pages: int = 40) -> list[dict]:
+    """Every public song on the profile, with its lyrics, from Suno's public profile API (the one
+    suno.com/@handle itself reads; no login). The rendered page now carries only the newest song,
+    which is why the catalogue had shrunk to two (2026-11-09); the page is the fallback."""
+    songs, seen = [], set()
+    try:
+        for page in range(1, max_pages + 1):
+            data = _get_json(f"{API}/profiles/{handle}?page={page}&clips_sort_by=created_at"
+                             f"&playlists_sort_by=created_at", timeout)
+            clips = data.get("clips") or []
+            for obj in clips:
+                c = _clip(obj)
+                if c and c["id"] not in seen:
+                    seen.add(c["id"])
+                    songs.append(c)
+            if not clips or len(seen) >= int(data.get("num_total_clips") or 0):
+                break
+    except Exception as exc:  # noqa: BLE001 - the page is the fallback
+        log(f"suno: profile API failed ({exc}); reading the page instead")
+        songs = []
+    if not songs:
+        req = urllib.request.Request(PROFILE_URL.format(handle=handle), headers={"User-Agent": UA})
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            songs = _payload(r.read().decode("utf-8", "replace"))
     log(f"suno: {len(songs)} public song(s) on @{handle}")
     return songs
+
+
+def fetch_clip(sid: str, timeout: int = 40) -> dict:
+    """One song by id, public or unlisted (anyone with the link can open it), from the public API."""
+    sid = song_id(sid)
+    c = _clip(_get_json(f"{API}/clip/{sid}", timeout))
+    if c is None:
+        raise LookupError(f"{sid} is not a finished song on Suno")
+    return c
 
 
 def _mmss(s: float) -> str:
@@ -326,12 +392,20 @@ def song_id(text: str) -> str:
 
 
 def find(handle: str, sid: str) -> dict:
+    """The song, rated: from the profile, or by its own link when it is unlisted (pasted on the
+    Sync with Suno page). A link to someone else's song is refused: only the channel's own songs."""
     sid = song_id(sid)
     cat = catalogue(handle)
     for s in cat["songs"]:
         if s["id"] == sid:
             return s
-    raise LookupError(f"{sid} is not a public song on @{handle}")
+    raw = _get_json(f"{API}/clip/{sid}")
+    if (raw.get("handle") or "").lower() != handle.lower():
+        raise LookupError(f"{sid} is not a song of @{handle}")
+    c = _clip(raw)
+    if c is None:
+        raise LookupError(f"{sid} is not a finished song on Suno")
+    return rate(c)
 
 
 def annotate_queue(songs: list[dict], queue_dir=None) -> dict | None:

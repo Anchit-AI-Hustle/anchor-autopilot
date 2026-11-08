@@ -375,11 +375,30 @@ def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
     """
     from .seo import description, tags, youtube_title
     lane = profile.lane(brief["lane"])
-    return {"youtube_title": youtube_title(brief["title"], lane, int(brief["bpm"]), profile.artist["name"]),
-            "tags": tags(profile, lane, int(brief["bpm"])),
-            "description": description(profile, brief, platform),
-            "description_short": description(profile, brief, "short"),
-            "caption_instagram": description(profile, brief, "instagram")}
+    out = {"youtube_title": youtube_title(brief["title"], lane, int(brief["bpm"]), profile.artist["name"]),
+           "tags": tags(profile, lane, int(brief["bpm"])),
+           "description": description(profile, brief, platform),
+           "description_short": description(profile, brief, "short"),
+           "caption_instagram": description(profile, brief, "instagram")}
+    return apply_overrides(out, brief.get("overrides") or {})
+
+
+def apply_overrides(out: dict, ov: dict) -> dict:
+    """What was typed on the Sync with Suno page wins: the YouTube title, the description (the
+    Short and the Reel keep their own pointer lines) and the hashtags (the last line of each)."""
+    if ov.get("youtube_title"):
+        out["youtube_title"] = ov["youtube_title"].strip()[:100]
+    if ov.get("description"):
+        out["description"] = ov["description"].strip()[:4900]
+    tags = " ".join(t if t.startswith("#") else f"#{t}" for t in str(ov.get("hashtags") or "").replace(",", " ").split())
+    if tags:
+        for k in ("description", "caption_instagram"):
+            body = out[k].rstrip().rsplit("\n", 1)
+            out[k] = (body[0] if body[-1].lstrip().startswith("#") else out[k].rstrip()) + "\n" + tags
+        short = out["description_short"].rstrip().rsplit("\n", 1)
+        short_tags = " ".join(dict.fromkeys([*tags.split()[:2], "#shorts"]))
+        out["description_short"] = (short[0] if short[-1].lstrip().startswith("#") else out["description_short"]) + "\n" + short_tags
+    return out
 
 
 def _cinematic_ready() -> set[str]:

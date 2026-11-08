@@ -13,7 +13,7 @@
 export const config = { runtime: "edge" };
 
 const REPO = "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download";
-const TAG = /^drop-\d{4}-\d{2}-\d{2}$/;
+const TAG = /^drop-\d{4}-\d{2}-\d{2}(-\d{1,2})?$/;   // drop-2026-11-08 or a numbered slot, drop-2026-11-08-4
 const FILE = /^[A-Za-z0-9][A-Za-z0-9._'-]*\.(mp3|mp4)$/;
 const TYPES = { mp3: "audio/mpeg", mp4: "video/mp4" };
 

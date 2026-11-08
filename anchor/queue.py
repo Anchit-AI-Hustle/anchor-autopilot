@@ -45,6 +45,26 @@ def _already_posted(name: str, title: str | None, queue_dir: Path) -> bool:
     return bool(key) and key in posted_ideas()
 
 
+HOLD_FOR_SHOTS_H = 36
+
+
+def waiting_for_shots(entry: dict) -> bool:
+    """A song queued with the cinematic look waits (up to HOLD_FOR_SHOTS_H hours) until the Mac has
+    made its shots; after that it goes out with the lyrical + motion + 3D video instead."""
+    if (entry or {}).get("style") != "cinematic" or not entry.get("suno_id"):
+        return False
+    from datetime import datetime, timezone
+
+    from .cinematic import shots_for
+    if shots_for(entry["suno_id"]):
+        return False
+    try:
+        at = datetime.fromisoformat(str(entry.get("queued_at", "")).replace("Z", "+00:00"))
+    except ValueError:
+        return False
+    return (datetime.now(timezone.utc) - at).total_seconds() < HOLD_FOR_SHOTS_H * 3600
+
+
 def pending(queue_dir: Path = QUEUE, skip_spent: bool = True) -> list[Path]:
     if not queue_dir.exists():
         return []
@@ -54,7 +74,8 @@ def pending(queue_dir: Path = QUEUE, skip_spent: bool = True) -> list[Path]:
         return files
     meta = read_json(queue_dir / "queue.json", {}) or {}
     return [p for p in files
-            if not _already_posted(p.name, (meta.get(p.name) or {}).get("title"), queue_dir)]
+            if not _already_posted(p.name, (meta.get(p.name) or {}).get("title"), queue_dir)
+            and not waiting_for_shots(meta.get(p.name) or {})]
 
 
 def reserved(queue_dir: Path = QUEUE) -> list[tuple[str, dict]]:
@@ -66,7 +87,7 @@ def reserved(queue_dir: Path = QUEUE) -> list[tuple[str, dict]]:
     meta = read_json(queue_dir / "queue.json", {}) or {}
     return sorted(((n, e) for n, e in meta.items()
                    if not e.get("released_at") and not (queue_dir / n).exists()
-                   and not _already_posted(n, e.get("title"), queue_dir)),
+                   and not _already_posted(n, e.get("title"), queue_dir) and not waiting_for_shots(e)),
                   key=lambda ne: ne[0])
 
 

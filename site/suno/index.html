@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sync with Suno - ANCHOR</title>
+  <meta name="description" content="Every ANCHOR song on Suno as a checklist: listen, check for duplicates, pick the video style, edit the post and send it to YouTube.">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="/assets/fonts/anton-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/jbmono-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/suno.css">
+  <script src="/assets/suno.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <a class="brand" href="/" aria-label="ANCHOR home">A N C H O R</a>
+    <nav aria-label="Primary">
+      <a href="/">Site</a>
+      <a href="/ops/">Ops</a>
+      <a href="https://suno.com/@anchor_at" rel="noopener" target="_blank">Suno<span aria-hidden="true"> ↗</span></a>
+      <a href="https://www.youtube.com/@AT_ANCHOR" rel="noopener" target="_blank">YouTube<span aria-hidden="true"> ↗</span></a>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="sy-head">
+      <p class="eyebrow">Sync with Suno</p>
+      <h1>Pick, preview, post</h1>
+      <p class="lede">Every song on <a href="https://suno.com/@anchor_at" rel="noopener" target="_blank">suno.com/@anchor_at</a>, live. Listen, watch, read the lyrics, see if it is already on YouTube, choose the video, edit the title, description and hashtags, then tick it and post. Fields start with exactly what the robot would post, so anything you leave alone stays as it is.</p>
+      <p id="sy-status" class="sy-status" aria-live="polite">Loading songs…</p>
+    </section>
+
+    <section class="sy-tools" aria-label="Filters and options">
+      <div class="sy-row">
+        <label class="sy-search"><span class="vh">Search songs</span>
+          <input id="sy-q" type="search" placeholder="Search title, style or lyrics" autocomplete="off">
+        </label>
+        <div class="sy-filters" role="group" aria-label="Show">
+          <button type="button" class="chip-btn on" data-f="all">All <b id="n-all">0</b></button>
+          <button type="button" class="chip-btn" data-f="new">Not on YouTube <b id="n-new">0</b></button>
+          <button type="button" class="chip-btn" data-f="dup">Duplicates <b id="n-dup">0</b></button>
+          <button type="button" class="chip-btn" data-f="out">On YouTube <b id="n-out">0</b></button>
+        </div>
+      </div>
+      <div class="sy-row">
+        <form id="sy-add" class="sy-add">
+          <label for="sy-link" class="vh">Add a song by its Suno link</label>
+          <input id="sy-link" type="url" inputmode="url" placeholder="Paste a private or unlisted song link: https://suno.com/song/…">
+          <button type="submit" class="btn">Add</button>
+        </form>
+        <div class="sy-bulk">
+          <button type="button" class="btn ghost" id="sy-pick-new">Tick every new song</button>
+          <button type="button" class="btn ghost" id="sy-clear">Clear ticks</button>
+          <button type="button" class="btn ghost" id="sy-refresh">Refresh from Suno</button>
+        </div>
+      </div>
+      <fieldset class="sy-all">
+        <legend>For every ticked song</legend>
+        <label><span>Video</span>
+          <select id="sy-style-all">
+            <option value="">Keep each song's choice</option>
+            <option value="motion">Lyrical + motion + 3D</option>
+            <option value="cinematic">Lyrical + cinematic</option>
+          </select>
+        </label>
+        <label><span>When</span>
+          <select id="sy-when">
+            <option value="now">Post now (starts a run straight away)</option>
+            <option value="next">Next daily slot</option>
+          </select>
+        </label>
+      </fieldset>
+    </section>
+
+    <ol id="sy-list" class="sy-list" aria-label="Suno songs"></ol>
+  </main>
+
+  <div class="sy-bar" id="sy-bar" role="region" aria-label="Post the ticked songs">
+    <p><b id="sy-count">0</b> ticked <span id="sy-warn" class="sy-warn"></span></p>
+    <div class="sy-bar-btns">
+      <button type="button" class="btn ghost" id="sy-copy" disabled>Copy request</button>
+      <button type="button" class="btn" id="sy-post" disabled>Post to YouTube</button>
+    </div>
+  </div>
+
+  <template id="sy-card">
+    <li class="sy-card">
+      <div class="sy-top">
+        <label class="sy-tick"><input type="checkbox" class="f-tick"><span class="vh">Tick to post</span></label>
+        <img class="sy-cover" alt="" width="120" height="120" loading="lazy" decoding="async">
+        <div class="sy-id">
+          <h3 class="sy-title"></h3>
+          <ul class="sy-meta"></ul>
+          <p class="sy-dup"></p>
+        </div>
+        <p class="sy-rating" title="Rating against the channel's format"></p>
+      </div>
+      <div class="sy-media">
+        <audio class="sy-audio" controls preload="none"></audio>
+        <button type="button" class="btn ghost f-video">Watch the Suno video</button>
+        <a class="sy-link" rel="noopener" target="_blank">Open on Suno ↗</a>
+      </div>
+      <video class="sy-video" controls playsinline preload="none" hidden></video>
+      <details class="sy-more"><summary>Lyrics</summary><pre class="sy-lyrics"></pre></details>
+      <details class="sy-more"><summary>Suno style prompt</summary><p class="sy-tags"></p></details>
+      <details class="sy-more sy-checks-wrap"><summary>Why this rating</summary><ul class="sy-checks"></ul></details>
+      <details class="sy-edit">
+        <summary>Edit the video and the post</summary>
+        <div class="sy-fields">
+          <fieldset class="sy-style">
+            <legend>Video</legend>
+            <label><input type="radio" value="motion" class="f-style"> <b>Lyrical + motion + 3D</b><small>Lyrics word by word over the cover in scene looks cut on the bar (3D corridor, mirror, glitch, spectrum). Posts on the next run.</small></label>
+            <label><input type="radio" value="cinematic" class="f-style"> <b>Lyrical + cinematic</b><small>Lyrics over filmed-looking shots made on your Mac while it is idle, full screen on every device. Posts once its shots are made (usually overnight, at most 36 h, then it uses motion + 3D).</small></label>
+          </fieldset>
+          <label><span>Song title</span><input type="text" class="f-title" maxlength="100"></label>
+          <label><span>YouTube title <i class="cnt f-yt-n"></i></span><input type="text" class="f-yt" maxlength="100"></label>
+          <label><span>Description <i class="cnt f-desc-n"></i></span><textarea class="f-desc" rows="9" maxlength="4900"></textarea></label>
+          <label><span>Hashtags</span><input type="text" class="f-tags" placeholder="#hardtechno #techno"></label>
+          <label><span>Genre lane</span><select class="f-lane"></select></label>
+          <label class="sy-force" hidden><input type="checkbox" class="f-force"> Post it even though it looks like a duplicate</label>
+          <button type="button" class="btn ghost f-reset">Reset to what the robot would post</button>
+        </div>
+      </details>
+    </li>
+  </template>
+
+  <noscript><p class="sy-status">This page needs JavaScript to read your Suno songs.</p></noscript>
+</body>
+</html>
