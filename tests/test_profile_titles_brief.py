@@ -67,7 +67,7 @@ def test_style_prompt_carries_all_nine_layers():
     lane = p.lane(b["lane"])
     cap = b["caption"]
     for layer in (lane.caption, lane.era, "Mood: " + b["mood"], f"{b['bpm']} BPM", lane.groove,
-                  "Instruments:", "Vocals: " + b["vocal_style"], "natural", "Production: " + lane.production,
+                  "Instruments:", "Vocals: " + __import__("anchor.songbook", fromlist=["short"]).short(b["vocal_style"], 110), "natural", "Production: " + lane.production,
                   "Arrangement:", "Special moment: " + b["special"]):
         assert layer in cap, f"layer missing from style prompt: {layer[:40]}"
     for t in b["textures"]:

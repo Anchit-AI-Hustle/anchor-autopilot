@@ -95,6 +95,9 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
                          used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
                          avoid_titles=tuple(avoid_titles), taken=check, report=title_report)
     theme = None
+    if song is not None:
+        # a long song (Model B, Kindness Needs Truth) gets the time to sing every word (2026-11-08)
+        duration_s = max(duration_s, songbook.length_s(song, int(lo), int(hi)))
     if song is None:
         # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
         theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,
@@ -102,7 +105,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
                             avoid_titles=tuple(avoid_titles))
     sound = pick_palette(profile, rng("anchor-sound", drop_id), past, group=lane.group or "")
     style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape,
-                          story=song.about if song else theme.idea, sound=sound,
+                          story=songbook.short(song.about, 100) if song else theme.idea, sound=sound,
                           vocals=songbook.vocals_line(song) if song else None)
 
     used_titles = [d.get("title", "") for d in history] + list(profile.artist["existing_titles"])
@@ -143,6 +146,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "theme_name": song.title if song else theme.name,
         "theme_idea": song.about if song else theme.idea,
         "form": song.form if song else "chant",
+        "model": song.model if song else "",
         "genre_group": lane.group or "any",
         "bpm": bpm,
         "key": key,

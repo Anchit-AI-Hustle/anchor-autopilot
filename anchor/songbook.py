@@ -23,7 +23,10 @@ from .util import log
 SONGBOOK_DIR = ROOT / "artist" / "songbook"
 FORMS = ("story", "revolt", "argument", "confession", "letter", "celebration", "vibe", "dialogue", "mantra")
 GROUPS = ("hardtech", "psy", "rap", "hiphop")
-MAX_LYRICS = 1900
+MAX_LYRICS = 3000          # a Model B song (Kindness Needs Truth) is long; the brief gives it the time
+MODELS = ("A", "B")
+# already sung and released before the two models were written down: kept as they went out
+RELEASED_BEFORE_MODELS = {"sunrise-at-the-fence"}        # A: Outrun Your Shadow (dense double-time verses), B: Kindness Needs Truth (argument)
 LOW_WATER = 15          # fewer unused songs than this and the run says so (a refill is due)
 # words a reader of the guide agreed never to write (artist/songbook/GUIDE.md, "Never")
 BANNED = re.compile(r"\b(robots?|machines?|systems?|circuits?|codes?|signals?|data|void|neon|cyber|digital|algorithms?)\b",
@@ -55,6 +58,7 @@ class Song:
     voice: str
     about: str
     lyrics: str
+    model: str = "A"
 
     def sung_lines(self) -> list[str]:
         return [ln.strip() for ln in self.lyrics.splitlines() if ln.strip() and not ln.strip().startswith("[")]
@@ -68,7 +72,8 @@ def load(directory: Path | str = SONGBOOK_DIR) -> tuple[Song, ...]:
             raw = tomllib.load(fh)
         for s in raw.get("songs", []):
             songs.append(Song(id=s["id"], title=s["title"], form=s["form"], groups=tuple(s["groups"]),
-                              voice=s["voice"], about=s["about"], lyrics=bare_tags(s["lyrics"])))
+                              voice=s["voice"], about=s["about"], lyrics=bare_tags(s["lyrics"]),
+                              model=str(s.get("model", "A")).upper()))
     return tuple(songs)
 
 
@@ -83,6 +88,9 @@ def problems(songs: tuple[Song, ...]) -> list[str]:
             out.append(f"{where}: title used twice")
         ids.add(s.id)
         titles.add(s.title.lower())
+        if s.model not in MODELS:
+            out.append(f"{where}: model must be A or B")
+        out += [f"{where}: {p}" for p in shape_problems(s)]
         if s.form not in FORMS:
             out.append(f"{where}: unknown form {s.form!r}")
         if not s.groups or any(g not in GROUPS for g in s.groups):
@@ -160,4 +168,79 @@ def find(song_id: str | None) -> Song | None:
 
 def vocals_line(song: Song) -> str:
     """The caption's vocal layer for this song: the one person who sings it."""
-    return f"Vocals: {song.voice}, natural English"
+    return f"Vocals: {short(song.voice, 110)}, natural English"
+
+
+def short(text: str, n: int) -> str:
+    """The caption's copy of a long line: whole clauses up to ``n`` characters (the prompt has a
+    budget; the full line stays in the book)."""
+    if len(text) <= n:
+        return text
+    cut = text[:n]
+    for sep in (", ", "; ", " "):
+        if sep in cut:
+            return cut[:cut.rindex(sep)].rstrip(",; ")
+    return cut
+
+
+def syllables(line: str) -> int:
+    """Vowel groups: close enough to sung syllables to measure a verse's density."""
+    n = 0
+    for w in re.findall(r"[a-z']+", line.lower()):
+        groups = re.findall(r"[aeiouy]+", w)
+        k = len(groups)
+        if w.endswith("e") and k > 1 and not w.endswith(("le", "ee")):
+            k -= 1
+        n += max(1, k)
+    return n
+
+
+def sections(lyrics: str) -> list[tuple[str, list[str]]]:
+    out, tag = [], ""
+    for ln in lyrics.splitlines():
+        ln = ln.strip()
+        if ln.startswith("["):
+            tag = ln.strip("[]").lower()
+            out.append((tag, []))
+        elif ln and out:
+            out[-1][1].append(ln)
+    return out
+
+
+def words(song: Song) -> int:
+    return sum(len(ln.split()) for ln in song.sung_lines())
+
+
+def shape_problems(s: Song) -> list[str]:
+    """The two models, measured (artist/songbook/GUIDE.md, 2026-11-08). A vibe song is exempt."""
+    if s.form == "vibe" or s.id in RELEASED_BEFORE_MODELS:
+        return []
+    secs = sections(s.lyrics)
+    verses = [lines for tag, lines in secs if tag.startswith("verse")]
+    hooks = [tag for tag, lines in secs if tag.startswith(("hook", "chorus", "final"))]
+    out = []
+    if len(verses) < 2:
+        out.append("needs at least two verses (the story must move)")
+    if not hooks:
+        out.append("needs a hook or chorus")
+    if not any(tag.startswith("outro") for tag, _ in secs):
+        out.append("needs an outro that closes the loop")
+    if sum(len(v) >= 8 for v in verses) < 2:
+        out.append("needs two full verses of 8 lines or more (a third may be shorter)")
+    dense = [syllables(ln) for v in verses for ln in v]
+    avg = sum(dense) / len(dense) if dense else 0
+    if s.model == "A" and avg < 15:
+        out.append(f"Model A verses average {avg:.1f} syllables a line (Outrun Your Shadow: 18 to 20)")
+    if s.model == "B":
+        if not 11 <= avg <= 18:
+            out.append(f"Model B verses average {avg:.1f} syllables a line (Kindness Needs Truth: 12 to 16)")
+        if not any(tag.startswith("bridge") for tag, _ in secs):
+            out.append("Model B needs a bridge (the turn)")
+    return out
+
+
+def length_s(song: Song, lo: int, hi: int, cap: int = 300) -> int:
+    """Enough time to sing every word at the model's pace, with the music around it: Outrun
+    Your Shadow sings 330 words in 4:36, Kindness Needs Truth about 600 in 4:10."""
+    need = int(75 + words(song) * (0.42 if song.model == "A" else 0.36))
+    return max(lo, min(cap, need))

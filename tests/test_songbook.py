@@ -68,7 +68,8 @@ def test_the_brief_sings_a_whole_songbook_song():
         song = songbook.find(b["theme"])
         assert song is not None, b["theme"]
         assert b["title"] == song.title and b["lyrics"] == song.lyrics
-        assert f"Vocals: {song.voice}" in b["caption"]
+        assert f"Vocals: {songbook.short(song.voice, 110)}" in b["caption"]
+        assert b["model"] == song.model and b["duration_s"] >= songbook.length_s(song, 185, 215)
         assert b["form"] == song.form and b["title"].lower() in b["lyrics"].lower()
         assert song.id not in seen
         seen.append(song.id)
@@ -81,3 +82,20 @@ def test_tags_are_bare_so_no_direction_gets_sung():
         for line in s.lyrics.splitlines():
             if line.startswith("["):
                 assert ":" not in line and "," not in line and len(line) < 16, (s.title, line)
+
+
+def test_every_song_follows_its_model():
+    """2026-11-08: built on Outrun Your Shadow (A) and Kindness Needs Truth (B), measured."""
+    songs = songbook.load()
+    assert {s.model for s in songs} == {"A", "B"}
+    for s in songs:
+        assert songbook.shape_problems(s) == [], s.title
+    a = [s for s in songs if s.model == "A" and s.form != "vibe"]
+    b = [s for s in songs if s.model == "B" and s.id not in songbook.RELEASED_BEFORE_MODELS]
+    assert all(songbook.words(s) >= 200 for s in a) and all(songbook.words(s) >= 350 for s in b)
+
+
+def test_a_long_song_gets_the_time_to_sing_it():
+    songs = songbook.load()
+    b = max(songs, key=songbook.words)
+    assert songbook.length_s(b, 185, 215) > 215 and songbook.length_s(b, 185, 215) <= 300
