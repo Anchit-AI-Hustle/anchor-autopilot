@@ -89,7 +89,7 @@ def main(argv: list[str] | None = None) -> int:
     vs.add_argument("--out", default="build/versions")
     vs.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
 
-    pls = sub.add_parser("playlists", help="every full video in the ANCHOR playlist; no song twice, none you left out (Data API)")
+    pls = sub.add_parser("playlists", help="every public video in the ANCHOR playlist; none twice, none you left out (Data API)")
     pls.add_argument("--dry-run", action="store_true")
     mo = sub.add_parser("motion", help="re-render a released song's full videos as motion graphics (beat punch-in, spectrum)")
     mo.add_argument("--list", action="store_true", help="print the ids of every song with a master on its release")
@@ -235,7 +235,16 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(out, indent=2, ensure_ascii=False))
     elif args.cmd == "playlists":
         from . import playlists
-        out = playlists.run(profile, dry_run=args.dry_run)
+        from .youtube import YouTubeError
+        try:
+            out = playlists.run(profile, dry_run=args.dry_run)
+        except YouTubeError as exc:
+            if "quotaExceeded" not in str(exc):
+                raise
+            # the day's quota is spent; the sync runs every few hours and catches up after the reset
+            print("::warning::YouTube quota spent for today; the playlist catches up on the next run")
+            print(json.dumps({"skipped": "quota"}))
+            return 0
         print(json.dumps(out, indent=2, ensure_ascii=False))
         return 1 if out["errors"] else 0
     elif args.cmd == "uploads":

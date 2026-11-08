@@ -1,4 +1,4 @@
-"""Playlists stay clean: every full video lands in ANCHOR, no song sits in a playlist twice,
+"""Playlists stay clean: every public video lands in ANCHOR, no video sits in a playlist twice,
 and nothing you left out stays in one. A fake YouTube; nothing touches the network."""
 import json
 from pathlib import Path
@@ -54,12 +54,36 @@ def lists():
             "PLrave": [{"item": "r1", "video": "A1"}, {"item": "r2", "video": "K1"}, {"item": "r3", "video": "gone"}]}
 
 
-def test_plan_adds_every_full_video_once_and_takes_out_twins_and_left_out_songs():
+def test_plan_adds_every_public_video_once_and_takes_out_twins_and_left_out_songs():
     p = playlists.plan(VIDEOS, lists(), MAIN, CHANNEL)
-    assert [(r["item"], r["why"]) for r in p["remove"]] == [("m2", "left out"), ("m3", "same song twice"),
+    assert [(r["item"], r["why"]) for r in p["remove"]] == [("m2", "left out"), ("m3", "same video twice"),
                                                               ("m5", "left out"), ("r1", "left out")]
-    # oldest first; the Short, the private video, the withdrawn and the sound-alikes never go in
+    # oldest first; both Kindness Needs Truth videos; the private video, the withdrawn and the
+    # sound-alikes never go in (the Short S1 is already there)
     assert [v["id"] for v in p["add"]] == ["K1", "K2", "F9"]
+
+
+def test_shorts_and_every_version_go_in_too():
+    """Anchit, 2026-11-09: "the anchor playlist must have all videos that are uploaded at all times"."""
+    videos = [vid("S2", "Outrun Your Shadow", 40), vid("O2", "Outrun Your Shadow | ANCHOR", 276),
+              vid("O1", "Outrun Your Shadow | ANCHOR", 276), vid("S1", "Cold Bunker", 45)]
+    p = playlists.plan(videos, {MAIN: []}, MAIN, {})
+    assert [v["id"] for v in p["add"]] == ["O1", "O2", "S1", "S2"]       # full videos first, then the Shorts
+    p = playlists.plan(videos, {MAIN: [{"item": "x", "video": "O1"}, {"item": "y", "video": "O2"}]}, MAIN, {})
+    assert p["remove"] == [] and [v["id"] for v in p["add"]] == ["S1", "S2"]
+
+
+def test_a_spent_quota_is_a_warning_and_the_next_run_catches_up(monkeypatch, capsys):
+    from anchor import __main__ as cli
+    from anchor.youtube import YouTubeError
+
+    def spent(*a, **k):
+        raise YouTubeError('HTTP 403 GET channels: {"reason": "quotaExceeded"}')
+
+    monkeypatch.setattr(playlists, "run", spent)
+    monkeypatch.setattr("sys.argv", ["anchor", "playlists"])
+    assert cli.main() == 0
+    assert "quota" in capsys.readouterr().out
 
 
 def test_run_applies_the_plan_and_never_deletes_a_video(tmp_path):

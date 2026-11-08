@@ -1,4 +1,4 @@
-name: Playlist sync (every full video in the ANCHOR playlist)
+name: Playlist sync (every public video in the ANCHOR playlist)
 
 # Anchit, 2026-11-08: "ensure all the videos are always added to the ANCHOR playlist". The sync
 # used to run only at the end of the Full videos workflow, which GitHub starts hours late, after
@@ -10,6 +10,9 @@ on:
   schedule:
     - cron: "9 8 * * *"     # 08:09 UTC: just after the quota reset, before the 08:37 drop
     - cron: "17 21 * * *"   # 21:17 UTC: catches the day's uploads
+    # Anchit, 2026-11-09: "all videos that are uploaded at all times": every 3 hours as well; a run
+    # with nothing to add only reads (about 20 of the 10,000 units)
+    - cron: "41 */3 * * *"
   workflow_dispatch:
     inputs:
       dry_run:
@@ -36,7 +39,7 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
 
-      - name: Every full video in ANCHOR, no song twice, none left out
+      - name: Every public video in ANCHOR, none twice, none left out
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
