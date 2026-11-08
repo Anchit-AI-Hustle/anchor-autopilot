@@ -2,23 +2,31 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-07",
-    "title": "Outrun Your Shadow",
-    "finished_at": "2026-11-08T15:26:25Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42491195968",
+    "drop_id": "2026-11-08-4",
+    "title": "Sunrise at the Fence",
+    "finished_at": "2026-11-08T19:20:11Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42492134901",
     "error": null
   },
-  "next_post_at": "2026-11-08T17:30:00Z",
-  "streak": 14,
+  "next_post_at": "2026-11-09T17:30:00Z",
+  "streak": 15,
   "totals": {
-    "drops": 79
+    "drops": 81
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-08T15:26:25Z",
+  "updated_at": "2026-11-08T19:20:11Z",
   "engine": {
-    "engine": "queue",
-    "source_file": "30-outrun-your-shadow.mp3"
+    "engine": "acestep_cpp",
+    "threads": 10,
+    "steps": 8,
+    "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+    "guidance": 1.0,
+    "lm_ms": 122688,
+    "ref_audio": "ANCHOR-2026-09-10-signal-detected.mp3",
+    "dit_ms": 126484,
+    "vae_ms": 107600,
+    "total_s": 473.0
   }
 }
