@@ -1,29 +1,24 @@
 {
   "last_run": {
-    "result": "failed",
-    "stage": "make",
-    "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-07T15:21:48Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42384500055"
+    "result": "ok",
+    "stage": "done",
+    "drop_id": "2026-11-07",
+    "title": "Outrun Your Shadow",
+    "finished_at": "2026-11-08T15:26:25Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42491195968",
+    "error": null
   },
-  "next_post_at": "2026-11-07T17:30:00Z",
-  "streak": 13,
+  "next_post_at": "2026-11-08T17:30:00Z",
+  "streak": 14,
   "totals": {
-    "drops": 78
+    "drops": 79
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-07T15:21:48Z",
+  "updated_at": "2026-11-08T15:26:25Z",
   "engine": {
-    "engine": "acestep_cpp",
-    "threads": 4,
-    "steps": 32,
-    "model": "acestep-v15-sft-Q8_0.gguf",
-    "guidance": 5.0,
-    "lm_ms": 229672,
-    "dit_ms": 7264568,
-    "vae_ms": 631714,
-    "total_s": 8152.5
+    "engine": "queue",
+    "source_file": "30-outrun-your-shadow.mp3"
   }
 }
