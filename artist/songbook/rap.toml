@@ -3,56 +3,51 @@ id = "landlord-knocks-twice"
 title = "Landlord Knocks Twice"
 form = "revolt"
 groups = ["rap"]
-voice = "gravelly male baritone, barked choppy staccato, double-time in the verses, breath audible between bars"
-about = "a building of tenants refusing a rent hike from a landlord who never fixed the leaking roof"
+model = "A"
+voice = "gravelly male baritone rapper, barked double-time flow locked to the kick, breath audible between bars"
+about = "twelve tenants in a leaking building take their landlord to the rent board instead of paying his hike"
 lyrics = """
-[Intro: spoken]
-Mr. Kohli, it's the first of the month again
+[Intro]
+First of the month, he's on the stairs, so who opens up when the landlord knocks twice?
 
-[Verse 1: choppy, double-time]
-Bucket in the kitchen catching what the ceiling cried
-Paint peeling like a sunburn on the bedroom side
-Fan wobbling like a drunk uncle at a wedding dance
-You fixed nothing, then you raised it, never gave a chance
-Deposit like a hostage that you're keeping on principle
-Mould on my wall got a lease more official than my rental
-I pay on the first and you still come collecting
-Counting shoes in my hallway like my guests need inspecting
+[Verse 1]
+Bucket in the kitchen catching every drop the ceiling cried all night
+Paint peeling off like a sunburn, the fan on the ceiling is wobbling left and right
+Wires from the switchboard like a nest a crow designed, and you never climbed the flight
+Now a paper under every door, ten percent, and you even typed it polite
+Auntie Joseph, ground floor, forty-two years, and she never once missed on the rent
+Every rupee of her pension on time, now her back is a question mark, bent
+You patched a crack with a calendar, stuck it with spit, and you told her it's fresh cement
+Counting the shoes in my hallway like every guest owes you a percent
+So we met on the roof by the tank that's been leaking since ninety-eight, one complaint
+Wrote it in red on my mother's old bedsheet, Fix The Roof First, hung it over the gate
 
-[Hook: chanted]
-Landlord knocks twice, I don't answer the door
-Fix the roof first, then we talk about more
-Landlord knocks twice, hear the whole block roar
-We ain't paying for the rain on the floor
+[Hook]
+Landlord knocks twice, who's gonna open the door?
 
 [Drop]
+Twelve doors, shut tight
 
-[Verse 2: heavier]
-Third floor, fourth floor, every door got the same letter
-Ten percent up, says the market's getting better
-Better for who? Auntie Joseph on the ground floor
-Forty years of rent paid, she can't climb the stairs no more
-So we met on the roof where your water tank leaks
-Twelve flats, one voice, first time in weeks
-Wrote it on a bedsheet, hung it off the railing
-"Fix it or forget it", watch your Sunday start failing
+[Verse 2]
+Monday he cut off the water, the whole block queueing at the public tap
+Tuesday he sent us a lawyer in loafers who slipped in the puddle and fell on his back
+Wednesday we answered with photos, the mould and the rust and every crack
+Heart at one-seventy, standing in court, fists in my pockets, keeping it clean
+Auntie Joseph stood up with her stick, the smallest lady that courtroom had seen
+She said, "I paid you through floods and a funeral, son, now fix it, you know what I mean"
+Judge read the file, looked at the landlord, said, "Fix it in thirty days, or the hike goes"
+Kohli went quiet, the colour went out of him, lawyer dripping from collar to toes
+Now a man's on my roof with tar, and Auntie's got chai, telling him where it goes
 
-[Bridge: spoken, low]
-Knock once, that's a neighbour
-Knock twice, that's a bill
-Twelve doors stayed shut and the hallway went still
+[Hook]
+Landlord knocks twice, now we open the door
 
-[Drop: crowd shouts]
-Twice!
-
-[Final Hook]
-Landlord knocks twice, twelve doors stay closed
-Fix the roof first, that's how this one goes
-Landlord knocks twice and the whole block knows
-We ain't paying for the rain on our clothes
-
-[Outro: spoken]
-Bucket's still full, Mr. Kohli. Come and see.
+[Outro]
+Knock knock
+Twelve doors open
+Floor is dry
+Rent stays the same
+Come in, Mr Kohli
 """
 
 [[songs]]
@@ -60,484 +55,406 @@ id = "dented-hatchback"
 title = "Dented Hatchback"
 form = "celebration"
 groups = ["rap"]
-voice = "nasal playful male tenor, laid-back bouncy flow, grins through every bar, little laughs between lines"
-about = "showing off a fifteen-year-old secondhand first car like it's a supercar, because he paid for it himself"
+model = "A"
+voice = "nasal playful male tenor rapper, bouncy double-time flow with little laughs between the bars"
+about = "a guy brags about the fifteen-year-old car he paid for himself, then tows his rich classmate's SUV down a ghat"
 lyrics = """
-[Intro: spoken, laughing]
-Bought it off a dentist. Yeah. It's got character.
+[Intro]
+Three owners, one dent, so tell me, what's a dented hatchback worth?
 
-[Verse 1: laid back, bouncy]
-Bought it from a dentist and it still had a cavity
-Park it on a hill and I'm in talks with gravity
-AC is the window and a little bit of praying
-Radio stuck on cricket, same old match still playing
-Passenger door only opens from inside
-So my date climbs over, that's the VIP ride
-Speedometer lying like a cousin at a wedding
-Says I'm doing ninety, rickshaws wave while I'm sweating
-Rearview mirror taped up, I can see the haters fine
-They're all behind me, that's the point, they're stuck in line
+[Verse 1]
+Bought it from a dentist and the engine came with a cavity, no lie
+Park it on a slope and now I'm negotiating with gravity every night
+Three previous owners, I call it a pedigree, you call it a tragedy, fine
+Paid for it in cash with eight months of my salary, no bank in my life
+AC is the window, the rest is a little bit of praying and a lot of sweating
+Radio stuck on a cricket match from ninety-nine, and Sachin is still batting
+Speedometer lies like a cousin at a wedding, autos overtaking
+Passenger door only opens from inside, my date climbs over, VIP seating
+Rearview mirror taped up, but I can see the haters fine, they're all behind me in a line
+Horn sounds like a goat with a sore throat, but the whole colony moves when it whines
+Uncle at the red light asks the mileage, I tell him, "Depends how hard you push it, bye"
 
-[Hook: sung, bouncy]
-Dented hatchback, but it's mine, all mine
-Every bump in the road, I just wave it bye
-Dented hatchback, rolling slow like a king
-Paid in full, baby, I don't owe a thing
+[Hook]
+Dented hatchback, paid in full, no EMI
 
 [Drop]
+Push start, beep beep
 
-[Verse 2: faster, cheeky]
-Petrol light's been glowing since the end of last March
-Car runs on confidence and a little bit of heart
-Uncle at the red light asks me "what's the mileage, beta?"
-Told him "depends how hard you push it, see you later"
-Bumper on with zip ties, I just call it custom tuning
-Mechanic sees me coming and he starts his chai brewing
-Parked beneath a neem tree, crows paying me no rent
-Every morning on the windshield they leave me their comments
-It ain't a Lambo, man, it's a lamb, it's a goat
-But I paid it off myself, every rupee, every note
+[Verse 2]
+Reunion in Lonavala, Rohan rolls in with an SUV the size of my flat
+Leather and lights and a screen in the headrest, laughs at my ride, says, "Bro, what's that?"
+Zip-tied bumper, I call it custom tuning, Shaktiman sticker keeping it intact
+Petrol light been glowing since March, runs on confidence, bro, and that is a fact
+Then the rain hits the ghat and his SUV panics, a hundred alerts on the screen
+Sensor says tyre, sensor says engine, then sensor says sorry, the saddest I've seen
+Forty-three lakh on the shoulder, no network, and Rohan is slowly turning green
+I pull up in first gear, rope from the dickey, I tell him, "Get in, we're towing you down"
+Dented hatchback dragging a tank down the ghat like an ant with a loaf into town
+Rohan in my passenger seat, climbing over the gearstick, I hand him the crown
 
-[Bridge: spoken]
-Dad rode a bicycle. I drive this. My kid's gonna fly. That's the plan.
-
-[Drop]
-
-[Final Hook]
-Dented hatchback, but it's mine, all mine
-Every bump in the road, I just wave it bye
-Dented hatchback, first thing that I own
-Paid in full, baby, now I'm driving Mum home
+[Outro]
+What's it worth?
+One dent
+Zero loans
+And Rohan owes me petrol
 """
 
 [[songs]]
-id = "corner-shop-credit"
-title = "Corner Shop Credit"
+id = "who-carries-the-bricks"
+title = "Who Carries The Bricks"
 form = "story"
 groups = ["rap"]
-voice = "warm husky female alto, unhurried storyteller pace, Indian English accent, a smile in the softer lines"
-about = "a shopkeeper who kept a broke family fed on credit in his notebook, and the daughter who came back twenty years later to pay"
+model = "A"
+voice = "deep weathered male bass-baritone rapper, heavy chest voice, deliberate double-time flow that lands on every kick"
+about = "a construction worker on a Gurugram tower builds flats he will never live in, and the crew stops work until they are paid and safe"
 lyrics = """
-[Intro: spoken]
-Page forty-one, in pencil. My mother's name.
+[Intro]
+Thirty-two floors of glass in Gurugram, so who carries the bricks?
 
-[Verse 1: conversational]
-Shutter half open and a radio playing old songs
-Mr. Iyer on his stool, knew who did right and who did wrong
-That monsoon the mill shut, Dad came home with a box
-Mum stood at the counter, fingers counting what she'd got
-Two kilo rice and a soap and a sweet for me
-He licked the pencil, turned a page, said "pay me when you're free"
-Six months of milk on one line in that book
-And never once did he give my mother the look
+[Verse 1]
+Four in the morning, tin roof on the labour camp shaking, the bus doesn't wait
+Forty men standing, the driver is chewing his paan and running it late
+Helmet's too big, the harness is frayed, the contractor ticks it as safe, he gets paid
+Thirty-two floors and the lift is for cement, the men take the stairs with the weight
+Ten bricks a trip on a folded up gamchha, my neck is a pillar of sinew and dust
+Rebar is rusting, the scaffold is singing, the wind at the top doesn't care who you trust
+Lunch on the twenty-ninth, onion and roti, legs over the edge in the gust
+Down at the gate, a billboard, a couple in white with a pool and a skyline at night
+Ninety-five lakh for the view from the balcony, I'm the one hanging it up in the sky
+Hands cracked like a field before monsoon, but steady, I'm laying it level and right
 
-[Hook: sung]
-Corner shop credit, pencil on a page
-He never charged interest, he just charged us faith
-Corner shop credit, kept us through the rain
-One day I'm coming back to clear my mother's name
+[Hook]
+Who carries the bricks to the sky?
 
 [Drop]
+Lift, carry, climb
 
 [Verse 2]
-Twenty years later, got a job in another city
-Same lane, new mall where the paddy fields sat pretty
-Shop's still standing, shutter rusted, sign gone pale red
-His son behind the counter, said his father's in bed
-Eighty-four, forgets the names of the streets
-But he remembered my mother and her coconut sweets
-I asked to see the book, the son pulled it off a shelf
-Page forty-one in pencil, there's my mother, there's myself
-Counted every line, rounded up and then some more
-Took it to his bedside, watched his hand cross out the score
+August monsoon on the thirtieth floor, Ramdeen slipped on a plank in the rain
+Net caught him at twenty-six, arm in two, and the contractor asked about the delay
+Not "is he alive", not "is he okay", just "when does the slab get poured again?"
+Forty-one days without pay, and they want us back up on that rope, not again
+Two hundred men on the stairwell, the bricks on the landing, the hammering stopped
+Builder came down with a driver, his shoes so white that the dust was in shock
+We said, "Harness, wages, a doctor for Ramdeen, then we go back to the top"
+He looked at the tower, he looked at our hands, knew without us it's a parking lot
+Heartbeat one-sixty, the same as the hammer, the kick in the night
+Morning, new harness, the wages in envelopes, Ramdeen in plaster, his thumb in the sky
 
-[Bridge: spoken]
-He didn't want the money. He wanted to see the line go through.
+[Outro]
+Ribbon cut
+Marble lobby
+Under the marble, my handprint
+Who carries the bricks?
+Now the building carries me
+"""
+
+[[songs]]
+id = "who-waters-mas-plants"
+title = "Who Waters Ma's Plants"
+form = "argument"
+groups = ["rap"]
+model = "B"
+voice = "warm conversational male mid-baritone, half-sung half-rapped, unhurried half-time phrasing with a soft catch in the voice"
+about = "a son with a job offer in Toronto argues with himself about leaving his widowed mother in Lucknow"
+lyrics = """
+[Intro]
+Ma waters the balcony at six with a steel lota, humming
+Tulsi, money plant, a chilli that never grew, and a question she won't ask me
+
+[Verse 1]
+The email came at midnight, Toronto, start in March
+A salary with commas my father never got that far
+I read it on the terrace with the neighbour's TV loud
+Then I read it to the water tank 'cause I couldn't say it out
+My head says, "Go, you earned it, every tuition, every fee"
+My heart says, "Watch her knees on the stairs, who climbs them when you leave?"
+She's sixty-three and stubborn and she still haggles for peas
+She says, "Beta, I'm fine," like a crack in the wall says "please"
+Was I raised to stay a son, or raised to go and send it home?
+Is a video call on Sunday being there, or being alone?
+
+[Chorus]
+Who waters Ma's plants when I'm nine time zones gone?
+Who checks the gas cylinder, who turns the porch light on?
+I can send her money, I can call her every night
+But you can't water tulsi through a phone screen's light
+Staying can be love and leaving can be love too
+And I swear I can't tell you which one of them is true
+
+[Verse 2]
+My father worked in Dubai, came home every second May
+With a suitcase full of Tang and a face we learned again each day
+He built this house on money orders, every brick a missed birthday
+And I swore at his cremation I would never live that way
+Then I found Ma's little diary underneath the rice tin lid
+She wrote, "Let him go further than his father ever did"
+She wrote, "I was not a sacrifice, I'm the one who chose"
+And the care for every plant she keeps, written out in rows
+Maybe staying isn't love if all it does is make her wait
+For the day I start to blame her for the life I didn't take
+
+[Chorus]
+Who waters Ma's plants when I'm nine time zones gone?
+Who checks the gas cylinder, who turns the porch light on?
+I can send her money, I can call her every night
+But you can't water tulsi through a phone screen's light
+Staying can be love and leaving can be love too
+And I swear I can't tell you which one of them is true
 
 [Drop]
 
-[Final Hook]
-Corner shop credit, pencil on a page
-He never charged interest, he just charged us faith
-Corner shop credit, kept us through the rain
-Walked back twenty years to clear my mother's name
+[Bridge]
+I'm not my father
+She's not alone
+A plan is not a promise
+A flight is not a stone
+I'll come home every winter
+She'll come and see the snow
 
-[Outro: spoken]
-Crossed out. In his own hand.
+[Final Chorus]
+Who waters Ma's plants when I'm nine time zones gone?
+Mrs Bhatt from upstairs, and a timer that I put on
+I can send her money, I can call her every night
+And in June she flies to see me with her pickles packed tight
+Staying can be love and leaving can be love too
+I'm going like she raised me, and that's how I know it's true
+
+[Outro]
+Ma waters the balcony at six with a steel lota, and finishes the song
+Tulsi, money plant, and a chilli that finally grew the week that I was gone
 """
 
 [[songs]]
 id = "nani-runs-it"
 title = "Nani Runs It"
-form = "celebration"
+form = "story"
 groups = ["rap"]
-voice = "sharp female soprano rapper, rapid-fire sassy delivery, Punjabi-English lilt, cackles between bars"
-about = "a five-foot grandmother who is the real boss of the neighbourhood, told with full gangster swagger"
+model = "A"
+voice = "sharp female soprano rapper, rapid-fire sassy double-time delivery with punchline pauses"
+about = "a grandchild brags that their seventy-eight-year-old Nani is the real boss of the colony, right up to saving the park's neem tree"
 lyrics = """
-[Intro: spoken]
-Everybody on this street answers to one woman. Five foot nothing.
+[Intro]
+Not the cops, not the RWA, so who runs this colony? Ask anybody
 
-[Verse 1: rapid-fire]
-Five foot nothing in a cardigan, the colony's queen
-Haggled with the sabzi man until he owed her for the greens
-Slipper in her hand got a range of thirty feet
-Hasn't missed a target since nineteen sixty-three
-Her WhatsApp forwards travel faster than the news
-She knew about your breakup way before you knew
-Pickle in the jar has been aging for a decade
-Neighbours bring her gossip like a tribute parade
-Doctor said "cut sugar", she said "you cut the advice"
-Then she ate a whole jalebi just to say it twice
+[Verse 1]
+Seventy-eight in a cotton sari, she walks through the mandi like it's her show
+Tomato wala sees her and starts sweating, drops it to twenty before she says no
+One eyebrow up and the onion guy folds like a plastic chair at a wedding, bro
+Stick tapping the pavement on beat, and the whole of the gully is moving in tempo
+RWA secretary stands when she enters, he hands her the chair and the keys
+Parking fight settled in thirty seconds, no lawyer, no paper, just "Beta, please"
+Guard at the gate does a full salute and the street dogs bow on their knees
+Colony WhatsApp, two hundred members, but only her good morning gets the likes
+Sends a pink rose with a sparkle by six, and by seven the whole block replies
+Nobody posts after nine, house rules, Nani says the phone light dries out your eyes
 
-[Hook: chanted, call and response]
-Who runs it? Nani runs it
-Who's the boss? Nani runs it
-Don't touch her tulsi plant, don't you park in front of it
-Who runs it? Nani runs it
+[Hook]
+Nani runs it, Nani runs it, don't ask why
 
 [Drop]
+Whistle twice, sit down
 
 [Verse 2]
-Walked into the bank and didn't even take a token
-Manager said "madam, there's a queue", she said "it's broken"
-Cricket ball went through her window back in ninety-eight
-Kid still sends her mangoes every summer, still afraid
-Taught three generations how to roll a round roti
-Mine come out like maps, she squints and says "that's Italy"
-Eighty-one years old and she still don't need a cane
-Only thing she leans on is the fact she's right again
-Pressed a hundred in my pocket, said "don't tell your mum"
-Gangster with a soft heart, that's where all my swagger's from
+Then a builder rolls up in a Fortuner, gold chain, says he's cutting the old neem tree
+Nani's on her evening round, number seventeen, she stops, and the lane goes quiet as can be
+Puts her stick on his bonnet, says, "I planted that neem when your father was cutting his teeth
+I know your mother, I gave you tuition, you failed in your Hindi, so listen to me"
+Builder goes red, and his bodyguards bend down and touch her feet right there in the street
+By noon she's got three hundred names, rummy aunties and the whole yoga gang came
+Milkman signed it, the press wala signed it, the builder's own driver signed his name
+No muscle, no money, just a walking stick and a memory that never fades
+Neem is still standing, the builder sends sweets every Diwali and says sorry by name
 
-[Bridge: spoken]
-She raised my mother. She raised me. Now she's raising hell at the sabzi man.
+[Hook]
+Nani runs it, Nani runs it, don't ask why
 
-[Drop: crowd]
-Nani!
-
-[Final Hook]
-Who runs it? Nani runs it
-Who's the boss? Nani runs it
-Ask the whole colony, they'll tell you who's the one in it
-Who runs it? Nani runs it
+[Outro]
+Who runs it?
+Phone rings
+"Beta, did you eat?"
+Yes, Nani
+Nani runs me too
 """
 
 [[songs]]
-id = "spare-house-keys"
-title = "Spare House Keys"
-form = "dialogue"
-groups = ["rap"]
-voice = "two male rappers trading: MC one a smooth light tenor with quick conversational flow, MC two a deep gruff bass with slow heavy bars"
-about = "two brothers, one who left for the big city and one who stayed home with their parents, finally saying it to each other"
-lyrics = """
-[Intro: MC two, spoken]
-You left the keys on the hook. I kept them.
-
-[Verse 1: MC one]
-Got the job in the city, sixteenth floor, glass view
-Send money home on the fifth like I'm supposed to
-Video call on a Sunday, Mum's face freezing in the frame
-Dad never says he's proud, but he forwards every game
-Rent eats half and the loneliness eats the rest
-Dinner from a paper box, my laptop on my chest
-Ten million people and I've never felt less known
-You think I got it easy? I'm just easy on the phone
-
-[Hook: both, sung]
-You took the highway, I kept the spare house keys
-Both of us carrying what the other never sees
-Same roof, same mother, different kind of weight
-Come home, brother, before it gets too late
-
-[Verse 2: MC two]
-I'm the one who drove Dad to the cardiac ward
-Signed the forms in a hallway with a pen on a cord
-Fixed the geyser, fixed the gate, fixed the TV twice
-Every aunty asks about you, never asks me how's life
-I tore up the offer letter when the doctor called
-Ain't a martyr, I just answered when the whole house stalled
-You send money, I send time, and both of them run out
-Come and sit with Dad one evening, that's what this is about
-
-[Drop]
-
-[Bridge: MC one]
-I was scared if I came back, I'd never leave
-
-[Bridge: MC two]
-I was scared if I said it, you'd never believe
-
-[Final Hook: both]
-I took the highway, you kept the spare house keys
-Booked a train for Friday, leave the porch light on for me
-Same roof, same mother, now we split the weight
-I'm coming home, brother, it ain't too late
-
-[Outro: MC two, spoken]
-Key's on the hook.
-"""
-
-[[songs]]
-id = "badge-on-the-desk"
-title = "Badge On The Desk"
+id = "pen-in-my-hand"
+title = "Pen In My Hand"
 form = "revolt"
 groups = ["rap"]
-voice = "hoarse male tenor, shouted punk-rap energy, fast choppy bursts, voice fraying at the top of every line"
-about = "walking out of a job that took seven years and paid him mostly in praise"
+model = "A"
+voice = "hoarse male tenor rapper, shouted punk-rap energy, fast clipped double-time bars with a crack on the high notes"
+about = "a son walks out of the engineering, office and arranged marriage his family wrote for him and opens an egg bhurji cart"
 lyrics = """
-[Intro: shouted]
-Seven years. Here's your lanyard back.
+[Intro]
+Marriage profile printed, horoscope matched, so whose pen is in my hand?
 
-[Verse 1: choppy bursts]
-Seven years of "rockstar" in the subject of an email
-Rockstars get paid, man, I got a cake that was stale
-Called us family at the offsite, then they froze the family's pay
-My real family never made me fill a form to take a day
-Boss on a yacht in his holiday story
-Telling me to hustle while he's soaking up the glory
-Missed my cousin's wedding for a deck nobody opened
-Missed Nani's eightieth for a meeting that got postponed
+[Verse 1]
+Father filled my forms at fourteen, wrote engineer in the column under my name
+Kota at sixteen, a room with one fan, a timetable taped to the wall like a frame
+Four hundred faces in a hall every morning, the same test, the same rank, the same blame
+Only place I could breathe was the mess at midnight, frying eggs on a borrowed flame
+Cleared it on the third try, B.Tech in a college with a gate and a guard and a fee
+Then an MBA 'cause the cousins all did, then a desk in Andheri with a view of a tree
+Sundays I'm cooking for twenty in a one-room flat, and the whole building eating for free
+Now my marriage profile's printed, my height and my salary rounded up for the brand
+Horoscope matched with a girl who wants to be a pilot, and her parents won't let her land
 
-[Hook: shouted chant]
-Badge on the desk and the chair still spinning
-Lost a paycheck, got my evenings, call it winning
-Badge on the desk, I'm not coming back Monday
-Tell 'em I'm busy being alive on a Sunday
+[Hook]
+Whose pen is in my hand?
 
 [Drop]
-
-[Verse 2: heavier]
-Lift going down and every floor peels off my shoulders
-Ravi at the gate just grins and says "you finally told 'em"
-Scared? Of course. My savings thin as office chai
-But I'd rather be broke for a month than numb until I die
-Nobody's gonna clap for this, no pizza and no plaque
-Just me and an auto driver, windows down, not looking back
-Called my dad from the footpath, waiting for the scolding
-He said "I gave thirty years for a pen, son. You're golden."
-
-[Bridge: chant]
-No two weeks, no farewell cake
-Just the sun on my face for my own sake
-
-[Drop: crowd shouts]
-Badge on the desk!
-
-[Final Hook]
-Badge on the desk and the chair still spinning
-Dad lost thirty years, I'm not giving, I'm living
-Badge on the desk, I'm not coming back Monday
-Tell 'em I'm busy being alive on a Sunday
-"""
-
-[[songs]]
-id = "chai-at-four"
-title = "Chai At Four"
-form = "vibe"
-groups = ["rap"]
-voice = "low sleepy female voice, half-whispered close-mic bars, unhurried, a soft crowd chant behind her"
-about = "the city at four in the morning around a roadside tea stall, before anyone is anyone"
-lyrics = """
-[Intro: whispered]
-Four o'clock. Kettle's on.
-
-[Drop]
-
-[Verse 1: half-whispered, slow psy rap]
-Milk van rattles past, crates clinking in the cold
-Night guard on his last yawn, telling stories getting old
-Sweeper with a broom of sticks, humming nineteen seventy
-Taxi uncle counting coins, the city owes him plenty
-Steam off the glasses like the sky's exhaling slow
-Nobody here is famous, nobody needs to know
-Cardamom and diesel, that's the perfume of the hour
-Fifteen rupees, one small glass, the morning still ours
-
-[Hook: chant]
-Chai at four, nobody's watching
-Chai at four, the kettle's talking
-Chai at four, nobody's watching
-Chai at four, the kettle's talking
-
-[Drop]
-
-[Drop: crowd chants]
-Chai at four
-
-[Bridge: whispered]
-Sky goes blue like ink in water
-Somebody's mother, somebody's daughter
-Shutters lifting one by one
-Last sip warm before the sun
-
-[Drop]
-
-[Hook: chant]
-Chai at four, nobody's watching
-Chai at four, the kettle's talking
-
-[Outro: whispered]
-Same time tomorrow.
-"""
-
-[[songs]]
-id = "ledger-of-favors"
-title = "Ledger Of Favors"
-form = "argument"
-groups = ["rap"]
-voice = "measured male bass, slow deliberate flow, every word placed, quiet steel, never shouts"
-about = "a co-founder who got written out of the story by his best friend, deciding whether to settle the score or let it go"
-lyrics = """
-[Intro: spoken, low]
-I kept a list. I'm not proud of it.
-
-[Verse 1: slow, heavy]
-We started in a garage with one fan and one chair
-Took turns on the sofa, took turns saying prayers
-I wrote the pitch at two a.m., you wore it to the meeting
-Magazine said "visionary", I was in the back, reading
-I pawned my mother's bangles so we'd make the first payroll
-You thanked your wife, your mentor and your dog in the keynote
-Every favour's written in a ledger in my chest
-Interest compounding every night I don't rest
-
-[Hook: sung low]
-Ledger of favors, I could read it out loud
-Every page you borrowed, every time you stood proud
-Ledger of favors, do I burn it or keep?
-Holding on is heavy, letting go ain't cheap
-
-[Drop]
+Sign it, mine
 
 [Verse 2]
-Half of me wants to post the receipts with your face
-Other half remembers who carried me out of that place
-You drove me to the hospital the night my father fell
-Sat there till the morning, didn't post it, didn't tell
-So which one are you, the thief or the friend in the chair?
-Both, and that's the part I can't put anywhere
-I don't need your sorry framed up on a wall
-Just say my name once where you said yours to them all
-Grudges are a loan where only I keep paying
-Seven years of instalments and I'm tired of staying
+Engagement lunch at a banquet in Thane, forty relatives watching me close
+Pilot girl looks at me over the paneer, and I swear I can see that she knows
+Both of us stand at the same time, chairs scraping, a hundred and seventy beats in my throat
+She says, "I'm flying," I say, "I'm cooking," and a gulab jamun hits the floor in slow-mo
+Father's face like a door slammed shut, and he didn't speak to me for ninety-one nights
+I quit the desk, sold the bike, rented a cart with a tawa and two lights
+Station road, seven to midnight, burnt fingers, egg bhurji, the queue going round twice
+Nobody wrote it for me, it's my handwriting on the menu, my spelling, my price
+Day ninety-two, a man in the queue in his office shirt, waiting his turn for a plate
+Father eats standing, says, "Too much salt," then he orders another and tells me, "It's late"
 
-[Bridge: spoken]
-Page one. Your name. My handwriting.
-I'm closing the book. Not for you.
-
-[Drop]
-
-[Final Hook]
-Ledger of favors, I won't read it out loud
-Let you keep the stage, let you keep the crowd
-Ledger of favors, I'm closing it for me
-Holding on was heavy, letting go is free
+[Outro]
+Whose pen? Mine
+Licence on the cart
+Pen in my hand
+My name on top
+His signature under it
 """
 
 [[songs]]
-id = "thrift-store-royalty"
-title = "Thrift Store Royalty"
+id = "i-laughed-along"
+title = "I Laughed Along"
+form = "confession"
+groups = ["rap"]
+model = "B"
+voice = "soft husky female alto, close-mic, quiet half-rapped verses that rise into a full chest voice on the chorus"
+about = "a woman admits she laughed along when a colleague was mocked for his accent, and years later, as team lead, finally stands up"
+lyrics = """
+[Intro]
+I still have the screenshot, three laughing faces in a row
+The third one's mine, sent at ten forty-two, and I let it go
+
+[Verse 1]
+Arjun came from Muzaffarpur with a pressed shirt and a plan
+Said "vegetable" in four syllables, said "sir" to every man
+His spreadsheets were the cleanest that the building ever saw
+But in standups he said "pleasure" like it scraped against his jaw
+Then Rohit made a sticker of his face mid-sentence, mouth wide
+And the chat lit up like Diwali, and I joined in from the side
+I was new, the only woman on the floor, I wanted to belong
+And a laugh is cheap admission, so I paid it, played along
+My conscience said, "He's sitting there, two chairs away from you"
+My fear said, "Keep your head down, girl, and let them laugh it through"
+Was I cruel, or just a coward borrowing somebody's grin?
+Either way, the man two chairs away wore it on his skin
+
+[Chorus]
+I laughed along, I laughed along
+It was easy, it was small, it was wrong
+I didn't throw the stone, I just clapped when it was thrown
+And a clap is still a hand, and the hand was my own
+Silence isn't neutral when it's sitting in the room
+I laughed along, and a good man packed his desk up in June
+
+[Verse 2]
+He resigned on a Friday, left a box of laddoos on the shelf
+Note said, "Thank you all for everything," no anger, nothing else
+I ate one by the printer and it wouldn't go down whole
+Sugar on my fingers, and a stone where my excuse would go
+Five years later I'm the team lead with a glass door and a chair
+And the new girl from Silchar says "schedule" and the whole room stares
+Somebody screenshots her slide, puts a caption, presses send
+And my thumb is on the laughing face, the same one, at the end
+My fear says, "You're the boss now, keep it light, it's just a joke"
+My memory says, "Laddoos on a shelf, and a man who never spoke"
+
+[Chorus]
+I laughed along, I laughed along
+It was easy, it was small, it was wrong
+I didn't throw the stone, I just clapped when it was thrown
+And a clap is still a hand, and the hand was my own
+Silence isn't neutral when it's sitting in the room
+I laughed along, and a good man packed his desk up in June
+
+[Drop]
+
+[Bridge]
+I put the phone face down
+I stood up in the room
+I said, "Delete it"
+And nobody laughed
+Not one
+Not even me
+
+[Final Chorus]
+I don't laugh along, I don't laugh along
+It was easy, it was small, it was wrong
+I won't throw the stone, and I won't clap when it's thrown
+'Cause a clap is still a hand, and this hand is my own
+Silence isn't neutral when it's sitting in the room
+I laughed along once, and I wrote to Arjun this June
+
+[Outro]
+I still have the screenshot, three laughing faces in a row
+I sent it to Arjun with "I'm sorry", and he wrote back, "I know"
+"""
+
+[[songs]]
+id = "drip-costs-two-hundred"
+title = "Drip Costs Two Hundred"
 form = "celebration"
 groups = ["rap"]
-voice = "bright squeaky upper-register male rapper, sharp comic timing, bouncing triplet flow, laughs mid-bar"
-about = "dressing like a millionaire from the Sunday secondhand market on three hundred rupees, and finding his grandfather's coat"
+model = "A"
+voice = "bright squeaky upper-register male rapper, cheeky sing-song double-time flow, grinning through every bar"
+about = "a broke kid wins a market fight for a two-hundred-rupee thrift jacket that ends up landing him a job"
 lyrics = """
-[Intro: spoken]
-Three hundred rupees. Sunday market. Watch this.
+[Intro]
+Everybody asking where I got the jacket, so how much does drip cost?
 
-[Verse 1: triplet flow]
-Blazer from an uncle who was obviously a banker
-Lottery ticket in the pocket, didn't win, so no thank ya
-Shoes two sizes big, every step's a round of applause
-Flap flap down the footpath, I'm a star without a cause
-Shades missing one lens, so I'm winking at the city
-Aunties think I'm flirting, nah, the other side is empty
-Tie from eighty-five with a little ketchup stain
-Told 'em it's a red accent, priced it like champagne
-Mothballs in the collar so mosquitoes pay respect
-Whole fit cost three hundred, bargains are my architect
+[Verse 1]
+Sarojini Saturday, elbows out, fighting aunties for a hoodie on a sheet
+Export reject with a label that says Gucchi, two c's and an h, that's elite
+Shopkeeper says three hundred, I say, "Bhaiya, it's got a hole," and I walk to the street
+He calls me back, two hundred, I'm sold, and I'm wearing it out of the market, complete
+Jacket's got a name on the inside, Kevin, so now when I'm wearing it, call me Kev, bro
+Somebody's grandpa in Ohio wore this to bowling, now it's walking in Delhi slow
+Shoes are from Karol Bagh, Nikey with a y, and they squeak on the beat when I go
+Shades from the metro, one lens a bit darker, I'm winking wherever I go
+Rich kid in the cafe in a jacket that cost him a semester, same colour, same make
+He looks at mine, I look at his, and the waiter can't tell which one of us is fake
 
-[Hook: sung, bouncy]
-Thrift store royalty, three hundred for the crown
-Second-hand swagger, first place in this town
-Thrift store royalty, wear it like it's new
-Somebody's old Sunday, now it's my debut
+[Hook]
+Drip costs two hundred, the swagger comes free
 
 [Drop]
+Bargain, bargain, two hundred
 
-[Verse 2: faster]
-Walked into my cousin's wedding, uncles stood up straight
-Thought I was the groom's boss, handed me the first plate
-Photographer asked my designer, I said "Sunday, by the station"
-Now his whole crew's there at seven fighting for my inspiration
-Price tag still hanging, I just wear it like a medal
-Thirty rupees, framed it, that's a trophy, that's a level
-Mum touched the collar, went quiet, "that's your grandfather's coat"
-We gave it away in ninety-nine. I paid thirty. What a quote.
+[Verse 2]
+Interview in Gurugram, forty floors up, and the lift is playing jazz all the way
+Everybody's suited in navy and grey, I'm in Kevin's old bowling jacket, okay?
+Receptionist reads the back out loud, "Strike Zone Ohio, nineteen eighty-eight"
+Panel of three, and the one in the middle stands up and he stares and he can't even say
+Name on his badge says Kevin, from Ohio, he walks round the table and lifts up my sleeve
+Checks the label inside, and it's his name, his grandpa's, he's laughing so hard he can't breathe
+Grandpa gave it to charity, crossed seven seas, landed on a sheet in Sarojini
+Didn't ask me a single question on finance, just "Where do you shop, and can you take me?"
+Saturday, me and my boss in Sarojini, elbows out, haggling for three
 
-[Bridge: spoken, laughing]
-Original owner, original swagger. It came home.
+[Hook]
+Drip costs two hundred, the swagger comes free
 
-[Drop]
-
-[Final Hook]
-Thrift store royalty, Grandpa's in the crown
-Second-hand swagger, first place in this town
-Thrift store royalty, wear it like it's new
-Somebody's old Sunday, Grandpa, this one's for you
-"""
-
-[[songs]]
-id = "benched-not-buried"
-title = "Benched Not Buried"
-form = "revolt"
-groups = ["rap"]
-voice = "raw gritty female mezzo rapper, chest voice, double-time bursts that slow into single pounding words"
-about = "a footballer written off after a knee injury fighting two years to get her name back on the team sheet"
-lyrics = """
-[Intro: spoken]
-Coach said "maybe next season". That was two seasons ago.
-
-[Verse 1: double-time bursts]
-Eighty-first minute, the knee went, I heard it in my teeth
-Stretcher and an ice pack and the grass gone underneath
-Physio said "other dreams", like they're sold in a pack
-I said "wrap it up, doc, I'm just taking the long way back"
-Team photo the next season, they cropped me at the shoulder
-Group chat stopped tagging me, every message getting colder
-Cried on step forty of the stadium at five
-Kept climbing forty-one, that's the day I came alive
-
-[Hook: chanted, pounding]
-Benched, not buried, I'm still breathing on the line
-Bruised, not broken, wait your turn, I'm taking mine
-Benched, not buried, put my name back on the sheet
-Every doubt you threw at me is turf beneath my feet
-
-[Drop]
-
-[Verse 2: slower, every word lands]
-Trial day. Same coach. Same clipboard. Same cap
-Looked at my knee brace like he's reading a map
-Girl they picked instead of me is nineteen and fast
-I'm not here to take her spot, I'm here to take my past
-First touch heavy. Second touch clean
-Third touch, net shaking, clipboard dropped on the green
-They say "comeback" like it's a story with a bow
-It's two years of mornings that nobody will know
-
-[Bridge: spoken, slow]
-Not. Done.
-Same two words for two years. Not done.
-
-[Drop: crowd]
-Benched not buried!
-
-[Final Hook]
-Benched, not buried, I was breathing on the line
-Bruised, not broken, now the number nine is mine
-Benched, not buried, there's my name upon the sheet
-Every doubt you threw at me is turf beneath my feet
+[Outro]
+How much?
+Two hundred
+Got the job
+Kevin wants his jacket back
+Two hundred, Kevin
 """
 
 [[songs]]
@@ -545,49 +462,174 @@ id = "ramesh-knows-everyone"
 title = "Ramesh Knows Everyone"
 form = "story"
 groups = ["rap"]
-voice = "warm mid-range male voice with a slight Marathi accent, unhurried conversational flow like a story told at a bus stop, chuckles between lines"
-about = "a city bus conductor who knows every passenger on his route, and the day the route finally learns about him"
+model = "A"
+voice = "warm mid-range male storyteller rapper with a slight Marathi accent, conversational double-time flow, a smile in the voice"
+about = "the neighbourhood fixer who can get anyone anything lands in hospital with no one to call, until the whole colony turns up"
 lyrics = """
-[Intro: spoken]
-Route nineteen. Six forty-two. Front door.
+[Intro]
+Licence, cylinder, a plumber at midnight, call him, Ramesh knows everyone
 
-[Verse 1: conversational]
-Ramesh got the ticket punch and khaki on his back
-Knows your stop before you say it, knows your mother, knows your snack
-Wakes the nurse who sleeps through Sion right before her station
-Gives the old man with the cane his seat without a conversation
-Caught the kid who skipped tuition, didn't tell, just raised a brow
-Kid's an engineer in Pune, sends him sweets at Diwali now
-Change for a hundred? Ramesh keeps it folded in his sock
-Twenty-six years on route nineteen, he's the bus's only clock
+[Verse 1]
+Ramesh at the corner by the paan shop, phones going off like a rocket
+Knows the man at the RTO, the gas agency, the fellow who fixes your socket
+Need a seat on a full train to Nagpur? Two calls, and your berth's in your pocket
+Lose your mother's locket? He knows a pandit, a constable, a dog, and he'll spot it
+Wedding needs a horse by Sunday? Ramesh. Hospital bed at three in the morning? Same
+Your cousin's visa, your landlord's mood, the cricket score before it even came
+Never takes a rupee, just a chai and a pat on the back and his name
+Whole colony saved under R in their phones, Ramesh Ji, Ramesh Gas, Ramesh Train
+Ask him for anything, he just says, "Consider it done," and it's done by the night
+Ten years I been calling him, never once asked him a thing about his own life
 
-[Hook: sung, whole bus singing along]
-Ramesh knows everyone on route nineteen
-Who got married, who got sick, who's somewhere in between
-Ramesh knows everyone, two bells and we go
-But who knows Ramesh? Funny, we don't know
+[Hook]
+Ramesh knows everyone, but who knows Ramesh?
 
 [Drop]
+Call Ramesh, call Ramesh
 
 [Verse 2]
-Last day was a Friday, driver Shinde let it slip
-So the whole route planned it, every stop and every trip
-Nurse brought a garland, old man brought a song
-Engineer took the night bus down, said "sorry, it's been long"
-Fish auntie brought a cake and it was shaped just like a bus
-Smelled a bit like pomfret but nobody made a fuss
-Ramesh stood there, punch in hand, mouth open, not a sound
-Punched one last ticket for himself, said "my stop", stepped down
+Then a Tuesday, the corner is empty, no Ramesh, no phones, no paan, no call
+Paan wala says, "Heart, they took him at dawn," and I felt my stomach fall
+Ward number six, bed by the window, a drip and a form and a nurse in the hall
+"Emergency contact?" Blank. Ramesh knows a thousand numbers and nobody at all
+So I write my own name in the box, and the nurse asks, "Relation?" I tell her, "A friend"
+Then I open the colony group and I type, "Ramesh, ward six," and I hit send
+By evening the corridor's packed, gas man, the pandit, the cop and the dog round the bend
+Even the wedding horse came, it's outside with a garland, the guard can't comprehend
+Monitor beeping like a kick drum, Ramesh opens one eye, says, "Who called all of them?"
 
-[Bridge: spoken]
-His name is Ramesh Pawar. Wife, Sunita. Likes cutting chai and old Kishore songs.
-We asked.
+[Hook]
+Ramesh knows everyone, and now everyone knows Ramesh
+
+[Outro]
+Who knows Ramesh?
+Ward six knows
+The horse knows
+I know
+Two chais, every Sunday
+"""
+
+[[songs]]
+id = "ten-more-rounds"
+title = "Ten More Rounds"
+form = "confession"
+groups = ["rap"]
+model = "A"
+voice = "raw gritty female mezzo rapper, low chest voice, heavy double-time flow that punches on the kick, real breaths"
+about = "a boxer from Bhiwani admits she has been scared before every fight of her life, then wins a title on that fear"
+lyrics = """
+[Intro]
+Corner stool, cut on my eyebrow, coach asking, can you give me ten more rounds?
+
+[Verse 1]
+Bhiwani, five in the morning, a tyre on a rope and a road that's all mine
+Father sold a buffalo to pay for the gloves, every punch got a price on the line
+Aunties in the lane said, "Who marries a girl with a broken nose?" I said, "Get in line"
+Skipping rope singing on concrete, the rhythm of it climbing up my spine
+But here is the thing I don't say at the weigh-in, the thing that I never let anyone hear
+Every fight, in the tunnel, my hands start to shake and I'm sick in a bucket from fear
+Eleven years and forty-one fights and it never once left me, it's sitting right here
+Posters say Iron Sunita, but iron doesn't whisper its prayers to a mirror
+
+[Hook]
+Can you give me ten more rounds?
+
+[Drop]
+Hands up, chin down
+
+[Verse 2]
+Title fight in Bangkok, the crowd is a wave and the ring lights are hot on my face
+Champion from Manila, thirty-two wins, she's got hooks like a slammed garage gate
+Round seven she drops me, the canvas is spinning, I'm reading the ref's lips at eight
+And I see father in row nine, in his one good shirt, and he's not even scared, he just waits
+Up at nine, and the fear is still sitting there, so I let it ride on my back
+Scared keeps your hands up, scared keeps you moving, scared sees the right before it comes back
+Jab, jab, body, body, the way that I dragged that tyre down a village track
+Round ten, she's breathing like an old harmonium, her corner is reaching for the towel
+Heartbeat at one-seventy-eight, and the bell, and the hand of the referee lifting mine now
+Father in row nine finally stands, he's shouting the name of the buffalo, loud
+
+[Hook]
+Can you give me ten more rounds?
+
+[Outro]
+Ten more rounds?
+I'm still scared
+Good
+Scared hits harder
+Ring the bell
+"""
+
+[[songs]]
+id = "thank-you-night-shift"
+title = "Thank You, Night Shift"
+form = "letter"
+groups = ["rap"]
+model = "B"
+voice = "gentle male tenor, tender half-time rap that opens into a sung chorus, close and warm with real breaths"
+about = "a new father writes to his mother, a night-shift nurse he resented as a boy, after a nurse like her gets him through his daughter's birth"
+lyrics = """
+[Intro]
+There's a note still on our fridge in your hurried nurse's hand
+"Dal is in the cooker, lock the door, I'm back by eight, understand?"
+
+[Verse 1]
+You left at seven every evening in your white and your blue
+With a steel tiffin, a bus pass, and a safety pin or two
+I'd watch you from the window till the bus took the bend
+Then I'd do my maths alone and call the TV my friend
+You came home when the milkman came, your feet in a bucket of salt
+Slept through the afternoon while I tiptoed round like it was my fault
+You missed my sports day, my debate, my first and only play
+I told my friends you didn't love me, I was ten, that's what kids say
+But somebody's grandfather breathed because you stayed up till three
+Somebody's newborn opened its eyes, and your face was what it would see
+
+[Chorus]
+Thank you, night shift, for the nights you weren't there
+For the mother you gave strangers while I combed my own hair
+I was jealous of the ward, I was jealous of the beds
+Now I know you held their hands and somehow still held mine instead
+Thank you, night shift, I'm saying it late
+But a thank you is a thank you, even after the wait
+
+[Verse 2]
+Last March, at three in the morning, my wife in labour, me a wreck
+A nurse in a blue cardigan with a safety pin at her neck
+She said, "Breathe, beta, she is fine, I've done this a thousand times"
+Twelve hours on her feet and still she laughed at my nervous lines
+I asked her, "Don't your kids miss you?" She said, "Every single night
+But somebody has to be awake so the rest can sleep all right"
+And I sat there with my daughter, maybe twenty minutes old
+And I cried about a sports day from when I was ten years old
+
+[Chorus]
+Thank you, night shift, for the nights you weren't there
+For the mother you gave strangers while I combed my own hair
+I was jealous of the ward, I was jealous of the beds
+Now I know you held their hands and somehow still held mine instead
+Thank you, night shift, I'm saying it late
+But a thank you is a thank you, even after the wait
 
 [Drop]
 
-[Final Hook]
-Ramesh knows everyone on route nineteen
-Who got married, who got sick, who's somewhere in between
-Ramesh knows everyone, two bells, let him go
-Ramesh Pawar, now the whole bus knows
+[Bridge]
+You weren't missing
+You were somewhere
+Holding a stranger's hand
+So a stranger
+Would hold mine
+Last March, at three
+
+[Final Chorus]
+Thank you, night shift, for the nights you weren't there
+For the mother you gave strangers, now a stranger gave me care
+I'm not jealous of the ward, I'm not jealous of the beds
+'Cause you held a thousand hands, and one came back to hold mine instead
+Thank you, night shift, and I'm saying it now
+Ma, sleep through the afternoon, I'll keep the house quiet somehow
+
+[Outro]
+There's a note now on my fridge in my hurried father's hand
+"Dal is in the cooker, Ma is sleeping, tiptoe, understand?"
 """
