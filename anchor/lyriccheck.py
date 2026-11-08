@@ -191,7 +191,8 @@ def misheard_title(heard: str, title: str | None, min_ratio: float = 0.8, min_ex
                 joined.append(seq[i])
                 i += 1
         near = [h for h in joined if len(h) >= 3 and _close(w, h) >= 0.6 and (h == w or h not in written)]
-        exact = sum(1 for h in near if h == w or h.rstrip("s") == w)
+        # singular or plural is the same word sung right ("coffees" heard as "coffee", 2026-11-08)
+        exact = sum(1 for h in near if h.rstrip("s") == w.rstrip("s"))
         if near and exact / len(near) < min_exact:
             bad.append(w)
     return bad
