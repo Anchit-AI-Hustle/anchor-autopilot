@@ -109,6 +109,8 @@ def align(vocal: Path, words: list[tuple[str, float, float]]) -> list[tuple[str,
         x = _load_mono(vocal, sr)
     except Exception as exc:                                  # noqa: BLE001 - no model: keep Whisper's times
         log(f"lyrics: alignment unavailable ({str(exc)[:120]})")
+        # loud on the run page: the karaoke runs ahead of the singer without it (2026-11-08)
+        print(f"::warning::lyrics alignment unavailable, words keep Whisper's timing: {str(exc)[:120]}", flush=True)
         return words
     groups, cur = [], []
     for w in words:
