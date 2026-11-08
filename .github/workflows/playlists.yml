@@ -1,0 +1,60 @@
+name: Playlist sync (every full video in the ANCHOR playlist)
+
+# Anchit, 2026-11-08: "ensure all the videos are always added to the ANCHOR playlist". The sync
+# used to run only at the end of the Full videos workflow, which GitHub starts hours late, after
+# the day's uploads had spent the YouTube quota: it failed on quotaExceeded on 11-06, 11-07 and
+# 11-08. It now runs on its own, minutes after the quota resets (midnight Pacific) and before the
+# day's drops, and again in the evening for anything uploaded during the day. A full run costs a
+# few hundred of the 10,000 daily units (50 per video added).
+on:
+  schedule:
+    - cron: "9 8 * * *"     # 08:09 UTC: just after the quota reset, before the 08:37 drop
+    - cron: "17 21 * * *"   # 21:17 UTC: catches the day's uploads
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "List what would be added or removed, change nothing"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: playlists
+  cancel-in-progress: false
+
+jobs:
+  playlists:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+
+      - name: Every full video in ANCHOR, no song twice, none left out
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "$YT_REFRESH_TOKEN" ]; then
+            echo "::warning::YT_* secrets are not set: the playlist cannot be synced"
+            exit 0
+          fi
+          FLAGS=()
+          [ "${{ inputs.dry_run }}" = "true" ] && FLAGS+=(--dry-run)
+          python -m anchor playlists "${FLAGS[@]}" | tee playlists.json
+          python - >> "$GITHUB_STEP_SUMMARY" <<'EOF'
+          import json
+          r = json.load(open("playlists.json"))
+          print("### Playlist sync\n")
+          for k, v in r.items():
+              n = len(v) if isinstance(v, (list, dict)) else v
+              print(f"- **{k}**: {n}")
+          EOF
