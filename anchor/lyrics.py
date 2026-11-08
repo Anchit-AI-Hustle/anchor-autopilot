@@ -173,11 +173,24 @@ def voiced(vocal: Path, words: list[tuple[str, float, float]], floor_db: float =
     return keep
 
 
+LONG_GAP = 0.9        # seconds per missed word above which a gap is music, not a fast verse
+RUN_WORD = 0.32       # a missed word's length when it is placed beside the sung ones
+
+
 def snap_to_sheet(heard: list[tuple[str, float, float]], sheet: str) -> list[tuple[str, float, float]]:
     """The written words with the sung timing: matched words take the heard time, the gaps
     between matches are spread evenly. Section tags like [Chorus] are not sung and dropped."""
-    text = re.sub(r"\[[^\]]*\]|\([^)]*\)", " ", sheet)
-    words = [w for w in text.split() if _norm(w)]
+    # each written word remembers its section, so a word the ear missed stays with its own section
+    words, section = [], []
+    sec = 0
+    for part in re.split(r"(\[[^\]]*\])", re.sub(r"\([^)]*\)", " ", sheet)):
+        if part.startswith("["):
+            sec += 1
+            continue
+        for w in part.split():
+            if _norm(w):
+                words.append(w)
+                section.append(sec)
     if not words or not heard:
         return heard
     a = [_norm(w) for w in words]
@@ -206,8 +219,20 @@ def snap_to_sheet(heard: list[tuple[str, float, float]], sheet: str) -> list[tup
             continue
         t0, t1 = anchors[prev][1], anchors[nxt][0]
         span = (t1 - t0) / (nxt - prev)
-        s = t0 + span * (i - prev - 1) + (0 if t1 <= t0 else 0)
-        out.append((w, s, s + max(0.15, span * 0.9)))
+        if span <= LONG_GAP:
+            s = t0 + span * (i - prev - 1)
+            out.append((w, s, s + max(0.15, span * 0.9)))
+            continue
+        # a long gap is music, not singing: spread evenly, the missed words showed up alone over the
+        # instrumental ("I've" at 23 s, "been" at 37 s, sung at 80 s; Outrun Your Shadow, 2026-11-08).
+        # A missed word is sung next to its section's heard words: after the previous one when it is
+        # in that section (and nearer to it), otherwise just before the next one
+        after = section[i] == section[prev] and (section[i] != section[nxt] or i - prev <= nxt - i)
+        if after:
+            s = t0 + 0.05 + RUN_WORD * (i - prev - 1)
+        else:
+            s = t1 - RUN_WORD * (nxt - i)
+        out.append((w, s, s + RUN_WORD * 0.9))
     # keep strictly forward in time
     fixed, last = [], 0.0
     for w, s, e in out:
