@@ -151,3 +151,13 @@ def test_the_released_songs_that_sang_their_title_wrong_are_caught():
     assert lyriccheck.misheard_title(HEARD_KINETIC_CARBON, "Kinetic Carbon") == ["kinetic"], "4 of 13 were 'kinected'"
     assert lyriccheck.misheard_title(HEARD_COMMAND_VORTEX, "Command Vortex") == ["command", "vortex"]
     assert lyriccheck.misheard_title(HEARD_PISTON_VOLTAGE, "Piston Voltage") == [], "sung right, plurals and all"
+
+
+def test_a_whole_song_is_not_held_for_everyday_words_or_its_own_lyrics():
+    """2026-11-07: songbook songs were held for "your", "three" and "window, down, brother"."""
+    sheet = "[Chorus]\nWindow down, brother, let the road say it\nThe windows fog, the brothers wait\n\n[Drop]\n"
+    heard = "window down brother let the road say it the windows fog the brothers wait window down brother"
+    assert lyriccheck.misheard_title(heard, "Window Down, Brother", sheet=sheet) == []
+    assert lyriccheck.misheard_title("keep your three wishes", "Your Three Wishes") == []
+    # a rare word sung wrong is still caught
+    assert lyriccheck.misheard_title("lanyard lanyard lanyerd lanyerd lanyerd", "Keep Your Lanyard") == ["lanyard"]

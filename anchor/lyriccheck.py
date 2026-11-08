@@ -151,13 +151,27 @@ def _close(a: str, b: str) -> float:
     return SequenceMatcher(None, a, b).ratio()
 
 
-def misheard_title(heard: str, title: str | None, min_ratio: float = 0.8, min_exact: float = 0.75) -> list[str]:
+# everyday words a singer cannot mispronounce into another word; only names and rare words are
+# judged (2026-11-07: whole songbook songs were held for "your", "three", "down", "brother")
+EVERYDAY = set("""about after again back best better brother come could days down even ever every
+face feel fire first five four from girl give gone good half hand have head heart here high home
+house just keep know last leave left life light like little long look love make mind more mother
+much name need never next night nothing once only open other over party people place play rain
+right road room same says show side sister some song stay still street summer take tell than that
+their them then there they thing think this three time today together tonight town until want
+what when where while will with without woman word work world year years your yours""".split())
+
+
+def misheard_title(heard: str, title: str | None, min_ratio: float = 0.8, min_exact: float = 0.75,
+                   sheet: str | None = None) -> list[str]:
     """The words of the title that were not sung as standard English (Anchit, 2026-10-30:
     "kinetic", "carbon" were pronounced wrong). The title is the chant of every drop, sung many
     times. A word is sung wrong when the recogniser never hears it as itself, or when most of
     what it hears near it is a variant: Kinetic Carbon (2026-10-26-3) was heard as "kinetic" 9
     times and "kinected" 4 times. Short words (under 4 letters) are not judged."""
-    words = [w for w in _words(title or "") if len(w) >= 4]
+    words = [w for w in _words(title or "") if len(w) >= 4 and w not in EVERYDAY]
+    # words the sheet itself sings ("brothers", "window") are lyrics, not a title sung wrong
+    written = set(_words(" ".join(sung_lines(sheet)))) if sheet else set()
     if not words:
         return []
     seq = _words(heard)
@@ -176,7 +190,7 @@ def misheard_title(heard: str, title: str | None, min_ratio: float = 0.8, min_ex
             else:
                 joined.append(seq[i])
                 i += 1
-        near = [h for h in joined if len(h) >= 3 and _close(w, h) >= 0.6]
+        near = [h for h in joined if len(h) >= 3 and _close(w, h) >= 0.6 and (h == w or h not in written)]
         exact = sum(1 for h in near if h == w or h.rstrip("s") == w)
         if near and exact / len(near) < min_exact:
             bad.append(w)
@@ -192,7 +206,8 @@ def check(audio: Path, sheet: str | None, title: str | None = None) -> dict:
     notes = sung_notes(heard, sheet)
     sung = sung_lines(sheet)
     # the title is judged only when the sheet sings it (a queued song's sheet may be unknown)
-    misheard = misheard_title(heard, title) if title and any(title.lower() in ln.lower() for ln in sung) else []
+    misheard = (misheard_title(heard, title, sheet=sheet)
+                if title and any(title.lower() in ln.lower() for ln in sung) else [])
     log(f"lyriccheck: {len(_words(heard))} words heard; "
         + (f"SINGS PRODUCTION NOTES: {notes}" if notes else "only the written lyrics")
         + (f"; TITLE SUNG WRONG: {misheard}" if misheard else ""))

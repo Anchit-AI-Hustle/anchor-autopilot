@@ -128,5 +128,25 @@
     "queued_at": "2026-11-01T16:30:00Z",
     "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/extras-2026-11-01/ANCHOR-Rain-On-The-Main-Stage-2026-11-01.mp3",
     "released_at": "2026-11-01T17:22:07Z"
+  },
+  "30-outrun-your-shadow.mp3": {
+    "title": "Outrun Your Shadow",
+    "keep_title": true,
+    "source": "suno",
+    "lane": "raptechno",
+    "lyrics": "[Intro]\nLocked inside the mind, can you outrun your own shadow?\n\n[Verse 1]\nI've been running from ghosts in the back of my head, I don't know how to break\nEvery decision I made in the dark is a permanent scar that I'm forced to take\nLooking for peace in the middle of it all, got my back to the wall and my hands on the flame\nNobody gave me a map to the top, I was buried alive and came out of the grave\nPain is inside of the ache when I ride, I've been sharpening blades in the dead of the night\nCut through the noise and the fake and the lies, you can see the vendetta reflecting my eyes\nHeartbeat is faster, a hundred and fifty, the blood in my veins is beginning to boil\nEverything built from the dirt and the pain, I've been watering roots in the venomous soil\nNo way to hide when the curtains are drawn\nWe're dancing with demons, still cornered, still gone\n\n[Hook]\nCan you feel the madness rise?\n\n[Drop]\nRun faster, deeper\n\n[Verse 2]\nPacing the floor in a cage of my making, the paranoia got me wide awake\nShaking, they wanted me broken, they wanted me quiet\nI walked in the room and I started a riot\nNo ceiling, no limits, no holding me back when I snap on the beat\nEvery syllable hidden like hell on the glass, I'm erasing the memories stuck in the past\nLook at the hunger, look at the drive, takes a little insanity just to survive\nOut of the ashes, I'm taking the throne, I've been fighting these shadows quietly alone\nNow the bass is erupting, the ceiling caves in\nAnd the chaos is the only thing keeping me sane\nWatch all the doubt and the guilt in the acid, I drown every drop of the rage in the rain\n\n[Outro]\nLook in the mirror\nWho are you running from?\nThere is no escape\nLose your mind\nThe silence is loud",
+    "note": "Anchit's Suno song (uploaded 2026-11-05 as OUTRUN YOUR SHADOW.MP4), asked for on YouTube with its own video",
+    "queued_at": "2026-11-08T14:40:00Z",
+    "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/extras-2026-11-08/ANCHOR-Outrun-Your-Shadow-2026-11-08.mp3"
+  },
+  "31-dancing-with-demons.mp3": {
+    "title": "Dancing With Demons",
+    "keep_title": true,
+    "source": "anchor",
+    "lane": "hardtechrap",
+    "lyrics": "[Intro: low throat chant, whispered]\nTurn around, turn around\nStop running from the shape that follows you down\n\n[Verse 1: rap, fast]\nTen long years I was sprinting with a shadow on my heels\nEvery mirror in the hallway held a face I couldn't feel\nKept the bedroom light on, kept the radio loud\nKept a smile for my mother and a fight in the crowd\nThen an old man at the bus stop said \"you're tired, aren't you, son?\"\nAnd I laughed till I cried 'cause he saw what I'd done\nSo I walked to the alley where I knew it would wait\nDidn't bring a blade, didn't bring a debate\nHeld my hand out to the dark like it's an old friend's hand\nSaid \"you lead, I'll follow, help me understand\"\nIt was heavier than iron, it was colder than rain\nBut it moved like my father, it swayed like my pain\nEvery step that it took, I was learning the floor\nEvery fear that I named didn't own me no more\n\n[Hook]\nI'm dancing with demons, I'm done with the chase\nSpin me in circles, I'll look at your face\nThe thing that I fled had my eyes all along\nDancing with demons, I'm learning their song\n\n[Drop]\n\n[Bridge: chanted]\nSlower, closer\n\n[Verse 2: rap]\nNow the shame wants the lead and the anger wants the beat\nGrief sits by the speaker with her shoes off her feet\nGuilt keeps stepping on my toes, so I teach him to turn\nEvery burn on my skin is a lesson I earned\nThey don't vanish when you face them, they just shrink to your size\nLike a monster in the closet when you open your eyes\nI was scared of the silence, now I'm leading the dance\nGave my demons a name and I gave them a chance\nHold 'em close, hold 'em closer, till the panic goes thin\nYou can't win against a war that you won't let in\n\n[Final Hook]\nI'm dancing with demons, I'm done with the chase\nSpin me in circles, I'll look at your face\nThe thing that I fled had my eyes all along\nDancing with demons, I'm learning their song\n\n[Outro: whispered]\nLook in the mirror\nWho were you running from?\nOnly me",
+    "note": "Second Suno version of the same song re-sung on the Mac GPU (ACE-Step cover-nofsq, src and timbre = the Suno take) with new lyrics: facing the demons instead of running; Anchit asked for different lyrics in its audio and video",
+    "queued_at": "2026-11-08T14:41:00Z",
+    "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/extras-2026-11-08/ANCHOR-Dancing-With-Demons-2026-11-08.mp3"
   }
 }

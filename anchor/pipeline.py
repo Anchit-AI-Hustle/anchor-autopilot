@@ -413,11 +413,18 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
     audio = decode(raw)
     stats_audio = analyze(audio)
     brief = make_brief(profile, day, hist or [], 0)
+    # a queued song is its own song: the day's songbook song is not spent on it, and its sheet
+    # is the queue's own (or none), never the songbook's (2026-11-07)
+    if not queued.get("theme"):
+        brief.update(theme="queue", theme_name=queued["title"], theme_idea="", form="own")
+        brief["lyrics"] = ""
+        brief.pop("vocal_style", None)
     # your own Suno title, unless a song by that name already exists somewhere: then it goes
     # out under the day's verified original title instead (Anchit, 2026-10-24). The queue's
     # name guard (released_at, done/) still stops the file coming back under its old name.
     check = originality.checker()
-    if check is not None and check(queued["title"]):
+    # keep_title: Anchit's own name for his own song stays, even if another song shares it
+    if not queued.get("keep_title") and check is not None and check(queued["title"]):
         log(f"queue: {queued['title']!r} is already a song elsewhere; releasing it as {brief['title']!r}")
         brief["suno_title"] = queued["title"]
     else:
@@ -442,6 +449,8 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
                          vocal_style=song.voice)
     if queued.get("lyrics"):
         brief["lyrics"] = queued["lyrics"]
+        # the words on screen in its videos are the ones it sings (2026-11-07)
+        brief["lyrics_sung"] = queued["lyrics"]
     if queued.get("caption"):
         brief["caption"] = queued["caption"]
     est = stats_audio.get("bpm_est")

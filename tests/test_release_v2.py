@@ -47,7 +47,9 @@ def test_lyria_prompt_carries_the_nine_layers_and_the_length_in_words():
     assert "Avoid:" in text and b["negative"] in text   # the whole avoid list rides along
 
 
-def test_length_and_arrangement_shape_are_drawn_for_the_day_so_records_do_not_share_a_timeline():
+def test_length_and_arrangement_shape_are_drawn_for_the_day_so_records_do_not_share_a_timeline(monkeypatch):
+    from anchor import songbook
+    monkeypatch.setattr(songbook, "load", lambda *a, **k: ())    # the line-pool sheet follows the arrangement
     from anchor.music import SHAPES, arrangement
     p = load_profile()
     lo, hi = p.music["duration_range_s"]
@@ -257,7 +259,9 @@ def test_an_unconnected_instagram_account_is_a_note_not_a_failed_run(tmp_path, m
     assert [s["video_url"] for s in sent] == ["https://host/short.mp4"]
     assert res["youtube"]["status"] == pipeline.NEEDS_YT and res["youtube"]["error"] is None
     assert res["youtube_short"]["post_id"] == "p1" and res["post_id"] == "p1"
-    assert res["instagram"] == {"status": "not connected", "error": None} and res["error"] is None
+    # 2026-11-02: the skip is loud now, so the reason is kept on the record (still not a failed run)
+    assert res["instagram"]["status"] == "not connected" and "no Instagram channel" in res["instagram"]["error"]
+    assert res["error"] is None
 
 
 def test_a_mix_without_the_channel_credentials_waits_instead_of_failing(monkeypatch, tmp_path):
