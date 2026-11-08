@@ -205,3 +205,25 @@ def test_a_queued_song_whose_title_already_exists_goes_out_under_an_original_tit
     assert b["title"] in asked and "Project Mayhem" in asked and b["title_check"]["verified"] is True
     assert b["title"] in b["youtube_title"] and "Project Mayhem" not in b["youtube_title"]
     assert not track.exists() and (queue / "done" / track.name).exists()
+
+
+def test_a_queued_song_keeps_anchits_name_and_its_own_words(fast_profile, tmp_path, site_dir, monkeypatch):
+    """2026-11-07: his own songs go out under the names he gave them (keep_title), with their own
+    words on screen, and never spend the day's songbook song."""
+    import json
+    from anchor import originality, pipeline
+    from anchor.music import SR, synth_techno, write_wav
+
+    monkeypatch.setenv("ANCHOR_TITLE_CHECK", "1")
+    monkeypatch.setattr(originality, "taken", lambda t: t == "Dancing With Demons")
+    queue = tmp_path / "queue"
+    queue.mkdir()
+    write_wav(queue / "dancing-with-demons.wav", synth_techno(40, 150, 5), SR)
+    (queue / "queue.json").write_text(json.dumps({"dancing-with-demons.wav": {
+        "title": "Dancing With Demons", "keep_title": True,
+        "lyrics": "[Hook]\nI'm dancing with demons, I'm done with the chase"}}))
+    meta = pipeline.make(fast_profile, "2026-09-20", tmp_path / "drop", art_mode="procedural",
+                         catalog_path=site_dir / "data" / "catalog.json", queue_dir=queue)
+    b = meta["brief"]
+    assert b["title"] == "Dancing With Demons" and "suno_title" not in b
+    assert b["lyrics_sung"].startswith("[Hook]\nI'm dancing with demons") and b["theme"] == "queue"
