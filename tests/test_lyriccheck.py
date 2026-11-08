@@ -161,3 +161,8 @@ def test_a_whole_song_is_not_held_for_everyday_words_or_its_own_lyrics():
     assert lyriccheck.misheard_title("keep your three wishes", "Your Three Wishes") == []
     # a rare word sung wrong is still caught
     assert lyriccheck.misheard_title("lanyard lanyard lanyerd lanyerd lanyerd", "Keep Your Lanyard") == ["lanyard"]
+
+
+def test_a_plural_title_heard_singular_is_sung_right():
+    """2026-11-08: "Three Coffees In" was held because the singer was heard as "coffee"."""
+    assert lyriccheck.misheard_title("three coffee in three coffees in three coffee in", "Three Coffees In") == []
