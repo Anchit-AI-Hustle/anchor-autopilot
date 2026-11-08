@@ -202,6 +202,11 @@ jobs:
           pip install "faster-whisper==1.2.1" "av<16" soundfile
           # the song gate that measures every take against Anchit's own songs (anchor/songgate.py)
           pip install -r requirements-gate.txt
+          # the lyrics in the videos: vocal stem (demucs) and word alignment (torchaudio). Without
+          # torchaudio the words kept Whisper's drifting times and the karaoke ran out of sync
+          # (Outrun Your Shadow, 2026-11-08)
+          pip install -r requirements-lyrics.txt
+          python -c "import torchaudio, demucs" || echo "::warning::lyrics alignment unavailable: videos will show lyrics on rough timings"
           bash scripts/install-ffmpeg.sh
 
       - name: Cache the speech model (faster-whisper small)
