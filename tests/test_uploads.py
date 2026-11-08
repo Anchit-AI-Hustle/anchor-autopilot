@@ -416,3 +416,32 @@ def test_full_videos_never_repost_a_held_song_or_one_the_motion_uploader_owns():
     import inspect
     src = inspect.getsource(fullvideos.run)
     assert "legacy_motion.json" in src and "uploads.json" in src             # the live run passes both
+
+
+def test_legs_the_quota_stopped_are_kept_and_retried(tmp_path):
+    """2026-11-08: the quota ran out right after a re-upload; the old video stayed public and the
+    entry was marked done. Failed legs are kept and the next run finishes them."""
+    from anchor import uploads
+
+    class Api:
+        def __init__(self, fail):
+            self.fail, self.calls = fail, []
+
+        def set_thumbnail(self, vid, f):
+            raise RuntimeError("quota")
+
+        def add_to_playlist(self, vid, pl):
+            self.calls.append(("playlist", vid))
+
+        def set_privacy(self, vid, p):
+            if self.fail:
+                raise RuntimeError("quota")
+            self.calls.append(("private", vid))
+
+    e = {"id": "x", "youtube_url": "https://www.youtube.com/watch?v=NEW", "release": "r", "thumbnail": "t.jpg"}
+    done = {"private": []}
+    yt = {"playlist_url": "https://www.youtube.com/playlist?list=PLx"}
+    left = uploads._finish(Api(True), e, "o/r", tmp_path, yt, done, ["playlist", "private OLD"])
+    assert left == ["private OLD"] and done["private"] == []
+    api = Api(False)
+    assert uploads._finish(api, e, "o/r", tmp_path, yt, done, left) == [] and api.calls == [("private", "OLD")]

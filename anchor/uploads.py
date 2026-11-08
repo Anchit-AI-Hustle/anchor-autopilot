@@ -174,6 +174,10 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
             log(f"uploads: queued {', '.join(done['queued']) or 'none'}; adopted from Studio {', '.join(done['adopted']) or 'none'}")
     except Exception as exc:              # noqa: BLE001 - the queued one-offs still go up
         log(f"uploads: motion queue skipped: {exc}")
+    for e in data.get("uploads", []):     # legs an earlier run could not finish (quota): tried again
+        if e.get("retry") and api is not None:
+            e["retry"] = _finish(api, e, repo, work, yt, done, e["retry"])
+            write_json(path, data)
     for e in data.get("uploads", []):     # a hand upload: its old videos go private here, cheaply
         if e.get("adopted") and not e.get("replaced") and api is not None:
             try:
@@ -207,21 +211,35 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
         e["youtube_url"] = f"https://www.youtube.com/watch?v={up['id']}"
         e["uploaded_at"] = iso(utcnow())
         write_json(path, data)
-        steps = []
-        if e.get("thumbnail"):
-            steps.append(("thumbnail", lambda: api.set_thumbnail(
-                up["id"], fetch(RELEASES.format(repo=repo, tag=e["release"], file=e["thumbnail"]), work / e["thumbnail"], 10_000))))
-        pl = playlist_id(yt.get("playlist_url"))
-        if pl and e.get("playlist", True):
-            steps.append(("playlist", lambda: api.add_to_playlist(up["id"], pl)))
-        for vid in e.get("replaces") or []:
-            steps.append((f"private {vid}", lambda vid=vid: (api.set_privacy(vid, "private"), done["private"].append(vid))))
-        for step, fn in steps:
-            try:
-                fn()
-            except Exception as exc:      # noqa: BLE001 - cosmetic legs, logged
-                log(f"uploads: {e['id']}: {step} failed: {exc}")
-        e["replaced"] = True
+        legs = (["thumbnail"] if e.get("thumbnail") else []) + (["playlist"] if e.get("playlist", True) else []) \
+            + [f"private {vid}" for vid in e.get("replaces") or []]
+        e["retry"] = _finish(api, e, repo, work, yt, done, legs)
+        e["replaced"] = not any(leg.startswith("private ") for leg in e["retry"])
         write_json(path, data)
         done["uploaded"].append(f"{e['id']} -> {up['id']}")
     return done
+
+
+def _finish(api, e: dict, repo: str, work: Path, yt: dict, done: dict, legs: list[str]) -> list[str]:
+    """The legs after an upload (thumbnail, playlist, old videos private). Returns the ones that
+    failed, kept on the entry and tried again next run (2026-11-08: the quota ran out right after
+    the Outrun Your Shadow re-upload and the old out-of-sync video stayed public)."""
+    vid_new = (e.get("youtube_url") or "").rsplit("=", 1)[-1]
+    left = []
+    for leg in legs:
+        try:
+            if leg == "thumbnail":
+                api.set_thumbnail(vid_new, fetch(RELEASES.format(repo=repo, tag=e["release"], file=e["thumbnail"]),
+                                                 work / e["thumbnail"], 10_000))
+            elif leg == "playlist":
+                pl = playlist_id(yt.get("playlist_url"))
+                if pl:
+                    api.add_to_playlist(vid_new, pl)
+            elif leg.startswith("private "):
+                vid = leg.split(" ", 1)[1]
+                api.set_privacy(vid, "private")
+                done["private"].append(vid)
+        except Exception as exc:          # noqa: BLE001 - kept and tried again next run
+            log(f"uploads: {e['id']}: {leg} failed, will retry: {str(exc)[:200]}")
+            left.append(leg)
+    return left
