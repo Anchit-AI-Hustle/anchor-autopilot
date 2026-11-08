@@ -1,11 +1,12 @@
 """Playlists stay clean, with the channel's own credentials.
 
-Every full video on the channel is in the ANCHOR playlist (the one in [youtube] playlist_url),
-whichever way it went up: the robot, Metricool or Studio. No playlist holds the same song twice,
-and no playlist holds a song you left out: one you took down (``withdrawn`` in
-site/data/channel.json) or one that sounds like an earlier record (``sound_alikes``, song ->
-the earlier record it resembles). Shorts are left where they are. Nothing is ever deleted: an
-entry leaves a playlist, the video stays on the channel.
+Every public video on the channel is in the ANCHOR playlist (the one in [youtube] playlist_url),
+whichever way it went up (the robot, Metricool or Studio): full videos, lyric videos, every
+version and the Shorts (Anchit, 2026-11-09: "the anchor playlist must have all videos that are
+uploaded at all times even in the future"). No playlist holds the same video twice, and no
+playlist holds a song you left out: one you took down (``withdrawn`` in site/data/channel.json)
+or one that sounds like an earlier record (``sound_alikes``, song -> the earlier record it
+resembles). Nothing is ever deleted: an entry leaves a playlist, the video stays on the channel.
 """
 from __future__ import annotations
 
@@ -27,29 +28,28 @@ def plan(videos: list[dict], lists: dict[str, list[dict]], main: str, channel: d
     entries to take out (with why) and the videos to add to ``main``, oldest first."""
     by_id = {v["id"]: v for v in videos}
     skip = left_out(channel)
-    full = lambda v: v.get("privacy") == "public" and seconds(v.get("duration")) > SHORT_MAX_S
-    remove, keys_in_main = [], set()
+    public = lambda v: v.get("privacy") == "public"
+    remove, in_main = [], set()
     for pl, entries in lists.items():
         seen: set[str] = set()
         for e in entries:
             v = by_id.get(e["video"])
-            if not v or seconds(v.get("duration")) <= SHORT_MAX_S:
-                continue                      # a Short, or a video these credentials cannot see: left alone
-            k = key(v["title"])
-            if k in skip:
+            if not v:
+                continue                      # a video these credentials cannot see: left alone
+            if key(v["title"]) in skip:
                 remove.append({"playlist": pl, "item": e["item"], "title": v["title"], "why": "left out"})
-            elif k in seen:
-                remove.append({"playlist": pl, "item": e["item"], "title": v["title"], "why": "same song twice"})
+            elif v["id"] in seen:
+                remove.append({"playlist": pl, "item": e["item"], "title": v["title"], "why": "same video twice"})
             else:
-                seen.add(k)
+                seen.add(v["id"])
         if pl == main:
-            keys_in_main = seen
+            in_main = seen
     add = []
-    for v in reversed(videos):                # the uploads list is newest first
-        k = key(v["title"])
-        if full(v) and k not in skip and k not in keys_in_main:
+    # full videos first, oldest first (the uploads list is newest first), then the Shorts
+    for v in sorted(reversed(videos), key=lambda v: seconds(v.get("duration")) <= SHORT_MAX_S):
+        if public(v) and key(v["title"]) not in skip and v["id"] not in in_main:
             add.append(v)
-            keys_in_main.add(k)
+            in_main.add(v["id"])
     return {"remove": remove, "add": add}
 
 
