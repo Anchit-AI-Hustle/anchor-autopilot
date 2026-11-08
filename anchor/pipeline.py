@@ -453,6 +453,14 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
         brief["lyrics_sung"] = queued["lyrics"]
     if queued.get("caption"):
         brief["caption"] = queued["caption"]
+    # chosen on the Sync with Suno page (Anchit, 2026-11-09): the video's look and the post's own
+    # YouTube title, description and hashtags (describe() applies them every time it runs)
+    if queued.get("style"):
+        brief["video_style"] = queued["style"]
+    if queued.get("suno_id"):
+        brief["cinematic_id"] = queued["suno_id"]
+    if queued.get("overrides"):
+        brief["overrides"] = {k: v for k, v in queued["overrides"].items() if v}
     est = stats_audio.get("bpm_est")
     if est:
         brief["bpm"] = int(round(est))

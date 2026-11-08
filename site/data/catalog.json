@@ -4608,28 +4608,308 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-08T19:20:12Z",
-    "total": 2,
-    "postable": 2,
-    "families": 0,
-    "twins": 0,
-    "fresh": 1,
+    "checked_at": "2026-11-08T22:49:50Z",
+    "total": 22,
+    "postable": 20,
+    "families": 9,
+    "twins": 20,
+    "fresh": 0,
     "queued": 0,
-    "released": 1,
-    "next_up": {
-      "title": "Project Mayhem Part 2",
-      "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
-      "rating": 8.3,
-      "source": "catalogue",
-      "why": "nothing is queued - this is the best take not yet released",
-      "waiting": 0
-    },
+    "released": 9,
+    "next_up": null,
     "songs": [
+      {
+        "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
+        "title": "Project Mayhem",
+        "duration_s": 245.0,
+        "tags": "Hardstyle hard techno industrial techno with more hypnotic drops and distortion’s - clean and clear master file audio quality",
+        "lyrics": "[Intro]\n(Laughing)\nWe are at war right now!\nAnd we are taking what's ours!\n(Laughing)\n\n[Verse 1]\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\n\n[Outro]\n(Laughing)\nWelcome to Project Mayhem",
+        "model": "v4.5-all",
+        "plays": 36,
+        "upvotes": 0,
+        "created_at": "2026-03-08T21:37:22.786Z",
+        "image": "https://cdn2.suno.ai/image_large_f5207246-bf22-41b1-a4d2-8b3861149d7d.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/f5207246-bf22-41b1-a4d2-8b3861149d7d.m4a",
+        "video_url": "https://cdn1.suno.ai/f5207246-bf22-41b1-a4d2-8b3861149d7d.mp4",
+        "url": "https://suno.com/song/f5207246-bf22-41b1-a4d2-8b3861149d7d",
+        "rating": 8.6,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, hardstyle), 4:05",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, hardstyle, hypnotic - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:05 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.9,
+            "max": 1.5,
+            "note": "36 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, hardstyle, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:05 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.6/10. Postable: prompt names techno, industrial, hardstyle, hypnotic - straight down the middle of the channel. 4:05 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "be9b114a-f658-465a-983b-759bacda940d",
+            "title": "Project Mayhem",
+            "score": 0.967
+          },
+          {
+            "id": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
+            "title": "Project Mayhem Part 1",
+            "score": 0.519
+          },
+          {
+            "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
+            "title": "Project Mayhem Part 2",
+            "score": 0.498
+          }
+        ],
+        "group": "be9b114a-f658-465a-983b-759bacda940d",
+        "group_size": 4,
+        "group_pick": true,
+        "released_at": "released",
+        "decision": {
+          "verdict": "released",
+          "reason": "released (on the site)"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "Project Mayhem | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "324147b3-967b-4f51-8be4-f820d6e21341",
+        "title": "Crossing The Threshold",
+        "duration_s": 227.6,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful punchy distorted kick as dominant element with rawstyle character and controlled saturation, deep tight mono sub bass aligned with kick phase, clean low frequency response, minimal industrial percussion, mechanical rhythmic precision, subtle atmospheric tension layers.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging in mid and high frequencies, strict mono compatibility in sub bass, optimized for large sound system playback, club-ready mixdown, peak-time festival performance ready, Tomorrowland mainstage soun",
+        "lyrics": "There was a point\nWhere everything changed\nNot suddenly\nBut completely\nI felt it before I understood it\nSomething opening\nSomething shifting\n\nThere was no resistance\nOnly movement\nOnly forward\nI crossed into it\nWithout knowing how\nWithout knowing when\nAnd nothing was the same again\nNo past\nNo future\nOnly this\nOnly this moment\nI stayed with it\nI let it happen\n\n\nCrossing the threshold\nCrossing the threshold\nThere was no turning back\nOnly becoming\nCrossing the threshold\nCrossing the threshold\nAnd I am still here",
+        "model": "v4.5-all",
+        "plays": 16,
+        "upvotes": 3,
+        "created_at": "2026-02-24T20:08:35.845Z",
+        "image": "https://cdn2.suno.ai/image_large_324147b3-967b-4f51-8be4-f820d6e21341.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/324147b3-967b-4f51-8be4-f820d6e21341.m4a",
+        "video_url": "https://cdn1.suno.ai/324147b3-967b-4f51-8be4-f820d6e21341.mp4",
+        "url": "https://suno.com/song/324147b3-967b-4f51-8be4-f820d6e21341",
+        "rating": 8.6,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 3:47",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:47 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.9,
+            "max": 1.5,
+            "note": "16 plays and 3 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:47 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.6/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 3:47 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+            "title": "Crossing The Threshold",
+            "score": 0.992
+          }
+        ],
+        "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T19:26:18Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        },
+        "post": {
+          "lane": "rawbounce",
+          "lane_name": "Rawstyle Bounce",
+          "bpm": 170,
+          "youtube_title": "Crossing The Threshold | Rawstyle Hybrid | ANCHOR",
+          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nCrossing The Threshold. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "d911518a-edb8-4009-a694-935add5470f9",
+        "title": "Silent Transmission",
+        "duration_s": 205.0,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful distorted rawstyle kick dominant, deep tight mono sub bass aligned with kick phase, minimal industrial percussion, subtle atmospheric tension pads.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging mids and highs, mono-compatible sub bass, club-ready mixdown, large sound system optimized, Tomorrowland mainstage quality, Berghain warehouse authority, Verknipt and Awakenings festival energy.\n\nVocals minimal hypnotic repetitive techno vocal phrases, breathy female or androgynous voice, emotionally neutral, immersi",
+        "lyrics": "There was no warning\nOnly movement\nOnly forward\nThreshold operator\nCrossing over\nOnly movement\nOnly forward\nThreshold operator",
+        "model": "v4.5-all",
+        "plays": 17,
+        "upvotes": 1,
+        "created_at": "2026-02-24T20:15:24.869Z",
+        "image": "https://cdn2.suno.ai/image_large_d911518a-edb8-4009-a694-935add5470f9.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/d911518a-edb8-4009-a694-935add5470f9.m4a",
+        "video_url": "https://cdn1.suno.ai/d911518a-edb8-4009-a694-935add5470f9.mp4",
+        "url": "https://suno.com/song/d911518a-edb8-4009-a694-935add5470f9",
+        "rating": 8.4,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 3:25",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:25 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.7,
+            "max": 1.5,
+            "note": "17 plays and 1 upvote on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:25 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.4/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 3:25 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+            "title": "Silent Transmission",
+            "score": 0.96
+          }
+        ],
+        "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:00:22Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        },
+        "post": {
+          "lane": "rawbounce",
+          "lane_name": "Rawstyle Bounce",
+          "bpm": 170,
+          "youtube_title": "Silent Transmission | Rawstyle Hybrid | ANCHOR",
+          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nSilent Transmission. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
       {
         "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
         "title": "Project Mayhem Part 2",
         "duration_s": 177.0,
         "tags": "hard techno, rawstyle hybrid, industrial, 156-158 bpm, techno, noise, hypnotic, minimal",
+        "lyrics": "[Intro]\n[distorted vocal sample]\nIf you haven't been paying attention to what's been going on\nWe are at war!\nRight now!\nThey are waging war on you!\n[mechanical laughter]\n[heavy distorted drop]\n[scratching noise]\n[screeching]\n\n[Break]\n[dark vocal sample]\nWelcome to Project Mayhem\n[scratching noise]\nWelcome to Project Mayhem\n[mechanical laughter]\n[melodic break]\nWelcome to Project Mayhem\nWelcome to Project Mayhem\n\n[Build-up]\nWelcome to Project Mayhem\n[drone noises]\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\n[mechanical laughter]\n[heavy distorted drop]",
         "model": "v4.5-all",
         "plays": 14,
         "upvotes": 1,
@@ -4691,14 +4971,1346 @@
           }
         ],
         "summary": "Rated 8.3/10. Postable: prompt names techno, industrial, rawstyle, hypnotic - straight down the middle of the channel. 2:57 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [],
-        "group": null,
-        "group_size": 1,
-        "group_pick": true,
+        "similar": [
+          {
+            "id": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
+            "title": "Project Mayhem Part 1",
+            "score": 0.978
+          },
+          {
+            "id": "be9b114a-f658-465a-983b-759bacda940d",
+            "title": "Project Mayhem",
+            "score": 0.519
+          },
+          {
+            "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
+            "title": "Project Mayhem",
+            "score": 0.498
+          }
+        ],
+        "group": "be9b114a-f658-465a-983b-759bacda940d",
+        "group_size": 4,
+        "group_pick": false,
         "idea_posted": true,
         "decision": {
           "verdict": "held",
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway (it is in the queue, and the guard will skip it)"
+        },
+        "post": {
+          "lane": "rawbounce",
+          "lane_name": "Rawstyle Bounce",
+          "bpm": 156,
+          "youtube_title": "Project Mayhem Part 2 | Rawstyle Hybrid | ANCHOR",
+          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nProject Mayhem Part 2. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
+        "title": "Stay With Me",
+        "duration_s": 218.8,
+        "tags": "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick dominant with clean punchy transient attack, deep mono sub bass tightly phase aligned with kick, driving warehouse groove, minimal industrial percussion, dark atmospheric tension, immersive hypnotic rhythm, emotional but controlled energy, modern European techno sound.\n\nProfessional clean master audio quality, studio-grade mastering, distortion-free output, no clipping, clean transient response, balanced frequency spectrum, tight low end with mono compatibility, wide stereo clarity in mids and highs, limiter controlled peaks, club-ready mixdown, optimized for large sound system playback, festival-ready audio clarity, suitable for warehouse and mainstage environments.",
+        "lyrics": "",
+        "model": "v4.5-all",
+        "plays": 18,
+        "upvotes": 0,
+        "created_at": "2026-02-26T09:39:53.365Z",
+        "image": "https://cdn2.suno.ai/image_large_9981adbf-fbe3-4919-a021-82a2f3fb83a3.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/9981adbf-fbe3-4919-a021-82a2f3fb83a3.m4a",
+        "video_url": "https://cdn1.suno.ai/9981adbf-fbe3-4919-a021-82a2f3fb83a3.mp4",
+        "url": "https://suno.com/song/9981adbf-fbe3-4919-a021-82a2f3fb83a3",
+        "rating": 8.2,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, warehouse), 3:38",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak-time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:38 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.5,
+            "max": 1.5,
+            "note": "18 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak-time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:38 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.2/10. Postable: prompt names techno, industrial, warehouse, peak-time - straight down the middle of the channel. 3:38 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+            "title": "Stay With Me",
+            "score": 0.986
+          }
+        ],
+        "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:01:18Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 154,
+          "youtube_title": "Stay With Me | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nStay With Me. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
+        "title": "Where It Begins",
+        "duration_s": 360.0,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Dark Minimal Techno, Modern Techno, Industrial Rave, Raw Techno, Hard Dance influence, cinematic techno atmosphere, aggressive, punchy, hypnotic, immersive, dense, powerful, professional, clean, loud, deep, driving, analog saturation character, digital precision, modern European techno sound.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, wide stereo imaging in mids and highs, tight mono-compatible sub bass, balanced frequency spectrum, club-ready mixdown, large sound system optimized, Tomorrowland mainstage playback quality, Berghain warehouse energy, Verknipt and Awakenings festival sound.\n\nDominant distorted techno kick with rawstyle character, deep sub bass aligned with kick phase, hypnotic",
+        "lyrics": "It started with a feeling\n\nSomething I couldn’t explain\n\nSomething I couldn’t see\n\nBut I could feel it\n\n\nIt was already there\n\nWaiting\n\nGrowing\n\nBecoming\n\n\nI closed my eyes\n\nAnd everything changed\n\nThe sound\n\nThe space\n\nThe moment\n\n\nThere was nothing else\n\nOnly this\n\nOnly now\n\n\nI felt it moving through me\n\nSlowly\n\nThen all at once\n\n\nI didn’t try to stop it\n\nI didn’t try to control it\n\nI let it take me\n\n\nFurther\n\nDeeper\n\nBeyond everything I knew\n\n\nWe were all there\n\nNot separate\n\nNot alone\n\n\nMoving together\n\nBreathing together\n\nExisting inside the same moment\n\n\nNo past\n\nNo future\n\nOnly presence\n\n\nI stayed with it\n\nI stayed inside it\n\nI became part of it\n\n\nAnd it never left",
+        "model": "v4.5-all",
+        "plays": 14,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:00:35.860Z",
+        "image": "https://cdn2.suno.ai/image_large_c0db60f4-c089-446a-8d7d-b1609f4c8d73.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/c0db60f4-c089-446a-8d7d-b1609f4c8d73.m4a",
+        "video_url": "https://cdn1.suno.ai/c0db60f4-c089-446a-8d7d-b1609f4c8d73.mp4",
+        "url": "https://suno.com/song/c0db60f4-c089-446a-8d7d-b1609f4c8d73",
+        "rating": 8.1,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 6:00",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "6:00 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "14 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "6:00 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.1/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 6:00 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+            "title": "Where It Begins",
+            "score": 0.956
+          }
+        ],
+        "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:03:18Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        },
+        "post": {
+          "lane": "rawbounce",
+          "lane_name": "Rawstyle Bounce",
+          "bpm": 170,
+          "youtube_title": "Where It Begins | Rawstyle Hybrid | ANCHOR",
+          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nWhere It Begins. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
+        "title": "Robot Love",
+        "duration_s": 249.5,
+        "tags": "Hard Techno, Industrial Techno, Peak Time Techno, Hypnotic Industrial Techno, Warehouse Techno, Driving Techno, Mechanical Techno, Modern European Techno, aggressive but clean sound design, powerful distorted techno kick dominant, punchy transient attack, controlled saturation, deep mono sub bass phase aligned with kick, clean low frequency separation, tight low end response, hypnotic driving groove, minimal industrial percussion, metallic textures, atmospheric tension layers, immersive spatial depth.\n\nProfessional festival master audio quality, clean distortion free mastering, high loudness clarity without clipping, limiter controlled peaks, balanced frequency spectrum, wide stereo imaging mids and highs, mono compatible sub bass, precise transient control, club ready mixdown, optimized for large sound system playback, peak time festival performance ready, warehouse and festival environment optimized.\n\nVocals minimal hypnotic chant style, emotionally neutral, processed modern tech",
+        "lyrics": "",
+        "model": "v4.5-all",
+        "plays": 14,
+        "upvotes": 0,
+        "created_at": "2026-02-25T16:09:44.014Z",
+        "image": "https://cdn2.suno.ai/image_large_b20ce676-a10d-4df9-8e62-1a121cbec080.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/b20ce676-a10d-4df9-8e62-1a121cbec080.m4a",
+        "video_url": "https://cdn1.suno.ai/b20ce676-a10d-4df9-8e62-1a121cbec080.mp4",
+        "url": "https://suno.com/song/b20ce676-a10d-4df9-8e62-1a121cbec080",
+        "rating": 8.1,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, warehouse), 4:09",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:09 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "14 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:09 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.1/10. Postable: prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel. 4:09 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+            "title": "Robot Love",
+            "score": 0.999
+          }
+        ],
+        "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:02:15Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "Robot Love | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nRobot Love. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "title": "Stay With Me",
+        "duration_s": 254.0,
+        "tags": "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick dominant with clean punchy transient attack, deep mono sub bass tightly phase aligned with kick, driving warehouse groove, minimal industrial percussion, dark atmospheric tension, immersive hypnotic rhythm, emotional but controlled energy, modern European techno sound.\n\nProfessional clean master audio quality, studio-grade mastering, distortion-free output, no clipping, clean transient response, balanced frequency spectrum, tight low end with mono compatibility, wide stereo clarity in mids and highs, limiter controlled peaks, club-ready mixdown, optimized for large sound system playback, festival-ready audio clarity, suitable for warehouse and mainstage environments.",
+        "lyrics": "",
+        "model": "v4.5-all",
+        "plays": 12,
+        "upvotes": 0,
+        "created_at": "2026-02-26T09:39:53.365Z",
+        "image": "https://cdn2.suno.ai/image_large_b5bdd361-ea65-47e3-99da-0551440c1c92.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/b5bdd361-ea65-47e3-99da-0551440c1c92.m4a",
+        "video_url": "https://cdn1.suno.ai/b5bdd361-ea65-47e3-99da-0551440c1c92.mp4",
+        "url": "https://suno.com/song/b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "rating": 8.0,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, warehouse), 4:14",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak-time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:14 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak-time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:14 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.0/10. Postable: prompt names techno, industrial, warehouse, peak-time - straight down the middle of the channel. 4:14 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "9981adbf-fbe3-4919-a021-82a2f3fb83a3",
+            "title": "Stay With Me",
+            "score": 0.986
+          }
+        ],
+        "group": "b5bdd361-ea65-47e3-99da-0551440c1c92",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 154,
+          "youtube_title": "Stay With Me | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nStay With Me. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "title": "Crossing The Threshold",
+        "duration_s": 247.6,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful punchy distorted kick as dominant element with rawstyle character and controlled saturation, deep tight mono sub bass aligned with kick phase, clean low frequency response, minimal industrial percussion, mechanical rhythmic precision, subtle atmospheric tension layers.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging in mid and high frequencies, strict mono compatibility in sub bass, optimized for large sound system playback, club-ready mixdown, peak-time festival performance ready, Tomorrowland mainstage soun",
+        "lyrics": "There was a point\nWhere everything changed\nNot suddenly\nBut completely\nI felt it before I understood it\nSomething opening\nSomething shifting\n\nThere was no resistance\nOnly movement\nOnly forward\nI crossed into it\nWithout knowing how\nWithout knowing when\nAnd nothing was the same again\nNo past\nNo future\nOnly this\nOnly this moment\nI stayed with it\nI let it happen\n\n\nCrossing the threshold\nCrossing the threshold\nThere was no turning back\nOnly becoming\nCrossing the threshold\nCrossing the threshold\nAnd I am still here",
+        "model": "v4.5-all",
+        "plays": 10,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:08:35.846Z",
+        "image": "https://cdn2.suno.ai/image_large_92e63fb9-bc78-4004-971c-a3221ef0b359.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/92e63fb9-bc78-4004-971c-a3221ef0b359.m4a",
+        "video_url": "https://cdn1.suno.ai/92e63fb9-bc78-4004-971c-a3221ef0b359.mp4",
+        "url": "https://suno.com/song/92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "rating": 8.0,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 4:07",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:07 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "10 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:07 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.0/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 4:07 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "324147b3-967b-4f51-8be4-f820d6e21341",
+            "title": "Crossing The Threshold",
+            "score": 0.992
+          }
+        ],
+        "group": "92e63fb9-bc78-4004-971c-a3221ef0b359",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "rawbounce",
+          "lane_name": "Rawstyle Bounce",
+          "bpm": 170,
+          "youtube_title": "Crossing The Threshold | Rawstyle Hybrid | ANCHOR",
+          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nCrossing The Threshold. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
+        "title": "Project Mayhem Part 1",
+        "duration_s": 227.2,
+        "tags": "hard techno, rawstyle hybrid, industrial, 156-158 bpm, techno, noise, hypnotic, minimal",
+        "lyrics": "[Intro]\n[distorted vocal sample]\nIf you haven't been paying attention to what's been going on\nWe are at war!\nRight now!\nThey are waging war on you!\n[mechanical laughter]\n[heavy distorted drop]\n[scratching noise]\n[screeching]\n\n[Break]\n[dark vocal sample]\nWelcome to Project Mayhem\n[scratching noise]\nWelcome to Project Mayhem\n[mechanical laughter]\n[melodic break]\nWelcome to Project Mayhem\nWelcome to Project Mayhem\n\n[Build-up]\nWelcome to Project Mayhem\n[drone noises]\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\n[mechanical laughter]\n[heavy distorted drop]",
+        "model": "v4.5-all",
+        "plays": 12,
+        "upvotes": 0,
+        "created_at": "2026-01-11T14:57:40.856Z",
+        "image": "https://cdn2.suno.ai/image_large_01f2d8fc-1d9e-49cc-b632-81745b3e0b4a.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/01f2d8fc-1d9e-49cc-b632-81745b3e0b4a.m4a",
+        "video_url": "https://cdn1.suno.ai/01f2d8fc-1d9e-49cc-b632-81745b3e0b4a.mp4",
+        "url": "https://suno.com/song/01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
+        "rating": 8.0,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 3:47",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, hypnotic - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:47 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:47 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.0/10. Postable: prompt names techno, industrial, rawstyle, hypnotic - straight down the middle of the channel. 3:47 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
+            "title": "Project Mayhem Part 2",
+            "score": 0.978
+          },
+          {
+            "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
+            "title": "Project Mayhem",
+            "score": 0.519
+          },
+          {
+            "id": "be9b114a-f658-465a-983b-759bacda940d",
+            "title": "Project Mayhem",
+            "score": 0.499
+          }
+        ],
+        "group": "be9b114a-f658-465a-983b-759bacda940d",
+        "group_size": 4,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "rawbounce",
+          "lane_name": "Rawstyle Bounce",
+          "bpm": 156,
+          "youtube_title": "Project Mayhem Part 1 | Rawstyle Hybrid | ANCHOR",
+          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nProject Mayhem Part 1. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "title": "Where It Begins",
+        "duration_s": 202.0,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Dark Minimal Techno, Modern Techno, Industrial Rave, Raw Techno, Hard Dance influence, cinematic techno atmosphere, aggressive, punchy, hypnotic, immersive, dense, powerful, professional, clean, loud, deep, driving, analog saturation character, digital precision, modern European techno sound.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, wide stereo imaging in mids and highs, tight mono-compatible sub bass, balanced frequency spectrum, club-ready mixdown, large sound system optimized, Tomorrowland mainstage playback quality, Berghain warehouse energy, Verknipt and Awakenings festival sound.\n\nDominant distorted techno kick with rawstyle character, deep sub bass aligned with kick phase, hypnotic",
+        "lyrics": "It started with a feeling\n\nSomething I couldn’t explain\n\nSomething I couldn’t see\n\nBut I could feel it\n\n\nIt was already there\n\nWaiting\n\nGrowing\n\nBecoming\n\n\nI closed my eyes\n\nAnd everything changed\n\nThe sound\n\nThe space\n\nThe moment\n\n\nThere was nothing else\n\nOnly this\n\nOnly now\n\n\nI felt it moving through me\n\nSlowly\n\nThen all at once\n\n\nI didn’t try to stop it\n\nI didn’t try to control it\n\nI let it take me\n\n\nFurther\n\nDeeper\n\nBeyond everything I knew\n\n\nWe were all there\n\nNot separate\n\nNot alone\n\n\nMoving together\n\nBreathing together\n\nExisting inside the same moment\n\n\nNo past\n\nNo future\n\nOnly presence\n\n\nI stayed with it\n\nI stayed inside it\n\nI became part of it\n\n\nAnd it never left",
+        "model": "v4.5-all",
+        "plays": 10,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:00:35.860Z",
+        "image": "https://cdn2.suno.ai/image_large_2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.m4a",
+        "video_url": "https://cdn1.suno.ai/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9.mp4",
+        "url": "https://suno.com/song/2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "rating": 8.0,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 3:22",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:22 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "10 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:22 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 8.0/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 3:22 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "c0db60f4-c089-446a-8d7d-b1609f4c8d73",
+            "title": "Where It Begins",
+            "score": 0.956
+          }
+        ],
+        "group": "2eda52ec-e1d7-458b-acbe-bb8b9e6d14c9",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "rawbounce",
+          "lane_name": "Rawstyle Bounce",
+          "bpm": 170,
+          "youtube_title": "Where It Begins | Rawstyle Hybrid | ANCHOR",
+          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nWhere It Begins. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "title": "Robot Love",
+        "duration_s": 250.9,
+        "tags": "Hard Techno, Industrial Techno, Peak Time Techno, Hypnotic Industrial Techno, Warehouse Techno, Driving Techno, Mechanical Techno, Modern European Techno, aggressive but clean sound design, powerful distorted techno kick dominant, punchy transient attack, controlled saturation, deep mono sub bass phase aligned with kick, clean low frequency separation, tight low end response, hypnotic driving groove, minimal industrial percussion, metallic textures, atmospheric tension layers, immersive spatial depth.\n\nProfessional festival master audio quality, clean distortion free mastering, high loudness clarity without clipping, limiter controlled peaks, balanced frequency spectrum, wide stereo imaging mids and highs, mono compatible sub bass, precise transient control, club ready mixdown, optimized for large sound system playback, peak time festival performance ready, warehouse and festival environment optimized.\n\nVocals minimal hypnotic chant style, emotionally neutral, processed modern tech",
+        "lyrics": "",
+        "model": "v4.5-all",
+        "plays": 6,
+        "upvotes": 0,
+        "created_at": "2026-02-25T16:09:44.014Z",
+        "image": "https://cdn2.suno.ai/image_large_1cba5057-cc31-4a56-b7c1-db29ec259792.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/1cba5057-cc31-4a56-b7c1-db29ec259792.m4a",
+        "video_url": "https://cdn1.suno.ai/1cba5057-cc31-4a56-b7c1-db29ec259792.mp4",
+        "url": "https://suno.com/song/1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "rating": 7.9,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, warehouse), 4:10",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "4:10 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.1,
+            "max": 1.5,
+            "note": "6 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "4:10 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.9/10. Postable: prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel. 4:10 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "b20ce676-a10d-4df9-8e62-1a121cbec080",
+            "title": "Robot Love",
+            "score": 0.999
+          }
+        ],
+        "group": "1cba5057-cc31-4a56-b7c1-db29ec259792",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "Robot Love | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nRobot Love. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "be9b114a-f658-465a-983b-759bacda940d",
+        "title": "Project Mayhem",
+        "duration_s": 165.0,
+        "tags": "Hardstyle hard techno industrial techno with more hypnotic drops and distortion’s - clean and clear master file audio quality",
+        "lyrics": "[Intro]\n(Laughing)\nWe are at war right now!\nAnd we are taking what's ours!\n(Laughing)\n\n[Verse 1]\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\nWelcome to Project Mayhem\n\n[Outro]\n(Laughing)\nWelcome to Project Mayhem",
+        "model": "v4.5-all",
+        "plays": 9,
+        "upvotes": 0,
+        "created_at": "2026-03-08T21:37:22.786Z",
+        "image": "https://cdn2.suno.ai/image_large_be9b114a-f658-465a-983b-759bacda940d.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/be9b114a-f658-465a-983b-759bacda940d.m4a",
+        "video_url": "https://cdn1.suno.ai/be9b114a-f658-465a-983b-759bacda940d.mp4",
+        "url": "https://suno.com/song/be9b114a-f658-465a-983b-759bacda940d",
+        "rating": 7.9,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, hardstyle), 2:45",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, hardstyle, hypnotic - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "2:45 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "9 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, hardstyle, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:45 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.9/10. Postable: prompt names techno, industrial, hardstyle, hypnotic - straight down the middle of the channel. 2:45 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "f5207246-bf22-41b1-a4d2-8b3861149d7d",
+            "title": "Project Mayhem",
+            "score": 0.967
+          },
+          {
+            "id": "0287e07b-4e22-4d9b-9d33-78e55743e3e7",
+            "title": "Project Mayhem Part 2",
+            "score": 0.519
+          },
+          {
+            "id": "01f2d8fc-1d9e-49cc-b632-81745b3e0b4a",
+            "title": "Project Mayhem Part 1",
+            "score": 0.499
+          }
+        ],
+        "group": "be9b114a-f658-465a-983b-759bacda940d",
+        "group_size": 4,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "Project Mayhem | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "e7cf9992-0b49-4038-9b31-03f7c4290533",
+        "title": "Then Do It",
+        "duration_s": 212.3,
+        "tags": "funk, hard techno, aggressive but clean sound design, powerful distorted techno kick dominant, punchy transient attack, controlled saturation, deep mono sub bass phase aligned with kick, clean low frequency separation, tight low end response, hypnotic driving groove, minimal industrial percussion, metallic textures, atmospheric tension layers, immersive spatial, deep, industrial, clean, low, techno, hypnotic, minimal",
+        "lyrics": "[Intro]\nHoo! (Yeah)\nI said\nHoo! (Oo-yeah)\nWoo! (Oo-yeah)\n[Chorus]\nI said\nHey\nDo it (Oo-yeah)\nAnd then you\nThen you go do it (Oo-yeah)\nYeah\nBaby\nDon't you wanna do it? (Oo-yeah)\nAnd then we all go do it (Oo-yeah)\nI said\nWoo\nDo it (Oo-yeah)\nAnd then we\nThen we go do it (Oo-yeah)\nYeah\nBaby\nDon't you wanna do it? (Oo-yeah)\nAnd then we all go do it (Oo-yeah)\nYeah!\nI said\nHoo\nDo it (Oo-yeah)\nAnd then you\nThen you go do it (Oo-yeah)\nYeah\nBaby\nDon't you wanna do it? (Oo-yeah)\nAnd then we all go do it (Oo-yeah)\nI said\nWoo\nDo it (Oo-yeah)\nAnd then we\nThen we go do it (Oo-yeah)\nYeah\nBaby\nDon't you wanna do it? (Oo-yeah)\nAnd then we all go do it (Oo-yeah)\nI said\nHoo!\nAnd then you\nThen you go do it\nYeah\nBaby\nDon't you wanna do it?\nAnd then we all go do it\nI said\nWoo\nDo it\nAnd then we\nThen we go do it\nYeah\nBaby\nDon't you wanna do it?\nAnd then we all go do it\nHoo!\nAnd then you\nThen you go do it\nYeah\nBaby\nDon't you wanna do it?\nAnd then we all go do it\nI said\nWoo\nDo it\nAnd then we\nThen we go do it\nYeah\nBaby\nDon't you wanna do it?\nAnd then we all go do it\nYeah\n[Outro]\n[Spoken]\nI said\nWoo!\n[Applause]\nThank you\nThank you very much\nWe love you\nThank you",
+        "model": "v4.5-all",
+        "plays": 18,
+        "upvotes": 0,
+        "created_at": "2026-02-26T08:42:50.038Z",
+        "image": "https://cdn2.suno.ai/image_large_e7cf9992-0b49-4038-9b31-03f7c4290533.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/e7cf9992-0b49-4038-9b31-03f7c4290533.m4a",
+        "video_url": "https://cdn1.suno.ai/e7cf9992-0b49-4038-9b31-03f7c4290533.mp4",
+        "url": "https://suno.com/song/e7cf9992-0b49-4038-9b31-03f7c4290533",
+        "rating": 7.7,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, hypnotic), 3:32",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.6,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, hypnotic - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:32 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.5,
+            "max": 1.5,
+            "note": "18 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:32 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.6 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.7/10. Postable: prompt names techno, industrial, hypnotic - straight down the middle of the channel. 3:32 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "bba502a3-ebed-411a-8161-54153eca984b",
+            "title": "Do It",
+            "score": 0.718
+          }
+        ],
+        "group": "bba502a3-ebed-411a-8161-54153eca984b",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T20:59:25Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "Then Do It | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nThen Do It. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "title": "Silent Transmission",
+        "duration_s": 122.7,
+        "tags": "Hard Techno, Rawstyle Hybrid, Industrial Techno, Peak Time Techno, Hypnotic Techno, Festival Techno, Warehouse Techno, Berlin Techno, Underground Techno, Driving Techno, Mechanical Techno, Modern Techno, Industrial Rave, cinematic techno atmosphere, immersive hypnotic rhythm structure, aggressive but clean sound design, powerful distorted rawstyle kick dominant, deep tight mono sub bass aligned with kick phase, minimal industrial percussion, subtle atmospheric tension pads.\n\nProfessional festival master audio quality, clean distortion-free mastering, high loudness clarity, limiter controlled peaks, punchy transient response, balanced frequency spectrum, wide stereo imaging mids and highs, mono-compatible sub bass, club-ready mixdown, large sound system optimized, Tomorrowland mainstage quality, Berghain warehouse authority, Verknipt and Awakenings festival energy.\n\nVocals minimal hypnotic repetitive techno vocal phrases, breathy female or androgynous voice, emotionally neutral, immersi",
+        "lyrics": "There was no warning\nOnly movement\nOnly forward\nThreshold operator\nCrossing over\nOnly movement\nOnly forward\nThreshold operator",
+        "model": "v4.5-all",
+        "plays": 10,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:15:24.869Z",
+        "image": "https://cdn2.suno.ai/image_large_568df3fe-272a-45db-92f6-f139b3e6d8dc.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/568df3fe-272a-45db-92f6-f139b3e6d8dc.m4a",
+        "video_url": "https://cdn1.suno.ai/568df3fe-272a-45db-92f6-f139b3e6d8dc.mp4",
+        "url": "https://suno.com/song/568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "rating": 7.7,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, rawstyle), 2:02 - good for a Short",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.2,
+            "max": 2.5,
+            "note": "2:02 - just long enough for a full release"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "10 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, rawstyle, warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:02 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.7/10. Postable: prompt names techno, industrial, rawstyle, warehouse - straight down the middle of the channel. 2:02 - just long enough for a full release. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "d911518a-edb8-4009-a694-935add5470f9",
+            "title": "Silent Transmission",
+            "score": 0.96
+          }
+        ],
+        "group": "568df3fe-272a-45db-92f6-f139b3e6d8dc",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "rawbounce",
+          "lane_name": "Rawstyle Bounce",
+          "bpm": 170,
+          "youtube_title": "Silent Transmission | Rawstyle Hybrid | ANCHOR",
+          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nSilent Transmission. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "bba502a3-ebed-411a-8161-54153eca984b",
+        "title": "Do It",
+        "duration_s": 208.4,
+        "tags": "funk, hard techno, aggressive but clean sound design, powerful distorted techno kick dominant, punchy transient attack, controlled saturation, deep mono sub bass phase aligned with kick, clean low frequency separation, tight low end response, hypnotic driving groove, minimal industrial percussion, metallic textures, atmospheric tension layers, immersive spatial, deep, industrial, clean, low, techno, hypnotic, minimal",
+        "lyrics": "[Intro]\nHoo! (Yeah)\nI said\nHoo! (Oo-yeah)\nWoo! (Oo-yeah)\n[Chorus]\nI said\nHey\nDo it (Oo-yeah)\nAnd then you\nThen you go do it (Oo-yeah)\nYeah\nBaby\nDon't you wanna do it? (Oo-yeah)\nAnd then we all go do it (Oo-yeah)\nI said\nWoo\nDo it (Oo-yeah)\nAnd then we\nThen we go do it (Oo-yeah)\nYeah\nBaby\nDon't you wanna do it? (Oo-yeah)\nAnd then we all go do it (Oo-yeah)\nYeah!\nI said\nHoo\nDo it (Oo-yeah)\nAnd then you\nThen you go do it (Oo-yeah)\nYeah\nBaby\nDon't you wanna do it? (Oo-yeah)\nAnd then we all go do it (Oo-yeah)\nI said\nWoo\nDo it (Oo-yeah)\nAnd then we\nThen we go do it (Oo-yeah)\nYeah\nBaby\nDon't you wanna do it? (Oo-yeah)\nAnd then we all go do it (Oo-yeah)\nI said\nHoo!\nAnd then you\nThen you go do it\nYeah\nBaby\nDon't you wanna do it?\nAnd then we all go do it\nI said\nWoo\nDo it\nAnd then we\nThen we go do it\nYeah\nBaby\nDon't you wanna do it?\nAnd then we all go do it\nHoo!\nAnd then you\nThen you go do it\nYeah\nBaby\nDon't you wanna do it?\nAnd then we all go do it\nI said\nWoo\nDo it\nAnd then we\nThen we go do it\nYeah\nBaby\nDon't you wanna do it?\nAnd then we all go do it\nYeah\n[Outro]\n[Spoken]\nI said\nWoo!\n[Applause]\nThank you\nThank you very much\nWe love you\nThank you",
+        "model": "v4.5-all",
+        "plays": 12,
+        "upvotes": 0,
+        "created_at": "2026-02-26T08:42:50.038Z",
+        "image": "https://cdn2.suno.ai/image_large_bba502a3-ebed-411a-8161-54153eca984b.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/bba502a3-ebed-411a-8161-54153eca984b.m4a",
+        "video_url": "https://cdn1.suno.ai/bba502a3-ebed-411a-8161-54153eca984b.mp4",
+        "url": "https://suno.com/song/bba502a3-ebed-411a-8161-54153eca984b",
+        "rating": 7.6,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, hypnotic), 3:28",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.6,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, hypnotic - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:28 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:28 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.6 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.6/10. Postable: prompt names techno, industrial, hypnotic - straight down the middle of the channel. 3:28 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "e7cf9992-0b49-4038-9b31-03f7c4290533",
+            "title": "Then Do It",
+            "score": 0.718
+          }
+        ],
+        "group": "bba502a3-ebed-411a-8161-54153eca984b",
+        "group_size": 2,
+        "group_pick": false,
+        "decision": {
+          "verdict": "held",
+          "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "Do It | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nDo It. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "d02466c4-239f-472f-b50d-eb5ea5c66c9b",
+        "title": "Let’s Fucking Go!",
+        "duration_s": 166.9,
+        "tags": "Hard industrial techno at 160-250 BPM, opening with a single distorted mono synth hit and raw vocal stab. Noisy 303-style acid line with resonant filter automation, overdriven kick pulses, metallic percussion hits, and psytrance-style rhythmic modulation. Voice crushed with distortion, bitcrush, delay throws, and dense reverb for a claustrophobic, relentless, top-quality finish.",
+        "lyrics": "[Verse 1]\nDoor swings wide\nold ghosts fade\nNew ink, fresh cut\nI’m not afraid\nCheap shoes, big dreams\nheart on display\nIf doubt starts talking\nI walk away\n\n[Chorus]\nLet’s fucking go\nI’ve been waiting all my life for this\nBurn that “maybe” to the ground\nturn every “later” to a risk\nLet’s fucking go\nfeel the pressure, let it blow\nIf the world says “take it slow”\nI just laugh like, “yeah, right\n(let’s fucking go)”\n\n[Verse 2]\nLate nights, sore throat\nstill I stay loud\nOne spark, one note\nI’m past proud\nI want scraped knees\nI want the fall\nI want that shock wave\nthrough it all\n\n[Bridge]\nI’m done playing quiet\ndone staying small (hey!)\nIf fear’s in the room\nI’m still taking the call\nIf my voice cracks\ngood\nat least it’s mine\nI’m crossing that line\nyeah, I’m crossing that line\n\n[Chorus]\nLet’s fucking go\nI’ve been waiting all my life for this\nBurn that “maybe” to the ground\nturn every “later” to a risk\nLet’s fucking go\nfeel the pressure, let it blow\nIf the world says “take it slow”\nI just laugh like, “yeah, right\n(let’s fucking go)”",
+        "model": "v4.5-all",
+        "plays": 8,
+        "upvotes": 0,
+        "created_at": "2026-04-16T22:57:09.363Z",
+        "image": "https://cdn2.suno.ai/image_large_d02466c4-239f-472f-b50d-eb5ea5c66c9b.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/d02466c4-239f-472f-b50d-eb5ea5c66c9b.m4a",
+        "video_url": "https://cdn1.suno.ai/d02466c4-239f-472f-b50d-eb5ea5c66c9b.mp4",
+        "url": "https://suno.com/song/d02466c4-239f-472f-b50d-eb5ea5c66c9b",
+        "rating": 7.5,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, acid), 2:46",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.6,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, acid - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "2:46 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "8 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, acid"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:46 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.6 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.5/10. Postable: prompt names techno, industrial, acid - straight down the middle of the channel. 2:46 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
+            "title": "Let’s Fucking Go!",
+            "score": 0.995
+          }
+        ],
+        "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
+        "group_size": 2,
+        "group_pick": true,
+        "released_at": "2026-09-13T21:04:02Z",
+        "decision": {
+          "verdict": "released",
+          "reason": "released 2026-09-13"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 160,
+          "youtube_title": "Let’s Fucking Go! | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nLet’s Fucking Go!. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
+        "title": "Let’s Fucking Go!",
+        "duration_s": 158.2,
+        "tags": "Hard industrial techno at 160-250 BPM, opening with a single distorted mono synth hit and raw vocal stab. Noisy 303-style acid line with resonant filter automation, overdriven kick pulses, metallic percussion hits, and psytrance-style rhythmic modulation. Voice crushed with distortion, bitcrush, delay throws, and dense reverb for a claustrophobic, relentless, top-quality finish.",
+        "lyrics": "[Verse 1]\nDoor swings wide\nold ghosts fade\nNew ink, fresh cut\nI’m not afraid\nCheap shoes, big dreams\nheart on display\nIf doubt starts talking\nI walk away\n\n[Chorus]\nLet’s fucking go\nI’ve been waiting all my life for this\nBurn that “maybe” to the ground\nturn every “later” to a risk\nLet’s fucking go\nfeel the pressure, let it blow\nIf the world says “take it slow”\nI just laugh like, “yeah, right\n(let’s fucking go)”\n\n[Verse 2]\nLate nights, sore throat\nstill I stay loud\nOne spark, one note\nI’m past proud\nI want scraped knees\nI want the fall\nI want that shock wave\nthrough it all\n\n[Bridge]\nI’m done playing quiet\ndone staying small (hey!)\nIf fear’s in the room\nI’m still taking the call\nIf my voice cracks\ngood\nat least it’s mine\nI’m crossing that line\nyeah, I’m crossing that line\n\n[Chorus]\nLet’s fucking go\nI’ve been waiting all my life for this\nBurn that “maybe” to the ground\nturn every “later” to a risk\nLet’s fucking go\nfeel the pressure, let it blow\nIf the world says “take it slow”\nI just laugh like, “yeah, right\n(let’s fucking go)”",
+        "model": "v4.5-all",
+        "plays": 8,
+        "upvotes": 0,
+        "created_at": "2026-04-16T22:57:09.364Z",
+        "image": "https://cdn2.suno.ai/image_large_6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb.m4a",
+        "video_url": "https://cdn1.suno.ai/6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb.mp4",
+        "url": "https://suno.com/song/6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
+        "rating": 7.5,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (techno, industrial, acid), 2:38",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 3.6,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, acid - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "2:38 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.2,
+            "max": 1.5,
+            "note": "8 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, acid"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:38 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "3.6 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 7.5/10. Postable: prompt names techno, industrial, acid - straight down the middle of the channel. 2:38 - full release length. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "d02466c4-239f-472f-b50d-eb5ea5c66c9b",
+            "title": "Let’s Fucking Go!",
+            "score": 0.995
+          }
+        ],
+        "group": "6ed5fd1b-d05d-4a62-be1b-e3dd3a9dbccb",
+        "group_size": 2,
+        "group_pick": false,
+        "idea_posted": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 160,
+          "youtube_title": "Let’s Fucking Go! | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nLet’s Fucking Go!. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
         }
       },
       {
@@ -4706,6 +6318,7 @@
         "title": "Signal Detected",
         "duration_s": 102.1,
         "tags": "hypnotic hard techno industrial techno deep warehouse techno peak time techno intro energy minimal mechanical groove deep clean sub bass mono focused subtle atmospheric pads restrained distorted kick with controlled transient punch immersive hypnotic rhythm cinematic techno atmosphere\n\nprofessional festival master audio quality clean distortionfree mastering wide stereo imaging clubready mixdown large sound system optimized immersive opening track energy argy Melodic Techno, Electronica afterlife style intro techno",
+        "lyrics": "I felt it first\n\nBefore anything else\n\nA signal\n\nSomewhere inside\n\nSignal detected\n\nSignal detected\n\nIt found me",
         "model": "v4.5-all",
         "plays": 23,
         "upvotes": 1,
@@ -4767,15 +6380,345 @@
           }
         ],
         "summary": "Rated 7.3/10. Postable: prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel. 1:42 - carries a Short, thin as a full drop. made on Suno v4.5-all - good, half a point behind v5.",
-        "similar": [],
-        "group": null,
-        "group_size": 1,
+        "similar": [
+          {
+            "id": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+            "title": "First Contact",
+            "score": 0.713
+          }
+        ],
+        "group": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+        "group_size": 2,
         "group_pick": true,
         "released_at": "2026-09-13T21:04:42Z",
         "decision": {
           "verdict": "released",
           "reason": "released 2026-09-13"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "Signal Detected | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nSignal Detected. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
         }
+      },
+      {
+        "id": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+        "title": "First Contact",
+        "duration_s": 109.2,
+        "tags": "hypnotic hard techno industrial techno deep warehouse techno peak time techno intro energy minimal mechanical groove deep clean sub bass mono focused subtle atmospheric pads restrained distorted kick with controlled transient punch immersive hypnotic rhythm cinematic techno atmosphere\n\nprofessional festival master audio quality clean distortionfree mastering wide stereo imaging clubready mixdown large sound system optimized immersive opening track energy argy Melodic Techno, Electronica afterlife style intro techno",
+        "lyrics": "I felt it first\n\nBefore anything else\n\nA signal\n\nSomewhere inside\n\nSignal detected\n\nSignal detected\n\nIt found me",
+        "model": "v4.5-all",
+        "plays": 12,
+        "upvotes": 0,
+        "created_at": "2026-02-24T20:23:34.556Z",
+        "image": "https://cdn2.suno.ai/image_large_2826d0d4-3c00-46f3-8c08-2e8a1ff9c022.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/2826d0d4-3c00-46f3-8c08-2e8a1ff9c022.m4a",
+        "video_url": "https://cdn1.suno.ai/2826d0d4-3c00-46f3-8c08-2e8a1ff9c022.mp4",
+        "url": "https://suno.com/song/2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+        "rating": 6.8,
+        "postable": true,
+        "slot": "Short only",
+        "verdict": "on format (techno, industrial, warehouse), 1:49 - good for a Short",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 4.0,
+            "max": 4.0,
+            "note": "prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel"
+          },
+          {
+            "name": "Length",
+            "score": 1.3,
+            "max": 2.5,
+            "note": "1:49 - carries a Short, thin as a full drop"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.3,
+            "max": 1.5,
+            "note": "12 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno, industrial, warehouse, peak time"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "1:49 against a 1:00 floor - Short only"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "4.0 against a 2.0 floor"
+          }
+        ],
+        "summary": "Rated 6.8/10. Postable: prompt names techno, industrial, warehouse, peak time - straight down the middle of the channel. 1:49 - carries a Short, thin as a full drop. made on Suno v4.5-all - good, half a point behind v5.",
+        "similar": [
+          {
+            "id": "e7f16cd4-b99f-4246-a209-23eb0b304e8d",
+            "title": "Signal Detected",
+            "score": 0.713
+          }
+        ],
+        "group": "2826d0d4-3c00-46f3-8c08-2e8a1ff9c022",
+        "group_size": 2,
+        "group_pick": false,
+        "decision": {
+          "verdict": "held",
+          "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "First Contact | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nFirst Contact. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "fe67ed44-93d0-4b7e-9f72-fc014bae0c8e",
+        "title": "Concrete Pulse",
+        "duration_s": 231.2,
+        "tags": "hard techno set of music like nf and Hip Hop, Rap raps",
+        "lyrics": "",
+        "model": "v4.5-all",
+        "plays": 6,
+        "upvotes": 0,
+        "created_at": "2026-08-21T20:38:02.708Z",
+        "image": "https://cdn2.suno.ai/image_large_fe67ed44-93d0-4b7e-9f72-fc014bae0c8e.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/fe67ed44-93d0-4b7e-9f72-fc014bae0c8e.m4a",
+        "video_url": "https://cdn1.suno.ai/fe67ed44-93d0-4b7e-9f72-fc014bae0c8e.mp4",
+        "url": "https://suno.com/song/fe67ed44-93d0-4b7e-9f72-fc014bae0c8e",
+        "rating": 5.5,
+        "postable": false,
+        "slot": "full release",
+        "verdict": "1.6 against a 2.0 floor, pulled down by hip hop, rap",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 1.6,
+            "max": 4.0,
+            "note": "techno, but also hip hop, rap - the off-format tags cost it 1.8"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:51 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.2,
+            "max": 1.5,
+            "note": "made on Suno v4.5-all - good, half a point behind v5"
+          },
+          {
+            "name": "Traction",
+            "score": 0.1,
+            "max": 1.5,
+            "note": "6 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names techno"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:51 against a 1:00 floor - full release"
+          },
+          {
+            "ok": false,
+            "label": "Genre score clears the bar",
+            "detail": "1.6 against a 2.0 floor, pulled down by hip hop, rap"
+          }
+        ],
+        "summary": "Rated 5.5/10. Not yet: 1.6 against a 2.0 floor, pulled down by hip hop, rap",
+        "similar": [],
+        "group": null,
+        "group_size": 1,
+        "group_pick": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "not on format: 1.6 against a 2.0 floor, pulled down by hip hop, rap"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 164,
+          "youtube_title": "Concrete Pulse | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nConcrete Pulse. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
+        "id": "61640220-f053-4894-9be3-550ba7326864",
+        "title": "Your Open Hand",
+        "duration_s": 138.0,
+        "tags": "Pretentious chamber-pop fortune reading at a poised midtempo 96 BPM, with syncopated brushed snare, muted piano, pizzicato strings, glassy celesta, and low upright bass. Deliver the lead close-mic’d and authoritative, with clipped diction, octave doubles on the hook, and panned whispered ad-libs. Begin sparse, add strings under each prophecy, then widen the final chorus with stately harmonies. Use fingertip taps, a reverse cymbal swell, and warm, polished room reverb.",
+        "lyrics": "[Chorus]\nYou will cross the wet road, you will change your name,\nYou will find one silver answer and forget the old refrain.\nYour open hand says plainly, with a calm, impeccable plan:\nNext year bends toward your fortune—everything is in your hand.\n\n[Verse 1]\nThe Life Line curves like a dark provincial river,\nYou will outlive the doubt that made your shoulders shiver.\nThe Head Line forks beneath the ring of distant lights:\nOne thought buys a blue suitcase, one thought stays up all night.\n\n[Verse 2]\nThe Heart Line cuts deep: a letter arrives in June,\nYou will say, “I knew you’d come,” before you read it through.\nThat pale road beyond your fingers is an omen dressed in rain:\nA green thing, a parked machine, then Tuesday’s sudden gain.\n\n[Chorus]\nYou will cross the wet road, you will change your name,\nYou will find one silver answer and forget the old refrain.\nYour open hand says plainly, with a calm, impeccable plan:\nNext year bends toward your fortune—everything is in your hand.",
+        "model": "v6-mini",
+        "plays": 2,
+        "upvotes": 0,
+        "created_at": "2026-11-08T22:12:24.348Z",
+        "image": "https://cdn2.suno.ai/image_large_d3dd967b-44fc-4516-a993-675356500dbc.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/61640220-f053-4894-9be3-550ba7326864.m4a",
+        "video_url": "https://cdn1.suno.ai/61640220-f053-4894-9be3-550ba7326864.mp4",
+        "url": "https://suno.com/song/61640220-f053-4894-9be3-550ba7326864",
+        "rating": 4.4,
+        "postable": false,
+        "slot": "full release",
+        "verdict": "nothing in the prompt says hard techno, industrial, rawstyle or warehouse",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 0.6,
+            "max": 4.0,
+            "note": "prompt asks for pop - a different channel"
+          },
+          {
+            "name": "Length",
+            "score": 2.2,
+            "max": 2.5,
+            "note": "2:18 - just long enough for a full release"
+          },
+          {
+            "name": "Model",
+            "score": 1.5,
+            "max": 1.5,
+            "note": "made on Suno v6-mini - current generation, cleanest master"
+          },
+          {
+            "name": "Traction",
+            "score": 0.1,
+            "max": 1.5,
+            "note": "2 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": false,
+            "label": "On the channel's format",
+            "detail": "nothing in the prompt says hard techno, industrial, rawstyle or warehouse"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "2:18 against a 1:00 floor - full release"
+          },
+          {
+            "ok": false,
+            "label": "Genre score clears the bar",
+            "detail": "0.6 against a 2.0 floor, pulled down by pop"
+          }
+        ],
+        "summary": "Rated 4.4/10. Not yet: nothing in the prompt says hard techno, industrial, rawstyle or warehouse; 0.6 against a 2.0 floor, pulled down by pop",
+        "similar": [],
+        "group": null,
+        "group_size": 1,
+        "group_pick": true,
+        "decision": {
+          "verdict": "held",
+          "reason": "not on format: nothing in the prompt says hard techno, industrial, rawstyle or warehouse"
+        },
+        "post": {
+          "lane": "bounce",
+          "lane_name": "Hard Bounce Techno",
+          "bpm": 96,
+          "youtube_title": "Your Open Hand | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nYour Open Hand. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      }
+    ],
+    "lanes": [
+      {
+        "id": "bounce",
+        "name": "Hard Bounce Techno"
+      },
+      {
+        "id": "rawbounce",
+        "name": "Rawstyle Bounce"
+      },
+      {
+        "id": "psy",
+        "name": "Psychedelic Hard Techno"
+      },
+      {
+        "id": "acidpsy",
+        "name": "Acid Psychedelic Techno"
+      },
+      {
+        "id": "hardgroove",
+        "name": "Hard Groove Bounce"
+      },
+      {
+        "id": "hyper",
+        "name": "Hyper Acid Techno"
+      },
+      {
+        "id": "hardtech",
+        "name": "Hard Tech"
+      },
+      {
+        "id": "psytech",
+        "name": "Psychedelic Hard Tech"
+      },
+      {
+        "id": "raptechno",
+        "name": "Rap Hard Techno"
+      },
+      {
+        "id": "hiphoptechno",
+        "name": "Hip Hop Hard Techno"
+      },
+      {
+        "id": "psyrap",
+        "name": "Psychedelic Rap Techno"
+      },
+      {
+        "id": "hardtechrap",
+        "name": "Hard Tech Rap"
+      },
+      {
+        "id": "psyhiphop",
+        "name": "Psychedelic Hip Hop Techno"
       }
     ]
   },

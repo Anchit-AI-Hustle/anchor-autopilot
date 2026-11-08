@@ -328,3 +328,17 @@ body.locked { overflow: hidden; }
   .next-up { padding: 16px 14px 14px 16px; }
   .nu-title { flex-wrap: wrap; gap: 4px 12px; }
 }
+
+/* ------------------------------------------------------------------ Sync with Suno call to action */
+.top nav a.nav-cta { color: var(--accent); }
+.suno-cta { display: flex; flex-wrap: wrap; gap: 16px 32px; align-items: center; justify-content: space-between; margin-block: 8px 32px;
+  padding: clamp(18px, 3vw, 28px); border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--line)); border-radius: 10px;
+  background: linear-gradient(120deg, color-mix(in srgb, var(--accent) 14%, var(--panel)), var(--panel)); }
+.suno-cta > div { flex: 1 1 320px; min-width: 0; }
+.suno-cta h2 { font-size: clamp(1.8rem, 3.6vw, 2.6rem); }
+.suno-cta p { margin: 8px 0 0; color: var(--muted); max-width: 64ch; }
+.suno-cta .eyebrow { margin: 0 0 6px; color: var(--accent); }
+.suno-cta-btn { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border-radius: 8px; background: var(--accent);
+  color: #0a0a0b; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; text-decoration: none; white-space: nowrap; }
+.suno-cta-btn:hover { color: #0a0a0b; filter: brightness(1.1); }
+@media (max-width: 560px) { .suno-cta-btn { width: 100%; justify-content: center; } }

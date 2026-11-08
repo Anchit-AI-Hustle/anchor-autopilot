@@ -58,13 +58,35 @@ jobs:
         id: q
         env:
           SONG: ${{ github.event_name == 'workflow_dispatch' && inputs.song || format('{0} {1}', github.event.issue.title, github.event.issue.body) }}
+          BODY: ${{ github.event.issue.body }}
         run: |
           set -o pipefail
-          python -m anchor queue-add --song "$SONG" | tee queued.json
-          echo "title=$(python -c 'import json;print(json.load(open("queued.json"))["title"])')" >> "$GITHUB_OUTPUT"
-          echo "file=$(python -c 'import json;print(json.load(open("queued.json"))["queued"])')"  >> "$GITHUB_OUTPUT"
-          echo "waiting=$(python -c 'import json;print(json.load(open("queued.json"))["waiting"])')" >> "$GITHUB_OUTPUT"
-          rm -f queued.json
+          # the Sync with Suno page sends a JSON block: several songs, each with its video style
+          # and its own title, description and hashtags (Anchit, 2026-11-09)
+          printf '%s' "$BODY" > body.txt
+          if grep -q '"form": *"anchor-suno-sync"' body.txt; then
+            python -m anchor queue-form --body-file body.txt | tee queued.json
+            python - >> "$GITHUB_OUTPUT" <<'PY'
+          import json, re
+          r = json.load(open("queued.json"))
+          body = open("body.txt").read()
+          m = re.search(r'"release":\s*"(\w+)"', body)
+          names = ", ".join(q["title"] + " (" + q["style"] + ")" for q in r["queued"]) or "nothing"
+          skipped = ", ".join(s["title"] + ": " + s["skipped"] for s in r["skipped"])
+          print(f"title={names}")
+          print("file=" + ", ".join(q["queued"] for q in r["queued"]))
+          print(f"waiting={r['waiting']}")
+          print(f"skipped={skipped}")
+          print("now=" + ("true" if (m and m.group(1) == "now" and r["queued"]) else "false"))
+          PY
+          else
+            python -m anchor queue-add --song "$SONG" | tee queued.json
+            echo "title=$(python -c 'import json;print(json.load(open("queued.json"))["title"])')" >> "$GITHUB_OUTPUT"
+            echo "file=$(python -c 'import json;print(json.load(open("queued.json"))["queued"])')"  >> "$GITHUB_OUTPUT"
+            echo "waiting=$(python -c 'import json;print(json.load(open("queued.json"))["waiting"])')" >> "$GITHUB_OUTPUT"
+            echo "now=false" >> "$GITHUB_OUTPUT"
+          fi
+          rm -f queued.json body.txt
 
       - name: Commit the queue
         env:
@@ -88,13 +110,19 @@ jobs:
           FILE: ${{ steps.q.outputs.file }}
           WAITING: ${{ steps.q.outputs.waiting }}
           RUN: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SKIPPED: ${{ steps.q.outputs.skipped }}
+          NOW: ${{ steps.q.outputs.now }}
         run: |
+          WHEN="The next daily run releases it"
+          [ "$NOW" = "true" ] && WHEN="A run has started now to release it"
+          NOTE=""
+          [ -n "$SKIPPED" ] && NOTE=" Skipped: $SKIPPED."
           gh issue comment "${{ github.event.issue.number }}" --body \
-            "**$TITLE** is queued as \`queue/$FILE\` - $WAITING track(s) waiting. The next daily run releases it: master, cover, Short, website. YouTube goes out with it once \`BUFFER_API_KEY\` is set. [Run log]($RUN)"
+            "**$TITLE** queued as \`$FILE\`, $WAITING track(s) waiting. $WHEN: master, cover, video, Short, YouTube, playlist, website.$NOTE [Run log]($RUN)"
           gh issue close "${{ github.event.issue.number }}" --reason completed
 
       - name: Release it now
-        if: github.event_name == 'workflow_dispatch' && inputs.release_now
+        if: (github.event_name == 'workflow_dispatch' && inputs.release_now) || steps.q.outputs.now == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run daily.yml --ref main

@@ -418,6 +418,15 @@ def master_beat_offset(audio: Path, bpm: float) -> float:
     return beat_phase(decode(audio).mean(axis=1), float(bpm))
 
 
+def cinematic_shots(brief: dict) -> list:
+    """The cinematic shots this drop's video uses, or [] for the scene video. The look chosen on
+    the Sync with Suno page decides: "motion" keeps the lyrical + motion + 3D scene video."""
+    from . import cinematic
+    if (brief.get("video_style") or "auto") == "motion":
+        return []
+    return cinematic.shots_for(brief.get("cinematic_id") or brief.get("theme"))
+
+
 def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: str, brief: dict,
                 lane_phrase: str, artist: str, accent: str | None = None, *, fam: Family | None = None,
                 cover_1080: Path | None = None, handle: str | None = None,
@@ -451,7 +460,7 @@ def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: st
         title, sub = clean_title(brief["title"]), f"{lane_phrase}"
         # real filmed-looking shots of the song's story when the Mac has made them (cinematic.py)
         from . import cinematic
-        shots = cinematic.shots_for(brief.get("theme"))
+        shots = cinematic_shots(brief)
         sung = brief.get("lyrics_sung") or brief.get("lyrics") or ""
         if shots:
             try:
