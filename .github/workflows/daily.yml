@@ -414,11 +414,17 @@ jobs:
           D="build/$DATE"
           B="$(python -c "import json;print(json.load(open('$D/meta.json'))['files']['base'])")"
           FILES=("$D/$B.mp3" "$D/$B.flac" "$D/$B-short.mp4" "$D/$B-full-169.mp4" "$D/$B-full-916.mp4" "$D/$B-cover.jpg" "$D/frame-169.jpg")
+          printf '%s' "$TITLE" > "$D/title.txt"
+          # a long Mac job's token can be refused by the releases API (HTTP 403 "Resource not
+          # accessible by integration": Window Down, Brother and Sober At The Barrier, 2026-11-08,
+          # both lost after passing every check). The song is not lost any more: the pages job,
+          # with a fresh token, creates the release from this job's artifact.
           if gh release view "drop-$DATE" >/dev/null 2>&1; then
-            gh release upload "drop-$DATE" "${FILES[@]}" --clobber
+            gh release upload "drop-$DATE" "${FILES[@]}" --clobber || { echo "::warning::release upload deferred to the pages job"; touch "$D/release_pending"; }
           else
             gh release create "drop-$DATE" "${FILES[@]}" --title "$TITLE · ANCHOR" \
-              --notes-file "$D/release_notes.md" --target "$GITHUB_SHA"
+              --notes-file "$D/release_notes.md" --target "$GITHUB_SHA" \
+              || { echo "::warning::release creation deferred to the pages job"; touch "$D/release_pending"; }
           fi
 
       # only after the release exists, so a song whose files never reached the release page
@@ -443,6 +449,8 @@ jobs:
             build/${{ steps.day.outputs.date }}/cover.jpg
             build/${{ steps.day.outputs.date }}/cover_600.jpg
             build/${{ steps.day.outputs.date }}/poster.jpg
+            build/${{ steps.day.outputs.date }}/title.txt
+            build/${{ steps.day.outputs.date }}/release_pending
 
   pages:
     needs: [plan, make]
@@ -461,6 +469,26 @@ jobs:
         with:
           pattern: drop-*
           path: drops
+
+      - name: Create the releases a make job could not
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          shopt -s nullglob
+          for d in drops/drop-*; do
+            [ -f "$d/release_pending" ] || continue
+            DATE="${d#drops/drop-}"
+            B="$(python3 -c "import json;print(json.load(open('$d/meta.json'))['files']['base'])")"
+            FILES=("$d/$B.mp3" "$d/$B.flac" "$d/$B-short.mp4" "$d/$B-full-169.mp4" "$d/$B-full-916.mp4" "$d/$B-cover.jpg" "$d/frame-169.jpg")
+            if gh release view "drop-$DATE" >/dev/null 2>&1; then
+              gh release upload "drop-$DATE" "${FILES[@]}" --clobber
+            else
+              gh release create "drop-$DATE" "${FILES[@]}" --title "$(cat "$d/title.txt") · ANCHOR" \
+                --notes-file "$d/release_notes.md" --target "$GITHUB_SHA"
+            fi
+            echo "release drop-$DATE created here for its make job"
+          done
 
       - name: Assemble the media host (latest drops only)
         id: media
