@@ -1,0 +1,757 @@
+# ANCHOR storyboards, group psy: 12 LTX-Video shots per song in lyric order, 3 hook shots each.
+
+[[boards]]
+id = "sunrise-at-the-fence"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Locked-off close of a woman's hand holding a phone with a dim glowing screen in a festival field at two in the morning, the crowd and stage lights blurred behind, cool violet light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Slow push in on two young women seen from behind walking through festival gates hand in hand at dusk, wristbands on their wrists, a yellow scarf around one neck, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off high wide of a dense crowd leaning with the bass at night, a yellow scarf sinking out of sight between the heads like a coin in a stream, stage lights sweeping, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot of a woman seen from behind stopping a boy with painted arms and a girl holding a flag in the crowd, purple stage light washing over them, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Static wide of a woman small in frame seen from behind walking past the stage for the third time, a water bottle poking out of her bag, lasers and haze above, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Pre-Chorus"
+hook = false
+prompt = "Locked-off wide of the sky over a festival field turning from black to grey to gold, the crowd below in silhouette, haze catching the first light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Slow push in on a woman seen from behind sitting against a chain link back fence at sunrise, shoes in her hand, dust in her hair, her friend walking toward her small in frame, golden light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Locked-off shot of two young women seen from behind embracing at a chain link fence as the sun clears the horizon, dust glowing in the warm light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Locked-off wide of an emptying festival field at dawn, small figures still dancing far off, paper cups on the grass, dust drifting in soft pink light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Locked-off shot of two women seen from behind sitting on a cooler, watching cleaners rake plastic cups into a little hill, pale morning light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Slow push in on two silhouettes sitting side by side against a chain link fence in bright morning sun, the empty field and stage behind them, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Locked-off close of two hands holding up a phone to photograph the sunrise over a chain link fence, the screen filled with only the sun, warm gold light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "whose-voice-is-this"
+
+[[boards.shots]]
+part = "Intro"
+hook = true
+prompt = "Handheld close of a chalk dusted shirt sleeve and a wooden ruler lying on an old school desk, dust floating in a sunbeam through a classroom window, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld push behind a man as he stands up to speak in a crowded meeting room, his shoulders stiff, flat fluorescent light, heads turning toward him, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Whip pan in an old classroom on a dusty afternoon from a teacher's silhouette at a blank blackboard to a small boy seen from behind standing at his desk, the back row a blur, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld follow of a man seen from behind climbing a long concrete staircase hunched as if carrying a heavy weight on his back, harsh midday light from the stairwell windows, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld shot of a man seen from behind sitting at a kitchen table at night with his head in his hands, a small boy asleep in the next room, warm tungsten light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld slow orbit around a man seen from behind as a silhouette in an empty classroom at dusk, facing a blank blackboard, chalk dust swirling in the last light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Handheld close of a man's hands snapping a wooden ruler in half, a puff of chalk dust bursting into a beam of light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld tracking shot in a temple courtyard in Meerut on a cold winter morning, a thin old man in a shawl with a walking cane seen from behind feeding pigeons, small in frame, grey light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld shot from behind of a man raising his hand high in a room full of seated people, sunlight from a side window falling across his arm, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld shot of a father and his small son seen from behind sitting on a kitchen floor with a notebook of sums, the boy's shoulders shaking with laughter, morning light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld shot of a man seen from behind drawing one long confident chalk line across a blank blackboard, chalk dust falling, warm golden hour light through the windows, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Whip pan from a man seen from behind sitting on a teacher's desk in an empty classroom to the window glowing with golden evening light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "calm-is-my-costume"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Locked-off shot of a tap dripping steadily into a white basin beside the third stall of an office bathroom, cold fluorescent light, white tiles, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off shot of a woman seen from behind on a balcony at night on a phone call, a mug of tea steaming on the railing, city lights below, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Static wide of a flooded street under grey monsoon light, a woman seen from behind wading through knee deep water carrying a friend's bags, small in frame, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Slow push in on a woman's hands laying out plasters, a phone charger and a spare set of keys neatly on an office desk, flat daylight, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Locked-off overhead of a woman sitting on the tiled floor of a bathroom stall with her back against the wall, a finger tracing the tiles, her face hidden by her knees, cold fluorescent light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Static wide of a hospital corridor in flat afternoon light, a twelve year old girl seen from behind sitting alone on a bench, a nurse's silhouette passing, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Slow push in on hands folding a white school shirt and laying it in a drawer, soft morning light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off wide of a harbour at dusk, a lone woman in silhouette rowing a small boat home between moored fishing boats, still water, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Slow push in on a woman seen from behind standing still in the middle of a busy open plan office, her shirt buttoned to the collar, colleagues blurred as they rush around her, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Locked-off shot of a woman seen from behind sitting with her back against a closed stall door, a phone pressed to her ear, Tuesday morning light through frosted glass, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Locked-off shot of a friend in slippers kneeling to hug a woman on a bathroom floor, both seen from behind, warm light through a frosted window, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Locked-off shot of an empty bathroom stall with a crisp shirt hanging on the door hook, a tap still running into the basin, soft daylight, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "who-is-breathing"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Slow handheld drift toward a woman seen from behind sitting cross legged on a mat by a rooftop water tank at four in the morning, a shawl over her shoulders, a sleeping city below in deep blue light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld tracking along a rooftop edge looking down at a quiet street at night, a dog asleep under a streetlamp, ceiling fans turning behind open windows, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Slow handheld orbit behind a woman sitting with a straight spine and open hands resting on her knees, her shawl lifting with each breath, pale blue pre dawn light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld close of a rope being drawn slowly up an old stone well, a brass bucket rising full and spilling water, soft grey morning light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld close of a crow landing on the lip of a rooftop water tank and lifting away again, a meditating woman soft in the background, blue grey light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld slow crane up behind a woman's silhouette sitting on a rooftop against a slowly brightening sky, her shawl moving in the breeze, the city still asleep, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Handheld close from behind of a shawl rising and falling with slow breath on a woman's back, first light catching the wool fibres, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld macro of milk pouring into a pan of dark tea and blooming, swirling and dissolving, steam rising in morning light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld tracking shot of pigeons lifting off a rooftop as a milkman cycles below with steel cans, a small temple bell swinging far off, sunrise gold on window glass, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld slow push toward a woman seen from behind sitting still as the sun rises behind a rooftop water tank, warm flare washing over her shoulders, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld slow drift around a woman's silhouette on a rooftop at full sunrise, rooftops and pigeons glowing gold around her, edges softening in the light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Handheld wide of a rooftop under a soft grey morning sky, water tank, crows on the parapet, milk cans by the stair door, an empty mat, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "your-noon-my-midnight"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Locked-off shot of a man seen from behind on a Delhi balcony at midnight in an old sweater, writing on paper on his knee, street dogs asleep below under sodium light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Static wide of a woman seen from behind on a Toronto park bench at noon eating rice from a lunch box, bright sun on snow, small in frame, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off low shot of a woman's boots pressing into fresh snow blowing sideways across a Toronto pavement on her lunch walk, bright cold daylight, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off shot of a mango seller seen from behind pushing a cart down a Delhi lane at half past two in the afternoon, heat haze, mangoes piled high, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Locked-off shot from the street of a lamp glowing in the window of an old Delhi house at midnight, a man's silhouette behind the curtain, a quiet street below, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot at a night airport curb of a man seen from behind carrying two suitcases, his sister small ahead of him walking toward the doors, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Slow push in on an older woman's hands in a car passenger seat at night holding an old school ID card face down, streetlights sliding over her fingers, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot of a man seen from behind lying under a kitchen sink with a wrench, afternoon light through a small window, a dripping pipe, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Slow push in on a man seen from behind on a balcony looking up at the moon over Delhi rooftops, a lamp glowing in the window beside him, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Locked-off shot through an airplane window of a wing above the clouds where night meets day on the horizon, a man's hand resting on the window frame, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Locked-off shot of a brother and sister seen from behind sitting on a Toronto bench at noon sharing one lunch box, squinting into bright winter sun, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Locked-off shot of a Delhi balcony at midnight, an old sweater over a chair, a lamp still glowing in the window, a man's silhouette stepping inside, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "can-you-see-it"
+
+[[boards.shots]]
+part = "Intro"
+hook = true
+prompt = "Handheld shot at night of a lantern being switched off in a small wooden boat off Havelock, a father and son seen from behind as silhouettes pulling in the oars, black sea and stars, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld close of an old fisherman's hands tying knots in a net by lantern light, the boat rocking gently, warm orange glow, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld tracking shot of an old man seen from behind sitting on rocks above a grey sea at dusk, fog drifting in over the water, small in frame, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld close of an oar dipping into black water and lighting up glowing blue trails of bioluminescence, swirling around the blade, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld shot over the side of a wooden boat as fish dart beneath, leaving glowing blue streaks like comets, wave crests sparkling blue in the dark, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Slow handheld orbit around a son seen from behind pointing at the glowing blue sea, his father's silhouette beside him, blue light catching their shoulders, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Handheld top down shot of glowing blue water swirling around a wooden hull at night, every ripple and oar drip sparking with light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld close of a son's cupped hands pouring glowing sea water into his father's weathered palms, blue light dripping through the fingers, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld tracking shot alongside a boat as the father rows through glowing water, seen from behind, his son seated ahead, stars above, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld shot from a moving boat passing a rocky bend with a small shore temple in silhouette, pale blue light before dawn, glowing wake behind, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld wide from the water of a small boat crossing a glowing sea, two silhouettes aboard, a trail of blue light behind, stars overhead, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Handheld low shot of two pairs of bare feet walking up wet sand beside a lit lantern on the beach, soft dawn light over the Andaman sea, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "one-more-hour"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Locked-off close of a woman's hand holding one shoe, a grey festival wristband on her wrist, a warehouse floor behind, pink dawn light falling from a skylight, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Static wide of a warehouse dance floor at five in the morning, a skylight turning pink, smoke drifting out of a side door, dancers small and seen from behind, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off close from behind of a woman's shoulder and collar dusted with gold glitter, pink light, the floor pulsing behind her, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off shot of an ironed white shirt on a chair beside a lanyard and an alarm clock in a dark bedroom, cool blue light from the window, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Slow push in on a woman seen from behind in the middle of a warehouse dance floor, her raised arms catching pink light from the skylight, haze around her, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Slow push in on a family lunch table in bright daylight with one empty chair, a bowl of halwa and plates, an old woman seen from behind at the head, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot of a man seen from behind selling water bottles from a crate, dancing as he sells, warehouse haze and coloured light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off overhead of a circle of strangers dancing together on a concrete floor, small figures, dawn light from above, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Two sides of a frame: a pulsing dance floor on the left and a doorway full of white morning light on the right, a woman small between them, locked-off, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Locked-off shot of a woman seen from behind bending to put her shoe back on at the edge of the dance floor, a girl with a flag waving goodbye nearby, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Slow push in on a woman seen from behind walking out of a warehouse door into bright sunrise, haze and music light behind her, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Locked-off shot of a woman seen from behind sitting down at a new office desk at eight fifty nine in the morning, her foot tapping, a wristband peeking from her pocket, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "the-roof-is-singing"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Handheld close of the first raindrops bouncing on the corrugated tin roof of a hill homestay, grey afternoon light, green hills soft behind, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Whip pan across a misty green hill valley as a sheet of rain sweeps in over the trees, handheld, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Low tracking shot of bare feet stepping on a polished red oxide floor, wooden shutters wide open to a rainy hillside, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld close of rain drumming on tin, water pouring off the roof edge in silver strings, soft grey light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld shot of steam rising from cracks in a dusty courtyard as the first rain soaks in, warm earth tones, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld close of a glass of chai on a window sill, steam blowing sideways, a rainy empty valley beyond, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld orbit around a young man seen from behind spinning barefoot on a red floor with his arms out, shutters open to the rain, grey green light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Handheld wide from outside of a small homestay in the hills under heavy rain, a silhouette dancing in the open doorway, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Handheld slow move through a curtain of water falling off a tin roof edge, a green valley blurred beyond, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Low handheld shot of bare feet splashing in a puddle on a red floor as golden light breaks through the rain clouds, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = true
+prompt = "Handheld drift above a tin roof as the rain softens, evening glow on the wet metal, hills fading into mist, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Handheld shot of a silhouette in a doorway at dusk holding out an open palm to the rain, drops landing in it, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "did-you-eat"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Locked-off shot of a hand lifting a gate latch at five fifteen in the morning, a pair of boots set down on the step, blue dawn light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off shot from the back seat of an auto rickshaw at dawn, a young woman seen from behind with glitter on her shoulders, empty city streets passing, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Two sides of a frame: a mother seen from behind at a kitchen table in a nightie with glasses on her head and a newspaper, her daughter small in the doorway, warm kitchen light, locked-off, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off shot of a mother seen from behind rising and lighting a gas stove, the blue flame catching, warm kitchen light against blue dawn, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Slow push in on a roti puffing up on a hot tawa as a mother's hands flip it, steam rising, warm kitchen light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot of a mother seen from behind sitting alone at a kitchen table at three in the morning, a gate rattling in the wind through the window, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot of a milkman cycling past a house gate at four in the morning, a woman's silhouette watching from the window, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Slow push in on parathas wrapped in a cloth beside a small plate of marigold flowers on a shelf, lamp light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Two sides of a frame: a mother's hands setting a plate of hot roti with ghee in front of her daughter's hands at a kitchen table, slow push in, warm light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Locked-off shot of a mother and daughter seen from behind at a kitchen table, the daughter's head resting on her mother's shoulder, blue light in the window, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Locked-off shot of two plates on a kitchen table and two pairs of hands eating, the sky turning blue through the window, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Locked-off shot of a mother seen from behind asleep in a chair as her daughter's hands lay a shawl over her, soft dawn light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "late-by-whose-clock"
+
+[[boards.shots]]
+part = "Intro"
+hook = true
+prompt = "Handheld close of a wall clock ticking in a drawing room, a man's shoulder in silhouette in the foreground, warm afternoon light through lace curtains, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld whip pan through a wedding buffet under string lights, an aunt's hand holding out a plate of jalebi to a man seen from behind in a kurta, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld tracking shot through a wedding tent of uncles holding up phones toward a man seen from behind, the screens turned away, warm lights, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld tracking shot of a man seen from behind running alone on an empty stadium track at dusk while a crowd stands still in the stands, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld crane up beside a vast banyan tree with hanging aerial roots, a man standing small beneath it seen from behind, golden hour light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld slow push behind a man in a dim drawing room facing a wall clock, the pendulum swinging, afternoon light fading, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Handheld extreme close of a drawing room clock's second hand ticking forward, then a whip pan to its brass pendulum swinging in dim light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld shot of a man seen from behind sitting on the floor with a wall clock in his lap, his father in a vest with a cup of tea entering the room, morning light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld shot of a father and son seen from behind sitting side by side on the floor, cups of tea between them, the father's knees creaking down, morning light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Handheld close of a father's fingers prying open the back of a clock with a coin and lifting the battery up to window light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Handheld push toward a bare nail and a pale rectangle on a wall where a clock once hung, a man's silhouette in the foreground, quiet afternoon light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Handheld tracking shot of a drawer sliding shut on a wall clock, then a man seen from behind walking out the door into a bright noon street, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "papa-finally-danced"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Locked-off wide of a courtyard strung with marigolds, a dhol player seen from behind by the door, an older man small on a plastic chair at the edge, evening light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off shot of an older man seen from behind on a plastic chair with coats and handbags piled on his lap, guests dancing in a blur around him, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Slow push in on an older man's shoe tapping under the edge of a tablecloth, a wedding dance floor blurred behind, warm string lights, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Slow push in on an older man's shoulder seen from behind beginning to move to the music, a woman's silhouette watching from the side, bulbs strung like kites above, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Slow push in on an older man seen from behind in the middle of a courtyard dance floor with his arms up, cousins circling him, marigolds overhead, warm light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot of a father and daughter seen from behind by a gate at two in the morning holding glasses of tea, a quiet street beyond, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot of a teenage boy seen from behind dancing with a band at a village wedding in daylight, an older man's hand taking his wrist, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Slow push in on an older man's hands wiping his glasses with a handkerchief at night, a tea glass beside him, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Locked-off wide of an empty plastic chair at the edge of a crowded dance floor, an older man dancing small in the centre under strings of bulbs, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Locked-off shot of a woman seen from behind carrying a plastic chair out of a sunny kitchen in the morning, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Slow push in on an older man and his daughter seen from behind dancing on the stairs of a house at evening, a pressure cooker steaming in the kitchen below, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Locked-off shot of an empty plastic chair in a sunny yard, marigold strings still hanging in the courtyard behind, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "water-cannot-wet-it"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Locked-off shot of a woman's fist gripping an iron chain on stone ghat steps at Rishikesh, a fast river beyond, early morning mist, an old woman's hand with prayer beads behind, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off shot of a muddy canal bank collapsing under a small girl's feet, brown water rising around them, overcast afternoon light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Locked-off shot of a woman seen from behind sitting at a poolside cafe with her sandals on, people swimming small beyond, bright midday sun, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Slow push in on a woman seen from behind standing on the lowest ghat step with green fast water around her shins, cold morning light, mist on the river, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Slow push in on an old woman seen from behind seated on a ghat step turning prayer beads, her granddaughter below in the river, sunlight breaking through morning mist, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off shot of two women seen from behind on the ghat steps, the old woman's hand pointing gently toward the river, soft morning light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Slow push in on a woman's hand on an iron chain as her fingers open one by one like a flower, river water rushing below, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Locked-off underwater shot of green river water with light rays and bubbles, a figure's silhouette drifting calmly, arms loose in the light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Locked-off wide of a Rishikesh ghat at sunrise, two small figures on the steps, the river glittering gold, hills behind, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Locked-off shot of two wet women seen from behind laughing on a stone step, an empty iron chain rocking in the current beside them, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Locked-off shot of a woman seen from behind rising out of the river with her arms open, golden light on the water, her grandmother on the step above, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Locked-off shot of an empty iron chain swinging in morning mist, an old woman seen from behind wringing out her sari, beads still turning in her wrist, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"

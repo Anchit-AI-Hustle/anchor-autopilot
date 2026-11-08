@@ -123,7 +123,8 @@ def _words(title: str) -> set[str]:
 
 
 def pick(songs: tuple[Song, ...], group: str, r, history: list[dict], *, used_titles: list[str] = (),
-         avoid_titles: tuple[str, ...] = (), taken=None, recent: int = 10, report: dict | None = None) -> Song | None:
+         avoid_titles: tuple[str, ...] = (), taken=None, recent: int = 10, report: dict | None = None,
+         prefer: set[str] | frozenset[str] = frozenset()) -> Song | None:
     """The next song for a drop of ``group``: never used before (by id or title), not a title the
     singer got wrong on an earlier take, not the same form as the song before it, no word
     shared with the last ``recent`` titles, and not an existing song elsewhere (``taken``).
@@ -141,8 +142,10 @@ def pick(songs: tuple[Song, ...], group: str, r, history: list[dict], *, used_ti
         log(f"songbook: only {left} unused {group} songs left; write more (artist/songbook/GUIDE.md)")
     order = list(fits)
     r.shuffle(order)
-    # best first: a new form and fresh words, then a new form, then anything
-    order.sort(key=lambda s: (s.form == last_form, bool(_words(s.title) & recent_words)))
+
+    # a song whose cinematic shots are all made goes first (``prefer``), then a new form and fresh
+    # words, then a new form, then anything
+    order.sort(key=lambda s: (s.id not in prefer, s.form == last_form, bool(_words(s.title) & recent_words)))
     report = {} if report is None else report
     report.setdefault("rejected", [])
     for s in order:

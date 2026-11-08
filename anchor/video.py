@@ -452,13 +452,15 @@ def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: st
         # real filmed-looking shots of the song's story when the Mac has made them (cinematic.py)
         from . import cinematic
         shots = cinematic.shots_for(brief.get("theme"))
+        sung = brief.get("lyrics_sung") or brief.get("lyrics") or ""
         if shots:
             try:
                 i169 = cinematic.render_cinematic_video(shots, audio, v169, accent, secs, title, sub, work / "ch",
-                                                        bpm=float(bpm), beat_offset=beat_offset or 0.0, lines=lines)
+                                                        bpm=float(bpm), beat_offset=beat_offset or 0.0, lines=lines,
+                                                        lyrics=sung)
                 i916 = cinematic.render_cinematic_video(shots, audio, v916, accent, secs, title, sub, work / "cv",
                                                         bpm=float(bpm), beat_offset=beat_offset or 0.0, lines=lines,
-                                                        vertical=True, crf=24)
+                                                        vertical=True, crf=24, lyrics=sung)
                 return {"full_169": {"file": v169.name, **i169}, "full_916": {"file": v916.name, **i916},
                         "thumbnail": f169.name, "scenes": len(secs), "lyrics": len(lines or []),
                         "cinematic": len(shots)}

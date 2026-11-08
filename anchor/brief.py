@@ -93,7 +93,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     check, title_report = originality.checker(), {}
     song = songbook.pick(songbook.load(), lane.group or "any", rng("anchor-song", drop_id), history,
                          used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
-                         avoid_titles=tuple(avoid_titles), taken=check, report=title_report)
+                         avoid_titles=tuple(avoid_titles), taken=check, report=title_report,
+                         prefer=_cinematic_ready())
     theme = None
     if song is not None:
         # a long song (Model B, Kindness Needs Truth) gets the time to sing every word (2026-11-08)
@@ -379,3 +380,12 @@ def describe(profile: Profile, brief: dict, platform: str = "youtube") -> dict:
             "description": description(profile, brief, platform),
             "description_short": description(profile, brief, "short"),
             "caption_instagram": description(profile, brief, "instagram")}
+
+
+def _cinematic_ready() -> set[str]:
+    """Songbook songs whose cinematic shots are all made on the Mac (empty anywhere else)."""
+    try:
+        from .cinematic import ready_ids
+        return ready_ids()
+    except Exception:  # noqa: BLE001 - a missing folder never stops a drop
+        return set()
