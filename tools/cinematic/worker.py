@@ -30,13 +30,15 @@ from pathlib import Path
 import tomllib
 
 HOME = Path.home()
-REPO = Path(os.environ.get("ANCHOR_REPO", HOME / "anchor-gpu" / "repo-feat"))
+# its own clean clone of main, pulled at every run, so new storyboards and songs arrive by themselves
+REPO = Path(os.environ.get("ANCHOR_REPO", HOME / "anchor-gpu" / "cinematic" / "repo"))
 CLIPS = Path(os.environ.get("ANCHOR_CINEMATIC_DIR", HOME / "anchor-gpu" / "cinematic" / "clips"))
 LOG = CLIPS.parent / "worker.log"
 IDLE_S = int(os.environ.get("ANCHOR_CINEMATIC_IDLE_S", "600"))      # 10 minutes untouched
 MIN_FREE = int(os.environ.get("ANCHOR_CINEMATIC_MIN_FREE", "45"))   # % memory free before loading the model
 SHOTS = 6
-W, H, FRAMES, STEPS = 768, 448, 97, 30                             # about 4 s at 24 fps
+# square, so the 16:9 and the 9:16 both crop from it and fill the screen (Anchit, 2026-11-09)
+W, H, FRAMES, STEPS = 704, 704, 97, 30                             # about 4 s at 24 fps
 MODEL = "Lightricks/LTX-Video"
 NEG = "worst quality, inconsistent motion, blurry, jittery, distorted, deformed face, text, watermark, cartoon"
 BUSY_PROCS = ("Runner.Worker", "ace-synth", "ace-lm", "ace-qwen", "anchor make", "anchor motion")
@@ -131,7 +133,25 @@ CAMERA = {"A": ("fast handheld tracking", "whip pan", "running steadicam"),
           "B": ("slow push in", "steady locked-off frame", "slow lateral dolly")}
 
 
-def shots(song: dict) -> list[str]:
+def storyboards() -> dict[str, list[dict]]:
+    """Song id -> its storyboard (artist/songbook/storyboards/*.toml): twelve shots written from the
+    lyrics, in story order, three of them the hook's image."""
+    out = {}
+    for p in sorted((REPO / "artist" / "songbook" / "storyboards").glob("*.toml")):
+        for b in tomllib.loads(p.read_text()).get("boards", []):
+            out[b["id"]] = b["shots"]
+    return out
+
+
+def shots(song: dict, boards: dict | None = None) -> list[dict]:
+    """The song's shots: its storyboard when it has one, otherwise six from the template below."""
+    board = (boards if boards is not None else storyboards()).get(song["id"])
+    if board:
+        return [{"prompt": b["prompt"], "part": b.get("part", ""), "hook": bool(b.get("hook"))} for b in board]
+    return [{"prompt": p, "part": "", "hook": False} for p in template_shots(song)]
+
+
+def template_shots(song: dict) -> list[str]:
     """Six shots that tell the song's story (its one-line subject) in its genre's world, framed for
     its form and moving like its model. People are seen from behind, in silhouette or small in
     frame: faces are the model's weakest part."""
@@ -163,17 +183,49 @@ def songbook() -> list[dict]:
     return [s for s in songs if s["id"] not in used]
 
 
-def todo() -> list[tuple[dict, int, str]]:
+GROUP_OF = (("psy", "psy"), ("hip hop", "hiphop"), ("hiphop", "hiphop"), ("rap", "rap"))
+
+
+def queued_cinematic() -> list[dict]:
+    """Songs queued from the Sync with Suno page with the cinematic look, not released yet: they go
+    out next, so they are shot first (template shots from the title, the tags and the first lines)."""
+    try:
+        q = json.loads((REPO / "queue" / "queue.json").read_text())
+    except (OSError, ValueError):
+        return []
     out = []
-    for s in songbook():
-        for n, prompt in enumerate(shots(s), 1):
-            if not (CLIPS / s["id"] / f"shot-{n}.mp4").exists():
-                out.append((s, n, prompt))
+    for e in q.values():
+        if e.get("style") != "cinematic" or not e.get("suno_id") or e.get("released"):
+            continue
+        tags = (e.get("tags") or "").lower()
+        group = next((g for k, g in GROUP_OF if k in tags), "hardtech")
+        first = " ".join(ln for ln in (e.get("lyrics") or "").splitlines() if ln and not ln.startswith("["))[:160]
+        about = f"{e.get('title', '')}, {first}".strip(", ")
+        out.append({"id": e["suno_id"], "about": about, "groups": [group], "form": "story", "model": "A"})
+    return out
+
+
+def todo() -> list[tuple[dict, int, dict]]:
+    out, boards = [], storyboards()
+    queued = queued_cinematic()
+    for s in queued + songbook():
+        for n, shot in enumerate(shots(s, boards), 1):
+            if not (CLIPS / s["id"] / f"shot-{n:02d}.mp4").exists():
+                out.append((s, n, shot))
     # songs closest to done first, so whole songs finish rather than every song half done
     left: dict[str, int] = {}
     for s, _, _ in out:
         left[s["id"]] = left.get(s["id"], 0) + 1
-    return sorted(out, key=lambda x: (left[x[0]["id"]], x[0]["id"], x[1]))
+    first = {s["id"] for s in queued}
+    return sorted(out, key=lambda x: (x[0]["id"] not in first, left[x[0]["id"]], x[0]["id"], x[1]))
+
+
+def mark_complete(song: dict) -> None:
+    """A ``complete`` file once every shot of the song exists: the daily run then prefers it."""
+    want = len(shots(song))
+    d = CLIPS / song["id"]
+    if all((d / f"shot-{n:02d}.mp4").exists() for n in range(1, want + 1)):
+        (d / "complete").write_text(time.strftime("%Y-%m-%d %H:%M:%S\n"))
 
 
 def main() -> int:
@@ -181,6 +233,8 @@ def main() -> int:
     if reason:
         log(f"skip: {reason}")
         return 0
+    if (REPO / ".git").exists():
+        _run(["git", "-C", str(REPO), "pull", "-q", "--ff-only"])
     jobs = todo()
     if not jobs:
         log("skip: every unreleased song has its shots")
@@ -200,17 +254,20 @@ def main() -> int:
     pipe = LTXPipeline.from_pretrained(MODEL, torch_dtype=torch.bfloat16).to("mps")
     pipe.vae.enable_tiling()
     log(f"loaded in {time.time() - t0:.0f}s; {len(jobs)} shots to make")
-    for song, n, prompt in jobs:
+    total: dict[str, int] = {}
+    for song, n, _ in jobs:
+        total[song["id"]] = max(total.get(song["id"], 0), n)
+    for song, n, shot in jobs:
         r = why_not(running=True)
         if r:
             log(f"stop: {r}")
             return 0
-        out = CLIPS / song["id"] / f"shot-{n}.mp4"
+        out = CLIPS / song["id"] / f"shot-{n:02d}.mp4"
         out.parent.mkdir(parents=True, exist_ok=True)
         seed = zlib.crc32(f"{song['id']}/{n}".encode()) % 2**31
         t1 = time.time()
         try:
-            frames = pipe(prompt=prompt, negative_prompt=NEG, width=W, height=H, num_frames=FRAMES,
+            frames = pipe(prompt=shot["prompt"], negative_prompt=NEG, width=W, height=H, num_frames=FRAMES,
                           num_inference_steps=STEPS, guidance_scale=3.0,
                           generator=torch.Generator().manual_seed(seed),
                           callback_on_step_end=guard).frames[0]
@@ -221,10 +278,10 @@ def main() -> int:
         export_to_video(frames, str(tmp), fps=24)
         tmp.rename(out)
         took = time.time() - t1
-        out.with_suffix(".json").write_text(json.dumps({"prompt": prompt, "seed": seed, "size": [W, H],
-                                                         "frames": FRAMES, "steps": STEPS, "model": MODEL,
-                                                         "seconds": round(took)}))
+        out.with_suffix(".json").write_text(json.dumps({**shot, "seed": seed, "size": [W, H], "frames": FRAMES,
+                                                         "steps": STEPS, "model": MODEL, "seconds": round(took)}))
         log(f"made {song['id']} shot {n} in {took:.0f}s")
+        mark_complete(song)
     return 0
 
 
