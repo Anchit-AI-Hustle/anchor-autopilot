@@ -10,6 +10,7 @@ on:
       - "site/data/**"
       - "site/covers/**"
       - "site/og.jpg"
+      - "queue/**"
   schedule:
     - cron: "17 2 * * *"
   workflow_dispatch:
@@ -17,14 +18,18 @@ on:
 permissions:
   contents: read
 
+# Anchit, 2026-11-09: "ensure all ci tests pass successfully always". The robot pushes to main
+# several times an hour, and each push used to cancel the run in progress, so the 36 min
+# pipeline test never finished (cancelled on every push since 2026-11-08 19:51). A running suite
+# now always finishes; only a waiting one is replaced by the newer push.
 concurrency:
   group: ci-slow-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   slow:
     runs-on: ubuntu-24.04
-    timeout-minutes: 40
+    timeout-minutes: 60
     strategy:
       fail-fast: false
       matrix:
@@ -37,4 +42,5 @@ jobs:
           cache: pip
       - run: bash scripts/install-ffmpeg.sh
       - run: pip install -r requirements.txt -r requirements-dev.txt -r requirements-gate.txt
-      - run: python -m pytest -q -m slow -n 0 tests/${{ matrix.file }}.py
+      # the whole-pipeline file is the long one (36 min on one core): it runs on all four cores
+      - run: python -m pytest -q -m slow -n ${{ matrix.file == 'test_pipeline' && '4' || '0' }} --durations=8 tests/${{ matrix.file }}.py
