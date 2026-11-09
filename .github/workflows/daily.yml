@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       date:
-        description: "Drop id: YYYY-MM-DD, YYYY-MM-DD-2 ... -5. Default: every song today still needs, as the YouTube quota allows"
+        description: "Drop id(s): YYYY-MM-DD, YYYY-MM-DD-2 ... -5, comma separated for several. Default: every song today still needs, as the YouTube quota allows"
         required: false
         default: ""
       publish_now:
@@ -93,7 +93,8 @@ jobs:
         id: plan
         run: |
           if [ -n "${{ inputs.date }}" ]; then
-            DROPS="[\"${{ inputs.date }}\"]"
+            # one id or several, comma separated (Anchit, 2026-11-09: "complete right now")
+            DROPS="$(python -c "import json,sys;print(json.dumps([d.strip() for d in sys.argv[1].split(',') if d.strip()]))" "${{ inputs.date }}")"
           else
             # every song today still needs, as many as the YouTube quota budget has room for
             DROPS="$(python -m anchor plan-drops 2>plan.txt)"
@@ -525,7 +526,7 @@ jobs:
     needs: [plan, make, pages]
     if: ${{ !cancelled() && needs.pages.result == 'success' && needs.pages.outputs.made != '' && inputs.dry_run != true }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 150   # up to 5 full-length uploads, Shorts and Reels, one after the other
+    timeout-minutes: 355   # up to 5.5 h waiting for the quota reset, then the uploads one after the other
     env:
       MADE: ${{ needs.pages.outputs.made }}
       PAGE_URL: ${{ needs.pages.outputs.page_url }}
@@ -564,6 +565,20 @@ jobs:
 
       # Each song in turn: YouTube with the channel's own credentials (YT_*), the Short through
       # Buffer, then recorded at once so the quota check before the next song counts it.
+      # Songs made between midnight UTC and the quota reset (08:00 UTC, midnight Pacific) would
+      # land on a quota day the earlier runs have already spent: wait for the reset instead of
+      # failing (Anchit, 2026-11-09: "complete right now" at 07:00 IST). Never waits past what
+      # the job allows; a longer wait leaves the quota check below to hold the song.
+      - name: Wait for the YouTube quota reset when it is minutes or hours away
+        run: |
+          NOW=$(date -u +%s)
+          RESET=$(date -u -d "$(date -u +%F) 08:05" +%s)
+          WAIT=$(( RESET - NOW ))
+          if [ "$WAIT" -gt 0 ] && [ "$WAIT" -le 14400 ]; then
+            echo "::notice::Waiting $(( WAIT / 60 )) min for the YouTube quota reset (08:05 UTC) before posting"
+            sleep "$WAIT"
+          fi
+
       - name: Publish each song to YouTube (full track and Short) and Instagram, and record it
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
