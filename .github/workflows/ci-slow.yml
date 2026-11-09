@@ -44,3 +44,5 @@ jobs:
       - run: pip install -r requirements.txt -r requirements-dev.txt -r requirements-gate.txt
       # the whole-pipeline file is the long one (36 min on one core): it runs on all four cores
       - run: python -m pytest -q -m slow -n ${{ matrix.file == 'test_pipeline' && '4' || '0' }} --durations=8 tests/${{ matrix.file }}.py
+        env:
+          ANCHOR_SCENE_WORKERS: "1"     # the test files run side by side already
