@@ -124,3 +124,14 @@ def test_every_sung_word_lands_big_when_it_is_sung(tmp_path):
         assert len([ln for ln in ass.splitlines() if ",Halo," in ln]) == 4
     assert SC.hero_size("SUPERCALIFRAGILISTIC", 1080, 250) * 0.5 * 20 <= 1080 * 0.86 + 1
     assert SC.hero_size("GO", 1920, 230) == 230
+
+
+def test_scenes_split_into_balanced_parts_of_neighbours():
+    """Anchit, 2026-11-09: "the songs shouldnt take so long": the scenes render in parts side by side."""
+    from anchor.scenes import _parts
+    fr = [(0, 300), (300, 900), (900, 1000), (1000, 2400), (2400, 2700), (2700, 3000)]
+    for k in (1, 2, 3, 4, 6, 9):
+        groups = _parts(fr, k)
+        assert [i for g in groups for i in g] == list(range(len(fr)))          # every scene once, in order
+        assert 1 <= len(groups) <= min(k, len(fr))
+    assert _parts(fr, 1) == [list(range(6))]
