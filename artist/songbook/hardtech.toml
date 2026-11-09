@@ -1,754 +1,750 @@
 # ANCHOR songbook - hardtech group (hard bounce, rawstyle bounce, hard groove, hyper acid)
-# Rewritten 2026-11-08 on the two models in GUIDE.md: Model A (Outrun Your Shadow) and Model B (Kindness Needs Truth).
+# Rewritten 2026-11-09 to "Themes and titles (restudied 2026-11-09)" in GUIDE.md: universal first-person
+# themes from the eight families, 1 to 4 word titles that are the hook, on Model A and Model B.
 
 [[songs]]
-id = "five-stars-for-what"
-title = "Five Stars for What?"
+id = "burn-the-blueprint"
+title = "Burn The Blueprint"
+family = "defiance"
 form = "revolt"
 model = "A"
 groups = ["hardtech"]
-voice = "hoarse male tenor in his thirties with a Mumbai street rasp, rapid double-time shouting locked to the kick, real breaths between bars"
-about = "a food delivery rider climbs nine floors in the rain for three stars, then two hundred riders ride slow through the city together"
+voice = "raw male tenor rave shouter with gravel at the top of his range, double time bars punched onto the hard techno kick, real breaths between lines"
+about = "I tear up the plan that was drawn for my life, set it alight in front of the crowd and start building my own"
 lyrics = """
 [Intro]
-Rain in the visor, nine floors up, so tell me, five stars for what?
+They drew my whole life on a sheet in pencil, so tonight I burn the blueprint
 
 [Verse 1]
-Eleven at night and the rain's coming sideways, I'm cutting through somebody's lane
-Forty-one orders since breakfast, my knees are on fire, the scooter is dragging its chain
-Nine floors of stairs 'cause the lift has a sign on it, soup in the bag, a hole in my shoe
-You open the door in a towel on a call, take the bag, never once look at who
-Three stars 'cause the fries had gone soft, like I fried them myself on the seat of the bike
-Three stars is a fine, and the fine is the dinner my daughter was having tonight
-I eat standing up at a red traffic light, half a samosa, then gone on the green
-Smiling for stars like a dog for a biscuit, the wettest clean shirt that you've seen
-The voice in my helmet says, "Customer's king," so I bow to a towel in a hall
-Hungry man carries the feast up the stairs, and the full man complains of the salt
+They measured my steps with a ruler of iron and told me the road had been laid
+Every wall had a number, every door had a lock, every lock had a key I never made
+Stand in the line, keep your voice in your pocket, they said it would keep me alive
+But a heart in a box is a heart on a fuse and I felt mine counting down from five
+There's a crack in the ceiling, the bass in the floor is shaking the dust off the beams
+And the paper they gave me is folded so tight that it's tearing apart at the seams
+So I strike the first match on the heel of my boot and I hold it up high in the air
+Let the edges go orange, the corners go black, let the ink of their promises tear
+Every line that they drew is a rope I untie, every rule is a brick I can throw
+Every name that they gave me goes up in the smoke and I'm watching the ashes glow
 
 [Hook]
-Five stars for what?
-Five stars for what?
+Burn the blueprint
+Burn the blueprint, build it again
 
 [Drop]
-Ride slow, ride slow
+Light it up
 
 [Verse 2]
-Tuesday a cab didn't see him, now Raju's in plaster, they sent him a card saying "care"
-Wednesday we met where the flyover drips, two hundred wet jackets, nobody scared
-Thursday at nine every phone in the city goes dead in a pocket at once
-Kitchens keep ringing, the paneer is sweating, the ice cream is melting, it's done
-We ride in a line at a walking pace, horns going off like a wedding band
-Aunties on balconies clapping, a cop tapping time on his tank with his hand
-You wanted us faster, we gave you the slowest parade that the ring road has seen
-Two hundred visors, two hundred names that you never asked, now on the evening screen
-Not asking for stars, I am asking for brakes and a rupee for every stair
-Not asking for love, just look in my eyes when you take what I carried up there
+Now the fire is a flag and the floor is an army that rises and roars at the flame
+They wanted me kneeling, they wanted me grateful, they wanted me quiet and tame
+I kicked in the door with the blood on my knuckles, I walked through the glass and the rain
+I'm the hammer, the anvil, the sparks on the steel and I'm forging a brand new frame
+No more permission, no more petition, I'm drawing the map on the back of my hand
+Every step that I take is a stake in the ground and the border is where I stand
+Give me the rubble, I'll give you a tower, give me the ashes, I'll give you a sky
+Every kick is a hammer, a nail in their plan, and the hammer is keeping me alive
+They can rebuild every wall in the morning, I'll be up on the top with a light
+And the plans that they made for the rest of my days are the smoke in the air tonight
 
 [Hook]
-Five stars for what?
-Five stars for who?
+Burn the blueprint
+Burn the blueprint, we build it again
 
 [Outro]
-Door opens
-You look up
-"Thank you, bhaiya"
-That's the five
-Ride home
+Paper burns
+Ink runs
+The lines are gone
+Draw your own
+Burn the blueprint
 """
 
 [[songs]]
-id = "walls-dont-remember"
-title = "Walls Don't Remember"
+id = "honest-wounds-heal"
+title = "Honest Wounds Heal"
+family = "truth"
 form = "argument"
 model = "B"
 groups = ["hardtech"]
-voice = "soft-spoken male baritone, warm and slightly nasal, half-sung verses that open into a full chest voice on the chorus"
-about = "a son argues with himself over selling his late mother's flat and decides what he can carry out of it"
+voice = "warm female alto with a husky low end, half sung verses over hard techno that lift into a full open belt on the chorus, close and conversational"
+about = "pride says keep the hurt covered, the heart says let it breathe, and I learn that only the wound I show can close"
 lyrics = """
 [Intro]
-There's a pencil line on the kitchen door with our heights from every June
-I stood against it with the agent waiting, and I didn't leave till noon
+I wore a bandage on a wound I swore was never there
+Smiled through the sting so nobody would stop and stare
 
 [Verse 1]
-Mum's been gone eleven months, the flat's been locked for ten
-The broker calls each Sunday, "Sir, this price won't come again"
-My heart says, "That's her cooker, that's the step where Papa fell"
-My mind says, "That's a leaking roof, and tax, and rusted locks as well"
-I pay a maid to sweep a house that nobody walks through
-I pay a guard to watch the dust, the calendar still on oh-two
-My wife says, "We can't keep a museum on a Pune salary"
-My sister says, "You sell it, you sell her," and hangs up on me
-Was I loyal, or afraid of having no door to go back to?
-Is keeping it a way to love her, or to not get through?
-One voice holds the keys like a rosary, one adds up the cost
-Both of them are grieving, both are scared of what gets lost
+I learned to keep the bleeding underneath a clean white sleeve
+Learned that if you never flinch, then nobody will leave
+Held my breath in every fight, held a laugh above the ache
+Held a glass so tight it cracked and called it no mistake
+My pride says, "Keep it covered, they will use it if they see"
+My heart says, "You are rotting in a room without a key"
+One of them wants armour, one of them wants air on the skin
+Both of them are scared of what the light would let back in
+Was I strong, or was I hiding from the hands that tried to help?
+Was I brave, or just too frightened to be honest with myself?
 
 [Chorus]
-Walls don't remember, the paint only peels
-It's the people who carry the way a home feels
-I can lock up a kitchen, I can't lock up a song
-She never lived in the bricks, she lived in us all along
-So why do I pay for a door that I'm scared to unlock?
-Walls don't remember, but I'm still afraid to stop
-
-[Drop]
+Honest wounds heal, the hidden ones spread
+Truth is a fire that burns what is dead
+Show me your scar and I'll show you mine
+Blood in the open will close in time
+I'd rather bleed loud than whisper a lie
+Honest wounds heal, so I'm letting them dry
 
 [Verse 2]
-I went back on her birthday with a broom and a cardboard box
-Found her glasses in the drawer beside the matches and the locks
-A tiffin with my name in shaky capital letters
-A list inside the cupboard, "less chilli, he gets fevers"
-I sat down where the sofa was, I laughed until I cried
-'Cause the walls had heard it all and kept none of it inside
-The neighbour's girl came in, the one who brought Mum milk each day
-She rolled a crooked roti on the counter, Mum's exact way
-And I saw my mother's wrist in hers, the turn, the flour, the hurry
-Mum was in her hands, and the house was only bricks and worry
-My heart still says, "Don't sell the floor she walked on every day"
-My mind says, "She'd have sold it in a week if you'd be okay"
+There was a night I hit the floor and nobody was told
+Wiped the mirror, fixed my face and blamed it on the cold
+You knocked upon the door, I said, "I'm fine," between my teeth
+You heard the shaking in the word and you did not believe
+You sat down on the step outside and waited out the rain
+Didn't ask me for the story, didn't ask me for the pain
+And something in the waiting cracked the plaster on my chest
+Like a window thrown wide open in a house that held its breath
+My pride still says, "They'll pity you, they'll whisper when you go"
+My heart says, "Let them whisper, at least the ones who stay will know"
+
+[Drop]
+Let it breathe
 
 [Chorus]
-Walls don't remember, the paint only peels
-It's the people who carry the way a home feels
-I can lock up a kitchen, I can't lock up a song
-She never lived in the bricks, she lived in us all along
-So why do I pay for a door that I'm scared to unlock?
-Walls don't remember, but I'm still afraid to stop
+Honest wounds heal, the hidden ones spread
+Truth is a fire that burns what is dead
+Show me your scar and I'll show you mine
+Blood in the open will close in time
+I'd rather bleed loud than whisper a lie
+Honest wounds heal, so I'm letting them dry
 
 [Bridge]
-Take the door frame with the pencil lines
-Leave the leaking roof behind
-Take the cooker, take the bangles
-Sell the bricks
-Keep her
+No more sleeve
+No more paint on the crack
+No more smile
+That I have to take back
+Here is the cut
+Here is the scar
+Here is the proof
+Of how far
 
 [Final Chorus]
-Walls don't remember, so I'll let the paint peel
-I'm the one who carries the way a home feels
-I can sell the kitchen and still keep the song
-She never lived in the bricks, she lived in us all along
-So I'm handing the key to a family of four
-Walls don't remember, but their kids will, on this floor
+Honest wounds heal, the hidden ones spread
+Truth was the fire that burned what was dead
+You showed me your scar, so I showed you mine
+Blood in the open has closed in time
+I'd rather bleed loud than live in a lie
+Honest wounds heal, and I'm watching them dry
 
 [Outro]
-There's a pencil line on a door in my flat in Pune now
-My daughter stands against it every June, and I show her how
+I took the bandage off and left it on the stair
+The wound I swore was never there is healing in the air
 """
 
 [[songs]]
-id = "wheres-the-stage"
-title = "Where's the Stage?"
+id = "heartbeat-ignition"
+title = "Heartbeat Ignition"
+family = "awakening"
 form = "story"
 model = "A"
 groups = ["hardtech"]
-voice = "bright young female mezzo with a giggle in it, quick chatty double-time verses, a terrace-chant hook she leads like a team captain"
-about = "six friends on a night bus to a Goa festival break down on a hill road and throw the party at a roadside dhaba instead"
+voice = "bright young male baritone rapper, clipped and urgent double time flow riding a hard techno kick, breathless and grinning on the hook"
+about = "I walk in from the rain feeling nothing, the first kick hits and something asleep in my chest starts to burn again"
 lyrics = """
 [Intro]
-Wristbands on, bus dead on the ghat, so tell me, where's the stage?
+One kick in the smoke and the blood remembers, heartbeat ignition
 
 [Verse 1]
-Six of us packed on a sleeper bus, Pune to Goa, one charger and chikki to share
-Meher's got glitter all over her eyebrows, Kabir's in sunglasses, nobody cares
-Tickets we saved for since March, skipping lunches, walking to college in heat
-Four hundred kilometres to stand at a barrier, jumping until we can't feel our feet
-Then on the ghat there's a bang and a hiss, and the driver gets out with a bidi
-Says, "Mechanic comes morning," and smiles like it's simple, like waiting is easy
-Fog on the hairpins, a dhaba with one yellow bulb and a dog and a man frying eggs
-Phones on two percent, the lineup is starting without us, Meher cries on Kabir's legs
-Eight months of waiting for one single night, and the night's on the far side of a hill
-Dhaba man flips us an egg and he says, "You don't chase a good night, you build it, so build"
+I came in from the rain with my hands in my pockets and nothing alive in my chest
+Twenty steps down to a door made of iron, a stamp on the wrist, and the rest
+Was a wall of hot air and a cloud full of sweat and a floor that was humming below
+I was leaning alone on a pillar in shadow, too tired to stay or to go
+Then the kick came in low like a fist on a coffin, it rattled the glass in my hand
+And a pulse that I thought had gone quiet for years stood up like it heard a command
+There's a spark in the veins on the back of my arm and it's climbing the side of my neck
+Every hair on my skin is a match being struck and the fire is running unchecked
+Every breath is a fuse and it's running up fast to the powder I've kept in my ribs
+I've been sleeping for years with my eyes open wide and tonight the sleeper lives
 
 [Hook]
-Where's the stage?
-Right here, right here
+Heartbeat ignition
+Heartbeat ignition
 
 [Drop]
-Kabir, turn it up
+Wake up
 
 [Verse 2]
-Kabir puts the speaker up on the bus roof, the driver wires it in, swearing
-Truckers pull over to see why the hill's shaking, one with a dholak, one staring
-A hundred and sixty on a speaker the size of a tiffin, the bass off the rock
-Meher's up on a crate with her arms in the fog, and she's counting us into the drop
-The dog's going wild and the egg man is jumping, a trucker is teaching a step
-Dust on the wristbands that never got scanned, and nobody has a regret
-Four in the morning the mechanic shows up, and he dances before the repair
-Nobody filmed it, the phones were all dead, so it lives in the people there
+A stranger beside me throws both of her arms to the ceiling and laughs at the sound
+I don't know her name but I know what she feels, it's the same thing that's lifting the ground
+The strobe is a camera that catches us flying, a thousand of us in a frame
+And the lights in the rafters are flashing in time with the blood that is calling my name
+I'm shaking the rust off my shoulders and knees, I'm kicking the dust off my soul
+Every year that I spent as a ghost in a coat is a coal that is starting to glow
+Heart at a hundred and fifty, the floor at a hundred and fifty, the same
+There's a fire in this room that was always inside me and only the kick knew its name
+Now I'm walking back out to the rain with my chest open wide and the morning in view
+And the street is still grey but my pulse is a drum and it's beating the whole street new
 
 [Hook]
-Where's the stage?
-Right here, right here
+Heartbeat ignition
+Feel the heartbeat ignition
 
 [Outro]
-Sunrise on the ghat
-Wristbands never scanned
-We never made it
-Best night we ever had
-Where's the stage? Under us
+Rain on my face
+Heat in my hands
+I'm awake
+Heartbeat ignition
+Go
 """
 
 [[songs]]
-id = "i-was-never-busy"
-title = "I Was Never Busy"
+id = "holding-your-wreckage"
+title = "Holding Your Wreckage"
+family = "devotion"
 form = "confession"
 model = "B"
 groups = ["hardtech"]
-voice = "breathy male tenor, close and hushed in the verses, cracking open into a full belt on the final chorus"
-about = "a man admits to his oldest friend that three years of 'I'm busy' were shame, then gets on a bus to his door"
+voice = "smoky female mezzo, intimate and slightly cracked on the verses, swelling into a soaring rave anthem chorus, every breath audible"
+about = "I admit I nearly walked away from someone falling apart, then say out loud that I am staying and holding on through the night"
 lyrics = """
 [Intro]
-Your name still sits at the top of my phone with a missed call from March
-I watched it light up on the table and I let it ring out in the dark
+There's glass in my palms from the night that you fell
+I never pulled it out and I never could tell
 
 [Verse 1]
-I told you I was busy when you got the job in Bangalore
-I said that I was busy when you rang me from the hospital floor
-I sent a heart instead of coming when your father passed away
-I said the trains were full that week, I sat at home all day
-I watched your wedding on a story, thirty seconds, gone
-I paused it when you scanned the crowd like you were missing someone
-Here's the thing I never said, the thing I didn't want to show
-I wasn't busy, I was ashamed of how slow I was to grow
-You were building something real, I was sleeping until two
-When your name came up I felt the size of what I didn't do
-My pride says, "Keep it quiet, he's got friends, he doesn't need you there"
-My gut says, "Every week you wait, it costs another year"
-So a short call turned into a long one I could never make
-And I called it being busy, 'cause busy's easy to fake
+I'll admit it here tonight, I've been tired for a while
+I've been carrying your storm behind a borrowed smile
+You smashed the mirror in the middle of the night
+And I swept up the silver till the window turned white
+Every friend says leave, every voice says go
+Says a heart that keeps on bleeding has a limit you should know
+And the truth I never told you, 'cause I wanted to be strong
+Is that some nights I packed a bag and sat there all night long
+I'm confessing it out loud, the doubt was real, the fear was true
+But every time I reached the door, the door was facing you
 
 [Chorus]
-I was never busy, I was scared
-Scared you'd see the mess and still be there
-Scared you'd ask me how I'm doing and I'd have to say it straight
-So I let a whole year happen and I called it running late
-I was never busy, I was small
-And the easiest thing to do was not to call
-
-[Drop]
+I'm holding your wreckage, I'm holding it tight
+Broken and burning, I'm here through the night
+Let the fire take the walls, let the rain take the roof
+I'm holding your wreckage, my hands are the proof
 
 [Verse 2]
-Class eleven, cricket nets, you bowled me, bought me Maggi after
-We swore we'd share a flat in Bombay, wrote it on a desk in marker
-You paid my fees the month my mother's shop shut down, and kept it quiet
-I found out from your sister, and I paid you back with silence
-Now I'm thirty-one, I've got a job that doesn't need a tie
-A rented room, a plant I've kept alive, I'm learning how to try
-I'm not calling 'cause I'm fixed now, I'm not calling with a win
-I miss you, that's the reason, and I'm done not letting you in
-A friend you're hiding from is just a door you're painting shut
-Every coat I put on it locked me in, not you out
-My pride still says, "He's moved on, you'll just embarrass him again"
-My gut says, "Then embarrass him, he's still your oldest friend"
+I remember who you were before the fire caught your name
+Barefoot on the tarmac like you'd never heard of pain
+You were the one who lifted me the night I hit the floor
+Held my shaking head and stayed till morning at the door
+So don't tell me this is weakness, don't call it a cage
+Love is not a promise that you break when you're afraid
+I'm scared, I'm saying it out loud, I'm scared of what you'll be
+But I'm more afraid of any world where you're not next to me
+The doubt is in my pocket and the glass is in my skin
+I'm still standing in the ruins and I'm still letting you in
+
+[Drop]
+Hold on
 
 [Chorus]
-I was never busy, I was scared
-Scared you'd see the mess and still be there
-Scared you'd ask me how I'm doing and I'd have to say it straight
-So I let a whole year happen and I called it running late
-I was never busy, I was small
-And the easiest thing to do was not to call
+I'm holding your wreckage, I'm holding it tight
+Broken and burning, I'm here through the night
+Let the fire take the walls, let the rain take the roof
+I'm holding your wreckage, my hands are the proof
 
 [Bridge]
-No speech, no gift, no clever line
-Just a bus to Bangalore at nine
-If you shut the door, I'll understand
-But I'm knocking with my own hand
+I'm not a saint
+I'm not your shield
+I'm just a pair of hands
+That will not yield
+Fall if you have to
+I'll be underneath
 
 [Final Chorus]
-I was never busy, I was scared
-Now I'm standing at your gate, and I'm finally here
-If you ask me how I'm doing, I will tell you, I'll say it straight
-I let three whole years happen, and I'm sorry that I'm late
-I was never busy, I was small
-Now I'm big enough to knock, so I came, I didn't call
+I'm holding your wreckage, and I'm holding it right
+We're raising the walls again, stone by stone in the night
+Let the fire take the past, let the rain wash the proof
+I'm holding your wreckage, and we're building a roof
 
 [Outro]
-Your name lights up my phone again, the missed call from March is gone
-You're in the doorway, phone still in your hand, saying, "Come on"
+There's glass in my palms and I'll leave it there still
+Every shard is a promise, I held and I will
 """
 
 [[songs]]
-id = "the-car-is-mine"
-title = "The Car Is Mine"
+id = "glass-floor-ritual"
+title = "Glass Floor Ritual"
+family = "ritual"
 form = "celebration"
 model = "A"
 groups = ["hardtech"]
-voice = "big-chested male baritone in his fifties, gravelly and proud, barked double-time bars like a wedding band leader, a full-throat shout on the hook"
-about = "a cab driver pays the last loan installment after eight years and drives his whole family to the sea at midnight"
+voice = "big female soul belter with a festival rasp, call and response shouts to a hard techno crowd, a gospel lift on every hook"
+about = "the first night the whole crowd is back together, and the dance floor becomes a ceremony of a thousand stamping feet"
 lyrics = """
 [Intro]
-Last stamp on the passbook, Sunita, say it with me, the car is mine
+Shoes on the glass and your hands to the fire, this is the glass floor ritual
 
 [Verse 1]
-Eight years of nights at the airport, I slept with the seat back, the meter still on
-Ninety-six payments, the fifth of the month, in the queue at the bank before dawn
-Drunk boys in the back, a bride with her mascara running, a surgeon who cried on the phone
-Took every one of them home at three in the morning, and never once took myself home
-Sunita stitched blouses at night to cover the months when the airport went quiet and slow
-Chhotu wore his cousin's old shoes to sports day and smiled like he didn't know
-Every scratch on the bumper's a bill, and the dent is the monsoon of twenty-one
-Every rupee went into the seat, and the seat was the bank's till the debt was gone
-Ma said, "A loan is a guest who eats first and leaves last," and ours ate for eight years
-Today a clerk stamped one red word, and I stood at his window in tears
+Midnight is striking, the lights coming down and the bodies come in through the smoke
+Every face is a candle, every arm is a branch and every shout is a spell that we spoke
+There's a floor made of glass with a fire beneath it, it flares every time that we land
+We are stamping together, a thousand of heels, and the heat climbs up into our hands
+All the weight of the week that we dragged to the gate, we are dropping it down at the door
+All the bruises we carried are drums for the night and we're beating them into the floor
+Look at the ceiling, it's sweating like we are, the walls have a pulse of their own
+I can feel you beside me, I can feel you behind me, I've never been less alone
+We were scattered like sparks for a year and a winter, and now we're a bonfire again
+So raise up your arms like you're calling the rain and the rain will come pouring in
 
 [Hook]
-The car is mine
-Say it loud, the car is mine
+Glass floor ritual
+Stamp it, glass floor ritual
 
 [Drop]
-Horn, horn, horn
+Stamp, stamp, stamp
 
 [Verse 2]
-Midnight I wake up the house, Sunita in slippers, Chhotu still holding his pillow
-Ma up front with marigolds, tying a garland across the glass like a halo
-Meter switched off for the first time in eight years, the little red flag folded down
-Nobody's paying and nobody's flying, we're taking the long way through town
-Past every hotel where I waited, the bridge where I changed a flat in the rain
-Sea road at two, all the windows down, horn like a band at a wedding again
-Chhotu climbs onto my lap and he steers, and the cops at the corner just grin
-Sunita is laughing so hard she is crying, "Eight years and the car finally lets us in"
-Waves on the bonnet, the radio up, a hundred and sixty shaking the door
-I drove every stranger in Mumbai to bed, now I drive us four, nobody more
+The drop is a bell and we answer it, jumping, the glass is a mirror of gold
+Every heartbeat is borrowed and given right back, every hand is a hand you can hold
+There's a girl on the shoulders of someone she met in the queue, and she's touching the sky
+There's a boy who was crying outside in the rain and he's laughing so hard he could fly
+We don't know the words to the prayer that we're praying, we only know when it begins
+When the bass hits the bottom, the bodies go up and the room is a storm of our skins
+The floor and the drum and the pulse in our necks are all keeping the time as one
+Let the glass take the sweat and the fire take the fear, we are dancing it into the sun
+When the morning comes up we'll be dust on the pavement, we'll walk to the trains in a daze
+But the floor will remember the heat of our feet and the fire will remember our praise
 
 [Hook]
-The car is mine
-Say it loud, the car is ours
+Glass floor ritual
+Stamp it, glass floor ritual
 
 [Outro]
-Passbook on the dashboard
-Last page
-Paid
-Not mine
-Ours
+Feet on the glass
+Fire below
+One more time
+Glass floor ritual
+Home
 """
 
 [[songs]]
-id = "why-did-you-stay"
-title = "Why Did You Stay?"
-form = "dialogue"
-model = "B"
-groups = ["hardtech"]
-voice = "duet of a husky male baritone and a clear bright female mezzo, trading verses like a long distance phone call, meeting in close harmony on the chorus"
-about = "a brother abroad and the sister who stayed home with their parents finally ask each other why, and swap places for one July"
-lyrics = """
-[Intro]
-Two cups of chai on two continents, both going cold on the call
-You in a car park in Toronto, me on the stairs in the hall
-
-[Verse 1]
-You pick up on the first ring, like you have for nine years straight
-I'm parked in Toronto snow, you're counting Papa's pills on a plate
-I send the money every month, a photo of the lake
-You send a voice note, Mummy laughing, I play it till it aches
-I hear the news when it's over, the stent, the scan, the scare
-You tell it like the weather, like you weren't the one there
-Everybody calls me lucky, the boy who got away
-Nobody asks you anything, they just assume you'll stay
-So I'm asking you tonight, and I'm asking it for real
-You topped the class, you had the offer letter, you had the will
-Why did you stay when you could have gone ahead of me?
-Was it love, or did we leave you with no other way to be?
-
-[Chorus]
-Why did you stay? Why did you go?
-Two kids from one small kitchen with the same old radio
-One of us got the airport, one of us got the gate
-One of us got the distance, one of us got the weight
-Why did you stay? Why did you go?
-Maybe both of us were brave and neither one said so
-
-[Drop]
-
-[Verse 2]
-You want the truth, so here it is, I'm thirty-four and tired
-I teach where we learned to read, I sing with the same old choir
-I know Papa's sugar levels and the state of Mummy's knees
-I stayed 'cause somebody had to, you'd already gone overseas
-I stayed because I was the daughter, here that's just a fact
-But I stayed 'cause I was scared too, and nobody told me to pack
-It's easier to be needed than to fail in someplace strange
-It's easier to hold the plate than find out you can change
-I've watched your life on a screen, the snow, the friends you've got
-I've hated you a little, and I've loved you a lot
-Everybody calls you lucky, but I hear you on the phone
-You've got a whole new country, and you eat dinner alone
-
-[Chorus]
-Why did you stay? Why did you go?
-Two kids from one small kitchen with the same old radio
-One of us got the airport, one of us got the gate
-One of us got the distance, one of us got the weight
-Why did you stay? Why did you go?
-Maybe both of us were brave and neither one said so
-
-[Bridge]
-"One month," you say, "I'll take July"
-"I've never been on a plane," I reply
-"Then go," you say, "go see the lake"
-"I'll count the pills, I'll stay awake"
-
-[Final Chorus]
-Why did you stay? Why did you go?
-Two kids from one small kitchen, finally saying so
-This July you take the airport, and I'm the one at the gate
-You get to feel the distance, and I get to hold the weight
-Why did you stay? Why did you go?
-Both of us were brave, and now we've both said so
-
-[Outro]
-Two cups of chai in one kitchen, July rain against the wall
-Your boarding pass on the fridge, and Mummy laughing down the hall
-"""
-
-[[songs]]
-id = "am-i-too-loud"
-title = "Am I Too Loud?"
+id = "teeth-in-the-mirror"
+title = "Teeth In The Mirror"
+family = "inner-demons"
 form = "revolt"
 model = "A"
 groups = ["hardtech"]
-voice = "raw female alto with a punk edge, clipped rapid-fire verses, a full-throat scream on the hook that the crowd throws back"
-about = "a woman told since class four to keep her voice down finds it again in the front row of a festival"
+voice = "snarling male bass baritone, low and gritty, rapid double time bars that spit on the consonants over hard techno, a shouted hook"
+about = "I stop running from the voice in my own head, stare down the grin in the mirror and make it answer to me"
 lyrics = """
 [Intro]
-Teacher, aunty, manager, all of you, tell me, am I too loud?
+Every time I wash my face there's teeth in the mirror
 
 [Verse 1]
-Class four, sat on my hands 'cause I answered before Sister finished the question
-Class nine, I laughed in the prayer line, a letter went home, Papa called it a lesson
-Aunties at weddings, "A girl should be soft," while their husbands were yelling the score
-Twenty-two, hired, the manager smiled, "Bring a little less of you through the door"
-I learned to say sorry for sneezing, I learned how to whisper my name on a call
-I learned how to laugh with my hand on my mouth like a secret I stole from the wall
-Swallowed my words till they piled in my chest like the bricks on a site in July
-Headaches at night, my jaw on the pillow, a fist I could never untie
-"Be grateful, be good, keep it down," said the voice that I thought was my own all along
-But a bird that is told it's too loud doesn't stop being a bird, it just forgets the song
+There's a grin on the glass when I lean to the sink and it isn't the grin that I wear
+It knows every time that I folded and ran, it knows every name of my fear
+It whispers at four when the ceiling is spinning, it tells me I'll never be clean
+It laughs when I stumble, it bites when I'm tired, it lives in the cracks in between
+I've been feeding it silence, I've been feeding it bottles, I've been feeding it nights on my own
+And it grows like a fire in a field in the summer, it eats every inch that I own
+But the bass in the floor is a war drum tonight and the war drum is calling my name
+I'm done with the hiding, I'm done with the running, I'm stepping right into the flame
+So I grip both sides of the cold porcelain and I stare at the thing in the glass
+And I tell it the truth that it's scared of the most, that your reign over me will not last
 
 [Hook]
-Am I too loud?
-Am I too loud?
+Teeth in the mirror
+Show me your teeth in the mirror
 
 [Drop]
-Louder
+Bite back
 
 [Verse 2]
-Then Saturday comes with a field full of people, the bass like a door kicked in
-Fifty thousand are screaming the words, and nobody's sorry for the din
-I open my mouth and a sound I've kept since class four comes out of me whole
-The girl next to me screams back, then her sister, and then the whole of the row
-Every sorry I swallowed comes up as a roar, every whisper comes due
-The nun and the aunties, the manager's smile, I am screaming them all the way through
-My throat is on fire, my jaw is unlocked, and my hands are not under me now
-Ten years of a library voice in my mouth, and I'm spitting it out on the crowd
-Monday I'll walk in the office and talk in a voice that the back row can hear
-If that is too loud then the room is too small, and I'm done making myself disappear
+Now the grin isn't laughing, it's twitching, it's flinching, it's backing away from the light
+I am breathing in fire, I am breathing out smoke and I'm ready to finish the fight
+Every lie that it told me is ash on my tongue and I spit it right back in its face
+Every scar that it gave me's a stripe on my arm and I wear it like gold on parade
+Every kick on the floor is a stamp on its neck and the rhythm is finally mine
+I'm the one with the fists and the voice and the floor, and the thing in the mirror is a sign
+That I've lived with my demons and danced with my shadows and bled on the edge of the knife
+But tonight I'm the one with the teeth in the mirror and I'm biting back into my life
+Let it crack, let it shatter, let silver go raining like hail on the tiles of the floor
+I can see my own face in a thousand of pieces and every piece wants more
 
 [Hook]
-Am I too loud?
-Not loud enough
+Teeth in the mirror
+These are my teeth in the mirror
 
 [Outro]
-Class four
-Hands under me
-Not anymore
-Not loud enough
-Louder
+Look again
+That grin
+Is mine now
+Teeth in the mirror
+Smile
 """
 
+
 [[songs]]
-id = "dont-call-me-daily"
-title = "Don't Call Me Daily"
+id = "start-it-tonight"
+title = "Start It Tonight"
+family = "drive"
 form = "letter"
 model = "B"
 groups = ["hardtech"]
-voice = "warm female contralto in her forties, unhurried and smoky in the low register, lifting into a clear ringing chorus"
-about = "a single mother writes to her daughter leaving for college, asking her not to call every day, and learns to let go herself"
+voice = "clear male tenor singer songwriter, earnest and steady, half time sung rap over a hard techno pulse, rising to a full chest chorus"
+about = "a letter to the version of me who keeps waiting for the right moment, telling him the moment is now"
 lyrics = """
 [Intro]
-Your school shoes are still under the bench by the door, polished for nobody
-I'm writing on the back of your old timetable, so read it slowly
+Dear me, I found your list of someday plans folded in a drawer
+The paper's gone yellow and the ink can't hold it anymore
 
 [Verse 1]
-You leave on Thursday, two suitcases, the pickle jar you hate
-I've packed you Crocin, safety pins, three aunties' numbers, just in case
-You'll laugh at me for labelled socks and "eat" on every pack
-But a label is a hug, my girl, that travels on your back
-My heart says, "Make her call at ten and send a photo of her plate"
-My head says, "You were nineteen once, and no one watched your gate"
-When I left for Pune, Nani couldn't read the letters that I sent
-The postman's son would read them out, she'd nod, "She's fine," content
-And that one month of quiet was the room I grew inside
-I burned the rice, I lost the rent, I found my feet, my stride
-So here's the thing I'm scared to write, the thing I mean the most
-Don't call me daily, I won't be a duty or a ghost
+You wrote it with a fever when the night was young and loud
+Every line a little fire that you swore would burn the crowd
+Then the fire met the morning and the morning met the rain
+And you said you'd start tomorrow, and tomorrow said the same
+You were waiting for a sign, a door, a light, a perfect day
+Waiting for your hands to stop shaking before you'd walk the way
+Your fear says, "Wait until you're ready, wait until you know"
+Your blood says, "Ready is a story that the frightened tell the slow"
+I'm writing from the other side of every year you spent
+Counting all the bridges that you never crossed and where they went
 
 [Chorus]
-Don't call me daily, call me when it's real
-When your heart gets broken, when you pass, or need a proper meal
-Call me when you're lost, or when you've found it on your own
-But don't spend every evening checking in with me by phone
-Don't call me daily, I will let you be
-A pot that's always opened never boils, believe me
-
-[Drop]
+Start it tonight, not when the fear is gone
+Start it tonight, the fear will come along
+Light the first match while your hands are still shaking
+Start it tonight, the whole night is waiting
 
 [Verse 2]
-I read your diary once, the year that you turned fifteen
-I put it back the way I found it, but I've never felt so mean
-I tracked your phone the night you went to Neha's and you didn't say
-I watched a blue dot on a map until it moved, then prayed
-I've been your alarm, your bank, your doctor, weather on the hour
-I've stood at the window every evening like a tower
-And the truth is it was never just your safety that I kept
-It was me, afraid of a quiet house, the night your father left
-My heart still says, "Just text her once, a heart, a little 'how's your day'"
-My head says, "Let her miss you, you can't miss what never goes away"
-That's not me loving less, my girl, that's love with the door ajar
-So you can come and go and know exactly where we are
+I know you think there's time, I know the clock looks kind and slow
+But time is just a river and it never stops to show
+The faces that you wanted and the roads you never ran
+The song you never finished in the pocket of your hand
+So take the first step crooked, take the first step wrong
+Let the floor hear you stumble, let the stumbling be the song
+Nobody gets a map, nobody gets a sign
+Everybody that you envy started shaking on the line
+Your fear will be beside you, let it ride there in the back
+But you hold the wheel and steer it and you never give it slack
+
+[Drop]
+Go now
 
 [Chorus]
-Don't call me daily, call me when it's real
-When your heart gets broken, when you pass, or need a proper meal
-Call me when you're lost, or when you've found it on your own
-But don't spend every evening checking in with me by phone
-Don't call me daily, I will let you be
-A pot that's always opened never boils, believe me
+Start it tonight, not when the fear is gone
+Start it tonight, the fear will come along
+Light the first match while your hands are still shaking
+Start it tonight, the whole night is waiting
 
 [Bridge]
-No curfew, no photo of your plate
-No "reached safe?" at a quarter past eight
-Just Sundays, if you want
-And the porch light on
+Not someday
+Not next year
+Not when it's easy
+Not when it's clear
+Right now
+Right here
 
 [Final Chorus]
-Don't call me daily, call me when it's real
-When you've won or lost or met someone, or when you need to heal
-Call me when you're lost, or when you've found it on your own
-I'll be out at singing class, so leave a message on the phone
-Don't call me daily, I will let you be
-I've lifted off the lid, and what's boiling now is me
+I started tonight, and the fear didn't go
+I started tonight and I let the fear know
+I lit the first match while my hands were still shaking
+I started tonight and the whole world is waking
 
 [Outro]
-Your school shoes aren't under the bench by the door anymore
-I gave them to the girl next door, she'll need them more
+Dear me, I burned your list of someday in the open air
+And every line of it is happening right here
 """
 
 [[songs]]
-id = "who-finishes-last"
-title = "Who Finishes Last?"
-form = "story"
-model = "A"
+id = "open-road-fever"
+title = "Open Road Fever"
+family = "escape"
+form = "dialogue"
+model = "B"
 groups = ["hardtech"]
-voice = "weathered male tenor in his late fifties, breathy, catching air between bars like a runner, a defiant shout on the hook"
-about = "a fifty-eight-year-old auto driver runs his first half marathon, comes last, and the volunteers run him home"
+voice = "male and female rave duet, a rough low male voice answered by a bright airy female soprano, trading lines over hard techno and harmonising on the chorus"
+about = "two lovers argue at an open door at midnight, one wants to stay where it is safe, one wants to run, and they leave together"
 lyrics = """
 [Intro]
-Five in the morning in borrowed shoes, Pooja, who finishes last?
+Engine running at the curb, the door is open wide
+You said, "Are you coming?" and I stood there half inside
 
 [Verse 1]
-Fifty-eight years I've been driving an auto from Noida to Okhla in smoke
-Pooja signed me up on her phone for a laugh, but I didn't take it as a joke
-Six months of running the colony at four with the milkman, the dogs on my heels
-Knees like a cupboard door, creaking and banging, my chest going round like the wheels
-Gun goes at six, eighteen thousand pour out like a river let out of a dam
-Kenyans are gone in a minute, the college boys gone in an hour, here I am
-Kilometre twelve and the water stalls packing, bananas stacked up in a van
-Sweeper bus crawling behind me, the driver leans out, "Uncle, get in while you can"
-Twenty-one kilometres is one long auto ride, and today the meter is me
-Slow is still moving, my father would say, and the tortoise still gets to the sea
+He says, "I've got a fire in my legs and this town is a cage
+Every street is a wall and every wall is my age"
+She says, "Every street is home, every wall has a name
+You can run to the end of the world, you'll still be the same"
+He says, "Then let me be the same with the wind in my face
+With a hundred miles of nothing and a sky I can't replace"
+She says, "And what about the people that you leave on the stair?"
+He says, "I'll carry them with me, I'm not leaving them there"
+She says, "What if the road is just a longer kind of cage?"
+He says, "Then I'll break that one too and I'll turn the next page"
 
-[Hook]
-Who finishes last?
-Who finishes last?
-
-[Drop]
-Left foot, right foot
+[Chorus]
+Open road fever, burning in my chest
+Headlights in the rain and we never get to rest
+Hold my hand and jump, the night is calling louder
+Open road fever, we are running out the door
 
 [Verse 2]
-Kilometre eighteen and the barriers are coming down, volunteers stacking them high
-One girl with a megaphone stops, and she shouts out my number up to the sky
-Then two of them jog right beside me, then ten, then the boys who were folding the chairs
-A sweeper drops his broom and runs in chappals, the bus honking out the prayers
-Kilometre twenty, my legs are cement and my heart's going one-sixty-five
-Pooja's at the finish, three fifty-one, and she's screaming, "Papa's alive"
-They hold up the tape that they'd already rolled, they unroll it again just for me
-And the man who came first four hours ago is still waiting with his medal and tea
-The megaphone girl hangs the last medal on me, says it's the heaviest one
-Last isn't losing, last is the one still out on the road when the rest are done
+She says, "I'm scared of the dark on the side of the road"
+He says, "So am I, but I'm more scared of growing old
+In the same chair, in the same light, with the same sound
+Watching all the days go by like rain into the ground"
+She says, "If I come with you, promise you won't let me fall"
+He says, "I can't promise that, but I'll be there through it all"
+She looks at the door, she looks at the window, at the sky
+She feels the floor start shaking and she doesn't know why
+She says, "It's in my blood now, I can feel it in my feet"
+He says, "Then let it take you, let it take you to the street"
 
-[Hook]
-Who finishes last?
-The one who finished
+[Drop]
+Drive
+
+[Chorus]
+Open road fever, burning in my chest
+Headlights in the rain and we never get to rest
+Hold my hand and jump, the night is calling louder
+Open road fever, we are running out the door
+
+[Bridge]
+Windows down
+Hair in the wind
+Nothing behind us
+Everything in
+Your hand on mine
+The white line spins
+
+[Final Chorus]
+Open road fever, burning in us both
+Headlights in the rain and we're keeping every oath
+Holding hands we jumped and the night got even louder
+Open road fever, we are miles beyond the door
 
 [Outro]
-Borrowed shoes
-Last medal
-Pooja's hand
-Three fifty-one
-Still counts
+Engine singing on the road, the door is far behind
+You said, "Are you coming?" and I said, "Every time"
 """
 
 [[songs]]
-id = "rain-counts-us-in"
-title = "Rain Counts Us In"
+id = "bodies-become-thunder"
+title = "Bodies Become Thunder"
+family = "ritual"
 form = "vibe"
 model = "A"
 groups = ["hardtech"]
-voice = "airy young female soprano, laughing between lines, counts chanted over the drums like a game in the street"
-about = "the first monsoon drops pull a whole apartment building up onto the terrace to dance"
+voice = "breathy female soprano chanting over hard techno, airy and hypnotic, a few words stretched long, a rave crowd shouting back behind her"
+about = "a few chanted lines as the whole crowd stamps in time until a thousand bodies sound like one storm"
 lyrics = """
 [Intro]
-First drop on the tin roof, rain counts us in
+Feet on the ground
+Hands to the sky
 
 [Verse 1]
-One on the water tank, two on the washing line, three on the dish, and the dog starts to run
-Four on the tin, and the whole building's up on the terrace with slippers off, everyone
-Five, and the uncle from three-oh-two puts down his paper, takes off his glasses and grins
-Six, and the sky tips over like a bucket kicked down the stairs, and that's how rain counts us in
+One heartbeat, then a thousand
+Rain on the roof, rain in the room
+Every stamp is a drum, every drum is a storm
 
 [Hook]
-Rain counts us in
-One, two, three, four
+Bodies become thunder
+Bodies become thunder
 
 [Drop]
+Stamp
 
-[Drop]
-Rain counts us in
+[Verse 2]
+Skin and sweat and lightning
+Nobody alone, nobody afraid
+Let the floor roll like the sky
+
+[Hook]
+Bodies become thunder
+We become thunder
 
 [Outro]
-Puddles on the terrace
-Nobody goes down
+Feel it shake
+Bodies become thunder
 """
 
 [[songs]]
-id = "safe-is-a-story"
-title = "Safe Is a Story"
+id = "kneel-to-nothing"
+title = "Kneel To Nothing"
+family = "defiance"
+form = "story"
+model = "A"
+groups = ["hardtech"]
+voice = "commanding male baritone storyteller with a stadium shout, measured double time bars over a hard techno kick, full chest voice on every hook"
+about = "in a great hall where everyone is ordered down on their knees, I stay standing, and one by one the whole crowd rises with me"
+lyrics = """
+[Intro]
+A hall full of heads bowed low, and I stand, I kneel to nothing
+
+[Verse 1]
+They marched us at dawn through a gate made of iron, a hundred of us in a line
+The floor was of marble, as cold as a river, the ceiling as high as the sky
+There's a chair on a step with a crown on a cushion, a man with a ring on his hand
+And a voice from the balcony shouting the order, "Get down on your knees where you stand"
+I heard every knee in the room hit the marble, it sounded like rain on a drum
+I felt every eye in the room on my shoulders, they waited to see if I'd come
+But my legs had been running for years in the dirt and they never had learned how to fold
+And the blood in my veins had been fire since birth and it never would do what it's told
+So I stood like a post in the eye of a storm with my chin and my heart in the air
+And the silence that fell on the hall was so loud you could hear every breath that was there
+
+[Hook]
+Kneel to nothing
+I kneel to nothing
+
+[Drop]
+Stand up
+
+[Verse 2]
+A girl in the front with her hair in the dust looked up at me, then at the throne
+And she pushed with her palms on the marble and rose, and I wasn't standing alone
+Then a boy at the back, then a man by the door, then the whole of the line came alive
+Like a field after rain when the wheat stands up straight in the light at the break of the sky
+The man on the chair got up off of his cushion, the crown fell and rolled on the floor
+And it spun like a coin on the marble and stopped at the foot of the open door
+We walked through the gate that we came through at dawn with our fists and our faces raised high
+And the sound of our boots on the road was a drum that was louder than any reply
+Nobody told us to rise, but we rose, and nobody gave us the key
+The key was the moment you stood when they knelt, and the moment was you and was me
+
+[Hook]
+Kneel to nothing
+We kneel to nothing
+
+[Outro]
+Crown on the floor
+Door open
+Heads up
+Kneel to nothing
+Walk
+"""
+
+[[songs]]
+id = "guarding-your-flame"
+title = "Guarding Your Flame"
+family = "devotion"
 form = "argument"
 model = "B"
 groups = ["hardtech"]
-voice = "clear young male baritone, earnest and conversational, sung-rap verses that lift into a wide open chorus"
-about = "a man who quit a salaried job argues with his father and himself about safety, until the man next door is laid off"
+voice = "tender male countertenor with a light rasp, soft spoken verses over a slow hard techno groove, a soaring falsetto on the chorus"
+about = "my fear wants to wall in the person I love to keep them safe, my love wants to give them air, and I learn which one keeps the fire alive"
 lyrics = """
 [Intro]
-My ID card's still in the drawer with the lanyard wound around it tight
-Papa keeps it there like a photograph, in case I come home one night
+I cup my hands around a candle in the wind
+And every time I close them tighter, the flame gets thin
 
 [Verse 1]
-I left the office on a Monday with a plant and a box
-Papa didn't say a word at dinner, just kept winding up the clocks
-"Thirty-two years at one desk," he said, "and I never missed a rent"
-"A salary's a roof, beta, and a dream is just a tent"
-My mind says, "He's not wrong, you've got a loan, seven months left"
-My heart says, "You were fading there in a nice shirt, neatly pressed"
-One counts the cash each morning, one the years I've got
-One says, "Be grateful for the chair," one says, "The chair's what you fought"
-Was I brave, or was I bored and calling it a calling?
-Is it vision if it works, and only madness if I'm falling?
-I wake at four and do the sums, the rent, the fees, the loan
-Then build until the sun is high, and leave the doubt alone
+You came to me a fire in a world of falling rain
+I swore I'd be your shelter and the glass in every pane
+My fear says, "Build a wall around her, lock the door, the night is wild"
+My love says, "She's a fire, not a picture of a child"
+I hold you close in crowded rooms, I watch the way they stare
+I count the strangers, count the exits, count the hands up in the air
+Was I guarding you, or guarding me from what I couldn't lose?
+Was I keeping you from danger, or from the right to choose?
+One voice holds a bucket full of water and a key
+One holds the open window and it whispers, "Set her free"
+Both of them are loving you and both of them are scared
+Both of them would bleed for you and neither one's prepared
 
 [Chorus]
-Safe is a story they tell you at twenty-two
-A desk and a pension and somebody else's view
-But the floor can fall out from a building too
-Safe is a story, and I'm writing something true
-So I'll count every rupee and I'll sleep with the fear
-Safe is a story, but the work is real, and it's here
-
-[Drop]
+I'm guarding your flame, but I won't close the door
+A fire with no air is a fire no more
+I'll stand in the storm with my back to the rain
+Let you burn as you are, I'm guarding your flame
 
 [Verse 2]
-In March our neighbour, Sharma uncle, twenty-eight years at a bank
-Got a meeting on a Friday, a cake, a thank-you card left blank
-He sat out on the stairs in his office shoes till late
-And Papa sat beside him, and they just watched the gate
-That night Papa knocked on my door, he'd never knocked before
-He said, "Show me what you're making," and sat down on the floor
-I showed him the first order, the first refund, and the plan
-He read it like a balance sheet, slow, like a careful man
-My mind says, "Keep a cushion, six months' rent, and never touch it"
-My heart says, "Fine, but don't you build a cage and call it a cushion"
-Maybe wisdom isn't safety, maybe wisdom is the map
-Knowing where the cliffs are, walking out, and coming back
+There was a night you left the party and you didn't say a word
+I paced the floor till four, my head drew every road and every curb
+I ran the streets with my heart in my mouth and the rain in my eyes
+Found you dancing on a rooftop underneath the open skies
+You were laughing, you were shining, you were brighter than the moon
+And I stood there in the doorway like a ghost who came too soon
+My fear said, "Drag her down, she'll fall, she doesn't know the height"
+My love said, "Look at her, you fool, she's never been so bright"
+So I climbed up on the rooftop and I didn't say a thing
+I just stood beside the fire and I let the fire sing
+
+[Drop]
+Burn bright
 
 [Chorus]
-Safe is a story they tell you at twenty-two
-A desk and a pension and somebody else's view
-But the floor can fall out from a building too
-Safe is a story, and I'm writing something true
-So I'll count every rupee and I'll sleep with the fear
-Safe is a story, but the work is real, and it's here
+I'm guarding your flame, but I won't close the door
+A fire with no air is a fire no more
+I'll stand in the storm with my back to the rain
+Let you burn as you are, I'm guarding your flame
 
 [Bridge]
-No chair is forever
-No roof is a promise
-Count the money
-Do the work
-Tell the truth at dinner
+Not a cage
+Not a jar
+Just a pair of hands
+Wherever you are
+Burn as high
+As the fire goes
 
 [Final Chorus]
-Safe was a story we bought at twenty-two
-A desk and a pension and somebody else's view
-But the floor fell out from under Sharma too
-So I'll build my own floor, Papa, plank by plank, with you
-I still count every rupee, and I still sleep with the fear
-Safe was a story, but we're writing this one here
+I'm guarding your flame, and I opened the door
+The fire got air and it burns even more
+I stand in the storm with my back to the rain
+And you burn as you are, I'm guarding your flame
 
 [Outro]
-My ID card's still in the drawer, but Papa's moved it to the back
-And on the front, the first bill that I ever sent, framed in black
+I opened up my hands around the candle in the wind
+And it rose up tall and golden like it knew where to begin
 """
 
 [[songs]]
-id = "whos-got-the-baby"
-title = "Who's Got the Baby?"
+id = "doors-blown-open"
+title = "Doors Blown Open"
+family = "escape"
 form = "celebration"
 model = "A"
 groups = ["hardtech"]
-voice = "sassy female mezzo in her early thirties with a husky laugh, fast playful double-time verses, a shout-along hook"
-about = "a new mother takes her first night out in eleven months while her husband handles bedtime alone"
+voice = "joyful female alto rapper with a playful bounce, quick double time bars and a rave crowd shout on the hook, laughing breaths"
+about = "the bass shakes the door off its hinges and I run out into the morning with a whole street of people breaking free with me"
 lyrics = """
 [Intro]
-Phone in my pocket on silent for once, so tell me, who's got the baby?
+Hinges on the floor and the sun on the street, doors blown open
 
 [Verse 1]
-Eleven months of feeds at three, I can change a nappy blind with a spoon in my teeth
-Burp cloth on my shoulder at the bank and the chemist, spit-up on the only good sheet
-Tonight I found jeans at the back of the cupboard, they buttoned on the second try
-Lipstick from before, a little dried up, I put it on anyway, nearly cried
-Rohan's at home with the bottle, a list on the fridge in my writing, three pages long
-"Bath at seven, rhymes at half past, the giraffe, and the fan on the second song"
-Girls in the car honking twice at the gate, Simran out of the sunroof screaming my name
-I kiss her head, the smell of her, nearly don't go, then I go all the same
-Nani said a mother's a kite, she needs string at home and she needs the sky
-So the string's at home with the giraffe and the fan, and tonight I'm the sky
+I was counting the cracks in the paint of the ceiling for longer than I can recall
+I was pacing the length of a room with no window and talking to shapes on the wall
+Every morning the same, every evening the same, every turn of the lock was a sigh
+Every night I would dream of a road and a river and wake with the wall in my eye
+Then I heard it, the bass coming up through the boards like a storm underneath the town
+And the floor started rattling, the hinges were rattling, the dust on the shelves coming down
+So I put my whole weight on the door with my shoulder, I kicked and I pushed and I yelled
+And the frame gave a crack like a bone in the winter, the bolt and the hinges fell
+Now the light's coming in like a flood through a dam and it's warm on the back of my knees
+I am out on the steps with my arms open wide and I'm drinking the wind from the trees
 
 [Hook]
-Who's got the baby?
-He's got the baby
+Doors blown open
+Doors blown open, run
 
 [Drop]
-Not me, not me
+Out, out, out
 
 [Verse 2]
-Bass at the gate hits the spot where she kicked me for nine months, under the ribs
-Simran drags me through to the barrier, shouting, "You're off duty, no bottles, no bibs"
-Arms up, eyes shut, and my body remembers a girl I had packed in a box with my shoes
-Jumping like college, like nobody's mother, with nothing at all to lose
-Then the phone in my pocket goes buzz and my heart drops right through the floor of the field
-Video, Rohan off-key with the giraffe, and she's laughing so hard that she squeals
-Fan on the second song, all three pages done, he did it, he actually did
-So I put the phone back and I scream with ten thousand, seventeen, like a kid
+There's a crowd in the street and they came from their rooms with the same kind of splinters and dust
+Every one of them grinning, a door at their back that is swinging and red with the rust
+We are running downhill to the river together, we're jumping the fence and the wall
+We are laughing so loud that the birds take the sky like confetti thrown over us all
+Feet on the tarmac like drums in a parade and the street is a song and we fly
+Every shout is a cheer and the sun is applause and it's ringing all over the sky
+I don't care where it ends, I don't care where we sleep, I don't care if we're lost by the night
+I've been safe in a box for a lifetime already, I'd rather be lost in the light
+So kick off the hinges and throw out the key and go dancing out into the blue
+Every door in the city's been blown off its frame and the morning is open for you
 
 [Hook]
-Who's got the baby?
-He's got the baby, I've got the night
+Doors blown open
+Doors blown open, run
 
 [Outro]
-Four in the morning
-Key in the door
-Both of them sleeping
-Giraffe on the floor
-I've got them both
+Hinges down
+Sun up
+Nowhere to be
+Doors blown open
+Free
 """

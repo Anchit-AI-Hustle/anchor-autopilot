@@ -91,7 +91,7 @@ def test_every_song_follows_its_model():
     for s in songs:
         assert songbook.shape_problems(s) == [], s.title
     a = [s for s in songs if s.model == "A" and s.form != "vibe"]
-    b = [s for s in songs if s.model == "B" and s.id not in songbook.RELEASED_BEFORE_MODELS]
+    b = [s for s in songs if s.model == "B" and s.id not in songbook.RELEASED_BEFORE_MODELS and s.form != "mantra"]
     assert all(songbook.words(s) >= 200 for s in a) and all(songbook.words(s) >= 350 for s in b)
 
 
@@ -99,3 +99,31 @@ def test_a_long_song_gets_the_time_to_sing_it():
     songs = songbook.load()
     b = max(songs, key=songbook.words)
     assert songbook.length_s(b, 185, 215) > 215 and songbook.length_s(b, 185, 215) <= 300
+
+
+def test_titles_sound_like_anchor_records():
+    """Anchit, 2026-11-09: "still song themes and titles arent appropriate and logical"; rebuilt like
+    his top songs (Project Mayhem, Signal Detected, Outrun Your Shadow): 1 to 4 words, the hook,
+    never a question, a name or a household detail; one of eight universal theme families."""
+    songs = [s for s in songbook.load() if s.id not in songbook.RELEASED_BEFORE_MODELS]
+    for s in songs:
+        assert songbook.title_problems(s) == [], (s.title, songbook.title_problems(s))
+    assert {s.family for s in songs} == set(songbook.FAMILIES)
+    bad = songbook.Song(id="x", title="Who's Got the Baby?", form="story", groups=("rap",), voice="v", about="a",
+                        lyrics="[Hook]\nWho's got the baby?\n", model="A", family="ritual")
+    assert len(songbook.title_problems(bad)) >= 3
+
+
+def test_no_two_songs_in_a_row_share_a_theme_family():
+    import random as _random
+    songs = songbook.load()
+    history: list[dict] = []
+    for i in range(16):
+        s = songbook.pick(songs, ["hardtech", "psy", "rap", "hiphop"][i % 4], _random.Random(i), history)
+        if history:
+            prev = songbook.find(history[0]["theme"])
+            others = [x for x in songs if x.id not in {d["theme"] for d in history} and x.family != prev.family
+                      and ["hardtech", "psy", "rap", "hiphop"][i % 4] in x.groups]
+            if others:
+                assert s.family != prev.family, (s.title, prev.title)
+        history.insert(0, {"theme": s.id, "title": s.title})

@@ -155,7 +155,8 @@ def test_brief_description_and_bounds():
     # the key is measured and kept in the data for QC, but never shown to a listener
     assert "BPM" not in b["description"] and b["key"] not in b["description"]  # no tempo or key shown to a listener
     assert "BPM" not in b["youtube_title"]
-    assert 185 <= b["duration_s"] <= 215, "every new song is at least 3 minutes"
+    # at least 3 minutes, and longer when the lyrics need the time (songbook.length_s, cap 300 s)
+    assert 185 <= b["duration_s"] <= 300, "every new song is at least 3 minutes"
     assert "#hardtechno" in b["description"] and "AI use disclosed" in b["description"]
     assert len(b["youtube_title"]) <= 100
 

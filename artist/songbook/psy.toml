@@ -8,6 +8,7 @@ groups = ["psy"]
 voice = "warm female alto, slightly hoarse from a long night, half-sung close to the mic, smiles audibly on the long vowels"
 about = "losing your best friend in a festival crowd at 4am and finding her at the back fence as the sun comes up"
 model = "B"
+family = "ritual"
 lyrics = """
 [Intro: half-whispered]
 Phone at two percent, your name still on the screen
@@ -54,691 +55,671 @@ Two percent. Still enough to take one picture.
 """
 
 [[songs]]
-id = "whose-voice-is-this"
-title = "Whose Voice Is This?"
+id = "melt-the-hours"
+title = "Melt The Hours"
 form = "revolt"
+family = "defiance"
 groups = ["psy"]
 model = "A"
-voice = "raspy male baritone in his thirties, half-rapped double time just above a whisper, clipped consonants and audible breaths between bars, opens into a full chest shout only on the last hook"
-about = "a man realises the voice in his head calling him useless belongs to his old maths teacher, and stops obeying it"
+voice = "husky female psy trance vocalist in her late twenties, half-whispered double-time verses riding the acid line, a ringing terrace chant on the hook, real breaths between bars"
+about = "refusing to let the hour decide when the night is over: the crowd sets fire to time and dances straight past it"
 lyrics = """
 [Intro]
-Chalk on my sleeve, a ruler on the desk, whose voice is this?
+Every hand on every wrist is ticking, so tonight we melt the hours
 
 [Verse 1]
-Twenty years gone and I still hear the chalk when I stand up to speak in a room full of names
-Mister Sharma at the board with the dust on his collar, the ruler, the sigh and the shame
-"Sit down, you will never get it," and the back row laughed and I burned like a match in the rain
-Now I'm thirty four with a son and a loan and a beard going grey at the side
-But my shoulders still drop when a boss clears his throat, like a boy with his homework to hide
-Every sentence I build has a crack down the middle, he walks in before I decide
-He's the hand on my neck when I lift up my own, he's the red pen that lives in my ear
-He's the reason I mumble my name at the counter and say it again so they hear
-I have carried this man up the stairs of my life on my back for some twenty two years
-And he never once asked if I wanted the weight, so tonight I am asking him here
+They hung a face above the door and said the hour decides when I rise and I fall
+Every second was a coin in a fist, and the fist never opened at all
+I was keeping the time like a prisoner keeps all the scratches he cuts in the stone
+Counting minutes on the back of my hand till the minutes had swallowed me whole
+Now the acid is bending the line and the bass is melting the hands on the face
+Twelve becomes water, the one becomes smoke, and the six is a snake in the haze
+I can feel every heartbeat refusing the order, a hundred and sixty and climbing
+Every body around me is swinging the same way, a tide that has slipped out of timing
+So I strike the first match on the glass of the dial and I watch how the minute hand bends
+There is no closing time when the floor is alive and the morning is only a friend
 
 [Hook]
-Whose voice is this in my head?
+Melt the hours, melt the hours
+Let the morning wait outside
 
 [Drop]
-Not his
+Melt it down
 
 [Verse 2]
-So I looked him up last winter, found a thin old man in a shawl with a walking cane
-Feeding pigeons by a temple in Meerut, and he couldn't remember my name
-All this time a stranger held the keys to my chest and the switch for the light in my brain
-So I'm taking it back, every word that he stole, I am pulling them out of my mouth
-Every "never," every "sit down," every "who do you think you are," every inch of the doubt
-I can stand in the room, put my hand up, be wrong and be wrong out loud
-When my son brings his sums to the floor of the kitchen I tell him go slow, it is free
-When he gets one wrong I say good, now we know where to look, and he laughs back at me
-Now the chalk's in my hand and I write my own name on the board where that man used to be
+They will tell you the night has a border, a line on the floor that you are not meant to cross
+I am stepping right over it laughing, my arms in the air, and I am not counting the cost
+Every warning they wrote on the wall is a ripple of light that is sliding away
+Every rule that they bolted to time is unscrewing itself as the strobes start to sway
+Now the crowd is one animal breathing, a thousand of lungs pulling air on the beat
+And the floor is a drum and the drum is a heart and the heart has forgotten defeat
+I will not kneel to an hour again, I will not hand my nights to the wall
+Let the hands on the dial go spinning like dancers, let the glass of the face start to fall
+When the sun comes to find us still moving, it will have to come in through the smoke
+And the clock will lie down in the ashes and tick, and nobody hears it, it is broke
 
 [Hook]
-Whose voice is this in my head?
+Melt the hours, melt the hours
+Let the morning wait outside
 
 [Outro]
-Chalk in my hand
-The desk is mine
-Whose voice is this?
-Mine
-Say it again
+Listen
+No ticking
+Only the kick
+Melt the hours
+We are still here
 """
 
 [[songs]]
-id = "calm-is-my-costume"
-title = "Calm Is My Costume"
+id = "face-the-undertow"
+title = "Face The Undertow"
 form = "confession"
+family = "inner-demons"
 groups = ["psy"]
 model = "B"
-voice = "warm female mezzo in her late twenties, soft half-sung delivery close to the mic, steady and kind on the chorus, the breath audibly shaking on the admissions"
-about = "the friend everyone calls in a crisis admits she has been hiding panic attacks in the office bathroom"
+voice = "soft-edged male tenor in his thirties, psychedelic half-sung confession close to the mic, the voice cracking open into full chest on the chorus, audible breaths"
+about = "admitting that the pull you keep swimming away from lives inside you, then turning round to face it and finding you can breathe"
 lyrics = """
 [Intro]
-Third stall from the window, and the tap that never stops
-I count the floor tiles, forty two, and then I count them twice
+I have stood at the edge of the water a thousand nights
+Ankles in the foam, pretending I was only watching the lights
 
 [Verse 1]
-When my sister lost her job it was me she rang at night
-I made her tea down the phone and I told her it's all right
-When the river took Priya's flat she slept two weeks on my couch
-I held her like a sandbag till the water ran out
-I'm the one with the plasters, the charger, the spare set of keys
-The one who stays level when the whole room's on its knees
-"Ask her, she won't panic," that's what everybody says
-And I nod like a lighthouse with a crack along the base
-But at eleven every morning something knocks inside my ribs
-Like a moth in a jar throwing wings against the lid
-So I smile at the guard and I walk down the hall
-And I lock the third stall and I lean on the wall
+There's a pull below the surface that I never say out loud
+It waits behind my ribs while I am laughing in the crowd
+I hold my smile up like a lantern high above the tide
+And nobody thinks to ask me what is moving down inside
+I've been swimming parallel, the way the lifeguards always teach
+Never fighting with the current, never drifting out of reach
+But the shore just keeps on sliding and the sand gives way to stone
+And every time I swim away, I swim back here alone
+My head says, "Keep on moving, it can't drown what doesn't stop"
+My chest says, "It's not water, it's the weight you never dropped"
 
 [Chorus]
-Calm is my costume, I wear it to work
-Buttoned to the collar so nobody sees it hurt
-You hear the soft voice and you watch the steady hands
-You don't see me on the floor counting tiles so I can stand
-Calm is my costume and it fits me too well
-I can carry the whole city and I can't carry myself
+So I turn around and face the undertow
+Let it wrap around my legs and pull me low
+I was running from the deep, but the deep was always me
+Face the undertow, and find out I can breathe
 
 [Drop]
 
 [Verse 2]
-I learned it at twelve in a hospital hall
-Mum in a gown and Dad not picking up his calls
-A nurse said, "Be brave," so I folded the fear
-Like a school shirt in a drawer for the next fifteen years
-Nobody gets hurt if the quiet one's fine
-Nobody looks under a floor that's been shined
-My heart says, "Tell someone, you're allowed to fall"
-My mind says, "Who holds them if you drop the wall?"
-Was I strong, or just scared of the noise if I broke?
-Was it kindness, or a scarf pulled so tight I would choke?
-I've been everybody's harbour with no water of my own
-Holding every boat steady, then rowing home alone
+I confess I loved the running, it was easier than truth
+Every mile was an excuse and every night was my proof
+I could blame it on the music, I could blame it on the dark
+I could dance until the morning just to never hear it bark
+But tonight the kick is slower in the middle of my chest
+And the strobe lands on the water like it's asking me to rest
+So I let my feet stop kicking and I let my arms go wide
+And the thing I feared for years just pulls me gently to its side
+It is heavy and it's freezing and it knows me by my name
+It has every face I hid from, and it holds them all the same
 
 [Chorus]
-Calm is my costume, I wear it to work
-Buttoned to the collar so nobody sees it hurt
-You hear the soft voice and you watch the steady hands
-You don't see me on the floor counting tiles so I can stand
+So I turn around and face the undertow
+Let it wrap around my legs and pull me low
+I was running from the deep, but the deep was always me
+Face the undertow, and find out I can breathe
 
 [Bridge]
-Tuesday, eleven, third stall
-I didn't count the tiles
-I rang Priya with my back against the door
-I said, "It's my turn, can you come?"
-She came in twenty minutes in her slippers
+No more swimming sideways
+No more smiling on the shore
+I went down with my eyes open
+And I found a floor
 
 [Final Chorus]
-Calm was my costume, I'm letting it go
-Unbuttoned at the collar so the people I love know
-You can hear my voice shake, you can watch my hands drop
-I can cry on the floor and the world doesn't stop
-Calm was my costume, now it hangs on the door
-I still carry the city, I just don't hide anymore
+Now I turn around and face the undertow
+It still wraps around my legs, but I don't go
+I was running from the deep, but the deep was always me
+I can face the undertow, and now I know I breathe
 
 [Outro]
-Third stall from the window, and the tap still runs
-I didn't count the tiles today, I counted who came
+I still stand at the edge of the water some nights
+But I walk in to my chest now, and I'm the one who holds the lights
 """
 
 [[songs]]
-id = "who-is-breathing"
-title = "Who Is Breathing?"
-form = "mantra"
-groups = ["psy"]
-model = "A"
-voice = "low husky female alto with an unhurried teacher's calm, hypnotic half-rapped verses spoken almost in one breath, the Sanskrit chanted plainly and slowly from the chest"
-about = "a sleepless woman on a rooftop at four in the morning follows her breath with the so ham mantra until she cannot find who is doing the breathing"
-lyrics = """
-[Intro]
-So ham, so ham, on a roof at four, who is breathing?
-
-[Verse 1]
-Up on the roof by the tank with a mat and a shawl, and the city asleep at my feet
-I can hear every fan in the building go round and a dog dreaming down in the street
-I came up here to sleep but my head is a market that shouts out the price of my needs
-So I do what my Dadi once taught me, spine like a stack of old coins, hands open, and breathe
-In on so, out on ham, like a rope from a well that is pulled up and let down slow
-Feel it cool at the nose, feel it warm going out, feel the belly rise up and then go
-Every thought is a crow on the lip of the tank, and I watch it and let the crow go
-And the rope keeps on moving, the bucket comes full, and the water keeps rising below
-
-[Hook]
-Who is breathing when I let go?
-
-[Drop]
-So ham
-
-[Verse 2]
-After forty I forget I was counting, the numbers slide off the edge of the roof
-And my skin goes as soft as the milk when it falls in the tea and it's gone into the brew
-I stop pulling the rope and the rope keeps on pulling, the well doesn't need me to choose
-Yo sav asau purushah, that one in the sunrise, so ham asmi, I am that too
-The pigeons, the tank, the man with the milk cans, the bell from the temple, the gold on the glass
-There's no wall where I end, there's no gate where it starts, there's a breath and it lets itself pass
-I was scared of the quiet, I thought I would vanish, I thought I'd be nothing at last
-But the nothing is full and it's breathing me now, and it's warm and it's slow and it's vast
-
-[Hook]
-Who is breathing when I let go?
-
-[Outro]
-So ham
-The sky goes grey
-The tank, the crows, the milk cans
-Who is breathing?
-All of it, so ham asmi
-"""
-
-[[songs]]
-id = "your-noon-my-midnight"
-title = "Your Noon, My Midnight"
-form = "letter"
-groups = ["psy"]
-model = "B"
-voice = "gentle male tenor with a light Punjabi lilt, half-sung like reading a letter aloud on a balcony, conversational and fond, fuller and brighter on the last chorus"
-about = "a letter to his sister in Toronto, written at midnight in Delhi while she is on her lunch break, from the brother who stayed home"
-lyrics = """
-[Intro]
-Didi, it's twelve here, the geyser's ticking and the street dogs are done
-You're on your lunch break in Toronto, eating rice out of a box in the sun
-
-[Verse 1]
-I'm writing on the balcony in Papa's old sweater
-Your call froze on a smile again, so I'm sending you a letter
-You said the snow comes sideways and it squeaks under your boots
-I said the mango man still shouts your name at half past two
-We used to share a bunk bed, one torch, one quilt, one fight
-Now we share a moon that reaches you a whole half day behind
-When I'm brushing my teeth you are taking off your shoes
-When you're dreaming I'm in traffic reading all your news
-My heart says, "Book a flight and go and ring her bell"
-My head says, "Ma's knees, the shop, who keeps them if you leave as well?"
-So I stay with the shutters and the ledger and the stock
-And I keep your chair at dinner and I wind your old clock
-
-[Chorus]
-It's your noon, my midnight, and we talk across the dark
-You're squinting at the sunlight, I'm whispering by the park
-It's your noon, my midnight, one day pulled into two
-I keep the lamp on in the window so the morning can find you
-
-[Drop]
-
-[Verse 2]
-The night you flew I carried both your suitcases and grinned
-You cried at gate eleven, I made jokes about your chin
-Then I drove Ma home and she didn't say a word
-Just held your old school ID like a feather from a bird
-I was angry for a year, I'll admit it in this ink
-That you got to be the brave one and I got to fix the sink
-That you got the snow and a brand new name for your street
-And I got the same chai stall and the same cracked seat
-But Ma says leaving isn't losing, and staying isn't small
-They're two hands on the same rope, and the rope holds us all
-So I sold the old scooter and I filled in the form
-I've a seat in March, Didi, I'll be landing in a storm
-
-[Chorus]
-It's your noon, my midnight, and we talk across the dark
-You're squinting at the sunlight, I'm whispering by the park
-It's your noon, my midnight, one day pulled into two
-I keep the lamp on in the window so the morning can find you
-
-[Bridge]
-I won't move there
-You won't move back
-That's fine
-We'll meet in the middle of the night
-Or the middle of the day
-Whichever one it is for you
-
-[Final Chorus]
-For one week your noon is my noon, the same plate, the same sun
-I'll squint at your sunlight and you'll laugh, "Look, the tourist's come"
-Then it's your noon, my midnight, one day pulled into two
-And the lamp stays on in the window, but now I know it points to you
-
-[Outro]
-Didi, it's twelve here, the geyser's quiet and the street dogs are done
-Eat your lunch, I'm going to sleep now, and say hi to the sun
-"""
-
-[[songs]]
-id = "can-you-see-it"
-title = "Can You See It?"
-form = "story"
-groups = ["psy"]
-model = "A"
-voice = "rough-edged male tenor from the coast, fast hushed half-rapped storytelling like talking low in a boat at night, salt in the throat, slowing right down on the hook"
-about = "a fisherman's son describes the glowing plankton to his father, whose eyesight is going, on their last night out in the boat"
-lyrics = """
-[Intro]
-Lantern off, oars in, Baba, can you see it?
-
-[Verse 1]
-Two in the morning off the rocks at Havelock with the tide going out like a breath
-Baba's hands on the net still remember each knot but his eyes have gone grey at the edge
-Doctor in Port Blair said it comes like a fog, in a year it'll be shapes and then less
-So he wanted one night on the water with me, with the lantern and the old wooden chest
-Then I dipped the oar in and the sea came alight, every stroke left a trail of blue fire
-Like somebody spilled all the stars in the water and stirred them around with a wire
-Every fish was a comet, every wave was a lamp, every drop on my arm was a spark
-And my father sat still with his face to the sound and his hands on the side in the dark
-
-[Hook]
-Can you see it, Baba, can you see it?
-
-[Drop]
-Blue
-
-[Verse 2]
-So I told it the way he told stories to me when I feared all the waves in the night
-It's like milk with the moon in it, Baba, like Diwali fell into the tide
-He said, "Pour some in my hand," so I cupped up the sea and I poured, and his palms filled and glowed
-And he laughed like a boy with the light running out through his fingers and onto his clothes
-"I can't see it," he said, "but I see you seeing, that's the better half of the show"
-Then he took both the oars and he rowed us back home through the light like a man who still knows
-Every rock, every current, the bend by the temple, the shape of the beach in the black
-He steered me my whole life, now I'm steering for him, and we're steering each other back
-
-[Hook]
-Can you see it, Baba, can you see it?
-
-[Outro]
-Lantern on
-Sand on our feet
-He said, "Tell me again"
-Can you see it?
-Through you, I can
-"""
-
-[[songs]]
-id = "one-more-hour"
-title = "One More Hour?"
-form = "argument"
-groups = ["psy"]
-model = "B"
-voice = "bright female soprano with a husky low end, quick breathy half-singing, argues with herself in two colours, playful and high for the heart, flat and low for the head"
-about = "at five in the morning on a warehouse dance floor she argues with herself over staying for the closing set or sleeping before her first day at a new job"
-lyrics = """
-[Intro]
-Wristband turning grey, and my left shoe in my hand
-There's a shirt ironed on a chair at home for the girl who starts at nine
-
-[Verse 1]
-Five in the morning and the kick's still a pulse in the floor
-The skylight's gone pink and the smoke's drifting out the side door
-My feet stopped complaining an hour ago, I think they left
-There's a stranger's gold glitter on my collar and my chest
-And at nine I start the job I spent a whole year trying to get
-Lanyard on the table, alarm on, the shirt pressed and set
-My body says, "Stay, you will never get this hour twice"
-My head says, "You've got three hours, and sleep has a price"
-One sees a sunrise I'll be telling my kids about
-One sees me on day one with my eyes falling out
-Was I free, or just scared that the good part was ending?
-Was I wise, or just old before my time and pretending?
-
-[Chorus]
-"One more hour?" says the heart in the bass
-One more hour with the light on my face
-One less hour, says the shirt on the chair
-Says the girl who starts at nine, says, "Be there"
-Is it one more hour, or is it one less me?
-Who do I owe the morning to, the floor or who I'll be?
-
-[Drop]
-
-[Verse 2]
-Last summer I stayed past the last song they played
-Missed Nani's eightieth lunch, came in grey and afraid
-She laughed and gave me halwa, but I saw the empty chair
-And the photo on the fridge with everybody but me there
-So I know what the night costs, I have paid it in full
-But I know what it gives me, the hush and the pull
-The man selling water who's been dancing since ten
-The circle of strangers who won't meet again
-My heart says, "This is church, you don't walk out in the prayer"
-My mind says, "You can pray and still get up from the chair"
-Maybe freedom's not staying till they sweep up the cups
-Maybe freedom is knowing the right time to get up
-
-[Chorus]
-"One more hour?" says the heart in the bass
-One more hour with the light on my face
-One less hour, says the shirt on the chair
-Says the girl who starts at nine, says, "Be there"
-
-[Bridge]
-The closing track comes in
-I give it one chorus
-I hug the girl with the flag
-I put my shoe back on
-I walk out while it's still beautiful
-
-[Final Chorus]
-One more hour, I gave it a song
-One more hour, and I knew I belonged
-Not one less hour, I'm taking it along
-In the shirt on the chair, on the bus, in the sun
-It was never one more hour or one less me
-I can walk out of the music and the music walks with me
-
-[Outro]
-Wristband in my pocket, both shoes on, and the shirt from the chair
-Eight fifty nine at my new desk, and the kick is still in there
-"""
-
-[[songs]]
-id = "the-roof-is-singing"
-title = "The Roof Is Singing"
-form = "vibe"
-groups = ["psy"]
-model = "A"
-voice = "breathy young male countertenor, floating barely above a whisper, lazy behind the beat, a smile you can hear in every vowel"
-about = "the first monsoon rain on a tin roof at a hill homestay, dancing barefoot on the wet red floor"
-lyrics = """
-[Intro]
-Tin roof, first rain, do you hear the roof singing?
-
-[Drop]
-
-[Verse 1]
-Barefoot on the red floor of the homestay with the shutters wide open to the hill
-Every drop on the tin is a finger on a drum and the whole valley's gone soft and gone still
-Smell of wet dust coming up through the cracks like the ground has been holding its breath all year
-Chai on the sill, the steam going sideways, nobody for a mile, nobody here
-
-[Hook]
-Do you hear the roof singing?
-
-[Drop]
-The roof is singing
-
-[Drop]
-
-[Outro]
-Tin roof
-First rain
-The roof is singing
-Let it
-"""
-
-[[songs]]
-id = "did-you-eat"
-title = "Did You Eat?"
-form = "dialogue"
-groups = ["psy"]
-model = "B"
-voice = "duet of a husky young female alto, giggly and worn out after a long night, and an older female mezzo with a firm, tender, sleepy speaking-singing tone; they overlap only on the final chorus"
-about = "a daughter tiptoes home at dawn after a rave and finds her mother awake at the kitchen table, asking only whether she ate"
-lyrics = """
-[Intro]
-Five fifteen, the gate latch, my boots off before the step
-The kitchen light still burning and a tiffin on the table, wrapped
-
-[Verse 1]
-I came in like a burglar with my glitter and my hum
-Practised "I slept at Ria's" in the auto all the way home
-My ears are still ringing and the bass is in my knees
-There's a stamp on my hand like a bruise I hope she won't see
-And there she is in her nightie with her glasses on her head
-Pretending to be reading the news she's already read
-I wait for the lecture, the "do you know what time it is"
-The cousins, the neighbours, the "what if this, what if this"
-But she looks at me a long time like she's counting all my bones
-Then she gets up and she lights the stove and leaves the rest alone
-
-[Chorus]
-"Did you eat?" That's the whole of it
-Not where were you, not who with, not what you did
-"Did you eat?" and the tawa starts to hiss
-Every fear she had all night is folded into this
-"Did you eat, beta, did you eat?
-Sit, there's ghee, the roti's hot, take a seat"
-
-[Drop]
-
-[Verse 2]
-I heard the gate at three and it was only the wind
-At four it was the milkman, and I started counting in
-I didn't call, I promised I would never be my mother
-Who stood out on the road in her slippers for my brother
-So I sat with the newspaper and read one line for hours
-Kept your parathas in a cloth beside the temple flowers
-I can smell the smoke in your hair and a thousand strangers' heat
-I was twenty once, I had my own late nights and sore feet
-My heart says, "Ask her everything, the who and the where"
-My head says, "Ask her that and she'll stop coming here"
-So I ask the only question that I know she'll answer true
-If she's eaten, she's still mine, and the rest can wait till noon
-
-[Chorus]
-"Did you eat?" That's the whole of it
-Not where were you, not who with, not what you did
-"Did you eat?" and the tawa starts to hiss
-Every fear she had all night is folded into this
-
-[Bridge]
-"Ma, I'm sorry, I should have called"
-"Eat first"
-"It was the best night of my life"
-"Then eat more"
-"You waited up"
-"I always will"
-
-[Final Chorus]
-"Did you eat?" Yes, Ma, and you?
-Two plates at the table and the sky going blue
-"Did you eat?" means "come home, I'm awake"
-Means a light in the kitchen for as long as it takes
-"Did you eat, beta, did you eat?"
-"Sit with me, Ma, the roti's hot, take a seat"
-
-[Outro]
-Five forty, the gate latch, and she's asleep in her chair
-I put the tiffin back and her shawl over her hair
-"""
-
-[[songs]]
-id = "late-by-whose-clock"
-title = "Late By Whose Clock?"
-form = "revolt"
-groups = ["psy"]
-model = "A"
-voice = "smoky male baritone with a sharp, amused edge, cool double-time half-rap delivered almost like conversation, a laugh breaking into the final outro line"
-about = "a thirty two year old refuses the family timetable for marriage, salary and a house, and keeps his own pace"
-lyrics = """
-[Intro]
-Wall clock in the drawing room ticking at my back, late by whose clock?
-
-[Verse 1]
-Bua at the wedding with a plate of jalebi says, "Beta, you're thirty two, what's the plan?"
-Every uncle has a girl on his phone and a flat and a salary in hand
-They have drawn me a calendar, boxes filled in, the promotion, the wedding, the son
-With a little red circle round the year I should be done, and that year has already gone
-Like I'm running behind in a race I never entered, on a lap I never agreed
-Like the hands on the clock in the drawing room spin for the neighbours and never for me
-But my body keeps time of its own, it's a drum that was tuned long before I was born
-And it says I am growing the way that a banyan grows, roots first, slow, then out like a storm
-
-[Hook]
-Late by whose clock?
-
-[Drop]
-Tick, tock, mine
-
-[Verse 2]
-So I took the clock down from the wall and I sat on the floor with it ticking in my lap
-Papa came in in his vest with his tea and he looked at the nail and he looked at the gap
-He sat down beside me, his knees cracking loud, and he told me what I'd never been told
-Married at twenty two, nobody asked him, his father just pointed and said, "You're old"
-"I was happy," he said, "but I never once chose, I ran early for somebody's bell
-So be late, be as late as you want, be so late that the aunties forget how to tell"
-He opened the back with a coin and took out the battery, held it up to the light
-And the room went so quiet I heard my own pulse, not early, not late, it was right
-I wake when I wake, I love when I love, I'll marry when I mean it, not before
-And the clock's in a drawer with the battery out and its hands pointing up at the door
-
-[Hook]
-Late by whose clock?
-
-[Outro]
-Wall clock in a drawer
-No tick at my back
-Late by whose clock?
-Mine
-And mine says now
-"""
-
-[[songs]]
-id = "papa-finally-danced"
-title = "Papa Finally Danced"
+id = "wake-inside-the-wave"
+title = "Wake Inside The Wave"
 form = "celebration"
+family = "awakening"
 groups = ["psy"]
-model = "B"
-voice = "round female alto with a gospel-tinged warmth, beaming half-sung delivery with quick little laughs between lines, opening up full and loud on the chorus"
-about = "at her sangeet, a bride watches her father, who sat out every wedding for forty years, finally get up and dance"
+model = "A"
+voice = "bright female mezzo psy trance singer, airy half-sung double time that lifts into a full open shout on the hook, laughter caught between the lines"
+about = "the drop hits and you wake up inside your own body for the first time in years, together with everyone around you"
 lyrics = """
 [Intro]
-Marigolds strung from the ceiling and a dhol going wild by the door
-Papa on his plastic chair, the one he's guarded forty years and more
+Somewhere under all the noise I feel it start, I wake inside the wave
 
 [Verse 1]
-Forty years of weddings and he never left that chair
-Held the coats and held the gifts and held the handbags with care
-Clapped a little off the beat, tapped one shoe under the cloth
-Told the aunties, "No, no, no," and waved the whole thing off
-Mummy used to pull his sleeve, he'd smile and shake his head
-"Someone has to watch the shoes," is all he ever said
-It's my sangeet tonight and the courtyard's full of light
-Thirty cousins on the floor and the bulbs strung up like kites
-Then the DJ played the song from his college cassette
-The one he hums when he shaves, the one he can't forget
-I saw his shoulder move, just a little, like a wave
-I saw Mummy see it too, and I saw her look away
+I was sleepwalking for years with my eyes open wide, nodding along to the rhythm of days
+Every morning a copy of morning, my feet on the ground and my mind in a haze
+Then the bassline came in like a tide through the soles of my feet and it climbed up my spine
+And a light I forgot I was carrying flickered and broke through the frost on the glass of my mind
+Every hair on my arms is awake and the skin on my neck is a field in the rain
+I can taste the electric of air in my mouth like a storm rolling over the plain
+Somebody beside me is laughing out loud and I'm laughing, I don't even know why
+There is gold in the smoke on the ceiling, a sun coming up in the middle of night
+And the fog in my head that I wore like a coat is evaporating into the beam
+I have never been this awake in my life and I swear to you this is no dream
 
-[Chorus]
-Papa finally danced, Papa finally danced
-Arms up like a schoolboy who just got his first chance
-Forty years of sitting down, forty years of "no"
-And tonight he's in the middle and he's never letting go
-Papa finally danced and the whole room lost its mind
-Somebody hold the coats, he left the chair behind
+[Hook]
+Wake inside the wave
+Wake inside the wave, we rise
 
 [Drop]
+Rise up
 
 [Verse 2]
-After, at two, by the gate with the tea going round
-He told me why he never danced, his eyes down on the ground
-He was seventeen at a cousin's and he jumped in with the band
-His father laughed in front of everyone and took him by the hand
-Walked him back to the chair and said, "Men don't make a show"
-And he sat for forty years because one man told him so
-I said, "Papa, why tonight?" and he wiped his glasses clean
-Said, "I watched you dance, and I've never seen you look that free"
-"I didn't want to be the chair in my daughter's memory
-Sixty two is late, but late is better than a seat"
+Now the second wave crashes, it lifts me up higher, my shoulders are loose and I'm climbing
+Every tired old version of me is a skin I am shedding and throwing behind me
+I can hear my own heart like a drum in a canyon, it's louder than all of my doubt
+And the doubt was a whisper, the heart is a choir, and the choir is shouting it out
+Thousands of us with our arms in the air while the lasers are painting the sky
+Every one of us woke at the very same moment and nobody's asking us why
+I was waiting for something to save me, a sign, or a hand coming down from above
+But the wave was inside me the whole time, the swell and the lift and the love
+So I open my arms to the light as it floods and I let it wash over my skin
+I am done being half of myself, I am wide awake, let the morning come in
 
-[Chorus]
-Papa finally danced, Papa finally danced
-Arms up like a schoolboy who just got his first chance
-Forty years of sitting down, forty years of "no"
-And tonight he's in the middle and he's never letting go
-
-[Bridge]
-His knees hurt the next morning
-He didn't care
-He asked for the song again at breakfast
-Mummy hid the chair
-
-[Final Chorus]
-Papa finally danced, and he's dancing on the stairs
-To the pressure cooker whistle and the bells at evening prayers
-Forty years of sitting down and one night of "yes"
-And the boy his father sat down is up in his best
-Papa finally danced, and he's teaching me the step
-Somebody hold the coats, we are not finished yet
+[Hook]
+Wake inside the wave
+Wake inside the wave, we rise
 
 [Outro]
-Marigolds still on the ceiling, the dhol's gone home for the night
-Papa's plastic chair is out in the yard, and it's empty, and that's right
+Breathe in
+I'm here
+I'm awake
+Wake inside the wave
 """
 
 [[songs]]
-id = "water-cannot-wet-it"
-title = "Water Cannot Wet It"
-form = "mantra"
+id = "chase-the-first-light"
+title = "Chase The First Light"
+form = "argument"
+family = "drive"
 groups = ["psy"]
 model = "B"
-voice = "clear older female voice with a soft temple-singer vibrato, unhurried half-sung English, the Sanskrit chanted slowly and evenly in a low warm register"
-about = "a woman afraid of water since childhood stands on the ghat steps at Rishikesh while her grandmother recites Bhagavad Gita 2.23"
+voice = "earnest warm male baritone, psy hip hop half-time sung rap, two inner voices argued in the same tone, an open lifted chorus with a grin in it"
+about = "half of you wants to wait for the perfect moment, the other half wants to move now, and by dawn both of them are running toward the first light"
 lyrics = """
 [Intro]
-Ghat steps at Rishikesh, the iron chain tight in my fist
-Nani on the step behind me with her beads turning in her wrist
+The sky is still black but the edge is wearing thin
+I can feel it on my skin, the day about to begin
 
 [Verse 1]
-I was six at the canal when the bank gave way beneath
-Brown water in my nose, my ears, and in between my teeth
-My cousin pulled me out by the plait, I coughed for hours
-Since then I don't take baths, I take buckets, I take showers
-Thirty years of swimming pools I watched from the cafe
-Thirty years of beaches with my sandals on all day
-Now Nani's eighty six and she doesn't ask for much
-Just one dip with her granddaughter, her hand inside my clutch
-So I'm on the lowest step with the water at my shins
-It's green and fast and freezing and it pulls against my skin
-My body says, "Remember, this is how you nearly drowned"
-And Nani from the step above begins a slow old sound
+Half of me says, "Wait, you are not ready, not yet
+Learn a little more, sleep a little more, settle every debt"
+Half of me says, "Ready is a story fear repeats
+You've been standing on the start line till it grew roots in your feet"
+I can see both sides, I'm not pretending one is wrong
+The careful one has kept me breathing and kept me safe so long
+But safe became a room and the room became a wall
+And the wall became the only thing I ever saw at all
+So I hear the kick come in like footsteps on a road
+And my legs begin to answer before my mind can tell them no
 
 [Chorus]
-Nainam chhindanti shastrani, nainam dahati pavakah
-Na chainam kledayantyapo, na shoshayati marutah
-No blade can cut it, no fire can burn it
-Water cannot wet it, no wind can dry it
-The one inside you, beta, the river cannot reach
-So give the river your body, it can't take the rest of me
+Chase the first light, don't wait for the sun to call your name
+Every hour you hold still is an hour that won't come again
+Fear says stay, but the morning never waits for anyone
+Chase the first light, and run
 
 [Drop]
 
 [Verse 2]
-I said, "Nani, that's for soldiers, that's Krishna on a field"
-She said, "It's for anyone with a battle they won't yield
-Your fear is wet, your fear is shivering, your fear is just your skin
-The one who's watching fear is dry, it's never once been in"
-My heart says, "Hold the chain, it's the only thing that's sure"
-My mind says, "Then you'll hold it here till you're eighty six and more"
-So I watched my hand like it belonged to someone new
-The fingers opened one by one the way the morning flowers do
-And the current took my knees and the chill climbed up my chest
-And I went under, eyes wide open, into green and into rest
-And there wasn't any panic, there was someone very still
-Watching all of it from somewhere that the river couldn't fill
+The careful voice gets louder, says, "Remember how you fell
+The gravel in your knees, the night you couldn't tell"
+And I remember, yes, I carry every bruise I earned
+But a bruise is just a lesson and the lesson is I learned
+The fearless voice gets quiet, doesn't shout, just takes my hand
+Says, "Nobody gets a map, you draw it as you land"
+Maybe both of them are right and both are trying to be kind
+One is guarding what I have and one is chasing what I'll find
+So I let the careful one pack water and the brave one tie the lace
+And I carry both together as I step into the race
 
 [Chorus]
-Nainam chhindanti shastrani, nainam dahati pavakah
-Na chainam kledayantyapo, na shoshayati marutah
-No blade can cut it, no fire can burn it
-Water cannot wet it, no wind can dry it
+Chase the first light, don't wait for the sun to call your name
+Every hour you hold still is an hour that won't come again
+Fear says stay, but the morning never waits for anyone
+Chase the first light, and run
 
 [Bridge]
-I came up laughing
-Nani was laughing
-Two wet women on a stone step
-And the chain just hanging there
-Rocking in the current like it didn't need me either
+No more waiting rooms
+No more someday
+The horizon is a line I can touch
+If I move today
 
 [Final Chorus]
-Nainam chhindanti shastrani, nainam dahati pavakah
-Na chainam kledayantyapo, na shoshayati marutah
-I went under and I came up, and the water couldn't wet it
-Thirty years I held a chain to guard a thing the river never touched
-So I gave the river my body, and it gave me back so much
+I chase the first light, I don't wait for the sun to call my name
+Every hour I held still is an hour I'm taking back again
+Fear can stay, but the morning never waits for anyone
+I chase the first light, I run
 
 [Outro]
-Ghat steps at Rishikesh, the chain swinging empty in the mist
-Nani wringing out her sari, her beads still turning in her wrist
+The sky was black but the edge has broken through
+I can feel it on my skin, the day is running too
+"""
+
+[[songs]]
+id = "surrender-to-the-pulse"
+title = "Surrender To The Pulse"
+form = "mantra"
+family = "devotion"
+groups = ["psy"]
+model = "A"
+voice = "deep resonant male bass-baritone, psychedelic temple-style chant on the Sanskrit, low unhurried double-time English verses, a warm open swell on the hook"
+about = "letting go of the self on the floor while the crowd chants Om Namah Shivaya, devotion to the stillness that dances under the beat"
+lyrics = """
+[Intro]
+Om namah shivaya, om namah shivaya
+
+[Verse 1]
+I walked in with my name like a badge on my chest and my pockets all heavy with plans
+Every shoulder I passed was a wall, every glance was a contest, I held myself tight in my hands
+Then the drone of the bass started low like a hum from the floor of a cave in the hills
+And the hum found the hum in my throat and the two of them met where the breath becomes still
+I could feel every heartbeat around me arriving in time with the beat of my own
+Like a river that splits into thousands of streams and then finds it was one all along
+I let go of my name on the second drop, I let go of my face on the third
+I let go of the story I tell when I'm lonely and found I was more than a word
+There is fire on the stage like a forehead, a flicker of ash and a crescent of light
+And I bow to the stillness that dances, the one who keeps time in the heart of the night
+
+[Hook]
+Surrender to the pulse
+Om namah shivaya
+Surrender to the pulse
+
+[Drop]
+Om namah shivaya
+
+[Verse 2]
+Now the drums are a rain on a lake and each ripple is someone I used to be
+And I watch them roll out to the edges and soften and vanish as far as I see
+Every worry I brought is a garment I drop on the floor as I spin through the smoke
+Every grudge is a stone I have carried for miles and I lay it down gently and go
+I am not the one dancing, the dance is the one who is moving this body tonight
+I am not the one breathing, the breath is a tide coming in from the edge of the light
+There's a stillness in the middle of the storm like an eye where the dancer can rest
+And a thousand of us bowing together with nothing to ask and nothing to protect
+When the sun climbs the hill I will pick up my name and I'll wear it a little more loose
+For I know what is under the name and the mask, and it's nothing that I can lose
+
+[Hook]
+Surrender to the pulse
+Om namah shivaya
+Surrender to the pulse
+
+[Outro]
+Om namah shivaya
+Bow to the stillness
+Surrender to the pulse
+Om
+"""
+
+[[songs]]
+id = "leaving-the-shoreline"
+title = "Leaving The Shoreline"
+form = "story"
+family = "escape"
+groups = ["psy"]
+model = "A"
+voice = "smoky female alto, psy rap double time, breathy and urgent like she is still running, the hook sung long and wide over the acid line"
+about = "two friends slip away from the festival before dawn and run into the sea, leaving everything heavy behind on the sand"
+lyrics = """
+[Intro]
+Shoes in the sand and your hand in my hand, we are leaving the shoreline
+
+[Verse 1]
+We slipped out the back while the drop was still falling, the crowd was a forest of arms in the air
+You tugged at my sleeve and you pointed at nothing, a stripe in the black where the sea was out there
+So we ran down the dunes with the bass in our backs and the grass drawing lines on the skin of our legs
+Every step was a door that we shut on the noise, every breath was a rope that we cut from the pegs
+We were laughing so hard that we fell in the sand and lay still with the sky turning over our heads
+And the stage far behind was a heart in a shell, all the lights just a smear of the blues and the reds
+Then you stood up and walked to the lip of the foam with the moon spilling silver along your back
+And you turned and you said, there is nothing back there that the tide cannot carry, so don't you look back
+I could feel all the weight that I brought to the field, every doubt I had packed, every fear I had stacked
+And I dropped it like clothes on the sand at my feet and I followed you into the black
+
+[Hook]
+Leaving the shoreline
+Leaving the shoreline, we're gone
+
+[Drop]
+Swim out
+
+[Verse 2]
+Now the water is cold and it bites at my chest and it knocks every thought from my head like a bell
+And the swell lifts us up and it sets us back down like a hand that has rocked us before, I can tell
+Every wave is a page that I don't have to read, every crest is a wall I don't have to climb
+You are floating beside me, your hair like a weed, and we're dancing in water, off rhythm, in time
+The festival hums like a hive on the hill and the beach is a line getting thinner and gone
+All the names they had called me are shells on the sand and the sea is already rolling them on
+When the sun cracks the edge of the water in gold, it's a door coming open in front of our eyes
+And we swim for the crack like it's calling us home, with the salt in our mouths and the gulls in the skies
+I don't know where we're going, I don't need to know, there is light on the water as far as I see
+We are leaving the shoreline, the shore can keep everything, everything heavy that used to be me
+
+[Hook]
+Leaving the shoreline
+Leaving the shoreline, we're gone
+
+[Outro]
+Look back once
+It's so small
+Let it go
+Keep swimming
+"""
+
+[[songs]]
+id = "one-body-breathing"
+title = "One Body Breathing"
+form = "vibe"
+family = "ritual"
+groups = ["psy"]
+model = "A"
+voice = "airy whispered female soprano, psychedelic breathy chant layered over the kick, close and intimate, a soft smile on every vowel"
+about = "the breakdown where a whole field breathes in and out together and becomes one body"
+lyrics = """
+[Intro]
+Breathe in
+Breathe out
+
+[Verse]
+Ten thousand chests rise up together
+Ten thousand chests let go
+Sweat on the skin like a summer river
+Light coming slow
+
+[Hook]
+One body breathing
+One body breathing
+In the haze, in the heat
+One body breathing
+
+[Drop]
+
+[Bridge]
+Your pulse in my palm
+My pulse in yours
+No edges now
+
+[Drop]
+
+[Hook]
+One body breathing
+One body breathing
+In the dust, in the dawn
+One body breathing
+
+[Outro]
+Breathe in
+We are one body breathing
+Breathe out
+"""
+
+[[songs]]
+id = "light-needs-shadow"
+title = "Light Needs Shadow"
+form = "letter"
+family = "truth"
+groups = ["psy"]
+model = "B"
+voice = "warm grainy female contralto, psy soul half-time sung rap, unhurried and intimate like reading a letter aloud, a full ringing chorus"
+about = "a letter to the you who only ever wanted to be bright, saying the glow only shows because of the shadow behind it"
+lyrics = """
+[Intro]
+I'm writing this to you before the sun is fully up
+To the you who only ever wanted to be gold
+
+[Verse 1]
+You used to hide the parts of you that didn't catch the light
+Kept your smile turned to the stage and your back turned to the night
+You thought that if they saw the bruise they'd never see the glow
+So you painted every crack in gold and never let it show
+I watched you dance at sunrise like the dark had never been
+Like the tears you cried at midnight never once had touched your skin
+But I was there in the middle when the strobes all cut out
+When you sat down on the floor and you were swallowed up in doubt
+And I swear the lights came back and hit you different than before
+Like the shadow gave them something they could finally shine for
+
+[Chorus]
+Light needs shadow, the flame needs the night
+Nobody sees a candle in a room full of white
+So bring me the dark that you keep in your chest
+Light needs shadow, so I'll hold you with the rest
+
+[Drop]
+
+[Verse 2]
+I know you'll read this and you'll say, "But I was hard to hold"
+You'll say the shadow made you sharp, it made you hard and cold
+And maybe sometimes, yes, it did, I won't pretend it didn't sting
+But a song without a silence isn't any kind of thing
+The water only glitters 'cause the deep is underneath
+A smile only means something when you've known what it is to grieve
+So stop apologizing for the hours you went dim
+For the nights you didn't answer and the weeks you couldn't swim
+I'd rather have the whole of you, the ember and the ash
+Than a picture of a sunrise someone painted in a flash
+
+[Chorus]
+Light needs shadow, the flame needs the night
+Nobody sees a candle in a room full of white
+So bring me the dark that you keep in your chest
+Light needs shadow, so I'll hold you with the rest
+
+[Bridge]
+Keep the scars
+Keep the quiet
+Keep the night you couldn't sleep
+They're the reason that you glow
+
+[Final Chorus]
+Light needs shadow, the flame needs the night
+I never saw you shining till I saw you without light
+So I'll keep the dark that you hid in your chest
+Light needs shadow, and I love you with the rest
+
+[Outro]
+The sun is fully up now, and I'm signing off in gold
+To the you who's finally learning that the shadow makes it whole
+"""
+
+[[songs]]
+id = "the-body-knows-first"
+title = "The Body Knows First"
+form = "dialogue"
+family = "awakening"
+groups = ["psy"]
+model = "B"
+voice = "duet of a low hushed male baritone and a bright clear female soprano, psychedelic call and response, half-time sung verses trading lines, the two voices meeting in harmony on the chorus"
+about = "the mind and the body argue on the dance floor about whether anything has changed, and the body is right first"
+lyrics = """
+[Intro]
+Before I had the word for it, before I had a thought
+The body knows first
+
+[Verse 1]
+My head says, "Nothing's changed, it's just another night
+Same lights across the ceiling, same heat, same fight"
+My feet say, "Something's moving, can't you feel it in the floor?
+There's a door inside the bassline that was never there before"
+My head says, "That's the tiredness, that's the sweat, the hour"
+My hands say, "Then why are we opening like a flower?"
+My head says, "Give me proof and I'll believe you, give me reason"
+My chest says, "Reason is a coat for a colder season"
+My head says, "I have kept us safe, I've kept us small"
+My spine says, "Small was never safe, it was a wall"
+
+[Chorus]
+The body knows first, before the mind can say
+Goosebumps on my arms like the sun before the day
+I don't need to understand it to know that it is real
+The body knows first, and the mind will learn to feel
+
+[Drop]
+
+[Verse 2]
+My head says, "Wait, let's think about it, slow it down"
+My heart says, "We've been thinking, now we're starting to drown"
+My skin says, "Every hair is standing up to listen"
+My head says, "That's a shiver, it's the air, it's nothing missing"
+My lungs say, "Then why are we breathing like we've climbed a hill?
+Why is every light in here so bright, and why am I so still?"
+My head goes quiet, puts its worries down for once
+And the body takes the lead like it was waiting there for months
+My head says, "Okay, show me," and the body says, "Just stay"
+And the two of us are dancing and the doubt has moved away
+
+[Chorus]
+The body knows first, before the mind can say
+Goosebumps on my arms like the sun before the day
+I don't need to understand it to know that it is real
+The body knows first, and the mind will learn to feel
+
+[Bridge]
+Mind, you're not the enemy
+Body, you're not a fool
+One of you is the lantern
+And one of you is the fuel
+
+[Final Chorus]
+The body knew it first, before the mind could say
+Goosebumps on my arms and now the sun is on the way
+I don't need to understand it, I can feel that it is real
+The body knows first, now the mind has learned to feel
+
+[Outro]
+Before I had the word for it, before I had a thought
+My feet were already moving, and the light was already caught
+"""
+
+[[songs]]
+id = "sweat-the-ghost-out"
+title = "Sweat The Ghost Out"
+form = "revolt"
+family = "inner-demons"
+groups = ["psy"]
+model = "A"
+voice = "gritty female rapper with a low raspy chest voice, psy rap double time hard on the kick, half-whispered verses, a shouted hook the crowd throws back"
+about = "an old regret that follows you everywhere gets danced out through the skin until it has nowhere left to hide"
+lyrics = """
+[Intro]
+There's a ghost in my chest, and tonight we sweat the ghost out
+
+[Verse 1]
+It's been living in the cage of my ribs, every night it is rattling the bars when I sleep
+Every mistake that I made with my mouth is a whisper it shoves in my ear on repeat
+It wears the face of the worst of my days and it sits on my shoulder and laughs when I speak
+I have tried to outrun it, outdrink it, outsmile it, it follows me everywhere, quick on its feet
+So I came to the floor where the bass is a furnace, the kick is a hammer that knocks on the bone
+I am pouring it out of my pores, every drop is a memory leaving and leaving me alone
+Let the strobe be the sun on the fog, let the acid line peel all the paint from the walls
+Every bead running down from my temple's a sentence it whispered, and I'm letting them fall
+I'm not scared of the shape in the corner, I'm looking it straight in the eye and I'm dancing on top
+It can scream all it wants in my chest, but the beat is a hundred and sixty and it won't make it stop
+
+[Hook]
+Sweat the ghost out
+Sweat the ghost out, let it go
+
+[Drop]
+Out, out
+
+[Verse 2]
+Now it's slipping, it's losing its grip on my throat, it is sliding away down the line of my back
+Every spin that I take is a twist of a key and I'm hearing the lock of it crack
+It was never as big as it looked in the dark, it was only as big as I fed it at night
+Now it's starving, it's thin, it's a sheet on a line, and the wind of the bass blows it out of my sight
+I can feel where it lived, there's a room in my chest and the room is just air and a window and light
+And the crowd is a storm that is washing it out, every shout is a wave, and the floor's running white
+I'm not saying I'm healed, I'm not saying it's gone and it won't come knocking again
+But I know where to bring it, I know what to do, I'll be here with the kick and my friends
+So tonight I am salt, I am steam, I am heat coming off of a body that's finally free
+And whatever was haunting the rooms of my ribs has to sweat its way out and get off of me
+
+[Hook]
+Sweat the ghost out
+Sweat the ghost out, let it go
+
+[Outro]
+Breathe
+It's gone quiet
+Only me in here
+Sweat the ghost out
+"""
+
+[[songs]]
+id = "carry-me-across"
+title = "Carry Me Across"
+form = "mantra"
+family = "escape"
+groups = ["psy"]
+model = "B"
+voice = "clear tender male tenor, psychedelic devotional half-time singing, the Sanskrit chanted soft and even, English verses close and unhurried"
+about = "crossing from fear to stillness at sunrise, carried by the old Upanishad prayer to be led from the unreal to the real and from night into light"
+lyrics = """
+[Intro]
+Asato ma sadgamaya
+Carry me across
+
+[Verse 1]
+I've been standing on the near bank of the river all my life
+Watching boats go into morning while I held the rope too tight
+Every fear I ever fed has built a fence along the sand
+Every shadow I mistook for something solid held my hand
+The water's wide and silver and the far side's wrapped in mist
+And I can't tell if it's real or just a dream I can't resist
+So I whisper what the old ones sang while standing where I stand
+Not a wish for gold or glory, just a crossing to the land
+From the false into the true, from the night into the dawn
+From the ending to the endless, to the place where I belong
+
+[Chorus]
+Asato ma sadgamaya
+Tamaso ma jyotirgamaya
+Mrityor ma amritamgamaya
+Carry me across, carry me across
+
+[Drop]
+
+[Verse 2]
+Now the kick is like a paddle and the bass is like a tide
+And I let go of the rope and step into the boat inside
+Every breath I take is rowing, every beat is one more stroke
+And the bank I knew is shrinking to a smudge of grey and smoke
+I'm not running from the near side, I am simply not there now
+I'm the water and the crossing and the light across the bow
+There's a stillness in the middle where the current doesn't pull
+Where the empty heart I carried is already somehow full
+And the far bank isn't far, it was the river all along
+And the one who wanted crossing was the crossing and the song
+
+[Chorus]
+Asato ma sadgamaya
+Tamaso ma jyotirgamaya
+Mrityor ma amritamgamaya
+Carry me across, carry me across
+
+[Bridge]
+No more near side
+No more far
+Just the river
+And the light where you are
+
+[Final Chorus]
+Asato ma sadgamaya
+Tamaso ma jyotirgamaya
+Mrityor ma amritamgamaya
+You carried me across, now carry me across
+
+[Outro]
+Asato ma sadgamaya
+The river is the shore, and the shore is light
 """
