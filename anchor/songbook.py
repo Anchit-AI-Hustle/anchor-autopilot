@@ -59,6 +59,7 @@ class Song:
     about: str
     lyrics: str
     model: str = "A"
+    family: str = ""
 
     def sung_lines(self) -> list[str]:
         return [ln.strip() for ln in self.lyrics.splitlines() if ln.strip() and not ln.strip().startswith("[")]
@@ -73,8 +74,44 @@ def load(directory: Path | str = SONGBOOK_DIR) -> tuple[Song, ...]:
         for s in raw.get("songs", []):
             songs.append(Song(id=s["id"], title=s["title"], form=s["form"], groups=tuple(s["groups"]),
                               voice=s["voice"], about=s["about"], lyrics=bare_tags(s["lyrics"]),
-                              model=str(s.get("model", "A")).upper()))
+                              model=str(s.get("model", "A")).upper(), family=str(s.get("family", ""))))
     return tuple(songs)
+
+
+# Anchit, 2026-11-09: "still song themes and titles arent appropriate and logical - restudy how
+# to choose these". Measured on his own songs (suno.com/@anchor_at, plays as of 2026-11-09) and
+# the two he holds up: Project Mayhem 36 plays, Signal Detected 23, Stay With Me 18, Then Do It
+# 18, Silent Transmission 17, Crossing The Threshold 10, Where It Begins 10, Dancing With Demons,
+# Outrun Your Shadow, Kindness Needs Truth, Pressure Spiral, Red Dust Warning. Every one is a
+# universal, first-person feeling the dance floor can share, named in 1 to 4 words, never a
+# question, never a family member, a price or a household object (artist/songbook/GUIDE.md,
+# "Themes and titles").
+FAMILIES = ("awakening", "defiance", "inner-demons", "drive", "devotion", "escape", "ritual", "truth")
+TITLE_MAX_WORDS = 4
+QUESTION_START = re.compile(r"^(who|whose|what|why|where|when|how|does|did|do you|can|is|are|will|would)\b", re.I)
+SMALL_LIFE = re.compile(r"\b(papa|mama|ma|maa|nani|nana|dadi|dad|mom|mother|father|baby|brother|sister|wife|husband|"
+                        r"aunty|uncle|landlord|rupees?|hatchback|scooter|fridge|spatula|collar|plants?|coffee|"
+                        r"haircut|barber|rating|stars?|drip|ramesh|night shift)\b", re.I)
+
+
+def title_problems(s: "Song") -> list[str]:
+    """Why a title does not sound like an ANCHOR record (empty when it does)."""
+    out, t = [], s.title.strip()
+    words = re.findall(r"[A-Za-z0-9'!]+", t)
+    if not 1 <= len(words) <= TITLE_MAX_WORDS:
+        out.append(f"title has {len(words)} words (1 to {TITLE_MAX_WORDS}, like Project Mayhem or Outrun Your Shadow)")
+    if "?" in t or QUESTION_START.search(t):
+        out.append("title is a question (his titles state or command: Signal Detected, Then Do It)")
+    m = SMALL_LIFE.search(t)
+    if m:
+        out.append(f"title names a small domestic detail {m.group(0)!r} (keep titles universal)")
+    if re.search(r"\d", t):
+        out.append("title has a number")
+    if s.lyrics.lower().count(t.lower().rstrip("!")) < 2:
+        out.append("the title is not the hook (sung at least twice)")
+    if s.family not in FAMILIES:
+        out.append(f"family must be one of {FAMILIES}")
+    return out
 
 
 def problems(songs: tuple[Song, ...]) -> list[str]:
@@ -113,6 +150,8 @@ def problems(songs: tuple[Song, ...]) -> list[str]:
         hits = [w for w in DARK if w in (s.voice + " " + s.about).lower()]
         if hits:
             out.append(f"{where}: voice or about line says {hits} (the caption stays bouncy)")
+        if s.id not in RELEASED_BEFORE_MODELS:
+            out += [f"{where}: {p}" for p in title_problems(s)]
         if s.form == "mantra" and "psy" not in s.groups:
             out.append(f"{where}: mantras belong to psy songs only")
     return out
@@ -145,7 +184,9 @@ def pick(songs: tuple[Song, ...], group: str, r, history: list[dict], *, used_ti
 
     # a song whose cinematic shots are all made goes first (``prefer``), then a new form and fresh
     # words, then a new form, then anything
-    order.sort(key=lambda s: (s.id not in prefer, s.form == last_form, bool(_words(s.title) & recent_words)))
+    last_family = next((by_id[d["theme"]].family for d in history if d.get("theme") in by_id), None)
+    order.sort(key=lambda s: (s.id not in prefer, s.form == last_form, bool(last_family) and s.family == last_family,
+                              bool(_words(s.title) & recent_words)))
     report = {} if report is None else report
     report.setdefault("rejected", [])
     for s in order:

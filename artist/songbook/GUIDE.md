@@ -92,7 +92,56 @@ How it is built:
 - Concrete pictures instead of abstract words.
 - An arc: the end is different from the start (an answer, a decision, a twist).
 - Rhyme that serves the meaning; slant rhyme is fine, a forced rhyme never is.
-- A title of 1 to 4 words that is the song's question or thesis.
+- A title of 1 to 4 words that is the song's hook (see Themes and titles).
+
+## Themes and titles (restudied 2026-11-09)
+
+Anchit, 2026-11-09: "still song themes and titles arent appropriate and logical - restudy how
+to choose these", and his choice: rebuild "like my top songs". The first songbook told Indian
+family stories (a delivery rider's rating, a father's scooter, a bride's dad dancing) and named
+them with questions ("Who's Got the Baby?", "Did You Eat?"). His own records do the opposite.
+
+What his songs measure (suno.com/@anchor_at plays on 2026-11-09, plus the two he holds up):
+
+| Song | Plays | Title shape | Theme |
+|---|---|---|---|
+| Project Mayhem | 36 | cinematic noun phrase | war on the system, taking back what is ours |
+| Signal Detected | 23 | event in two words | an awakening felt in the body before the mind |
+| Stay With Me | 18 | command | devotion, holding on through the night |
+| Then Do It | 18 | command | drive: stop talking, act |
+| Silent Transmission | 17 | cinematic noun phrase | crossing over, only forward |
+| Crossing The Threshold | 10 | event | the moment everything changed |
+| Where It Begins | 10 | statement | the first spark of a feeling |
+| Dancing With Demons | 8 | gerund + object | facing the dark inside instead of running |
+| Outrun Your Shadow | YouTube | command | outrunning your past, the chase |
+| Kindness Needs Truth | YouTube | thesis | mercy with a limit |
+
+So every song now:
+
+1. **Has a universal theme a whole dance floor can feel at once**, from one of eight families
+   (the song's `family` field; never two of the same family in a row):
+   - `awakening`: something wakes inside, a threshold, a first spark (Signal Detected).
+   - `defiance`: war on the rules, taking it back, refusing to kneel (Project Mayhem).
+   - `inner-demons`: the dark inside, faced instead of run from (Dancing With Demons, Outrun Your Shadow).
+   - `drive`: action, momentum, no more waiting (Then Do It, Let's Fucking Go).
+   - `devotion`: holding on to someone or something through the night (Stay With Me).
+   - `escape`: breaking out, leaving the cage, the open road at full speed.
+   - `ritual`: the crowd, the night, the drop as a ceremony, bodies moving as one.
+   - `truth`: a hard lesson said plainly, a thesis (Kindness Needs Truth).
+2. **Is sung by "I" to "you"** (a lover, an enemy, the crowd, the mirror), in the present tense.
+   Concrete physical pictures (blood, fire, glass, rain, a door, a mirror, a heartbeat, a
+   floor shaking), never biography: no family members, jobs, prices, cities, brands or
+   household objects. The listener must be able to put their own life into it.
+3. **Has a title of 1 to 4 words that is its hook**, sung or chanted at least twice, in one of
+   these shapes: a command (Then Do It, Stay With Me, Outrun Your Shadow), a cinematic noun
+   phrase (Project Mayhem, Pressure Spiral, Silent Transmission), an event (Signal Detected,
+   Crossing The Threshold), a gerund with an object (Dancing With Demons) or a thesis
+   (Kindness Needs Truth). Never a question, never a name, never a number. Strong, physical
+   words: burn, break, rise, run, war, fire, blood, pressure, threshold, mayhem, shadow.
+4. **Still follows its model** (A: the dense chase, B: the argument) and the shared rules above.
+
+`anchor/songbook.py` (`title_problems`) checks every title against these rules and the tests
+fail a book that breaks them. Released songs keep their names.
 
 ## Choosing the model
 
