@@ -136,7 +136,7 @@ steps = 8
 guidance = 1.0
 shift = 3.0
 takes = 6           # 2026-10-31 first Mac run: 1 of 4 takes reached the gate, so six
-best_of = 2
+best_of = 1         # 2026-11-09 "the songs shouldnt take so long": the first take that passes the gate ships
 
 [music.renderers.cpu]
 takes = 2

@@ -254,51 +254,52 @@ def hero_words(ln: dict, line_end: float, x: int, y: int, W: int, base: int, acc
     return out
 
 
-def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: list[dict], title: str, sub: str,
-                       work: Path, *, bpm: float, beat_offset: float, lines: list[dict] | None = None,
-                       vertical: bool = False, crf: int = 23, timeout: int = 5400) -> dict:
-    """The song's scene video, verified against the audio length. ``tex`` is the square artwork."""
-    duration = media_summary(audio)["duration"]
-    W, H = (1080, 1920) if vertical else (1920, 1080)
-    work.mkdir(parents=True, exist_ok=True)
-    fr = frames(secs, duration)
-    scan = scanlines(W, H, work / f"scan-{W}.png")
-    a = _ff(accent)
-    ass = write_ass(work / "scenes.ass", accent, W, H, secs, lines or [], title, sub)
-    n = len(secs)
-    looks = assign_looks(secs)
-    parts = [f"[0:v]format=yuv420p,split={n}" + "".join(f"[s{i}]" for i in range(n))]
-    for i, (sc, (n0, n1)) in enumerate(zip(secs, fr)):
-        parts.append(f"[s{i}]trim=start_frame={n0}:end_frame={n1},setpts=PTS-STARTPTS[t{i}]")
-        parts += _scene(looks[i], i, W, H, sc, n0, n1, bpm, beat_offset, i == 0)
-    parts.append("".join(f"[o{i}]" for i in range(n)) + f"concat=n={n}:v=1:a=0[body]")
-    bd = [(s["start"], s["end"]) for s in secs if s["kind"] == "breakdown"]
-    parts += [f"[3:v]scale={W}:{H}:flags=bilinear,format=rgba[fxl]", "[body][fxl]overlay=x=0:y=0:format=auto:shortest=1[v2]"]
-    last = "v2"
-    graph = parts
-    graph.append(f"[{last}][2:v]overlay=x=0:y='-mod(t*24,8)':shortest=1[v3]")
-    graph.append(f"color=c={a}:s={W}x8:r={FPS}[fill]")
-    graph.append(f"color=c=0x0a1622:s={W}x8:r={FPS}[track]")
-    graph.append(f"[track][fill]overlay=x='-{W}+{W}*t/{duration:.3f}':y=0:shortest=1[bar]")
-    graph.append(f"[v3][bar]overlay=x=0:y={H - 8}:shortest=1,vignette=PI/5,"
-                 f"subtitles=scenes.ass:fontsdir={_fonts()},format=yuv420p[vout]")
-    rgb = (int(a[2:4], 16), int(a[4:6], 16), int(a[6:8], 16))
-    mono = decode(audio).mean(axis=1)
-    n_total = round(duration * FPS)
+def _parts(fr: list[tuple[int, int]], k: int) -> list[list[int]]:
+    """Scenes split into ``k`` runs of neighbours with about the same number of frames each."""
+    total = fr[-1][1] or 1
+    groups: list[list[int]] = [[]]
+    for i, (n0, n1) in enumerate(fr):
+        if groups[-1] and n0 >= total * len(groups) / k and len(groups) < k:
+            groups.append([])
+        groups[-1].append(i)
+    return [g for g in groups if g]
+
+
+def _render_part(job: dict) -> str:
+    """One run of scenes as its own silent video, its frames and times exactly where they sit in
+    the whole song (the bar, the scanlines and the lyrics are shifted by the part's start)."""
+    W, H, idx, secs, fr, looks = job["W"], job["H"], job["idx"], job["secs"], job["fr"], job["looks"]
+    N0, N1 = fr[idx[0]][0], fr[idx[-1]][1]
+    T0 = N0 / FPS
+    m = len(idx)
+    g = [f"[0:v]format=yuv420p,split={m}" + "".join(f"[s{i}]" for i in idx)]
+    for i in idx:
+        n0, n1 = fr[i]
+        g.append(f"[s{i}]trim=start_frame={n0}:end_frame={n1},setpts=PTS-STARTPTS[t{i}]")
+        g += _scene(looks[i], i, W, H, secs[i], n0, n1, job["bpm"], job["off"], i == 0)
+    g.append("".join(f"[o{i}]" for i in idx) + f"concat=n={m}:v=1:a=0[body]")
+    g += [f"[2:v]scale={W}:{H}:flags=bilinear,format=rgba[fxl]", "[body][fxl]overlay=x=0:y=0:format=auto:shortest=1[v2]"]
+    g.append(f"[v2][1:v]overlay=x=0:y='-mod((t+{T0:.4f})*24,8)':shortest=1[v3]")
+    g.append(f"color=c={job['accent']}:s={W}x8:r={FPS}[fill]")
+    g.append(f"color=c=0x0a1622:s={W}x8:r={FPS}[track]")
+    g.append(f"[track][fill]overlay=x='-{W}+{W}*(t+{T0:.4f})/{job['duration']:.3f}':y=0:shortest=1[bar]")
+    g.append(f"[v3][bar]overlay=x=0:y={H - 8}:shortest=1,vignette=PI/5,setpts=PTS+{T0:.4f}/TB,"
+             f"subtitles=scenes.ass:fontsdir={_fonts()},setpts=PTS-STARTPTS,format=yuv420p[vout]")
+    out = Path(job["work"]) / f"part-{idx[0]:03d}.mp4"
     cmd = ["ffmpeg", "-y", "-hide_banner", "-v", "error", "-loop", "1", "-framerate", str(FPS), "-i",
-           str(Path(tex).resolve()), "-i", str(Path(audio).resolve()), "-loop", "1", "-framerate", str(FPS), "-i",
-           str(scan.resolve()), "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{W // 2}x{H // 2}", "-framerate",
-           str(FPS), "-i", "pipe:0", "-filter_complex", ";".join(graph), "-map", "[vout]", "-map", "1:a",
-           "-t", f"{duration:.3f}", "-r", str(FPS), "-c:v", "libx264", "-preset", "veryfast", "-crf", str(crf),
-           "-maxrate", "4M", "-bufsize", "8M", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN,
-           "-ar", "48000", "-movflags", "+faststart", str(Path(out).resolve())]
-    log("$ " + " ".join(cmd[:6]) + " ...")
-    errf = work / "ffmpeg.err"
+           job["tex"], "-loop", "1", "-framerate", str(FPS), "-i", job["scan"],
+           "-f", "rawvideo", "-pix_fmt", "rgba", "-s", f"{W // 2}x{H // 2}", "-framerate", str(FPS), "-i", "pipe:0",
+           "-filter_complex", ";".join(g), "-map", "[vout]", "-frames:v", str(N1 - N0), "-r", str(FPS),
+           "-c:v", "libx264", "-preset", "veryfast", "-crf", str(job["crf"]), "-maxrate", "4M", "-bufsize", "8M",
+           "-pix_fmt", "yuv420p", "-an", str(out)]
+    errf = Path(job["work"]) / f"part-{idx[0]:03d}.err"
+    mono = decode(Path(job["audio"])).mean(axis=1)
+    layer = fx.Layer(W, H, job["bpm"], job["off"], job["rgb"], secs, mono, FPS, job["n_total"] + 2, int(H * 0.11))
     with open(errf, "wb") as ef:
-        proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=ef, cwd=str(work))
+        proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=ef, cwd=job["work"])
         try:
-            for raw in fx.frames(mono, FPS, n_total + 2, W, H, rgb, secs, bpm, beat_offset, base=int(H * 0.11)):
-                proc.stdin.write(raw)
+            for k in range(N0, N1 + 2):
+                proc.stdin.write(layer.frame(k))
         except (BrokenPipeError, OSError):
             pass
         finally:
@@ -306,14 +307,70 @@ def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: lis
                 proc.stdin.close()
             except OSError:
                 pass
-        code = proc.wait(timeout=timeout)
+        code = proc.wait(timeout=job["timeout"])
     if code != 0:
-        raise RuntimeError(f"scene render failed ({code}): " + errf.read_text(errors="replace")[-1500:])
+        raise RuntimeError(f"scene part {idx[0]} failed ({code}): " + errf.read_text(errors="replace")[-1500:])
+    return str(out)
+
+
+def workers() -> int:
+    """How many parts render side by side: half the cores (each part is one ffmpeg plus one frame
+    painter), at least 1, at most 6. ANCHOR_SCENE_WORKERS overrides it."""
+    import os
+    want = os.environ.get("ANCHOR_SCENE_WORKERS")
+    if want:
+        return max(1, int(want))
+    return max(1, min(6, (os.cpu_count() or 2) // 2))
+
+
+def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: list[dict], title: str, sub: str,
+                       work: Path, *, bpm: float, beat_offset: float, lines: list[dict] | None = None,
+                       vertical: bool = False, crf: int = 23, timeout: int = 5400) -> dict:
+    """The song's scene video, verified against the audio length. ``tex`` is the square artwork.
+
+    The scene filters run on one core each, so a whole song took about 20 min per format on the
+    Mac (Anchit, 2026-11-09: "the songs shouldnt take so long"). The scenes are now rendered in
+    parts side by side, each part exactly the frames it covers, then joined without re-encoding
+    and given the song's audio; the picture is the same frame for frame."""
+    from concurrent.futures import ProcessPoolExecutor
+    duration = media_summary(audio)["duration"]
+    W, H = (1080, 1920) if vertical else (1920, 1080)
+    work.mkdir(parents=True, exist_ok=True)
+    fr = frames(secs, duration)
+    scan = scanlines(W, H, work / f"scan-{W}.png")
+    a = _ff(accent)
+    write_ass(work / "scenes.ass", accent, W, H, secs, lines or [], title, sub)
+    looks = assign_looks(secs)
+    rgb = (int(a[2:4], 16), int(a[4:6], 16), int(a[6:8], 16))
+    n_total = round(duration * FPS)
+    groups = _parts(fr, workers())
+    base = {"W": W, "H": H, "secs": secs, "fr": fr, "looks": looks, "bpm": bpm, "off": beat_offset, "accent": a,
+            "duration": duration, "tex": str(Path(tex).resolve()), "scan": str(scan.resolve()), "crf": crf,
+            "work": str(work.resolve()), "audio": str(Path(audio).resolve()), "rgb": rgb, "n_total": n_total,
+            "timeout": timeout}
+    log(f"scenes: {len(secs)} scenes in {len(groups)} parts side by side, {W}x{H}")
+    if len(groups) == 1:
+        parts = [_render_part({**base, "idx": groups[0]})]
+    else:
+        with ProcessPoolExecutor(max_workers=len(groups)) as pool:
+            parts = list(pool.map(_render_part, [{**base, "idx": g} for g in groups]))
+    (work / "parts.txt").write_text("".join(f"file '{Path(p).name}'\n" for p in parts))
+    cmd = ["ffmpeg", "-y", "-hide_banner", "-v", "error", "-f", "concat", "-safe", "0", "-i", "parts.txt",
+           "-i", str(Path(audio).resolve()), "-map", "0:v", "-map", "1:a", "-c:v", "copy", "-t", f"{duration:.3f}",
+           "-c:a", "aac", "-b:a", "192k", *AAC_CLEAN, "-ar", "48000", "-movflags", "+faststart",
+           str(Path(out).resolve())]
+    errf = work / "ffmpeg.err"
+    with open(errf, "wb") as ef:
+        code = subprocess.run(cmd, stderr=ef, cwd=str(work), timeout=timeout, check=False).returncode
+    if code != 0:
+        raise RuntimeError(f"scene join failed ({code}): " + errf.read_text(errors="replace")[-1500:])
+    for p in parts:
+        Path(p).unlink(missing_ok=True)
     scan.unlink(missing_ok=True)
     info = media_summary(out)
     if abs(info["duration"] - duration) > 1.5:
         raise RuntimeError(f"scene render truncated: {info['duration']:.1f}s vs audio {duration:.1f}s")
-    return {**info, "scenes": n}
+    return {**info, "scenes": len(secs), "parts": len(groups)}
 
 
 def _fonts() -> str:
