@@ -177,6 +177,7 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
     for e in data.get("uploads", []):     # legs an earlier run could not finish (quota): tried again
         if e.get("retry") and api is not None:
             e["retry"] = _finish(api, e, repo, work, yt, done, e["retry"])
+            e["replaced"] = not any(leg.startswith("private ") for leg in e["retry"])
             write_json(path, data)
     for e in data.get("uploads", []):     # a hand upload: its old videos go private here, cheaply
         if e.get("adopted") and not e.get("replaced") and api is not None:
@@ -240,6 +241,20 @@ def _finish(api, e: dict, repo: str, work: Path, yt: dict, done: dict, legs: lis
                 api.set_privacy(vid, "private")
                 done["private"].append(vid)
         except Exception as exc:          # noqa: BLE001 - kept and tried again next run
+            if _already_done(leg, str(exc)):
+                log(f"uploads: {e['id']}: {leg} already done ({str(exc)[:60]})")
+                continue
             log(f"uploads: {e['id']}: {leg} failed, will retry: {str(exc)[:200]}")
             left.append(leg)
     return left
+
+
+def _already_done(leg: str, err: str) -> bool:
+    """A leg YouTube says needs nothing more is done, not retried forever (2026-11-10: the new
+    Outrun Your Shadow video was already in the playlist, HTTP 409, and the old one no longer
+    exists on the channel, HTTP 404, so both stayed on the retry list run after run)."""
+    if leg == "playlist":
+        return "HTTP 409" in err and "already in playlist" in err.lower()
+    if leg.startswith("private "):
+        return "HTTP 404" in err
+    return False
