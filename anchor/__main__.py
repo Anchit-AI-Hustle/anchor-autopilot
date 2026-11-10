@@ -216,7 +216,16 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(row, indent=2))
     elif args.cmd == "retitle":
         from . import retitle
-        print(json.dumps(retitle.run(profile, dry_run=args.dry_run), indent=2, ensure_ascii=False))
+        from .youtube import YouTubeError
+        try:
+            out = retitle.run(profile, dry_run=args.dry_run)
+        except YouTubeError as exc:
+            if "quotaExceeded" not in str(exc):
+                raise
+            # quota spent for the day: retitle again on its next run instead of failing
+            print("::warning::YouTube quota spent for today; titles are rewritten on the next run", file=sys.stderr)
+            out = {"skipped": "quota", "changed": [], "same": [], "unknown": []}
+        print(json.dumps(out, indent=2, ensure_ascii=False))
     elif args.cmd == "versions":
         from . import versions
         data, cat = versions.load(), catalog.load(CATALOG_PATH, profile)
@@ -257,7 +266,9 @@ def main(argv: list[str] | None = None) -> int:
             if "quotaExceeded" not in str(exc):
                 raise
             # the day's quota is spent; the sync runs every few hours and catches up after the reset
-            print("::warning::YouTube quota spent for today; the playlist catches up on the next run")
+            # the notice goes to stderr: stdout is the JSON the workflow reads (2026-11-10: a
+            # notice on stdout broke the summary step and failed the run)
+            print("::warning::YouTube quota spent for today; the playlist catches up on the next run", file=sys.stderr)
             print(json.dumps({"skipped": "quota"}))
             return 0
         print(json.dumps(out, indent=2, ensure_ascii=False))

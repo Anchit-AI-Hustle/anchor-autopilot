@@ -36,6 +36,10 @@ on:
         type: choice
         options: [auto, mac, cpu]
         default: auto
+      from_run:
+        description: "Post songs an earlier run already made: that run's id (its make jobs passed, a later step failed). Nothing is rendered again"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -130,7 +134,7 @@ jobs:
   # no song started this cancels the run and starts it again on GitHub's CPU.
   mac-watch:
     needs: plan
-    if: needs.plan.outputs.count != '0' && needs.plan.outputs.renderer == 'mac'
+    if: needs.plan.outputs.count != '0' && needs.plan.outputs.renderer == 'mac' && inputs.from_run == ''
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
@@ -158,7 +162,7 @@ jobs:
 
   make:
     needs: plan
-    if: needs.plan.outputs.count != '0'
+    if: needs.plan.outputs.count != '0' && inputs.from_run == ''
     # the Mac (self-hosted, label anchor-mac) or GitHub's CPU, as the plan picked
     runs-on: ${{ fromJSON(needs.plan.outputs.runs_on) }}
     # the CPU music engine can run past 3.5 h (210 cancelled the 10-18 and 10-22 drops); the Mac
@@ -470,6 +474,8 @@ jobs:
         with:
           pattern: drop-*
           path: drops
+          run-id: ${{ inputs.from_run || github.run_id }}
+          github-token: ${{ github.token }}
 
       - name: Create the releases a make job could not
         env:
@@ -498,14 +504,30 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           mkdir -p public/media drops
+          if [ -n "${{ inputs.from_run }}" ] && [ -n "${{ inputs.date }}" ]; then
+            for d in drops/drop-*; do
+              case ",${{ inputs.date }}," in *",${d#drops/drop-},"*) ;; *) rm -rf "$d" ;; esac
+            done
+          fi
           MADE="$(ls drops | sed 's/^drop-//' | sort | tr '\n' ' ')"
           echo "made=$MADE" >> "$GITHUB_OUTPUT"
           [ -n "$MADE" ] || { echo "::warning::no song made it through its checks"; exit 0; }
           for d in drops/drop-*; do cp "$d"/*-short.mp4 "$d"/*-full-169.mp4 "$d"/*-full-916.mp4 public/media/; done
-          # keep the previous drops online too, in case a scheduled post is still pending
+          # keep the previous drops online too, in case a scheduled post is still pending, but
+          # only while the site stays under GitHub Pages' 1 GB (2026-11-10: 2.07 GB, deploy timed out)
+          BUDGET=900000000
+          size() { du -sk public | awk '{print $1 * 1024}'; }
+          [ "$(size)" -le "$BUDGET" ] || echo "::warning::today's songs alone are $(( $(size) / 1000000 )) MB, over the Pages budget"
           for tag in $(gh release list --limit 10 --json tagName -q '.[].tagName' | grep '^drop-' | head -6); do
-            [ -d "drops/$tag" ] || gh release download "$tag" --pattern '*.mp4' --dir public/media --clobber || true
+            [ -d "drops/$tag" ] && continue
+            NEED="$(gh release view "$tag" --json assets -q '[.assets[] | select(.name | endswith(".mp4")) | .size] | add // 0')"
+            if [ $(( $(size) + NEED )) -gt "$BUDGET" ]; then
+              echo "skipping $tag ($(( NEED / 1000000 )) MB): over the Pages budget"
+              continue
+            fi
+            gh release download "$tag" --pattern '*.mp4' --dir public/media --clobber || true
           done
+          echo "media host: $(( $(size) / 1000000 )) MB"
           printf 'User-agent: *\nDisallow: /\n' > public/robots.txt
           printf '<!doctype html><meta charset="utf-8"><title>ANCHOR media</title><meta http-equiv="refresh" content="0;url=https://anchor.anchit-tandon.com/">' > public/index.html
           ls -la public/media
@@ -548,6 +570,8 @@ jobs:
         with:
           pattern: drop-*
           path: dl
+          run-id: ${{ inputs.from_run || github.run_id }}
+          github-token: ${{ github.token }}
 
       - name: Lay out the songs that were made
         run: |
@@ -684,7 +708,7 @@ jobs:
       - name: Mark the failed run on the status page
         env:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          STAGE: ${{ needs.make.result != 'success' && 'make' || (needs.pages.result != 'success' && 'pages' || 'publish') }}
+          STAGE: ${{ (needs.make.result != 'success' && needs.make.result != 'skipped') && 'make' || (needs.pages.result != 'success' && 'pages' || 'publish') }}
         run: |
           python -m anchor fail --stage "$STAGE" --error "The $STAGE stage failed. Open the run log for details." --run-url "$RUN_URL"
           git config user.name "$ROBOT_NAME"
