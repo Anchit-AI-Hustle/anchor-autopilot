@@ -20,6 +20,7 @@ from pathlib import Path
 
 import numpy as np
 
+from . import genres
 from .art import make_cover
 from .audio import SR, beat_phase, decode, encode_mp3, loudness, master
 from .config import Profile
@@ -130,7 +131,7 @@ def words(profile: Profile, chapters: list[dict], period: str, vol: int, duratio
     if len(title) > 100:
         title = f"{lead} {kind} {year} | {name} Vol. {vol} | {minutes} min"
     lines = [f"{lead} mix, {minutes} minutes, {len(chapters)} original {name} tracks back to back. "
-             f"{'The month' if period == 'month' else 'The week'} in one set, in tempo order. Free downloads of every track below.", "",
+             f"{'The month' if period == 'month' else 'The week'} in one set, climbing in tempo and in key. Free downloads of every track below.", "",
              "Tracklist"]
     lines += [f"{stamp(c['start_s'])} {c['title']} ({c['bpm']} BPM)" for c in chapters]
     lines += ["", f"All tracks: {yt.get('playlist_url', site)}", f"Free download: {site} · IG @{profile.artist.get('instagram_handle', '').lstrip('@')}",
@@ -149,7 +150,8 @@ def build(profile: Profile, catalog: dict, day: str, period: str, out_dir: Path,
     drops = pick_tracks(catalog, day, period)
     if len(drops) < 3:
         raise RuntimeError(f"only {len(drops)} released track(s) in the {period} ending {day}; a mix needs three")
-    tracks = sorted(fetch(drops, out_dir / "tracks"), key=lambda d: (int(d["bpm"]), d["date"]))
+    # 2026-11-10: a set climbs to a peak two-thirds in, in compatible keys (anchor/genres.py)
+    tracks = genres.set_order(fetch(drops, out_dir / "tracks"))
     vol = volume_number(catalog, period)
     audio, chapters = join(tracks)
     raw = out_dir / "mix_raw.wav"

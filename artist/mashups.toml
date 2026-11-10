@@ -1,0 +1,103 @@
+# Mashups, fusions and sets: how two genres become one song, and how songs become one set
+# (Anchit, 2026-11-10). Researched 2026-11-10; sources per section. anchor/genres.py reads it.
+
+[camelot]
+# Mixed In Key's Camelot wheel: A = minor, B = major
+source = "https://mixedinkey.com/workflows/how-to-use-the-camelot-wheel/"
+# moves that sound right (same code, one step either way, the other letter on the same number);
+# +2 is an energy boost, used sparingly
+smooth = [0, 1, -1]
+boost = 2
+
+[camelot.codes]
+"G# minor" = "1A"
+"Ab minor" = "1A"
+"B major" = "1B"
+"D# minor" = "2A"
+"Eb minor" = "2A"
+"F# major" = "2B"
+"A# minor" = "3A"
+"Bb minor" = "3A"
+"C# major" = "3B"
+"Db major" = "3B"
+"F minor" = "4A"
+"G# major" = "4B"
+"Ab major" = "4B"
+"C minor" = "5A"
+"D# major" = "5B"
+"Eb major" = "5B"
+"G minor" = "6A"
+"A# major" = "6B"
+"Bb major" = "6B"
+"D minor" = "7A"
+"F major" = "7B"
+"A minor" = "8A"
+"C major" = "8B"
+"E minor" = "9A"
+"G major" = "9B"
+"B minor" = "10A"
+"D major" = "10B"
+"F# minor" = "11A"
+"A major" = "11B"
+"C# minor" = "12A"
+"Db minor" = "12A"
+"E major" = "12B"
+
+
+[tempo]
+source = "https://www.digitaldjtips.com/"
+max_stretch = 0.05          # beyond about 5 percent a track sounds wrong; 2-3 percent is safest
+pairs = "half or double time lines up: 70/140, 75/150, 87/174 (one slow bar is two fast bars)"
+# hard techno sets ramp rather than start at full speed (Mixmag: 145 minimum by 2021, sets to 160)
+ramp = "start in the low end of the set's range and climb; the peak sits about two-thirds in"
+
+[sets]
+source = "https://dj.studio/blog/anatomy-great-dj-mix-structure-energy-flow-transition-logic"
+phases = ["warm up: long blends", "build: rising energy, more percussion", "peak: shortest switches",
+  "release: breakdowns and filters", "finale: a long outro"]
+peak_at = 0.66
+blend_bars = { techno = 32, hard_techno = 16, hard_dance = 16 }
+
+# Fusion recipes: what each side brings so the result is both genres, never one with the other
+# pasted on top. `base` provides the drums and the low end, `top` the voice or the hook.
+[[fusion]]
+id = "rap_x_hard_techno"
+base = "hard_techno"
+top = "techno_rap"
+rule = "the distorted four-on-the-floor kick runs under every verse; rap in 8-bar blocks, a half-time flow (75-88) over 150-176"
+source = "https://mixmag.net/feature/brutalismus-3000-interview-cover-feature-harmony"
+
+[[fusion]]
+id = "psy_x_hard_techno"
+base = "hard_techno"
+top = "psytrance"
+rule = "short hard techno kick, then a kick-bass-bass-bass psy roll in the gaps; acid and swirling leads on top"
+source = "https://www.attackmagazine.com/?p=85913"
+
+[[fusion]]
+id = "hardstyle_x_hard_techno"
+base = "hard_techno"
+top = "hardstyle"
+rule = "a pitched hardstyle-type kick carries the bass over a straight techno groove and offbeat hats; no long euphoric breakdown"
+source = "https://www.edmprod.com/what-is-hard-techno/"
+
+[[fusion]]
+id = "phonk_x_hard_techno"
+base = "hard_techno"
+top = "phonk"
+rule = "four-on-the-floor distorted kick with the phonk cowbell melody and a clipped 808 under it; Memphis vocal chops"
+source = "https://splice.com/blog/brazilian-funk-vs-phonk/"
+
+[[fusion]]
+id = "hiphop_x_hard_techno"
+base = "hard_techno"
+top = "boom_bap"
+rule = "the hard techno kick stays four-on-the-floor; the rap rides it in a half-time flow with backbeat claps on top"
+source = "https://www.mixgraph.io/"
+
+[[fusion]]
+id = "acid_x_hardtek"
+base = "hardtek"
+top = "acid_techno"
+rule = "pounding hardtek kick with a distorted 303 line as bass and lead"
+source = "https://en.wikipedia.org/wiki/Free_tekno"

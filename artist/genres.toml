@@ -1,0 +1,561 @@
+# Every genre ANCHOR makes or mixes, what it is made of, and how it must never sound
+# (Anchit, 2026-11-10: "completely learn about each and every genre of music ... and about
+# mashups so that you can create the perfect type of music, songs, videos and sets").
+#
+# Researched 2026-11-10 from the pages in each entry's sources. Where sources disagree the
+# range covers both and `note` says so; `confidence` is "low" where no strong source was found.
+# `prompt` holds the words a text-to-music prompt needs for the genre to come out; `negative`
+# what makes it sound wrong; `visual` is the video's look (a creative choice, not sourced).
+# anchor/genres.py loads this file; every lane in anchor.toml names its genres, and the tests
+# check each lane against them (tempo, signature words in, wrong-sounding words out).
+#
+# ANCHOR's "raw hard tech" (Anchit, 2026-11-10: high BPM, industrial drums and bass) is hard
+# techno and industrial techno pushed into hardtek tempo: the sources put hard techno at
+# 140-160 and French hardtek/free tekno at 150-185. "Hard tech" alone is ambiguous (a 130-140
+# tech house meaning exists but has no solid source), so prompts always spell the sound out.
+
+# ---------------------------------------------------------------- techno
+[[genre]]
+id = "hard_techno"
+name = "Hard Techno"
+family = "techno"
+bpm = [140, 160]
+feel = "four-on-the-floor, straight, no swing"
+kick = "heavy distorted kick with a rumble tail, close to a hardstyle kick"
+bass = "aggressive, sidechained, often an acid line"
+percussion = "sharp offbeat hats, sparse percussion"
+synths = "dark industrial stabs, dissonant acid"
+vocals = "sparse vocal chops"
+structure = "8-bar sections, first drop near bar 16, first breakdown near bar 32, something new every 8 bars"
+prompt = ["hard techno", "distorted kick", "rumble kick", "offbeat hats", "sidechained bass", "industrial stabs", "acid line"]
+negative = ["swing shuffle", "clean house kick", "bright supersaw chords", "acoustic drums", "long 64-bar intro"]
+visual = "strobe-lit concrete warehouse, red and white strobes, smoke, silhouettes"
+sources = ["https://www.edmprod.com/what-is-hard-techno/", "https://mixmagmena.com/feature/has-dance-music-got-harder-faster-hor-berlin-hard-techno-rave-music-interview-investigation"]
+
+[[genre]]
+id = "industrial_techno"
+name = "Industrial Techno"
+family = "techno"
+bpm = [130, 150]
+note = "FutureProof says 140-150, Mixgraph 130-145"
+feel = "four-on-the-floor"
+kick = "distorted, clipped"
+bass = "distorted, fused with the kick rumble"
+percussion = "metallic hits, factory noise"
+synths = "dystopian atmospheres, noise"
+vocals = "rare, processed"
+structure = "long loops that harden over time"
+prompt = ["industrial techno", "metallic percussion", "factory noise", "distorted rumble kick", "saturation"]
+negative = ["melodic leads", "bright pads", "funky swing"]
+visual = "rusted machinery, sparks, monochrome grain"
+sources = ["https://futureproofmusicschool.com/blog/what-is-hard-techno", "https://www.mixgraph.io/bpm-for"]
+
+[[genre]]
+id = "hardtek"
+name = "Hardtek (free tekno)"
+family = "techno"
+bpm = [150, 185]
+note = "Wikipedia 150-185, Technomag 160-180"
+feel = "four-on-the-floor, pounding and repetitive"
+kick = "pounding repetitive kick, less clipped than hardcore"
+bass = "driving, under the kick"
+percussion = "hardware drum machine loops"
+synths = "acid stabs, raw synth riffs"
+vocals = "film and TV samples at key moments"
+structure = "long, built for sound-system parties"
+prompt = ["hardtek", "free party tekno", "pounding kick", "acid stabs", "sound system rawness"]
+negative = ["polished EDM drops", "pop vocals", "slow tempo"]
+visual = "teknival field, speaker stacks, trucks at dawn"
+sources = ["https://en.wikipedia.org/wiki/Free_tekno", "https://www.technomag.fr/en/hardcore-an-analysis-the-different-sub-genres-of-hard-techno/"]
+
+[[genre]]
+id = "schranz"
+name = "Schranz"
+family = "techno"
+bpm = [140, 150]
+feel = "four-on-the-floor, loop-driven"
+kick = "hard, distorted"
+bass = "minimal, under the loops"
+percussion = "crunchy distorted percussion loops, tribal drums, heavy repetition"
+synths = "almost no melody"
+vocals = "rare"
+structure = "relentless loops, few breakdowns"
+prompt = ["schranz", "distorted percussion loops", "crunchy looped hats", "tribal drums", "relentless repetition"]
+negative = ["big melodic breakdowns", "supersaws", "half-time", "soft kick"]
+visual = "fast-cut tunnel lights, bunker"
+sources = ["https://mixmag.net/feature/10-essential-schranz-tracks-selected-by-nikolina"]
+
+[[genre]]
+id = "hard_groove"
+name = "Hard Groove Techno"
+family = "techno"
+bpm = [138, 150]
+feel = "four-on-the-floor with swung sixteenth shakers"
+kick = "tough, not too short, audible pitch"
+bass = "rolling, under the percussion loops"
+percussion = "chopped Latin percussion loops, 909 open hats, congas, swung shaker, 909 ride"
+synths = "funky loops, few leads"
+vocals = "chopped stabs"
+structure = "a kick repeat every 8 bars, a tom every other bar"
+prompt = ["hard groove techno", "chopped percussion loops", "swung shaker", "909 ride", "conga", "pitched kick"]
+negative = ["stiff unswung grid", "trance leads", "vocals throughout"]
+visual = "sweaty basement, 16mm film, dancers"
+sources = ["https://www.musicradar.com/tutorials/"]
+
+[[genre]]
+id = "acid_techno"
+name = "Acid Techno"
+family = "techno"
+bpm = [130, 150]
+note = "12edit 130-150, Mixgraph 130-140"
+feel = "four-on-the-floor"
+kick = "punchy 4x4"
+bass = "TB-303 as bass and lead, distorted, resonant filter sweeps"
+percussion = "noisy, rattling"
+synths = "303 squelch"
+vocals = "rare"
+structure = "the filter opens over the track"
+prompt = ["acid techno", "303 squelch", "resonant filter sweeps", "distorted acid line"]
+negative = ["smooth pads", "half-time", "no 303"]
+visual = "acid smiley UV, squat party"
+sources = ["https://blog.12edit.com/acid-techno", "https://www.mixgraph.io/bpm-for"]
+
+[[genre]]
+id = "hypertechno"
+name = "Hypertechno"
+family = "techno"
+bpm = [150, 180]
+confidence = "low"
+feel = "four-on-the-floor, very fast"
+kick = "thick, punchy"
+bass = "short pulses"
+percussion = "rapid hats"
+synths = "sped-up melodic hook, eurodance lead"
+vocals = "pitched-up hooks"
+structure = "short, hook-led"
+prompt = ["hypertechno", "very fast kick", "sped-up melodic hook", "rapid hats"]
+negative = ["slow groove"]
+visual = "Y2K neon, chrome text"
+sources = ["https://www.musicmetricsvault.com/genres/hypertechno/116"]
+
+[[genre]]
+id = "hard_bounce"
+name = "Hard Bounce"
+family = "techno"
+bpm = [155, 170]
+confidence = "low"
+feel = "four-on-the-floor, bouncy offbeat bass"
+kick = "donk-inflected hard kick"
+bass = "bouncy offbeat bass"
+percussion = "claps, rolls"
+synths = "donk leads, cheeky stabs"
+vocals = "shouted chants"
+structure = "cheeky build-ups into bouncy drops"
+prompt = ["hard bounce", "bouncy offbeat bass", "donk lead", "cheeky build-up"]
+negative = ["slow tempo"]
+visual = "confetti, bright colour rave"
+sources = ["https://www.attackmagazine.com/features/long-read/has-techno-lost-its-groove/"]
+
+[[genre]]
+id = "dark_techno"
+name = "Berlin Dark Techno"
+family = "techno"
+bpm = [128, 135]
+feel = "four-on-the-floor, 50-54 percent swing"
+kick = "compressed 909 with a long reverb rumble layer"
+bass = "rumble fused with the kick"
+percussion = "gritty offbeat shaker, lo-fi hats, 909 ride"
+synths = "few, dark"
+vocals = "none"
+structure = "long hypnotic sections"
+prompt = ["dark techno", "909 kick with reverb rumble", "gritty shaker", "bunker atmosphere"]
+negative = ["bright melodies", "happy chords"]
+visual = "concrete club, red light"
+sources = ["https://www.attackmagazine.com/technique/beat-dissected/dark-techno-rumble/"]
+
+[[genre]]
+id = "peak_time_techno"
+name = "Peak Time Techno"
+family = "techno"
+bpm = [126, 132]
+feel = "four-on-the-floor"
+kick = "layered, saturated, mono sub"
+bass = "repetitive sixteenths, sidechained"
+percussion = "rides in the drops, sparse claps"
+synths = "1-2 bar riff with filter movement"
+vocals = "rare"
+structure = "intro, build, drop, break, second drop, outro"
+prompt = ["peak time techno", "driving 16th bassline", "ride cymbals", "filter sweep build"]
+negative = ["breakbeats", "rap vocals"]
+visual = "festival main stage lasers"
+sources = ["https://www.beatportal.com/articles/783088-step-by-step-guide-to-producing-techno-peak-time-driving"]
+
+[[genre]]
+id = "melodic_techno"
+name = "Melodic Techno"
+family = "techno"
+bpm = [120, 130]
+feel = "four-on-the-floor"
+kick = "deep, straight"
+bass = "rolling root notes"
+percussion = "light"
+synths = "lush pads, emotive arpeggios, one-bar lead"
+vocals = "occasional airy vocals"
+structure = "a new layer every 8 bars, a cinematic breakdown"
+prompt = ["melodic techno", "emotive arpeggio", "lush pads", "rolling bass"]
+negative = ["distortion", "rap", "gabber kick"]
+visual = "vast landscapes, surreal monoliths"
+sources = ["https://www.native-instruments.com/en/blogs/blog/melodic-techno"]
+
+# ---------------------------------------------------------------- hard dance
+[[genre]]
+id = "hardstyle"
+name = "Hardstyle"
+family = "hard dance"
+bpm = [150, 160]
+feel = "four-on-the-floor"
+kick = "overdriven pitched kick that carries the bassline, reverse bass on the offbeat"
+bass = "the kick itself"
+percussion = "claps, snare rolls"
+synths = "emotional supersaw melodies"
+vocals = "anthem vocals"
+structure = "long anthem breakdown, climax drop"
+prompt = ["hardstyle", "pitched distorted kick", "reverse bass", "anthem breakdown"]
+negative = ["techno rumble kick", "swing", "half-time"]
+visual = "pyro, sunrise anthem"
+sources = ["https://en.wikipedia.org/wiki/Hardstyle"]
+
+[[genre]]
+id = "rawstyle"
+name = "Rawstyle"
+family = "hard dance"
+bpm = [150, 160]
+feel = "four-on-the-floor"
+kick = "layered distorted raw kick"
+bass = "the kick's tail"
+percussion = "snare rolls into drops"
+synths = "screeches, little or no melody"
+vocals = "dark spoken samples"
+structure = "8-16 bar breakdowns, aggressive drops"
+prompt = ["rawstyle", "screech lead", "distorted raw kick", "aggressive drop"]
+negative = ["euphoric chords", "bright piano", "soft kick"]
+visual = "black and red fire, masks"
+sources = ["https://www.mixgraph.io/bpm-for/rawstyle", "https://en.wikipedia.org/wiki/Hardstyle"]
+
+[[genre]]
+id = "frenchcore"
+name = "Frenchcore"
+family = "hard dance"
+bpm = [190, 205]
+feel = "four-on-the-floor"
+kick = "distorted wood kick"
+bass = "loud distorted offbeat bass"
+percussion = "tight rolls"
+synths = "optional melodic hook"
+vocals = "shouts"
+structure = "filter-swept breaks at full tempo"
+prompt = ["frenchcore", "offbeat distorted bass", "wood kick", "melodic hook"]
+negative = ["half-time breakdown", "slow"]
+visual = "kaleidoscope, free-party energy"
+sources = ["https://en.wikipedia.org/wiki/Frenchcore", "https://www.mixgraph.io/bpm-for/frenchcore"]
+
+[[genre]]
+id = "gabber"
+name = "Gabber"
+family = "hard dance"
+bpm = [160, 200]
+note = "sources range from 140 to 220"
+feel = "four-on-the-floor"
+kick = "distorted 909-style kick"
+bass = "the kick"
+percussion = "minimal"
+synths = "hoovers"
+vocals = "roared"
+structure = "relentless"
+prompt = ["gabber", "distorted 909 kick", "hoover", "roared vocals"]
+negative = ["clean kick", "swing"]
+visual = "Rotterdam 90s"
+sources = ["https://en.wikipedia.org/wiki/Gabber"]
+
+[[genre]]
+id = "uptempo_hardcore"
+name = "Uptempo Hardcore"
+family = "hard dance"
+bpm = [180, 220]
+confidence = "low"
+feel = "four-on-the-floor"
+kick = "piep kick: high attack, heavily distorted tail"
+bass = "the kick"
+percussion = "minimal"
+synths = "walls of distortion"
+vocals = "chaotic shouts"
+structure = "short, chaotic"
+prompt = ["uptempo hardcore", "piep kick", "wall of distortion"]
+negative = ["groove swing", "melodic calm"]
+visual = "glitch chaos"
+sources = ["https://electronic-guide.neocities.org/genres/uptempohardcore"]
+
+[[genre]]
+id = "hard_trance"
+name = "Hard Trance"
+family = "hard dance"
+bpm = [140, 160]
+confidence = "low"
+feel = "four-on-the-floor"
+kick = "strong, sometimes pitched down"
+bass = "resonant"
+percussion = "snare-roll builds"
+synths = "gated pads, anthem lead"
+vocals = "rare"
+structure = "breakdown, build, anthem"
+prompt = ["hard trance", "gated pads", "anthem lead", "snare roll build"]
+negative = ["half-time"]
+visual = "late-90s laser rave"
+sources = ["https://en.wikipedia.org/wiki/Trance_music"]
+
+# ---------------------------------------------------------------- psy
+# shared psy rule (bonedo): a kick no longer than an eighth, then three sixteenth bass notes
+# (kick-bass-bass-bass), the kick tail tuned to the bass root
+[[genre]]
+id = "psytrance"
+name = "Full On Psytrance"
+family = "psy"
+bpm = [140, 148]
+feel = "four-on-the-floor, rolling"
+kick = "short, under an eighth note"
+bass = "rolling sixteenths, kick-bass-bass-bass"
+percussion = "crisp, busy"
+synths = "squelchy leads, sci-fi samples"
+vocals = "spoken samples"
+structure = "elements change every 8 bars, breakdowns 30 s to 1 min"
+prompt = ["psytrance", "rolling 16th bassline", "kick-bass-bass-bass", "squelchy leads"]
+negative = ["long bass notes over the kick", "swing", "half-time"]
+visual = "UV fractals, mandalas"
+sources = ["https://en.wikipedia.org/wiki/Psychedelic_trance", "https://psytranceguide.com"]
+
+[[genre]]
+id = "dark_psy"
+name = "Dark Psytrance"
+family = "psy"
+bpm = [145, 160]
+feel = "four-on-the-floor, rolling"
+kick = "short"
+bass = "heavy rolling"
+percussion = "busy"
+synths = "lasers, alien sounds"
+vocals = "horror samples"
+structure = "few breakdowns"
+prompt = ["dark psytrance", "laser fx", "heavy rolling bass"]
+negative = ["happy melodies"]
+visual = "night forest"
+sources = ["https://psytranceguide.com"]
+
+[[genre]]
+id = "forest_psy"
+name = "Forest Psytrance"
+family = "psy"
+bpm = [150, 160]
+feel = "four-on-the-floor, rolling"
+kick = "short"
+bass = "continuous rolling"
+percussion = "organic"
+synths = "creepy swarming textures, nature ambience"
+vocals = "rare"
+structure = "almost no breakdowns"
+prompt = ["forest psytrance", "organic textures", "continuous rolling bass"]
+negative = ["big breakdowns"]
+visual = "mossy forest"
+sources = ["https://psytranceguide.com"]
+
+[[genre]]
+id = "hitech"
+name = "Hi-Tech Psytrance"
+family = "psy"
+bpm = [170, 200]
+feel = "four-on-the-floor, very fast"
+kick = "short"
+bass = "rapid rolling"
+percussion = "glitchy micro-edits"
+synths = "playful, silly fx"
+vocals = "rare"
+structure = "relentless"
+prompt = ["hitech psytrance", "glitchy micro-edits", "rapid rolling bass"]
+negative = ["slow groove"]
+visual = "hyper-speed fractals"
+sources = ["https://psytranceguide.com"]
+
+[[genre]]
+id = "goa"
+name = "Goa Trance"
+family = "psy"
+bpm = [135, 150]
+feel = "four-on-the-floor"
+kick = "round"
+bass = "rolling"
+percussion = "organic"
+synths = "oriental melodies, acid leads"
+vocals = "rare"
+structure = "long"
+prompt = ["goa trance", "oriental melodies", "acid leads"]
+negative = ["minimal sparseness"]
+visual = "Goa beach, 90s psychedelic art"
+sources = ["https://psytranceguide.com"]
+
+# ---------------------------------------------------------------- bass and breaks
+[[genre]]
+id = "drum_and_bass"
+name = "Drum and Bass"
+family = "bass"
+bpm = [160, 185]
+feel = "breakbeat, amen break"
+kick = "inside the break"
+bass = "deep sub, reese bass"
+percussion = "fast chopped breaks"
+synths = "neurofunk growls or jump up wobbles"
+vocals = "MC or sung hooks"
+structure = "32-bar intro, 16-32 bar breakdown and drop"
+prompt = ["drum and bass", "amen break", "reese bass"]
+negative = ["four-on-the-floor kick", "128 bpm"]
+visual = "dark city tunnels, motion blur"
+sources = ["https://en.wikipedia.org/wiki/Drum_and_bass", "https://www.edmprod.com/how-to-make-drum-and-bass/"]
+
+[[genre]]
+id = "dubstep"
+name = "Dubstep"
+family = "bass"
+bpm = [138, 142]
+feel = "half-time, snare on 3"
+kick = "punchy"
+bass = "sub and wobble"
+percussion = "sparse"
+synths = "growls"
+vocals = "samples"
+structure = "drop after bar 16 or 32, second drop"
+prompt = ["dubstep", "half-time", "wobble bass", "bass drop"]
+negative = ["four-on-the-floor kick"]
+visual = "dark urban, shaking bass cones"
+sources = ["https://en.wikipedia.org/wiki/Dubstep"]
+
+# ---------------------------------------------------------------- house
+[[genre]]
+id = "tech_house"
+name = "Tech House"
+family = "house"
+bpm = [122, 130]
+feel = "four-on-the-floor, shuffled"
+kick = "short, deep"
+bass = "groovy, plucky"
+percussion = "quick hats, noisy snares"
+synths = "vocal chops, 303 touches"
+vocals = "chopped hooks"
+structure = "DJ-friendly intros and outros"
+prompt = ["tech house", "groovy bassline", "shuffled hats", "vocal chop"]
+negative = ["150 bpm", "screech"]
+visual = "Ibiza terrace"
+sources = ["https://en.wikipedia.org/wiki/Tech_house"]
+
+# ---------------------------------------------------------------- hip hop and rap
+[[genre]]
+id = "boom_bap"
+name = "Boom Bap"
+family = "hiphop"
+bpm = [80, 100]
+feel = "swung backbeat, snares on 2 and 4"
+kick = "sampled break kick"
+bass = "sampled or simple"
+percussion = "dusty sampled drums"
+synths = "jazz and soul sample chops"
+vocals = "rap verses, hooks"
+structure = "16-bar verses, 8-bar hooks"
+prompt = ["boom bap", "dusty sampled drums", "swung hats"]
+negative = ["808 slides", "trap hat rolls"]
+visual = "90s street, VHS"
+sources = ["https://blog.native-instruments.com/what-is-boom-bap/"]
+
+[[genre]]
+id = "trap"
+name = "Trap"
+family = "hiphop"
+bpm = [130, 150]
+note = "felt at half time (65-75); Wikipedia's range is 100-176"
+feel = "half-time"
+kick = "808 kick"
+bass = "long-decay 808"
+percussion = "eighth hats with 16th and 32nd rolls, snare on 3"
+synths = "dark bells"
+vocals = "rap, ad-libs"
+structure = "16-bar verses, 8-bar hooks"
+prompt = ["trap", "808 bass", "hi-hat rolls", "half-time snare"]
+negative = ["four-on-the-floor kick"]
+visual = "night city, smoke"
+sources = ["https://en.wikipedia.org/wiki/Trap_music"]
+
+[[genre]]
+id = "drill"
+name = "Drill"
+family = "hiphop"
+bpm = [140, 150]
+feel = "half-time"
+kick = "808"
+bass = "sliding 808 glides"
+percussion = "skippy hats, syncopated snares"
+synths = "dark strings, piano, bells"
+vocals = "aggressive rap"
+structure = "16-bar verses"
+prompt = ["drill", "sliding 808", "skippy hats", "dark strings"]
+negative = ["four-on-the-floor kick"]
+visual = "council estate at night"
+sources = ["https://orphiq.com/resources/drill-chords"]
+
+[[genre]]
+id = "phonk"
+name = "Drift Phonk"
+family = "hiphop"
+bpm = [140, 160]
+note = "classic phonk 80-110; drift phonk 140-160; phonk house 120-140 four-on-the-floor; Brazilian phonk 130-160"
+feel = "fast grid felt at half time"
+kick = "hard-clipped 808"
+bass = "distorted 808"
+percussion = "cowbell patterns"
+synths = "cowbell melody lead"
+vocals = "Memphis rap vocal chops"
+structure = "short, loop-based, blown-out"
+prompt = ["drift phonk", "cowbell melody", "distorted 808", "memphis vocal chop"]
+negative = ["clean mix"]
+visual = "night drifting cars, VHS grain"
+sources = ["https://splice.com/blog/brazilian-funk-vs-phonk/", "https://www.beatstorapon.com/blog/phonk-music/"]
+
+[[genre]]
+id = "grime"
+name = "Grime"
+family = "hiphop"
+bpm = [138, 142]
+feel = "syncopated, sparse"
+kick = "sparse"
+bass = "raw square-wave bass"
+percussion = "eski clicks"
+synths = "square leads"
+vocals = "MC up front, 16-bar verses"
+structure = "8-bar blocks"
+prompt = ["grime", "square wave bass", "eski click"]
+negative = ["four-on-the-floor kick"]
+visual = "London tower blocks"
+sources = ["https://orphiq.com/resources/what-is-grime-music"]
+
+[[genre]]
+id = "techno_rap"
+name = "Techno Rap"
+family = "fusion"
+bpm = [140, 175]
+confidence = "low"
+feel = "four-on-the-floor under the rap"
+kick = "the hard techno kick stays under the verses"
+bass = "rumble or acid under the rap"
+percussion = "techno hats"
+synths = "industrial stabs"
+vocals = "screamed or fast rap in 8-bar blocks, half-time flows fit (75 over 150)"
+structure = "8-bar rap blocks with drop-outs for punchlines"
+prompt = ["rap over hard techno", "under every verse", "kick the whole song", "four-on-the-floor under the verses", "8-bar rap blocks"]
+negative = ["rap over an empty beat", "kick dropping out under the verses"]
+visual = "rapper in strobe-lit warehouse"
+sources = ["https://mixmag.net/feature/brutalismus-3000-interview-cover-feature-harmony"]
