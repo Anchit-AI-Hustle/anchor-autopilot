@@ -39,6 +39,13 @@ CHECKS = {
     # to digital silence mid-song (Who Started The Dance: 0.3 s at 2:08); none of his nine do
     "silence_holes": ("max", 0, "the music cuts to silence in the middle", ""),
     "breaks": ("max", 4, "the music keeps breaking off in the middle", ""),
+    # Anchit, 2026-11-10: "Raw hard tech has a high BPM with industrial hard tech noises like
+    # drums, bass, everything. All of it is missing." Every one of his songs carries most of its
+    # weight in a distorted kick and sub (30 to 150 Hz); the engine songs he called soft do not
+    # (Bleed Beside Me 0.23, Doors Blown Open 0.54, Sunrise at the Fence 0.58) or have a clean,
+    # unsaturated low end (Sweat The Ghost Out crest 3.41, Bleed Beside Me 4.42)
+    "low_end_share": ("min", 0.62, "not hard tech: the kick and bass are too light", ""),
+    "low_end_crest": ("max", 2.72, "not hard tech: the kick and bass are clean, not distorted", ""),
 }
 REFERENCE = {  # the nine Suno songs: weakest and strongest value
     "noise_score": (0.0156, 0.0434),
@@ -50,6 +57,10 @@ REFERENCE = {  # the nine Suno songs: weakest and strongest value
     "silent_tail_s": (0.0, 2.2),
     "silence_holes": (0, 0),
     "breaks": (0, 4),
+    # measured 2026-11-10 on the original masters of eight of the nine (Let's F*cking Go! is not on
+    # the releases); the limits are the weakest value loosened by 10 percent of the spread
+    "low_end_share": (0.637, 0.811),
+    "low_end_crest": (2.2, 2.67),
 }
 
 
@@ -90,6 +101,26 @@ def holes_and_breaks(y, sr):
         run = 0
     breaks += run >= 4
     return int(holes), int(breaks)
+
+
+def low_end(y, sr):
+    """(share, crest) of the kick and sub (30 to 150 Hz) from 20 s in, over at most 150 s: the
+    share of all energy that sits there, and the median crest factor (peak over RMS, half-second
+    windows) of that band alone. Distorted hard tech kicks and basses are loud there and
+    saturated, so their crest is low. Anchit's songs: share 0.64 to 0.81, crest 2.20 to 2.67."""
+    import librosa
+    a = y[int(20 * sr):int(170 * sr)] if len(y) > 60 * sr else y
+    hop = 512
+    S = np.abs(librosa.stft(a, n_fft=2048, hop_length=hop))
+    f = librosa.fft_frequencies(sr=sr, n_fft=2048)
+    band = (f >= 30) & (f < 150)
+    share = float((S[band] ** 2).sum() / ((S ** 2).sum() + 1e-12))
+    yl = librosa.istft(S * np.exp(1j * np.angle(librosa.stft(a, n_fft=2048, hop_length=hop))) * band[:, None],
+                       hop_length=hop, length=len(a))
+    seg = sr // 2
+    crest = [np.max(np.abs(yl[i:i + seg])) / (np.sqrt(np.mean(yl[i:i + seg] ** 2)) + 1e-9)
+             for i in range(0, len(yl) - seg, seg)]
+    return round(share, 3), round(float(np.median(crest)) if crest else 99.0, 2)
 
 
 def measure(path):
@@ -147,6 +178,7 @@ def measure(path):
         m["most_different_parts"] = 1.0
 
     m["silence_holes"], m["breaks"] = holes_and_breaks(y, sr)
+    m["low_end_share"], m["low_end_crest"] = low_end(y, sr)
 
     # dead air at the end
     fr = 20 * np.log10(librosa.feature.rms(y=y, frame_length=2048, hop_length=hop)[0] + 1e-9)

@@ -28,7 +28,8 @@ def test_a_full_day_has_every_genre_and_the_lead_genre_turns():
         for s in range(1, 6):
             lanes = slot_lanes(p, day, s)
             assert lanes and (groups[s - 1] == "any" or {l.group for l in lanes} == {groups[s - 1]})
-    assert set(leads) == GROUPS | {"any"}, "the first slot is a different genre each day"
+    # 2026-11-10 (Anchit): the first song of every day is raw hard tech, the one most likely to go out
+    assert set(leads) == {"hardtech"}, "the first slot is always hard tech"
 
 
 def test_the_briefs_follow_the_slot_genres():

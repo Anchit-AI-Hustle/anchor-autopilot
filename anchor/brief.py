@@ -34,6 +34,15 @@ def slot_group(profile: Profile, day: str, slot: int) -> str:
     if not groups:
         return "any"
     turn = Date.fromisoformat(day).toordinal()
+    # schedule.first_slot_group (Anchit, 2026-11-10: "if you are making hard tech, then ensure
+    # hard tech songs are made"): the day's first song, the one that most often makes it, is
+    # always that group; the other slots turn through the rest one step a day
+    first = profile.schedule.get("first_slot_group")
+    if first and first in groups:
+        if slot == 1:
+            return first
+        rest = [g for g in groups if g != first] or groups
+        return rest[(turn + slot - 2) % len(rest)]
     return groups[(turn + slot - 1) % len(groups)]
 
 

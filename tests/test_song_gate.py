@@ -16,7 +16,7 @@ from anchor.music import FixtureEngine, renderer_settings, synth_techno, write_w
 # inside them passes every check
 SUNO_LIKE = {"duration_s": 210.0, "noise_score": 0.03, "melody_share": 0.85, "sound_movement": 0.2,
              "loud_quiet_range_db": 9.0, "most_different_parts": -0.4, "section_changes": 10, "silent_tail_s": 0.5,
-             "silence_holes": 0, "breaks": 1}
+             "silence_holes": 0, "breaks": 1, "low_end_share": 0.72, "low_end_crest": 2.4}
 
 
 def test_the_limits_are_the_publish_checks_own():
@@ -26,7 +26,8 @@ def test_the_limits_are_the_publish_checks_own():
         "noise_score": ("max", 0.0462), "melody_share": ("min", 0.7937), "sound_movement": ("min", 0.1296),
         "loud_quiet_range_db": ("min", 6.76), "most_different_parts": ("max", -0.2545),
         "section_changes": ("min", 7.1), "silent_tail_s": ("max", 3.0),
-        "silence_holes": ("max", 0), "breaks": ("max", 4)}
+        "silence_holes": ("max", 0), "breaks": ("max", 4),
+        "low_end_share": ("min", 0.62), "low_end_crest": ("max", 2.72)}
 
 
 def test_a_song_like_take_passes_and_each_miss_is_named():
@@ -311,3 +312,28 @@ def test_a_song_that_cuts_to_silence_in_the_middle_fails():
 def test_a_take_measured_before_the_new_checks_is_still_judged():
     old = {k: v for k, v in SUNO_LIKE.items() if k not in ("silence_holes", "breaks")}
     assert songgate.judge(old) == []
+
+
+def test_hard_tech_needs_a_heavy_distorted_low_end():
+    """Anchit, 2026-11-10: the hard tech was missing. Measured on the releases: his songs 0.64 to
+    0.81 of their energy in the kick and sub with crest 2.20 to 2.67; Bleed Beside Me 0.23 and
+    4.42, Sweat The Ghost Out crest 3.41, Doors Blown Open 0.54, Sunrise at the Fence 0.58."""
+    soft = {**SUNO_LIKE, "low_end_share": 0.232, "low_end_crest": 4.42}
+    assert [f["check"] for f in songgate.judge(soft)] == ["low_end_share", "low_end_crest"]
+    assert songgate.reasons({"fails": songgate.judge(soft)})[0].startswith("not hard tech: the kick and bass are too light")
+    assert songgate.judge({**SUNO_LIKE, "low_end_crest": 3.41})[0]["check"] == "low_end_crest"
+
+
+def test_the_low_end_measure_tells_a_distorted_kick_from_a_light_one():
+    sr = 22050
+    t = np.arange(int(sr * 70)) / sr
+    beat = 60 / 170
+    ph = (t % beat)
+    kick = np.sin(2 * np.pi * (50 + 120 * np.exp(-ph * 40)) * ph) * np.exp(-ph * 9)
+    hats = np.random.default_rng(1).normal(0, 1, len(t)) * np.exp(-((t + beat / 2) % beat) * 60)
+    hard = np.tanh(4 * (kick + 0.6 * np.sin(2 * np.pi * 45 * t))) * 0.8 + 0.05 * hats
+    light = 0.25 * kick + 0.5 * hats + 0.3 * np.sin(2 * np.pi * 880 * t) * (np.sin(2 * np.pi * 0.5 * t) > 0)
+    hs, hc = songgate.low_end(hard.astype(np.float32), sr)
+    ls, lc = songgate.low_end(light.astype(np.float32), sr)
+    assert hs >= 0.62 and hc <= 2.72, (hs, hc)
+    assert ls < 0.62, (ls, lc)

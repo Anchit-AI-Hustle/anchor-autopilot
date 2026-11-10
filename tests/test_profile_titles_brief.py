@@ -143,8 +143,10 @@ def test_brief_rotation_rules_over_60_days():
         assert hist[i]["key"] not in {w["key"] for w in window}
     # each day's first song cycles the genre groups (schedule.slot_groups); every lane of every
     # group is covered over full five-song days in test_genres_every_day.py
-    assert {h["genre_group"] for h in hist} == {l.group for l in p.active_lanes}, "every genre leads some days"
-    assert len({h["lane"] for h in hist}) >= len(p.active_lanes) - 2
+    # 2026-11-10 (Anchit): the first song of every day is hard tech, in turn through its lanes;
+    # every other group is covered over full five-song days in test_genres_every_day.py
+    assert {h["genre_group"] for h in hist} == {"hardtech"}, "every day leads with hard tech"
+    assert {h["lane"] for h in hist} == {l.id for l in p.active_lanes if l.group == "hardtech"}
 
 
 def test_brief_description_and_bounds():
@@ -174,9 +176,11 @@ def test_every_song_is_hard_acid_or_psychedelic_at_160_to_200_bpm():
     start = date(2026, 10, 1)
     seen = set()
     for i in range(120):
-        b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
-        assert 160 <= b["bpm"] <= 200
-        seen.add(b["lane"])
+        for slot in range(1, 6):
+            day = (start + timedelta(days=i)).isoformat()
+            b = make_brief(p, day if slot == 1 else f"{day}-{slot}", [])
+            assert 160 <= b["bpm"] <= 200
+            seen.add(b["lane"])
     assert seen == {l.id for l in p.active_lanes}
 
 
