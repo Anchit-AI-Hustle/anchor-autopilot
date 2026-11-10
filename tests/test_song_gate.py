@@ -324,7 +324,9 @@ def test_hard_tech_needs_a_heavy_distorted_low_end():
     assert songgate.judge({**SUNO_LIKE, "low_end_crest": 3.41})[0]["check"] == "low_end_crest"
 
 
+@pytest.mark.slow
 def test_the_low_end_measure_tells_a_distorted_kick_from_a_light_one():
+    pytest.importorskip("librosa")
     sr = 22050
     t = np.arange(int(sr * 70)) / sr
     beat = 60 / 170
