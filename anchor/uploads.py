@@ -200,6 +200,15 @@ def run(profile: Profile, *, repo: str, work: Path, api=None, path: Path = UPLOA
     for e in todo:                        # the song's full videos on the channel right now all go private after it
         if e["id"].startswith("motion-") and videos:
             e["replaces"] = list(dict.fromkeys([*(e.get("replaces") or []), *(v["id"] for v in _same(videos, e["title"]))]))
+        from . import dupes
+        same = dupes.is_reupload(e["title"], videos or [], replaces=e.get("replaces") or []) if videos else None
+        if same and not e.get("replaces"):
+            # the song already has its one video and this entry replaces nothing (2026-11-10)
+            log(f"uploads: {e['id']}: already on the channel as {same}; not uploaded again")
+            e["youtube_url"] = f"https://www.youtube.com/watch?v={same}"
+            e["skipped"] = "duplicate of a video already on the channel"
+            write_json(path, data)
+            continue
         try:
             video = fetch(RELEASES.format(repo=repo, tag=e["release"], file=e["file"]), work / e["file"], 1_000_000)
             up = api.upload(video, title=e["title"], description=e["description"], tags=e.get("tags") or [],

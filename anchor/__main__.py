@@ -92,6 +92,11 @@ def main(argv: list[str] | None = None) -> int:
     vs.add_argument("--out", default="build/versions")
     vs.add_argument("--repo", default=env("GITHUB_REPOSITORY") or "Anchit-AI-Hustle/anchor-autopilot")
 
+    dp = sub.add_parser("dupes", help="one song, one video: print every master and find the same music twice (audio), "
+                        "then check the channel and take duplicates off it (channel; --apply sets them private)")
+    dp.add_argument("stage", choices=["audio", "channel"])
+    dp.add_argument("--apply", action="store_true", help="set every duplicate private (never deleted)")
+    dp.add_argument("--out", default="build/dupes")
     pls = sub.add_parser("playlists", help="every public video in the ANCHOR playlist; none twice, none you left out (Data API)")
     pls.add_argument("--dry-run", action="store_true")
     mo = sub.add_parser("motion", help="re-render a released song's full videos as motion graphics (beat punch-in, spectrum)")
@@ -257,6 +262,33 @@ def main(argv: list[str] | None = None) -> int:
             raise SystemExit("motion: give --list or --id")
         out = motion.run(profile, repo=args.repo, song_id=args.id, work=Path(args.out), do_upload=args.upload)
         print(json.dumps(out, indent=2, ensure_ascii=False))
+    elif args.cmd == "dupes":
+        from . import dupes
+        from .config import CATALOG_PATH as cat_path
+        if args.stage == "audio":
+            out = dupes.build_audio(cat_path, Path(args.out))
+            save_json(dupes.DUPES_PATH, {**dupes.load(), **out,
+                                         "note": "Releases with the same music (same_record) or music that sounds alike, "
+                                                 "built by 'anchor dupes audio'. anchor/dupes.py."})
+            print(json.dumps(out, indent=2, ensure_ascii=False))
+            return 0
+        from .youtube import YouTube, YouTubeError
+        api = YouTube()
+        try:
+            videos = api.channel_videos(profile.artist["youtube_channel_id"])
+            report = dupes.audit(videos, read_json(cat_path, {}) or {}, read_json(cat_path.parent / "uploads.json", {}) or {},
+                                 read_json(cat_path.parent / "channel.json", {}) or {}, dupes.load())
+            out = {"songs": report["songs"], "public_videos": sum(v.get("privacy") == "public" for v in videos),
+                   "duplicates": report["duplicates"]}
+            if args.apply:
+                out["applied"] = dupes.apply(api, report)
+        except YouTubeError as exc:
+            if "quotaExceeded" not in str(exc):
+                raise
+            print("::warning::YouTube quota spent for today; the duplicate check runs again after the reset", file=sys.stderr)
+            out = {"skipped": "quota"}
+        print(json.dumps(out, indent=2, ensure_ascii=False))
+        return 0
     elif args.cmd == "playlists":
         from . import playlists
         from .youtube import YouTubeError

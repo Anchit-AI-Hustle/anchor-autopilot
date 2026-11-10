@@ -1,9 +1,10 @@
 """Playlists stay clean, with the channel's own credentials.
 
-Every public video on the channel is in the ANCHOR playlist (the one in [youtube] playlist_url),
-whichever way it went up (the robot, Metricool or Studio): full videos, lyric videos, every
-version and the Shorts (Anchit, 2026-11-09: "the anchor playlist must have all videos that are
-uploaded at all times even in the future"). No playlist holds the same video twice, and no
+The ANCHOR playlist (the one in [youtube] playlist_url) holds every unique song on the channel
+once: its one full video, whichever way it went up (Anchit, 2026-11-09: "the anchor playlist
+must have all videos that are uploaded"; 2026-11-10: "only unique videos and audios are there
+in the playlist"). A second upload of the same music, a replaced video and the Shorts stay out
+(anchor/dupes.py decides which video is the song's one). No playlist holds the same video twice, and no
 playlist holds a song you left out: one you took down (``withdrawn`` in site/data/channel.json)
 or one that sounds like an earlier record (``sound_alikes``, song -> the earlier record it
 resembles). Nothing is ever deleted: an entry leaves a playlist, the video stays on the channel.
@@ -23,9 +24,12 @@ def left_out(channel: dict) -> set[str]:
     return {key(t) for t in [*channel.get("withdrawn", []), *channel.get("sound_alikes", {})]}
 
 
-def plan(videos: list[dict], lists: dict[str, list[dict]], main: str, channel: dict) -> dict:
+def plan(videos: list[dict], lists: dict[str, list[dict]], main: str, channel: dict,
+         unique_ids: set[str] | None = None) -> dict:
     """``lists`` maps playlist id -> its entries in order ({"item", "video"}). Returns the
-    entries to take out (with why) and the videos to add to ``main``, oldest first."""
+    entries to take out (with why) and the videos to add to ``main``, oldest first.
+    ``unique_ids``: each song's one video (dupes.audit canonical); when given, ``main`` holds
+    those and nothing else."""
     by_id = {v["id"]: v for v in videos}
     skip = left_out(channel)
     public = lambda v: v.get("privacy") == "public"
@@ -40,6 +44,9 @@ def plan(videos: list[dict], lists: dict[str, list[dict]], main: str, channel: d
                 remove.append({"playlist": pl, "item": e["item"], "title": v["title"], "why": "left out"})
             elif v["id"] in seen:
                 remove.append({"playlist": pl, "item": e["item"], "title": v["title"], "why": "same video twice"})
+            elif pl == main and unique_ids is not None and v["id"] not in unique_ids:
+                remove.append({"playlist": pl, "item": e["item"], "title": v["title"],
+                               "why": "not the song's one video (a duplicate, a replaced video or a Short)"})
             else:
                 seen.add(v["id"])
         if pl == main:
@@ -47,6 +54,8 @@ def plan(videos: list[dict], lists: dict[str, list[dict]], main: str, channel: d
     add = []
     # full videos first, oldest first (the uploads list is newest first), then the Shorts
     for v in sorted(reversed(videos), key=lambda v: seconds(v.get("duration")) <= SHORT_MAX_S):
+        if unique_ids is not None and v["id"] not in unique_ids:
+            continue
         if public(v) and key(v["title"]) not in skip and v["id"] not in in_main:
             add.append(v)
             in_main.add(v["id"])
@@ -64,7 +73,11 @@ def run(profile: Profile, *, api=None, channel_path: Path = CHANNEL_PATH, dry_ru
     videos = api.channel_videos(cid)
     ids = list(dict.fromkeys([main, *(p["id"] for p in api.playlists(cid))]))
     lists = {pl: api.playlist_items(pl) for pl in ids}
-    p = plan(videos, lists, main, channel)
+    from . import dupes
+    from .config import CATALOG_PATH as _cat
+    report = dupes.audit(videos, read_json(_cat, {}) or {}, read_json(_cat.parent / "uploads.json", {}) or {},
+                         channel, dupes.load())
+    p = plan(videos, lists, main, channel, set(report["canonical"].values()))
     done = {"removed": [f"{r['title']} ({r['why']}) from {r['playlist']}" for r in p["remove"]],
             "added": [v["title"] for v in p["add"]], "errors": []}
     if dry_run:
