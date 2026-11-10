@@ -374,11 +374,15 @@ rap = [
   "Pockets full of rhythm and a ticket to the sky",
 ]
 
+# genres: what each lane is, from artist/genres.toml; tempo_like: genres whose speed it borrows.
+# ANCHOR plays hard techno at 160-200 (Anchit's rule), above the 140-160 the sources give for
+# the genre and inside hardtek's 150-185, so most lanes borrow hardtek's tempo (2026-11-10).
 # Active lanes (Anchit, 2026-10-04): hard techno, acid and psychedelic bounce at 160-200 BPM,
 # bouncy and fun, never dark, with whispers and chanted hooks.
 [[music.lanes]]
 id = "bounce"
 group = "hardtech"
+genres = ["hard_techno", "hard_bounce"]
 name = "Hard Bounce Techno"
 bpm = ["160", "168"]
 weight = 3
@@ -396,6 +400,8 @@ special_moments = ["the bassline climbs an octave while the crowd chant rides on
 [[music.lanes]]
 id = "rawbounce"
 group = "hardtech"
+genres = ["hard_techno", "rawstyle"]
+tempo_like = ["hardtek"]
 name = "Rawstyle Hard Tech"
 bpm = ["165", "175"]
 weight = 2
@@ -413,6 +419,8 @@ special_moments = ["a pitched kick roll that climbs a full octave into the secon
 [[music.lanes]]
 id = "psy"
 group = "psy"
+genres = ["hard_techno", "acid_techno"]
+tempo_like = ["hardtek"]
 name = "Psychedelic Hard Techno"
 bpm = ["160", "168"]
 weight = 2
@@ -430,6 +438,8 @@ special_moments = ["a whispered phrase that circles around the head before the d
 [[music.lanes]]
 id = "acidpsy"
 group = "psy"
+genres = ["acid_techno", "hard_techno"]
+tempo_like = ["hardtek"]
 name = "Acid Psychedelic Techno"
 bpm = ["166", "176"]
 weight = 3
@@ -447,6 +457,8 @@ special_moments = ["the 303 filter opens fully for the first time only on the se
 [[music.lanes]]
 id = "hardgroove"
 group = "hardtech"
+genres = ["hard_groove", "industrial_techno"]
+tempo_like = ["hardtek"]
 name = "Industrial Hard Groove"
 bpm = ["160", "168"]
 weight = 1
@@ -464,6 +476,8 @@ special_moments = ["the rumble tail bounces through the whole off-beat in the fi
 [[music.lanes]]
 id = "hyper"
 group = "hardtech"
+genres = ["hypertechno", "acid_techno"]
+tempo_like = ["hardtek", "frenchcore"]
 name = "Hyper Acid Techno"
 bpm = ["185", "200"]
 weight = 1
@@ -590,10 +604,11 @@ special_moments = ["an arpeggio that spirals up into the second drop", "the arpe
 [[music.lanes]]
 id = "hardtech"
 group = "hardtech"
+genres = ["hard_techno", "industrial_techno", "hardtek"]
 name = "Raw Hard Tech"
 bpm = ["165", "175"]
 weight = 3
-caption = "raw hard tech, industrial hard techno, distorted rawstyle kick dominant, rumbling distorted sub bass bouncing on the off-beat, clanking metal percussion, noisy 303 acid stabs, relentless drive"
+caption = "raw hard tech, hardtek, industrial hard techno, distorted rawstyle kick dominant, rumbling distorted sub bass bouncing on the off-beat, clanking metal percussion, noisy 303 acid stabs, relentless drive"
 textures = ["clanking steel percussion", "distorted kick rumble", "industrial noise bursts", "grinding metal hits", "hydraulic hiss", "screeching acid stabs"]
 genre_line = "Hard Tech, Industrial Hard Techno, Hard Techno"
 style_line = "Raw Hard Tech, Industrial Techno, Warehouse Techno, Driving Techno"
@@ -607,6 +622,8 @@ special_moments = ["the groove drops to just kick and vocal chop for one bar bef
 [[music.lanes]]
 id = "psytech"
 group = "psy"
+genres = ["hard_techno", "acid_techno"]
+tempo_like = ["hardtek"]
 name = "Psychedelic Hard Tech"
 bpm = ["162", "172"]
 weight = 1
@@ -624,6 +641,7 @@ special_moments = ["the acid line rises a full octave under the final drop", "a 
 [[music.lanes]]
 id = "raptechno"
 group = "rap"
+genres = ["hard_techno", "techno_rap"]
 name = "Rap Hard Techno"
 bpm = ["160", "170"]
 weight = 2
@@ -644,6 +662,8 @@ negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotu
 [[music.lanes]]
 id = "hiphoptechno"
 group = "hiphop"
+genres = ["hard_techno", "techno_rap"]
+tempo_like = ["boom_bap"]
 name = "Hip Hop Hard Techno"
 bpm = ["172", "186"]
 weight = 2
@@ -664,6 +684,8 @@ negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotu
 [[music.lanes]]
 id = "psyrap"
 group = "rap"
+genres = ["hard_techno", "techno_rap"]
+tempo_like = ["hardtek"]
 name = "Psychedelic Rap Techno"
 bpm = ["165", "178"]
 weight = 1
@@ -686,6 +708,7 @@ negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotu
 [[music.lanes]]
 id = "hardtechrap"
 group = "rap"
+genres = ["hard_techno", "techno_rap"]
 name = "Hard Tech Rap"
 bpm = ["165", "175"]
 weight = 2
@@ -706,6 +729,8 @@ negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotu
 [[music.lanes]]
 id = "psyhiphop"
 group = "hiphop"
+genres = ["hard_techno", "techno_rap"]
+tempo_like = ["boom_bap"]
 name = "Psychedelic Hip Hop Techno"
 bpm = ["176", "190"]
 weight = 2
@@ -722,6 +747,49 @@ mood_arcs = ["hazy head-nodding cool, flipping into a full-room jump, ending wid
 special_moments = ["a scratch fill on the boom bap, then the four-on-the-floor slams in", "the acid line bends up a full octave under the last hook", "the rapper's last line echoes into the drop through a phaser"]
 vocals = "Vocals: {rapper}, hard-hitting heavy bars, raw and confident, natural English, the title sung at the end of each verse, the crowd chants it in the drops"
 negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, rap over an empty beat, kick dropping out under the verses, tech house, soft kick, clean pop drums, thin weak bass, plucky house bass, tropical, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, trailer-music cliches, constant full-volume loop, silent gaps, sudden stops, tape stops, stutter edits, dropouts, beat cutting out"
+
+# Mashups (Anchit, 2026-11-10: "learn about mashups"): two genres fused by the recipes in
+# artist/mashups.toml, the hard techno kick always the base.
+[[music.lanes]]
+id = "hardstyletechno"
+group = "hardtech"
+genres = ["hard_techno", "hardstyle"]
+tempo_like = ["hardtek"]
+name = "Hardstyle Hard Techno"
+bpm = ["160", "170"]
+weight = 1
+caption = "hardstyle x hard techno, pitched distorted kick carrying the bass, reverse bass bouncing on the off-beat, straight techno groove, offbeat hats, industrial stabs, chanted hook"
+textures = ["pitched kick rolls", "industrial stabs", "screeching leads", "tight snare rolls into drops", "metal percussion", "rising noise sweeps"]
+genre_line = "Hardstyle Hard Techno, Hard Techno, Hardstyle"
+style_line = "Hardstyle Techno, Hard Techno, Industrial Techno, Driving Techno"
+tags = ["hardstyle techno", "hard techno", "hardstyle", "industrial techno", "hard techno 2026"]
+era = "Mid-2020s crossover: the hardstyle kick inside a hard techno groove"
+groove = "four-on-the-floor, the pitched kick bouncing into a reverse bass on every off-beat, straight hats"
+production = "Loud and saturated, pitched kick up front, mono low end, stabs wide"
+mood_arcs = ["confident from bar one, harder every drop, ending on one big kick", "teasing build, exploding into a pitched-kick drop, never letting go", "driving and proud, building to a crowd-wide jump, landing on a shout"]
+special_moments = ["the kick pitches up a full octave into the last drop", "a two-bar screech answers the chant", "the groove strips to kick and hats for one bar before the final drop"]
+
+[[music.lanes]]
+id = "phonktechno"
+group = "hiphop"
+genres = ["hard_techno", "phonk"]
+tempo_like = ["hardtek"]
+name = "Drift Phonk Hard Techno"
+bpm = ["160", "170"]
+weight = 1
+voice = "rap"
+caption = "drift phonk x hard techno, distorted four-on-the-floor kick the whole song, cowbell melody, distorted 808 bouncing under the kick, memphis vocal chop, rap under every verse, chanted hook"
+textures = ["cowbell melody", "memphis vocal chops", "clipped 808 slides", "metal percussion", "tape-saturated hats", "siren sweeps"]
+genre_line = "Phonk Hard Techno, Drift Phonk, Hard Techno"
+style_line = "Drift Phonk, Phonk Techno, Hard Techno, Rave Rap"
+tags = ["phonk techno", "drift phonk", "hard techno", "phonk", "hard techno 2026"]
+era = "Mid-2020s drift phonk cowbells and clipped 808s on a hard techno kick"
+groove = "four-on-the-floor hard techno kick the whole song, the 808 bouncing on the off-beat, the rap riding a half-time flow"
+production = "Blown-out and loud, kick up front, 808 clipped and centred, cowbells bright and wide"
+mood_arcs = ["cocky and swerving, building to a full-room jump, ending on a cowbell hit", "smooth and sly in the verses, exploding into a phonk drop", "laid-back swagger, harder every hook, landing on one shout"]
+special_moments = ["the cowbell melody doubles an octave up over the last drop", "a Memphis vocal chop answers every line of the last verse", "the 808 slides down two notes into the final hook"]
+vocals = "Vocals: {rapper}, cocky phonk-style rap verses, natural English, the title sung at the end of each verse, the crowd chants it in the drops"
+negative = "robotic vocals, vocoder voice, monotone text-to-speech voice, autotune crooning, ballad singing, mumbled vocals, slurred or accented words, rap over an empty beat, kick dropping out under the verses, tech house, soft kick, thin weak bass, acoustic guitar, piano ballad, lo-fi, jazz, cheesy EDM build-ups, silent gaps, sudden stops, tape stops, dropouts, beat cutting out"
 
 [titles]
 # Title patterns: V = verb, N = noun, A = adjective, P = particle ("Pull Under").

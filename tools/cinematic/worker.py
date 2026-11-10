@@ -111,9 +111,10 @@ class Busy(Exception):
 # the world each genre lives in (the picture fits the music: Anchit, 2026-11-09 "use appropriate
 # music videos as per the music")
 WORLD = {
-    "hardtech": "at night in a big Indian city, sodium streetlights, wet roads, a warehouse rave with strobes and haze",
+    # artist/genres.toml visual lines (2026-11-10): hard techno and industrial techno's world
+    "hardtech": "at night in a big Indian city, a strobe-lit concrete warehouse rave, red and white strobes, smoke, rusted machinery and sparks",
     "psy": "at dawn at an open-air forest festival, mist, colourful canopies, first sun through the trees",
-    "rap": "in daylight city streets, flyovers, a crowded local train, concrete rooftops and water tanks",
+    "rap": "in a strobe-lit warehouse rave and the city streets around it, flyovers, concrete rooftops and water tanks",
     "hiphop": "in a neighbourhood at golden hour, a corner chai stall, a basketball court, a parked scooter",
 }
 # how each form moves: who is in the frame and what the last shot resolves into

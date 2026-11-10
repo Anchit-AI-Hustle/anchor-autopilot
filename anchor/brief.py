@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from datetime import date as Date, datetime, timezone
 
+from . import genres
 from . import originality, themes
 from . import songbook
 from .config import Lane, Profile
@@ -159,6 +160,9 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "form": song.form if song else "chant",
         "model": song.model if song else "",
         "genre_group": lane.group or "any",
+        # what the lane is in the genre knowledge (artist/genres.toml) and the video's look from it
+        "genres": genres.for_lane(profile, lane.id),
+        "visual_mood": genres.visual(genres.for_lane(profile, lane.id)),
         "bpm": bpm,
         "key": key,
         "family": family.id,
