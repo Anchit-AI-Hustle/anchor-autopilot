@@ -1,10 +1,10 @@
 {
   "last_run": {
     "result": "failed",
-    "stage": "make",
-    "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-10T03:43:15Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42679780631"
+    "stage": "pages",
+    "error": "The pages stage failed. Open the run log for details.",
+    "finished_at": "2026-11-10T06:49:46Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42717965227"
   },
   "next_post_at": "2026-11-10T17:30:00Z",
   "streak": 16,
@@ -14,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-10T03:43:15Z",
+  "updated_at": "2026-11-10T06:49:46Z",
   "engine": {
     "engine": "queue",
     "source_file": "28-new-beginnings-219cedc0.m4a"
