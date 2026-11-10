@@ -98,7 +98,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     theme = None
     if song is not None:
         # a long song (Model B, Kindness Needs Truth) gets the time to sing every word (2026-11-08)
-        duration_s = max(duration_s, songbook.length_s(song, int(lo), int(hi)))
+        duration_s = max(duration_s, songbook.length_s(song, int(lo), int(hi),
+                                                       int(profile.music.get("max_duration_s", 300))))
     if song is None:
         # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
         theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,

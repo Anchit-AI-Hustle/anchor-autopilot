@@ -14,6 +14,9 @@ def fast_profile(tmp_path):
     from anchor.config import load_profile
     text = (ROOT / "artist" / "anchor.toml").read_text()
     text = re.sub(r"^duration_s = \d+", "duration_s = 36", text, flags=re.M)
+    # a songbook song asks for the time its lyrics need (up to 300 s); tests keep renders short
+    # (the slow suite's whole-pipeline file went from 36 min to past its 40 min limit, 2026-11-08)
+    text = re.sub(r"^short_s = ", "max_duration_s = 40\nshort_s = ", text, count=1, flags=re.M)
     text = re.sub(r"^duration_range_s = .*$", "", text, flags=re.M)
     text = re.sub(r"^short_s = \d+", "short_s = 16", text, flags=re.M)
     path = tmp_path / "anchor.toml"
