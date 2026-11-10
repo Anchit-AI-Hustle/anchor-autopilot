@@ -7,8 +7,74 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-08T19:20:11Z",
+  "updated_at": "2026-11-10T03:42:53Z",
   "drops": [
+    {
+      "id": "2026-11-09",
+      "date": "2026-11-09",
+      "title": "Doors Blown Open",
+      "lane": "rawbounce",
+      "lane_name": "Rawstyle Bounce",
+      "bpm": 147,
+      "key": "F minor",
+      "family": "rust",
+      "family_name": "Rust",
+      "duration_s": 246.81,
+      "short_s": 45,
+      "cover": "covers/2026-11-09.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-09/ANCHOR-2026-11-09-doors-blown-open.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-09",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-09-doors-blown-open-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-09/ANCHOR-2026-11-09-doors-blown-open-short.mp4",
+      "youtube_url": "https://youtu.be/bBu4XO5UrmE",
+      "buffer_post_id": "bBu4XO5UrmE",
+      "status": "public",
+      "post_at": "2026-11-10T03:42:42Z",
+      "qc": {
+        "bpm_est": 147.0,
+        "lufs": -14.03,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-09T23:28:17Z",
+      "genre_line": "Rawstyle Hybrid, Hard Techno, Peak Time Techno",
+      "style_line": "Bouncy Rawstyle, Hard Bounce, Festival Techno, Driving Techno",
+      "error": null,
+      "accent": "#d8742f",
+      "caption": "rawstyle hybrid, hard bounce, hard techno, pitched rawstyle kick with a short bouncy tail, reverse bass bouncing on the off-beat, playful lead hook. Mid-2020s festival hard techno crossed with Dutch rawstyle and hard bounce, loud and bright. Mood: teasing and playful, exploding at the first drop into pure bounce, never letting go, about the bass shakes the door off its hinges and I run out into the morning with a whole street of. Feel: bouncy, fun and psychedelic, never dark. 172 BPM, fast four-on-the-floor with a reverse bass bouncing on every off-beat, snare rolls into every drop. Instruments: pounding distorted kick, rumbling tail, off-beat open hats, off-beat bouncing saw bass, gritty reese lead playing an octave-jumping hook over bright uplifting chords; rising noise risers intro, tight snare rolls into drops build, playful supersaw stabs breakdown. Vocals: joyful female alto rapper with a playful bounce, quick double time bars and a rave crowd shout on the hook, natural English. Production: Loud and bright, kick tail short and bouncy, lead hook in the upper mids, wide stereo; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, rising noise risers far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, rising noise risers last, a smooth fade out. Special moment: a two-bar rising noise sweep into the final section.",
+      "seed": 1174935366,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "28-new-beginnings-219cedc0.m4a"
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-09/ANCHOR-2026-11-09-doors-blown-open-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-09/ANCHOR-2026-11-09-doors-blown-open-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/bBu4XO5UrmE",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=GmGIF70J4SI",
+      "buffer_short_post_id": "6af292b9e261c09acc99abef",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "queue",
+      "sound": {
+        "lead": "gritty reese lead",
+        "bass": "off-beat bouncing saw bass",
+        "drums": "pounding distorted kick, rumbling tail, off-beat open hats",
+        "melody": "an octave-jumping hook",
+        "chords": "bright uplifting chords"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
     {
       "id": "2026-11-08-4",
       "date": "2026-11-08",
@@ -94,7 +160,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-08/ANCHOR-2026-11-08-dancing-with-demons-short.mp4",
       "youtube_url": "https://youtu.be/U5aMYtAD9MI",
       "buffer_post_id": "U5aMYtAD9MI",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-08T19:19:19Z",
       "qc": {
         "bpm_est": 150.0,
@@ -4608,7 +4674,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-09T11:51:42Z",
+    "checked_at": "2026-11-10T03:42:54Z",
     "total": 38,
     "postable": 27,
     "families": 15,
@@ -5296,7 +5362,7 @@
         "tags": "",
         "lyrics": "[Verse 1]\nFound a map in my coat\nNo town, just a joke\nThree coins and a key\nThat don't fit anything\n\nI took the long way home\nPast a fence made of bone\nA dog in a yard\nKept barking at stars\n\n[Pre-Chorus]\nAnd the day turned its face\nLike it knew my name\nI laughed at the rain\nAnd it stayed the same\n\n[Chorus]\nPocket of matches\nPocket of matches\nI struck one small spark\nIn the dark, in the dark\n\nPocket of matches\nPocket of matches\nIf the whole world shakes\nI'll make a little flame\n\n[Verse 2]\nThere was soup on the stove\nAnd a note by the phone\nSaying pick what you need\nFrom the mess and the seeds\n\nSo I chose the cracked mug\nAnd the rug by the door\nA song in my head\nThat I never ignored\n\n[Pre-Chorus]\nThen the window breathed in\nLike a bird with no wings\nI held up my hands\nTo the ordinary things\n\n[Chorus]\nPocket of matches\nPocket of matches\nI struck one small spark\nIn the dark, in the dark\n\nPocket of matches\nPocket of matches\nIf the whole world shakes\nI'll make a little flame\n\n[Bridge]\nLet the small stuff stay\nLet the wild stuff roam\nI can start right here\nWith a chipped-up stone\n\n[Final Chorus]\nPocket of matches\nPocket of matches\nI struck one small spark\nIn the dark, in the dark\n\nPocket of matches\nPocket of matches\nIf the whole world shakes\nI'll make a little flame\n\nPocket of matches\nPocket of matches\nI struck one small spark\nAnd it feels like home",
         "model": "v6",
-        "plays": 2,
+        "plays": 3,
         "upvotes": 0,
         "created_at": "2026-11-05T23:07:57.843Z",
         "image": "https://cdn2.suno.ai/image_large_876b951e-06a6-481d-a526-f43ebd8da0f2.jpeg",
@@ -5330,7 +5396,7 @@
             "name": "Traction",
             "score": 0.1,
             "max": 1.5,
-            "note": "2 plays and 0 upvotes on Suno"
+            "note": "3 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -6601,7 +6667,7 @@
         "tags": "Hard techno, 200bpm-plus fast bounce; female vocals with sharp, chopped accents; relentless kick and acid arpeggiator synth, resonant filter sweeps, tension-building fake drops into a crushing real drop; full-length 5-6-minute arrangement with a psychedelic acid mix.",
         "lyrics": "",
         "model": "v6",
-        "plays": 3,
+        "plays": 4,
         "upvotes": 0,
         "created_at": "2026-10-03T10:26:46.907Z",
         "image": "https://cdn2.suno.ai/image_large_219cedc0-adad-49e2-a761-674fc0af10d8.jpeg",
@@ -6635,7 +6701,7 @@
             "name": "Traction",
             "score": 0.1,
             "max": 1.5,
-            "note": "3 plays and 0 upvotes on Suno"
+            "note": "4 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -6692,7 +6758,7 @@
         "tags": "Hard techno, relentlessly fast bounce at 200 BPM and above, with escalating builds, fake drops, then a crushing full-force drop across a 5-6-minute arrangement; squelching 303 bassline and FM screech stabs drive a psychedelic acid sound, with female vocals.",
         "lyrics": "",
         "model": "v6",
-        "plays": 3,
+        "plays": 5,
         "upvotes": 0,
         "created_at": "2026-10-03T10:27:37.465Z",
         "image": "https://cdn2.suno.ai/image_large_5c886c24-dfa0-424e-9123-62bc8d5e0ad2.jpeg",
@@ -6726,7 +6792,7 @@
             "name": "Traction",
             "score": 0.1,
             "max": 1.5,
-            "note": "3 plays and 0 upvotes on Suno"
+            "note": "5 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -6788,7 +6854,7 @@
         "tags": "Hard techno, relentlessly fast bounce at 200 BPM and above, with escalating builds, fake drops, then a crushing full-force drop across a 5-6-minute arrangement; squelching 303 bassline and FM screech stabs drive a psychedelic acid sound, with female vocals.",
         "lyrics": "",
         "model": "v6",
-        "plays": 3,
+        "plays": 4,
         "upvotes": 0,
         "created_at": "2026-10-03T10:27:37.465Z",
         "image": "https://cdn2.suno.ai/image_large_ad81bbd4-9916-427d-8240-bc993e27281b.jpeg",
@@ -6822,7 +6888,7 @@
             "name": "Traction",
             "score": 0.1,
             "max": 1.5,
-            "note": "3 plays and 0 upvotes on Suno"
+            "note": "4 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -6884,7 +6950,7 @@
         "tags": "Hard techno, relentlessly fast bounce at 200 BPM and above, with escalating builds, fake drops, then a crushing full-force drop across a 5-6-minute arrangement; squelching 303 bassline and FM screech stabs drive a psychedelic acid sound, with female vocals.",
         "lyrics": "",
         "model": "v6",
-        "plays": 3,
+        "plays": 4,
         "upvotes": 0,
         "created_at": "2026-10-03T10:26:46.906Z",
         "image": "https://cdn2.suno.ai/image_large_dd0d3471-06cd-416f-972e-63cfc9fd7329.jpeg",
@@ -6918,7 +6984,7 @@
             "name": "Traction",
             "score": 0.1,
             "max": 1.5,
-            "note": "3 plays and 0 upvotes on Suno"
+            "note": "4 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -7076,7 +7142,7 @@
         "tags": "Fast-paced cinematic chopper rap fused with peak-time hard acid techno and organic psytrance; wide-ranging aggressive rap climbs into high notes, breathless multisyllabic flow, dry and upfront, stacked hook harmonies. 150 BPM relentless drive; Extended Club Mix with two 32-bar instrumental drops, eerie breakdown, rising snare builds, dark orchestral strings and brass. Relentless industrial 909 kicks, squelchy 303 lead, bouncy psytrance triplet bass, haunting female whispers, throat chants, euphoric stutter-house vocal chops; dark urgency turning euphoric.",
         "lyrics": "[Tempo: 150 BPM]\n[Duration: 03:30]\n\n[Intro: 0:00 - 0:25]\n[Dark cinematic orchestral strings, distant thunderous rumble, eerie stereo-panned whispers]\n(Whispered, cold and hypnotic)\nLocked inside the mind... \nCan you outrun your own shadow? \n(Low ancient throat chant)\nOmm... Vera... Sanguis...\n[Rising acid 303 synth filter sweep, pounding 909 kick drum fades in]\n\n[Verse 1: 0:25 - 0:55]\n[Fast-paced aggressive double-time rap, dark orchestral stabs, rolling psytrance triplet bassline]\n(Breathless chopper flow, intense emotional delivery)\nFoot on the gas, I been running from ghosts in the back of my head, I don't know how to brake,\nEvery decision I made in the dark is a permanent scar that I'm forced to awake,\nLooking for peace in the middle of war, got my back to the wall and my hands on the flame,\nNobody gave me a map to the top, I was buried alive and came out of the grave!\nVenom inside of the ink when I write, I been sharpening blades in the dead of the night,\nCut through the noise and the fake and the lies, you can see the vendetta reflect in my eyes,\nHeart beating fast at a hundred and fifty, the blood in my veins is beginning to boil,\nEverything built from the dirt and the pain, I been watering roots in the venomous soil!\n\n[Pre-Chorus: 0:55 - 1:10]\n[Melodic urgent rap transitioning into rhythmic stuttered vocal chops, accelerating snare roll]\nNowhere to hide when the curtains are drawn,\nWe dancing with demons till quarter to dawn!\n(Whispered, close to mic)\nCan you feel the madness rising?\nLet it out.\n\n[Drop 1: 1:10 - 1:45]\n[Extended 32-Bar Instrumental Drop: Peak-time Hard Acid Techno, relentless distorted 909 kicks, screaming squelchy 303 acid lines, glitchy vocal stutters]\n(Echoed chant over the bass)\nRun. Faster. Deeper.\n\n[Verse 2: 1:45 - 2:15]\n[Manic high-speed rap flow returns, interwoven with bouncy psychedelic acid synths and heavy orchestral brass hits]\n(Rapid-fire delivery, switching cadences mid-bar)\nPacing the floor in a cage of my making, the paranoia got me wide awake shaking,\nThey wanted me broken, they wanted me quiet, I walked in the room and I started a riot!\nNo ceilings, no limits, no holding me back, when I snap on the beat it's a panic attack,\nEvery syllable hitting like hail on the glass, I'm erasing the memories stuck in the past,\nLook at the hunger, look at the drive, takes a little insanity just to survive,\nOut of the ashes I'm taking the throne, I been fighting these shadows entirely alone,\nNow the bass is erupting, the ceiling is caving, the chaos is the only thing keeping me sane,\nWash all the doubt and the guilt in the acid and drown every drop of the rage in the rain!\n\n[Bridge / Breakdown: 2:15 - 2:40]\n[Sudden beat cut, eerie silence, haunting strings, dark ritualistic chants and stereo whispers]\n(Whispering, echoing in the dark)\nLook in the mirror... who are you running from?\nThere is no escape.\n(Tribal Chant)\nKalima... Ignis... Libera...\n[Massive psy-trance snare build-up, extreme acid resonance peaking]\n\n[Drop 2 / Climax: 2:40 - 3:15]\n[Maximum Energy Climax: 32-Bar Psy-Techno & Rap Fusion, bouncy triplet bass, relentless fast kicks, chopped rap vocal samples, pure rave euphoria]\n(Whispered)\nLose your mind.\n\n[Outro: 3:15 - 3:30]\n[Stripped-back industrial kick, fading orchestral violin, lingering cold breath]\n(Whispered)\nThe silence is loud.\n[End]",
         "model": "v6",
-        "plays": 8,
+        "plays": 9,
         "upvotes": 0,
         "created_at": "2026-10-25T01:24:52.017Z",
         "image": "https://cdn2.suno.ai/image_large_a38f8226-68ba-4c6a-9ef6-3d602f66bfbb.jpeg",
@@ -7110,7 +7176,7 @@
             "name": "Traction",
             "score": 0.2,
             "max": 1.5,
-            "note": "8 plays and 0 upvotes on Suno"
+            "note": "9 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -7162,13 +7228,98 @@
         }
       },
       {
+        "id": "56f381b9-75d1-4ed3-88a5-459f721e6744",
+        "title": "Pressure Spiral",
+        "duration_s": 180.0,
+        "tags": "Hardtechno with psychedelic acid-trance pressure, 155 BPM warehouse drive, distorted kick and rumbling sub, hypnotic 303 sequences, jagged synth stabs, industrial percussion, evolving stereo modulation, sudden tension drops and explosive returns, commanding male rap verses with clipped rhythmic delivery, sparse shouted hook, saturated club mix with controlled low end and abrasive high percussion",
+        "lyrics": "[Intro]\nRed coil turning under the floor\nPressure in the walls, then the room wants more\n\n[Verse 1]\nI walk in with the voltage biting my tongue\nSteel-toe rhythm, every bar gets sprung\nAcid on the ceiling, colors split in two\nI keep one eye on the clock, one eye on you\n\nNo soft landing, no polite retreat\nBoot prints stamped where the kick drum meets\nMind bends sideways when the sirens arrive\nI make a pulse out of everything alive\n\n[Hook]\nPush it past the limit, let the whole place shake\nCut the cord clean, watch the circuit wake\nPush it past the limit, no way back tonight\nRed heat, black room, teeth against the light\n\n[Verse 2]\nNumbers melt down on a cracked display\nI count four beats, then I throw them away\nA green line crawls through the smoke in my head\nEvery turn gets stranger, every rule is dead\n\nYou want calm? I brought the opposite here\nA hard little truth that you can feel in your ear\nWhen the floor starts folding and the crowd starts grinning\nThat’s the exact moment the real night’s beginning\n\n[Bridge]\nLose the map\nLose the name\nLet the spiral rearrange\nHold your breath\nFeel it climb\nOne more hit and cross the line\n\n[Hook]\nPush it past the limit, let the whole place shake\nCut the cord clean, watch the circuit wake\nPush it past the limit, no way back tonight\nRed heat, black room, teeth against the light\n\n[Outro]\nThe coil keeps turning after we leave\nA pulse in the concrete, a mark on the sleeve",
+        "model": "v6-mini",
+        "plays": 6,
+        "upvotes": 0,
+        "created_at": "2026-09-12T23:30:18.524Z",
+        "image": "https://cdn2.suno.ai/image_large_56f381b9-75d1-4ed3-88a5-459f721e6744.jpeg",
+        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/56f381b9-75d1-4ed3-88a5-459f721e6744.m4a",
+        "video_url": "https://cdn1.suno.ai/56f381b9-75d1-4ed3-88a5-459f721e6744.mp4",
+        "url": "https://suno.com/song/56f381b9-75d1-4ed3-88a5-459f721e6744",
+        "rating": 6.4,
+        "postable": true,
+        "slot": "full release",
+        "verdict": "on format (industrial, warehouse, acid), 3:00",
+        "factors": [
+          {
+            "name": "Genre fit",
+            "score": 2.2,
+            "max": 4.0,
+            "note": "industrial, warehouse, acid, but also rap, trance - the off-format tags cost it 1.8"
+          },
+          {
+            "name": "Length",
+            "score": 2.5,
+            "max": 2.5,
+            "note": "3:00 - full release length"
+          },
+          {
+            "name": "Model",
+            "score": 1.5,
+            "max": 1.5,
+            "note": "made on Suno v6-mini - current generation, cleanest master"
+          },
+          {
+            "name": "Traction",
+            "score": 0.1,
+            "max": 1.5,
+            "note": "6 plays and 0 upvotes on Suno"
+          }
+        ],
+        "checks": [
+          {
+            "ok": true,
+            "label": "On the channel's format",
+            "detail": "the prompt names industrial, warehouse, acid, hypnotic"
+          },
+          {
+            "ok": true,
+            "label": "Not a personal track",
+            "detail": "nothing personal in the title"
+          },
+          {
+            "ok": true,
+            "label": "Long enough to release",
+            "detail": "3:00 against a 1:00 floor - full release"
+          },
+          {
+            "ok": true,
+            "label": "Genre score clears the bar",
+            "detail": "2.2 against a 2.0 floor, pulled down by rap, trance"
+          }
+        ],
+        "summary": "Rated 6.4/10. Postable: industrial, warehouse, acid, but also rap, trance - the off-format tags cost it 1.8. 3:00 - full release length. made on Suno v6-mini - current generation, cleanest master.",
+        "similar": [],
+        "group": null,
+        "group_size": 1,
+        "group_pick": true,
+        "decision": {
+          "verdict": "eligible",
+          "reason": "on format, rated 6.4, a song the channel does not have"
+        },
+        "post": {
+          "lane": "hiphoptechno",
+          "lane_name": "Hip Hop Hard Techno",
+          "bpm": 155,
+          "youtube_title": "Pressure Spiral | Hip Hop Techno | ANCHOR",
+          "description": "Hip Hop Techno. An ANCHOR original, free download below.\n\nPressure Spiral. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "hashtags": "#hardtechno #acidtechno #techno",
+          "style": "motion"
+        }
+      },
+      {
         "id": "272d7227-ba0c-4cd8-a3b8-6ecde13fe853",
         "title": "Red Dust Warning",
         "duration_s": 226.8,
         "tags": "hardtechno with psychedelic trance crossover, relentless 150 BPM four-on-the-floor kick, distorted rumbling bass, hypnotic acid lines, spiraling resonant synths, granular textures, industrial percussion, sudden rave drops, dark warehouse pressure, aggressive rhythmic rap verses with clipped confident delivery, chant-ready chorus, saturated club mix with controlled low end and wide psychedelic motion",
         "lyrics": "[Intro]\nRed dust on the speaker cone\nPulse like a warning through the stone\n\n[Verse 1]\nI came through the gate with a spark in my teeth\nCold steel rhythm and a storm underneath\nNo map in my pocket, no brake in the machine\nI turn one hard step into a fever dream\n\n[Pre-Chorus]\nRound and round, let the ceiling bend\nLose the shape, let the night descend\n\n[Chorus]\nBreak the lock, let the pressure rise\nHard pulse cutting through ultraviolet skies\nNo sleep, no pause, keep the engine alive\nWe write our names where the walls vibrate\n\n[Verse 2]\nBassline crawling like a wire through flame\nEvery red light calling out my name\nI spit four bars, then the room goes blind\nAcid in the air, new geometry in mind\n\n[Bridge]\nTilt the floor\nOpen the door\nFollow the spiral\nAsk for no more\n\n[Rap Verse]\nI move with the kick, never miss when it lands\nBlack boots striking sparks from the plans\nGot a head full of color and a mouth full of grit\nWhen the pattern starts folding, I’m inside of it\nNo crown, no throne, just a pulse and a vow\nTurn the noise into force, make the future bow\nIf the walls close in, I accelerate\nHardtech pressure at the edge of the state\n\n[Final Chorus]\nBreak the lock, let the pressure rise\nHard pulse cutting through ultraviolet skies\nNo sleep, no pause, keep the engine alive\nWe write our names where the walls vibrate\n\n[Outro]\nRed dust settling, heartbeat remains\nOne last spark running through the veins",
         "model": "v6-mini",
-        "plays": 3,
+        "plays": 4,
         "upvotes": 0,
         "created_at": "2026-09-12T23:30:18.524Z",
         "image": "https://cdn2.suno.ai/image_large_272d7227-ba0c-4cd8-a3b8-6ecde13fe853.jpeg",
@@ -7202,7 +7353,7 @@
             "name": "Traction",
             "score": 0.1,
             "max": 1.5,
-            "note": "3 plays and 0 upvotes on Suno"
+            "note": "4 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -7242,91 +7393,6 @@
           "bpm": 150,
           "youtube_title": "Red Dust Warning | Hip Hop Techno | ANCHOR",
           "description": "Hip Hop Techno. An ANCHOR original, free download below.\n\nRed Dust Warning. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
-          "hashtags": "#hardtechno #acidtechno #techno",
-          "style": "motion"
-        }
-      },
-      {
-        "id": "56f381b9-75d1-4ed3-88a5-459f721e6744",
-        "title": "Pressure Spiral",
-        "duration_s": 180.0,
-        "tags": "Hardtechno with psychedelic acid-trance pressure, 155 BPM warehouse drive, distorted kick and rumbling sub, hypnotic 303 sequences, jagged synth stabs, industrial percussion, evolving stereo modulation, sudden tension drops and explosive returns, commanding male rap verses with clipped rhythmic delivery, sparse shouted hook, saturated club mix with controlled low end and abrasive high percussion",
-        "lyrics": "[Intro]\nRed coil turning under the floor\nPressure in the walls, then the room wants more\n\n[Verse 1]\nI walk in with the voltage biting my tongue\nSteel-toe rhythm, every bar gets sprung\nAcid on the ceiling, colors split in two\nI keep one eye on the clock, one eye on you\n\nNo soft landing, no polite retreat\nBoot prints stamped where the kick drum meets\nMind bends sideways when the sirens arrive\nI make a pulse out of everything alive\n\n[Hook]\nPush it past the limit, let the whole place shake\nCut the cord clean, watch the circuit wake\nPush it past the limit, no way back tonight\nRed heat, black room, teeth against the light\n\n[Verse 2]\nNumbers melt down on a cracked display\nI count four beats, then I throw them away\nA green line crawls through the smoke in my head\nEvery turn gets stranger, every rule is dead\n\nYou want calm? I brought the opposite here\nA hard little truth that you can feel in your ear\nWhen the floor starts folding and the crowd starts grinning\nThat’s the exact moment the real night’s beginning\n\n[Bridge]\nLose the map\nLose the name\nLet the spiral rearrange\nHold your breath\nFeel it climb\nOne more hit and cross the line\n\n[Hook]\nPush it past the limit, let the whole place shake\nCut the cord clean, watch the circuit wake\nPush it past the limit, no way back tonight\nRed heat, black room, teeth against the light\n\n[Outro]\nThe coil keeps turning after we leave\nA pulse in the concrete, a mark on the sleeve",
-        "model": "v6-mini",
-        "plays": 5,
-        "upvotes": 0,
-        "created_at": "2026-09-12T23:30:18.524Z",
-        "image": "https://cdn2.suno.ai/image_large_56f381b9-75d1-4ed3-88a5-459f721e6744.jpeg",
-        "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/56f381b9-75d1-4ed3-88a5-459f721e6744.m4a",
-        "video_url": "https://cdn1.suno.ai/56f381b9-75d1-4ed3-88a5-459f721e6744.mp4",
-        "url": "https://suno.com/song/56f381b9-75d1-4ed3-88a5-459f721e6744",
-        "rating": 6.3,
-        "postable": true,
-        "slot": "full release",
-        "verdict": "on format (industrial, warehouse, acid), 3:00",
-        "factors": [
-          {
-            "name": "Genre fit",
-            "score": 2.2,
-            "max": 4.0,
-            "note": "industrial, warehouse, acid, but also rap, trance - the off-format tags cost it 1.8"
-          },
-          {
-            "name": "Length",
-            "score": 2.5,
-            "max": 2.5,
-            "note": "3:00 - full release length"
-          },
-          {
-            "name": "Model",
-            "score": 1.5,
-            "max": 1.5,
-            "note": "made on Suno v6-mini - current generation, cleanest master"
-          },
-          {
-            "name": "Traction",
-            "score": 0.1,
-            "max": 1.5,
-            "note": "5 plays and 0 upvotes on Suno"
-          }
-        ],
-        "checks": [
-          {
-            "ok": true,
-            "label": "On the channel's format",
-            "detail": "the prompt names industrial, warehouse, acid, hypnotic"
-          },
-          {
-            "ok": true,
-            "label": "Not a personal track",
-            "detail": "nothing personal in the title"
-          },
-          {
-            "ok": true,
-            "label": "Long enough to release",
-            "detail": "3:00 against a 1:00 floor - full release"
-          },
-          {
-            "ok": true,
-            "label": "Genre score clears the bar",
-            "detail": "2.2 against a 2.0 floor, pulled down by rap, trance"
-          }
-        ],
-        "summary": "Rated 6.3/10. Postable: industrial, warehouse, acid, but also rap, trance - the off-format tags cost it 1.8. 3:00 - full release length. made on Suno v6-mini - current generation, cleanest master.",
-        "similar": [],
-        "group": null,
-        "group_size": 1,
-        "group_pick": true,
-        "decision": {
-          "verdict": "eligible",
-          "reason": "on format, rated 6.3, a song the channel does not have"
-        },
-        "post": {
-          "lane": "hiphoptechno",
-          "lane_name": "Hip Hop Hard Techno",
-          "bpm": 155,
-          "youtube_title": "Pressure Spiral | Hip Hop Techno | ANCHOR",
-          "description": "Hip Hop Techno. An ANCHOR original, free download below.\n\nPressure Spiral. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7429,7 +7495,7 @@
         "tags": "Extended Club Mix, 150 BPM relentless drive with 32-bar instrumental drops; rapid-fire aggressive rap in a low, dark register, half-spoken talk-sing with layered octave doubles; squelchy featured 303 acid bass, industrial 909 kicks, bouncy psytrance triplet bass, dark orchestral strings and brass, haunting female whispers, throat chants, euphoric stutter-house vocal chops.",
         "lyrics": "[Tempo: 150 BPM]\n[Duration: 03:30]\n\n[Intro: 0:00 - 0:25]\n[Dark cinematic orchestral strings, distant thunderous rumble, eerie stereo-panned whispers]\n(Whispered, cold and hypnotic)\nLocked inside the mind... \nCan you outrun your own shadow? \n(Low ancient throat chant)\nOmm... Vera... Sanguis...\n[Rising acid 303 synth filter sweep, pounding 909 kick drum fades in]\n\n[Verse 1: 0:25 - 0:55]\n[Fast-paced aggressive double-time rap, dark orchestral stabs, rolling psytrance triplet bassline]\n(Breathless chopper flow, intense emotional delivery)\nFoot on the gas, I been running from ghosts in the back of my head, I don't know how to brake,\nEvery decision I made in the dark is a permanent scar that I'm forced to awake,\nLooking for peace in the middle of war, got my back to the wall and my hands on the flame,\nNobody gave me a map to the top, I was buried alive and came out of the grave!\nVenom inside of the ink when I write, I been sharpening blades in the dead of the night,\nCut through the noise and the fake and the lies, you can see the vendetta reflect in my eyes,\nHeart beating fast at a hundred and fifty, the blood in my veins is beginning to boil,\nEverything built from the dirt and the pain, I been watering roots in the venomous soil!\n\n[Pre-Chorus: 0:55 - 1:10]\n[Melodic urgent rap transitioning into rhythmic stuttered vocal chops, accelerating snare roll]\nNowhere to hide when the curtains are drawn,\nWe dancing with demons till quarter to dawn!\n(Whispered, close to mic)\nCan you feel the madness rising?\nLet it out.\n\n[Drop 1: 1:10 - 1:45]\n[Extended 32-Bar Instrumental Drop: Peak-time Hard Acid Techno, relentless distorted 909 kicks, screaming squelchy 303 acid lines, glitchy vocal stutters]\n(Echoed chant over the bass)\nRun. Faster. Deeper.\n\n[Verse 2: 1:45 - 2:15]\n[Manic high-speed rap flow returns, interwoven with bouncy psychedelic acid synths and heavy orchestral brass hits]\n(Rapid-fire delivery, switching cadences mid-bar)\nPacing the floor in a cage of my making, the paranoia got me wide awake shaking,\nThey wanted me broken, they wanted me quiet, I walked in the room and I started a riot!\nNo ceilings, no limits, no holding me back, when I snap on the beat it's a panic attack,\nEvery syllable hitting like hail on the glass, I'm erasing the memories stuck in the past,\nLook at the hunger, look at the drive, takes a little insanity just to survive,\nOut of the ashes I'm taking the throne, I been fighting these shadows entirely alone,\nNow the bass is erupting, the ceiling is caving, the chaos is the only thing keeping me sane,\nWash all the doubt and the guilt in the acid and drown every drop of the rage in the rain!\n\n[Bridge / Breakdown: 2:15 - 2:40]\n[Sudden beat cut, eerie silence, haunting strings, dark ritualistic chants and stereo whispers]\n(Whispering, echoing in the dark)\nLook in the mirror... who are you running from?\nThere is no escape.\n(Tribal Chant)\nKalima... Ignis... Libera...\n[Massive psy-trance snare build-up, extreme acid resonance peaking]\n\n[Drop 2 / Climax: 2:40 - 3:15]\n[Maximum Energy Climax: 32-Bar Psy-Techno & Rap Fusion, bouncy triplet bass, relentless fast kicks, chopped rap vocal samples, pure rave euphoria]\n(Whispered)\nLose your mind.\n\n[Outro: 3:15 - 3:30]\n[Stripped-back industrial kick, fading orchestral violin, lingering cold breath]\n(Whispered)\nThe silence is loud.\n[End]",
         "model": "v6",
-        "plays": 8,
+        "plays": 9,
         "upvotes": 0,
         "created_at": "2026-10-25T01:24:52.017Z",
         "image": "https://cdn2.suno.ai/image_large_58dce5fb-24ac-45af-bd22-e16ae41150d9.jpeg",
@@ -7463,7 +7529,7 @@
             "name": "Traction",
             "score": 0.2,
             "max": 1.5,
-            "note": "8 plays and 0 upvotes on Suno"
+            "note": "9 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -7697,7 +7763,7 @@
         "tags": "Rap, Hardcore Hip Hop, Midwest Hip Hop, Emo Rap, Trap, and Alternative Hip Hop; high, light upper-register male vocals, bright and clear-toned, moving from forceful rap into a powerful full-voice belt, doubled hooks; trap hi-hat rolls and distorted electric guitar; dark atmospheric production with cinematic trailer-style builds; driving double-time Midwest rap.",
         "lyrics": "[Verse 1]\nI found a coin in the laundromat floor\nBent like a moon with a scratch on it\nKept it warm in my palm all day\nLike it knew my name\n\nYou said, pick a lane, pick a plan\nBut I like the spin of a random hand\nSome days are a lock, some days are a flame\nI just lean in\n\n[Pre-Chorus]\nIf it lands on red\nI'm all in\nIf it lands on blue\nI grin\nThe world can flip\nI can too\nWatch me roll right through\n\n[Chorus]\nBackseat lottery\nBackseat lottery\nI let it choose me\nI let it choose me\n\nBackseat lottery\nBackseat lottery\nWhatever hits next\nThat’s the move for me\n\n[Verse 2]\nI took the long road to the corner store\nBought two cans and a cheap postcard\nOne said go, one said stay\nI mailed both away\n\nNow the rain on the bus stop roof\nSounds like drums for my reckless truth\nI don't need a map to prove\nI can still arrive\n\n[Pre-Chorus]\nIf it lands on red\nI'm all in\nIf it lands on blue\nI grin\nThe world can flip\nI can too\nWatch me roll right through\n\n[Chorus]\nBackseat lottery\nBackseat lottery\nI let it choose me\nI let it choose me\n\nBackseat lottery\nBackseat lottery\nWhatever hits next\nThat’s the move for me\n\n[Bridge]\nNo fixed line\nNo safe bet\nJust my heart\nOn a coin flip\nSay my name\nThrow it high\nI'll catch the fall\nWith open eyes\n\n[Final Chorus]\nBackseat lottery\nBackseat lottery\nI let it choose me\nI let it choose me\n\nBackseat lottery\nBackseat lottery\nWhatever hits next\nThat’s the move for me",
         "model": "v6",
-        "plays": 4,
+        "plays": 5,
         "upvotes": 0,
         "created_at": "2026-10-24T10:09:58.007Z",
         "image": "https://cdn2.suno.ai/image_large_8d0906fd-58f5-4c81-8da3-76c683e9146c.jpeg",
@@ -7731,7 +7797,7 @@
             "name": "Traction",
             "score": 0.1,
             "max": 1.5,
-            "note": "4 plays and 0 upvotes on Suno"
+            "note": "5 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
