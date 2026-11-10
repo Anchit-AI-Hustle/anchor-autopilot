@@ -7,8 +7,76 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-10T12:20:57Z",
+  "updated_at": "2026-11-10T22:18:22Z",
   "drops": [
+    {
+      "id": "2026-11-10-4",
+      "date": "2026-11-10",
+      "title": "Move Before Thunder",
+      "lane": "psyrap",
+      "lane_name": "Psychedelic Rap Techno",
+      "bpm": 148,
+      "key": "C minor",
+      "family": "furnace",
+      "family_name": "Furnace",
+      "duration_s": 226.8,
+      "short_s": 45,
+      "cover": "covers/2026-11-10-4.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-10-4/ANCHOR-2026-11-10-move-before-thunder.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-10-4",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-10-move-before-thunder-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-10-4/ANCHOR-2026-11-10-move-before-thunder-short.mp4",
+      "youtube_url": "https://youtu.be/LwiMYlhQDC8",
+      "buffer_post_id": "LwiMYlhQDC8",
+      "status": "public",
+      "post_at": "2026-11-10T22:18:04Z",
+      "qc": {
+        "bpm_est": 148.0,
+        "lufs": -14.02,
+        "warnings": [
+          "song gate: no part sounds different from the rest (one loop start to finish) (most_different_parts -0.241, limit -0.2545)"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-10T22:13:37Z",
+      "genre_line": "Psychedelic Rap Techno, Psychedelic Techno, Hard Techno",
+      "style_line": "Psychedelic Rave Rap, Acid Techno, Bouncy Hard Techno, Hip Hop Techno",
+      "error": null,
+      "accent": "#ff3b1f",
+      "caption": "fast rap over psychedelic hard techno, the beat runs under every verse, distorted punchy kick, rumbling sub bouncing on the off-beat, squelching acid lines, swirling leads, chanted hook. Mid-2020s psychedelic hard techno with English rave rap on top, colourful and fast. Mood: curious and colourful, spiralling up into a full-room jump, ending wide-eyed, about a doubter and a doer trade bars on a ridge as a storm rolls in. Feel: bouncy, fun and psychedelic, never dark. 175 BPM, fast four-on-the-floor, a rolling acid bassline bouncing on every off-beat, the rap riding the groove in sixteenths. Instruments: pounding kick, 808 snare, shaker loop, rolling hats, punchy saw stab bass, funky clav synth hook playing a short catchy hook between the rap lines over playful major chords with a twist; phasing psychedelic leads intro, bubbling arpeggios build, swirling 303 acid lines breakdown. Vocals: nimble wiry male tenor rapper, natural English. Production: Wide and colourful, acid lines swirling around a dry centred rap vocal, kick tight and up front; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, phasing psychedelic leads far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, phasing psychedelic leads last, a smooth fade out. Special moment: the acid line rises a full octave under the final hook.",
+      "seed": 592680904,
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "37-red-dust-warning-272d7227.m4a"
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-10-4/ANCHOR-2026-11-10-move-before-thunder-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-10-4/ANCHOR-2026-11-10-move-before-thunder-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/LwiMYlhQDC8",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=xBGqYictn_A",
+      "buffer_short_post_id": "6af3982232827e88e29b0a31",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "queue",
+      "sound": {
+        "lead": "funky clav synth hook",
+        "bass": "punchy saw stab bass",
+        "drums": "pounding kick, 808 snare, shaker loop, rolling hats",
+        "melody": "a short catchy hook between the rap lines",
+        "chords": "playful major chords with a twist"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
     {
       "id": "2026-11-10-3",
       "date": "2026-11-10",
@@ -28,7 +96,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-10-3/ANCHOR-2026-11-10-bleed-beside-me-short.mp4",
       "youtube_url": "https://youtu.be/8JApJxMjoqw",
       "buffer_post_id": "8JApJxMjoqw",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-10T12:20:36Z",
       "qc": {
         "bpm_est": 150.0,
@@ -97,7 +165,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-10-2/ANCHOR-2026-11-10-sweat-the-ghost-out-short.mp4",
       "youtube_url": "https://youtu.be/USHDVbTl1ig",
       "buffer_post_id": "USHDVbTl1ig",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-10T12:20:19Z",
       "qc": {
         "bpm_est": 171.1,
@@ -4877,14 +4945,14 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-10T12:20:58Z",
+    "checked_at": "2026-11-10T22:18:23Z",
     "total": 38,
     "postable": 27,
     "families": 15,
     "twins": 34,
-    "fresh": 3,
+    "fresh": 2,
     "queued": 0,
-    "released": 10,
+    "released": 11,
     "next_up": {
       "title": "DANCING WITH DEMONS",
       "id": "a38f8226-68ba-4c6a-9ef6-3d602f66bfbb",
@@ -4987,11 +5055,11 @@
           "reason": "released (on the site)"
         },
         "post": {
-          "lane": "bounce",
-          "lane_name": "Hard Bounce Techno",
-          "bpm": 164,
-          "youtube_title": "Project Mayhem | Hard Techno | ANCHOR",
-          "description": "Hard Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "hardstyletechno",
+          "lane_name": "Hardstyle Hard Techno",
+          "bpm": 165,
+          "youtube_title": "Project Mayhem | Hardstyle Hard Techno | ANCHOR",
+          "description": "Hardstyle Hard Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -5080,7 +5148,7 @@
         },
         "post": {
           "lane": "rawbounce",
-          "lane_name": "Rawstyle Bounce",
+          "lane_name": "Rawstyle Hard Tech",
           "bpm": 170,
           "youtube_title": "Crossing The Threshold | Rawstyle Hybrid | ANCHOR",
           "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nCrossing The Threshold. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
@@ -5172,7 +5240,7 @@
         },
         "post": {
           "lane": "rawbounce",
-          "lane_name": "Rawstyle Bounce",
+          "lane_name": "Rawstyle Hard Tech",
           "bpm": 170,
           "youtube_title": "Silent Transmission | Rawstyle Hybrid | ANCHOR",
           "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nSilent Transmission. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
@@ -5274,7 +5342,7 @@
         },
         "post": {
           "lane": "rawbounce",
-          "lane_name": "Rawstyle Bounce",
+          "lane_name": "Rawstyle Hard Tech",
           "bpm": 156,
           "youtube_title": "Project Mayhem Part 2 | Rawstyle Hybrid | ANCHOR",
           "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nProject Mayhem Part 2. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
@@ -5458,7 +5526,7 @@
         },
         "post": {
           "lane": "rawbounce",
-          "lane_name": "Rawstyle Bounce",
+          "lane_name": "Rawstyle Hard Tech",
           "bpm": 170,
           "youtube_title": "Where It Begins | Rawstyle Hybrid | ANCHOR",
           "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nWhere It Begins. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
@@ -5825,7 +5893,7 @@
         },
         "post": {
           "lane": "rawbounce",
-          "lane_name": "Rawstyle Bounce",
+          "lane_name": "Rawstyle Hard Tech",
           "bpm": 170,
           "youtube_title": "Crossing The Threshold | Rawstyle Hybrid | ANCHOR",
           "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nCrossing The Threshold. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
@@ -6018,7 +6086,7 @@
         },
         "post": {
           "lane": "rawbounce",
-          "lane_name": "Rawstyle Bounce",
+          "lane_name": "Rawstyle Hard Tech",
           "bpm": 156,
           "youtube_title": "Project Mayhem Part 1 | Rawstyle Hybrid | ANCHOR",
           "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nProject Mayhem Part 1. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
@@ -6110,7 +6178,7 @@
         },
         "post": {
           "lane": "rawbounce",
-          "lane_name": "Rawstyle Bounce",
+          "lane_name": "Rawstyle Hard Tech",
           "bpm": 170,
           "youtube_title": "Where It Begins | Rawstyle Hybrid | ANCHOR",
           "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nWhere It Begins. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
@@ -6303,11 +6371,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "bounce",
-          "lane_name": "Hard Bounce Techno",
-          "bpm": 164,
-          "youtube_title": "Project Mayhem | Hard Techno | ANCHOR",
-          "description": "Hard Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "hardstyletechno",
+          "lane_name": "Hardstyle Hard Techno",
+          "bpm": 165,
+          "youtube_title": "Project Mayhem | Hardstyle Hard Techno | ANCHOR",
+          "description": "Hardstyle Hard Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -6488,7 +6556,7 @@
         },
         "post": {
           "lane": "rawbounce",
-          "lane_name": "Rawstyle Bounce",
+          "lane_name": "Rawstyle Hard Tech",
           "bpm": 170,
           "youtube_title": "Silent Transmission | Rawstyle Hybrid | ANCHOR",
           "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nSilent Transmission. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
@@ -7502,9 +7570,10 @@
         "group": null,
         "group_size": 1,
         "group_pick": true,
+        "released_at": "2026-11-10T04:17:22Z",
         "decision": {
-          "verdict": "eligible",
-          "reason": "on format, rated 6.4, a song the channel does not have"
+          "verdict": "released",
+          "reason": "released 2026-11-10"
         },
         "post": {
           "lane": "hiphoptechno",
@@ -8417,7 +8486,7 @@
       },
       {
         "id": "rawbounce",
-        "name": "Rawstyle Bounce"
+        "name": "Rawstyle Hard Tech"
       },
       {
         "id": "psy",
@@ -8429,7 +8498,7 @@
       },
       {
         "id": "hardgroove",
-        "name": "Hard Groove Bounce"
+        "name": "Industrial Hard Groove"
       },
       {
         "id": "hyper",
@@ -8437,7 +8506,7 @@
       },
       {
         "id": "hardtech",
-        "name": "Hard Tech"
+        "name": "Raw Hard Tech"
       },
       {
         "id": "psytech",
@@ -8462,6 +8531,14 @@
       {
         "id": "psyhiphop",
         "name": "Psychedelic Hip Hop Techno"
+      },
+      {
+        "id": "hardstyletechno",
+        "name": "Hardstyle Hard Techno"
+      },
+      {
+        "id": "phonktechno",
+        "name": "Drift Phonk Hard Techno"
       }
     ]
   },
