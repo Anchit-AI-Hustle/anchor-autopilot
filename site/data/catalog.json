@@ -4674,18 +4674,18 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-10T03:42:54Z",
+    "checked_at": "2026-11-10T11:25:45Z",
     "total": 38,
     "postable": 27,
     "families": 15,
     "twins": 34,
-    "fresh": 4,
+    "fresh": 3,
     "queued": 0,
-    "released": 9,
+    "released": 10,
     "next_up": {
-      "title": "New Beginnings",
-      "id": "219cedc0-adad-49e2-a761-674fc0af10d8",
-      "rating": 7.2,
+      "title": "DANCING WITH DEMONS",
+      "id": "a38f8226-68ba-4c6a-9ef6-3d602f66bfbb",
+      "rating": 6.4,
       "source": "catalogue",
       "why": "nothing is queued - this is the best take not yet released",
       "waiting": 0
@@ -6737,9 +6737,10 @@
         "group": "dd0d3471-06cd-416f-972e-63cfc9fd7329",
         "group_size": 4,
         "group_pick": true,
+        "released_at": "2026-11-09T23:28:17Z",
         "decision": {
-          "verdict": "eligible",
-          "reason": "on format, rated 7.2, a song the channel does not have"
+          "verdict": "released",
+          "reason": "released 2026-11-09"
         },
         "post": {
           "lane": "bounce",
@@ -6834,8 +6835,8 @@
         "group_size": 4,
         "group_pick": false,
         "decision": {
-          "verdict": "eligible",
-          "reason": "on format, rated 7.2, a song the channel does not have"
+          "verdict": "held",
+          "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
         },
         "post": {
           "lane": "bounce",
@@ -6930,8 +6931,8 @@
         "group_size": 4,
         "group_pick": false,
         "decision": {
-          "verdict": "eligible",
-          "reason": "on format, rated 7.2, a song the channel does not have"
+          "verdict": "held",
+          "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
         },
         "post": {
           "lane": "bounce",
@@ -7031,8 +7032,8 @@
         "group_size": 4,
         "group_pick": false,
         "decision": {
-          "verdict": "eligible",
-          "reason": "on format, rated 7.2, a song the channel does not have"
+          "verdict": "held",
+          "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
         },
         "post": {
           "lane": "bounce",
