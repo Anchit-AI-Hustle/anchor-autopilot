@@ -78,3 +78,5 @@ def test_a_set_climbs_to_a_peak_two_thirds_in_and_moves_in_key():
     steps = [genres.key_distance(a["key"], b["key"]) for a, b in zip(climb, climb[1:])]
     assert sum(steps) <= sum(genres.key_distance(a["key"], b["key"]) for a, b in zip(tracks, tracks[1:]))
     assert genres.set_order(tracks[:2]) == tracks[:2]
+    # a short set just climbs (the weekly mix of three songs, tests/test_mix_youtube.py)
+    assert [t["bpm"] for t in genres.set_order(list(reversed(tracks[:4])))] == [160, 162, 164, 166]

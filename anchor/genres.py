@@ -155,7 +155,8 @@ def set_order(tracks: list[dict]) -> list[dict]:
     """Order a set: the tempo climbs from the slowest song to the fastest, which plays about
     two-thirds in (mashups.toml [sets] peak_at), then the rest step back down to close. Among
     songs of a near tempo the next one is the closest key on the Camelot wheel."""
-    if len(tracks) < 3:
+    # a set of four or fewer songs has no room for a peak and a come-down: it just climbs
+    if len(tracks) < 5:
         return sorted(tracks, key=lambda t: (float(t.get("bpm") or 0), t.get("date", "")))
     by_bpm = sorted(tracks, key=lambda t: (float(t.get("bpm") or 0), t.get("date", "")))
     peak = by_bpm[-1]
