@@ -1,0 +1,40 @@
+{
+  "printed": 85,
+  "releases": 85,
+  "audio_pairs": [
+    {
+      "duplicate": "2026-09-15",
+      "of": "2026-09-12",
+      "duplicate_title": "Afterburn",
+      "of_title": "Grid Blade",
+      "same_record": false,
+      "score": {
+        "envelope": 0.326,
+        "sequence": 0.652
+      }
+    },
+    {
+      "duplicate": "2026-09-24",
+      "of": "2026-09-12",
+      "duplicate_title": "Null Monolith",
+      "of_title": "Grid Blade",
+      "same_record": false,
+      "score": {
+        "envelope": 0.428,
+        "sequence": 0.705
+      }
+    },
+    {
+      "duplicate": "2026-09-24",
+      "of": "2026-09-15",
+      "duplicate_title": "Null Monolith",
+      "of_title": "Afterburn",
+      "same_record": false,
+      "score": {
+        "envelope": 0.513,
+        "sequence": 0.639
+      }
+    }
+  ],
+  "note": "Releases with the same music (same_record) or music that sounds alike, built by 'anchor dupes audio'. anchor/dupes.py."
+}
