@@ -251,7 +251,7 @@ class YouTube:
                 out.append({"id": v["id"], "title": sn.get("title", ""), "description": sn.get("description", ""),
                             "tags": sn.get("tags") or [], "categoryId": sn.get("categoryId", "10"),
                             "duration": v.get("contentDetails", {}).get("duration"), "privacy": v.get("status", {}).get("privacyStatus"),
-                            "language": sn.get("defaultLanguage")})
+                            "language": sn.get("defaultLanguage"), "published": sn.get("publishedAt", "")})
         return out
 
     def update_video(self, video: dict, *, title: str, description: str, tags: list[str] | None = None) -> None:

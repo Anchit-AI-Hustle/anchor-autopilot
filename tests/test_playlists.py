@@ -63,14 +63,19 @@ def test_plan_adds_every_public_video_once_and_takes_out_twins_and_left_out_song
     assert [v["id"] for v in p["add"]] == ["K1", "K2", "F9"]
 
 
-def test_shorts_and_every_version_go_in_too():
-    """Anchit, 2026-11-09: "the anchor playlist must have all videos that are uploaded at all times"."""
-    videos = [vid("S2", "Outrun Your Shadow", 40), vid("O2", "Outrun Your Shadow | ANCHOR", 276),
-              vid("O1", "Outrun Your Shadow | ANCHOR", 276), vid("S1", "Cold Bunker", 45)]
-    p = playlists.plan(videos, {MAIN: []}, MAIN, {})
-    assert [v["id"] for v in p["add"]] == ["O1", "O2", "S1", "S2"]       # full videos first, then the Shorts
-    p = playlists.plan(videos, {MAIN: [{"item": "x", "video": "O1"}, {"item": "y", "video": "O2"}]}, MAIN, {})
-    assert p["remove"] == [] and [v["id"] for v in p["add"]] == ["S1", "S2"]
+def test_each_unique_song_goes_in_once():
+    """Anchit, 2026-11-10: "only unique videos and audios are there in the playlist": the song's
+    one full video, never a second upload of the same music or its Short."""
+    from anchor import dupes
+    videos = [vid("L1", "Outrun Your Shadow (Lyric Video) | ANCHOR", 276), vid("S2", "Outrun Your Shadow", 40),
+              vid("O2", "Outrun Your Shadow | ANCHOR", 276), vid("O1", "Outrun Your Shadow | ANCHOR", 276),
+              vid("S1", "Cold Bunker", 45)]       # newest first, as the Data API lists them
+    keep = set(dupes.audit(videos, {}, {}, {}, {})["canonical"].values())
+    assert keep == {"O1"}
+    p = playlists.plan(videos, {MAIN: []}, MAIN, {}, keep)
+    assert [v["id"] for v in p["add"]] == ["O1"]
+    p = playlists.plan(videos, {MAIN: [{"item": "x", "video": "O1"}, {"item": "y", "video": "O2"}]}, MAIN, {}, keep)
+    assert [r["item"] for r in p["remove"]] == ["y"] and p["add"] == []
 
 
 def test_a_spent_quota_is_a_warning_and_the_next_run_catches_up(monkeypatch, capsys):
@@ -91,9 +96,10 @@ def test_run_applies_the_plan_and_never_deletes_a_video(tmp_path):
     ch.write_text(json.dumps(CHANNEL))
     yt = FakeYouTube(lists())
     out = playlists.run(PROFILE, api=yt, channel_path=ch)
-    assert yt.removed == ["m2", "m3", "m5", "r1"]
-    assert yt.added == [("K1", MAIN), ("K2", MAIN), ("F9", MAIN)]
-    assert not out["errors"] and len(out["added"]) == 3
+    # the Short S1 leaves ANCHOR; Kindness Needs Truth goes in once (its lyric video K2 is the same music)
+    assert yt.removed == ["m2", "m3", "m4", "m5", "r1"]
+    assert yt.added == [("K1", MAIN), ("F9", MAIN)]
+    assert not out["errors"] and len(out["added"]) == 2
     dry = FakeYouTube(lists())
     playlists.run(PROFILE, api=dry, channel_path=ch, dry_run=True)
     assert not dry.added and not dry.removed

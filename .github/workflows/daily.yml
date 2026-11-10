@@ -484,8 +484,12 @@ jobs:
         run: |
           shopt -s nullglob
           for d in drops/drop-*; do
-            [ -f "$d/release_pending" ] || continue
             DATE="${d#drops/drop-}"
+            # a song an earlier render-only run made (from_run) has no release yet either
+            if [ ! -f "$d/release_pending" ]; then
+              [ -n "${{ inputs.from_run }}" ] && ! gh release view "drop-$DATE" >/dev/null 2>&1 || continue
+            fi
+            [ -s "$d/title.txt" ] || python3 -c "import json;print(json.load(open('$d/meta.json'))['brief']['title'], end='')" > "$d/title.txt"
             B="$(python3 -c "import json;print(json.load(open('$d/meta.json'))['files']['base'])")"
             FILES=("$d/$B.mp3" "$d/$B.flac" "$d/$B-short.mp4" "$d/$B-full-169.mp4" "$d/$B-full-916.mp4" "$d/$B-cover.jpg" "$d/frame-169.jpg")
             if gh release view "drop-$DATE" >/dev/null 2>&1; then

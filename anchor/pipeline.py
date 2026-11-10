@@ -689,6 +689,20 @@ def publish_youtube_api(profile: Profile, drop_dir: Path, meta: dict, brief: dic
                   ai_generated=bool(yt["ai_generated"]))
     tags = list(brief.get("tags") or [])
     full = None
+    # never the same song twice on the channel (Anchit, 2026-11-10: "ensure old songs arent
+    # reuploaded again and again"): a re-run, a retry or a remake finds the song already up
+    try:
+        from . import dupes
+        same = dupes.is_reupload(brief["youtube_title"], api.channel_videos(profile.artist["youtube_channel_id"]),
+                                 read_json(dupes.CATALOG_PATH.parent / "channel.json", {}) or {}, dupes.load())
+    except Exception as exc:              # noqa: BLE001 - the check never blocks a new song on an API hiccup
+        log(f"publish: duplicate check skipped: {exc}")
+        same = None
+    if same:
+        result["youtube"] = {"post_id": same, "status": "already on the channel", "external_link": f"https://youtu.be/{same}",
+                             "via": "duplicate check"}
+        log(f"publish: {brief['youtube_title']} is already on the channel as {same}; not uploaded again")
+        return
     try:
         full = api.upload(drop_dir / files["full_169"], title=brief["youtube_title"], description=brief["description"],
                           tags=tags, notify=bool(yt["notify_subscribers"]), **common)
