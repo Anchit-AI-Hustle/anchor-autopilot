@@ -118,13 +118,16 @@ def test_hard_tech_psy_rap_and_hip_hop_all_get_airtime():
     hist = []
     for i in range(90):
         day = (start + timedelta(days=i)).isoformat()
-        b = make_brief(p, day, hist)
-        hist.insert(0, {"date": day, "title": b["title"], "lane": b["lane"], "family": b["family"], "key": b["key"]})
-        seen.add(b["lane"])
-        rap_days += p.lane(b["lane"]).voice == "rap"
-        assert 160 <= b["bpm"] <= 200, "the new lanes keep the channel's tempo range"
+        for slot in (1, 2, 3):         # a usual day: hard tech first (2026-11-10), two more groups
+            drop = day if slot == 1 else f"{day}-{slot}"
+            b = make_brief(p, drop, hist)
+            hist.insert(0, {"date": day, "id": drop, "title": b["title"], "lane": b["lane"],
+                            "family": b["family"], "key": b["key"]})
+            seen.add(b["lane"])
+            rap_days += p.lane(b["lane"]).voice == "rap"
+            assert 160 <= b["bpm"] <= 200, "the new lanes keep the channel's tempo range"
     assert seen == ids
-    assert 15 <= rap_days <= 45, rap_days
+    assert 45 <= rap_days <= 150, rap_days
 
 
 def test_rap_lanes_rap_and_never_ban_rap(no_songbook):
