@@ -76,7 +76,21 @@ def song_of(title: str, merge: dict[str, str]) -> str:
     return k
 
 
-def merges(channel: dict, dupes: dict) -> dict[str, str]:
+def renamed(catalog: dict) -> dict[str, str]:
+    """Queued songs that went out under another name (drop title key -> its own Suno title key):
+    Start It Tonight is Pressure Spiral, Doors Blown Open is New Beginnings (2026-11-11)."""
+    from .queue import _title_from
+    out = {}
+    for d in (catalog or {}).get("drops", []):
+        src = ((d.get("engine") or {}) if isinstance(d.get("engine"), dict) else {}).get("source_file")
+        if src and d.get("title"):
+            a, b = song_key(d["title"]), song_key(_title_from(src))
+            if a and b and a != b:
+                out[a] = b
+    return out
+
+
+def merges(channel: dict, dupes: dict, catalog: dict | None = None) -> dict[str, str]:
     """Songs that are the same record under two names (duplicate -> original). Only the same
     record: songs that merely sound alike are different songs (kept public, out of the playlist
     through channel.json sound_alikes)."""
@@ -84,6 +98,8 @@ def merges(channel: dict, dupes: dict) -> dict[str, str]:
     for p in dupes.get("audio_pairs", []):
         if p.get("same_record"):
             m.setdefault(song_key(p["duplicate_title"]), song_key(p["of_title"]))
+    for a, b in renamed(catalog or {}).items():
+        m.setdefault(a, b)
     return m
 
 
@@ -108,7 +124,9 @@ def preferred(catalog: dict, uploads: dict) -> tuple[set[str], set[str]]:
 def audit(videos: list[dict], catalog: dict, uploads: dict, channel: dict, dupes: dict) -> dict:
     """Group the channel's public videos by song: the canonical full video of each, and every
     duplicate with the reason. ``videos`` are YouTube.channel_videos() rows."""
-    merge = merges(channel, dupes)
+    merge = merges(channel, dupes, catalog)
+    # a song that went out again under a new name keeps its first upload, the original
+    again = set(renamed(catalog).values())
     keep, replaced = preferred(catalog, uploads)
     songs: dict[str, dict] = {}
     # the Data API lists uploads newest first: without dates the later position is the older video
@@ -122,7 +140,9 @@ def audit(videos: list[dict], catalog: dict, uploads: dict, channel: dict, dupes
     for song, s in songs.items():
         fulls = s["full"]
         if fulls:
-            ranked = sorted(fulls, key=lambda v: (v["id"] in replaced, v["id"] not in keep, v.get("published") or "", age[v["id"]]))
+            first = song in again
+            ranked = sorted(fulls, key=lambda v: (v["id"] in replaced, False if first else v["id"] not in keep,
+                                                  v.get("published") or "", age[v["id"]]))
             best = ranked[0]
             canonical[song] = best
             for v in ranked[1:]:
@@ -130,7 +150,8 @@ def audit(videos: list[dict], catalog: dict, uploads: dict, channel: dict, dupes
                        else "same music as " + best["title"])
                 duplicates.append({"id": v["id"], "title": v["title"], "kind": "full", "song": song,
                                    "keep": best["id"], "why": why})
-        shorts = sorted(s["short"], key=lambda v: (v["id"] in replaced, v["id"] not in keep, v.get("published") or "", age[v["id"]]))
+        shorts = sorted(s["short"], key=lambda v: (v["id"] in replaced, False if song in again else v["id"] not in keep,
+                                                    v.get("published") or "", age[v["id"]]))
         for v in shorts[1:]:
             duplicates.append({"id": v["id"], "title": v["title"], "kind": "short", "song": song,
                                "keep": shorts[0]["id"], "why": "another Short of the same song"})
@@ -141,10 +162,10 @@ def audit(videos: list[dict], catalog: dict, uploads: dict, channel: dict, dupes
 
 
 def is_reupload(title: str, videos: list[dict], channel: dict | None = None, dupes: dict | None = None,
-                replaces: list[str] | tuple[str, ...] = ()) -> str | None:
+                replaces: list[str] | tuple[str, ...] = (), catalog: dict | None = None) -> str | None:
     """The id of a public full video of the same music already on the channel (None when the
     song has none, or when that video is one this upload declares it replaces)."""
-    merge = merges(channel or {}, dupes or {})
+    merge = merges(channel or {}, dupes or {}, catalog)
     song = song_of(title, merge)
     for v in videos:
         if (v.get("privacy") == "public" and not is_short(v) and v["id"] not in set(replaces)
