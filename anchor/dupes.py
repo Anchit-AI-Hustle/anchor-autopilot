@@ -91,13 +91,15 @@ def renamed(catalog: dict) -> dict[str, str]:
 
 
 def merges(channel: dict, dupes: dict, catalog: dict | None = None) -> dict[str, str]:
-    """Songs that are the same record under two names (duplicate -> original). Only the same
-    record: songs that merely sound alike are different songs (kept public, out of the playlist
-    through channel.json sound_alikes)."""
+    """Songs that are one song under two names (duplicate -> original): the same record, two
+    songs that sound alike, and a queued song that went out under a new name."""
     m = {}
+    # only unique songs on the channel (Anchit, 2026-11-11: "ensure all correct unique songs only
+    # exist - remove all duplicates"): the same record AND songs that sound alike are one song
     for p in dupes.get("audio_pairs", []):
-        if p.get("same_record"):
-            m.setdefault(song_key(p["duplicate_title"]), song_key(p["of_title"]))
+        m.setdefault(song_key(p["duplicate_title"]), song_key(p["of_title"]))
+    for a, b in ((channel or {}).get("sound_alikes") or {}).items():
+        m.setdefault(song_key(a), song_key(b))
     for a, b in renamed(catalog or {}).items():
         m.setdefault(a, b)
     return m
@@ -121,6 +123,11 @@ def preferred(catalog: dict, uploads: dict) -> tuple[set[str], set[str]]:
     return keep, replaced
 
 
+def engagement(v: dict) -> int:
+    """How much a video is watched and liked: views, plus likes and comments weighted up."""
+    return int(v.get("view") or 0) + 20 * int(v.get("like") or 0) + 50 * int(v.get("comment") or 0)
+
+
 def audit(videos: list[dict], catalog: dict, uploads: dict, channel: dict, dupes: dict) -> dict:
     """Group the channel's public videos by song: the canonical full video of each, and every
     duplicate with the reason. ``videos`` are YouTube.channel_videos() rows."""
@@ -140,17 +147,22 @@ def audit(videos: list[dict], catalog: dict, uploads: dict, channel: dict, dupes
     for song, s in songs.items():
         fulls = s["full"]
         if fulls:
+            # the copy people watch stays; the ones with the least engagement go private (Anchit,
+            # 2026-11-11: "choose the ones with the least engagement to remove"). Ties: the
+            # original over a renamed repost, then the recorded one, then the oldest
             first = song in again
-            ranked = sorted(fulls, key=lambda v: (v["id"] in replaced, False if first else v["id"] not in keep,
+            ranked = sorted(fulls, key=lambda v: (-engagement(v), v["id"] in replaced,
+                                                  False if first else v["id"] not in keep,
                                                   v.get("published") or "", age[v["id"]]))
             best = ranked[0]
             canonical[song] = best
             for v in ranked[1:]:
                 why = ("replaced by a newer upload of the same song" if v["id"] in replaced
-                       else "same music as " + best["title"])
+                       else "same music as " + best["title"]) + f" (engagement {engagement(v)} vs {engagement(best)})"
                 duplicates.append({"id": v["id"], "title": v["title"], "kind": "full", "song": song,
                                    "keep": best["id"], "why": why})
-        shorts = sorted(s["short"], key=lambda v: (v["id"] in replaced, False if song in again else v["id"] not in keep,
+        shorts = sorted(s["short"], key=lambda v: (-engagement(v), v["id"] in replaced,
+                                                    False if song in again else v["id"] not in keep,
                                                     v.get("published") or "", age[v["id"]]))
         for v in shorts[1:]:
             duplicates.append({"id": v["id"], "title": v["title"], "kind": "short", "song": song,
@@ -196,9 +208,23 @@ def apply(api, report: dict, *, limit: int = 40) -> dict:
         try:
             api.set_privacy(d["id"], "private")
             done["private"].append(f"{d['title']} ({d['id']}): {d['why']}")
+            done.setdefault("moved", {})[d["id"]] = d["keep"]
         except Exception as exc:          # noqa: BLE001 - one video never stops the rest
             if "quotaExceeded" in str(exc):
                 done["errors"].append("quota spent; the rest go private on the next run")
                 break
             done["errors"].append(f"{d['id']}: {str(exc)[:200]}")
     return done
+
+
+def repoint(catalog: dict, applied_ids: dict[str, str]) -> int:
+    """The site's links follow the copy that stays: a drop whose full video or Short went private
+    as a duplicate now points at the kept one. ``applied_ids`` maps private id -> kept id."""
+    n = 0
+    for d in catalog.get("drops", []):
+        for f in ("youtube_full_url", "youtube_url", "youtube_short_url"):
+            v = _vid(d.get(f))
+            if v and v in applied_ids:
+                d[f] = d[f].replace(v, applied_ids[v])
+                n += 1
+    return n

@@ -92,7 +92,7 @@ jobs:
         run: |
           git config user.name "$ROBOT_NAME"
           git config user.email "$ROBOT_EMAIL"
-          git add site/data/dupes.json
+          git add site/data/dupes.json site/data/catalog.json
           git commit -q -m "dupes: same music across the releases" || { echo "nothing to commit"; exit 0; }
           for i in 1 2 3 4 5; do git pull --rebase -q origin main && git push -q origin HEAD:main && exit 0; sleep $((i * 5)); done
           exit 1

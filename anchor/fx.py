@@ -31,9 +31,24 @@ def _rgb(accent_rgb: tuple[int, int, int], dh: float) -> np.ndarray:
     return np.array([r, g, b], dtype=np.float32) * 255
 
 
+# What each visual world draws over its picture (anchor/scenes.py WORLDS), and how far its colours
+# turn from the song's accent. Before 2026-11-11 every video carried all of it, the same ring of
+# bars in the middle of every frame, which is why every video looked like the last one.
+STYLES = {
+    "hologram": {"draw": {"shock", "ring", "scope", "particles", "riser", "bars"}, "hue": 0.0},
+    "kaleidoscope": {"draw": {"shock", "particles", "riser"}, "hue": 0.25},
+    "neon wire": {"draw": {"shock", "line", "riser"}, "hue": 0.5},
+    "vhs tape": {"draw": {"line", "bars"}, "hue": -0.08},
+    "warehouse": {"draw": {"meters", "bars", "riser"}, "hue": 0.0},
+    "pop art": {"draw": {"particles", "meters"}, "hue": 0.33},
+}
+
+
 class Layer:
     def __init__(self, W: int, H: int, bpm: float, offset: float, rgb: tuple[int, int, int], secs: list[dict],
-                 mono: np.ndarray, fps: int, n_frames: int, base: int):
+                 mono: np.ndarray, fps: int, n_frames: int, base: int, style: str = "hologram"):
+        st = STYLES.get(style) or STYLES["hologram"]
+        self.draw = st["draw"]
         self.w, self.h = W // 2, H // 2
         self.bpm, self.offset, self.fps = bpm, offset, fps
         self.beat = 60.0 / bpm
@@ -52,7 +67,8 @@ class Layer:
         self.pv = rng.uniform(0.4, 1.0, n).astype(np.float32)
         self.pb = rng.uniform(0.5, 1.0, n).astype(np.float32)
         self._q: list = []
-        self.pal = {"main": _rgb(rgb, 0.0), "warm": _rgb(rgb, -0.04), "cool": _rgb(rgb, 0.06), "alt": _rgb(rgb, 0.5)}
+        dh = st["hue"]
+        self.pal = {"main": _rgb(rgb, dh), "warm": _rgb(rgb, dh - 0.04), "cool": _rgb(rgb, dh + 0.06), "alt": _rgb(rgb, dh + 0.5)}
 
     def section(self, t: float) -> dict:
         for s in self.secs:
@@ -96,7 +112,7 @@ class Layer:
         sec_t = (t - sc["start"]) / max(0.1, sc["end"] - sc["start"])
         hit = kind in ("drop", "groove")
 
-        if hit or kind == "build":                      # shockwaves from the last three beats
+        if "shock" in self.draw and (hit or kind == "build"):   # shockwaves from the last three beats
             for back in range(3):
                 age = (frac + back) * self.beat
                 strong = ((beat_i - back) % 4) == 0
@@ -106,7 +122,7 @@ class Layer:
                 ring = np.exp(-((self.R - r) / w) ** 2) * fade * (1.0 if strong else 0.7)
                 acc += ring[..., None] * (alt if strong and hit else main) * 1.9
 
-        if kind != "intro" or sec_t > 0.5:             # radial spectrum
+        if "ring" in self.draw and (kind != "intro" or sec_t > 0.5):   # radial spectrum
             n = len(lv)
             ang = np.arange(n) * 2 * np.pi / n + (step * 0.12 if kind != "build" else t * (0.12 + 0.5 * sec_t))
             r0 = S * (0.24 + 0.03 * p)
@@ -118,7 +134,7 @@ class Layer:
 
         i0 = int(t * SR)                                # oscilloscope ring
         seg = self.mono[i0:i0 + 2048]
-        if len(seg) >= 2048:
+        if len(seg) >= 2048 and "scope" in self.draw:
             seg = seg[::4][:512]
             m = 360
             wave = np.interp(np.linspace(0, len(seg) - 1, m), np.arange(len(seg)), seg)
@@ -127,7 +143,9 @@ class Layer:
             rr = S * (0.15 + 0.012 * p) + wave * S * 0.055
             self._splat(acc, self.cx + np.cos(th) * rr, self.cy + np.sin(th) * rr, self.pal["cool"] * 1.0, 1.0, 2)
 
-        if kind == "build":                             # particles
+        if "particles" not in self.draw:
+            rad = ang_p = amp = None
+        elif kind == "build":                           # particles
             rad = (self.pr * (1.0 - sec_t * 0.85) ** 1.2) * S * 0.95
             ang_p = self.pa + t * 0.8 * (0.6 + 1.6 * sec_t) * self.pv
             amp = 0.75 + 0.25 * self.pb
@@ -139,9 +157,27 @@ class Layer:
             rad = (self.pr + 0.02 * np.sin(t * 0.4 + self.pa)) * S * 0.9
             ang_p = self.pa + t * 0.05 * self.pv
             amp = 0.5 + 0.2 * self.pb
-        self._splat(acc, self.cx + np.cos(ang_p) * rad * 1.35, self.cy + np.sin(ang_p) * rad, self.pal["warm"], amp * 1.4, 1)
+        if rad is not None:
+            self._splat(acc, self.cx + np.cos(ang_p) * rad * 1.35, self.cy + np.sin(ang_p) * rad, self.pal["warm"], amp * 1.4,
+                        2 if "meters" in self.draw else 1)
 
-        if kind == "build":                             # rising bar and converging lines
+        if "line" in self.draw and len(self.mono[i0:i0 + 4096]) >= 4096:   # the waveform, edge to edge
+            seg2 = self.mono[i0:i0 + 4096][::4]
+            m = self.w
+            wave = np.interp(np.linspace(0, len(seg2) - 1, m), np.arange(len(seg2)), seg2)
+            wave = wave / (np.abs(wave).max() + 1e-6)
+            ys = self.cy + wave * S * (0.10 + 0.08 * p) * (1.3 if hit else 0.8)
+            self._splat(acc, np.arange(m, dtype=np.float32), ys, self.pal["cool"] * 1.2, 1.0, 1)
+
+        if "meters" in self.draw:                       # two level meters on the edges, lows left, highs right
+            nb = len(lv)
+            for x_frac, val in ((0.035, float(np.mean(lv[: nb // 4]))), (0.965, float(np.mean(lv[nb // 2:])))):
+                hh = int(min(1.0, val * 1.6) * self.h * 0.8)
+                x = int(self.w * x_frac)
+                for seg_y in range(self.h - 10, self.h - 10 - hh, -8):
+                    acc[max(0, seg_y - 5):seg_y, max(0, x - 6):x + 6] += (alt if seg_y < self.h * 0.35 else main) * 1.2
+
+        if "riser" in self.draw and kind == "build":    # rising bar and converging lines
             acc[self.h - self.base - 6:self.h - self.base - 2, :int(self.w * sec_t)] += alt * 0.9
             for j in range(28):
                 a = j * 2 * np.pi / 28 + t * 0.3
@@ -155,6 +191,8 @@ class Layer:
 
         n = len(lv)                                     # bottom spectrum
         gap = 2
+        if "bars" not in self.draw:
+            lv = lv[:0]
         bw = max(1, int((self.w * 0.94) / n) - gap)
         x0 = (self.w - n * (bw + gap)) // 2
         for i, val in enumerate(lv):

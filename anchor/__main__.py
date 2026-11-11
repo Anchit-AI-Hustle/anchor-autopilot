@@ -282,6 +282,11 @@ def main(argv: list[str] | None = None) -> int:
                    "duplicates": report["duplicates"]}
             if args.apply:
                 out["applied"] = dupes.apply(api, report)
+                moved = out["applied"].pop("moved", {})
+                if moved:
+                    cat = read_json(cat_path, {}) or {}
+                    if dupes.repoint(cat, moved):
+                        save_json(cat_path, cat)
         except YouTubeError as exc:
             if "quotaExceeded" not in str(exc):
                 raise

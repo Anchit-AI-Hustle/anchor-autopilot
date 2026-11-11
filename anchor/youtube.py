@@ -245,13 +245,15 @@ class YouTube:
                 break
         out = []
         for k in range(0, len(ids), 50):
-            page = self._json("GET", "videos", {"part": "snippet,contentDetails,status", "id": ",".join(ids[k:k + 50]), "maxResults": 50})
+            page = self._json("GET", "videos", {"part": "snippet,contentDetails,status,statistics", "id": ",".join(ids[k:k + 50]), "maxResults": 50})
             for v in page.get("items", []):
                 sn = v["snippet"]
                 out.append({"id": v["id"], "title": sn.get("title", ""), "description": sn.get("description", ""),
                             "tags": sn.get("tags") or [], "categoryId": sn.get("categoryId", "10"),
                             "duration": v.get("contentDetails", {}).get("duration"), "privacy": v.get("status", {}).get("privacyStatus"),
-                            "language": sn.get("defaultLanguage"), "published": sn.get("publishedAt", "")})
+                            "language": sn.get("defaultLanguage"), "published": sn.get("publishedAt", ""),
+                            # engagement decides which copy of a song stays (Anchit, 2026-11-11)
+                            **{k: int((v.get("statistics") or {}).get(f"{k}Count") or 0) for k in ("view", "like", "comment")}})
         return out
 
     def update_video(self, video: dict, *, title: str, description: str, tags: list[str] | None = None) -> None:
