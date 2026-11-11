@@ -48,7 +48,7 @@ jobs:
           cache: pip
 
       - name: Install ffmpeg
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+        run: for i in 1 2 3; do sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg && break; sleep 30; done; command -v ffmpeg
 
       - run: pip install -r requirements.txt
 

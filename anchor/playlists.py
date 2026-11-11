@@ -62,6 +62,15 @@ def plan(videos: list[dict], lists: dict[str, list[dict]], main: str, channel: d
     return {"remove": remove, "add": add}
 
 
+def _items(api, pl: str) -> list[dict]:
+    import time
+    try:
+        return api.playlist_items(pl)
+    except Exception:                     # noqa: BLE001 - one more try after a short pause
+        time.sleep(5)
+        return api.playlist_items(pl)
+
+
 def run(profile: Profile, *, api=None, channel_path: Path = CHANNEL_PATH, dry_run: bool = False) -> dict:
     from .youtube import YouTube, playlist_id
     api = api or YouTube()
@@ -72,14 +81,24 @@ def run(profile: Profile, *, api=None, channel_path: Path = CHANNEL_PATH, dry_ru
     cid = profile.artist["youtube_channel_id"]
     videos = api.channel_videos(cid)
     ids = list(dict.fromkeys([main, *(p["id"] for p in api.playlists(cid))]))
-    lists = {pl: api.playlist_items(pl) for pl in ids}
+    # YouTube now and then answers 404 playlistNotFound for a playlist that exists (2026-11-11
+    # 11:24, the next run was fine): it is asked again once, and a side playlist that still
+    # fails is left out of this pass instead of stopping the whole sync
+    lists, skipped = {}, []
+    for pl in ids:
+        try:
+            lists[pl] = _items(api, pl)
+        except Exception as exc:          # noqa: BLE001
+            if pl == main:
+                raise
+            skipped.append(f"playlist {pl} not read: {str(exc)[:160]}")
     from . import dupes
     from .config import CATALOG_PATH as _cat
     report = dupes.audit(videos, read_json(_cat, {}) or {}, read_json(_cat.parent / "uploads.json", {}) or {},
                          channel, dupes.load())
     p = plan(videos, lists, main, channel, set(report["canonical"].values()))
     done = {"removed": [f"{r['title']} ({r['why']}) from {r['playlist']}" for r in p["remove"]],
-            "added": [v["title"] for v in p["add"]], "errors": []}
+            "added": [v["title"] for v in p["add"]], "errors": list(skipped)}
     if dry_run:
         return done
     for r in p["remove"]:

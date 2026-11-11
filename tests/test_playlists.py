@@ -115,3 +115,39 @@ def test_a_new_take_this_close_to_a_released_record_is_sent_back():
     assert sounds_alike({"envelope": 0.43, "sequence": 0.70})      # Null Monolith against Grid Blade
     assert sounds_alike({"envelope": 0.65, "sequence": 0.33})      # Afterburn against Grid Blade
     assert not sounds_alike({"envelope": 0.35, "sequence": 0.53})  # Rogue Frequency against Null Monolith
+
+
+def test_a_side_playlist_youtube_cannot_find_never_stops_the_sync(tmp_path, monkeypatch):
+    # 2026-11-11 11:24: one 404 playlistNotFound stopped the whole pass; the next run was fine
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    ch = tmp_path / "channel.json"
+    ch.write_text(json.dumps(CHANNEL))
+
+    class Flaky(FakeYouTube):
+        calls = 0
+
+        def playlist_items(self, pl):
+            if pl == "PLrave":
+                Flaky.calls += 1
+                raise RuntimeError("HTTP 404 playlistNotFound")
+            return super().playlist_items(pl)
+
+    yt = Flaky(lists())
+    out = playlists.run(PROFILE, api=yt, channel_path=ch)
+    assert Flaky.calls == 2                       # asked again once
+    assert ("K1", MAIN) in yt.added and "r1" not in yt.removed
+    assert out["errors"] and "PLrave" in out["errors"][0]
+
+
+def test_the_main_playlist_failing_twice_still_fails_the_run(tmp_path, monkeypatch):
+    monkeypatch.setattr("time.sleep", lambda s: None)
+    ch = tmp_path / "channel.json"
+    ch.write_text(json.dumps(CHANNEL))
+
+    class Down(FakeYouTube):
+        def playlist_items(self, pl):
+            raise RuntimeError("HTTP 404 playlistNotFound")
+
+    import pytest
+    with pytest.raises(RuntimeError):
+        playlists.run(PROFILE, api=Down(lists()), channel_path=ch)
