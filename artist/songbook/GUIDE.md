@@ -172,13 +172,32 @@ its lyrics are long, so a Model B song is not squeezed.
 
 ## Genre voices
 
-- `hardtech` (hard bounce, rawstyle bounce, hard groove, hyper acid): sung or shouted English,
-  festival scale, a hook a crowd can scream back.
+- `hardtech` (raw hard tech, rawstyle, hard bounce, hard groove, hyper acid, hardstyle techno):
+  sung or shouted English, festival scale, a hook a crowd can scream back. The sound is raw
+  industrial hard tech at 160 to 175 BPM: a distorted rawstyle kick on top, a rumbling
+  distorted sub, clanking metal percussion, 303 acid. Never a tech house shuffle (Anchit,
+  2026-11-10). Every day's first song is hard tech.
 - `psy` (psychedelic, acid psy): hypnotic, inward, images of light, water, time, the body;
   whispered or half-sung verses; mantras rarely.
 - `rap` (rap techno, psy rap, hard tech rap): Model A bars. Internal rhyme, rhyme chains,
   punchlines, a point of view. Wacky gangster swagger, hard and heavy, or storytelling.
 - `hiphop` (hip hop techno, psy hip hop): story bars and heavy bars mixed, a sung hook.
+
+## Sound, genre and release rules (learned 2026-11-10)
+
+- Genres are defined in `artist/genres.toml` (31 genres, sourced) and fused by the recipes in
+  `artist/mashups.toml`; every lane names its genres and is tested against them.
+- Rap and hip hop ride the hard techno kick: the four-on-the-floor runs under every verse, never
+  a rap beat with techno only in the drops. Rap over hard tech is labelled Hard Tech Rap.
+- Tempo is part of the genre: a take more than 6 percent slower than asked is made again (the
+  engine drifts to about 150 BPM).
+- The low end is part of the genre: the song gate holds a take whose kick and sub carry under
+  62 percent of the energy or are not distorted (Anchit's own songs: 64 to 81 percent).
+- Anchit's own Suno songs keep their own title and are filed by their own style prompt, never
+  given a songbook title or the day's slot genre.
+- One song, one video: one full video and one Short per song on the channel, one entry per
+  song in the ANCHOR playlist; a second upload of the same music is set private, never
+  deleted, and nothing uploads a song already on the channel.
 
 ## Syncing (how the words meet the beat)
 
