@@ -72,3 +72,15 @@ def test_tempo_is_read_right_across_160_to_200_bpm():
     for bpm in (160, 172, 185, 199, 200):
         est = analyze(synth_techno(40, bpm, 3))["bpm_est"]
         assert est is not None and abs(est - bpm) <= 0.5, (bpm, est)
+
+
+def test_a_take_far_slower_than_asked_is_made_again():
+    """Anchit, 2026-11-10: hard tech has a high BPM; a 150 BPM take for a 168 BPM song fails."""
+    base = {"finite": True, "duration_s": 30.0, "rms_db": -12.0, "longest_dropout_s": 0.0,
+            "low_ratio": 0.3, "clip_ratio": 0.0}
+    ok, fails, _ = quality_gate({**base, "bpm_est": 150.0}, {"duration_s": 30, "bpm": 168})
+    assert not ok and fails[0].startswith("too slow: landed at 150.0 BPM, asked 168")
+    ok, _, warns = quality_gate({**base, "bpm_est": 161.0}, {"duration_s": 30, "bpm": 168})
+    assert ok and warns, "a few BPM off is a note, not a failure"
+    ok, _, _ = quality_gate({**base, "bpm_est": 84.0}, {"duration_s": 30, "bpm": 168})
+    assert ok, "half time reads as the same tempo"

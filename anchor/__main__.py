@@ -344,7 +344,8 @@ def main(argv: list[str] | None = None) -> int:
         day = args.date or pipeline.today_utc()
         sched = profile.schedule
         slots = min(1 + len(sched.get("extra_post_times_utc", [])), int(sched.get("max_drops_per_day", 9)))
-        drop_id, why = quota.next_drop(catalog.load(CATALOG_PATH).get("drops", []), day, slots,
+        drop_id, why = quota.next_drop(catalog.load(CATALOG_PATH).get("drops", [])
+                                       + quota.from_uploads(read_json(CATALOG_PATH.parent / "uploads.json", {})), day, slots,
                                        int(profile.youtube.get("daily_quota_budget", 9500)), datetime.now(timezone.utc),
                                        shorts_via_buffer=profile.youtube.get("shorts_via", "buffer") == "buffer")
         print(why, file=sys.stderr)
@@ -354,7 +355,8 @@ def main(argv: list[str] | None = None) -> int:
         from . import quota
         sched = profile.schedule
         slots = min(1 + len(sched.get("extra_post_times_utc", [])), int(sched.get("max_drops_per_day", 9)))
-        drops = catalog.load(CATALOG_PATH).get("drops", [])
+        # the day's spend counts the one-off uploads too (lyric re-cuts, motion videos)
+        drops = catalog.load(CATALOG_PATH).get("drops", []) + quota.from_uploads(read_json(CATALOG_PATH.parent / "uploads.json", {}))
         budget = int(profile.youtube.get("daily_quota_budget", 9500))
         via_buffer = profile.youtube.get("shorts_via", "buffer") == "buffer"
         if args.cmd == "plan-drops":

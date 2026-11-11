@@ -72,7 +72,8 @@ def test_the_profile_allows_five_with_headroom():
     assert p.schedule["max_drops_per_day"] == 5 and len(p.schedule["extra_post_times_utc"]) == 4
     assert p.youtube["daily_quota_budget"] <= 10_000 - 300, "headroom for the Uploads, sync and playlist jobs"
     assert p.youtube["shorts_via"] == "buffer"
-    assert 5 * quota.COST_BUFFER_SHORT <= p.youtube["daily_quota_budget"] < 3 * quota.COST_API_SHORT
+    # 2026-11-10: four songs a day, with 2,000 kept for thumbnails, playlists, re-cuts and retitles
+    assert 4 * quota.COST_BUFFER_SHORT <= p.youtube["daily_quota_budget"] <= 10_000 - 2_000
 
 
 def test_the_cli_prints_the_next_drop(tmp_path, monkeypatch):
@@ -202,7 +203,8 @@ def test_the_cli_plans_the_day(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr("anchor.__main__.CATALOG_PATH", cat, raising=False)
     from anchor.__main__ import main
     main(["plan-drops", "--date", "2026-10-25"])
-    assert json.loads(capsys.readouterr().out) == ["2026-10-25", "2026-10-25-2", "2026-10-25-3", "2026-10-25-4", "2026-10-25-5"]
+    # four a day within the 8,000 budget (2026-11-10)
+    assert json.loads(capsys.readouterr().out) == ["2026-10-25", "2026-10-25-2", "2026-10-25-3", "2026-10-25-4"]
     main(["quota-ok"])
     assert capsys.readouterr().out.strip() == "yes"
 
@@ -267,3 +269,18 @@ def test_a_song_goes_live_the_moment_it_is_uploaded(monkeypatch, tmp_path):
     assert not short.get("due_at"), "the Short goes out now too"
     res, status, short = run("scheduled")
     assert status["privacyStatus"] == "private" and status["publishAt"].startswith("2030-01-01")
+
+
+def test_a_song_counts_on_the_day_it_went_up_and_one_off_uploads_count_too():
+    """2026-11-10: songs rendered before the Pacific midnight and uploaded after it counted on
+    the day before; the check said 0 used while the real quota was spent."""
+    from datetime import datetime, timezone
+    now = datetime(2026, 11, 10, 13, 0, tzinfo=timezone.utc)          # 05:00 Pacific
+    song = {"youtube_via": "youtube_api", "short_via": "buffer",
+            "created_at": "2026-11-10T06:05:40Z", "post_at": "2026-11-10T12:20:19Z"}
+    assert quota.used([song], now) == quota.COST_BUFFER_SHORT
+    later = {**song, "post_at": "2026-11-10T17:30:00Z"}                   # scheduled: uploaded already
+    assert quota.used([later], now) == quota.COST_BUFFER_SHORT
+    ups = quota.from_uploads({"uploads": [{"uploaded_at": "2026-11-10T12:25:00Z", "youtube_url": "u"},
+                                          {"uploaded_at": "2026-11-10T12:30:00Z"}]})
+    assert quota.used(ups, now) == quota.COST_BUFFER_SHORT
