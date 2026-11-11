@@ -80,3 +80,23 @@ def test_a_set_climbs_to_a_peak_two_thirds_in_and_moves_in_key():
     assert genres.set_order(tracks[:2]) == tracks[:2]
     # a short set just climbs (the weekly mix of three songs, tests/test_mix_youtube.py)
     assert [t["bpm"] for t in genres.set_order(list(reversed(tracks[:4])))] == [160, 162, 164, 166]
+
+
+def test_his_own_songs_are_filed_by_what_they_are():
+    """Anchit's Suno style prompts, filed by their sound and voice (2026-11-10)."""
+    cases = {
+        "hardtechno with psychedelic trance crossover, relentless 150 BPM four-on-the-floor kick, "
+        "aggressive rhythmic rap verses with clipped confident delivery": "psyrap",           # Red Dust Warning
+        "Fast-paced cinematic chopper rap fused with peak-time hard acid techno and organic psytrance": "psyrap",
+        "hard techno, rawstyle hybrid, industrial, 156-158 bpm": "rawbounce",                  # Project Mayhem Part 2
+        "Hard techno, relentlessly fast bounce at 200 BPM and above, acid arpeggiator": "hyper",
+        "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick": "hardtech",
+        "Rap, brooding half-time trap bounce, snare-clap backbeat": "hiphoptechno",
+        "drift phonk cowbell over hard techno": "phonktechno",
+        "aggressive rap over industrial hard techno, distorted kick": "hardtechrap",
+    }
+    for tags, lane in cases.items():
+        assert genres.classify(tags) == lane, (tags[:40], genres.classify(tags))
+    p = load_profile()
+    ids = {l.id for l in p.active_lanes}
+    assert set(cases.values()) <= ids

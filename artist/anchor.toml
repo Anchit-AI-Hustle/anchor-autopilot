@@ -810,7 +810,9 @@ ai_generated = true       # YouTube "AI use" disclosure: always on
 notify_subscribers = true
 # YouTube Data API units the robot may spend per day (Google's limit is 10,000, reset at
 # midnight Pacific); the rest is headroom for the Uploads, sync and playlist jobs.
-daily_quota_budget = 9500
+# 2026-11-10: four songs plus a lyric re-cut, thumbnails, playlist adds and the retitle run
+# spent the real 10,000 while the estimate said 6,800, so the songs keep 2,000 for that work
+daily_quota_budget = 8000
 # The Short goes through Buffer (no API quota) and through the API only if Buffer refuses it.
 shorts_via = "buffer"
 # The Shorts go up before the full-length videos exist, so every Short says so on its

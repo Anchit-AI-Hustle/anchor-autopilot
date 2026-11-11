@@ -35,17 +35,37 @@ def cost(drop: dict) -> int:
     return COST_BUFFER_SHORT if drop.get("short_via") == "buffer" else COST_API_SHORT
 
 
-def _when(drop: dict) -> datetime | None:
-    raw = drop.get("created_at") or ""
+def _parse(raw: str | None) -> datetime | None:
     try:
-        return datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        return datetime.fromisoformat((raw or "").replace("Z", "+00:00"))
     except ValueError:
         return None
 
 
+def _when(drop: dict) -> datetime | None:
+    """When the drop spent quota: when it went up (post_at), not when it was rendered. 2026-11-10:
+    three songs rendered before the Pacific midnight and uploaded after it counted on the day
+    before, the check said 0 units used and the playlist sync then hit quotaExceeded."""
+    return _parse(drop.get("post_at")) or _parse(drop.get("created_at"))
+
+
+def from_uploads(uploads: dict | None) -> list[dict]:
+    """The one-off uploads (site/data/uploads.json: lyric re-cuts, motion videos) as spend rows:
+    each is a full video through the API."""
+    return [{"youtube_via": "youtube_api", "short_via": "buffer", "post_at": e["uploaded_at"]}
+            for e in (uploads or {}).get("uploads", []) if e.get("uploaded_at") and e.get("youtube_url")]
+
+
 def used(drops: list[dict], now: datetime) -> int:
     start = day_start(now)
-    return sum(cost(d) for d in drops if (w := _when(d)) and start <= w <= now + timedelta(hours=1))
+    total = 0
+    for d in drops:
+        w = _when(d)
+        if w and w > now:            # scheduled to go public later: it was uploaded already
+            w = now
+        if w and start <= w <= now + timedelta(hours=1):
+            total += cost(d)
+    return total
 
 
 def next_cost(drops: list[dict], shorts_via_buffer: bool = True) -> int:

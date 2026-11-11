@@ -27,7 +27,12 @@ BPM_RE = re.compile(r"(\d{2,3})\s*(?:-\s*\d{2,3}\s*)?bpm", re.IGNORECASE)
 
 
 def guess_lane(profile: Profile, tags: str) -> str:
-    """The active lane whose genre words the Suno style prompt names most (hard techno by default)."""
+    """The active lane the Suno style prompt describes (anchor/genres.py classify, 2026-11-10);
+    the old count of genre words stays as the fallback for a lane classify does not know."""
+    from . import genres
+    lane = genres.classify(tags)
+    if any(l.id == lane for l in profile.active_lanes):
+        return lane
     text = (tags or "").lower()
     best, score = None, 0
     for lane in profile.active_lanes:

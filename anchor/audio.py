@@ -384,7 +384,13 @@ def quality_gate(stats: dict, brief: dict) -> tuple[bool, list[str], list[str]]:
     est, target = stats.get("bpm_est"), brief["bpm"]
     if est:
         ratios = [abs(est - target), abs(est * 2 - target), abs(est / 2 - target)]
-        if min(ratios) > 5:
+        near = min((est, est * 2, est / 2), key=lambda e: abs(e - target))
+        if near < target * 0.94:
+            # Anchit, 2026-11-10: "raw hard tech has a high BPM". The engine treats the tempo as a
+            # hint and half the songs of 11-05 to 11-10 landed near 150 when 160 to 175 was asked
+            # (Bleed Beside Me 150 for 165, Doors Blown Open 147 for 170): a take that slow is made again
+            fail.append(f"too slow: landed at {est} BPM, asked {target}")
+        elif min(ratios) > 5:
             warn.append(f"tempo landed at {est} BPM (asked {target})")
     return (not fail), fail, warn
 

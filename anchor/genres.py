@@ -186,3 +186,36 @@ def visual(ids: list[str]) -> str:
     """The look of a song's video from its genres, base genre first."""
     gs = load()
     return "; ".join(gs[i].visual for i in ids if i in gs)
+
+
+def classify(tags: str, bpm: int | None = None) -> str:
+    """The active lane a song's own style prompt describes (Anchit's Suno songs, 2026-11-10: Red
+    Dust Warning, hard techno with psytrance and rap verses, was filed by the day's slot instead).
+    Rap decides the voice; psy, acid, rawstyle, hardstyle, phonk, groove and tempo the sound."""
+    import re
+    t = (tags or "").lower()
+    has = lambda *ws: any(re.search(rf"(?<![a-z]){re.escape(w)}", t) for w in ws)
+    rap = has("rap", "chopper", "mc ", "verses", "spitting")
+    psy = has("psy", "psychedelic", "trance", "goa")
+    hiphop = has("hip hop", "hip-hop", "boom bap", "trap", "808")
+    if has("phonk", "cowbell"):
+        return "phonktechno"
+    if rap:
+        if hiphop:
+            return "psyhiphop" if psy else "hiphoptechno"
+        if psy:
+            return "psyrap"
+        return "hardtechrap" if has("industrial", "hard tech", "raw", "distorted") else "raptechno"
+    if has("hardstyle") and not has("rawstyle"):
+        return "hardstyletechno"
+    if has("rawstyle"):
+        return "rawbounce"
+    if psy:
+        return "acidpsy" if has("acid", "303") else "psy"
+    if has("hyper") or (bpm or 0) >= 185 or re.search(r"\b(1[89]\d|2\d\d)\s*bpm", t):
+        return "hyper" if has("acid", "hyper", "arp") else "bounce"
+    if has("groove"):
+        return "hardgroove"
+    if has("bounce", "bouncy"):
+        return "bounce"
+    return "hardtech"

@@ -422,7 +422,11 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
     # your own Suno title, unless a song by that name already exists somewhere: then it goes
     # out under the day's verified original title instead (Anchit, 2026-10-24). The queue's
     # name guard (released_at, done/) still stops the file coming back under its old name.
+    # A song from your Suno profile always keeps its own title (2026-11-10: Red Dust Warning went
+    # out as "Move Before Thunder", a songbook title written for other lyrics, which it never sings)
     check = originality.checker()
+    if queued.get("source") == "suno" or queued.get("suno_id"):
+        queued = {**queued, "keep_title": True}
     # keep_title: Anchit's own name for his own song stays, even if another song shares it
     if not queued.get("keep_title") and check is not None and check(queued["title"]):
         log(f"queue: {queued['title']!r} is already a song elsewhere; releasing it as {brief['title']!r}")
@@ -433,6 +437,10 @@ def make_from_queue(profile: Profile, day: str, out_dir: Path, queued: dict, *,
     brief["source"], brief["source_file"] = "queue", src.name
     # a queued take of the robot's own (Anchit, 2026-11-01: "if this is not on youtube add it")
     # keeps the genre, theme and lyrics it was made with, not the day's slot
+    # its genre is the one its own style prompt describes, never the day's slot (2026-11-10)
+    if not queued.get("lane") and queued.get("tags"):
+        from . import sunopost
+        queued = {**queued, "lane": sunopost.guess_lane(profile, queued["tags"])}
     if queued.get("lane"):
         lane = profile.lane(queued["lane"])
         brief.update(lane=lane.id, lane_name=lane.name, genre_group=lane.group or "any",
