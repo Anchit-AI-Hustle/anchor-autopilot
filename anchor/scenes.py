@@ -38,13 +38,54 @@ LOOKS = {
 }
 
 
-def assign_looks(secs: list[dict]) -> list[str]:
+# Visual worlds (Anchit, 2026-11-11: "ensure unique different types of visuals in videos - all
+# have the same style"). Every video used the five hologram looks above under the same scanlines.
+# Now each song gets one world: its own looks for each kind of section, its own colour grade and
+# its own finish over the picture, and no world comes back within WORLD_GAP songs.
+WORLDS = {
+    "hologram": {"looks": LOOKS, "grade": "", "finish": "scan"},
+    "kaleidoscope": {"looks": {"intro": ["card"], "outro": ["card", "kaleido"], "build": ["kaleido", "mirror"],
+                               "groove": ["kaleido", "tunnel"], "drop": ["tunnel", "kaleido", "mirror"],
+                               "breakdown": ["spectrum"]},
+                     "grade": "eq=saturation=1.35", "finish": "none"},
+    "neon wire": {"looks": {"intro": ["neon"], "outro": ["neon"], "build": ["neon", "mosaic"],
+                            "groove": ["neon", "tunnel"], "drop": ["neon", "tunnel", "mosaic"], "breakdown": ["neon"]},
+                  "grade": "eq=contrast=1.1", "finish": "scan"},
+    "vhs tape": {"looks": {"intro": ["vhs"], "outro": ["vhs"], "build": ["vhs", "mosaic"],
+                           "groove": ["vhs", "glitch"], "drop": ["vhs", "glitch", "mosaic"], "breakdown": ["card"]},
+                 "grade": "curves=preset=vintage", "finish": "grain"},
+    "warehouse": {"looks": {"intro": ["card"], "outro": ["card"], "build": ["mirror", "grid"],
+                            "groove": ["corridor", "grid"], "drop": ["grid", "corridor", "tunnel"], "breakdown": ["spectrum"]},
+                  "grade": "eq=contrast=1.3:saturation=0.55", "finish": "grain"},
+    "pop art": {"looks": {"intro": ["duotone"], "outro": ["duotone"], "build": ["grid", "duotone"],
+                          "groove": ["duotone", "grid", "kaleido"], "drop": ["grid", "duotone", "kaleido"],
+                          "breakdown": ["duotone"]},
+                "grade": "", "finish": "none"},
+}
+WORLD_GAP = 3
+
+
+def pick_world(seed: int, recent: list[str] | tuple[str, ...] = ()) -> str:
+    """The song's visual world: picked by its seed among the worlds the last WORLD_GAP songs did not use."""
+    names = sorted(WORLDS)
+    fresh = [n for n in names if n not in set(list(recent)[-WORLD_GAP:])] or names
+    return fresh[int(seed) % len(fresh)]
+
+
+def world_for(title: str) -> str:
+    """A stable world for a video made outside the daily run (re-cuts, older songs): from its title."""
+    import zlib
+    return sorted(WORLDS)[zlib.crc32(title.encode()) % len(WORLDS)]
+
+
+def assign_looks(secs: list[dict], world: str = "hologram") -> list[str]:
     """A look for every scene: the least-used one its kind allows that differs from the scene before,
     so neighbouring scenes never repeat and a long drop cycles through everything it can."""
+    looks = (WORLDS.get(world) or WORLDS["hologram"])["looks"]
     used: dict[str, int] = {}
     out: list[str] = []
     for sc in secs:
-        cands = LOOKS.get(sc["kind"]) or ["glitch"]
+        cands = looks.get(sc["kind"]) or ["glitch"]
         order = sorted(range(len(cands)), key=lambda j: (used.get(cands[j], 0), j))
         pick = next((cands[j] for j in order if not out or cands[j] != out[-1]), cands[order[0]])
         out.append(pick)
@@ -80,7 +121,7 @@ def frames(sections: list[dict], duration: float) -> list[tuple[int, int]]:
 
 
 def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: float, off: float,
-           first: bool) -> list[str]:
+           first: bool, rgb: tuple[int, int, int] = (255, 59, 212)) -> list[str]:
     """Filter lines from the trimmed artwork ``[t{i}]`` to ``[o{i}]`` for one scene."""
     t0 = n0 / FPS
     dur = (n1 - n0) / FPS
@@ -138,6 +179,56 @@ def _scene(look: str, i: int, W: int, H: int, sc: dict, n0: int, n1: int, bpm: f
               f"[r3{i}][g3{i}]blend=all_mode=addition[rg{i}]",
               f"[rg{i}][b3{i}]blend=all_mode=addition,format=yuv420p,noise=alls=10:allf=t,"
               f"eq=brightness='0.08*({P})':eval=frame[x{i}]"]
+    elif look == "kaleido":
+        # an eight-way kaleidoscope: a turning quarter of the art folded on its diagonal, then mirrored
+        L += [f"{s}scale=1620:1620,rotate=a='{sign}*({0.5 * beat:.5f}*({S})+0.1*({P}))':ow=1620:oh=1620:c=black,"
+              f"crop=1080:1080,crop=540:540:0:0,split=2[ka{i}][kb{i}]",
+              f"[kb{i}]transpose=1,hflip[kc{i}]", f"[ka{i}][kc{i}]blend=all_mode=lighten,"
+              f"scale={W // 2}:{H // 2}:force_original_aspect_ratio=increase,crop={W // 2}:{H // 2},split=2[qa{i}][qb{i}]",
+              f"[qb{i}]hflip[qc{i}]", f"[qa{i}][qc{i}]hstack[tp{i}]",
+              f"[tp{i}]split=2[ta{i}][tb{i}]", f"[tb{i}]vflip[bt{i}]",
+              f"[ta{i}][bt{i}]vstack,scale=w='{W}*(1+0.06*({P}))':h=-2:eval=frame,crop={W}:{H},"
+              f"hue=h='{hue}+40*sin((t+{t0:.3f})*0.6)':s=1.5,eq=brightness='0.12*({P})':eval=frame[x{i}]"]
+    elif look == "tunnel":
+        # an endless zoom: the art falls toward the viewer every two beats with itself inside it
+        z = f"(1+0.8*mod((t+{t0:.3f})/{2 * beat:.5f},1))"
+        C = int(min(W, H) * 0.5)
+        L += [f"{s}scale=1080:1080,split=2[ua{i}][ub{i}]",
+              f"[ua{i}]scale=w='{Q}*{z}':h=-2:eval=frame,crop={W}:{H},eq=brightness=-0.3:saturation=1.3,hue=h={hue}[ug{i}]",
+              f"[ub{i}]scale=w='{C}*{z}':h=-2:eval=frame[uf{i}]",
+              f"[ug{i}][uf{i}]overlay=x='({W}-w)/2':y='({H}-h)/2':format=auto:shortest=1,"
+              f"eq=brightness='0.12*({P})':eval=frame[x{i}]"]
+    elif look == "mosaic":
+        px = 20 + (var % 3) * 14
+        L += [f"{s}scale=w='{Q}*(1+0.1*({P}))':h=-2:eval=frame,crop={W}:{H},"
+              f"scale={max(8, W // px)}:{max(8, H // px)}:flags=area,scale={W}:{H}:flags=neighbor,"
+              f"hue=h={hue}:s=1.4,eq=brightness='0.14*({P})':contrast=1.15:eval=frame[x{i}]"]
+    elif look == "neon":
+        L += [f"{s}scale=w='{Q}*(1+0.1*({P}))':h=-2:eval=frame,crop={W}:{H},"
+              f"edgedetect=low=0.08:high=0.25:mode=colormix,"
+              f"eq=saturation=2.2:contrast=1.4:brightness='0.05+0.12*({P})':eval=frame,split=2[na{i}][nb{i}]",
+              f"[nb{i}]gblur=sigma=12[ng{i}]",
+              f"[na{i}][ng{i}]blend=all_mode=screen,hue=h='{hue}+30*sin((t+{t0:.3f})*0.8)'[x{i}]"]
+    elif look == "vhs":
+        sh = 6 + var % 5
+        L += [f"{s}scale={Q + 48}:{Q + 48},crop={W}:{H}:'24+10*sin((t+{t0:.3f})*37)':24,"
+              f"rgbashift=rh={sh}:bh=-{sh}:edge=wrap,noise=alls=26:allf=t+u,"
+              f"eq=saturation=0.8:contrast=1.15:brightness='0.1*({P})':eval=frame,hue=h={hue}[x{i}]"]
+    elif look == "grid":
+        M = max(W, H) // 3
+        L += [f"{s}scale=w='{M}*(1+0.12*({P}))':h=-2:eval=frame,crop={W // 3}:{H // 3},split=3[g1{i}][g2{i}][g3{i}]",
+              f"[g2{i}]hflip,negate[gn{i}]",
+              f"[g1{i}][gn{i}][g3{i}]hstack=inputs=3,split=3[r1{i}][r2{i}][r3{i}]",
+              f"[r2{i}]hflip[rf{i}]",
+              f"[r1{i}][rf{i}][r3{i}]vstack=inputs=3,scale={W}:{H},hue=h={hue}:s=1.4,"
+              f"eq=brightness='0.1*({P})':eval=frame[x{i}]"]
+    elif look == "duotone":
+        r, g_, b = rgb
+        d = (12, 10, 34)
+        L += [f"{s}scale=w='{Q}*(1+0.08*({P}))':h=-2:eval=frame,crop={W}:{H},hue=s=0,"
+              f"eq=contrast=1.7:brightness='0.1*({P})':eval=frame,format=rgb24,"
+              f"lutrgb=r='{d[0]}+val*{r - d[0]}/255':g='{d[1]}+val*{g_ - d[1]}/255':b='{d[2]}+val*{b - d[2]}/255',"
+              f"format=yuv420p[x{i}]"]
     else:                                                     # spectrum (breakdown)
         C = int(min(W, H) * (0.5 if W > H else 0.62))
         L += [f"{s}split=2[ba{i}][ca{i}]",
@@ -276,14 +367,21 @@ def _render_part(job: dict) -> str:
     for i in idx:
         n0, n1 = fr[i]
         g.append(f"[s{i}]trim=start_frame={n0}:end_frame={n1},setpts=PTS-STARTPTS[t{i}]")
-        g += _scene(looks[i], i, W, H, secs[i], n0, n1, job["bpm"], job["off"], i == 0)
+        g += _scene(looks[i], i, W, H, secs[i], n0, n1, job["bpm"], job["off"], i == 0, job["rgb"])
     g.append("".join(f"[o{i}]" for i in idx) + f"concat=n={m}:v=1:a=0[body]")
     g += [f"[2:v]scale={W}:{H}:flags=bilinear,format=rgba[fxl]", "[body][fxl]overlay=x=0:y=0:format=auto:shortest=1[v2]"]
-    g.append(f"[v2][1:v]overlay=x=0:y='-mod((t+{T0:.4f})*24,8)':shortest=1[v3]")
+    w = WORLDS.get(job.get("world") or "hologram") or WORLDS["hologram"]
+    if w["finish"] == "scan":
+        g.append(f"[v2][1:v]overlay=x=0:y='-mod((t+{T0:.4f})*24,8)':shortest=1[v3]")
+    elif w["finish"] == "grain":
+        g.append("[v2]noise=alls=12:allf=t[v3]")
+    else:
+        g.append("[v2]null[v3]")
+    grade = f",{w['grade']}" if w["grade"] else ""
     g.append(f"color=c={job['accent']}:s={W}x8:r={FPS}[fill]")
     g.append(f"color=c=0x0a1622:s={W}x8:r={FPS}[track]")
     g.append(f"[track][fill]overlay=x='-{W}+{W}*(t+{T0:.4f})/{job['duration']:.3f}':y=0:shortest=1[bar]")
-    g.append(f"[v3][bar]overlay=x=0:y={H - 8}:shortest=1,vignette=PI/5,setpts=PTS+{T0:.4f}/TB,"
+    g.append(f"[v3][bar]overlay=x=0:y={H - 8}:shortest=1,vignette=PI/5{grade},setpts=PTS+{T0:.4f}/TB,"
              f"subtitles=scenes.ass:fontsdir={_fonts()},setpts=PTS-STARTPTS,format=yuv420p[vout]")
     out = Path(job["work"]) / f"part-{idx[0]:03d}.mp4"
     cmd = ["ffmpeg", "-y", "-hide_banner", "-v", "error", "-loop", "1", "-framerate", str(FPS), "-i",
@@ -294,7 +392,8 @@ def _render_part(job: dict) -> str:
            "-pix_fmt", "yuv420p", "-an", str(out)]
     errf = Path(job["work"]) / f"part-{idx[0]:03d}.err"
     mono = decode(Path(job["audio"])).mean(axis=1)
-    layer = fx.Layer(W, H, job["bpm"], job["off"], job["rgb"], secs, mono, FPS, job["n_total"] + 2, int(H * 0.11))
+    layer = fx.Layer(W, H, job["bpm"], job["off"], job["rgb"], secs, mono, FPS, job["n_total"] + 2, int(H * 0.11),
+                     style=job.get("world") or "hologram")
     with open(errf, "wb") as ef:
         proc = subprocess.Popen(cmd, stdin=subprocess.PIPE, stderr=ef, cwd=job["work"])
         try:
@@ -325,7 +424,7 @@ def workers() -> int:
 
 def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: list[dict], title: str, sub: str,
                        work: Path, *, bpm: float, beat_offset: float, lines: list[dict] | None = None,
-                       vertical: bool = False, crf: int = 23, timeout: int = 5400) -> dict:
+                       vertical: bool = False, crf: int = 23, timeout: int = 5400, world: str | None = None) -> dict:
     """The song's scene video, verified against the audio length. ``tex`` is the square artwork.
 
     The scene filters run on one core each, so a whole song took about 20 min per format on the
@@ -340,15 +439,16 @@ def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: lis
     scan = scanlines(W, H, work / f"scan-{W}.png")
     a = _ff(accent)
     write_ass(work / "scenes.ass", accent, W, H, secs, lines or [], title, sub)
-    looks = assign_looks(secs)
+    world = world if world in WORLDS else world_for(title)
+    looks = assign_looks(secs, world)
     rgb = (int(a[2:4], 16), int(a[4:6], 16), int(a[6:8], 16))
     n_total = round(duration * FPS)
     groups = _parts(fr, workers())
     base = {"W": W, "H": H, "secs": secs, "fr": fr, "looks": looks, "bpm": bpm, "off": beat_offset, "accent": a,
             "duration": duration, "tex": str(Path(tex).resolve()), "scan": str(scan.resolve()), "crf": crf,
             "work": str(work.resolve()), "audio": str(Path(audio).resolve()), "rgb": rgb, "n_total": n_total,
-            "timeout": timeout}
-    log(f"scenes: {len(secs)} scenes in {len(groups)} parts side by side, {W}x{H}")
+            "timeout": timeout, "world": world}
+    log(f"scenes: {len(secs)} scenes in {len(groups)} parts side by side, {W}x{H}, world {world!r}")
     if len(groups) == 1:
         parts = [_render_part({**base, "idx": groups[0]})]
     else:
@@ -370,7 +470,7 @@ def render_scene_video(tex: Path, audio: Path, out: Path, accent: str, secs: lis
     info = media_summary(out)
     if abs(info["duration"] - duration) > 1.5:
         raise RuntimeError(f"scene render truncated: {info['duration']:.1f}s vs audio {duration:.1f}s")
-    return {**info, "scenes": len(secs), "parts": len(groups)}
+    return {**info, "scenes": len(secs), "parts": len(groups), "world": world}
 
 
 def _fonts() -> str:

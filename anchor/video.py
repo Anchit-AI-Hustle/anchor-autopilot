@@ -475,9 +475,9 @@ def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: st
                         "cinematic": len(shots)}
             except Exception as exc:  # noqa: BLE001 - the scene video below still makes the drop
                 print(f"::warning::cinematic video failed, using the scene video: {exc}"[:900])
-        i169 = scenes.render_scene_video(tex, audio, v169, accent, secs, title, sub, work / "h", bpm=float(bpm),
+        i169 = scenes.render_scene_video(tex, audio, v169, accent, secs, title, sub, work / "h", world=brief.get("visual_world"), bpm=float(bpm),
                                          beat_offset=beat_offset or 0.0, lines=lines)
-        i916 = scenes.render_scene_video(tex, audio, v916, accent, secs, title, sub, work / "v", bpm=float(bpm),
+        i916 = scenes.render_scene_video(tex, audio, v916, accent, secs, title, sub, work / "v", world=brief.get("visual_world"), bpm=float(bpm),
                                          beat_offset=beat_offset or 0.0, lines=lines, vertical=True, crf=24)
         return {"full_169": {"file": v169.name, **i169}, "full_916": {"file": v916.name, **i916},
                 "thumbnail": f169.name, "scenes": len(secs), "lyrics": len(lines or [])}

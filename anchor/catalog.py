@@ -9,7 +9,7 @@ from .util import iso, read_json, utcnow, write_json
 DROP_FIELDS = ("id", "date", "title", "lane", "lane_name", "bpm", "key", "family", "family_name",
                "duration_s", "short_s", "cover", "audio_url", "release_url", "short_url", "video_url",
                "youtube_url", "buffer_post_id", "status", "post_at", "qc", "art_source",
-               "created_at", "genre_line", "style_line", "error", "accent", "caption", "seed",
+               "created_at", "genre_line", "style_line", "error", "accent", "caption", "seed", "visual_world",
                "engine", "instagram_url", "full_video_url", "reel_url", "hook", "lyrics", "youtube_full_url",
                "version", "youtube_via", "youtube_short_url", "buffer_short_post_id", "short_status",
                "short_via", "short_buffer_failed", "theme", "sound", "instagram_status",

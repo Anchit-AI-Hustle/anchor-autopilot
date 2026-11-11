@@ -372,9 +372,30 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     }, cover=out_dir / "cover_600.jpg")
 
     mp4 = out_dir / f"{base}-short.mp4"
-    video = render_short(out_dir / "cover_1080.jpg", short_wav, mp4, fam, brief,
-                         profile.artist["name"], profile.artist["handle"], out_dir / "video-work",
-                         beat_offset=beat_offset)
+    # its own visual world, never the one the last songs had (Anchit, 2026-11-11: "ensure unique
+    # different types of visuals in videos - all have the same style")
+    from . import scenes
+    if brief.get("visual_world") not in scenes.WORLDS:
+        try:
+            done = catalog.history(catalog.load(CATALOG_PATH))
+        except Exception:                 # noqa: BLE001 - no catalogue: any world will do
+            done = []
+        recent = [d.get("visual_world") for d in sorted(done, key=lambda d: d.get("id", "")) if d.get("visual_world")]
+        brief["visual_world"] = scenes.pick_world(int(brief.get("seed") or 0), recent)
+    log(f"video: visual world {brief['visual_world']!r}")
+    if brief["visual_world"] == "hologram":
+        video = render_short(out_dir / "cover_1080.jpg", short_wav, mp4, fam, brief,
+                             profile.artist["name"], profile.artist["handle"], out_dir / "video-work",
+                             beat_offset=beat_offset)
+    else:
+        from .ledger import clean_title
+        sw = out_dir / "short-scene"
+        sw.mkdir(parents=True, exist_ok=True)
+        video = scenes.render_scene_video(scenes.square(out_dir / "cover_1080.jpg", sw / "tex.jpg"), short_wav, mp4,
+                                          fam.accent, scenes.song_sections(short_wav, float(brief["bpm"]), beat_offset),
+                                          clean_title(brief["title"]), brief.get("lane_name", ""), sw,
+                                          bpm=float(brief["bpm"]), beat_offset=beat_offset, vertical=True,
+                                          world=brief["visual_world"])
     poster_frame(mp4, out_dir / "poster.jpg", min(3.0, length / 2))
     lane = profile.lane(brief["lane"])
     # the 16:9 frame sets its own type over the raw art; the 9:16 shows the finished cover
@@ -840,6 +861,7 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
         **{k: brief[k] for k in ("id", "date", "title", "lane", "lane_name", "bpm", "key", "family",
                                  "family_name", "duration_s", "short_s", "genre_line", "style_line",
                                  "caption", "seed")},
+        "visual_world": brief.get("visual_world"),
         "theme": brief.get("theme"),
         "sound": brief.get("sound"),
         "engine": {"name": meta["engine"].get("engine"), "steps": meta["engine"].get("steps"),

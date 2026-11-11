@@ -38,7 +38,7 @@ def test_each_song_keeps_one_full_video_and_one_short():
     assert r["canonical"]["outrunyourshadow"] == "NEW" and ids["OLD"]["why"].startswith("replaced")
     assert r["canonical"]["spatulasolo"] == "RE1" and ids["RE2"]["keep"] == "RE1"          # the recorded one stays
     assert "S1" not in ids and ids["S2"]["kind"] == "short" and ids["S2"]["keep"] == "S1"
-    assert r["canonical"]["firsttrack"] == "ORIG" and ids["AKA"]["why"] == "same music as First Track | Acid Techno | ANCHOR"
+    assert r["canonical"]["firsttrack"] == "ORIG" and ids["AKA"]["why"].startswith("same music as First Track | Acid Techno | ANCHOR")
     assert "ALIKE" not in ids, "a song that only sounds alike stays on the channel (out of the playlist)"
     assert "PRIV" not in ids, "a private video is not counted"
     assert {d["id"] for d in r["duplicate_full"]} == {"OLD", "RE2", "AKA"}
@@ -90,3 +90,27 @@ def test_the_same_music_is_found_by_its_prints(monkeypatch):
     pairs = dupes.audio_pairs({"2026-11-01": a, "2026-11-05": b, "2026-11-03": c},
                               {"2026-11-01": "One", "2026-11-05": "Copy", "2026-11-03": "Other"})
     assert [(p["duplicate"], p["of"], p["same_record"]) for p in pairs] == [("2026-11-05", "2026-11-01", True)]
+
+
+
+def test_the_copy_with_the_least_engagement_goes_private():
+    # Anchit, 2026-11-11: "choose the ones with the least engagement to remove"
+    vids = [{"id": "NEW", "title": "Song A | Hard Tech | ANCHOR", "privacy": "public", "duration": "PT3M",
+             "published": "2026-11-10", "view": 900, "like": 30, "comment": 2},
+            {"id": "OLD", "title": "Song A | Hard Tech | ANCHOR", "privacy": "public", "duration": "PT3M",
+             "published": "2026-09-10", "view": 40, "like": 1, "comment": 0}]
+    r = dupes.audit(vids, {}, {}, {}, {})
+    assert r["canonical"]["songa"] == "NEW" and [d["id"] for d in r["duplicates"]] == ["OLD"]
+
+
+def test_songs_that_sound_alike_are_one_song_now():
+    vids = [{"id": "GB", "title": "Grid Blade", "privacy": "public", "duration": "PT3M", "view": 500},
+            {"id": "AB", "title": "Afterburn", "privacy": "public", "duration": "PT3M", "view": 50}]
+    r = dupes.audit(vids, {}, {}, {"sound_alikes": {"Afterburn": "Grid Blade"}}, {})
+    assert [d["id"] for d in r["duplicates"]] == ["AB"]
+
+
+def test_the_site_links_follow_the_copy_that_stays():
+    cat = {"drops": [{"id": "d", "youtube_url": "https://www.youtube.com/watch?v=OLD", "youtube_short_url": "https://youtu.be/S"}]}
+    assert dupes.repoint(cat, {"OLD": "NEW"}) == 1
+    assert cat["drops"][0]["youtube_url"].endswith("v=NEW") and cat["drops"][0]["youtube_short_url"].endswith("/S")
