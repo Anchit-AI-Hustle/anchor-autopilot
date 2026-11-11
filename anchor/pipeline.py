@@ -705,8 +705,15 @@ def publish_youtube_api(profile: Profile, drop_dir: Path, meta: dict, brief: dic
     # reuploaded again and again"): a re-run, a retry or a remake finds the song already up
     try:
         from . import dupes
-        same = dupes.is_reupload(brief["youtube_title"], api.channel_videos(profile.artist["youtube_channel_id"]),
-                                 read_json(dupes.CATALOG_PATH.parent / "channel.json", {}) or {}, dupes.load())
+        videos = api.channel_videos(profile.artist["youtube_channel_id"])
+        channel = read_json(dupes.CATALOG_PATH.parent / "channel.json", {}) or {}
+        catalog = read_json(dupes.CATALOG_PATH, {}) or {}
+        same = dupes.is_reupload(brief["youtube_title"], videos, channel, dupes.load(), catalog=catalog)
+        # a queued song is also checked under its own Suno name: Pressure Spiral was up since
+        # September and went out again as "Start It Tonight" (2026-11-11)
+        if not same and brief.get("source_file"):
+            from .queue import _title_from
+            same = dupes.is_reupload(_title_from(brief["source_file"]), videos, channel, dupes.load(), catalog=catalog)
     except Exception as exc:              # noqa: BLE001 - the check never blocks a new song on an API hiccup
         log(f"publish: duplicate check skipped: {exc}")
         same = None

@@ -148,7 +148,7 @@ def sounds_alike(score: dict) -> bool:
     return max(score["envelope"], score["sequence"]) >= SOUND_ALIKE
 
 
-def released_prints(catalog_path: Path, work: Path, limit: int = 40) -> dict[str, dict]:
+def released_prints(catalog_path: Path, work: Path, limit: int = 1000) -> dict[str, dict]:
     """Prints of the released masters, cached as .npz. On the Mac the cache is shared across
     builds (~/.cache/anchor/prints, or ANCHOR_PRINTS_CACHE), so each release is fetched once,
     not once per song (2026-11-02: one blackholed GitHub download address held a song for
@@ -163,6 +163,14 @@ def released_prints(catalog_path: Path, work: Path, limit: int = 40) -> dict[str
         drops = json.loads(Path(catalog_path).read_text()).get("drops", [])[:limit]
     except (OSError, ValueError):
         return out
+    # every release, not the newest 40: the timbre references are the September drops, the
+    # oldest of all, so a take was never compared with the song it leans on; and the older songs whose audio is on the channel but
+    # not on a drop (Anchit, 2026-11-11: "ensure unique new generations each and every time")
+    try:
+        legacy = json.loads((Path(catalog_path).parent / "legacy_motion.json").read_text()).get("songs", [])
+    except (OSError, ValueError):
+        legacy = []
+    drops = [*drops, *({"id": e.get("id"), "audio_url": e.get("audio_url"), "title": e.get("title")} for e in legacy)]
     for d in drops:
         url, did = d.get("audio_url"), d.get("id")
         if not (url and did):

@@ -41,6 +41,12 @@ def _already_posted(name: str, title: str | None, queue_dir: Path) -> bool:
     meta = read_json(Path(queue_dir) / "queue.json", {}) or {}
     if (meta.get(name) or {}).get("force"):       # you said release it anyway; the audio gate still runs
         return False
+    entry = meta.get(name) or {}
+    sid = str(entry.get("suno_id") or "")[:8].lower()
+    m = re.search(r"-([0-9a-f]{8})\.[a-z0-9]+$", name, flags=re.I)
+    sid = sid or (m.group(1).lower() if m else "")
+    if sid and sid in posted_suno_ids():
+        return True
     key = title_key(title or _title_from(name))
     return bool(key) and key in posted_ideas()
 
@@ -215,7 +221,50 @@ def posted_ideas(catalog_path: Path | None = None) -> set[frozenset[str]]:
     repeating itself, which is the one thing a daily robot must not do.
     """
     from .suno import title_key
-    return {title_key(d["title"]) for d in _drops(catalog_path) if d.get("title")}
+    return {k for k in (title_key(t) for t in posted_titles(catalog_path)) if k}
+
+
+def _song_part(title: str) -> str:
+    """'Pressure Spiral | Hard Techno | ANCHOR' -> 'Pressure Spiral'."""
+    return re.sub(r"\([^)]*\)|\[[^\]]*\]", " ", str(title).split("|")[0]).strip()
+
+
+def posted_titles(catalog_path: Path | None = None) -> list[str]:
+    """The name of every song already on the channel, under every name it went out as.
+
+    Anchit, 2026-11-11: "last few videos were duplicates of an older song". Pressure Spiral was
+    on the channel since September (a full video outside the drop list), went out again on 11-10
+    as "Start It Tonight", and New Beginnings went out as "Doors Blown Open": the guard only knew
+    the drops' new titles. Now it knows the drops' titles, the Suno title of the file each queued
+    drop was made from, every video in channel.json, every one-off upload and every older song."""
+    from .config import CATALOG_PATH
+    base = (Path(catalog_path) if catalog_path else CATALOG_PATH).parent
+    out = []
+    for d in _drops(catalog_path):
+        if d.get("title"):
+            out.append(d["title"])
+        src = ((d.get("engine") or {}) if isinstance(d.get("engine"), dict) else {}).get("source_file")
+        if src:
+            out.append(_title_from(src))
+    channel = read_json(base / "channel.json", {}) or {}
+    out += [v.get("title", "") for v in (channel.get("videos") or {}).values()]
+    uploads = read_json(base / "uploads.json", {}) or {}
+    out += [e.get("title", "") for e in uploads.get("uploads") or []]
+    legacy = read_json(base / "legacy_motion.json", {}) or {}
+    out += [e.get("title", "") for e in legacy.get("songs") or []]
+    return [_song_part(t) for t in out if t and _song_part(t)]
+
+
+def posted_suno_ids(catalog_path: Path | None = None) -> set[str]:
+    """The first 8 characters of every Suno song id already released (from the drops' source
+    files, whatever name the queue file had)."""
+    ids = set()
+    for d in _drops(catalog_path):
+        src = ((d.get("engine") or {}) if isinstance(d.get("engine"), dict) else {}).get("source_file") or ""
+        m = re.search(r"-([0-9a-f]{8})\.[a-z0-9]+$", src, flags=re.I)
+        if m:
+            ids.add(m.group(1).lower())
+    return ids
 
 
 def released(queue_dir: Path | None = None) -> dict[str, str]:
