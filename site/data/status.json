@@ -3,8 +3,8 @@
     "result": "failed",
     "stage": "make",
     "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-10T22:18:45Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42856002386"
+    "finished_at": "2026-11-11T01:13:40Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/42896847962"
   },
   "next_post_at": "2026-11-11T17:30:00Z",
   "streak": 18,
@@ -14,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-10T22:18:45Z",
+  "updated_at": "2026-11-11T01:13:40Z",
   "engine": {
     "engine": "queue",
     "source_file": "37-red-dust-warning-272d7227.m4a"
