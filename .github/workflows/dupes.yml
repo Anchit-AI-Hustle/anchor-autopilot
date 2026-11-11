@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+      - run: for i in 1 2 3; do sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg && break; sleep 30; done; command -v ffmpeg
       - run: pip install -r requirements.txt
 
       - name: Cache the prints of the released masters

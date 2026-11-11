@@ -95,7 +95,9 @@ WORKFLOW = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
 def test_one_run_a_day_after_the_quota_reset_and_a_backup_that_fills_gaps():
     head = WORKFLOW.split("workflow_dispatch:", 1)[0]
     crons = re.findall(r'- cron: "([^"]+)"', head)
-    assert crons == ["37 8 * * *", "37 13 * * *"]
+    assert crons[:2] == ["37 8 * * *", "37 13 * * *"]
+    # Mac first (2026-11-11): later runs wait for the Mac, the 19:37 run is the CPU fallback
+    assert sorted(crons[2:]) == ["37 10 * * *", "37 16 * * *", "37 19 * * *"]
     assert all(int(c.split()[1]) >= 8 for c in crons), "after the Pacific quota reset all year (08:00 UTC in winter)"
     assert "group: daily-drop\n  cancel-in-progress: false" in WORKFLOW, "the runs go one after the other"
     for other in ("fullvideos.yml", "uploads.yml"):

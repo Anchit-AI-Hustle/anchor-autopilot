@@ -9,6 +9,14 @@ on:
     # five runs one after the other made one song). The later runs only fill what failed.
     - cron: "37 8 * * *"   # 08:37 UTC (14:07 IST): after the YouTube quota reset (07:00 UTC summer, 08:00 winter)
     - cron: "37 13 * * *"  # 13:37 UTC: remakes any song the first run could not make
+    # Mac first (Anchit, 2026-11-11: "better quality music, songs and videos now onwards"): the
+    # Mac's 4B XL model makes the better songs, and on 11-11 the Mac slept through the 13:37 run
+    # so four songs went to the small CPU model. A run that finds the Mac asleep before 19:00 UTC
+    # now waits for one of these later runs; the 19:37 run renders on the CPU if the Mac never
+    # came back, so a day is never left empty.
+    - cron: "37 10 * * *"
+    - cron: "37 16 * * *"
+    - cron: "37 19 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -78,7 +86,7 @@ jobs:
     timeout-minutes: 10
     outputs:
       drops: ${{ steps.plan.outputs.drops }}
-      count: ${{ steps.plan.outputs.count }}
+      count: ${{ steps.where.outputs.renderer == 'wait' && '0' || steps.plan.outputs.count }}
       renderer: ${{ steps.where.outputs.renderer }}
       runs_on: ${{ steps.where.outputs.runs_on }}
     steps:
@@ -116,10 +124,17 @@ jobs:
         env:
           SEEN: ${{ vars.ANCHOR_MAC_SEEN }}
           WANT: ${{ inputs.renderer || 'auto' }}
+          EVENT: ${{ github.event_name }}
         run: |
           case "$SEEN" in ''|*[!0-9]*) SEEN=0 ;; esac
           AGE=$(( $(date +%s) - SEEN ))
-          if [ "$WANT" = "mac" ] || { [ "$WANT" = "auto" ] && [ "$AGE" -le 1200 ]; }; then
+          HOUR=$((10#$(date -u +%H)))
+          if [ "$WANT" = "auto" ] && [ "$AGE" -gt 1200 ] && [ "$EVENT" = "schedule" ] && [ "$HOUR" -lt 19 ]; then
+            # Mac first: wait for a later run while the Mac may still wake up today
+            echo "renderer=wait" >> "$GITHUB_OUTPUT"
+            echo 'runs_on="ubuntu-24.04"' >> "$GITHUB_OUTPUT"
+            echo "::notice::The Mac is asleep (heartbeat ${AGE}s ago): waiting for a later run to render on its GPU; the 19:37 UTC run falls back to the CPU"
+          elif [ "$WANT" = "mac" ] || { [ "$WANT" = "auto" ] && [ "$AGE" -le 1200 ]; }; then
             echo "renderer=mac" >> "$GITHUB_OUTPUT"
             echo 'runs_on=["self-hosted","macOS","ARM64","anchor-mac"]' >> "$GITHUB_OUTPUT"
             echo "::notice::Rendering on the Mac GPU (last heartbeat ${AGE}s ago)"

@@ -31,10 +31,12 @@ jobs:
   queue:
     # Only the owner can queue a release: an issue from anyone else is ignored. The song
     # itself is looked up on the channel's own Suno profile, so nothing outside it can
-    # ever be queued.
+    # ever be queued. The Sync with Suno form counts without the label: GitHub drops a label
+    # that does not exist yet, and on 2026-11-11 that skipped his "Post to YouTube: 4 songs".
     if: >-
       github.event_name == 'workflow_dispatch' ||
-      (contains(github.event.issue.labels.*.name, 'youtube-queue') &&
+      ((contains(github.event.issue.labels.*.name, 'youtube-queue') ||
+        (github.event.action == 'opened' && contains(github.event.issue.body, '"form": "anchor-suno-sync"'))) &&
        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
     runs-on: ubuntu-24.04
     timeout-minutes: 15
@@ -52,7 +54,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          for i in 1 2 3; do sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg && break; sleep 30; done; command -v ffmpeg
 
       - name: Pull the song into the queue
         id: q

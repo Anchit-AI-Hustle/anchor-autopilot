@@ -53,7 +53,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
+          for i in 1 2 3; do sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg && break; sleep 30; done; command -v ffmpeg
 
       - name: Decide whether this period is due
         id: due
