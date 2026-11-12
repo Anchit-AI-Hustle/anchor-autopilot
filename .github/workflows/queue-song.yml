@@ -116,15 +116,19 @@ jobs:
           NOW: ${{ steps.q.outputs.now }}
         run: |
           WHEN="The next daily run releases it"
-          [ "$NOW" = "true" ] && WHEN="A run has started now to release it"
+          [ "$NOW" = "true" ] && WHEN="The next scheduled run (08:37, 10:37, 13:37, 16:37 or 19:37 UTC) releases it"
           NOTE=""
           [ -n "$SKIPPED" ] && NOTE=" Skipped: $SKIPPED."
           gh issue comment "${{ github.event.issue.number }}" --body \
             "**$TITLE** queued as \`$FILE\`, $WAITING track(s) waiting. $WHEN: master, cover, video, Short, YouTube, playlist, website.$NOTE [Run log]($RUN)"
           gh issue close "${{ github.event.issue.number }}" --reason completed
 
+      # A daily run started from here runs as github-actions[bot], and the releases API refuses
+      # that run's token (HTTP 403 "Resource not accessible by integration", 2026-11-11: Pocket Of
+      # Matches was made but could not be released or posted). A run started by hand, or one of
+      # the scheduled runs (08:37, 10:37, 13:37, 16:37, 19:37 UTC) releases it instead.
       - name: Release it now
-        if: (github.event_name == 'workflow_dispatch' && inputs.release_now) || steps.q.outputs.now == 'true'
+        if: github.event_name == 'workflow_dispatch' && inputs.release_now
         env:
           GH_TOKEN: ${{ github.token }}
         run: gh workflow run daily.yml --ref main
