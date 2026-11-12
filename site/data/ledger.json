@@ -1,6 +1,462 @@
 {
   "entries": [
     {
+      "id": "2026-11-12-2",
+      "date": "2026-11-12",
+      "title": "Floor Becomes Fire",
+      "source": "pipeline",
+      "made_at": "2026-11-12T06:59:33Z",
+      "recorded_at": "2026-11-12T10:48:54Z",
+      "lane": "Hard Tech Rap",
+      "bpm": 165,
+      "family": "Void",
+      "accent": "#f2f2f2",
+      "cover": "covers/2026-11-12-2.jpg",
+      "engine": {
+        "name": "acestep_cpp",
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "render_s": 466.2,
+        "fallback_from": null
+      },
+      "variants": [
+        {
+          "kind": "audio",
+          "label": "attempt 0",
+          "seed": 120397141,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "title sung wrong, not standard English: swallowing"
+          ],
+          "warn": [
+            "craft: no breakdown (needs 8 s at least 8 dB under the peak; the channel's top record has two)"
+          ],
+          "nearest": "2026-10-10",
+          "score": 0.51,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 1",
+          "seed": 860108504,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "song gate: too little melody and harmony under the drums (melody_share 0.782, limit 0.7937)",
+            "song gate: no part sounds different from the rest (one loop start to finish) (most_different_parts -0.227, limit -0.2545)",
+            "song gate: the music keeps breaking off in the middle (breaks 7, limit 4)"
+          ],
+          "warn": [
+            "craft: no breakdown (needs 8 s at least 8 dB under the peak; the channel's top record has two)"
+          ],
+          "nearest": "2026-09-08",
+          "score": 0.406,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 2",
+          "seed": 189766593,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "title sung wrong, not standard English: burning"
+          ],
+          "warn": [],
+          "nearest": "2026-10-30",
+          "score": 0.42,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 3",
+          "seed": 1984497397,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "song gate: the music keeps breaking off in the middle (breaks 7, limit 4)"
+          ],
+          "warn": [],
+          "nearest": "2026-10-10",
+          "score": 0.574,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 4",
+          "seed": 1535561310,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "song gate: no part sounds different from the rest (one loop start to finish) (most_different_parts -0.245, limit -0.2545)",
+            "song gate: the music cuts to silence in the middle (silence_holes 2, limit 0)"
+          ],
+          "warn": [],
+          "nearest": "legacy-time-to-peak",
+          "score": 0.449,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 5",
+          "seed": 153308841,
+          "ok": true,
+          "chosen": true,
+          "fail": [],
+          "warn": [],
+          "nearest": "2026-10-10",
+          "score": 0.573,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 153308841",
+          "seed": 153308841,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "motif too close to 2026-10-24-3 (56/256)"
+          ],
+          "warn": [],
+          "nearest": "2026-10-24-3",
+          "score": 56.5,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 153308842",
+          "seed": 153308842,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "motif too close to 2026-10-24-3 (51/256)"
+          ],
+          "warn": [],
+          "nearest": "2026-10-24-3",
+          "score": 51.0,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 153308843",
+          "seed": 153308843,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "motif too close to 2026-10-24-3 (54/256)"
+          ],
+          "warn": [],
+          "nearest": "2026-10-24-3",
+          "score": 53.5,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 153308844",
+          "seed": 153308844,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "motif too close to 2026-10-24-3 (52/256)"
+          ],
+          "warn": [],
+          "nearest": "2026-10-24-3",
+          "score": 51.5,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 153308845",
+          "seed": 153308845,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "motif too close to 2026-10-24-3 (50/256)"
+          ],
+          "warn": [],
+          "nearest": "2026-10-24-3",
+          "score": 50.0,
+          "note": null
+        }
+      ],
+      "files": [
+        {
+          "role": "master",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire.mp3",
+          "spec": "MP3 320k, ID3 tagged, -14.11 LUFS"
+        },
+        {
+          "role": "master (lossless)",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire.flac",
+          "spec": "FLAC, same master"
+        },
+        {
+          "role": "short 9:16",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire-short.mp4",
+          "spec": "1080x1920 30.0 fps, 45 s"
+        },
+        {
+          "role": "full video 16:9",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire-full-169.mp4",
+          "spec": "1920x1080, 204 s"
+        },
+        {
+          "role": "reel 9:16",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire-full-916.mp4",
+          "spec": "1080x1920, 204 s"
+        },
+        {
+          "role": "cover",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire-cover.jpg",
+          "spec": "1440x1440 square, type set"
+        },
+        {
+          "role": "thumbnail 16:9",
+          "file": "frame-169.jpg",
+          "spec": "1920x1080 frame, type over the raw art"
+        }
+      ],
+      "uploads": [
+        {
+          "target": "youtube_full",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire-full-169.mp4",
+          "status": "public",
+          "url": "https://youtu.be/ii1ZxJtZAFM",
+          "post_id": "ii1ZxJtZAFM",
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "youtube_short",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire-short.mp4",
+          "status": "sent",
+          "url": "https://www.youtube.com/watch?v=1RAYpuBo4Bs",
+          "post_id": "6af59993e11ce7b6b8e45932",
+          "due_at": "2026-11-12T10:48:51.644Z",
+          "error": null
+        },
+        {
+          "target": "instagram_reel",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire-full-916.mp4",
+          "status": "error",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+        },
+        {
+          "target": "github_release",
+          "file": "ANCHOR-2026-11-12-floor-becomes-fire.mp3",
+          "status": "released",
+          "url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-12-2",
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "site",
+          "file": "cover_600.jpg",
+          "status": "listed",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        }
+      ],
+      "fields": [
+        {
+          "field": "source",
+          "value": "generated by acestep_cpp (acestep-v15-xl-sftturbo50-Q8_0.gguf)",
+          "rule": "Nothing queued, so the engine generated the record from the brief.",
+          "evidence": "6 attempt(s); chosen seed 153308841",
+          "group": "record"
+        },
+        {
+          "field": "sound lane",
+          "value": "Hard Tech Rap",
+          "rule": "Weighted pick from the profile's lanes: never the lane of the previous drop, lanes used in the last three drops down-weighted. Seeded by the date, so a rerun picks the same lane.",
+          "evidence": "lane weight 2; genre line: Hard Tech Rap, Raw Hard Tech, Industrial Hard Techno",
+          "group": "record"
+        },
+        {
+          "field": "bpm",
+          "value": 165,
+          "rule": "Random tempo inside the lane's BPM range; the published tempo follows the audio when the measured tempo differs by more than 1 BPM (the model treats BPM as guidance).",
+          "evidence": "asked 167 BPM, audio measured 165.0",
+          "group": "record"
+        },
+        {
+          "field": "key",
+          "value": "A minor",
+          "rule": "Random key not used in the last three drops; replaced by the key actually heard in the audio when the detector is confident (>= 0.25). Kept off every public surface.",
+          "evidence": "asked F minor, heard A minor (confidence 0.45)",
+          "group": "record"
+        },
+        {
+          "field": "duration",
+          "value": "210 s",
+          "rule": "Drawn for the day inside the profile's duration range; every drop is a complete arrangement whose shape is also drawn for the day, so no two records share a timeline.",
+          "evidence": "shape classic",
+          "group": "record"
+        },
+        {
+          "field": "quality gate",
+          "value": "pass",
+          "rule": "Each attempt must be finite audio at the right length, no dropouts, no clipping, tempo near the brief, and must not resemble a released drop: loudness envelope correlation <= 0.8 and spectral-sequence correlation <= 0.75 against every released master. A fail is regenerated with the next seed.",
+          "evidence": "nearest released audio 2026-10-10 at envelope 0.573, spectral sequence 0.084; warnings: none",
+          "group": "record"
+        },
+        {
+          "field": "craft",
+          "value": "phone share 0.316, width 0.257, 2 breakdown(s)",
+          "rule": "What the channel's best records share (measured 2026-09-23): a generated take needs a breakdown of 8 s or more at least 8 dB under the peak and a sound that moves, or it is regenerated while seeds remain; every record then gets the finishing pass (bass harmonics where a phone plays them, the kick's click and air lifted, wider above 250 Hz, mono below), only as much as it needs.",
+          "evidence": "before the pass: phone share 0.316, width 0.099; pass tone 0.0, width 0.69",
+          "group": "record"
+        },
+        {
+          "field": "master loudness",
+          "value": "-14.11 LUFS / -1.75 dBTP",
+          "rule": "Mastered to -14.0 LUFS integrated with a -1.5 dBTP ceiling (YouTube plays everything at -14, so the master sits at that level with headroom for the AAC encoder instead of being turned down) and a 3.0 s outro fade.",
+          "evidence": "before -15.13 LUFS; gain 1.13 dB",
+          "group": "record"
+        },
+        {
+          "field": "title",
+          "value": "Floor Becomes Fire",
+          "rule": "Drawn from the title word bank: never repeats a title on the channel, avoids every word used in the last ten titles, never doubles a word. Seeded by the date.",
+          "evidence": "no sung hook found",
+          "group": "content"
+        },
+        {
+          "field": "youtube title",
+          "value": "Floor Becomes Fire | Hard Tech Rap | ANCHOR",
+          "rule": "The track's name first, then the lane's genre phrase and the tempo, then the artist ('Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR'): search matches the words in the title, and the bare name scored 62 against 70 for this form (vidIQ, 2026-09-23).",
+          "evidence": "43 chars; genre phrase 'Hard Tech Rap'",
+          "group": "content"
+        },
+        {
+          "field": "description",
+          "value": "Hard Tech Rap. An ANCHOR original, free download below.\n\nA song about a thousand bodies turn the dance floor into a bonfire one drop at a time until sunrise finds them still moving. Hard, dry, and in no hurry. Cheeky swagger, building to a crowd-wide jump, ending on a grin. The groove drops to just kick and rap for two bars before the hook slams back. Once it starts there's no way back up. You won't want one.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechrap #hardtechno #techno",
+          "rule": "One search line first (genre phrase, tempo, artist), because that is the line YouTube shows under the title; then the vibe and the theme of the record in two to four sentences that build like an intro, nothing mechanical (no timestamps, no section names); then the playlist, site and Instagram, the AI disclosure, ©, three hashtags. Gemini writes the vibe from the brief's mood and theme and any clock time or hype word is rejected; the template writes it when there is no key.",
+          "evidence": "written by template; arc: 4 drop(s), 4 breakdown(s); mood: 'cheeky swagger, building to a crowd-wide jump, ending on a grin'",
+          "group": "content"
+        },
+        {
+          "field": "tags",
+          "value": [
+            "hard tech rap",
+            "hard tech",
+            "rap techno",
+            "industrial hard techno",
+            "hard techno 2026",
+            "techno",
+            "hard techno",
+            "techno visualizer",
+            "anchor techno",
+            "techno official visualizer",
+            "165 bpm techno",
+            "techno 2026",
+            "ai techno",
+            "techno full track"
+          ],
+          "rule": "Lane tags first (the niche), then the channel's base tags, the genre phrase, '<BPM> bpm techno', the year, 'ai techno' and 'techno full track'; duplicates removed, order kept so the most specific tags lead.",
+          "evidence": "14 tags",
+          "group": "content"
+        },
+        {
+          "field": "instagram caption",
+          "value": "Hard Tech Rap. An ANCHOR original, free download below.\n\nA song about a thousand bodies turn the dance floor into a bonfire one drop at a time until sunrise finds them still moving. Hard, dry, and in no hurry. Cheeky swagger, building to a crowd-wide jump, ending on a grin. The groove drops to just kick and rap for two bars before the hook slams back. Once it starts there's no way back up. You won't want one.\n\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno #technomusic #psytechno #hardbounce #peaktimetechno #rawtechno #undergroundtechno #technoreel #electronicmusic #aimusic #newmusic #technolovers #rave #clubmusic #technodaily #psychedelictechno #anchortechno",
+          "rule": "The same copy as YouTube, the genre line, the site link, then the channel's Instagram hashtag set (broader than YouTube's three).",
+          "evidence": null,
+          "group": "content"
+        },
+        {
+          "field": "category",
+          "value": "Music (10)",
+          "rule": "YouTube category id from the profile; every drop is a song.",
+          "evidence": "sent as categoryId 10",
+          "group": "platform"
+        },
+        {
+          "field": "privacy",
+          "value": "public",
+          "rule": "Public on publish; Buffer schedules the post for the drop's slot.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "AI disclosure",
+          "value": "on",
+          "rule": "YouTube 'altered or synthetic content' flag and Instagram AI label are always on: the audio is model-generated and the channel says so in every description too.",
+          "evidence": "isAiGenerated=True",
+          "group": "platform"
+        },
+        {
+          "field": "made for kids",
+          "value": "no",
+          "rule": "Club music for adults; never marked for kids (which would strip comments, end screens and personalised ads).",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "notify subscribers",
+          "value": "yes",
+          "rule": "Subscribers get the bell on every drop; the cadence is every second day, so it never spams.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "licence",
+          "value": "Standard YouTube licence",
+          "rule": "Standard, not Creative Commons: the channel keeps its rights; the © line in the description says the same.",
+          "evidence": "set in the channel's upload defaults",
+          "group": "platform"
+        },
+        {
+          "field": "language",
+          "value": "English",
+          "rule": "Title and description language and video language both English (channel default), so YouTube can index and translate the copy.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "post time",
+          "value": "2026-11-12T19:30:00Z",
+          "rule": "17:30 UTC (23:00 IST): late-evening India, afternoon Europe, morning US - the widest awake techno audience. One drop every 1 day(s) from 2026-09-20.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "visual family",
+          "value": "Void (#f2f2f2)",
+          "rule": "One of the profile's palettes, never one used in the last three drops, so consecutive covers read differently on the channel grid.",
+          "evidence": null,
+          "group": "visual"
+        },
+        {
+          "field": "cover",
+          "value": "procedural",
+          "rule": "Procedural art drawn from the family's forms and the date seed; redrawn from the next seed until it is at least 84/256 away from every cover already on the site.",
+          "evidence": "nearest existing cover 2026-10-24-3 at distance 50.0",
+          "group": "visual"
+        },
+        {
+          "field": "thumbnail 16:9",
+          "value": "frame-169.jpg",
+          "rule": "Drawn for the phone: the title in Anton at up to 300 px on a left scrim, the lane and BPM under it at 90 px, hard shadow; no wordmark, because the channel name is printed under the thumbnail anyway. Legible at the 336×189 px a phone shows.",
+          "evidence": null,
+          "group": "visual"
+        },
+        {
+          "field": "short window",
+          "value": "155.7 s for 45.1 s",
+          "rule": "The loudest, busiest 45 s of the master snapped to whole bars, with the pulse locked to the beat grid of that cut.",
+          "evidence": "beat offset 0.2307 s",
+          "group": "visual"
+        }
+      ]
+    },
+    {
       "id": "2026-11-11",
       "date": "2026-11-11",
       "title": "Pocket Of Matches",
@@ -115,7 +571,7 @@
         {
           "target": "youtube_full",
           "file": "ANCHOR-2026-11-11-pocket-of-matches-full-169.mp4",
-          "status": "public",
+          "status": "sent",
           "url": "https://youtu.be/6adqozlKXAI",
           "post_id": "6adqozlKXAI",
           "due_at": null,
@@ -508,7 +964,7 @@
         {
           "target": "youtube_full",
           "file": "ANCHOR-2026-11-10-move-before-thunder-full-169.mp4",
-          "status": "public",
+          "status": "sent",
           "url": "https://youtu.be/LwiMYlhQDC8",
           "post_id": "LwiMYlhQDC8",
           "due_at": null,
@@ -1591,7 +2047,7 @@
         {
           "target": "youtube_full",
           "file": "ANCHOR-2026-11-10-start-it-tonight-full-169.mp4",
-          "status": "public",
+          "status": "sent",
           "url": "https://youtu.be/m5wytIg4DkU",
           "post_id": "m5wytIg4DkU",
           "due_at": null,
@@ -28540,5 +28996,5 @@
       "note": null
     }
   ],
-  "updated_at": "2026-11-12T08:05:28Z"
+  "updated_at": "2026-11-12T10:48:54Z"
 }

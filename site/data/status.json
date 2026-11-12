@@ -1,22 +1,31 @@
 {
   "last_run": {
-    "result": "failed",
-    "stage": "pages",
-    "error": "The pages stage failed. Open the run log for details.",
-    "finished_at": "2026-11-12T10:46:11Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43203170459"
+    "result": "ok",
+    "stage": "done",
+    "drop_id": "2026-11-12-2",
+    "title": "Floor Becomes Fire",
+    "finished_at": "2026-11-12T10:48:54Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43203342323",
+    "error": null
   },
-  "next_post_at": "2026-11-12T17:30:00Z",
-  "streak": 18,
+  "next_post_at": "2026-11-13T17:30:00Z",
+  "streak": 19,
   "totals": {
-    "drops": 87
+    "drops": 88
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-12T10:46:11Z",
+  "updated_at": "2026-11-12T10:48:54Z",
   "engine": {
-    "engine": "queue",
-    "source_file": "19-pocket-of-matches-876b951e.m4a"
+    "engine": "acestep_cpp",
+    "threads": 10,
+    "steps": 8,
+    "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+    "guidance": 1.0,
+    "lm_ms": 109671,
+    "dit_ms": 96408,
+    "vae_ms": 241349,
+    "total_s": 466.2
   }
 }
