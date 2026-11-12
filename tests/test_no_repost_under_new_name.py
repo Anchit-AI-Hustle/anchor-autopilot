@@ -19,7 +19,7 @@ def test_a_song_already_out_under_another_name_is_never_queued_again(tmp_path, m
     assert queue._already_posted("42-new-beginnings-219cedc0.m4a", "New Beginnings", q)
     assert queue._already_posted("43-renamed-take-219cedc0.m4a", "A Brand New Name", q), "same Suno song id"
     # a song never posted under any name still goes out
-    assert not queue._already_posted("44-pocket-of-matches-876b951e.m4a", "Pocket Of Matches", q)
+    assert not queue._already_posted("44-a-song-never-posted-0badf00d.m4a", "Zephyr Quokka Lantern", q)
 
 
 def test_posted_titles_know_every_name_a_song_went_out_as(tmp_path):
