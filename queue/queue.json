@@ -233,6 +233,7 @@
     "keep_title": true,
     "style": "motion",
     "overrides": {},
-    "from": "sync-with-suno"
+    "from": "sync-with-suno",
+    "released_at": "2026-11-12T11:05:49Z"
   }
 }

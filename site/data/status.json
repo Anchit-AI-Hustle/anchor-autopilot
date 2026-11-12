@@ -2,30 +2,23 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-12-2",
-    "title": "Floor Becomes Fire",
-    "finished_at": "2026-11-12T10:48:54Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43203342323",
+    "drop_id": "2026-11-12-4",
+    "title": "Concrete Acid",
+    "finished_at": "2026-11-12T12:13:16Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43203361666",
     "error": null
   },
   "next_post_at": "2026-11-13T17:30:00Z",
-  "streak": 19,
+  "streak": 20,
   "totals": {
-    "drops": 88
+    "drops": 89
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-12T10:48:54Z",
+  "updated_at": "2026-11-12T12:13:16Z",
   "engine": {
-    "engine": "acestep_cpp",
-    "threads": 10,
-    "steps": 8,
-    "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
-    "guidance": 1.0,
-    "lm_ms": 109671,
-    "dit_ms": 96408,
-    "vae_ms": 241349,
-    "total_s": 466.2
+    "engine": "queue",
+    "source_file": "28-concrete-acid-5c886c24.m4a"
   }
 }

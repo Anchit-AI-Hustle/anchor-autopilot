@@ -7,8 +7,77 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-12T10:48:54Z",
+  "updated_at": "2026-11-12T12:13:16Z",
   "drops": [
+    {
+      "id": "2026-11-12-4",
+      "date": "2026-11-12",
+      "title": "Concrete Acid",
+      "lane": "acidpsy",
+      "lane_name": "Acid Psychedelic Techno",
+      "bpm": 147,
+      "key": "C# minor",
+      "family": "prism",
+      "family_name": "Prism",
+      "duration_s": 246.4,
+      "short_s": 45,
+      "cover": "covers/2026-11-12-4.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-4/ANCHOR-2026-11-12-concrete-acid.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-12-4",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-12-concrete-acid-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-4/ANCHOR-2026-11-12-concrete-acid-short.mp4",
+      "youtube_url": "https://youtu.be/d3QGY2i-qx0",
+      "buffer_post_id": "d3QGY2i-qx0",
+      "status": "public",
+      "post_at": "2026-11-12T12:13:04Z",
+      "qc": {
+        "bpm_est": 147.4,
+        "lufs": -14.04,
+        "warnings": [
+          "song gate: no real drops or quiet parts (loud_quiet_range_db 6.61 dB, limit 6.76); no part sounds different from the rest (one loop start to finish) (most_different_parts -0.192, limit -0.2545); not hard tech: the kick and bass are too light (low_end_share 0.565, limit 0.62)"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-12T11:05:49Z",
+      "genre_line": "Acid Techno, Psychedelic Techno, Hard Techno",
+      "style_line": "Acid Techno, Psychedelic Techno, Bouncy Acid, Rave Techno",
+      "error": null,
+      "accent": "#f4f4f6",
+      "caption": "psychedelic hip hop meets hard techno, heavy rap over a distorted four-on-the-floor kick the whole song, gliding 808 bouncing under the rap, swirling acid, chanted hook. Mid-2020s psychedelic hip hop rave, boom bap swing flipping into hard techno drops. Mood: playful bars over a bubbling acid swing, then the drop turns it into a rave, about two people arguing at the edge of the only road out of a small life until the wind decides for them. Feel: bouncy, fun and psychedelic, never dark. 178 BPM, hard techno four-on-the-floor kick the whole song, the rap in a half-time flow over it, triplet hats, the 808 bouncing under the rap. Instruments: trap drums: booming 808 kick, clap on three, rolling triplet hats, deep sub bass following the kick, chopped piano stabs playing a pentatonic riff that loops with a twist over sunny soul chords; swirling 303 acid lines intro, phasing psychedelic leads build, scratch fills breakdown. Vocals: duet of a restless male hip hop rapper with a quick nasal flow and a calm low female hip hop singer, natural English. Production: Warm and wide, rap vocal dry and centred, acid swirling around it, kick big in the drops; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, swirling 303 acid lines far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, swirling 303 acid lines last, a smooth fade out. Special moment: the rapper's last line echoes into the drop through a phaser.",
+      "seed": 303852219,
+      "visual_world": "warehouse",
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "28-concrete-acid-5c886c24.m4a"
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-4/ANCHOR-2026-11-12-concrete-acid-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-4/ANCHOR-2026-11-12-concrete-acid-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/d3QGY2i-qx0",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=ORixdAAp2VI",
+      "buffer_short_post_id": "6af5ad57f16061e291d64f0c",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "queue",
+      "sound": {
+        "lead": "chopped piano stabs",
+        "bass": "deep sub bass following the kick",
+        "drums": "trap drums: booming 808 kick, clap on three, rolling triplet hats",
+        "melody": "a pentatonic riff that loops with a twist",
+        "chords": "sunny soul chords"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
     {
       "id": "2026-11-12-2",
       "date": "2026-11-12",
@@ -28,7 +97,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-2/ANCHOR-2026-11-12-floor-becomes-fire-short.mp4",
       "youtube_url": "https://youtu.be/ii1ZxJtZAFM",
       "buffer_post_id": "ii1ZxJtZAFM",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-12T10:48:38Z",
       "qc": {
         "bpm_est": 165.0,
@@ -5079,21 +5148,21 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-12T11:31:50Z",
+    "checked_at": "2026-11-12T12:13:17Z",
     "total": 38,
     "postable": 27,
     "families": 15,
     "twins": 34,
     "fresh": 1,
-    "queued": 2,
-    "released": 13,
+    "queued": 1,
+    "released": 14,
     "next_up": {
-      "title": "Concrete Acid",
-      "id": "5c886c24-dfa0-424e-9123-62bc8d5e0ad2",
-      "rating": 7.2,
+      "title": "Backseat Lottery",
+      "id": "841dc942-0d7f-411c-99c3-61074c820a60",
+      "rating": 4.7,
       "source": "queue",
       "why": "first in the release queue - goes out on the next daily run",
-      "waiting": 1
+      "waiting": 0
     },
     "songs": [
       {
@@ -7241,11 +7310,10 @@
         "group": "dd0d3471-06cd-416f-972e-63cfc9fd7329",
         "group_size": 4,
         "group_pick": false,
-        "queue_pos": 1,
-        "queued_at": "2026-11-11T21:13:22Z",
+        "released_at": "released",
         "decision": {
-          "verdict": "held",
-          "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway (it is in the queue, and the guard will skip it)"
+          "verdict": "released",
+          "reason": "released (on the site)"
         },
         "post": {
           "lane": "acidpsy",
@@ -7645,7 +7713,7 @@
         "tags": "Hardtechno with psychedelic acid-trance pressure, 155 BPM warehouse drive, distorted kick and rumbling sub, hypnotic 303 sequences, jagged synth stabs, industrial percussion, evolving stereo modulation, sudden tension drops and explosive returns, commanding male rap verses with clipped rhythmic delivery, sparse shouted hook, saturated club mix with controlled low end and abrasive high percussion",
         "lyrics": "[Intro]\nRed coil turning under the floor\nPressure in the walls, then the room wants more\n\n[Verse 1]\nI walk in with the voltage biting my tongue\nSteel-toe rhythm, every bar gets sprung\nAcid on the ceiling, colors split in two\nI keep one eye on the clock, one eye on you\n\nNo soft landing, no polite retreat\nBoot prints stamped where the kick drum meets\nMind bends sideways when the sirens arrive\nI make a pulse out of everything alive\n\n[Hook]\nPush it past the limit, let the whole place shake\nCut the cord clean, watch the circuit wake\nPush it past the limit, no way back tonight\nRed heat, black room, teeth against the light\n\n[Verse 2]\nNumbers melt down on a cracked display\nI count four beats, then I throw them away\nA green line crawls through the smoke in my head\nEvery turn gets stranger, every rule is dead\n\nYou want calm? I brought the opposite here\nA hard little truth that you can feel in your ear\nWhen the floor starts folding and the crowd starts grinning\nThat’s the exact moment the real night’s beginning\n\n[Bridge]\nLose the map\nLose the name\nLet the spiral rearrange\nHold your breath\nFeel it climb\nOne more hit and cross the line\n\n[Hook]\nPush it past the limit, let the whole place shake\nCut the cord clean, watch the circuit wake\nPush it past the limit, no way back tonight\nRed heat, black room, teeth against the light\n\n[Outro]\nThe coil keeps turning after we leave\nA pulse in the concrete, a mark on the sleeve",
         "model": "v6-mini",
-        "plays": 6,
+        "plays": 7,
         "upvotes": 0,
         "created_at": "2026-09-12T23:30:18.524Z",
         "image": "https://cdn2.suno.ai/image_large_56f381b9-75d1-4ed3-88a5-459f721e6744.jpeg",
@@ -7677,9 +7745,9 @@
           },
           {
             "name": "Traction",
-            "score": 0.1,
+            "score": 0.2,
             "max": 1.5,
-            "note": "6 plays and 0 upvotes on Suno"
+            "note": "7 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -8246,7 +8314,7 @@
         "group": "841dc942-0d7f-411c-99c3-61074c820a60",
         "group_size": 2,
         "group_pick": false,
-        "queue_pos": 2,
+        "queue_pos": 1,
         "queued_at": "2026-11-11T21:13:22Z",
         "decision": {
           "verdict": "held",
