@@ -1,6 +1,6 @@
 {
-  "printed": 85,
-  "releases": 85,
+  "printed": 96,
+  "releases": 87,
   "audio_pairs": [
     {
       "duplicate": "2026-09-15",
@@ -33,6 +33,28 @@
       "score": {
         "envelope": 0.513,
         "sequence": 0.639
+      }
+    },
+    {
+      "duplicate": "legacy-pressure-spiral",
+      "of": "2026-11-10",
+      "duplicate_title": "legacy-pressure-spiral",
+      "of_title": "Start It Tonight",
+      "same_record": true,
+      "score": {
+        "envelope": 0.977,
+        "sequence": 0.689
+      }
+    },
+    {
+      "duplicate": "legacy-no-control",
+      "of": "legacy-cold-metal-floor",
+      "duplicate_title": "legacy-no-control",
+      "of_title": "legacy-cold-metal-floor",
+      "same_record": false,
+      "score": {
+        "envelope": 0.371,
+        "sequence": 0.669
       }
     }
   ],
