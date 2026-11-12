@@ -2,23 +2,23 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-12-4",
-    "title": "Concrete Acid",
-    "finished_at": "2026-11-12T12:13:16Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43203361666",
+    "drop_id": "2026-11-12-5",
+    "title": "Backseat Lottery",
+    "finished_at": "2026-11-12T12:54:58Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43218167813",
     "error": null
   },
   "next_post_at": "2026-11-13T17:30:00Z",
   "streak": 20,
   "totals": {
-    "drops": 89
+    "drops": 90
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-12T12:13:16Z",
+  "updated_at": "2026-11-12T12:54:58Z",
   "engine": {
     "engine": "queue",
-    "source_file": "28-concrete-acid-5c886c24.m4a"
+    "source_file": "53-backseat-lottery-841dc942.m4a"
   }
 }

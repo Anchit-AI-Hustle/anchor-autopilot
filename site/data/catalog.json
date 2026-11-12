@@ -7,8 +7,75 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-12T12:13:16Z",
+  "updated_at": "2026-11-12T12:54:58Z",
   "drops": [
+    {
+      "id": "2026-11-12-5",
+      "date": "2026-11-12",
+      "title": "Backseat Lottery",
+      "lane": "hiphoptechno",
+      "lane_name": "Hip Hop Hard Techno",
+      "bpm": 130,
+      "key": "C major",
+      "family": "furnace",
+      "family_name": "Furnace",
+      "duration_s": 212.8,
+      "short_s": 45,
+      "cover": "covers/2026-11-12-5.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-5/ANCHOR-2026-11-12-backseat-lottery.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-12-5",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-12-backseat-lottery-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-5/ANCHOR-2026-11-12-backseat-lottery-short.mp4",
+      "youtube_url": "https://youtu.be/jA5XQP6-vSE",
+      "buffer_post_id": "jA5XQP6-vSE",
+      "status": "public",
+      "post_at": "2026-11-12T12:54:44Z",
+      "qc": {
+        "bpm_est": 130.1,
+        "lufs": -14.06,
+        "warnings": []
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-12T12:48:56Z",
+      "genre_line": "Hip Hop Techno, Hard Techno, Rap",
+      "style_line": "Hip Hop Techno, Boom Bap Rave, Bouncy Hard Techno, Rave Rap",
+      "error": null,
+      "accent": "#ff3b1f",
+      "caption": "hip hop meets raw hard techno, heavy rap over a distorted four-on-the-floor kick the whole song, rumbling 808 sub bouncing under the rap, metal percussion, chanted hook. Mid-2020s hip hop crossover rave, boom bap swing into hard techno drops. Mood: head-nodding swagger, switching into a full-room jump, ending with a grin, about someone who went numb for a year is dragged into a basement full of bass and feels his own. Feel: bouncy, fun and psychedelic, never dark. 180 BPM, hard techno four-on-the-floor kick the whole song, the rap in a half-time flow over it, backbeat claps, the 808 rumble bouncing under the rap. Instruments: head-nod boom bap, rimshots, scratched fills, funky slap synth bass, bright bell lead playing a slow wide melody over the beat over playful major chords with a twist; brass stab samples intro, vocal ad-lib echoes build, vinyl crackle loops breakdown. Vocals: hushed male hip hop rapper in his late twenties, natural English. Production: Warm and punchy, rap vocal dry and centred, snare crisp, kick big in the drops; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, brass stab samples far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, brass stab samples last, a smooth fade out. Special moment: a two-bar 808 slide that pulls the room into the last drop.",
+      "seed": 254990835,
+      "visual_world": "vhs tape",
+      "engine": {
+        "name": "queue",
+        "steps": null,
+        "render_s": null,
+        "threads": null,
+        "model": null,
+        "guidance": null,
+        "source_file": "53-backseat-lottery-841dc942.m4a"
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-5/ANCHOR-2026-11-12-backseat-lottery-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-5/ANCHOR-2026-11-12-backseat-lottery-full-916.mp4",
+      "hook": null,
+      "lyrics": "[Verse 1]\nI found a coin in the laundromat floor\nBent like a moon with a scratch on it\nKept it warm in my palm all day\nLike it knew my name\n\nYou said, pick a lane, pick a plan\nBut I like the spin of a random hand\nSome days are a lock, some days are a flame\nI just lean in\n\n[Pre-Chorus]\nIf it lands on red\nI'm all in\nIf it lands on blue\nI grin\nThe world can flip\nI can too\nWatch me roll right through\n\n[Chorus]\nBackseat lottery\nBackseat lottery\nI let it choose me\nI let it choose me\n\nBackseat lottery\nBackseat lottery\nWhatever hits next\nThat’s the move for me\n\n[Verse 2]\nI took the long road to the corner store\nBought two cans and a cheap postcard\nOne said go, one said stay\nI mailed both away\n\nNow the rain on the bus stop roof\nSounds like drums for my reckless truth\nI don't need a map to prove\nI can still arrive\n\n[Pre-Chorus]\nIf it lands on red\nI'm all in\nIf it lands on blue\nI grin\nThe world can flip\nI can too\nWatch me roll right through\n\n[Chorus]\nBackseat lottery\nBackseat lottery\nI let it choose me\nI let it choose me\n\nBackseat lottery\nBackseat lottery\nWhatever hits next\nThat’s the move for me\n\n[Bridge]\nNo fixed line\nNo safe bet\nJust my heart\nOn a coin flip\nSay my name\nThrow it high\nI'll catch the fall\nWith open eyes\n\n[Final Chorus]\nBackseat lottery\nBackseat lottery\nI let it choose me\nI let it choose me\n\nBackseat lottery\nBackseat lottery\nWhatever hits next\nThat’s the move for me",
+      "youtube_full_url": "https://youtu.be/jA5XQP6-vSE",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=E3FnjTgdP2w",
+      "buffer_short_post_id": "6af5b71e93c2389370556449",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "queue",
+      "sound": {
+        "lead": "bright bell lead",
+        "bass": "funky slap synth bass",
+        "drums": "head-nod boom bap, rimshots, scratched fills",
+        "melody": "a slow wide melody over the beat",
+        "chords": "playful major chords with a twist"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
     {
       "id": "2026-11-12-4",
       "date": "2026-11-12",
@@ -28,7 +95,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-12-4/ANCHOR-2026-11-12-concrete-acid-short.mp4",
       "youtube_url": "https://youtu.be/d3QGY2i-qx0",
       "buffer_post_id": "d3QGY2i-qx0",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-12T12:13:04Z",
       "qc": {
         "bpm_est": 147.4,
@@ -5148,20 +5215,20 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-12T12:13:17Z",
+    "checked_at": "2026-11-12T12:54:59Z",
     "total": 38,
     "postable": 27,
     "families": 15,
     "twins": 34,
     "fresh": 1,
-    "queued": 1,
-    "released": 14,
+    "queued": 0,
+    "released": 15,
     "next_up": {
-      "title": "Backseat Lottery",
-      "id": "841dc942-0d7f-411c-99c3-61074c820a60",
-      "rating": 4.7,
-      "source": "queue",
-      "why": "first in the release queue - goes out on the next daily run",
+      "title": "DANCING WITH DEMONS",
+      "id": "a38f8226-68ba-4c6a-9ef6-3d602f66bfbb",
+      "rating": 6.4,
+      "source": "catalogue",
+      "why": "nothing is queued - this is the best take not yet released",
       "waiting": 0
     },
     "songs": [
@@ -7310,10 +7377,10 @@
         "group": "dd0d3471-06cd-416f-972e-63cfc9fd7329",
         "group_size": 4,
         "group_pick": false,
-        "released_at": "released",
+        "released_at": "2026-11-12T11:05:49Z",
         "decision": {
           "verdict": "released",
-          "reason": "released (on the site)"
+          "reason": "released 2026-11-12"
         },
         "post": {
           "lane": "acidpsy",
@@ -8223,6 +8290,7 @@
         "group": "841dc942-0d7f-411c-99c3-61074c820a60",
         "group_size": 2,
         "group_pick": true,
+        "idea_posted": true,
         "decision": {
           "verdict": "held",
           "reason": "not on format: nothing in the prompt says hard techno, industrial, rawstyle or warehouse"
@@ -8314,11 +8382,10 @@
         "group": "841dc942-0d7f-411c-99c3-61074c820a60",
         "group_size": 2,
         "group_pick": false,
-        "queue_pos": 1,
-        "queued_at": "2026-11-11T21:13:22Z",
+        "released_at": "released",
         "decision": {
-          "verdict": "held",
-          "reason": "not on format: nothing in the prompt says hard techno, industrial, rawstyle or warehouse"
+          "verdict": "released",
+          "reason": "released (on the site)"
         },
         "post": {
           "lane": "hiphoptechno",
