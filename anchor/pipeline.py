@@ -68,13 +68,13 @@ def master_take(profile: Profile, raw: Path, work: Path) -> dict:
     return {"master_wav": master_wav, "loud": loud, "finish_info": finish_info, "mix_info": mix_info}
 
 
-def gate_take(mastered: dict, engine: str | None = None) -> dict | None:
+def gate_take(mastered: dict, engine: str | None = None, hard: bool = True) -> dict | None:
     """The song gate's verdict on a mastered take, or None when the gate is off (the tests) or
     the engine is the test-tone fixture. A take the gate cannot read is a fail, never a pass."""
     if not songgate.enabled() or engine == "fixture":
         return None
     try:
-        result = songgate.check(mastered["master_wav"])
+        result = songgate.check(mastered["master_wav"], hard=hard)
     except Exception as exc:          # noqa: BLE001
         result = {"verdict": "FAIL", "measures": {},
                   "fails": [{"check": "read", "value": None, "limit": None, "unit": "",
@@ -247,7 +247,7 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         mastered, gate_score = None, 0.0
         if ok:
             mastered = master_take(profile, raw, out_dir / f"take-{attempt}")
-            gate = gate_take(mastered, stats.get("engine"))
+            gate = gate_take(mastered, stats.get("engine"), hard=(brief.get("genre_group") == "hardtech"))
             if gate is not None:
                 entry["song_gate"] = gate_note(gate)
                 gate_score = entry["song_gate"]["score"]
