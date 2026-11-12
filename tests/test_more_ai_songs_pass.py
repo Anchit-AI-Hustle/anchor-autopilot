@@ -1,11 +1,21 @@
 """More good AI songs reach the channel (2026-11-12: 1 of 29 takes passed)."""
 from pathlib import Path
 
-import soundfile as sf
-
 from anchor import lyriccheck, pipeline
 from anchor.audio import SR, analyze, decode
 from anchor.music import synth_techno
+
+
+def write_wav(path, audio):
+    import wave
+
+    import numpy as np
+    pcm = (np.clip(audio, -1, 1) * 32767).astype("<i2")
+    with wave.open(str(path), "wb") as w:
+        w.setnchannels(pcm.shape[1] if pcm.ndim == 2 else 1)
+        w.setsampwidth(2)
+        w.setframerate(SR)
+        w.writeframes(pcm.tobytes())
 
 
 def test_a_title_word_heard_right_and_as_a_variant_is_only_a_note():
@@ -21,7 +31,7 @@ def test_a_title_word_mostly_heard_as_another_word_still_fails():
 
 def test_a_take_that_landed_slow_is_brought_up_to_the_asked_tempo(tmp_path):
     wav = tmp_path / "gen.wav"
-    sf.write(wav, synth_techno(30.0, 150, 3), SR)
+    write_wav(wav, synth_techno(30.0, 150, 3))
     stats = analyze(decode(wav))
     brief = {"bpm": 165, "duration_s": 30}
     out, fixed = pipeline.to_tempo(wav, stats, brief, "acestep_cpp")
@@ -31,7 +41,7 @@ def test_a_take_that_landed_slow_is_brought_up_to_the_asked_tempo(tmp_path):
 
 def test_a_take_far_off_or_on_tempo_is_left_alone(tmp_path):
     wav = tmp_path / "gen.wav"
-    sf.write(wav, synth_techno(20.0, 150, 3), SR)
+    write_wav(wav, synth_techno(20.0, 150, 3))
     stats = analyze(decode(wav))
     for bpm in (150, 199):
         out, _ = pipeline.to_tempo(wav, stats, {"bpm": bpm, "duration_s": 20}, "acestep_cpp")

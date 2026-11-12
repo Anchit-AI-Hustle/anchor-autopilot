@@ -185,15 +185,15 @@ leads = ["screeching rawstyle lead", "hoover synth lead", "detuned supersaw stab
   "bright brass stab lead", "chopped vocal chop lead"]
 # 2026-11-12: 14 of 29 takes failed "not hard tech" (kick and bass too light or too clean), so
 # every bass and kit here says distorted, saturated and heavy
-basses = ["heavy distorted rumble bass filling every off-beat after the kick", "saturated reverse bass pulling into every kick",
-  "overdriven off-beat bouncing saw bass", "distorted rolling mid bass", "distorted hoover bass stabs on the off-beat",
-  "overdriven acid 303 bass running sixteenths"]
+basses = ["distorted rumble bass on every off-beat after the kick", "saturated reverse bass into every kick",
+  "overdriven off-beat saw bass", "distorted rolling mid bass", "distorted hoover bass stabs on the off-beat",
+  "overdriven acid 303 bass in sixteenths"]
 drums = ["pounding distorted kick, rumbling tail, off-beat open hats",
-  "heavily distorted pitched rawstyle kick, reverse tail, snare rolls",
+  "distorted rawstyle kick, reverse tail, snare rolls",
   "saturated hard groove kick, swung congas, clipped percussion",
-  "overdriven hard bounce kick, short bouncy tail, tambourine shuffle",
+  "overdriven bounce kick, short tail, tambourine shuffle",
   "distorted industrial kick, metallic hits, rolling sixteenth hats",
-  "distorted hyper kick, fast rolling hats, snare builds"]
+  "distorted hyper kick, rolling hats, snare builds"]
 melodies = ["a two-note call and response hook", "a rising arpeggio in triplets", "an octave-jumping hook",
   "a syncopated stabbing riff", "a sing-along five-note hook", "a falling riff that lands on the downbeat"]
 chords = ["euphoric rave chords", "bold power chords", "glowing open fifths", "bright uplifting chords",
