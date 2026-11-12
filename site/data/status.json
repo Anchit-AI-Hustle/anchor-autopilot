@@ -1,22 +1,24 @@
 {
   "last_run": {
-    "result": "failed",
-    "stage": "make",
-    "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-12T02:21:03Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43101203467"
+    "result": "ok",
+    "stage": "done",
+    "drop_id": "2026-11-11",
+    "title": "Pocket Of Matches",
+    "finished_at": "2026-11-12T08:05:28Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43152179867",
+    "error": null
   },
-  "next_post_at": "2026-11-11T17:30:00Z",
+  "next_post_at": "2026-11-12T17:30:00Z",
   "streak": 18,
   "totals": {
-    "drops": 86
+    "drops": 87
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-12T02:21:03Z",
+  "updated_at": "2026-11-12T08:05:28Z",
   "engine": {
     "engine": "queue",
-    "source_file": "37-red-dust-warning-272d7227.m4a"
+    "source_file": "19-pocket-of-matches-876b951e.m4a"
   }
 }
