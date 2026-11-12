@@ -339,3 +339,10 @@ def test_the_low_end_measure_tells_a_distorted_kick_from_a_light_one():
     ls, lc = songgate.low_end(light.astype(np.float32), sr)
     assert hs >= 0.62 and hc <= 2.72, (hs, hc)
     assert ls < 0.62, (ls, lc)
+
+
+def test_the_hard_tech_kick_and_bass_checks_judge_hard_tech_songs_only():
+    # 2026-11-12: acid, psy and rap takes were failed as "not hard tech"
+    light = {**SUNO_LIKE, "low_end_share": 0.5, "low_end_crest": 3.4}
+    assert {f["check"] for f in songgate.judge(light)} == {"low_end_share", "low_end_crest"}
+    assert songgate.judge(light, hard=False) == []

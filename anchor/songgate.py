@@ -187,9 +187,16 @@ def measure(path):
     return m
 
 
-def judge(m):
+# the two kick-and-bass checks say "hard tech"; they judge hard tech songs only. On 2026-11-12 they
+# were failing acid, psy and rap takes too, and no AI take of the night passed (12 of 12 held)
+HARD_ONLY = ("low_end_share", "low_end_crest")
+
+
+def judge(m, hard: bool = True):
     fails = []
     for name, (direction, limit, words, unit) in CHECKS.items():
+        if name in HARD_ONLY and not hard:
+            continue
         v = m.get(name)
         if v is None:                 # measured before this check existed
             continue
@@ -217,10 +224,11 @@ def score(m: dict) -> float:
     return round(total / n, 4) if n else 0.0
 
 
-def check(path: Path | str) -> dict:
-    """The verdict on one file: {"verdict": PASS/FAIL, "measures": {...}, "fails": [...]}."""
+def check(path: Path | str, hard: bool = True) -> dict:
+    """The verdict on one file: {"verdict": PASS/FAIL, "measures": {...}, "fails": [...]}.
+    ``hard``: the song is hard tech, so its kick and bass are judged as hard tech too."""
     m = measure(str(path))
-    fails = judge(m)
+    fails = judge(m, hard)
     return {"verdict": "FAIL" if fails else "PASS", "measures": m, "fails": fails}
 
 
