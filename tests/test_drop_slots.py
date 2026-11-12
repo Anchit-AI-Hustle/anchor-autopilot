@@ -99,7 +99,8 @@ def test_one_run_a_day_after_the_quota_reset_and_a_backup_that_fills_gaps():
     # Mac first (2026-11-11): later runs wait for the Mac, the 19:37 run is the CPU fallback
     assert sorted(crons[2:]) == ["37 10 * * *", "37 16 * * *", "37 19 * * *"]
     assert all(int(c.split()[1]) >= 8 for c in crons), "after the Pacific quota reset all year (08:00 UTC in winter)"
-    assert "group: daily-drop\n  cancel-in-progress: false" in WORKFLOW, "the runs go one after the other"
+    assert "|| 'daily-drop' }}\n  cancel-in-progress: false" in WORKFLOW, "the runs that post go one after the other"
+    assert "inputs.dry_run && format('daily-render-{0}', github.run_id)" in WORKFLOW, "a render-only run never waits"
     for other in ("fullvideos.yml", "uploads.yml"):
         text = (ROOT / ".github" / "workflows" / other).read_text()
         hour = int(re.search(r'- cron: "\d+ (\d+) ', text).group(1))

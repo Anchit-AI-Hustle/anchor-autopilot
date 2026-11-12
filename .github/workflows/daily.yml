@@ -56,7 +56,9 @@ permissions:
   actions: write   # the Mac watch: cancel a run whose Mac never picked it up and start it on GitHub's CPU
 
 concurrency:
-  group: daily-drop
+  # runs that post go one after the other; a render-only run (dry_run) posts nothing, so it renders
+  # beside them (2026-11-12: a run waiting hours for the YouTube quota held the idle Mac back)
+  group: ${{ inputs.dry_run && format('daily-render-{0}', github.run_id) || 'daily-drop' }}
   cancel-in-progress: false
 
 env:
