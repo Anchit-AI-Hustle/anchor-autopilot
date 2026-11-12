@@ -183,15 +183,17 @@ chords = ["bright uplifting chords", "warm feel-good chords", "playful major cho
 leads = ["screeching rawstyle lead", "hoover synth lead", "detuned supersaw stab lead", "distorted acid 303 lead",
   "pitched rave piano stabs", "wide trance supersaw lead", "laser zap lead", "gritty reese lead",
   "bright brass stab lead", "chopped vocal chop lead"]
-basses = ["rumble bass filling every off-beat after the kick", "reverse bass pulling into every kick",
-  "off-beat bouncing saw bass", "distorted rolling mid bass", "hoover bass stabs on the off-beat",
-  "acid 303 bass running sixteenths"]
+# 2026-11-12: 14 of 29 takes failed "not hard tech" (kick and bass too light or too clean), so
+# every bass and kit here says distorted, saturated and heavy
+basses = ["heavy distorted rumble bass filling every off-beat after the kick", "saturated reverse bass pulling into every kick",
+  "overdriven off-beat bouncing saw bass", "distorted rolling mid bass", "distorted hoover bass stabs on the off-beat",
+  "overdriven acid 303 bass running sixteenths"]
 drums = ["pounding distorted kick, rumbling tail, off-beat open hats",
-  "pitched rawstyle kick, reverse tail, snare rolls",
-  "hard groove kick, swung congas, clipped percussion",
-  "hard bounce kick, short bouncy tail, tambourine shuffle",
-  "industrial kick, metallic hits, rolling sixteenth hats",
-  "hyper kick, fast rolling hats, snare builds"]
+  "heavily distorted pitched rawstyle kick, reverse tail, snare rolls",
+  "saturated hard groove kick, swung congas, clipped percussion",
+  "overdriven hard bounce kick, short bouncy tail, tambourine shuffle",
+  "distorted industrial kick, metallic hits, rolling sixteenth hats",
+  "distorted hyper kick, fast rolling hats, snare builds"]
 melodies = ["a two-note call and response hook", "a rising arpeggio in triplets", "an octave-jumping hook",
   "a syncopated stabbing riff", "a sing-along five-note hook", "a falling riff that lands on the downbeat"]
 chords = ["euphoric rave chords", "bold power chords", "glowing open fifths", "bright uplifting chords",

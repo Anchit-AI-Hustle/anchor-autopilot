@@ -96,6 +96,29 @@ def time_for_another_take(deadline: float | None, take_s: list[float], margin_s:
     return time.time() + max(take_s) * 1.1 + margin_s < deadline
 
 
+def to_tempo(raw: Path, stats_audio: dict, brief: dict, engine: str | None) -> tuple[Path, dict]:
+    """A take that landed up to a fifth slower than asked is sped up to the asked tempo, pitch
+    kept (ffmpeg atempo), instead of being made again (2026-11-12: 7 of 29 AI takes landed near
+    150 BPM when 165 to 175 was asked). The song gets shorter by the same factor, so its target
+    length follows. The fixture tone loop is left alone."""
+    est, target = stats_audio.get("bpm_est"), float(brief["bpm"])
+    if not est or engine == "fixture":
+        return raw, stats_audio
+    near = min((est, est * 2, est / 2), key=lambda e: abs(e - target))
+    ratio = target / near
+    if not (1.0 / 0.94 <= ratio <= 1.2):
+        return raw, stats_audio
+    import subprocess
+    out = Path(raw).with_name(Path(raw).stem + "-tempo.wav")
+    subprocess.run(["ffmpeg", "-y", "-hide_banner", "-v", "error", "-i", str(raw), "-filter:a", f"atempo={ratio:.5f}",
+                    "-ar", "48000", str(out)], check=True, timeout=600)
+    fixed = analyze(decode(out))
+    log(f"make: take landed at {est} BPM, asked {target:g}: sped up x{ratio:.3f} -> {fixed.get('bpm_est')} BPM, "
+        f"{fixed['duration_s']}s")
+    brief["duration_s"] = fixed["duration_s"]
+    return out, fixed
+
+
 def take_plan(profile: Profile, retries: int) -> tuple[int, int]:
     """(takes, best_of): how many takes a slot may render, and after how many passing takes it
     stops and keeps the best. The renderer the run picked sets them ([music.renderers]: the
@@ -196,6 +219,7 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             f"{brief['family_name']} | seed {brief['seed']} | take {attempt + 1} of {takes}")
         raw, stats = engine.generate(brief, out_dir / f"gen-{attempt}")
         stats_audio = analyze(decode(raw))
+        raw, stats_audio = to_tempo(raw, stats_audio, brief, stats.get("engine"))
         ok, fails, warns = quality_gate(stats_audio, brief)
         if stats.get("engine") == "fixture":
             # the test engine is a fixed tone loop: its tempo is not a take to make again
@@ -236,6 +260,8 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
                 ok = False
                 fails = [*fails, f"title sung wrong, not standard English: {', '.join(heard['misheard'])}"]
                 misheard_titles.append(brief["title"])
+            if heard.get("variant"):
+                warns = [*warns, f"title word also heard as a variant: {', '.join(heard['variant'])}"]
             if not heard["checked"]:
                 warns = [*warns, "lyrics not checked: the recogniser was unavailable"]
         entry = {"attempt": attempt, "seed": brief["seed"], "ok": ok, "fail": fails, "warn": warns,

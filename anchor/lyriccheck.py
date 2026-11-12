@@ -207,12 +207,17 @@ def check(audio: Path, sheet: str | None, title: str | None = None) -> dict:
     notes = sung_notes(heard, sheet)
     sung = sung_lines(sheet)
     # the title is judged only when the sheet sings it (a queued song's sheet may be unknown)
-    misheard = (misheard_title(heard, title, sheet=sheet)
-                if title and any(title.lower() in ln.lower() for ln in sung) else [])
+    chanted = bool(title and any(title.lower() in ln.lower() for ln in sung))
+    # a title word mostly heard as something else is sung wrong ("Bolts" heard as "boats" every
+    # time); one heard right most of the time and as a variant now and then ("kinetic" 9 times,
+    # "kinected" 4) is only a note (2026-11-12: 10 of 29 AI takes were sent back for one word in a
+    # fast chant, and 1 of 29 passed)
+    misheard = misheard_title(heard, title, sheet=sheet, min_exact=0.4) if chanted else []
+    variant = [w for w in (misheard_title(heard, title, sheet=sheet) if chanted else []) if w not in misheard]
     log(f"lyriccheck: {len(_words(heard))} words heard; "
         + (f"SINGS PRODUCTION NOTES: {notes}" if notes else "only the written lyrics")
         + (f"; TITLE SUNG WRONG: {misheard}" if misheard else ""))
-    return {"heard": heard, "notes": notes, "misheard": misheard, "checked": True}
+    return {"heard": heard, "notes": notes, "misheard": misheard, "variant": variant, "checked": True}
 
 
 VERIFIED = Path(__file__).resolve().parent.parent / "site" / "data" / "lyrics_verified.json"
