@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-12-5",
-    "title": "Backseat Lottery",
-    "finished_at": "2026-11-12T12:54:58Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43218167813",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-13T21:39:25Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43465411647"
   },
   "next_post_at": "2026-11-13T17:30:00Z",
   "streak": 20,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-12T12:54:58Z",
+  "updated_at": "2026-11-13T21:39:25Z",
   "engine": {
     "engine": "queue",
     "source_file": "53-backseat-lottery-841dc942.m4a"
