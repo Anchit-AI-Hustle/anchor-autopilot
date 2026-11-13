@@ -2,31 +2,31 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-13-4",
-    "title": "Honest Wounds Heal",
-    "finished_at": "2026-11-13T21:42:14Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43512536681",
+    "drop_id": "2026-11-13-2",
+    "title": "Chase The First Light",
+    "finished_at": "2026-11-13T21:44:40Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43512815886",
     "error": null
   },
   "next_post_at": "2026-11-14T17:30:00Z",
-  "streak": 20,
+  "streak": 21,
   "totals": {
-    "drops": 92
+    "drops": 94
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-13T21:42:14Z",
+  "updated_at": "2026-11-13T21:44:40Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
     "steps": 8,
     "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
     "guidance": 1.0,
-    "lm_ms": 166798,
-    "ref_audio": "ANCHOR-2026-09-14-crossing-the-threshold.mp3",
-    "dit_ms": 147848,
-    "vae_ms": 139780,
-    "total_s": 625.8
+    "lm_ms": 136947,
+    "ref_audio": "ANCHOR-2026-09-13-project-mayhem.mp3",
+    "dit_ms": 91690,
+    "vae_ms": 255358,
+    "total_s": 760.6
   }
 }
