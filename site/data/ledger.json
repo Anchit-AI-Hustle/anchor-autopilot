@@ -1,6 +1,752 @@
 {
   "entries": [
     {
+      "id": "2026-11-13-4",
+      "date": "2026-11-13",
+      "title": "Honest Wounds Heal",
+      "source": "pipeline",
+      "made_at": "2026-11-13T21:19:17Z",
+      "recorded_at": "2026-11-13T21:42:13Z",
+      "lane": "Hardstyle Hard Techno",
+      "bpm": 169,
+      "family": "Furnace",
+      "accent": "#ff3b1f",
+      "cover": "covers/2026-11-13-4.jpg",
+      "engine": {
+        "name": "acestep_cpp",
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "render_s": 625.8,
+        "fallback_from": null
+      },
+      "variants": [
+        {
+          "kind": "audio",
+          "label": "attempt 0",
+          "seed": 1270909724,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "song gate: no part sounds different from the rest (one loop start to finish) (most_different_parts -0.204, limit -0.2545)",
+            "song gate: the music keeps breaking off in the middle (breaks 6, limit 4)"
+          ],
+          "warn": [
+            "tempo landed at 163.0 BPM (asked 169)"
+          ],
+          "nearest": "2026-09-24",
+          "score": 0.453,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 1",
+          "seed": 1650485945,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "song gate: the music keeps breaking off in the middle (breaks 5, limit 4)"
+          ],
+          "warn": [
+            "title word also heard as a variant: heal"
+          ],
+          "nearest": "2026-10-04",
+          "score": 0.449,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 2",
+          "seed": 1308004065,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "song gate: the music cuts to silence in the middle (silence_holes 1, limit 0)"
+          ],
+          "warn": [],
+          "nearest": "legacy-no-control",
+          "score": 0.32,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 3",
+          "seed": 169317301,
+          "ok": true,
+          "chosen": true,
+          "fail": [],
+          "warn": [
+            "title word also heard as a variant: wounds, heal"
+          ],
+          "nearest": "2026-10-09",
+          "score": 0.496,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 169317301",
+          "seed": 169317301,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "motif too close to 2026-11-08 (72/256)"
+          ],
+          "warn": [],
+          "nearest": "2026-11-08",
+          "score": 71.5,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 169317302",
+          "seed": 169317302,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "motif too close to 2026-11-10-4 (76/256)"
+          ],
+          "warn": [],
+          "nearest": "2026-11-10-4",
+          "score": 75.5,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 169317303",
+          "seed": 169317303,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "motif too close to 2026-09-24 (80/256)"
+          ],
+          "warn": [],
+          "nearest": "2026-09-24",
+          "score": 80.5,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 169317304",
+          "seed": 169317304,
+          "ok": true,
+          "chosen": true,
+          "fail": [],
+          "warn": [],
+          "nearest": "2026-10-30-3",
+          "score": 91.0,
+          "note": null
+        }
+      ],
+      "files": [
+        {
+          "role": "master",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal.mp3",
+          "spec": "MP3 320k, ID3 tagged, -14.05 LUFS"
+        },
+        {
+          "role": "master (lossless)",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal.flac",
+          "spec": "FLAC, same master"
+        },
+        {
+          "role": "short 9:16",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal-short.mp4",
+          "spec": "1080x1920 30.0 fps, 45 s"
+        },
+        {
+          "role": "full video 16:9",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal-full-169.mp4",
+          "spec": "1920x1080, 244 s"
+        },
+        {
+          "role": "reel 9:16",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal-full-916.mp4",
+          "spec": "1080x1920, 244 s"
+        },
+        {
+          "role": "cover",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal-cover.jpg",
+          "spec": "1440x1440 square, type set"
+        },
+        {
+          "role": "thumbnail 16:9",
+          "file": "frame-169.jpg",
+          "spec": "1920x1080 frame, type over the raw art"
+        }
+      ],
+      "uploads": [
+        {
+          "target": "youtube_full",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal-full-169.mp4",
+          "status": "public",
+          "url": "https://youtu.be/e-NP0Ysb1NY",
+          "post_id": "e-NP0Ysb1NY",
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "youtube_short",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal-short.mp4",
+          "status": "sent",
+          "url": "https://www.youtube.com/watch?v=jaLLP8lp5l0",
+          "post_id": "6af78432d16af15d4dd55583",
+          "due_at": "2026-11-13T21:42:10.384Z",
+          "error": null
+        },
+        {
+          "target": "instagram_reel",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal-full-916.mp4",
+          "status": "error",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+        },
+        {
+          "target": "github_release",
+          "file": "ANCHOR-2026-11-13-honest-wounds-heal.mp3",
+          "status": "released",
+          "url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-13-4",
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "site",
+          "file": "cover_600.jpg",
+          "status": "listed",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        }
+      ],
+      "fields": [
+        {
+          "field": "source",
+          "value": "generated by acestep_cpp (acestep-v15-xl-sftturbo50-Q8_0.gguf)",
+          "rule": "Nothing queued, so the engine generated the record from the brief.",
+          "evidence": "4 attempt(s); chosen seed 169317301",
+          "group": "record"
+        },
+        {
+          "field": "sound lane",
+          "value": "Hardstyle Hard Techno",
+          "rule": "Weighted pick from the profile's lanes: never the lane of the previous drop, lanes used in the last three drops down-weighted. Seeded by the date, so a rerun picks the same lane.",
+          "evidence": "lane weight 1; genre line: Hardstyle Hard Techno, Hard Techno, Hardstyle",
+          "group": "record"
+        },
+        {
+          "field": "bpm",
+          "value": 169,
+          "rule": "Random tempo inside the lane's BPM range; the published tempo follows the audio when the measured tempo differs by more than 1 BPM (the model treats BPM as guidance).",
+          "evidence": "in the lane's range 160-170; audio measured 170.0",
+          "group": "record"
+        },
+        {
+          "field": "key",
+          "value": "G# minor",
+          "rule": "Random key not used in the last three drops; replaced by the key actually heard in the audio when the detector is confident (>= 0.25). Kept off every public surface.",
+          "evidence": "asked C major, heard G# minor (confidence 0.53)",
+          "group": "record"
+        },
+        {
+          "field": "duration",
+          "value": "245 s",
+          "rule": "Drawn for the day inside the profile's duration range; every drop is a complete arrangement whose shape is also drawn for the day, so no two records share a timeline.",
+          "evidence": "shape peak",
+          "group": "record"
+        },
+        {
+          "field": "quality gate",
+          "value": "pass",
+          "rule": "Each attempt must be finite audio at the right length, no dropouts, no clipping, tempo near the brief, and must not resemble a released drop: loudness envelope correlation <= 0.8 and spectral-sequence correlation <= 0.75 against every released master. A fail is regenerated with the next seed.",
+          "evidence": "nearest released audio 2026-10-09 at envelope 0.496, spectral sequence 0.179; warnings: title word also heard as a variant: wounds, heal",
+          "group": "record"
+        },
+        {
+          "field": "craft",
+          "value": "phone share 0.443, width 0.242, 4 breakdown(s)",
+          "rule": "What the channel's best records share (measured 2026-09-23): a generated take needs a breakdown of 8 s or more at least 8 dB under the peak and a sound that moves, or it is regenerated while seeds remain; every record then gets the finishing pass (bass harmonics where a phone plays them, the kick's click and air lifted, wider above 250 Hz, mono below), only as much as it needs.",
+          "evidence": "before the pass: phone share 0.443, width 0.205; pass tone 0.0, width 0.09",
+          "group": "record"
+        },
+        {
+          "field": "master loudness",
+          "value": "-14.05 LUFS / -1.79 dBTP",
+          "rule": "Mastered to -14.0 LUFS integrated with a -1.5 dBTP ceiling (YouTube plays everything at -14, so the master sits at that level with headroom for the AAC encoder instead of being turned down) and a 3.0 s outro fade.",
+          "evidence": "before -13.58 LUFS; gain -0.42 dB",
+          "group": "record"
+        },
+        {
+          "field": "title",
+          "value": "Honest Wounds Heal",
+          "rule": "Drawn from the title word bank: never repeats a title on the channel, avoids every word used in the last ten titles, never doubles a word. Seeded by the date.",
+          "evidence": "no sung hook found",
+          "group": "content"
+        },
+        {
+          "field": "youtube title",
+          "value": "Honest Wounds Heal | Hardstyle Hard Techno | ANCHOR",
+          "rule": "The track's name first, then the lane's genre phrase and the tempo, then the artist ('Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR'): search matches the words in the title, and the bare name scored 62 against 70 for this form (vidIQ, 2026-09-23).",
+          "evidence": "51 chars; genre phrase 'Hardstyle Hard Techno'",
+          "group": "content"
+        },
+        {
+          "field": "description",
+          "value": "Hardstyle Hard Techno. An ANCHOR original, free download below.\n\nA song about pride says keep the hurt covered, the heart says let it breathe, and I learn that only the wound I show can close. Hard, dry, and in no hurry. Lights off. Let it run.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardstylehardtechno #hardtechno #techno",
+          "rule": "One search line first (genre phrase, tempo, artist), because that is the line YouTube shows under the title; then the vibe and the theme of the record in two to four sentences that build like an intro, nothing mechanical (no timestamps, no section names); then the playlist, site and Instagram, the AI disclosure, ©, three hashtags. Gemini writes the vibe from the brief's mood and theme and any clock time or hype word is rejected; the template writes it when there is no key.",
+          "evidence": "written by template; arc: 3 drop(s), 6 breakdown(s); mood: 'confident from bar one, harder every drop, ending on one big kick'",
+          "group": "content"
+        },
+        {
+          "field": "tags",
+          "value": [
+            "hardstyle techno",
+            "hard techno",
+            "hardstyle",
+            "industrial techno",
+            "hard techno 2026",
+            "techno",
+            "techno visualizer",
+            "anchor techno",
+            "techno official visualizer",
+            "hardstyle hard techno",
+            "169 bpm techno",
+            "techno 2026",
+            "ai techno",
+            "techno full track"
+          ],
+          "rule": "Lane tags first (the niche), then the channel's base tags, the genre phrase, '<BPM> bpm techno', the year, 'ai techno' and 'techno full track'; duplicates removed, order kept so the most specific tags lead.",
+          "evidence": "14 tags",
+          "group": "content"
+        },
+        {
+          "field": "instagram caption",
+          "value": "Hardstyle Hard Techno. An ANCHOR original, free download below.\n\nA song about pride says keep the hurt covered, the heart says let it breathe, and I learn that only the wound I show can close. Hard, dry, and in no hurry. Lights off. Let it run.\n\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno #technomusic #psytechno #hardbounce #peaktimetechno #rawtechno #undergroundtechno #technoreel #electronicmusic #aimusic #newmusic #technolovers #rave #clubmusic #technodaily #psychedelictechno #anchortechno",
+          "rule": "The same copy as YouTube, the genre line, the site link, then the channel's Instagram hashtag set (broader than YouTube's three).",
+          "evidence": null,
+          "group": "content"
+        },
+        {
+          "field": "category",
+          "value": "Music (10)",
+          "rule": "YouTube category id from the profile; every drop is a song.",
+          "evidence": "sent as categoryId 10",
+          "group": "platform"
+        },
+        {
+          "field": "privacy",
+          "value": "public",
+          "rule": "Public on publish; Buffer schedules the post for the drop's slot.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "AI disclosure",
+          "value": "on",
+          "rule": "YouTube 'altered or synthetic content' flag and Instagram AI label are always on: the audio is model-generated and the channel says so in every description too.",
+          "evidence": "isAiGenerated=True",
+          "group": "platform"
+        },
+        {
+          "field": "made for kids",
+          "value": "no",
+          "rule": "Club music for adults; never marked for kids (which would strip comments, end screens and personalised ads).",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "notify subscribers",
+          "value": "yes",
+          "rule": "Subscribers get the bell on every drop; the cadence is every second day, so it never spams.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "licence",
+          "value": "Standard YouTube licence",
+          "rule": "Standard, not Creative Commons: the channel keeps its rights; the © line in the description says the same.",
+          "evidence": "set in the channel's upload defaults",
+          "group": "platform"
+        },
+        {
+          "field": "language",
+          "value": "English",
+          "rule": "Title and description language and video language both English (channel default), so YouTube can index and translate the copy.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "post time",
+          "value": "2026-11-13T23:00:00Z",
+          "rule": "17:30 UTC (23:00 IST): late-evening India, afternoon Europe, morning US - the widest awake techno audience. One drop every 1 day(s) from 2026-09-20.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "visual family",
+          "value": "Furnace (#ff3b1f)",
+          "rule": "One of the profile's palettes, never one used in the last three drops, so consecutive covers read differently on the channel grid.",
+          "evidence": null,
+          "group": "visual"
+        },
+        {
+          "field": "cover",
+          "value": "procedural",
+          "rule": "Procedural art drawn from the family's forms and the date seed; redrawn from the next seed until it is at least 84/256 away from every cover already on the site.",
+          "evidence": "nearest existing cover 2026-10-30-3 at distance 91.0",
+          "group": "visual"
+        },
+        {
+          "field": "thumbnail 16:9",
+          "value": "frame-169.jpg",
+          "rule": "Drawn for the phone: the title in Anton at up to 300 px on a left scrim, the lane and BPM under it at 90 px, hard shadow; no wordmark, because the channel name is printed under the thumbnail anyway. Legible at the 336×189 px a phone shows.",
+          "evidence": null,
+          "group": "visual"
+        },
+        {
+          "field": "short window",
+          "value": "85.2 s for 45.4 s",
+          "rule": "The loudest, busiest 45 s of the master snapped to whole bars, with the pulse locked to the beat grid of that cut.",
+          "evidence": "beat offset 0.0183 s",
+          "group": "visual"
+        }
+      ]
+    },
+    {
+      "id": "2026-11-13-3",
+      "date": "2026-11-13",
+      "title": "Stomping The Earth Awake",
+      "source": "pipeline",
+      "made_at": "2026-11-13T18:27:25Z",
+      "recorded_at": "2026-11-13T21:42:00Z",
+      "lane": "Psychedelic Hip Hop Techno",
+      "bpm": 176,
+      "family": "Prism",
+      "accent": "#f4f4f6",
+      "cover": "covers/2026-11-13-3.jpg",
+      "engine": {
+        "name": "acestep_cpp",
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "render_s": 392.5,
+        "fallback_from": null
+      },
+      "variants": [
+        {
+          "kind": "audio",
+          "label": "attempt 0",
+          "seed": 118553453,
+          "ok": false,
+          "chosen": false,
+          "fail": [
+            "title sung wrong, not standard English: starve"
+          ],
+          "warn": [],
+          "nearest": "2026-11-10",
+          "score": 0.462,
+          "note": null
+        },
+        {
+          "kind": "audio",
+          "label": "attempt 1",
+          "seed": 896681615,
+          "ok": true,
+          "chosen": true,
+          "fail": [],
+          "warn": [],
+          "nearest": "2026-09-15",
+          "score": 0.441,
+          "note": null
+        },
+        {
+          "kind": "cover",
+          "label": "cover seed 896681615",
+          "seed": 896681615,
+          "ok": true,
+          "chosen": true,
+          "fail": [],
+          "warn": [],
+          "nearest": "2026-11-02-3",
+          "score": 88.5,
+          "note": null
+        }
+      ],
+      "files": [
+        {
+          "role": "master",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake.mp3",
+          "spec": "MP3 320k, ID3 tagged, -14.1 LUFS"
+        },
+        {
+          "role": "master (lossless)",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake.flac",
+          "spec": "FLAC, same master"
+        },
+        {
+          "role": "short 9:16",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake-short.mp4",
+          "spec": "1080x1920 30.0 fps, 45 s"
+        },
+        {
+          "role": "full video 16:9",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake-full-169.mp4",
+          "spec": "1920x1080, 220 s"
+        },
+        {
+          "role": "reel 9:16",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake-full-916.mp4",
+          "spec": "1080x1920, 220 s"
+        },
+        {
+          "role": "cover",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake-cover.jpg",
+          "spec": "1440x1440 square, type set"
+        },
+        {
+          "role": "thumbnail 16:9",
+          "file": "frame-169.jpg",
+          "spec": "1920x1080 frame, type over the raw art"
+        }
+      ],
+      "uploads": [
+        {
+          "target": "youtube_full",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake-full-169.mp4",
+          "status": "public",
+          "url": "https://youtu.be/EWh2bkN1ppo",
+          "post_id": "EWh2bkN1ppo",
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "youtube_short",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake-short.mp4",
+          "status": "sent",
+          "url": "https://www.youtube.com/watch?v=9K0RSl3CjpQ",
+          "post_id": "6af784244b28296eb118d78c",
+          "due_at": "2026-11-13T21:41:56.993Z",
+          "error": null
+        },
+        {
+          "target": "instagram_reel",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake-full-916.mp4",
+          "status": "error",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+        },
+        {
+          "target": "github_release",
+          "file": "ANCHOR-2026-11-13-stomping-the-earth-awake.mp3",
+          "status": "released",
+          "url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-13-3",
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "site",
+          "file": "cover_600.jpg",
+          "status": "listed",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        }
+      ],
+      "fields": [
+        {
+          "field": "source",
+          "value": "generated by acestep_cpp (acestep-v15-xl-sftturbo50-Q8_0.gguf)",
+          "rule": "Nothing queued, so the engine generated the record from the brief.",
+          "evidence": "2 attempt(s); chosen seed 896681615",
+          "group": "record"
+        },
+        {
+          "field": "sound lane",
+          "value": "Psychedelic Hip Hop Techno",
+          "rule": "Weighted pick from the profile's lanes: never the lane of the previous drop, lanes used in the last three drops down-weighted. Seeded by the date, so a rerun picks the same lane.",
+          "evidence": "lane weight 2; genre line: Psychedelic Hip Hop, Hip Hop Techno, Hard Techno",
+          "group": "record"
+        },
+        {
+          "field": "bpm",
+          "value": 176,
+          "rule": "Random tempo inside the lane's BPM range; the published tempo follows the audio when the measured tempo differs by more than 1 BPM (the model treats BPM as guidance).",
+          "evidence": "in the lane's range 176-190; audio measured 176.5",
+          "group": "record"
+        },
+        {
+          "field": "key",
+          "value": "F# major",
+          "rule": "Random key not used in the last three drops; replaced by the key actually heard in the audio when the detector is confident (>= 0.25). Kept off every public surface.",
+          "evidence": "asked Bb major, heard F# major (confidence 0.46)",
+          "group": "record"
+        },
+        {
+          "field": "duration",
+          "value": "224 s",
+          "rule": "Drawn for the day inside the profile's duration range; every drop is a complete arrangement whose shape is also drawn for the day, so no two records share a timeline.",
+          "evidence": "shape twice",
+          "group": "record"
+        },
+        {
+          "field": "quality gate",
+          "value": "pass",
+          "rule": "Each attempt must be finite audio at the right length, no dropouts, no clipping, tempo near the brief, and must not resemble a released drop: loudness envelope correlation <= 0.8 and spectral-sequence correlation <= 0.75 against every released master. A fail is regenerated with the next seed.",
+          "evidence": "nearest released audio 2026-09-15 at envelope 0.441, spectral sequence 0.157; warnings: none",
+          "group": "record"
+        },
+        {
+          "field": "craft",
+          "value": "phone share 0.55, width 0.277, 2 breakdown(s)",
+          "rule": "What the channel's best records share (measured 2026-09-23): a generated take needs a breakdown of 8 s or more at least 8 dB under the peak and a sound that moves, or it is regenerated while seeds remain; every record then gets the finishing pass (bass harmonics where a phone plays them, the kick's click and air lifted, wider above 250 Hz, mono below), only as much as it needs.",
+          "evidence": "before the pass: phone share 0.55, width 0.14; pass tone 0.0, width 0.45",
+          "group": "record"
+        },
+        {
+          "field": "master loudness",
+          "value": "-14.1 LUFS / -1.78 dBTP",
+          "rule": "Mastered to -14.0 LUFS integrated with a -1.5 dBTP ceiling (YouTube plays everything at -14, so the master sits at that level with headroom for the AAC encoder instead of being turned down) and a 3.0 s outro fade.",
+          "evidence": "before -16.93 LUFS; gain 2.93 dB",
+          "group": "record"
+        },
+        {
+          "field": "title",
+          "value": "Stomping The Earth Awake",
+          "rule": "Drawn from the title word bank: never repeats a title on the channel, avoids every word used in the last ten titles, never doubles a word. Seeded by the date.",
+          "evidence": "no sung hook found",
+          "group": "content"
+        },
+        {
+          "field": "youtube title",
+          "value": "Stomping The Earth Awake | Psychedelic Hip Hop | ANCHOR",
+          "rule": "The track's name first, then the lane's genre phrase and the tempo, then the artist ('Rupture Pulse | Industrial Hard Techno 154 BPM | ANCHOR'): search matches the words in the title, and the bare name scored 62 against 70 for this form (vidIQ, 2026-09-23).",
+          "evidence": "55 chars; genre phrase 'Psychedelic Hip Hop'",
+          "group": "content"
+        },
+        {
+          "field": "description",
+          "value": "Psychedelic Hip Hop. An ANCHOR original, free download below.\n\nA song about a crowd of strangers at midnight turns the dance floor into a ceremony until the ground itself seems to wake up. Hard, dry, and in no hurry. Dreamy and swaying, sharpening at every switch, landing on one bright hook. A scratch fill on the boom bap, then the four-on-the-floor slams in. Once it starts there's no way back up. You won't want one.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#psychedelichiphop #hardtechno #techno",
+          "rule": "One search line first (genre phrase, tempo, artist), because that is the line YouTube shows under the title; then the vibe and the theme of the record in two to four sentences that build like an intro, nothing mechanical (no timestamps, no section names); then the playlist, site and Instagram, the AI disclosure, ©, three hashtags. Gemini writes the vibe from the brief's mood and theme and any clock time or hype word is rejected; the template writes it when there is no key.",
+          "evidence": "written by template; arc: 4 drop(s), 2 breakdown(s); mood: 'dreamy and swaying, sharpening at every switch, landing on one bright hook'",
+          "group": "content"
+        },
+        {
+          "field": "tags",
+          "value": [
+            "psychedelic hip hop",
+            "hip hop techno",
+            "acid hip hop",
+            "rap techno",
+            "hard techno",
+            "techno",
+            "techno visualizer",
+            "anchor techno",
+            "techno official visualizer",
+            "176 bpm techno",
+            "techno 2026",
+            "ai techno",
+            "techno full track"
+          ],
+          "rule": "Lane tags first (the niche), then the channel's base tags, the genre phrase, '<BPM> bpm techno', the year, 'ai techno' and 'techno full track'; duplicates removed, order kept so the most specific tags lead.",
+          "evidence": "13 tags",
+          "group": "content"
+        },
+        {
+          "field": "instagram caption",
+          "value": "Psychedelic Hip Hop. An ANCHOR original, free download below.\n\nA song about a crowd of strangers at midnight turns the dance floor into a ceremony until the ground itself seems to wake up. Hard, dry, and in no hurry. Dreamy and swaying, sharpening at every switch, landing on one bright hook. A scratch fill on the boom bap, then the four-on-the-floor slams in. Once it starts there's no way back up. You won't want one.\n\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno #technomusic #psytechno #hardbounce #peaktimetechno #rawtechno #undergroundtechno #technoreel #electronicmusic #aimusic #newmusic #technolovers #rave #clubmusic #technodaily #psychedelictechno #anchortechno",
+          "rule": "The same copy as YouTube, the genre line, the site link, then the channel's Instagram hashtag set (broader than YouTube's three).",
+          "evidence": null,
+          "group": "content"
+        },
+        {
+          "field": "category",
+          "value": "Music (10)",
+          "rule": "YouTube category id from the profile; every drop is a song.",
+          "evidence": "sent as categoryId 10",
+          "group": "platform"
+        },
+        {
+          "field": "privacy",
+          "value": "public",
+          "rule": "Public on publish; Buffer schedules the post for the drop's slot.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "AI disclosure",
+          "value": "on",
+          "rule": "YouTube 'altered or synthetic content' flag and Instagram AI label are always on: the audio is model-generated and the channel says so in every description too.",
+          "evidence": "isAiGenerated=True",
+          "group": "platform"
+        },
+        {
+          "field": "made for kids",
+          "value": "no",
+          "rule": "Club music for adults; never marked for kids (which would strip comments, end screens and personalised ads).",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "notify subscribers",
+          "value": "yes",
+          "rule": "Subscribers get the bell on every drop; the cadence is every second day, so it never spams.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "licence",
+          "value": "Standard YouTube licence",
+          "rule": "Standard, not Creative Commons: the channel keeps its rights; the © line in the description says the same.",
+          "evidence": "set in the channel's upload defaults",
+          "group": "platform"
+        },
+        {
+          "field": "language",
+          "value": "English",
+          "rule": "Title and description language and video language both English (channel default), so YouTube can index and translate the copy.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "post time",
+          "value": "2026-11-13T21:30:00Z",
+          "rule": "17:30 UTC (23:00 IST): late-evening India, afternoon Europe, morning US - the widest awake techno audience. One drop every 1 day(s) from 2026-09-20.",
+          "evidence": null,
+          "group": "platform"
+        },
+        {
+          "field": "visual family",
+          "value": "Prism (#f4f4f6)",
+          "rule": "One of the profile's palettes, never one used in the last three drops, so consecutive covers read differently on the channel grid.",
+          "evidence": null,
+          "group": "visual"
+        },
+        {
+          "field": "cover",
+          "value": "procedural",
+          "rule": "Procedural art drawn from the family's forms and the date seed; redrawn from the next seed until it is at least 84/256 away from every cover already on the site.",
+          "evidence": "nearest existing cover 2026-11-02-3 at distance 88.5",
+          "group": "visual"
+        },
+        {
+          "field": "thumbnail 16:9",
+          "value": "frame-169.jpg",
+          "rule": "Drawn for the phone: the title in Anton at up to 300 px on a left scrim, the lane and BPM under it at 90 px, hard shadow; no wordmark, because the channel name is printed under the thumbnail anyway. Legible at the 336×189 px a phone shows.",
+          "evidence": null,
+          "group": "visual"
+        },
+        {
+          "field": "short window",
+          "value": "94.4 s for 45.0 s",
+          "rule": "The loudest, busiest 45 s of the master snapped to whole bars, with the pulse locked to the beat grid of that cut.",
+          "evidence": "beat offset 0.2773 s",
+          "group": "visual"
+        }
+      ]
+    },
+    {
       "id": "2026-11-12-5",
       "date": "2026-11-12",
       "title": "Backseat Lottery",
@@ -159,7 +905,7 @@
         {
           "target": "youtube_full",
           "file": "ANCHOR-2026-11-12-backseat-lottery-full-169.mp4",
-          "status": "public",
+          "status": "sent",
           "url": "https://youtu.be/jA5XQP6-vSE",
           "post_id": "jA5XQP6-vSE",
           "due_at": null,
@@ -29764,5 +30510,5 @@
       "note": null
     }
   ],
-  "updated_at": "2026-11-12T12:54:58Z"
+  "updated_at": "2026-11-13T21:42:13Z"
 }
