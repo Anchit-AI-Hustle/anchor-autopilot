@@ -690,3 +690,192 @@ prompt = "A smith seen from behind raising a glowing blade high in a shadowed fo
 part = "Outro"
 hook = false
 prompt = "A quiet forge in the morning with steam rising from a quench barrel, a lone figure seen from behind walking out into daylight, centred, handheld camera settling, soft daylight, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "teeth-in-the-wind"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A young man in a soaked hoodie steps out of a doorway into a raging storm on an empty street, rain blasting sideways, he grins into the wind, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Handheld tracking shot behind a figure walking into horizontal rain on a long bridge, coat flapping wildly, street lamps swaying overhead, the camera shaking in the gusts, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Close up of a laughing face as hailstones bounce off his shoulders and hood, water streaming down his cheeks, lightning flashing white behind him, quick handheld whip, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A lightning bolt splits a purple night sky above rooftops while a lone figure on the roof raises both arms, rain pouring, low angle handheld shot looking up, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Muddy boots stomping through deep puddles on a flooded road, water exploding outward with each step in slow motion, low handheld shot following the feet, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A man shouts into the storm with his teeth bared and arms wide on a hilltop, grass flattened by the wind, rain streaking past the lens, handheld orbit, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Wide shot of trees bending almost to the ground in a gale while a single figure stands upright in the middle of the field, rain sheets moving across, handheld, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A row of warning flags on a wire fence snapping violently in the wind, the fence wobbling, a figure climbing over it in the rain, quick handheld pan, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man tearing wet roof shingles off a small shed and flinging them into the wind, rain pouring down his arms, handheld camera circling at shoulder height, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Rain running in silver sheets off a smiling face tilted up to the sky, eyes closed, water drops glittering in a passing car headlight, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A crowd of friends in rain jackets jumping and shouting together on a flooded street at night, water splashing up around their knees, handheld camera in the middle, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Close up of a soaked figure walking away down a glistening wet street as the storm thins out, first light breaking through clouds ahead, slow handheld follow, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "pressure-makes-diamonds"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A woman in a dark jacket stands in a dusty basement full of coal sacks, a single beam of light falling on her face from a high window, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Close up of hands pressing hard against a heavy stack of crates that will not move, knuckles white, dust drifting in the light, handheld shaking camera, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman lying on a narrow bed counting cracks in a stained ceiling at night, a phone screen glowing beside her, slow overhead handheld drift, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A figure carrying a huge heavy bag across a busy crosswalk at dusk, headlights streaking past, handheld tracking shot from behind at walking pace, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Extreme close up of a rough grey stone cracking open under a hammer, sparks of light glinting inside, slow motion, handheld macro shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman holds a glittering cut gem up to a bright lamp, rainbow light spilling across her face and the wall behind her, slow handheld orbit, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "A dance floor where a crowd jumps as spinning coloured light from a mirror ball sweeps over them, handheld camera moving through the bodies, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman climbing out of a deep stone quarry on a rope at sunrise, dust falling from her boots, handheld camera looking down from the rim, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Close up of scarred hands polishing a rough stone on a spinning wheel, sparks and grit flying, warm workshop light, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman walking through a long hallway of mirrors, her reflection multiplying into hundreds, coloured light glinting off every surface, handheld tracking shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman dancing alone in the middle of a crowded club floor as colour beams split off her sequined jacket, handheld camera circling her, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A small glittering stone resting in an open palm in front of a window at sunrise, light scattering across the room, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "count-me-in"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A young man sitting on a worn couch suddenly jumps up as friends burst through the door shouting, cushions flying, quick handheld whip toward the door, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Close up of a line of shoes by a front door as hands grab a pair and lace them fast, keys jangling, handheld camera following the hands, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A group of friends running down apartment stairs two at a time laughing, the stairwell lights flickering, handheld camera running behind them, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man vaulting over a low garden fence at night as friends cheer from the street, porch lights glowing, slow motion handheld side shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Friends piling into the back of a small open truck under streetlights, waving their arms and shouting, handheld camera bouncing alongside, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A crowd of friends pointing at the camera and shouting together in a packed room, fists in the air, confetti falling, handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Feet jumping on a sticky club floor in slow motion, sneakers lifting off together on the beat, low handheld shot looking up at the lights, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A street parade at midnight growing bigger as strangers join in, people dancing on the pavement, handheld camera walking backwards ahead of them, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man standing on a bench shouting a chant with a crowd answering, streetlights and phone lights all around, handheld low angle, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man kicking open a pair of double doors into a bright noisy party, light flooding out over his grinning face, slow motion handheld, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A group of friends with arms around each other jumping in a circle in the middle of an empty road at night, handheld camera inside the circle, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A grinning man asleep on the back seat of a night bus with friends dozing beside him as sunrise lights the window, slow handheld drift, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"

@@ -642,3 +642,151 @@ It won't last
 Swing
 Now
 """
+
+# Added 2026-11-14 (Anchit: "create as many more songs like this and rap songs also")
+[[songs]]
+id = "teeth-in-the-wind"
+title = "Teeth In The Wind"
+family = "defiance"
+form = "revolt"
+groups = ["rap"]
+model = "A"
+voice = "gravel-voiced male rapper, fast clipped double-time bars with a grin in them, shouted ad libs on the off-beat"
+about = "someone who was told to keep their head down runs straight into the storm and laughs at it"
+lyrics = """
+[Intro]
+They told me to hide from the weather, so I'm walking out with my teeth in the wind
+
+[Verse 1]
+They said keep your collar up and your eyes on the floor and your mouth on a leash in the rain
+I said watch me go out in the thunder with nothing but bones and a smile and a terrible aim
+Every gust is a hand on my chest that is trying to push me back into the line where I came
+So I lean into it harder and laugh at the sky till it gives up on saying my name
+Hail on my shoulders like coins from a crowd that is paying me back for the years that I bent
+Lightning is drawing my picture in white on the clouds and I'm signing the bottom in cement
+Every step is a stomp on the floor of the storm and the floor is a drum and the drum is my friend
+Hundred and seventy beats in my chest and I'm running the gale like I'm running a trend
+
+[Hook]
+Teeth in the wind, teeth in the wind
+
+[Drop]
+Bite it, ride it
+
+[Verse 2]
+Now the trees on the hill bow down to the gust and I'm the only thing standing up in the field
+Every warning they gave me is flapping like flags on a fence and the fence is about to yield
+They built me a roof and they told me to stay, said the sky was a weapon they wouldn't wield
+I tore off the shingles and climbed to the top and I howled at the cloud till the cloud had to kneel
+Water is pouring in sheets off my face and I taste it like silver and swallow it down
+Every drop that was meant to be heavy is light when you wear it as rain on a crown
+They will tell you to wait for the sun to come out but the sun is a liar who sleeps in the town
+I was born in the squall and I grew in the gale and I never once looked for the ground
+
+[Hook]
+Teeth in the wind, teeth in the wind
+
+[Outro]
+Feel that
+That's not a storm
+That's applause
+Keep walking
+"""
+
+[[songs]]
+id = "pressure-makes-diamonds"
+title = "Pressure Makes Diamonds"
+family = "truth"
+form = "argument"
+groups = ["rap"]
+model = "A"
+voice = "smooth female rapper with a husky low register, precise rolling triplet flow, every last word of a bar landed hard"
+about = "someone under every kind of weight decides the weight is what is making them shine"
+lyrics = """
+[Intro]
+Everybody wants the shine but nobody wants the squeeze, pressure makes diamonds
+
+[Verse 1]
+I was coal in the corner, the dust on the shelf that they swept to the side of the room
+Every hand that came near me was heavy, the weight of a mountain, the weight of a tomb
+They kept stacking it higher, the rent and the rumours, the doubts and the deadlines, the gloom
+And I sat in the middle and held it so long that the dark in me started to bloom
+Every night was a vice on my ribs and I counted the cracks in the ceiling like stars
+Every morning I stood with the load on my back and I walked it through traffic and bars
+Now they ask me the secret, the way that I glitter, the light that I throw from my scars
+I just smile and I tell them I never got lighter, I learned how to carry it far
+
+[Hook]
+Pressure makes diamonds, pressure makes diamonds
+
+[Drop]
+Squeeze it, shine
+
+[Verse 2]
+Now the rock that they buried me under is lifting, I'm cutting my way to the air
+Every edge on my body was made by a moment I thought I would break in despair
+Every facet a night that I wanted to quit and I stayed and I stared at the stare
+Hold me up to the lights in the room and the colours go spinning in rings everywhere
+They want diamonds for nothing, the sparkle with none of the years in the dirt and the heat
+I want every last pound that it took, I want every last blister and burn on my feet
+Put the weight on my shoulders again, put the world on my back, put the drums on repeat
+I will turn it to light on the floor, I will hand you the glow, I will make it complete
+
+[Hook]
+Pressure makes diamonds, pressure makes diamonds
+
+[Outro]
+Hold it to the light
+See that
+That's the weight
+Shining
+"""
+
+[[songs]]
+id = "count-me-in"
+title = "Count Me In"
+family = "drive"
+form = "celebration"
+groups = ["rap"]
+model = "A"
+voice = "cheeky high-energy male rapper, bouncy staccato flow that laughs at its own punchlines, a crowd of friends shouting the hook"
+about = "someone who sat out every adventure says yes to everything tonight and drags the whole room with them"
+lyrics = """
+[Intro]
+Somebody said they were going all night, and I said count me in
+
+[Verse 1]
+I was the one on the couch with the excuses lined up in a row like shoes at the door
+Every invite was a maybe, a later, a next time, a sorry I'm tired, a sorry I'm sore
+Tonight I am lacing them up and I'm out of the house before anybody asks me for more
+If you're jumping the fence I'm already over, if you're starting a fire I'm bringing the wood
+If you're dancing on tables I'm holding the table, if you're running the hill then I'm running it good
+Every no that I said is a stone in my pocket and I'm throwing them all in the river for good
+Hundred and sixty-eight beats in the floor and my feet are agreeing with all of the hood
+I was quiet so long that the noise in my chest is a riot that's doing what riots should
+
+[Hook]
+Count me in, count me in
+
+[Drop]
+One, two, go
+
+[Verse 2]
+Now the sun is a rumour, the moon is a witness, the street is a stage and the stage is a ride
+Every corner we turn there's a stranger who joins us, a bigger parade at the end of the night
+Somebody's shouting the words and I'm shouting them louder, I'm hoarse and I'm happy, I'm right
+Every door that I closed on myself I am kicking it open and walking it into the light
+They can ask me tomorrow what happened and I'll tell them I don't even know where we've been
+I just know that I said it, I said it again, I was in, I was in, I was in
+If the night has a seat at the front of the bus then I'm sitting it, wearing a grin
+And the next time you're going, you don't even have to ask me, just count me in
+
+[Hook]
+Count me in, count me in
+
+[Outro]
+Again
+Yeah
+Again
+I'm in
+"""

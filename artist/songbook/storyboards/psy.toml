@@ -755,3 +755,66 @@ prompt = "Slow push in on a man seen from behind standing in the boat as the sun
 part = "Outro"
 hook = false
 prompt = "Locked off wide of the river at full sunrise, a small empty boat drifting near a sunlit shore, mist lifting, the water shining like light, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "ride-the-pulse"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A young woman closes her eyes and sways in the middle of a misty field at dawn, a crowd moving softly around her, golden light rising, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Close up of bare feet on warm grass pressing down in rhythm, dew drops glittering, the ground almost seeming to breathe, slow handheld drift, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A crowd swaying together in one motion like a river at sunrise, hands raised, mist rolling through, handheld camera floating above shoulder height, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Sunlight bending through the leaves of tall trees above a dancing crowd, the branches moving in the breeze, slow handheld tilt up, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman spinning slowly with her arms out as pink and gold colours bleed across the morning sky behind her, slow motion handheld orbit, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A circle of people holding hands and turning together on a grassy hill at dawn, laughing, light flares across the lens, handheld inside the circle, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Hands raised against a bright rising sun as the crowd jumps on the beat, silhouettes glowing at the edges, slow motion low handheld shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A circle of dancers opening outward like a flower from above, coloured scarves trailing, morning mist, handheld camera drifting overhead, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Two strangers clasping hands and laughing in the middle of a swaying crowd, sunlight on their faces, handheld close shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Barefoot dancers walking slowly across warm sand toward the sea at sunrise, footprints behind them, handheld tracking shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman with water running from her wet hair dancing with her face turned to the sun, droplets glittering, slow motion handheld orbit, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A field of tired happy dancers lying in the grass watching the sky as the sun climbs, slow handheld drift across their smiling faces, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"

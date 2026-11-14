@@ -723,3 +723,53 @@ You carried me across, now carry me across
 Asato ma sadgamaya
 The river is the shore, and the shore is light
 """
+
+# Added 2026-11-14 (Anchit: "create as many more songs like this")
+[[songs]]
+id = "ride-the-pulse"
+title = "Ride The Pulse"
+family = "ritual"
+form = "celebration"
+groups = ["psy"]
+model = "A"
+voice = "airy female voice, half-whispered verses close to the mic that bloom into a bright sung hook, delighted laughter between lines"
+about = "a crowd at sunrise stops thinking and lets one rhythm carry every body in the field"
+lyrics = """
+[Intro]
+Close your eyes, let it carry you, ride the pulse
+
+[Verse 1]
+There's a wave coming up from the ground through the soles of my feet and it's warm like the sea
+Every body around me is swaying the same and the same is a river that's running through me
+I can see the light bend on the tops of the trees and the trees are all dancing as well
+Every heartbeat is borrowed and given away like a bell that is ringing a bell
+There's a colour I can't name in the edges of everything, gold on the inside of green
+And the sky is unzipping its seams to the morning, the softest pink I have ever seen
+I forgot what I came here to worry about, it fell out of my pocket and into the stream
+Now I'm floating on top of the rhythm, I'm awake in the middle of somebody's dream
+
+[Hook]
+Ride the pulse, ride the pulse
+
+[Drop]
+Breathe, flow
+
+[Verse 2]
+Every circle of people is turning, a flower that's opening, petal by petal by hand
+I am holding a stranger's warm palm and I laugh because now I completely understand
+That the music was never a sound, it's a road and we're walking it barefoot on sand
+Every kick is a footstep of someone ahead of us showing the way through the land
+Let the water run down from my hair, let the sun come and sit on my face like a friend
+Let the hours go melting like wax off a candle, I don't need to know when it ends
+I was searching so long for a door and the door was the floor and the floor never ends
+Now we move as one creature of light on the field and the field and the morning are friends
+
+[Hook]
+Ride the pulse, ride the pulse
+
+[Outro]
+Slower now
+Feel it
+Still moving
+Still home
+"""

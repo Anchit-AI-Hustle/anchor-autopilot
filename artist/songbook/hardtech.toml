@@ -748,3 +748,53 @@ Nowhere to be
 Doors blown open
 Free
 """
+
+# Added 2026-11-14 (Anchit: "create as many more songs like this")
+[[songs]]
+id = "break-the-floor"
+title = "Break The Floor"
+family = "ritual"
+form = "revolt"
+groups = ["hardtech"]
+model = "A"
+voice = "roaring festival MC, chest-voice shouts that the whole crowd screams back, breathless and laughing between the chants"
+about = "a packed room decides the floor is not strong enough to hold what they are about to do"
+lyrics = """
+[Intro]
+They said the room couldn't take it, so we're going to break the floor
+
+[Verse 1]
+Every board in this building was laid by a hand that was sure it would last for a hundred years
+Every nail was a promise, a bolt was a vow, every beam was a wall against all of our cheers
+They put up a sign at the door saying careful, the weight of the crowd is the limit we fear
+So we packed in a thousand and stomped in a circle and laughed as the plaster came down from the tier
+Every kick is a hammer that swings from the ceiling and lands in the soles of our shoes
+Every bass is a quake in the rafters that rattles the lights and the lights are the news
+They can call it a riot, a party, a problem, whatever they say it's the truth
+We were told to be gentle and quiet and civil, we're here to be loud and to lose
+
+[Hook]
+Break the floor, break the floor
+
+[Drop]
+Jump, stomp
+
+[Verse 2]
+Now the cracks run like rivers of light from the corner, they're racing the beat to the door
+Every crack is a crowd that is cheering, a thousand of voices that ask for one more
+Somebody's lifted up high on the shoulders, they're surfing the noise to the core
+Every jump is a vote and we're winning, the count is a roar on the score
+If it gives then we fall through together, we land on the basement and dance even more
+If it holds then we stomp it again till it doesn't, we didn't come here to be sure
+Every sweat drop that hits is a drum, every scream is a siren, a war that is pure
+We were born for the sound of the boards going under, we came here to break the floor
+
+[Hook]
+Break the floor, break the floor
+
+[Outro]
+Listen
+That's wood
+Splitting
+One more time
+"""
