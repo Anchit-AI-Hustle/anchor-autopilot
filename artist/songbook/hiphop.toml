@@ -507,3 +507,55 @@ Empty throne
 Look at us
 Every spine unbent
 """
+
+# Added 2026-11-14 (Anchit: "create as many more songs like this")
+[[songs]]
+id = "hold-the-line"
+title = "Hold The Line"
+family = "devotion"
+form = "letter"
+groups = ["hiphop"]
+model = "A"
+voice = "warm male rapper with a raspy edge, steady storytelling bars, a soulful female voice singing the hook over the kick"
+about = "someone tells the person beside them that no matter how hard the night pushes, they are not letting go"
+lyrics = """
+[Intro]
+When the floor starts shaking and the lights go out, I hold the line for you
+
+[Verse 1]
+I remember the night that the river came up to the door and we sat on the stairs with our knees
+You were counting the waves on the wall and I counted your breathing and told you to breathe
+Every promise I made you was quiet, a hand on your back and a whisper between the trees
+I am not a hero, I'm just the one standing beside you when nobody else wants to leave
+Now the crowd is a tide in the dark and it pulls at our sleeves like it wants us apart
+Every bass hit a wave on the shore and I feel it come up through my shoes to my heart
+If it drags you away I will dive in the deep, I will swim till I find where you are
+I'm the rope and the rock and the anchor, the end of the rope and the very start
+
+[Hook]
+Hold the line, hold the line, I'm not letting go
+Hold the line, hold the line
+
+[Drop]
+Stay, hold
+
+[Verse 2]
+They will tell you that people move on, that the summer runs out and the fire burns low
+They will tell you that every good thing is a loan and the bank always wants it to go
+But I keep every night we survived like a stone in my pocket, I hold them and know
+That the hand that I'm holding is holding me back, and the line that we drew is our home
+When you're tired I will carry the bag, when you're scared I will carry the light
+When you want to give up I will sit on the curb with you singing the hook through the night
+When the speakers are screaming and everyone's leaving I'm still on your left and your right
+Every beat is a vow on the floor and the floor isn't stopping and neither am I
+
+[Hook]
+Hold the line, hold the line, I'm not letting go
+Hold the line, hold the line
+
+[Outro]
+Still here
+Still holding
+Look down
+That's my hand
+"""
