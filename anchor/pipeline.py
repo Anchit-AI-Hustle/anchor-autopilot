@@ -213,7 +213,10 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
                 f"{max(take_s) / 60:.0f} min); stopping")
             break
         started = time.monotonic()
-        brief = make_brief(profile, day, hist, attempt, avoid_titles=tuple(misheard_titles))
+        # with a run salt, every three takes try a different lane and song: six takes of one
+        # song that keeps breaking off post nothing, a second song often passes
+        variant = f"{salt}:{attempt // 3}" if salt else ""
+        brief = make_brief(profile, day, hist, attempt, avoid_titles=tuple(misheard_titles), variant=variant)
         if salt:
             brief["seed"] = seed_from("anchor-audio", day, attempt, salt) % 2_000_000_000
         log(f"brief: {brief['title']!r} | {brief['lane_name']} | {brief['bpm']} BPM | {brief['key']} | "
