@@ -57,14 +57,18 @@ def slot_lanes(profile: Profile, day: str, slot: int) -> tuple[Lane, ...]:
 
 
 def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0,
-               avoid_titles: tuple[str, ...] = ()) -> dict:
+               avoid_titles: tuple[str, ...] = (), variant: str = "") -> dict:
     """Build the brief for drop ``day``: a date (YYYY-MM-DD, the day's first song) or a date
     and slot (YYYY-MM-DD-2, its second). ``history`` is newest-first. Everything is seeded by
     the drop id, so the second song of a day is a different record, never a re-roll."""
     drop_id = day
     day, slot = split_drop_id(drop_id)
     Date.fromisoformat(day)  # validates the date
-    r = rng("anchor-brief", drop_id)
+    # ``variant`` draws a different lane, song and sound for the same slot: a slot whose song keeps
+    # failing the gate (2026-11-14-2: breaks 9 to 56 in twelve takes over two runs) is not tried
+    # with the same song again (Anchit, 2026-11-14: "uploaded as soon as they are created")
+    seed_key = (drop_id, variant) if variant else (drop_id,)
+    r = rng("anchor-brief", *seed_key)
     # earlier drops, including an earlier slot of the same day
     past = [d for d in history if (d.get("date", ""), d.get("id") or d.get("date", "")) < (day, drop_id)]
     recent = past[:3]
@@ -101,7 +105,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     # (Anchit, 2026-11-07: "proper theme selection and lyrics ... written as humans ... choose
     # the song name based on theme and lyrics"); the line-pool themes only when the book is dry
     check, title_report = originality.checker(), {}
-    song = songbook.pick(songbook.load(), lane.group or "any", rng("anchor-song", drop_id), history,
+    song = songbook.pick(songbook.load(), lane.group or "any", rng("anchor-song", *seed_key), history,
                          used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
                          avoid_titles=tuple(avoid_titles), taken=check, report=title_report,
                          prefer=_cinematic_ready())
@@ -112,10 +116,10 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
                                                        int(profile.music.get("max_duration_s", 300))))
     if song is None:
         # what the song is about: a theme none of the last 20 songs had (artist/themes.toml)
-        theme = themes.pick(themes.load(), rng("anchor-theme", drop_id), past,
+        theme = themes.pick(themes.load(), rng("anchor-theme", *seed_key), past,
                             used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
                             avoid_titles=tuple(avoid_titles))
-    sound = pick_palette(profile, rng("anchor-sound", drop_id), past, group=lane.group or "")
+    sound = pick_palette(profile, rng("anchor-sound", *seed_key), past, group=lane.group or "")
     style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape,
                           story=songbook.short(song.about, 100) if song else theme.idea, sound=sound,
                           vocals=songbook.vocals_line(song) if song else None)
@@ -132,15 +136,15 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     else:
         # the name comes from the theme, sharing no word with any earlier ANCHOR title (Anchit,
         # 2026-10-31); only when every title of the theme is taken does the old word list name it
-        title = themes.title(theme, rng("anchor-title", drop_id), used_titles, taken=check, report=title_report,
+        title = themes.title(theme, rng("anchor-title", *seed_key), used_titles, taken=check, report=title_report,
                              recent_titles=[d.get("title", "") for d in past])
     if title is None:
-        title = make_title(profile.titles, rng("anchor-title", drop_id), used_titles, recent_titles,
+        title = make_title(profile.titles, rng("anchor-title", *seed_key), used_titles, recent_titles,
                            taken=check, report=title_report)
     if song is not None:
         lyrics = song.lyrics
     else:
-        lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", drop_id),
+        lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", *seed_key),
                              mode=lane.voice, theme=theme, group=lane.group or "",
                              rotate=Date.fromisoformat(day).toordinal() * 3 + (slot - 1) * 7)
 

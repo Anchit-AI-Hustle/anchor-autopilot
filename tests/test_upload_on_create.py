@@ -118,3 +118,19 @@ def test_a_made_song_not_yet_up_is_posted_by_the_next_run(tmp_path, posted, want
     assert lines["from_run"] == want_from
     if want_from:
         assert json.loads(lines["drops"]) == [f"{today}-3"], "only the made song, nothing made again"
+
+
+def test_a_failing_song_is_swapped_for_another_after_three_takes(fast_profile):
+    """2026-11-14-2 kept breaking off in twelve takes over two runs, all the same song: with a run
+    salt, every three takes draw a different lane and song, so one bad song cannot hold a slot."""
+    from anchor.brief import make_brief
+    plain = [make_brief(fast_profile, "2026-11-20-2", [], 0)["title"] for _ in range(2)]
+    assert plain[0] == plain[1], "without a variant the slot's brief is the same every time"
+    titles = {make_brief(fast_profile, "2026-11-20-2", [], 0, variant=f"run9:{k}")["title"] for k in range(4)}
+    assert len(titles) >= 3, titles
+
+
+def test_the_pipeline_varies_the_song_every_three_takes():
+    text = (ROOT / "anchor" / "pipeline.py").read_text()
+    assert 'variant = f"{salt}:{attempt // 3}" if salt else ""' in text
+    assert "variant=variant" in text
