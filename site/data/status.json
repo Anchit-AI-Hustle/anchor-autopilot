@@ -2,30 +2,31 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-14-4",
-    "title": "Strike While Burning",
-    "finished_at": "2026-11-14T09:29:47Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43580669980",
+    "drop_id": "2026-11-14-3",
+    "title": "Wake Inside The Wave",
+    "finished_at": "2026-11-14T13:03:16Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43587443831",
     "error": null
   },
   "next_post_at": "2026-11-15T17:30:00Z",
-  "streak": 21,
+  "streak": 22,
   "totals": {
-    "drops": 95
+    "drops": 96
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-14T09:29:47Z",
+  "updated_at": "2026-11-14T13:03:16Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
     "steps": 8,
     "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
     "guidance": 1.0,
-    "lm_ms": 58125,
-    "dit_ms": 192838,
-    "vae_ms": 166665,
-    "total_s": 437.4
+    "lm_ms": 198870,
+    "ref_audio": "ANCHOR-2026-09-13-project-mayhem.mp3",
+    "dit_ms": 122188,
+    "vae_ms": 172453,
+    "total_s": 749.6
   }
 }
