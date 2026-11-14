@@ -7,7 +7,7 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-14T17:44:20Z",
+  "updated_at": "2026-11-14T18:31:27Z",
   "drops": [
     {
       "id": "2026-11-14-4",
@@ -165,7 +165,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-2/ANCHOR-2026-11-14-soft-lie-slow-knife-short.mp4",
       "youtube_url": "https://youtu.be/-YFY5yGl1ik",
       "buffer_post_id": "-YFY5yGl1ik",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-14T17:44:09Z",
       "qc": {
         "bpm_est": 157.0,
@@ -211,6 +211,75 @@
         "drums": "trap drums: booming 808 kick, clap on three, rolling triplet hats",
         "melody": "a laid-back looping riff",
         "chords": "playful major chords with a twist"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
+    {
+      "id": "2026-11-14",
+      "date": "2026-11-14",
+      "title": "Bodies Become Thunder",
+      "lane": "hardtech",
+      "lane_name": "Raw Hard Tech",
+      "bpm": 174,
+      "key": "A minor",
+      "family": "void",
+      "family_name": "Void",
+      "duration_s": 204,
+      "short_s": 45,
+      "cover": "covers/2026-11-14.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14/ANCHOR-2026-11-14-bodies-become-thunder.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-14",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-14-bodies-become-thunder-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14/ANCHOR-2026-11-14-bodies-become-thunder-short.mp4",
+      "youtube_url": "https://youtu.be/U555LjMZ07Y",
+      "buffer_post_id": "U555LjMZ07Y",
+      "status": "public",
+      "post_at": "2026-11-14T18:31:11Z",
+      "qc": {
+        "bpm_est": 173.1,
+        "lufs": -14.03,
+        "warnings": [
+          "craft: no breakdown (needs 8 s at least 8 dB under the peak; the channel's top record has two)"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-14T18:26:59Z",
+      "genre_line": "Hard Tech, Industrial Hard Techno, Hard Techno",
+      "style_line": "Raw Hard Tech, Industrial Techno, Warehouse Techno, Driving Techno",
+      "error": null,
+      "accent": "#f2f2f2",
+      "caption": "raw hard tech, hardtek, industrial hard techno, distorted rawstyle kick dominant, rumbling distorted sub bass bouncing on the off-beat, clanking metal percussion, noisy 303 acid stabs, relentless drive. Mid-2020s raw hard tech, industrial and relentless. Mood: cheeky and swinging, growing into a full-room bounce, ending on a grin, about a few chanted lines as the whole crowd stamps in time until a thousand bodies sound like one storm. Feel: bouncy, fun and psychedelic, never dark. 174 BPM, relentless fast four-on-the-floor, a distorted rumble bass bouncing on every off-beat, metallic sixteenth hats, the kick never stops. Instruments: distorted hyper kick, rolling hats, snare builds, distorted hoover bass stabs on the off-beat, screeching rawstyle lead playing a syncopated stabbing riff over bright uplifting chords; hydraulic hiss intro, industrial noise bursts build, clanking steel percussion breakdown. Vocals: breathy female soprano chanting over hard techno, airy and hypnotic, a few words stretched long, natural English. Production: Loud and saturated, distorted kick up front, mono sub, metal percussion wide; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> drop -> breakdown -> build -> drop -> outro; filtered kick alone, no sub bass yet, hydraulic hiss far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, hydraulic hiss last, a smooth fade out. Special moment: the groove drops to just kick and vocal chop for one bar before the final drop.",
+      "seed": 161850848,
+      "visual_world": "hologram",
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 8,
+        "render_s": 429.3,
+        "threads": 10,
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "guidance": 1.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14/ANCHOR-2026-11-14-bodies-become-thunder-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14/ANCHOR-2026-11-14-bodies-become-thunder-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/U555LjMZ07Y",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=z5luMEE6_34",
+      "buffer_short_post_id": "6af8a8fbe5a113497a9f39de",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "bodies-become-thunder",
+      "sound": {
+        "lead": "screeching rawstyle lead",
+        "bass": "distorted hoover bass stabs on the off-beat",
+        "drums": "distorted hyper kick, rolling hats, snare builds",
+        "melody": "a syncopated stabbing riff",
+        "chords": "bright uplifting chords"
       },
       "instagram_status": "not connected",
       "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
@@ -5696,7 +5765,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-14T17:44:21Z",
+    "checked_at": "2026-11-14T18:31:28Z",
     "total": 38,
     "postable": 27,
     "families": 15,
