@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-14-3",
-    "title": "Wake Inside The Wave",
-    "finished_at": "2026-11-14T13:03:16Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43587443831",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-14T13:03:38Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43587443831"
   },
   "next_post_at": "2026-11-15T17:30:00Z",
   "streak": 22,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-14T13:03:16Z",
+  "updated_at": "2026-11-14T13:03:38Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
