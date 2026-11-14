@@ -57,5 +57,5 @@ def test_a_run_started_by_hand_is_never_held(tmp_path):
 
 def test_a_waiting_run_plans_no_songs():
     text = WF.read_text()
-    assert re.search(r"count: \$\{\{ steps\.where\.outputs\.renderer == 'wait' && '0'", text)
+    assert re.search(r"count: \$\{\{ \(steps\.where\.outputs\.renderer == 'wait' && steps\.plan\.outputs\.from_run == ''\) && '0'", text)
     assert '- cron: "37 19 * * *"' in text
