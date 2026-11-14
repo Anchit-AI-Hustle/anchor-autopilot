@@ -7,8 +7,78 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-13T21:44:40Z",
+  "updated_at": "2026-11-14T09:29:47Z",
   "drops": [
+    {
+      "id": "2026-11-14-4",
+      "date": "2026-11-14",
+      "title": "Strike While Burning",
+      "lane": "raptechno",
+      "lane_name": "Rap Hard Techno",
+      "bpm": 168,
+      "key": "A minor",
+      "family": "prism",
+      "family_name": "Prism",
+      "duration_s": 198.49,
+      "short_s": 45,
+      "cover": "covers/2026-11-14-4.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-4/ANCHOR-2026-11-14-strike-while-burning.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-14-4",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-14-strike-while-burning-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-4/ANCHOR-2026-11-14-strike-while-burning-short.mp4",
+      "youtube_url": "https://youtu.be/Kgn2eNWoHDY",
+      "buffer_post_id": "Kgn2eNWoHDY",
+      "status": "public",
+      "post_at": "2026-11-14T09:29:36Z",
+      "qc": {
+        "bpm_est": 167.9,
+        "lufs": -14.04,
+        "warnings": [
+          "craft: no breakdown (needs 8 s at least 8 dB under the peak; the channel's top record has two)",
+          "title word also heard as a variant: strike, burning"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-14T03:03:35Z",
+      "genre_line": "Rap Techno, Hard Techno, Rave Rap",
+      "style_line": "Rap Hard Techno, Industrial Techno, Rave Rap, Driving Techno",
+      "error": null,
+      "accent": "#f4f4f6",
+      "caption": "fast rap over raw hard techno, the beat runs under every verse, distorted rawstyle kick dominant, rumbling sub bass bouncing on the off-beat, metal percussion, 303 acid stabs, chanted hook. Mid-2020s hard techno rap: fast chopper rap riding industrial hard techno, the kick never leaves. Mood: laid-back swagger at first, getting louder every hook, ending on one big hook, about a fighter stops waiting for the perfect moment and hits while the fire is still hot in the hands. Feel: bouncy, fun and psychedelic, never dark. 168 BPM, relentless four-on-the-floor under verses and drops alike, a distorted rumble bass bouncing on every off-beat, the rap riding the hats. Instruments: four-on-the-floor kick, cracking backbeat snare, swung hats, bouncing off-beat rolling bass, brass stab hook playing a two-note call and response hook over bold power chords; distorted kick rumble intro, snare rolls into hooks build, clanking steel percussion breakdown. Vocals: fierce hoarse female alto rapper, shouted drill-sergeant cadence, natural English. Production: Loud and saturated, distorted kick dominant, rap vocal dry and centred above it, metal percussion wide; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, distorted kick rumble far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, distorted kick rumble last, a smooth fade out. Special moment: the crowd chant answers the rapper in call and response.",
+      "seed": 1350581753,
+      "visual_world": "warehouse",
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 8,
+        "render_s": 437.4,
+        "threads": 10,
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "guidance": 1.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-4/ANCHOR-2026-11-14-strike-while-burning-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-4/ANCHOR-2026-11-14-strike-while-burning-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/Kgn2eNWoHDY",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=ulkDZchPlis",
+      "buffer_short_post_id": "6af82a0881e1228421f80c1d",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "strike-while-burning",
+      "sound": {
+        "lead": "brass stab hook",
+        "bass": "bouncing off-beat rolling bass",
+        "drums": "four-on-the-floor kick, cracking backbeat snare, swung hats",
+        "melody": "a two-note call and response hook",
+        "chords": "bold power chords"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
     {
       "id": "2026-11-13-4",
       "date": "2026-11-13",
@@ -164,7 +234,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-13-2/ANCHOR-2026-11-13-chase-the-first-light-short.mp4",
       "youtube_url": "https://youtu.be/A7szOCUtFxI",
       "buffer_post_id": "A7szOCUtFxI",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-13T21:44:30Z",
       "qc": {
         "bpm_est": 165.0,
@@ -234,7 +304,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-13/ANCHOR-2026-11-13-holding-your-wreckage-short.mp4",
       "youtube_url": "https://youtu.be/TPzQOAGwTnY",
       "buffer_post_id": "TPzQOAGwTnY",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-13T21:44:18Z",
       "qc": {
         "bpm_est": 170.0,
@@ -5490,7 +5560,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-13T21:44:41Z",
+    "checked_at": "2026-11-14T09:29:48Z",
     "total": 38,
     "postable": 27,
     "families": 15,
@@ -5501,7 +5571,7 @@
     "next_up": {
       "title": "DANCING WITH DEMONS",
       "id": "a38f8226-68ba-4c6a-9ef6-3d602f66bfbb",
-      "rating": 6.4,
+      "rating": 6.5,
       "source": "catalogue",
       "why": "nothing is queued - this is the best take not yet released",
       "waiting": 0
@@ -7963,14 +8033,14 @@
         "tags": "Fast-paced cinematic chopper rap fused with peak-time hard acid techno and organic psytrance; wide-ranging aggressive rap climbs into high notes, breathless multisyllabic flow, dry and upfront, stacked hook harmonies. 150 BPM relentless drive; Extended Club Mix with two 32-bar instrumental drops, eerie breakdown, rising snare builds, dark orchestral strings and brass. Relentless industrial 909 kicks, squelchy 303 lead, bouncy psytrance triplet bass, haunting female whispers, throat chants, euphoric stutter-house vocal chops; dark urgency turning euphoric.",
         "lyrics": "[Tempo: 150 BPM]\n[Duration: 03:30]\n\n[Intro: 0:00 - 0:25]\n[Dark cinematic orchestral strings, distant thunderous rumble, eerie stereo-panned whispers]\n(Whispered, cold and hypnotic)\nLocked inside the mind... \nCan you outrun your own shadow? \n(Low ancient throat chant)\nOmm... Vera... Sanguis...\n[Rising acid 303 synth filter sweep, pounding 909 kick drum fades in]\n\n[Verse 1: 0:25 - 0:55]\n[Fast-paced aggressive double-time rap, dark orchestral stabs, rolling psytrance triplet bassline]\n(Breathless chopper flow, intense emotional delivery)\nFoot on the gas, I been running from ghosts in the back of my head, I don't know how to brake,\nEvery decision I made in the dark is a permanent scar that I'm forced to awake,\nLooking for peace in the middle of war, got my back to the wall and my hands on the flame,\nNobody gave me a map to the top, I was buried alive and came out of the grave!\nVenom inside of the ink when I write, I been sharpening blades in the dead of the night,\nCut through the noise and the fake and the lies, you can see the vendetta reflect in my eyes,\nHeart beating fast at a hundred and fifty, the blood in my veins is beginning to boil,\nEverything built from the dirt and the pain, I been watering roots in the venomous soil!\n\n[Pre-Chorus: 0:55 - 1:10]\n[Melodic urgent rap transitioning into rhythmic stuttered vocal chops, accelerating snare roll]\nNowhere to hide when the curtains are drawn,\nWe dancing with demons till quarter to dawn!\n(Whispered, close to mic)\nCan you feel the madness rising?\nLet it out.\n\n[Drop 1: 1:10 - 1:45]\n[Extended 32-Bar Instrumental Drop: Peak-time Hard Acid Techno, relentless distorted 909 kicks, screaming squelchy 303 acid lines, glitchy vocal stutters]\n(Echoed chant over the bass)\nRun. Faster. Deeper.\n\n[Verse 2: 1:45 - 2:15]\n[Manic high-speed rap flow returns, interwoven with bouncy psychedelic acid synths and heavy orchestral brass hits]\n(Rapid-fire delivery, switching cadences mid-bar)\nPacing the floor in a cage of my making, the paranoia got me wide awake shaking,\nThey wanted me broken, they wanted me quiet, I walked in the room and I started a riot!\nNo ceilings, no limits, no holding me back, when I snap on the beat it's a panic attack,\nEvery syllable hitting like hail on the glass, I'm erasing the memories stuck in the past,\nLook at the hunger, look at the drive, takes a little insanity just to survive,\nOut of the ashes I'm taking the throne, I been fighting these shadows entirely alone,\nNow the bass is erupting, the ceiling is caving, the chaos is the only thing keeping me sane,\nWash all the doubt and the guilt in the acid and drown every drop of the rage in the rain!\n\n[Bridge / Breakdown: 2:15 - 2:40]\n[Sudden beat cut, eerie silence, haunting strings, dark ritualistic chants and stereo whispers]\n(Whispering, echoing in the dark)\nLook in the mirror... who are you running from?\nThere is no escape.\n(Tribal Chant)\nKalima... Ignis... Libera...\n[Massive psy-trance snare build-up, extreme acid resonance peaking]\n\n[Drop 2 / Climax: 2:40 - 3:15]\n[Maximum Energy Climax: 32-Bar Psy-Techno & Rap Fusion, bouncy triplet bass, relentless fast kicks, chopped rap vocal samples, pure rave euphoria]\n(Whispered)\nLose your mind.\n\n[Outro: 3:15 - 3:30]\n[Stripped-back industrial kick, fading orchestral violin, lingering cold breath]\n(Whispered)\nThe silence is loud.\n[End]",
         "model": "v6",
-        "plays": 9,
+        "plays": 12,
         "upvotes": 0,
         "created_at": "2026-10-25T01:24:52.017Z",
         "image": "https://cdn2.suno.ai/image_large_a38f8226-68ba-4c6a-9ef6-3d602f66bfbb.jpeg",
         "audio_url": "https://d2lwuy8qc234o3.cloudfront.net/1/clip/a38f8226-68ba-4c6a-9ef6-3d602f66bfbb.m4a",
         "video_url": "https://cdn1.suno.ai/a38f8226-68ba-4c6a-9ef6-3d602f66bfbb.mp4",
         "url": "https://suno.com/song/a38f8226-68ba-4c6a-9ef6-3d602f66bfbb",
-        "rating": 6.4,
+        "rating": 6.5,
         "postable": true,
         "slot": "full release",
         "verdict": "on format (techno, industrial, acid), 4:36",
@@ -7995,9 +8065,9 @@
           },
           {
             "name": "Traction",
-            "score": 0.2,
+            "score": 0.3,
             "max": 1.5,
-            "note": "9 plays and 0 upvotes on Suno"
+            "note": "12 plays and 0 upvotes on Suno"
           }
         ],
         "checks": [
@@ -8022,7 +8092,7 @@
             "detail": "2.2 against a 2.0 floor, pulled down by rap, house"
           }
         ],
-        "summary": "Rated 6.4/10. Postable: techno, industrial, acid, but also rap, house - the off-format tags cost it 1.8. 4:36 - full release length. made on Suno v6 - current generation, cleanest master.",
+        "summary": "Rated 6.5/10. Postable: techno, industrial, acid, but also rap, house - the off-format tags cost it 1.8. 4:36 - full release length. made on Suno v6 - current generation, cleanest master.",
         "similar": [
           {
             "id": "58dce5fb-24ac-45af-bd22-e16ae41150d9",
@@ -8679,7 +8749,7 @@
         "tags": "150 BPM extended mix. Aggressive fast chopper rap, dark cinematic strings, peak-time hard 303 acid techno, bouncy psytrance triplet bass, 909 kicks, eerie female whispers, dark chants, raw rage",
         "lyrics": "[Intro]\n\n[Chorus]\n180 BPM extended mix. Aggressive fast chopper rap, dark cinematic strings, peak-time hard 303 acid techno, bouncy psytrance triplet bass, 909 kicks, eerie female whispers, dark chants, raw rage\n\n[End]",
         "model": "v6",
-        "plays": 0,
+        "plays": 1,
         "upvotes": 0,
         "created_at": "2026-10-25T02:21:27.778Z",
         "image": "https://cdn2.suno.ai/image_large_a911eba4-c0d6-4faa-83b6-bf8dd63cb6e0.jpeg",
@@ -8713,7 +8783,7 @@
             "name": "Traction",
             "score": 0.0,
             "max": 1.5,
-            "note": "0 plays and 0 upvotes on Suno - no signal yet"
+            "note": "1 play and 0 upvotes on Suno"
           }
         ],
         "checks": [
