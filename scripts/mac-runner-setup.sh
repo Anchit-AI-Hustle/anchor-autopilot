@@ -69,7 +69,12 @@ cat > "$HOME/anchor-gpu/heartbeat.sh" <<HBEOF
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 pgrep -f "Runner.Listener" >/dev/null || exit 0
 gh variable set ANCHOR_MAC_SEEN -R "$REPO" --body "\$(date +%s)" >/dev/null 2>&1
+# start the next posting run when songs are due (tools/mac-autostart.sh; run from a copy, since it
+# updates the clone it lives in)
+cp "\$HOME/anchor-gpu/autostart-repo/tools/mac-autostart.sh" "\$HOME/anchor-gpu/autostart.sh" 2>/dev/null \\
+  && bash "\$HOME/anchor-gpu/autostart.sh"
 HBEOF
+[ -d "$HOME/anchor-gpu/autostart-repo/.git" ] || gh repo clone "$REPO" "$HOME/anchor-gpu/autostart-repo" -- -q
 chmod +x "$HOME/anchor-gpu/heartbeat.sh"
 cat > "$HB" <<PLEOF
 <?xml version="1.0" encoding="UTF-8"?>

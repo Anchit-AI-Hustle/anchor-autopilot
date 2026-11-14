@@ -142,11 +142,18 @@ def test_the_plan_step_lists_the_drops(tmp_path, date_input, planned, want):
     shim.chmod(0o755)
     out_file = tmp_path / "out"
     script = (_plan_step().replace("${{ inputs.date }}", date_input).replace("${{ inputs.from_run }}", "")
-              .replace("${{ github.event_name }}", "workflow_dispatch"))
+              .replace("${{ github.event_name }}", "workflow_dispatch").replace("${{ inputs.dry_run }}", ""))
+    gh = tmp_path / "gh"
+    gh.write_text("#!/bin/sh\nexit 0\n")  # no earlier run has songs left to post
+    gh.chmod(0o755)
+    import shutil
+    if shutil.which("gdate"):  # a Mac: GNU date, as on the ubuntu runner
+        (tmp_path / "date").write_text(f"#!/bin/sh\nexec {shutil.which('gdate')} \"$@\"\n")
+        (tmp_path / "date").chmod(0o755)
     env = {"PATH": f"{tmp_path}:/usr/bin:/bin", "GITHUB_OUTPUT": str(out_file)}
     subprocess.run(["bash", "-e", "-c", script], capture_output=True, text=True, check=True, cwd=tmp_path, env=env)
     lines = dict(l.split("=", 1) for l in out_file.read_text().splitlines())
     assert json.loads(lines["drops"]) == want and lines["count"] == str(len(want))
-    assert lines["from_run"] == "", "a run started by hand never picks up an overnight batch by itself"
+    assert lines["from_run"] == "", "with no earlier run holding a made song, nothing is picked up"
     for d in want:
         split_drop_id(d)

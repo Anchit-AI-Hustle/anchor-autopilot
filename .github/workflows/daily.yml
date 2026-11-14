@@ -118,9 +118,12 @@ jobs:
             echo "::notice::$(tail -n 1 plan.txt)"
           fi
           FROM="${{ inputs.from_run }}"
-          if [ "${{ github.event_name }}" = "schedule" ]; then
+          if [ "${{ github.event_name }}" = "schedule" ] || { [ -z "${{ inputs.date }}" ] && [ -z "$FROM" ] \
+              && [ "${{ inputs.dry_run }}" != "true" ]; }; then
             # Use the songs made overnight (prerender.yml): a render-only run of the last day whose
-            # songs for today passed every check is posted as it is, nothing made again
+            # songs for today passed every check is posted as it is, nothing made again. A posting
+            # run the Mac starts itself (tools/mac-autostart.sh, no date) does the same, so a ready
+            # song goes up at once (Anchit, 2026-11-14: "uploaded as soon as they are created")
             TODAY="$(date -u +%F)"
             SINCE="$(date -u -d '20 hours ago' +%FT%TZ)"
             for RID in $(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/daily.yml/runs?status=success&per_page=30" \
