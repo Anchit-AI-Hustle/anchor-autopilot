@@ -65,11 +65,16 @@ WORLDS = {
 WORLD_GAP = 3
 
 
-def pick_world(seed: int, recent: list[str] | tuple[str, ...] = ()) -> str:
-    """The song's visual world: picked by its seed among the worlds the last WORLD_GAP songs did not use."""
+def pick_world(seed: int, recent: list[str] | tuple[str, ...] = (), slot: int | None = None) -> str:
+    """The song's visual world, among the worlds the last WORLD_GAP songs did not use. With the
+    day's ``slot`` (1, 2, 3 ...) the day's songs take neighbouring worlds of that list, so no two
+    songs of one day share a world even when two runs make them side by side (2026-11-13: two
+    neon wire and two kaleidoscope songs went out the same evening); ``seed`` then picks the day."""
     names = sorted(WORLDS)
     fresh = [n for n in names if n not in set(list(recent)[-WORLD_GAP:])] or names
-    return fresh[int(seed) % len(fresh)]
+    if slot is None:
+        return fresh[int(seed) % len(fresh)]
+    return fresh[(int(seed) + int(slot) - 1) % len(fresh)]
 
 
 def world_for(title: str) -> str:

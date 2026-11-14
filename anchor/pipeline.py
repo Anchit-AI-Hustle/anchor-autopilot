@@ -406,8 +406,11 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
             done = catalog.history(catalog.load(CATALOG_PATH))
         except Exception:                 # noqa: BLE001 - no catalogue: any world will do
             done = []
-        recent = [d.get("visual_world") for d in sorted(done, key=lambda d: d.get("id", "")) if d.get("visual_world")]
-        brief["visual_world"] = scenes.pick_world(int(brief.get("seed") or 0), recent)
+        day, slot = split_drop_id(brief["id"]) if brief.get("id") else (brief.get("date", ""), 1)
+        # songs of earlier days only: today's other slots are being made right now
+        recent = [d.get("visual_world") for d in sorted(done, key=lambda d: d.get("id", ""))
+                  if d.get("visual_world") and not str(d.get("id", "")).startswith(day)]
+        brief["visual_world"] = scenes.pick_world(seed_from("anchor-world", day) % 1000, recent, slot)
     log(f"video: visual world {brief['visual_world']!r}")
     if brief["visual_world"] == "hologram":
         video = render_short(out_dir / "cover_1080.jpg", short_wav, mp4, fam, brief,

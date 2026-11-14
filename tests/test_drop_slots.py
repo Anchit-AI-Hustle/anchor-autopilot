@@ -141,10 +141,12 @@ def test_the_plan_step_lists_the_drops(tmp_path, date_input, planned, want):
     shim.write_text(f"#!/bin/sh\nif [ \"$1\" = \"-m\" ]; then echo 'why' >&2; echo '{planned}'; else exec {sys.executable} \"$@\"; fi\n")
     shim.chmod(0o755)
     out_file = tmp_path / "out"
-    script = _plan_step().replace("${{ inputs.date }}", date_input)
+    script = (_plan_step().replace("${{ inputs.date }}", date_input).replace("${{ inputs.from_run }}", "")
+              .replace("${{ github.event_name }}", "workflow_dispatch"))
     env = {"PATH": f"{tmp_path}:/usr/bin:/bin", "GITHUB_OUTPUT": str(out_file)}
     subprocess.run(["bash", "-e", "-c", script], capture_output=True, text=True, check=True, cwd=tmp_path, env=env)
     lines = dict(l.split("=", 1) for l in out_file.read_text().splitlines())
     assert json.loads(lines["drops"]) == want and lines["count"] == str(len(want))
+    assert lines["from_run"] == "", "a run started by hand never picks up an overnight batch by itself"
     for d in want:
         split_drop_id(d)

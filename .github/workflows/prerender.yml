@@ -1,0 +1,29 @@
+# The night before (Anchit, 2026-11-13: "ensure max song creation and uploads"): the Mac makes
+# the next day's AI songs overnight, render only, so they are ready the moment the YouTube quota
+# resets. The 08:37 UTC daily run finds this batch and posts it (daily.yml, "Use the songs made
+# overnight"); slot 1 stays free for a queued Suno song or a song made during the day.
+name: Make tomorrow's songs overnight
+
+on:
+  schedule:
+    - cron: "37 21 * * *"   # 21:37 UTC (03:07 IST): after the day's runs, hours before the reset
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  start:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Start the render-only batch on the Mac
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          T="$(date -u -d tomorrow +%F)"
+          gh workflow run daily.yml --ref main -f date="$T-2,$T-3,$T-4" -f renderer=mac \
+            -f dry_run=true -f ignore_queue=true
+          echo "::notice::Making $T-2, $T-3 and $T-4 overnight"

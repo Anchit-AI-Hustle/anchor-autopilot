@@ -88,7 +88,8 @@ jobs:
     timeout-minutes: 10
     outputs:
       drops: ${{ steps.plan.outputs.drops }}
-      count: ${{ steps.where.outputs.renderer == 'wait' && '0' || steps.plan.outputs.count }}
+      from_run: ${{ steps.plan.outputs.from_run }}
+      count: ${{ (steps.where.outputs.renderer == 'wait' && steps.plan.outputs.from_run == '') && '0' || steps.plan.outputs.count }}
       renderer: ${{ steps.where.outputs.renderer }}
       runs_on: ${{ steps.where.outputs.runs_on }}
     steps:
@@ -105,6 +106,8 @@ jobs:
 
       - name: Plan the day's songs
         id: plan
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [ -n "${{ inputs.date }}" ]; then
             # one id or several, comma separated (Anchit, 2026-11-09: "complete right now")
@@ -114,6 +117,27 @@ jobs:
             DROPS="$(python -m anchor plan-drops 2>plan.txt)"
             echo "::notice::$(tail -n 1 plan.txt)"
           fi
+          FROM="${{ inputs.from_run }}"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            # Use the songs made overnight (prerender.yml): a render-only run of the last day whose
+            # songs for today passed every check is posted as it is, nothing made again
+            TODAY="$(date -u +%F)"
+            SINCE="$(date -u -d '20 hours ago' +%FT%TZ)"
+            for RID in $(gh api "repos/$GITHUB_REPOSITORY/actions/workflows/daily.yml/runs?status=success&per_page=30" \
+                -q ".workflow_runs[] | select(.created_at > \"$SINCE\") | .id"); do
+              MADE="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RID/artifacts" -q '.artifacts[] | select(.expired | not) | .name' \
+                | sed -n "s/^drop-\($TODAY\(-[0-9]\)\{0,1\}\)$/\1/p" | sort -u)"
+              WANT=""
+              for D in $MADE; do [ "$(python -m anchor has-drop --date "$D" 2>/dev/null)" = yes ] || WANT="$WANT $D"; done
+              if [ -n "$WANT" ]; then
+                FROM="$RID"
+                DROPS="$(python -c "import json,sys;print(json.dumps(sys.argv[1].split()))" "$WANT")"
+                echo "::notice::Posting the songs made overnight by run $RID:$WANT"
+                break
+              fi
+            done
+          fi
+          echo "from_run=$FROM" >> "$GITHUB_OUTPUT"
           echo "drops=$DROPS" >> "$GITHUB_OUTPUT"
           echo "count=$(python -c "import json,sys;print(len(json.loads(sys.argv[1])))" "$DROPS")" >> "$GITHUB_OUTPUT"
 
@@ -151,7 +175,7 @@ jobs:
   # no song started this cancels the run and starts it again on GitHub's CPU.
   mac-watch:
     needs: plan
-    if: needs.plan.outputs.count != '0' && needs.plan.outputs.renderer == 'mac' && inputs.from_run == ''
+    if: needs.plan.outputs.count != '0' && needs.plan.outputs.renderer == 'mac' && needs.plan.outputs.from_run == ''
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     steps:
@@ -179,7 +203,7 @@ jobs:
 
   make:
     needs: plan
-    if: needs.plan.outputs.count != '0' && inputs.from_run == ''
+    if: needs.plan.outputs.count != '0' && needs.plan.outputs.from_run == ''
     # the Mac (self-hosted, label anchor-mac) or GitHub's CPU, as the plan picked
     runs-on: ${{ fromJSON(needs.plan.outputs.runs_on) }}
     # the CPU music engine can run past 3.5 h (210 cancelled the 10-18 and 10-22 drops); the Mac
@@ -491,7 +515,7 @@ jobs:
         with:
           pattern: drop-*
           path: drops
-          run-id: ${{ inputs.from_run || github.run_id }}
+          run-id: ${{ needs.plan.outputs.from_run || github.run_id }}
           github-token: ${{ github.token }}
 
       - name: Create the releases a make job could not
@@ -504,7 +528,7 @@ jobs:
             DATE="${d#drops/drop-}"
             # a song an earlier render-only run made (from_run) has no release yet either
             if [ ! -f "$d/release_pending" ]; then
-              [ -n "${{ inputs.from_run }}" ] && ! gh release view "drop-$DATE" >/dev/null 2>&1 || continue
+              [ -n "${{ needs.plan.outputs.from_run }}" ] && ! gh release view "drop-$DATE" >/dev/null 2>&1 || continue
             fi
             [ -s "$d/title.txt" ] || python3 -c "import json;print(json.load(open('$d/meta.json'))['brief']['title'], end='')" > "$d/title.txt"
             B="$(python3 -c "import json;print(json.load(open('$d/meta.json'))['files']['base'])")"
@@ -525,7 +549,7 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           mkdir -p public/media drops
-          if [ -n "${{ inputs.from_run }}" ] && [ -n "${{ inputs.date }}" ]; then
+          if [ -n "${{ needs.plan.outputs.from_run }}" ] && [ -n "${{ inputs.date }}" ]; then
             for d in drops/drop-*; do
               case ",${{ inputs.date }}," in *",${d#drops/drop-},"*) ;; *) rm -rf "$d" ;; esac
             done
@@ -591,7 +615,7 @@ jobs:
         with:
           pattern: drop-*
           path: dl
-          run-id: ${{ inputs.from_run || github.run_id }}
+          run-id: ${{ needs.plan.outputs.from_run || github.run_id }}
           github-token: ${{ github.token }}
 
       - name: Lay out the songs that were made
