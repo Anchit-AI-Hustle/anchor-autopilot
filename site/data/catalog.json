@@ -7,7 +7,7 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-14T13:03:16Z",
+  "updated_at": "2026-11-14T17:44:20Z",
   "drops": [
     {
       "id": "2026-11-14-4",
@@ -98,7 +98,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-3/ANCHOR-2026-11-14-wake-inside-the-wave-short.mp4",
       "youtube_url": "https://youtu.be/arnS5YawtX0",
       "buffer_post_id": "arnS5YawtX0",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-14T13:03:05Z",
       "qc": {
         "bpm_est": 175.0,
@@ -142,6 +142,75 @@
         "drums": "deep psytech kick, snappy claps, rolling bongos",
         "melody": "a phased sixteenth-note sequence that morphs",
         "chords": "phrygian chords that lift to major"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
+    {
+      "id": "2026-11-14-2",
+      "date": "2026-11-14",
+      "title": "Soft Lie, Slow Knife",
+      "lane": "phonktechno",
+      "lane_name": "Drift Phonk Hard Techno",
+      "bpm": 157,
+      "key": "E minor",
+      "family": "rust",
+      "family_name": "Rust",
+      "duration_s": 235,
+      "short_s": 45,
+      "cover": "covers/2026-11-14-2.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-2/ANCHOR-2026-11-14-soft-lie-slow-knife.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-14-2",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-14-soft-lie-slow-knife-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-2/ANCHOR-2026-11-14-soft-lie-slow-knife-short.mp4",
+      "youtube_url": "https://youtu.be/-YFY5yGl1ik",
+      "buffer_post_id": "-YFY5yGl1ik",
+      "status": "public",
+      "post_at": "2026-11-14T17:44:09Z",
+      "qc": {
+        "bpm_est": 157.0,
+        "lufs": -14.13,
+        "warnings": [
+          "key is not clearly audible; kept the requested one"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-14T17:39:47Z",
+      "genre_line": "Phonk Hard Techno, Drift Phonk, Hard Techno",
+      "style_line": "Drift Phonk, Phonk Techno, Hard Techno, Rave Rap",
+      "error": null,
+      "accent": "#d8742f",
+      "caption": "drift phonk x hard techno, distorted four-on-the-floor kick the whole song, cowbell melody, distorted 808 bouncing under the kick, memphis vocal chop, rap under every verse, chanted hook. Mid-2020s drift phonk cowbells and clipped 808s on a hard techno kick. Mood: laid-back swagger, harder every hook, landing on one shout, about a woman torn between a sweet lie and a hard truth for someone she loves who is walking toward a fire. Feel: bouncy, fun and psychedelic, never dark. 160 BPM, four-on-the-floor hard techno kick the whole song, the 808 bouncing on the off-beat, the rap riding a half-time flow. Instruments: trap drums: booming 808 kick, clap on three, rolling triplet hats, funky slap synth bass, squelchy acid synth riff playing a laid-back looping riff over playful major chords with a twist; cowbell melody intro, metal percussion build, memphis vocal chops breakdown. Vocals: steady warm female hip hop vocalist in her thirties, conversational half-time sung rap, a firm clear chorus, natural English. Production: Blown-out and loud, kick up front, 808 clipped and centred, cowbells bright and wide; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, cowbell melody far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, cowbell melody last, a smooth fade out. Special moment: the cowbell melody doubles an octave up over the last drop.",
+      "seed": 337267953,
+      "visual_world": "pop art",
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 8,
+        "render_s": 329.6,
+        "threads": 10,
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "guidance": 1.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-2/ANCHOR-2026-11-14-soft-lie-slow-knife-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-14-2/ANCHOR-2026-11-14-soft-lie-slow-knife-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/-YFY5yGl1ik",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=i3rr4gwGasE",
+      "buffer_short_post_id": "6af89df1c5b364e06208639e",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "soft-lie-slow-knife",
+      "sound": {
+        "lead": "squelchy acid synth riff",
+        "bass": "funky slap synth bass",
+        "drums": "trap drums: booming 808 kick, clap on three, rolling triplet hats",
+        "melody": "a laid-back looping riff",
+        "chords": "playful major chords with a twist"
       },
       "instagram_status": "not connected",
       "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
@@ -5627,7 +5696,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-14T13:03:17Z",
+    "checked_at": "2026-11-14T17:44:21Z",
     "total": 38,
     "postable": 27,
     "families": 15,
