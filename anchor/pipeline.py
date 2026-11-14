@@ -97,7 +97,7 @@ def time_for_another_take(deadline: float | None, take_s: list[float], margin_s:
 
 
 def to_tempo(raw: Path, stats_audio: dict, brief: dict, engine: str | None) -> tuple[Path, dict]:
-    """A take that landed up to a fifth slower than asked is sped up to the asked tempo, pitch
+    """A take that landed up to a quarter slower than asked is sped up to the asked tempo, pitch
     kept (ffmpeg atempo), instead of being made again (2026-11-12: 7 of 29 AI takes landed near
     150 BPM when 165 to 175 was asked). The song gets shorter by the same factor, so its target
     length follows. The fixture tone loop is left alone."""
@@ -106,7 +106,8 @@ def to_tempo(raw: Path, stats_audio: dict, brief: dict, engine: str | None) -> t
         return raw, stats_audio
     near = min((est, est * 2, est / 2), key=lambda e: abs(e - target))
     ratio = target / near
-    if not (1.0 / 0.94 <= ratio <= 1.2):
+    # up to a quarter (2026-11-14: six takes of one song all landed at 140 for 170, x1.214)
+    if not (1.0 / 0.94 <= ratio <= 1.25):
         return raw, stats_audio
     import subprocess
     out = Path(raw).with_name(Path(raw).stem + "-tempo.wav")

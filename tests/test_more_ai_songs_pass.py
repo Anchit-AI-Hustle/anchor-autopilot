@@ -46,3 +46,11 @@ def test_a_take_far_off_or_on_tempo_is_left_alone(tmp_path):
     for bpm in (150, 199):
         out, _ = pipeline.to_tempo(wav, stats, {"bpm": bpm, "duration_s": 20}, "acestep_cpp")
         assert out == wav
+
+
+def test_a_take_at_140_for_170_is_brought_up_too(tmp_path):
+    wav = tmp_path / "gen.wav"
+    write_wav(wav, synth_techno(20.0, 140, 5))
+    stats = analyze(decode(wav))
+    out, fixed = pipeline.to_tempo(wav, stats, {"bpm": 170, "duration_s": 20}, "acestep_cpp")
+    assert out != wav and abs(fixed["bpm_est"] - 170) <= 4
