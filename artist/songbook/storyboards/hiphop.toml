@@ -564,3 +564,66 @@ prompt = "An empty golden throne in a vast hall, the crowd's shadows long across
 part = "Outro"
 hook = false
 prompt = "A crowd seen from behind walks out of the stone hall into an open square at dawn, a woman centred among them, handheld camera following fast, clear gold sunrise light, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "hold-the-line"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Two young people sit close on a wooden staircase in a dim flooded hallway, water lapping at the bottom step, one hand on the other's back, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Close up of rain water seeping under a front door and spreading across a tiled floor, a lamp flickering, handheld camera tilting up to two silhouettes, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Two friends sitting under a big tree at night whispering, a single street lamp lighting their faces, leaves moving in the breeze, slow handheld orbit, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man standing protectively beside a woman at the edge of a packed crowd, his arm around her shoulders, coloured stage lights behind them, handheld, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A tight crowd surging forward like a wave in a dark venue, two clasped hands holding on in the middle of it, handheld camera at hand height, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Two hands gripping each other tightly in slow motion as bodies push past on both sides, strobe light flashing, extreme close up handheld, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Two silhouettes standing still back to back in the middle of a jumping crowd, beams of light sweeping over them, handheld camera circling, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man diving into a dark river at night and swimming hard toward a figure in the water, moonlight on the ripples, handheld from the bank, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Two people sitting on a curb outside a closed club at dawn, one carrying the other's bag, laughing tiredly, slow handheld tracking shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A young woman asleep on a man's shoulder in the back of a taxi at night, city lights sliding across the window, slow handheld drift, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Two friends singing loudly together with arms raised in the middle of a crowd as lights burst overhead, handheld camera pushing through bodies, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Close up of two hands still holding each other on a park bench as the sun rises over the city behind them, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"

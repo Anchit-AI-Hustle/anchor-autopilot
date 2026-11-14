@@ -755,3 +755,66 @@ prompt = "A crowd seen from behind dances in the middle of a sunlit street with 
 part = "Outro"
 hook = false
 prompt = "A woman seen from behind sits on a riverbank in the morning sun, the crowd small behind her, breeze moving the grass, handheld slow drift, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "break-the-floor"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A packed old warehouse full of people waiting in the dark, a warning sign about the floor weight hanging by the door, slow handheld push in on the sign, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Close up of rusty bolts and old wooden floor boards vibrating under hundreds of stomping boots, dust jumping off the planks, low handheld shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Ceiling plaster cracking and falling in chunks above a jumping crowd, stage lights cutting through the dust, handheld camera looking up, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A thousand people stomping in a giant circle on a wooden floor, the circle spinning faster, handheld camera in the middle of the ring, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A hanging light swinging wildly from the rafters as the whole room jumps, light and shadow sweeping across faces, handheld orbit, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "An MC on a crate roaring into a microphone as the entire crowd screams back with fists raised, handheld low angle shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "A crowd landing a jump in perfect unison as dust explodes up from the floorboards in slow motion, handheld shot at floor level, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Glowing cracks spreading across a dark wooden floor between dancing feet, lights pulsing through the gaps, handheld camera tracking the crack, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A girl lifted onto shoulders and carried across a sweating crowd, arms wide, strobe lights flashing, handheld camera moving underneath, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Sweat flying off a dancer's hair in slow motion as red lights pulse behind, the room shaking, extreme close up handheld, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "The whole floor of a warehouse dipping as the crowd jumps on the drop, beams creaking, people laughing and screaming, handheld wide shot, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Close up of a split floorboard with light shining up through the crack as feet keep jumping around it, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
