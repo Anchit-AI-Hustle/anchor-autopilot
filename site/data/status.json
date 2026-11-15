@@ -2,31 +2,31 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-14",
-    "title": "Bodies Become Thunder",
-    "finished_at": "2026-11-14T18:31:27Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43623133836",
+    "drop_id": "2026-11-15-4",
+    "title": "Face The Undertow",
+    "finished_at": "2026-11-15T15:29:53Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43693610873",
     "error": null
   },
-  "next_post_at": "2026-11-15T17:30:00Z",
+  "next_post_at": "2026-11-16T17:30:00Z",
   "streak": 22,
   "totals": {
-    "drops": 98
+    "drops": 101
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-14T18:31:27Z",
+  "updated_at": "2026-11-15T15:29:53Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
     "steps": 8,
     "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
     "guidance": 1.0,
-    "lm_ms": 68296,
-    "ref_audio": "ANCHOR-2026-09-09-let-s-fucking-go.mp3",
-    "dit_ms": 53354,
-    "vae_ms": 52414,
-    "total_s": 429.3
+    "lm_ms": 141537,
+    "ref_audio": "ANCHOR-2026-09-13-project-mayhem.mp3",
+    "dit_ms": 129061,
+    "vae_ms": 83055,
+    "total_s": 475.2
   }
 }
