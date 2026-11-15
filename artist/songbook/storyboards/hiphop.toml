@@ -627,3 +627,382 @@ prompt = "Two friends singing loudly together with arms raised in the middle of 
 part = "Outro"
 hook = false
 prompt = "Close up of two hands still holding each other on a park bench as the sun rises over the city behind them, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+# Added 2026-11-15 with the songbook refill
+[[boards]]
+id = "mercy-is-a-muscle"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A woman seen from behind sitting on the steps of a neighbourhood basketball court at golden hour, her hands clenched into fists on her knees, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman seen from behind walking along a sunlit street with a small grey stone in her palm, turning it over and over between her fingers, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A small fire glowing in an old metal barrel on a rooftop at dusk, a woman in silhouette staring down into it, warm orange light flickering on the concrete, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "A woman seen from behind lifting a heavy iron weight above her head in an open air gym beside the court at golden hour, her arms shaking with the effort, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A figure seen from behind walking away down a rainy street at night swinging a set of keys, a woman left standing small in a lit doorway behind them, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman seen from behind punching a heavy bag in a dim gym at night, sweat flying off her shoulders, a single bare bulb swinging overhead, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman seen from behind standing on the court, opening her hand and letting the small stone drop onto the concrete, golden light all around her, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Wide shot of a block party on a neighbourhood court at sunset, the crowd moving to the beat, warm light on the walls and rooftops around them, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "A woman seen from behind pressing the iron weight up again, steadier this time, the setting sun flaring behind her and friends dancing in soft focus, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "An open palm held out flat in warm golden light at the edge of the court, the fingers slowly relaxing, an open doorway glowing in the background, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "A woman seen from behind lifting the weight easily overhead as the whole court dances around her at golden hour, her shadow long across the concrete, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A calloused open hand catching the last gold light of the day, the basketball court and rooftops blurred behind it, a breeze moving the dust, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "circle-gets-wider"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A lone girl seen from behind standing at the edge of a neighbourhood basketball court at golden hour, watching four friends dance around a small speaker, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A girl seen from behind rolling slowly up to a small dance circle on the court on a skateboard, warm low sun and long shadows across the painted lines, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "The dancers seen from behind stepping aside to open the circle as the girl steps in, the speaker thumping, dust rising off the court, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "An old man seen from behind tapping a walking stick in time and then stepping into the middle of the circle to dance, the crowd cheering around him, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Overhead view of a dance circle on a court at golden hour growing wider as more people join, everyone clapping, long shadows stretching across the court, fast handheld circling, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Hands clapping in unison and feet stepping in on the beat at the edge of the circle, warm sunlight flaring through the gaps in the crowd, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Fifty people seen from behind dancing in a huge ring on the court as the sun sinks behind the rooftops, sandals, heels and boots moving together, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man seen from behind who had been sitting alone on the steps now clapping loudest in the circle, a woman beside him dancing barefoot, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Open windows in the buildings around the court with arms hanging out and clapping along, the ring of dancers reaching all the way to the doorways, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Wide shot of the whole street turned into one enormous dance circle at dusk, everyone holding hands and stepping in together, fast handheld rising crane, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Lamps flickering on over the court at nightfall as the circle keeps dancing, a newcomer seen from behind being waved in from the dark edge, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The court seen from a rooftop at night with a huge ring of people still dancing around the tiny speaker, warm light spilling from every window, running steadicam pull back, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "this-aint-rehearsal"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A young woman seen from behind standing before a large mirror in a small dim room, her reflection blurred and out of focus, the door behind her shut, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman seen from behind rehearsing hand gestures in front of a blurry mirror late at night, a single lamp glowing beside her, the door locked, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman seen from behind walking through a busy street at golden hour with her hands in her pockets, her feet stepping to a beat only she can hear, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman seen from behind tying her laces in a double knot on a doorstep, a struck match flaring in her other hand, warm evening light on the steps, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A mirror shattering in slow motion while a woman seen from behind walks through the doorway past it and out into the bright street, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "A woman seen from behind bursting into the middle of a golden hour block party on a basketball court, the crowd turning toward her as the beat drops, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman seen from behind in the centre of the court stumbling on her first step and then dancing anyway, the beat thumping from a speaker beside her, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "The crowd seen from behind cheering as the woman in the middle dances messy and free, dust rising in the low sun around her feet, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Red curtains opening on an empty outdoor stage at dusk, a single figure seen from behind walking out into the light without stopping, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman seen from behind on the outdoor stage with both arms raised as the neighbourhood crowd jumps in front of her at sunset, fast handheld circling, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The broken mirror lying in pieces on the floor of the small empty room, golden street light pouring through the open door, dust floating in the beam, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A woman seen from behind standing in the middle of the court with her head lifted to the sky at golden hour, the crowd still moving around her, running steadicam pull back, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "streetlights-end-here"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A man seen from behind standing at the very end of a lit street where the last lamp post stands and dark open fields begin, warm lamplight behind him, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man seen from behind walking past familiar doorsteps and corners in a neighbourhood at dusk, every window glowing warm around him, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Moths circling a single streetlamp at night, the light buzzing, a figure seen from behind standing just below it and looking out into the dark beyond, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "A man seen from behind stepping out of the circle of lamplight onto an unlit country road that stretches away into the night, stars above the fields, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man seen from behind with a bag over his shoulder stopping at the last lamp post on a quiet road, his shadow stretching out into the dark field ahead, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "The edge where yellow lamplight meets the black night on the tarmac like a shoreline, a pair of feet standing exactly on the line, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man seen from behind turning around and walking back into the lit neighbourhood, then stopping halfway to look over his shoulder at the road, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Wide shot of the neighbourhood lights at night giving way to a vast dark landscape under the stars, a tiny figure walking out between them, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "A man seen from behind walking steadily down the unlit road past the last streetlight, a small lantern glowing in his hand, crickets in the grass at the roadside, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Footsteps on a dark country road, one, two, three, each step lit by a soft warm glow, tall grass moving at the edge of the frame, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "A man seen from behind walking with loose arms down an open road under a sky full of stars, the lit neighbourhood only a small glow far behind him, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The last lamp post at the edge of town at dawn, its light switching off, the empty road beyond it running into golden fields, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "sky-belongs-to-nobody"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A tall chain link fence with a padlocked gate around an empty neighbourhood field at golden hour, a woman seen from behind gripping the wire and looking up at the sky, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A guard in silhouette standing by a locked gate with a dog at his side, the sun sinking low behind the rooftops, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Neighbourhood walls topped with wire and empty courts behind fences at golden hour, a group of friends seen from behind walking along the outside of them, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman seen from behind tilting her head back to look at a huge open sky streaked pink and gold above the fenced streets, swallows darting overhead, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Friends seen from behind climbing a concrete stairway onto a flat rooftop at golden hour carrying a speaker and a crate, the wide sky opening above them, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Wide shot of rooftops across the neighbourhood filling with people dancing at sunset, arms raised to the sky, the tar still warm under their feet, swallows wheeling overhead, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "The guard seen from behind at the locked gate below, tapping his boot to the music drifting down from the rooftops, his dog lying in the warm dust, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "People seen from behind on neighbouring rooftops waving to each other across the gaps as the sun sinks, warm light glinting on the water tanks, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A flock of birds bursting free into the evening sky above the rooftops against a pink and gold horizon, the dancing crowd below in silhouette, whip pan tilting up, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman seen from behind standing on the highest rooftop with both arms stretched wide to the violet sky, the crowd around her jumping, fast handheld circling, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The padlocked gate of the empty field at dusk, music and laughter drifting down from the rooftops above, fast handheld tilt up from the lock to the open sky, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Rooftops crowded with tiny silhouettes under a vast starry sky at night, music still drifting over the streets, the fences below lost in shadow, running steadicam pull back, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "caught-myself-glowing"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "An empty neighbourhood street at half past five in the morning, shutters down on every shop, a young man seen from behind walking alone in the blue dawn light, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Streetlamps switching off one by one along a quiet road at dawn, a man in silhouette walking beneath them with his hands in his pockets, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man seen from behind stopping in front of a large dark shop window, his reflection only a soft blurred glow in the glass, the sky turning blue behind him, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man seen from behind lifting his hand toward the shop window as the blurred reflection lifts its hand too, warm light catching the edge of the glass, fast handheld close tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A man seen from behind in front of the window as the first sunlight hits the glass and his blurred reflection seems to glow from within, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Golden light flaring across a row of shop windows on an empty street at sunrise, a small figure in the middle spinning once with his arms out, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A crowded basement party in warm red light the night before, a girl seen from behind with streaks of paint on her arms dancing wildly, the bass shaking the walls, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Friends seen from behind running through rain toward an open door at night, soaked and laughing, the bass thumping from the basement inside, streetlight shining off the puddles, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A stranger's hand passing a bottle of water to a tired dancer in a packed basement, both seen from behind, warm light and haze around them, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "Back on the dawn street the man seen from behind waves at his glowing reflection in the window and walks on, sunlight spilling across the pavement, fast handheld circling, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A man seen from behind walking the last block home with the sun rising over the rooftops ahead of him, his long shadow walking beside him, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The shop window in full morning sun, empty now, a faint warm glow lingering on the glass as the street wakes up around it, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"

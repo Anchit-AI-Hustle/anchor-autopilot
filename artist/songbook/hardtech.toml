@@ -798,3 +798,398 @@ That's wood
 Splitting
 One more time
 """
+
+# Added 2026-11-15 (songbook refill to 14 unused: every title checked free on MusicBrainz, iTunes and Deezer)
+[[songs]]
+id = "fingerprints-on-the-lightning"
+title = "Fingerprints On The Lightning"
+family = "truth"
+form = "confession"
+model = "B"
+groups = ["hardtech"]
+voice = "weathered female contralto with a smoky crack, half sung confessional verses over raw hard techno, the chorus thrown wide open in a full chest belt"
+about = "for years I blamed the weather for every broken window in my life, then I look closer and find my own fingerprints on the lightning"
+lyrics = """
+[Intro]
+I used to stand at the window and curse at the sky
+Every pane in the house had a crack, and I never asked why
+
+[Verse 1]
+I blamed it on the thunder when the doors came off the frame
+I blamed it on the lightning every time it spoke my name
+Every friend who stopped calling was a leaf on the wind
+Every night that went under was the rain coming in
+I said the sky was out to get me, said it never let me be
+Said the river had a grudge and that the road had it in for me
+But the flood was always deepest in the rooms where I had been
+And the glass was always shattered on the side that I was in
+My pride says, "It was weather, nobody can hold the rain"
+My gut says, "Count the doors you slammed, then say that word again"
+Was it bad luck, or a habit that I didn't want to see?
+Was the thunder in the sky, or was it rolling out of me?
+
+[Chorus]
+There were fingerprints on the lightning, and every print was mine
+I was the thunder in the walls, I was the crack along the line
+I tore off the roof, then I cursed at the rain
+Slammed every door, then I blamed the hurricane
+You can't calm a storm that you won't call your own
+Fingerprints on the lightning, and I'm soaked to the bone
+
+[Verse 2]
+There's a night I keep replaying, you were standing at my door
+You had sunlight in your pockets and I met you with a war
+I said the kind of words that leave a ringing in the ear
+Then I stood inside the wreckage asking how the sky got here
+Every lover, every friend, I watched them running for the hills
+And I swore that they were cowards, swore that I was standing still
+But a storm never sees itself, it only sees the trees
+Bending low and losing branches, and it calls itself a breeze
+My pride says, "Keep the story, you were only ever wind"
+My heart says, "Then explain the roofs, explain the rooms you've been"
+So I'm standing in the clearing where the wreckage meets the light
+And I'm saying it out loud for the first time in my life
+
+[Drop]
+Say it loud
+
+[Chorus]
+There were fingerprints on the lightning, and every print was mine
+I was the thunder in the walls, I was the crack along the line
+I tore off the roof, then I cursed at the rain
+Slammed every door, then I blamed the hurricane
+You can't calm a storm that you won't call your own
+Fingerprints on the lightning, and I'm soaked to the bone
+
+[Bridge]
+It was me
+Not the sky
+Not the sea
+Not the night
+It was me
+And it's mine
+
+[Final Chorus]
+There are fingerprints on the lightning, and I'm owning every one
+I'm the thunder and the quiet, I'm the cloud and I'm the sun
+I'm raising the roof where I let in the rain
+Opening doors that I slammed, one by one, again
+You can't calm a storm that you won't call your own
+Fingerprints on the lightning, and the calm is mine to hold
+
+[Outro]
+I still stand at the window when the clouds roll by
+Every pane is mended now, and I don't curse the sky
+"""
+
+[[songs]]
+id = "push-past-the-red"
+title = "Push Past The Red"
+family = "drive"
+form = "story"
+model = "A"
+groups = ["hardtech"]
+voice = "wiry male tenor with a sprinter's breathless bark, rapid double time bars that lean ahead of the kick, a hoarse shouted hook"
+about = "I stop saving my strength for some later day and push heart, lungs and legs past the red line until the sun comes up"
+lyrics = """
+[Intro]
+They built me with a warning light, so tonight I push past the red
+
+[Verse 1]
+I was born with a gauge on the side of my chest and a needle that never would climb
+Kept a hand on the brake and a foot off the gas, I was saving my fire for some other time
+Left a little in the tank every race that I ran, kept a little in reserve every night
+Every song I would swallow the top of the note, every punch I would pull in the fight
+Then a warehouse at three with a floor made of iron and a kick like a hammer on bone
+And the voice in my head saying, slow it, go home, you will need it when you're on your own
+But I'm sick of the someday I'm saving it for, I am moss growing over a stone
+So I slam it all down to the floor of my chest and I take both my hands off the wheel
+Watch the needle go over the white to the orange to red, it's the realest thing I feel
+Every bolt in my body is rattling loose and my blood is a river of fire on steel
+
+[Hook]
+Push past the red
+Push past the red till the morning
+
+[Drop]
+All of it
+
+[Verse 2]
+Now the crowd is a pack of us running in red and there's nobody touching the brake
+There's a stranger beside me with steam off his shoulders, he's grinning, his whole body shakes
+Every lung in the room is a furnace, a bellows, we're blowing the roof off the place
+Every heartbeat is maxed, every tendon is pulled, and the sweat is a flag on my face
+I was scared I would break if I ever went all of the way to the end of the line
+But the needle is pinned and I'm still in one piece and I've never felt this alive
+All the fuel that I saved for a day that would never arrive, I am burning it bright
+Like a car with no lights on a road with no end, I'm a blaze at the edge of the night
+When the sun hits the door I'll be empty, a shell with a grin, every drop of me gone
+And I'll walk out the gate with the red in my cheeks and I'll do it again at the dawn
+
+[Hook]
+Push past the red
+Push past the red, I'm not saving it
+
+[Outro]
+Empty tank
+Full chest
+Needle down
+Push past the red
+Again
+"""
+
+[[songs]]
+id = "ribs-like-wings"
+title = "Ribs Like Wings"
+family = "awakening"
+form = "celebration"
+model = "A"
+groups = ["hardtech"]
+voice = "big bright female mezzo with a joyful rasp, quick chanted double time verses, the hook screamed open like the front row of a festival"
+about = "after years of breathing small and holding my voice in, the drop hits and I take the first full breath of my life, ribs spread like wings, and scream it out with the crowd"
+lyrics = """
+[Intro]
+Hold it, hold it, now let it all go, ribs like wings
+
+[Verse 1]
+I have spent all my years breathing small, just the top of my chest and never once more
+Holding air in the hallway, the stairwell, the queue, I would swallow my laugh at the door
+Every room that I walked in, I folded up thinner, a whisper that slid on the floor
+Like the air was a loan I'd be asked to pay back, like I'd taken too much of it before
+Then the kick in the warehouse came up through my heels at a quarter past three in the night
+And the bass grabbed my ribs like two hands on a cage and it pried every bar of it wide
+There's a storm in the rafters, a crack and a flash, every strobe is a fork in the light
+And I breathe it all in to the floor of my belly, I swallow the sky and ignite
+Now my ribs open out like a pair of wings, and my throat is a chimney of flame
+And I scream like a kid on a hill in the wind, and the scream has the sound of my name
+
+[Hook]
+Ribs like wings, ribs like wings
+Open up and let the whole room ring
+
+[Drop]
+Breathe in, scream
+
+[Verse 2]
+There's a thousand of us with our heads thrown back and our arms like the branches in rain
+Every one of us came here with something held in, every one of us letting it break
+There's a boy with his hands on his knees and he's laughing, he's gasping, he's coming awake
+There's a girl on the shoulders of strangers who's shouting a word that she never could say
+All the air we were taught to be careful with, all of the breath that we borrowed and owed
+We are throwing it up to the rafters like confetti, like handfuls of gold
+And the rafters throw back every shout as a thunder that rattles the steel and the stone
+I was quiet so long that I thought I was made that way, now I'm a roar of my own
+When the morning comes up I'll be hoarse to the bone with a chest that is aching and wide
+But I'll breathe like I mean it on every street corner and leave nothing folded inside
+
+[Hook]
+Ribs like wings, ribs like wings
+I'm alive and the whole room sings
+
+[Outro]
+In
+Out
+Louder
+Ribs like wings
+Fly
+"""
+
+[[songs]]
+id = "saddle-the-beast"
+title = "Saddle The Beast"
+family = "inner-demons"
+form = "dialogue"
+model = "A"
+groups = ["hardtech"]
+voice = "duet of a low growling male bass for the beast and a steady clear male baritone answering it, double time bars traded line by line over the hard techno kick"
+about = "the rage in my chest begs to wreck the room, we argue it out line by line, and instead of caging it or letting it loose I put a saddle on it and ride"
+lyrics = """
+[Intro]
+Something with hooves is kicking my ribs, so tonight I saddle the beast
+
+[Verse 1]
+It growls, "Let me loose, let me tear up the night, every face in the crowd is a fight"
+I say, "I have let you loose plenty before, and I woke in the wreck every time"
+It growls, "You were nothing without me, a mouse, it was me who put iron in your spine"
+I say, "And it was you who set fire to my friends, every bridge that I built on the line"
+It growls, "Then you'll cage me, you'll starve me to bone, and you'll bury the key in the floor"
+I say, "No, I have tried every cage that there is and you only come back with more"
+It growls, "Then what's left?" and it rattles my ribs and it hammers its hooves on the door
+I say, "Something you never had once in your life, a rider, a road and a roar"
+So I throw on the leather, I pull on the strap, and it bucks and it kicks at the beat
+And the kick of the track is the kick of its legs, and the thunder is under my feet
+
+[Hook]
+Saddle the beast
+Don't cage it, don't kill it, saddle the beast
+
+[Drop]
+Hold on
+
+[Verse 2]
+It howls, "Let me go," but I tighten the reins and I lean in the turn of the kick
+I say, "You can run, you can run till you're raw, but you run on the line that I pick"
+And it charges the floor and the floor gives a crack and the strobes are a gallop of white
+There's a crowd going wild and they don't even know there's a beast and a man in the light
+It growls, "I could stay like this," sweat on its neck, every muscle a drum in the dark
+I say, "Then we stay," and I give it the floor and we're riding the heat of the spark
+Every rage I was scared of is galloping under me, every insult is dust in the air
+Every face I was ready to fight is a blur at the edge, it's a ghost, it's not there
+When the sun hits the gate it will lie down beside me and breathe with its head on my knee
+Not a monster, not broken, a beast with a rider, and both of us running free
+
+[Hook]
+Saddle the beast
+Saddle the beast, we ride
+
+[Outro]
+Easy
+Easy now
+Head down
+Saddle the beast
+Ride
+"""
+
+[[songs]]
+id = "dig-until-daylight"
+title = "Dig Until Daylight"
+family = "escape"
+form = "story"
+model = "A"
+groups = ["hardtech"]
+voice = "gravelly female alto rapper with a working rhythm in her breath, steady double time bars that land like shovel strokes, a ringing sung hook"
+about = "locked in a room with no window, I hear a party through the stone and dig with my bare hands to the beat until I break out into the morning"
+lyrics = """
+[Intro]
+Four walls and a floor made of stone, so I dig until daylight
+
+[Verse 1]
+They put me in a room with no window, four walls and a bench and a lock on the door
+Every day was a copy of yesterday, light in a stripe on the stone of the floor
+And I counted the stripes till the counting was all that I had, it was all I was for
+Then I heard it at night through the stone like a kick drum, a party, a pulse and a roar
+So I found a loose bolt in the frame of the bench and I sharpened it down on the wall
+And I started to scrape at the crack in the corner, a crumb at a time, that was all
+Every stroke with the beat, every beat was a stroke, I was digging in time with the sound
+Every fingernail torn and the knuckles in blood, I was going down into the ground
+When the footsteps came by I would lie on the hole with my heart going loud in my ears
+And the moment they left I'd be back in the dirt with the drum and the dust and the years
+
+[Hook]
+Dig until daylight, dig until daylight
+Every kick is a shovel
+
+[Drop]
+Dig, dig
+
+[Verse 2]
+Now the tunnel is long as a song and it bends like a river that's searching for air
+There's a taste in my teeth of the earth and the iron, there's dust in my eyes and my hair
+Every night I go further, the rumble gets louder, the stone getting softer and warm
+Every kick from above is a rope that is pulling me up through the rock like a storm
+Then my hand hits a root, and a root is a promise of grass, and the grass means a sky
+So I claw at the roof with the last that I've got and the dirt falls away from my eyes
+And it's gold, it's a sliver of gold, it's the morning, it's coming in sideways and bright
+And I push through the grass like a seed that refused to stay buried, I climb into light
+There are people still dancing in a field by a fire and they cheer like they knew I would come
+And I fall in the grass with my hands full of earth and I laugh in the face of the sun
+
+[Hook]
+Dig until daylight, dig until daylight
+Don't stop
+
+[Outro]
+Back there
+They're still guarding
+An empty room
+Dig until daylight
+Go
+"""
+
+[[songs]]
+id = "shelter-in-the-noise"
+title = "Shelter In The Noise"
+family = "devotion"
+form = "letter"
+model = "B"
+groups = ["hardtech"]
+voice = "soft husky male tenor, close and tender half sung verses over a hard techno pulse, rising to a warm full voiced chorus with a falsetto lift"
+about = "a letter to the one who has always been my quiet place in the loudest rooms, promising to be theirs in return"
+lyrics = """
+[Intro]
+I'm writing this on the back of my hand in the middle of the floor
+The bass is shaking every wall, and you're the one thing I'm here for
+
+[Verse 1]
+There's a kind of quiet that I only ever find in you
+Not the silence of an empty room, the calm when the thunder's through
+When the crowd is wall to wall and every light is cutting white
+You lean your shoulder into mine and the whole room drops out of sight
+I've been lost in louder places than a thousand speakers make
+In my head at four in the morning when the thoughts would not stop shaking
+And you never said, "Be quiet," never told me, "Calm it down"
+You just stood there like a doorway in the middle of the sound
+My fear says, "Nobody stays, they leave you in the din"
+My heart says, "Look who's standing here, the door is letting you in"
+Was it luck, or something older, like a harbour knows a boat?
+Did you choose me, or just find me, like the shore finds what floats?
+
+[Chorus]
+You are my shelter in the noise
+The hush inside the roar
+When every speaker's screaming
+You're the one I'm dancing for
+Let the bass break every window
+Let the walls shake till they fall
+You are my shelter in the noise
+And I hear you over all
+
+[Verse 2]
+I remember the night you broke and the room was spinning fast
+You were shaking by the stairs and you said, "I'm not gonna last"
+So I didn't try to fix it, didn't preach or pull you out
+I just sat down on the floor with you and let the music shout
+And I told you, "Count the kicks with me, just breathe on every one"
+Till the shaking turned to swaying and the swaying turned to fun
+That's the thing I want to give you, all the quiet that you gave
+Not a wall to hide you from it, just a place to be brave
+My fear says, "You will fail them, you're too loud inside yourself"
+My heart says, "Then be loud for them, be the roof when they need help"
+So I'm learning how to hold a space the way that you held me
+In the middle of the madness, standing steady as a tree
+
+[Drop]
+Hold on
+
+[Chorus]
+You are my shelter in the noise
+The hush inside the roar
+When every speaker's screaming
+You're the one I'm dancing for
+Let the bass break every window
+Let the walls shake till they fall
+You are my shelter in the noise
+And I hear you over all
+
+[Bridge]
+No walls
+No roof
+Just your hand
+That's the proof
+In the loudest room
+I am home
+
+[Final Chorus]
+I'll be your shelter in the noise
+The hush inside the roar
+When every speaker's screaming
+I'm the one you're dancing for
+Let the bass break every window
+Let the walls shake till they fall
+I'll be your shelter in the noise
+And you'll hear me over all
+
+[Outro]
+I wrote it on the back of my hand and the sweat has worn it through
+But I don't need the ink to know it, every word of it is you
+"""

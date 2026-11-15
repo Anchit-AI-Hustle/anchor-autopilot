@@ -818,3 +818,382 @@ prompt = "The whole floor of a warehouse dipping as the crowd jumps on the drop,
 part = "Outro"
 hook = false
 prompt = "Close up of a split floorboard with light shining up through the crack as feet keep jumping around it, slow handheld push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+# Added 2026-11-15 with the songbook refill
+[[boards]]
+id = "fingerprints-on-the-lightning"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A woman seen from behind stands at a tall cracked window in a dim concrete room at night, rain streaking the glass, lightning flashing over a row of distant warehouses, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A heavy steel door torn off its hinges by storm wind inside an empty warehouse, dry leaves and dust whirling across the concrete, a small figure watching from the far wall, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A hand pressed flat against rain soaked window glass, a jagged crack running out from under the palm across the pane, lightning flaring white behind it in the night sky, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Inside a strobe lit warehouse rave a woman seen from behind raises one open hand toward a burst of white light that forks like lightning through the smoke above the crowd, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A doorway at night with warm light spilling onto wet steps, a woman in silhouette inside the frame while a second small figure walks away into the rain, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A lone figure seen from behind stands among broken glass and overturned crates in a flooded concrete room, rainwater pouring through a hole in the roof, cold blue light, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Tall trees bending hard in a night storm at the edge of an industrial yard, branches tearing loose in the wind, a tiny figure standing still in the clearing below, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "The warehouse rave at full force, red and white strobes slicing thick smoke, a woman seen from behind at the centre of the jumping crowd with both fists raised, steady locked off frame shaking with the bass, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Rain pouring through a torn warehouse roof onto a crowd that keeps dancing, a woman seen from behind tilting her head up into the falling water as lightning flashes overhead, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Locked off wide of an empty concrete stairwell after the storm, a single figure seen from behind sitting on the bottom step, calm grey light falling through a high window, puddles still on the floor, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "A woman seen from behind lifts a sheet of new glass into an old window frame at dawn while the warehouse crowd dances below her in soft red light, slow lateral dolly, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A mended window with clean unbroken panes at sunrise, grey clouds drifting past outside, a small figure seen from behind opening it to the cool morning air, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "push-past-the-red"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A row of round dial gauges on a rusted iron panel in a dark warehouse, one needle trembling at the edge of the red zone, red warning lamps blinking through the smoke, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A young man seen from behind at the start line of a running track at night, one foot on the line, holding back while other runners sprint ahead into the floodlights, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A figure in silhouette walks down iron stairs into a concrete warehouse at three in the morning, a wall of hot haze and red strobes waiting below, running steadicam following close behind, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Moss covered stones and a rusted steering wheel half buried in weeds in an empty lot at night, sparks drifting from a grinder somewhere out of frame, a young man walking past it, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A crowd seen from behind jumping in a strobe lit warehouse as one tall figure in the middle throws both arms forward, a wash of deep red light flooding the smoke, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "A gauge needle slams past the red line and pins against the stop, sparks bursting from a grinder against steel behind it, red strobes pulsing on every kick, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Steam rising off the bare shoulders of dancers seen from behind in a packed warehouse, sweat glinting in red and white strobe light, fast handheld tracking through the crowd, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A car with its headlights off speeds down an empty concrete road at night toward a red glow on the horizon, the camera running alongside low to the ground, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A young man seen from behind sprinting the length of a warehouse floor between concrete pillars, smoke parting around him, red light flashing off the wet ground, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A whole warehouse crowd seen from behind with arms raised in deep red light as the bass hits, sparks raining from the rafters, a figure at the centre lifted onto shoulders, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Dawn light through an open warehouse gate, a tired young man seen from behind walking out into the grey morning with his shirt slung over one shoulder, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "An empty warehouse floor at sunrise, scattered cups and settling haze, the needle on the old iron panel slowly falling back to rest, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "ribs-like-wings"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A woman seen from behind stands still in a crowded strobe lit warehouse with her shoulders hunched and her arms folded tight to her chest, smoke drifting past her, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A narrow concrete stairwell lit by one flickering bulb, a small figure seen from behind pressed flat against the wall as other people rush past, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Low angle on boots on a vibrating warehouse floor, dust jumping off the concrete with each kick, red and white strobes flashing through thick smoke, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Fork shaped white strobe beams cutting across the rafters of a vast warehouse like lightning, a woman in silhouette below tipping her head back and filling her lungs, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman seen from behind flings her arms wide like wings in the middle of the warehouse crowd, her back arching as a burst of white light floods the smoke, fast handheld circling, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "A whole crowd seen from behind screaming upward with heads thrown back and arms spread, sweat and haze lit by blinding white strobes on every beat, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Hundreds of dancers seen from behind with arms raised like branches in the rain, a fine mist falling from the ceiling vents through red light, running steadicam weaving through the crowd, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A young man seen from behind bent over with his hands on his knees in the middle of the dance floor, shoulders shaking with laughter, red strobes flickering, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman seen from behind riding on the shoulders of strangers above the warehouse crowd, golden confetti bursting through the smoke around her, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman in silhouette at the front of the crowd spreads her arms wide like wings toward a wall of white light as confetti swirls, the crowd behind her doing the same, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Early morning on an empty street outside the warehouse, a woman seen from behind walking with her arms loose and her chest open to the cool air, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A flock of birds lifting off a warehouse roof into a pale dawn sky, a tiny figure on the street below raising both arms with them, fast handheld tilt up, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "saddle-the-beast"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A man seen from behind stands at a rusted iron gate in a dark industrial yard at night, the gate rattling as something heavy pushes against it from inside, red light pulsing, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A huge black horse rearing inside a smoke filled warehouse, hooves striking sparks from the concrete under red and white strobes, a small figure facing it from a distance, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man seen from behind standing among the burnt beams of a collapsed wooden footbridge at night, embers still glowing in the planks around his boots, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Hands seen over a man's shoulder buckling a worn leather saddle onto the back of a restless black horse in a dim warehouse corner, sweat gleaming on its flank, fast handheld close tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A rider seen from behind on a powerful black horse charging through the middle of a strobe lit warehouse rave, the crowd parting and cheering, smoke swirling around them, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Hooves pounding the concrete in bursts of white strobe light, sparks flying with each kick, the rider in silhouette leaning low over the horse's neck, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "The rider seen from behind pulling the reins tight as the black horse turns hard around a steel pillar, the crowd a blur of raised arms, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Wide shot of the warehouse floor cracking under the galloping horse, white strobes flashing like lightning, dancers jumping on the beat around it, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Dust and smoke hanging in the air as the horse and rider gallop past, blurred figures at the edges of the frame fading away like ghosts, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A rider and a black horse seen from behind bursting out of the warehouse doors into the open yard at dawn, the crowd pouring out after them, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The black horse lying calm on the concrete of the empty yard at sunrise, its head resting near the knee of a man seen from behind sitting beside it, fast handheld slow drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A man seen from behind riding the black horse at an easy walk down an empty road at sunrise, long shadows stretching behind them, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "dig-until-daylight"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A bare concrete cell at night with no window, a single stripe of light under a heavy steel door, a woman seen from behind sitting on an iron bench, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A thin stripe of light crawling across a stone floor as the days pass, a woman in silhouette scratching tally marks into the wall beside it, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Dust trembling on a concrete wall as a deep bass rumble shakes through the stone, a woman's hand pressed flat to feel it, red light leaking through a hairline crack, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman seen from behind on her knees scraping at a crack in the corner of the cell with a sharpened bolt, dirt piling up beside her, fast handheld close tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman seen from behind digging fast through dark earth in a narrow tunnel, dirt flying with every stroke, a faint red pulse of light glowing ahead, running steadicam crawling behind her, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Above ground a packed warehouse rave shakes under red strobes while below the floor a tunnel trembles, dust falling in rhythm with the kick, whip pan from the dancers down to the earth, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A long curving tunnel lit by one weak bulb, roots hanging from its ceiling, a woman seen from behind crawling forward with dust in her hair, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A dirt stained hand closing around a thick tree root in the tunnel roof, crumbs of soil falling, a thin line of grey morning light opening above it, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman seen from behind pushing up through grass and soil into a golden sunrise in an open field, earth sliding off her shoulders, running steadicam rising with her, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman seen from behind standing in a field at dawn with dirt covered arms raised to the sun, a crowd dancing around a bonfire in the distance and cheering her on, fast handheld circling, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Inside the empty concrete cell a guard seen from behind stands in the open doorway staring at the hole in the corner, morning light pouring down through it, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A tiny figure walking away across a wide green field toward the rising sun, the dark mouth of the tunnel left behind her in the grass, running steadicam pull back, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "shelter-in-the-noise"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A man seen from behind in the middle of a packed warehouse rave presses his palm against a huge speaker stack, red strobes and smoke all around him, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Two figures seen from behind stand shoulder to shoulder in a dense strobe lit crowd, one leaning gently into the other as white light cuts through the haze, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A doorway glowing with soft warm light at the edge of a loud dark warehouse, a small figure standing calm inside it while the crowd surges past, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Two figures seen from behind hold each other still in the centre of a jumping crowd, the only calm point in a storm of red and white strobes, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man seen from behind sitting on a concrete stairway at the side of the rave beside someone curled up with their head on their knees, the strobes flickering above them, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Two pairs of feet on a vibrating concrete floor, one pair tapping slowly in time with the kick while the other begins to follow, dust lifting with each beat, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Two figures in silhouette rising from the stairs and stepping back into the crowd, the shaking turning into swaying, warm amber light washing over their shoulders, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Wide shot of the warehouse at full force, the high windows rattling in their frames, strobes flashing, smoke rolling over a thousand raised hands, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "A man seen from behind wrapping his arms around another figure in the middle of the shaking crowd, the light around them softening to warm gold, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "A single open hand raised above the crowd in slow motion, catching a beam of white light, smoke drifting between the fingers, the room a soft blur behind it, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Two figures seen from behind standing tall together as the strobes and bass peak, the crowd swirling around them like a storm around a lighthouse, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "Early morning outside the warehouse, two figures seen from behind walking side by side down a quiet wet street, the bass fading behind them, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"

@@ -818,3 +818,319 @@ prompt = "A woman with water running from her wet hair dancing with her face tur
 part = "Outro"
 hook = false
 prompt = "A field of tired happy dancers lying in the grass watching the sky as the sun climbs, slow handheld drift across their smiling faces, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+# Added 2026-11-15 with the songbook refill
+[[boards]]
+id = "spin-or-fall"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A wooden spinning top turning on a flat stone in a misty forest clearing at dawn, slowly starting to wobble, a festival canopy glowing in the background, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A tired man seen from behind sitting on a fallen log at the edge of a forest festival before sunrise, dancers turning slowly in the mist beyond him, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man seen from behind standing alone in a quiet tent doorway with the music muffled outside, grey early light and mist drifting between the trees, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "A man seen from behind spinning slowly with his arms out in the middle of a misty forest dance floor, coloured canopies wheeling around him, the first sun breaking through the trees, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "An empty wooden room with bare walls and dust floating in one beam of light, a figure in silhouette sitting against the wall with his shoulders slumped, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A wooden top spinning far too fast on a stone, wobbling wildly and tipping off the edge into wet grass, morning dew catching the light, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Overhead view of dancers circling in a slow whirl in a forest clearing at dawn, one figure standing perfectly still at the exact centre, mist curling around them all, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Wide shot of the psychedelic forest festival as the bass rolls in, colourful canopies, mist and the first sunbeams through the trees, the crowd moving as one in silhouette, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "A man seen from behind turning in slow circles among the crowd as golden sunlight strikes through the mist, his long shadow sweeping across the grass, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Bare feet planted on mossy earth while the body above them turns slowly, the treetops and sky blurred in motion overhead, dew shaking loose from the grass, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "A man seen from behind spinning calmly at the centre of a ring of dancers in full morning sun, the mist burning off the clearing around them, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The wooden spinning top turning steady and upright on the flat stone in warm morning light, blurred dancers moving gently in the background, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "the-mud-turned-gold"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A figure seen from behind walking away from a forest festival in the blue hour before dawn, shoes dangling from one hand, mist lying on the path ahead, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman seen from behind dancing slowly and alone at the back of a crowd in a misty valley at night, speakers glowing among the trees, mud on her boots, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "The sky behind a festival stage beginning to split open with a thin seam of pale gold light above the dark treetops, mist rising from the valley below, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "First sunlight pouring across a muddy festival field, puddles and churned mud turning bright gold around the feet of dancers seen from behind, slow lateral dolly, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman seen from behind sitting on a grassy hill above the festival at sunrise with her knees pulled up, golden mist filling the valley below her, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A young man asleep against a speaker stack at sunrise seen from a distance, golden light on his shoulders, a girl dancing barefoot nearby in the mist, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A single candle flickering inside a glass jar on a wooden post as the dawn light grows around it, the festival waking up in soft focus behind, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Wide shot of the forest festival in full sunrise, golden beams cutting through mist and canopies, the crowd swaying slowly in silhouette, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "Hands raised in the air seen from behind the crowd, mud on the fingers glowing gold in the low sun, dust drifting through the light like sparks, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "An empty space on a hillside blanket at dawn, a woman seen from behind patting the spot beside her and looking out at the brightening sky, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Two friends seen from behind standing together at the edge of the field as the sun clears the trees, the mud around their boots shining gold, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A pair of muddy shoes left on a gold lit hillside at sunrise while two figures walk hand in hand toward the stage in soft focus, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "stop-the-rewind"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A man seen from behind sits on a damp log in a forest at night while an old film projector flickers the same short scene onto a white cloth hung between two trees, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Flickering projected images of a rainy street at night and a door swinging shut, playing on the white cloth among the trees, mist drifting through the beam, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man seen from behind dancing in loops on a forest festival floor, repeating the same small step over and over while green lasers trace circles in the mist, fast handheld circling, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A hand winding a scratched film reel back to its start on an old projector, the celluloid worn and dusty, blue light before dawn spilling through the trees, fast handheld close tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A man seen from behind pulls his hand away from the projector and steps back as the reel spins freely, the forest crowd dancing behind him in the mist, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "The film reel spinning fast and loose, celluloid fluttering in the wind, beams of first sunlight breaking through the trees across the dance floor, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "On the white cloth a projected figure seen from behind walks away down a rainy street and keeps on walking past the corner, mist moving through the beam, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "The projected images on the cloth turning from rain to a bright morning field full of people, the man watching it seen from behind, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "The end of the film flaring into pure white light on the cloth as the real sun rises behind it through the trees, the man in silhouette in front of it, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "The man seen from behind dancing freely among the crowd in the morning sun, no longer looping, arms loose, the mist glowing gold around him, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The old projector on the log with its empty reel slowly coming to a stop, the white cloth swaying in the breeze between the trees in daylight, fast handheld slow drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A man seen from behind walking out of the clearing into the bright forest and taking a deep breath, sunbeams falling across the path ahead of him, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "roots-find-each-other"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "Two tall trees at opposite ends of a hillside above a forest festival at dawn, a river of crowd and coloured canopies flowing between them, mist rising, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A man seen from behind dancing at the far side of a misty festival field while a woman, small in the distance, dances alone at the other end, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A woman seen from behind searching the crowd during a night rainstorm at the festival, lantern light shining on wet canopies, thunder clouds over the trees, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "A cut away view of the earth under a festival field, tangled tree roots from two sides growing toward each other and wrapping together in warm soil, dancing feet above in soft focus, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A man and a woman seen from behind standing a few steps apart under a big oak tree at first light, hesitating, mist hanging between them, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "Two figures seen from behind sitting side by side with their backs against the bark of the oak in gentle rain, the valley glowing pale gold below them, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A hand resting flat on mossy ground at the foot of the tree, feeling the soil, a slow pulse of bass making dew drops tremble on the grass around it, slow push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = false
+prompt = "Wide shot of the forest festival waking at sunrise, the crowd swaying slowly under colourful canopies, mist and light pouring between the trees, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Chorus"
+hook = true
+prompt = "The branches of two separate trees swaying apart in the wind while beneath the ground their roots stay wrapped together, both seen in one frame in warm morning light, slow lateral dolly, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Bridge"
+hook = false
+prompt = "Tangled roots exposed on a riverbank at dawn, thick and intertwined, clear water flowing gently past them, a pair of bare feet stepping carefully over them, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Final Chorus"
+hook = true
+prompt = "Two old friends seen from behind walking arm in arm into the dancing crowd as the sun rises, their shadows joining into one on the grass, slow push in, subject centred in the square frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The two trees on the hillside in full morning light as the crowd streams home along the path between them, the last of the mist lifting off the grass, steady locked off frame, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards]]
+id = "later-is-a-liar"
+
+[[boards.shots]]
+part = "Intro"
+hook = false
+prompt = "A young woman seen from behind standing at the edge of a forest festival at dawn with her hands pushed deep into heavy coat pockets, mist and coloured canopies ahead of her, fast handheld push in, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "A pile of unopened gift boxes tied with ribbon sitting on a tree stump in the mist, dew gathering on the wrapping, dancers moving in a blur behind them, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "The sky at the back of a forest turning pink as mist lifts off a festival field, a woman small in frame standing still in the middle of the swaying crowd, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 1"
+hook = false
+prompt = "Sand slipping through open fingers at the edge of a lake at sunrise, small waves washing over the shore, the festival lights blurred in the background, fast handheld close tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman seen from behind pulling handfuls of colourful confetti from her pockets and flinging them into the air over the dancing crowd as the sun breaks through the trees, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Drop"
+hook = true
+prompt = "Confetti and mist swirling in golden sunbeams over a psychedelic forest dance floor, the crowd jumping as one as the bass rolls through the trees, colourful canopies glowing overhead, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman seen from behind hugging a group of friends too long and too tight on the dance floor until they all tumble laughing into the grass, fast handheld tracking, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A woman seen from behind throwing a fistful of white flower petals up toward the treetops like snow, the low morning light catching every petal, fast handheld tilt up, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Verse 2"
+hook = false
+prompt = "A small firework bursting over a misty forest clearing at sunrise, its sparks reflected in a stream where a figure stands in silhouette, whip pan, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Hook"
+hook = true
+prompt = "A woman seen from behind dancing with her coat pockets turned inside out and her arms flung wide in full morning sun, the crowd around her shouting along, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "The tree stump in sunlight with the gift boxes torn open and empty, ribbons fluttering in the breeze, dancers moving in soft focus behind it, fast handheld drift, cinematic, 35mm film, realistic, natural light, shallow depth of field"
+
+[[boards.shots]]
+part = "Outro"
+hook = false
+prompt = "A woman small in frame walking barefoot through a golden festival field toward the music at sunrise, her pockets turned out and empty, mist trailing behind her, running steadicam, cinematic, 35mm film, realistic, natural light, shallow depth of field"
