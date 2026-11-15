@@ -773,3 +773,365 @@ Feel it
 Still moving
 Still home
 """
+
+# Added 2026-11-15 (songbook refill to 14 unused: every title checked free on MusicBrainz, iTunes and Deezer)
+[[songs]]
+id = "spin-or-fall"
+title = "Spin Or Fall"
+family = "drive"
+form = "argument"
+model = "B"
+groups = ["psy"]
+voice = "soft high male tenor with a floating head voice, two inner voices argued in a hush and a lift, half time sung verses over the rolling psy bass, a wide swirling chorus"
+about = "half of me wants to stop and rest, half of me knows that like a spinning top I only stand while I keep turning, and by dawn I find the still middle of the spin"
+lyrics = """
+[Intro]
+A top only stands while it's turning around
+The moment it stops, it lies down on the ground
+
+[Verse 1]
+My body says, "Lie down, you've been turning since the dusk
+Your feet are full of fire and your bones are full of dust"
+My spirit says, "Keep going, there's a stillness in the spin
+The moment that you stop is the moment it gets in"
+And I know what it is, the thing that waits for me to rest
+The heavy that comes crawling when it's quiet in my chest
+But the tired one is honest, and the tired one is kind
+It's the one who caught me falling every time I ran too blind
+So who do I believe when they're both pulling at my sleeve?
+One says, "Stay and you will drown," and one says, "Run and you will grieve"
+Is the stillness that I'm scared of just a place I've never been?
+Or the spinning just a way to never let the silence in?
+
+[Chorus]
+Spin or fall, spin or fall
+Nothing stands still when the morning calls
+A top only stands while it's turning round
+Spin or fall, and I won't touch the ground
+Every turning thing is quiet at its core
+Spin or fall, and I'm not afraid anymore
+
+[Verse 2]
+I remember being still in a room without a sound
+How the quiet started talking, how it pulled my shoulders down
+And I swore I'd never stop again, I'd keep the wheel in flight
+I would dance through every morning, I would outrun every night
+But you can't outrun the weather when the weather is your own
+And a top that's spun too wildly wobbles off and hits the stone
+So I'm learning there's a centre in the middle of the whirl
+Where the axis doesn't move at all, the stillest point in the world
+My body says, "Then rest there, you don't have to stop to breathe"
+My spirit says, "Then turn there, let the turning carry me"
+Maybe rest and motion never were two enemies at all
+Just a dancer and his centre, and the music, and the call
+
+[Drop]
+
+[Chorus]
+Spin or fall, spin or fall
+Nothing stands still when the morning calls
+A top only stands while it's turning round
+Spin or fall, and I won't touch the ground
+Every turning thing is quiet at its core
+Spin or fall, and I'm not afraid anymore
+
+[Bridge]
+Feet on the earth
+Head in the sky
+Still in the middle
+Wide in the eye
+Turning, turning
+Never down
+
+[Final Chorus]
+Spin or fall, spin or fall
+I found the stillness inside of it all
+A top only stands while it's turning round
+Spin or fall, and I'm spinning on solid ground
+Every turning thing is quiet at its core
+Spin or fall, and I'm home on the floor
+
+[Outro]
+A top only stands while it's turning around
+And I've never stood so still while I'm going around
+"""
+
+[[songs]]
+id = "the-mud-turned-gold"
+title = "The Mud Turned Gold"
+family = "awakening"
+form = "letter"
+model = "B"
+groups = ["psy"]
+voice = "warm sleepy female alto, sun cracked and smiling, reading a letter half spoken over the acid line, a soft gospel lift on the chorus"
+about = "a letter to the friend who went home before sunrise, telling them how the first light turned the mud and every tired face gold and woke something in me"
+lyrics = """
+[Intro]
+You left at four with your shoes in your hand and a yawn
+So I'm writing you this from the hill, because you missed the dawn
+
+[Verse 1]
+The night was nothing special, I was tired to the bone
+Dancing out of habit with the crowd and still alone
+The mist was in the valley and the bass was in the trees
+And the cold was on my shoulders and the mud was on my knees
+Then the sky behind the stage began to crack along the seam
+Like an egg about to open, like the ending of a dream
+And the first light hit the speakers and it ran along the ground
+And it poured across the puddles till they shone without a sound
+And I swear I felt it happen in the middle of my chest
+Like a window someone opened in a room I'd never guessed
+Every stranger had a halo made of sweat and morning glow
+Every tired face was lit like it had something new to show
+
+[Chorus]
+And the mud turned gold
+On the boots and on the skin
+On the hands that we were raising
+On the field that we were in
+I was waking and I didn't
+Know that I'd been sleeping long
+And the mud turned gold
+And I wish you'd seen the dawn
+
+[Verse 2]
+I know you'll say a sunrise is a sunrise, nothing more
+That you've seen a hundred mornings and you've walked out of the door
+But this one didn't rise, it came and found me where I stood
+It walked right through the crowd to me the way a good friend would
+There's a girl who'd lost her voice and she was laughing anyway
+There's a boy asleep against a speaker, smiling at the day
+And the music didn't stop, it just got softer, like it knew
+Like the whole field had been waiting for the light to come through
+I was grey for half a year, and I didn't even know
+That a person can go out like a candle, very slow
+But a match can strike at sunrise in the middle of a hill
+And I'm burning as I write this, and I think I'm burning still
+
+[Drop]
+
+[Chorus]
+And the mud turned gold
+On the boots and on the skin
+On the hands that we were raising
+On the field that we were in
+I was waking and I didn't
+Know that I'd been sleeping long
+And the mud turned gold
+And I wish you'd seen the dawn
+
+[Bridge]
+Next time
+Stay
+Next time
+Wait
+Next time
+Watch the sky with me
+
+[Final Chorus]
+And the mud turned gold
+On the boots and on the skin
+On the hands that we'll be raising
+On the field we'll be dancing in
+I was sleeping and I didn't
+Know it till the light came on
+And the mud turned gold
+And next time you'll see the dawn
+
+[Outro]
+You left at four with your shoes in your hand and a yawn
+Next time I'm keeping the other hand, and we'll stay for the dawn
+"""
+
+[[songs]]
+id = "stop-the-rewind"
+title = "Stop The Rewind"
+family = "inner-demons"
+form = "revolt"
+model = "A"
+groups = ["psy"]
+voice = "sharp male baritone with a whispered edge, psy rap double time locked to the rolling bass, the hook chanted low like a spell"
+about = "one memory keeps replaying behind my eyes every night, and at sunrise on the floor I refuse to press it again and let it play out to the end"
+lyrics = """
+[Intro]
+Same night, same words, same door, every night, stop the rewind
+
+[Verse 1]
+There's a reel in my head with a night on it, one night, and it plays when I lie down to sleep
+Every word that I said is in focus, the look on your face is a cut that is fresh and deep
+I can see every second in slow motion, the door and the rain and the light on the street
+And I wake up at four with it playing again like a fever that wants to repeat
+I have watched it a thousand times over, the edges are scratched and the colour is gone
+But my hand keeps on pressing it back to the start like a tongue on a tooth that is wrong
+And the acid line loops like the loop in my head, the same bend and the same little climb
+Every turn of the bass is a turn of the reel, every bar is the same piece of time
+But tonight in the field with the sun coming up there is something that won't let me sink
+There's a voice in my blood saying, play it out once to the end, and then let it go blank
+
+[Hook]
+Stop the rewind
+Stop the rewind, let it play out
+
+[Drop]
+Let it run
+
+[Verse 2]
+So I sit with it, watch it, the door and the rain and the words that I wish I had swallowed
+And I let it go past the place where I always stop, past the part that I never have followed
+There's a me in the film who walks out in the rain and he's hurting, but look, he survives
+There's a morning that comes after that, and a year, and a field, and a crowd full of lives
+I was keeping it stuck at the worst of the scene like the worst was the end of the reel
+But the film keeps on going, it always kept going, it's only my hand on the wheel
+So I take my hand off, and I let the reel spin, and it rattles and flutters and runs
+And it ends in a flicker of white on the screen, and the white is the light of the sun
+Now the loop in the bass is just music again, it's a circle that carries me home
+And the night I replayed is a night that I lived, it was mine, it was real, and it's gone
+
+[Hook]
+Stop the rewind
+Stop the rewind, I let it play out
+
+[Outro]
+Credits roll
+Lights up
+The reel runs out
+Stop the rewind
+Breathe
+"""
+
+[[songs]]
+id = "roots-find-each-other"
+title = "Roots Find Each Other"
+family = "devotion"
+form = "dialogue"
+model = "B"
+groups = ["psy"]
+voice = "duet of a deep gentle male voice and a light clear female alto, psychedelic half time call and answer under the trees, the two voices braiding on the chorus"
+about = "two old friends who drifted to opposite ends of the festival meet again at dawn under the trees and find out that what held them never let go"
+lyrics = """
+[Intro]
+Two trees on the hill and a mile of crowd in between
+But under the ground, where nobody's been, roots find each other
+
+[Verse 1]
+You say, "We were close once, then the years pulled us apart
+You went out into the morning, I went deeper in the dark"
+I say, "I watched you dancing from the far side of the field
+And I didn't cross the crowd to you, I didn't know how it would feel"
+You say, "I thought you'd changed, I thought you'd found another tribe
+Somebody new to laugh with, someone braver at your side"
+I say, "I thought the same of you, I'd see you laughing in the sun
+And I'd tell myself you'd outgrown me, and I'd go back to the drum"
+You say, "So why, when the thunder came, did I look round for you?"
+I say, "The same reason I was searching every face I knew"
+You say, "Maybe what we had is just a story that we keep"
+I say, "Look down at your feet, the story's running deep"
+
+[Chorus]
+Branches go where the wind decides
+Leaves come down when the summer dies
+But under the ground where the dark is warm
+Roots find each other through every storm
+Roots find each other, roots find each other
+Under the field, like a hand finds another
+
+[Verse 2]
+You say, "I'm scared of how it was, I'm scared we've grown too strange"
+I say, "So am I, but strange is just a word for things that change"
+You say, "I missed the night you fell, I wasn't there to catch your hand"
+I say, "You're here at sunrise now, and that's enough to understand"
+You say, "Then what do we do now, do we start it all again?"
+I say, "We don't have to start it, we just sit here in the rain"
+And we sit beneath the oak with both our backs against the bark
+While the first light finds the valley and the last stars leave the dark
+You say, "Do you feel that?" and I feel it through the ground
+Like a heartbeat in the soil, like a slow and steady sound
+I say, "That's the thing that held us when we didn't hold at all"
+You say, "Then I'll stop counting miles," and we watch the shadows fall
+
+[Drop]
+
+[Chorus]
+Branches go where the wind decides
+Leaves come down when the summer dies
+But under the ground where the dark is warm
+Roots find each other through every storm
+Roots find each other, roots find each other
+Under the field, like a hand finds another
+
+[Bridge]
+Far apart
+Up top
+Tangled tight
+Down below
+Nothing broke
+We just grew
+
+[Final Chorus]
+Branches go where the wind decides
+Leaves come down and the summer dies
+But under the ground where the dark is warm
+Roots find each other, and we held through the storm
+Roots find each other, roots find each other
+Under the field, we were holding each other
+
+[Outro]
+Two trees on the hill, and the crowd going home in a stream
+And under the ground, where nobody's been, roots find each other
+"""
+
+[[songs]]
+id = "later-is-a-liar"
+title = "Later Is A Liar"
+family = "truth"
+form = "celebration"
+model = "A"
+groups = ["psy"]
+voice = "laughing young female soprano, airy half sung double time with a grin in every bar, a shouted sing along hook over the acid line"
+about = "after years of saving every joy for some perfect later, I realise at dawn that later never promised me anything and throw a party for right now"
+lyrics = """
+[Intro]
+I kept every good thing for later, but later is a liar
+
+[Verse 1]
+I was saving my laugh for a better occasion, my dance for a summer to come
+Kept the best of my voice like a coin in my pocket, I'd spend it when all this was done
+Every hug I held back for a holiday, every big word for a day in the sun
+Every thank you, I'm sorry, I love you, I folded and kept them for some other one
+Then the sky at the back of the forest went pink and the mist started lifting away
+And I stood in the crowd with my pockets all heavy with everything saved for a day
+That was never once promised to anyone here, it's a rumour that nobody made
+Every later I banked on was sand at the edge of the water, and look how it fades
+So I'm pulling it out, every word, every dance, every laugh I was keeping for good
+And I'm spending it here on the grass in the mud at the dawn like I always knew that I could
+
+[Hook]
+Later is a liar, later is a liar
+Now is all I've got
+
+[Drop]
+Now, now
+
+[Verse 2]
+So I'm holding my people too long and too tight till they laugh and they tell me to go
+And I'm telling the stranger beside me her dancing is lighting the field, so she'll know
+Every sorry I swallowed, I'm saying it now while the bass is still rolling below
+Every thank you, I'm shouting it up to the trees like I'm throwing a fistful of snow
+Let the careful keep waiting for perfect, the perfect is somebody's story, a lie
+There is only the now, and the now is a river, it runs and it never runs dry
+Every second I'm in is a firework going, I'm catching it bright in my eye
+And I swear I won't save it, I won't put it back, I won't wait for a cloudless sky
+When tomorrow arrives, if it comes, I will meet it the way that I'm meeting today
+With my arms open wide and my pockets turned out and with nothing at all put away
+
+[Hook]
+Later is a liar, later is a liar
+Now is mine
+
+[Outro]
+Spend it
+All of it
+Here
+Later is a liar
+Now
+"""

@@ -790,3 +790,172 @@ Yeah
 Again
 I'm in
 """
+
+# Added 2026-11-15 (songbook refill to 14 unused: every title checked free on MusicBrainz, iTunes and Deezer)
+[[songs]]
+id = "rooftop-oath"
+title = "Rooftop Oath"
+family = "devotion"
+form = "story"
+model = "A"
+groups = ["rap"]
+voice = "husky streetwise female alto rapper, steady storytelling double time with a warm laugh at the edge, the hook half sung"
+about = "two friends climb onto a rooftop at sunrise after the rave and swear that whoever falls first, the other one carries"
+lyrics = """
+[Intro]
+Water tank, wind, and the streets still asleep, this is the rooftop oath
+
+[Verse 1]
+We came out of the warehouse at five with our ears ringing, shirts soaked through to the skin
+Climbed the ladder of rust on the side of the building like kids who were sneaking back in
+Sat with our backs on the water tank, watching the streets underneath get their colour again
+And you said, with your voice going hoarse from the night, that you didn't know where to begin
+Said you'd been coming apart at the seams for a while, said you smiled so that nobody would see
+That the floor was the only place left where your head didn't scream and you felt you could breathe
+And I told you I'd been there myself, I'd been dancing away from the very same grief
+Every one of us up here is running from something, the kick is the only relief
+So you spat in your palm like a pirate and grinned, and I spat in mine, and we shook
+And we swore on the sunrise, the rust and the wind, while the sun on the rooftops took a look
+
+[Hook]
+Rooftop oath, rooftop oath
+Whoever falls first, I carry us both
+
+[Drop]
+Swear it
+
+[Verse 2]
+Now the deal is whoever falls first gets carried, no matter how heavy the load
+Whoever goes quiet gets found in the crowd, and whoever gets lost, I come running the road
+If you sink, I'm the rope, if I burn, you're the rain, if we fight, then we fight and we stay
+If the world wants to swing at you, tell it to line up, 'cause I'm standing in front, come what may
+There'll be nights you forget it, I'll show up and remind you with rust on my hands from the climb
+There'll be nights I'll be sure that I'm finished, you'll drag me back up to the roof one more time
+And we laughed till the pigeons took off from the ledge and the sun hit the tanks like a gong
+And the streets underneath started yawning awake and we both knew the night had been long
+Every rave ends at sunrise, but some things you build at the end of a night will hold on
+Like an oath on a rooftop, two hands and a spit and a promise as loud as a song
+
+[Hook]
+Rooftop oath, rooftop oath
+Whoever falls first, I carry us both
+
+[Outro]
+Rust on our palms
+Sun on the tank
+Say it again
+Rooftop oath
+Both
+"""
+
+[[songs]]
+id = "roll-call-at-midnight"
+title = "Roll Call At Midnight"
+family = "ritual"
+form = "dialogue"
+model = "A"
+groups = ["rap"]
+voice = "booming male MC with a drill sergeant snap, call and response double time bars, a whole crowd shouting back every answer"
+about = "at midnight the MC calls the roll of everyone who made it through to the floor, and every voice answers until the whole room is shouting that it is here"
+lyrics = """
+[Intro]
+Lights down, hands up, answer when I call you, this is roll call at midnight
+
+[Verse 1]
+Everybody who walked in tonight with a weight on the back and a crack in the voice
+Sound off, and the room throws it back like a wave, we are here, we are here by our choice
+Everybody who's been told to be quiet, to sit on their hands and to keep down the noise
+Sound off, and the walls start to shake with it, here, and the shaking's a way to rejoice
+Everybody who lost somebody this year and still came to the floor with a hole in the chest
+Answer up, and a hand in the front goes up slow, then a hundred, then all of the rest
+Everybody who got knocked flat on the ground and got up with the dirt on their best
+Answer up, and the roar hits the rafters, we're here, we are here, and we're blessed
+This is not a parade, this is attendance, I'm counting the living, I'm checking you in
+Every name is a heartbeat, a stamp on the concrete, and nobody's missing the hymn
+
+[Hook]
+Roll call at midnight
+Who's here? We're here
+
+[Drop]
+Here, here
+
+[Verse 2]
+Everybody who swore they were done with the night, who had hung up their shoes for good
+Let me hear it, and a voice in the middle goes up like a rocket, I knew that you would
+Everybody who's dancing alone, who came here with nobody, nobody at all
+Let me hear it, and you're not alone anymore, there's a thousand of you in the hall
+Everybody with scars that they hide in the daylight, the ones that they cover with sleeves
+Let me hear it, the sleeves are rolled up and the arms are all up like a forest of leaves
+Everybody still breathing, still kicking, still stubborn, still here at the end of the year
+Let me hear it, and the answer comes back so loud it's a wave that is breaking my ear
+There's a list at the door with the names of the living, and every last one of you's on it
+So stamp it and shout it and sweat it and mean it, and nobody here is a ghost, so own it
+
+[Hook]
+Roll call at midnight
+Sound off, we're here
+
+[Outro]
+Lights up
+Still here
+All here
+Roll call at midnight
+Present
+"""
+
+[[songs]]
+id = "loud-in-their-library"
+title = "Loud In Their Library"
+family = "defiance"
+form = "revolt"
+model = "A"
+groups = ["rap"]
+voice = "cheeky nasal female rapper with a playful sneer, wacky swaggering double time flow, shouted ad libs and a chanted hook"
+about = "a crowd that was hushed all its life rolls a speaker the size of a car into the great hall of quiet rules and gets loud in their library"
+lyrics = """
+[Intro]
+Shh, they said, shh, so we brought the whole bass and got loud in their library
+
+[Verse 1]
+They built a big hall out of marble and hush, where the dust on the shelves has a dust of its own
+Every chair has a rule and every rule has a finger that's pressed to a mouth like a stone
+Every giggle I had got a look, every shout got a note, every note got a frown and a tone
+So I tiptoed for years in my socks on the marble till tiptoe was all that I'd known
+Then I heard that a crowd had a key to the door and a speaker the size of a car
+And they rolled it right under the board that said quiet, and plugged it in, there we are
+First kick hit the shelves and a thousand of pages went flying like birds from a tree
+Second kick and the chandelier swung like a pendulum, swinging the dust over me
+And the keepers of quiet came running and flapping, their fingers all pressed to their lips
+But the floor was already a riot of elbows and knees and the swing of the hips
+
+[Hook]
+Loud in their library
+We get loud in their library
+
+[Drop]
+Shh, no
+
+[Verse 2]
+Now we're stomping the stacks and we're surfing the ladders, we're doing the worm on the reading room floor
+Every rule that they whispered is printed on paper, we're folding it into a plane for the door
+There's a girl on the top of the tallest of shelves with a voice like a fire alarm
+And she's screaming a song she was told was too much, and the crowd is a wave in her arms
+They can stamp us with overdue, ban us for life, put our names on a list at the gate
+But you can't put a shush on a heartbeat, you can't tell a kick drum to wait
+All the silence they sold us was dust on a shelf and we're blowing it into the light
+Every whisper they forced is a scream coming back, every shh is a riot tonight
+When we leave there'll be glitter in every chapter and bass in the spine of the books
+And whoever comes in for a quiet tomorrow will hear us in all of the nooks
+
+[Hook]
+Loud in their library
+We stay loud in their library
+
+[Outro]
+Shh
+Make me
+Louder
+Loud in their library
+Ha
+"""

@@ -559,3 +559,392 @@ Still holding
 Look down
 That's my hand
 """
+
+# Added 2026-11-15 (songbook refill to 14 unused: every title checked free on MusicBrainz, iTunes and Deezer)
+[[songs]]
+id = "mercy-is-a-muscle"
+title = "Mercy Is A Muscle"
+family = "truth"
+form = "confession"
+model = "B"
+groups = ["hiphop"]
+voice = "low tender female singer rapper with a cracked edge, confessional half time verses close to the mic, a soulful sung chorus"
+about = "I confess I could never forgive and thought mercy was something people are born with, then learn that it is a muscle that only grows when it aches"
+lyrics = """
+[Intro]
+I used to think that mercy was a gift, like perfect pitch
+Some were born with open hands, and I was born with fists
+
+[Verse 1]
+When somebody crossed me, I would carry it for years
+Like a stone inside my shoe that I was keeping for souvenirs
+I would smile and say it's nothing, I would tell them I forgot
+Then I'd heat it up at midnight till the anger glowed red hot
+I watched people let it go and I was sure that they were weak
+Or that they were born with something I could never learn to speak
+My pride says, "If you let it go, you're telling them it's fine"
+My heart says, "If you hold it, you're the one who's doing time"
+And I hated that the heart was right, I hated how it burned
+That the fire I kept for them was only burning me in turn
+Was I strong, or was I scared to put the heavy thing down?
+Was I loyal to the hurt because the hurt was all I'd found?
+
+[Chorus]
+Mercy is a muscle, and mine was weak
+It shakes when you lift it, it burns for a week
+Nobody's born with it, you build it in pain
+Rep after rep, you forgive them again
+I'm not saying they're right, I'm not saying it's free
+Mercy is a muscle, and I'm lifting for me
+
+[Verse 2]
+There's a name I couldn't say without my jaw locking tight
+Someone who I trusted with the keys and with the night
+And they took it, and they laughed, and they left me in the rain
+And I swore I'd keep that fire till they felt the same pain
+So I trained it like a soldier, I would feed it every day
+I rehearsed what I would tell them, every word a perfect blade
+But the years went by, and all that strength was going to the wrong place
+It was holding up a war that only lived behind my face
+So I started small, I let a little insult slip away
+Then a bigger one, a broken promise, then a wasted day
+It still shakes when I lift it, I still drop it now and then
+But I pick it up and lift again, I count, and I begin
+
+[Drop]
+Let it go
+
+[Chorus]
+Mercy is a muscle, and mine was weak
+It shakes when you lift it, it burns for a week
+Nobody's born with it, you build it in pain
+Rep after rep, you forgive them again
+I'm not saying they're right, I'm not saying it's free
+Mercy is a muscle, and I'm lifting for me
+
+[Bridge]
+Open hand
+Open door
+Not for them
+Anymore
+For the one
+Who carried the war
+
+[Final Chorus]
+Mercy is a muscle, and mine's getting strong
+It shook when I lifted, I carried it on
+Nobody's born with it, you build it in pain
+Rep after rep, till you're light in the rain
+I'm not saying they're right, and I'm not saying it's free
+Mercy is a muscle, and it's carrying me
+
+[Outro]
+I used to think that mercy was a gift you're born to hold
+Now I know it's something learned, and I've got calluses of gold
+"""
+
+[[songs]]
+id = "circle-gets-wider"
+title = "Circle Gets Wider"
+family = "ritual"
+form = "celebration"
+model = "A"
+groups = ["hiphop"]
+voice = "bright warm male hip hop singer rapper, bouncy double time story bars, a big joyful sung hook with handclap energy"
+about = "a dance circle on a court at golden hour keeps opening for every person standing at the edge until the whole street is inside it"
+lyrics = """
+[Intro]
+Somebody's standing alone at the edge, so the circle gets wider
+
+[Verse 1]
+It started with four of us out on the court with a speaker, a beat and the sun going low
+Then a girl with a skateboard came rolling in slow and she stopped at the edge of the glow
+She was watching our feet with her arms in a knot, like she wanted it, wanted to go
+So we opened the ring, took a step to the side, and she knew what it meant and she flowed
+Then an old man came by with a stick that he tapped on the line at the side of the court
+And we widened it more, and he stepped in the middle and showed us a move from before
+From a summer we never saw, knees like springs and a laugh like a thunderous roar
+And the four of us cheered like a stadium, twenty of us, and the street wanted more
+Every time somebody stopped at the edge with that look like they didn't belong
+We would all take a step to the back and the ring would just swallow them into the song
+
+[Hook]
+The circle gets wider, the circle gets wider
+Nobody stands on the outside tonight
+
+[Drop]
+Step in, clap
+
+[Verse 2]
+By the time that the sun was a coin on the roofs there were fifty of us in the ring
+There were people in heels and in sandals and boots and a few who just came here to sing
+There's a guy who was crying alone on the steps and he's loudest of all on the beat
+There's a woman who swore that she couldn't dance and she's dancing the skin off her feet
+And the circle's so wide that it's touching the houses, the doorways are part of the floor
+Every window is open with hands hanging out of it, clapping and asking for more
+Every corner that thought it was too far away is a part of the ring and the roar
+It's a ritual older than anyone here, it's a circle we all made before
+When the lamps flicker on and the speaker gets tired and the night takes the heat off the stone
+There'll be nobody walking away from this court on the outside, and nobody walking alone
+
+[Hook]
+The circle gets wider, the circle gets wider
+Everybody's in it, nobody's alone
+
+[Outro]
+Step back
+Make room
+Come in
+Circle gets wider
+Welcome
+"""
+
+[[songs]]
+id = "this-aint-rehearsal"
+title = "This Ain't Rehearsal"
+family = "drive"
+form = "story"
+model = "A"
+groups = ["hiphop"]
+voice = "intense young female rapper with a clipped breathless flow, double time bars that build like a countdown, a sung hook in a clear mezzo"
+about = "after years of practising the brave thing in the mirror, I walk out into the street and do it for real, because this ain't rehearsal"
+lyrics = """
+[Intro]
+Lights on, no mirror, no second take, this ain't rehearsal
+
+[Verse 1]
+I have practised my life in the glass of a mirror for years with the door locked tight
+Every speech I would give, every step I would take, every word I would throw in a fight
+I would mouth it at two in the morning, the face and the timing, the pause and the bite
+And I'd nail it, I swear, in the mirror I'm golden, I'm fearless, I'm perfect, I'm right
+Then the sun would come up and I'd fold it all up like a map that I never would use
+And I'd walk through the day with the speech in my teeth and the dance in the soles of my shoes
+There's a version of me that's been ready for years and she's sitting backstage in the dark
+With her laces tied double and sweat on her palms and a match she's afraid to spark
+Every practice I did was a way to be safe, it was courage I kept behind glass
+And tonight I'm the one with the hammer, I'm breaking the mirror, I'm walking right out of the past
+
+[Hook]
+This ain't rehearsal, this ain't rehearsal
+One take, go
+
+[Drop]
+Go, go
+
+[Verse 2]
+Now I'm out on the street with my heart in my throat and the beat coming up from the ground
+And the words that I practised are gone, they're just gone, I can't find them, there's only the sound
+So I do it without them, I stumble, I start it, I say it all wrong and out loud
+And the strangest thing happens, the wrong version lands, and it's louder than all of my doubt
+There's no second take out here, nobody yelling cut, there is only the truth
+And the truth has a rhythm, it's shaking and messy, it's mine, and it's proof
+That the person I practised was never as brave as the one who walks out with no plan
+Every perfect rehearsal I nailed was a coward that held me back by the hand
+So if you've got a dance in your feet or a word in your chest you've been saving for when
+There is no dress rehearsal, the curtain is up, and the curtain won't open again
+
+[Hook]
+This ain't rehearsal, this ain't rehearsal
+One take, go
+
+[Outro]
+No mirror
+No second take
+Eyes up
+This ain't rehearsal
+Now
+"""
+
+[[songs]]
+id = "streetlights-end-here"
+title = "Streetlights End Here"
+family = "escape"
+form = "argument"
+model = "B"
+groups = ["hiphop"]
+voice = "smooth laid back male hip hop singer rapper, half time sung verses with a warm drawl, the two sides argued in the same easy tone, a soaring sung chorus"
+about = "one half of me wants to stay where every street is lit and known, the other wants to walk out where the streetlights end, and I learn to carry my own light"
+lyrics = """
+[Intro]
+There's a line on the road where the lamps give out and the fields begin
+I've been standing on the lit side all my life, with the night breathing in
+
+[Verse 1]
+My feet say, "Go, there's a whole wide world past the edge of the glow"
+My fear says, "Stay, at least here you can see every face that you know"
+Every corner here's a picture I could draw with my eyes closed
+Every doorstep, every crack, every window where the light goes
+And I love it, I won't lie, there's a comfort in the hum
+Of the same few blocks, the same few songs, the same few places to run
+But a light that keeps you safe can be a fence you never see
+Like a moth around a streetlamp, thinking that's all it can be
+My feet say, "You were made for roads that nobody has named"
+My fear says, "Out there nobody will ever call you by your name"
+Is the dark past the last lamp just a place I've never been?
+Or the place I've always needed, with the wind against my skin?
+
+[Chorus]
+The streetlights end here, where the map runs out
+Where nobody knows my name and nobody shouts
+I'm scared of the dark, but I'm scared to stay
+In a circle of light till my feet forget the way
+There's a road with no lamps and it calls me by name
+The streetlights end here, and I won't come back the same
+
+[Verse 2]
+There's a night I almost went, I had a bag across my back
+Got as far as the last lamppost and I stood there on the crack
+Where the yellow meets the black like a shoreline meets the sea
+And I heard a dog somewhere out there, and the sound went straight through me
+So I turned around and walked back home and told myself I'm wise
+That a fool is someone running and a wise one never tries
+But wisdom isn't hiding in the same few streets you know
+And a fool is just a name for someone braver than the glow
+My fear still says, "You'll get lost," and maybe yes, I will
+My feet say, "Lost is how you find the things that make you feel"
+So tonight I'm at the line again, my shoes are laced up tight
+And the light is in my chest this time, I'm bringing my own light
+
+[Drop]
+Walk on
+
+[Chorus]
+The streetlights end here, where the map runs out
+Where nobody knows my name and nobody shouts
+I'm scared of the dark, but I'm scared to stay
+In a circle of light till my feet forget the way
+There's a road with no lamps and it calls me by name
+The streetlights end here, and I won't come back the same
+
+[Bridge]
+One step
+Out of the glow
+Two steps
+Into the unknown
+Three steps
+And I'm gone
+
+[Final Chorus]
+The streetlights end here, where the map runs out
+I can hear my own heart, and it's beating out loud
+I was scared of the dark, but I was scared to stay
+So I carry the light, and I'm lighting the way
+There's a road with no lamps and it knows me by name
+The streetlights end here, and I'm never the same
+
+[Outro]
+There's a line on the road where the lamps give out and the fields begin
+I'm standing on the far side now, and the night is letting me in
+"""
+
+[[songs]]
+id = "sky-belongs-to-nobody"
+title = "Sky Belongs To Nobody"
+family = "defiance"
+form = "revolt"
+model = "A"
+groups = ["hiphop"]
+voice = "proud resonant female hip hop MC with a smoky rasp, heavy storytelling double time bars, the hook belted wide and free like a rooftop anthem"
+about = "they fence every field and tell us where to stand, so the whole street climbs onto the rooftops at golden hour and dances under the one thing nobody can fence"
+lyrics = """
+[Intro]
+They fenced every field and they locked every gate, but the sky belongs to nobody
+
+[Verse 1]
+They put up a fence round the field where we played and a sign on the fence and a lock on the gate
+Then a guard for the lock and a dog for the guard and a rule for the dog, and a curfew at eight
+Every wall in the neighbourhood whispers keep out, every step on the grass is a debt we can't pay
+They have measured the ground into squares with our names on the outside, and told us to wait
+But you look up, and look, it's still open up there, it's a river of gold going pink at the seam
+There's no fence on the clouds, there's no lock on the wind, there's no guard on the swallows that scream
+So we climb up the stairs to the roof of the block with a speaker, a crate and a crowd full of dreams
+And the tar on the roof is still warm from the day and the whole of the sky is a stage, so it seems
+Every rooftop around us is filling with people, the ones that the fences kept out
+And they're waving at strangers on rooftops across, and the sky is a canopy, loud
+
+[Hook]
+The sky belongs to nobody
+The sky belongs to nobody, look up
+
+[Drop]
+Look up
+
+[Verse 2]
+Now the guard at the gate is just watching us dance, he's got nothing to lock, nothing left to defend
+And he's tapping his boot on the beat in the street, and I swear he's a second away from a friend
+They can fence off the ground, they can wall off the street, they can switch off the lamps in the night
+But the sky doesn't take any orders, it's open, it's wide, and it's free, and it's ours, and it's right
+Every hand in the air is a flag with no border, a claim on the blue and the gold
+Every voice going up is a bird that got out of the cage and that won't ever be sold
+When the sun's going down, it goes down on all of us, rooftop to rooftop the same
+Nobody paid for the colour, nobody owns it, and nobody's putting their name
+On the wind or the rain or the stars or the swallows, the moon or the light that we share
+So we dance on their fences and sing on their roofs and we throw every rule in the air
+
+[Hook]
+The sky belongs to nobody
+The sky belongs to nobody, look up
+
+[Outro]
+Gate's locked
+Roof's open
+Look up
+Sky belongs to nobody
+Ours
+"""
+
+[[songs]]
+id = "caught-myself-glowing"
+title = "Caught Myself Glowing"
+family = "awakening"
+form = "story"
+model = "A"
+groups = ["hiphop"]
+voice = "soft spoken male tenor rapper who brightens as he goes, gentle double time bars that pick up speed, a sweet sung hook in head voice"
+about = "walking home at dawn after a block party I catch my reflection in a window and see a stranger lit up and grinning, and it is me"
+lyrics = """
+[Intro]
+Half past five on an empty street, and I caught myself glowing
+
+[Verse 1]
+I was walking back home with the bass in my ears and the sky going blue at the rim
+Every shutter still down on the shops and the lamps going off one by one getting dim
+Then I passed by a window, a big sheet of glass with the night still asleep in the frame
+And I saw someone grinning, a fool in the glass, with a face that I couldn't quite name
+He was sweaty and wrecked and his shirt was untucked and his eyes were as bright as a flare
+And he looked like a person who'd laughed for a week, like a kid on a swing in the air
+So I stopped, and he stopped, and I lifted my hand, and he lifted his hand to his hair
+And it hit me, the fool in the glass was me, and I'd never once seen him there
+I had walked past my own face in windows a thousand of times with my head going down
+With the face that I wear just to get through the day, a closed door and a frown
+
+[Hook]
+Caught myself glowing
+I caught myself glowing in the glass
+
+[Drop]
+Shine
+
+[Verse 2]
+So I stood on the pavement and laughed at the glass, and the guy in the glass laughed too
+And I tried to remember the last time I'd felt it this warm, and I didn't have a clue
+Was it the girl with the paint on her cheeks who was dancing like nobody could see
+Or the kick in the basement that shook every bone till it shook something loose out of me
+Or the rain on the roof when we ran for the door, every one of us soaked and alive
+Or the stranger who handed me water and said, you look like you needed this, right
+I don't know what it was, I just know that it's there, it's a coal that's still warm in my chest
+And I'm not gonna bury it under the grey of the week like I bury the rest
+So I wave at the fool in the window, he waves, and we walk the last block side by side
+And the sun comes up over the roofs and it finds me still glowing, with nothing to hide
+
+[Hook]
+Caught myself glowing
+I caught myself glowing, and I let it show
+
+[Outro]
+Glass
+Grin
+Me
+Caught myself glowing
+Keep it
+"""
