@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-15-4",
-    "title": "Face The Undertow",
-    "finished_at": "2026-11-15T15:29:53Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43693610873",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-15T16:35:35Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43730695586"
   },
   "next_post_at": "2026-11-16T17:30:00Z",
   "streak": 22,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-15T15:29:53Z",
+  "updated_at": "2026-11-15T16:35:35Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
