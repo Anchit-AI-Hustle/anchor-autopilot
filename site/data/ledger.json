@@ -1,6 +1,95 @@
 {
   "entries": [
     {
+      "id": "mix-week-2026-11-15",
+      "date": "2026-11-15",
+      "title": "Hip Hop Techno Mix 2026 | ANCHOR Vol. 3 | 20 tracks, 71 min, 130+ BPM warehouse rave",
+      "source": "mix",
+      "made_at": "2026-11-15T18:30:21Z",
+      "recorded_at": "2026-11-15T18:31:30Z",
+      "lane": "mix",
+      "bpm": null,
+      "family": null,
+      "accent": null,
+      "cover": "covers/mix-week-2026-11-15.jpg",
+      "engine": {
+        "name": "mix",
+        "model": null,
+        "render_s": null,
+        "fallback_from": null
+      },
+      "variants": [],
+      "files": [
+        {
+          "role": "mix master",
+          "file": "ANCHOR-week-mix-2026-11-15-vol-3.mp3",
+          "spec": "MP3 320k, -14.05 LUFS, 4263 s"
+        },
+        {
+          "role": "full video 16:9",
+          "file": "ANCHOR-week-mix-2026-11-15-vol-3-full-169.mp4",
+          "spec": "1920x1080, 4263 s"
+        },
+        {
+          "role": "thumbnail 16:9",
+          "file": "frame-169.jpg",
+          "spec": "1920x1080 frame"
+        }
+      ],
+      "uploads": [
+        {
+          "target": "youtube_full",
+          "file": "ANCHOR-week-mix-2026-11-15-vol-3-full-169.mp4",
+          "status": "public",
+          "url": "https://youtu.be/aBHvvUgsF6A",
+          "post_id": "aBHvvUgsF6A",
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "github_release",
+          "file": "ANCHOR-week-mix-2026-11-15-vol-3.mp3",
+          "status": "released",
+          "url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/mix-week-2026-11-15/ANCHOR-week-mix-2026-11-15-vol-3.mp3",
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        },
+        {
+          "target": "site",
+          "file": "cover_600.jpg",
+          "status": "listed",
+          "url": null,
+          "post_id": null,
+          "due_at": null,
+          "error": null
+        }
+      ],
+      "fields": [
+        {
+          "field": "tracks",
+          "value": "Backseat Lottery (130 BPM) at 0 s, Pocket Of Matches (136 BPM) at 198 s, Doors Blown Open (147 BPM) at 430 s, Red Dust Warning (148 BPM) at 663 s, Start It Tonight (153 BPM) at 877 s, Concrete Acid (147 BPM) at 1043 s, Bleed Beside Me (150 BPM) at 1276 s, Floor Becomes Fire (165 BPM) at 1524 s, Strike While Burning (168 BPM) at 1716 s, The Mud Turned Gold (169 BPM) at 1901 s, Wake Inside The Wave (175 BPM) at 2146 s, Spark Under Skin (172 BPM) at 2337 s, Sweat The Ghost Out (171 BPM) at 2542 s, Stomping The Earth Awake (176 BPM) at 2790 s, Bodies Become Thunder (174 BPM) at 2999 s, Face The Undertow (171 BPM) at 3189 s, Holding Your Wreckage (170 BPM) at 3407 s, Honest Wounds Heal (169 BPM) at 3587 s, Chase The First Light (165 BPM) at 3820 s, Soft Lie, Slow Knife (157 BPM) at 4033 s",
+          "rule": "The period's released drops in tempo order, so the set climbs; each matched to -14 LUFS and joined with an eight-bar equal-power crossfade, the incoming record entering on its own downbeat. No time-stretching.",
+          "evidence": null,
+          "group": "record"
+        },
+        {
+          "field": "youtube title",
+          "value": "Hip Hop Techno Mix 2026 | ANCHOR Vol. 3 | 20 tracks, 71 min, 130+ BPM warehouse rave",
+          "rule": "The genre phrase and the year first, then the artist and the volume, then what is inside: a mix is found by search, and every breakout mix in this niche is titled this way.",
+          "evidence": "84 chars",
+          "group": "content"
+        },
+        {
+          "field": "description",
+          "value": "Hip Hop Techno mix, 71 minutes, 20 original ANCHOR tracks back to back. The week in one set, climbing in tempo and in key. Free downloads of every track below.\n\nTracklist\n0:00 Backseat Lottery (130 BPM)\n3:17 Pocket Of Matches (136 BPM)\n7:10 Doors Blown Open (147 BPM)\n11:03 Red Dust Warning (148 BPM)\n14:36 Start It Tonight (153 BPM)\n17:22 Concrete Acid (147 BPM)\n21:15 Bleed Beside Me (150 BPM)\n25:23 Floor Becomes Fire (165 BPM)\n28:35 Strike While Burning (168 BPM)\n31:41 The Mud Turned Gold (169 BPM)\n35:45 Wake Inside The Wave (175 BPM)\n38:56 Spark Under Skin (172 BPM)\n42:21 Sweat The Ghost Out (171 BPM)\n46:29 Stomping The Earth Awake (176 BPM)\n49:58 Bodies Become Thunder (174 BPM)\n53:08 Face The Undertow (171 BPM)\n56:46 Holding Your Wreckage (170 BPM)\n59:47 Honest Wounds Heal (169 BPM)\n1:03:39 Chase The First Light (165 BPM)\n1:07:12 Soft Lie, Slow Knife (157 BPM)\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #technomix #hiphoptechno",
+          "rule": "One search line, then the tracklist as chapters (a clock time per track, which is navigation, not hype), then the footer.",
+          "evidence": null,
+          "group": "content"
+        }
+      ]
+    },
+    {
       "id": "2026-11-15-4",
       "date": "2026-11-15",
       "title": "Face The Undertow",
@@ -33775,5 +33864,5 @@
       "note": null
     }
   ],
-  "updated_at": "2026-11-15T15:29:52Z"
+  "updated_at": "2026-11-15T18:31:30Z"
 }
