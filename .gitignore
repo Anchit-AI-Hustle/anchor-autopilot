@@ -11,3 +11,5 @@ queue/*.src.mp4
 queue/done/
 build-art/
 .wrangler/
+
+.env.local
