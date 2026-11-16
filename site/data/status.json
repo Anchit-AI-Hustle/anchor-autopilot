@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-16-3",
-    "title": "Later Is A Liar",
-    "finished_at": "2026-11-16T21:26:18Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43829437250",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-16T21:27:52Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/43829437250"
   },
   "next_post_at": "2026-11-17T17:30:00Z",
   "streak": 23,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-16T21:26:18Z",
+  "updated_at": "2026-11-16T21:27:52Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
