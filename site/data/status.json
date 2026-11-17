@@ -2,30 +2,30 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-17-4",
-    "title": "Streetlights End Here",
-    "finished_at": "2026-11-17T10:36:41Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44044786965",
+    "drop_id": "2026-11-17-3",
+    "title": "Mercy Is A Muscle",
+    "finished_at": "2026-11-17T12:02:04Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44066859901",
     "error": null
   },
   "next_post_at": "2026-11-18T17:30:00Z",
-  "streak": 24,
+  "streak": 25,
   "totals": {
-    "drops": 106
+    "drops": 107
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-17T10:36:41Z",
+  "updated_at": "2026-11-17T12:02:04Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
     "steps": 8,
     "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
     "guidance": 1.0,
-    "lm_ms": 78511,
-    "dit_ms": 90066,
-    "vae_ms": 76558,
-    "total_s": 260.3
+    "lm_ms": 76254,
+    "dit_ms": 86349,
+    "vae_ms": 68195,
+    "total_s": 245.7
   }
 }
