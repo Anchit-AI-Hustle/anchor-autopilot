@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-19-4",
-    "title": "Spin Or Fall",
-    "finished_at": "2026-11-19T13:54:14Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44513609622",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-19T13:54:44Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44513609622"
   },
   "next_post_at": "2026-11-20T17:30:00Z",
   "streak": 25,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-19T13:54:14Z",
+  "updated_at": "2026-11-19T13:54:44Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
