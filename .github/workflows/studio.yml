@@ -1,0 +1,123 @@
+# The Music Studio (Jarvis, the-third-eye.anchit-tandon.com/tools/music): a song from a prompt,
+# made on the Mac exactly like a daily drop (anchor/studio.py). Jarvis starts this with
+# workflow_dispatch and reads the result from the release "studio-<id>": the MP3, the FLAC and
+# studio.json (title, genre, BPM, key, lyrics, every take's verdict; or held: true and why).
+# Anchit, 2026-11-20: "Music studio in jarvis must use this exact architecture and logics".
+name: Music Studio song
+run-name: Music Studio ${{ inputs.id }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      id:
+        description: "Request id (4-64 letters, digits, - or _), names the release studio-<id>"
+        required: true
+      request:
+        description: "The request JSON: prompt, title, lyrics, genre, bpm, duration_s, instrumental, voice"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: studio-${{ inputs.id }}
+  cancel-in-progress: false
+
+env:
+  ACESTEP_CPP_REPO: https://github.com/ServeurpersoCom/acestep.cpp.git
+  ACESTEP_CPP_REF: c9045e270c3145a288579fee4f298286e03aa881
+  HF_REPO: Serveurperso/ACE-Step-1.5-GGUF
+  MAC_MODEL_FILES: >-
+    acestep-v15-xl-sftturbo50-Q8_0.gguf:5305828768
+    acestep-5Hz-lm-4B-Q8_0.gguf:4457323648
+    Qwen3-Embedding-0.6B-Q8_0.gguf:784144960
+    vae-BF16.gguf:337420928
+
+jobs:
+  song:
+    runs-on: [self-hosted, macOS, ARM64, anchor-mac]
+    timeout-minutes: 120
+    env:
+      ANCHOR_RENDERER: mac
+    steps:
+      - name: Check the request id
+        env:
+          ID: ${{ inputs.id }}
+        run: |
+          [[ "$ID" =~ ^[A-Za-z0-9_-]{4,64}$ ]] || { echo "::error::bad request id"; exit 1; }
+
+      - uses: actions/checkout@v4
+
+      - name: Python 3.12 on the Mac
+        run: |
+          PY=/opt/homebrew/bin/python3.12
+          [ -x "$PY" ] || brew install python@3.12
+          VENV="$HOME/anchor-gpu/runner-venv"
+          [ -x "$VENV/bin/python" ] || "$PY" -m venv "$VENV"
+          echo "$VENV/bin" >> "$GITHUB_PATH"
+
+      - name: Install dependencies
+        run: |
+          pip install -q -r requirements.txt
+          pip install -q "faster-whisper==1.2.1" "av<16" soundfile
+          pip install -q -r requirements-gate.txt
+          bash scripts/install-ffmpeg.sh
+
+      - name: The Mac's engine and models (Metal build, 4B XL DiT, 4B planner)
+        run: |
+          G="$HOME/anchor-gpu"
+          if [ "$(git -C "$G/acestep.cpp" rev-parse HEAD 2>/dev/null)" != "$ACESTEP_CPP_REF" ] || [ ! -x "$G/acestep.cpp/build/ace-synth" ]; then
+            rm -rf "$G/acestep.cpp"
+            git clone --recurse-submodules "$ACESTEP_CPP_REPO" "$G/acestep.cpp"
+            git -C "$G/acestep.cpp" checkout "$ACESTEP_CPP_REF"
+            git -C "$G/acestep.cpp" submodule update --init --recursive
+            cmake -S "$G/acestep.cpp" -B "$G/acestep.cpp/build" -DCMAKE_BUILD_TYPE=Release
+            cmake --build "$G/acestep.cpp/build" --config Release -j "$(sysctl -n hw.ncpu)" --target ace-synth ace-lm
+          fi
+          mkdir -p "$G/models"
+          for entry in $MAC_MODEL_FILES; do
+            f="${entry%%:*}"; want="${entry##*:}"
+            [ "$(stat -f %z "$G/models/$f" 2>/dev/null)" = "$want" ] && continue
+            curl -fL --retry 5 --retry-delay 10 -o "$G/models/$f" "https://huggingface.co/$HF_REPO/resolve/main/$f"
+            [ "$(stat -f %z "$G/models/$f")" = "$want" ] || { echo "::error::$f has the wrong size"; exit 1; }
+          done
+          echo "ACESTEP_BIN=$G/acestep.cpp/build" >> "$GITHUB_ENV"
+          echo "ACESTEP_MODELS=$G/models" >> "$GITHUB_ENV"
+          echo "ACE_THREADS=$(sysctl -n hw.ncpu)" >> "$GITHUB_ENV"
+          [ -d "$G/refs" ] && echo "ANCHOR_REF_DIR=$G/refs" >> "$GITHUB_ENV" || true
+
+      - name: Make the song (takes, gates, master)
+        id: make
+        env:
+          REQUEST: ${{ inputs.request }}
+          ID: ${{ inputs.id }}
+          ANCHOR_SEED_SALT: ${{ github.run_id }}
+          ANCHOR_VAE_CHUNK: "1024"
+        run: |
+          mkdir -p "build/studio-$ID"
+          python - <<'PY'
+          import json, os
+          req = json.loads(os.environ["REQUEST"])
+          req["id"] = os.environ["ID"]
+          open(f"build/studio-{req['id']}/request.json", "w").write(json.dumps(req))
+          PY
+          export ANCHOR_MAKE_DEADLINE=$(( $(date +%s) + 100 * 60 ))
+          RC=0
+          caffeinate -i python -m anchor studio --request "build/studio-$ID/request.json" --out "build/studio-$ID" | tee studio-out.json || RC=${PIPESTATUS[0]}
+          echo "rc=$RC" >> "$GITHUB_OUTPUT"
+          [ "$RC" = 0 ] || [ "$RC" = 3 ] || exit "$RC"
+
+      - name: Hand the song to Jarvis (release studio-<id>)
+        if: always() && steps.make.outcome != 'skipped'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ID: ${{ inputs.id }}
+        run: |
+          D="build/studio-$ID"
+          [ -f "$D/studio.json" ] || echo "{\"id\":\"$ID\",\"failed\":true}" > "$D/studio.json"
+          FILES=("$D/studio.json")
+          for f in "$D"/*.mp3 "$D"/*.flac; do [ -f "$f" ] && FILES+=("$f"); done
+          gh release view "studio-$ID" >/dev/null 2>&1 && gh release delete "studio-$ID" --yes --cleanup-tag
+          gh release create "studio-$ID" "${FILES[@]}" --prerelease --title "Music Studio $ID" \
+            --notes "Made by the Music Studio with ANCHOR's pipeline (anchor/studio.py). Not a channel release."
+          python -c "import json;d=json.load(open('$D/studio.json'));print('### Music Studio\n');print({k:d.get(k) for k in ('title','genre','bpm','key','duration_s','arrangement','held','why')})" >> "$GITHUB_STEP_SUMMARY"

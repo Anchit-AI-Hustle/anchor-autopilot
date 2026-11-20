@@ -78,7 +78,8 @@ def facts(profile: Profile, video: dict, catalog: dict, channel: dict) -> tuple[
 
 
 def run(profile: Profile, *, catalog_path: Path = CATALOG_PATH, channel_path: Path = CHANNEL_PATH,
-        api: YouTube | None = None, dry_run: bool = False) -> dict:
+        api: YouTube | None = None, dry_run: bool = False, max_updates: int = 40) -> dict:
+    """At most ``max_updates`` changes a run (50 quota units each): the rest wait for the next run."""
     api = api or YouTube()
     catalog = read_json(catalog_path, {}) or {}
     channel = read_json(channel_path, {}) or {}
@@ -86,6 +87,8 @@ def run(profile: Profile, *, catalog_path: Path = CATALOG_PATH, channel_path: Pa
     videos = api.channel_videos(profile.artist["youtube_channel_id"])
     changed, same, unknown = [], [], []
     for v in videos:
+        if len(changed) >= max_updates:
+            break
         f = facts(profile, v, catalog, channel)
         if not f:
             fallback = strip_tempo(v)

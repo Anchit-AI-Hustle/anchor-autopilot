@@ -566,7 +566,7 @@ jobs:
           BUDGET=900000000
           size() { du -sk public | awk '{print $1 * 1024}'; }
           [ "$(size)" -le "$BUDGET" ] || echo "::warning::today's songs alone are $(( $(size) / 1000000 )) MB, over the Pages budget"
-          for tag in $(gh release list --limit 10 --json tagName -q '.[].tagName' | grep '^drop-' | head -6); do
+          for tag in $(gh release list --limit 60 --json tagName -q '.[].tagName' | grep '^drop-' | head -6); do
             [ -d "drops/$tag" ] && continue
             NEED="$(gh release view "$tag" --json assets -q '[.assets[] | select(.name | endswith(".mp4")) | .size] | add // 0')"
             if [ $(( $(size) + NEED )) -gt "$BUDGET" ]; then

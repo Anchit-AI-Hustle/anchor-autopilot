@@ -362,3 +362,20 @@ Never two songs in a row with the same voice.
     Just a choice made clean, just a life made fair
     If my heart is a compass and my mind is the wheel
     I can travel with both, I can feel what I feel
+
+## Club cut (2026-11-15)
+
+Anchit: "all songs dont need to have constant lyrics throughout the song - that is probably
+stopping the best acid techno and hard techno flows and even in the drops".
+
+- The chant lanes (hard tech, rawstyle, hardstyle, acid and psy techno) sing the club cut of a
+  book song (`anchor/songbook_club.py`): one intro line, half a verse (whole couplets, about 36
+  words), a build-up on the hook, a drop that is music with the title shouted once, a breakdown
+  (the bridge or four lines of verse 2), the hook again, the second drop, a two-line outro.
+  About a third of the words; the kick, the rumble and the 303 carry the floor.
+- Hard tech breaks on one spoken line before the climax (the hardstyle MC moment).
+- Rap and hip hop lanes keep their full verses: there the words are the genre. Their drops
+  still carry only a chant.
+- Never an empty chorus: ACE-Step renders an empty chorus as silence. Instrumental parts use
+  `[Drop]`, `[Build-Up]` and `[Breakdown]`, and each drop carries one short shout.
+- Write the book as before (whole songs); the cut is made from them.

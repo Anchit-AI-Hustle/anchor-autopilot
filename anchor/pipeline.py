@@ -182,7 +182,8 @@ def can_make(profile: Profile, queue_dir: Path | None = None, catalog_path: Path
 # ------------------------------------------------------------------------- make
 def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None = None,
          art_mode: str | None = None, retries: int = 1, catalog_path: Path = CATALOG_PATH,
-         queue_dir: Path | None = None, use_queue: bool = True, deadline: float | None = None) -> dict:
+         queue_dir: Path | None = None, use_queue: bool = True, deadline: float | None = None,
+         brief_fn=None, audio_only: bool = False) -> dict:
     """One drop: your next queued Suno song, or the best take the engine makes.
 
     Every take goes through QC, the lyric check and then the song gate (Anchit: a hard gate,
@@ -198,6 +199,8 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
     # only a real run reads Suno; a test with its own catalog never touches the network or the repo's queue
     if use_queue and engine_name not in ("fixture",) and Path(catalog_path) == CATALOG_PATH:
         autofill(profile, queue_dir, catalog_path)
+    # the Music Studio (anchor/studio.py) brings its own brief and never takes a queued song
+    use_queue = use_queue and brief_fn is None
     queued = next_track(queue_dir) if use_queue and engine_name not in ("fixture",) else None
     if queued:
         return make_from_queue(profile, day, out_dir, queued, art_mode=art_mode, hist=hist)
@@ -216,7 +219,8 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         # with a run salt, every three takes try a different lane and song: six takes of one
         # song that keeps breaking off post nothing, a second song often passes
         variant = f"{salt}:{attempt // 3}" if salt else ""
-        brief = make_brief(profile, day, hist, attempt, avoid_titles=tuple(misheard_titles), variant=variant)
+        brief = (brief_fn(attempt, tuple(misheard_titles), variant) if brief_fn else
+                 make_brief(profile, day, hist, attempt, avoid_titles=tuple(misheard_titles), variant=variant))
         if salt:
             brief["seed"] = seed_from("anchor-audio", day, attempt, salt) % 2_000_000_000
         log(f"brief: {brief['title']!r} | {brief['lane_name']} | {brief['bpm']} BPM | {brief['key']} | "
@@ -309,7 +313,7 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
     # a song that sings a hook is called by its hook; a name from the word list is the
     # fallback, not the default ("Welcome to Project Mayhem" x6 is why that one is Project Mayhem)
     lyrics = stats.get("lyrics")
-    hook = hook_title(lyrics)
+    hook = hook_title(lyrics) if brief_fn is None else None   # a studio song keeps the user's name
     used = {d.get("title", "").lower() for d in hist} | {t.lower() for t in profile.artist["existing_titles"]}
     if hook and hook.lower() not in used:
         log(f"title from the hook: {hook!r} (was {brief['title']!r})")
@@ -340,7 +344,32 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
             brief["key"] = key
             brief.update(describe(profile, brief))
 
+    if audio_only:
+        return finish_audio(profile, brief, stats_audio, stats, attempts_log, out_dir, chosen)
     return finish(profile, brief, raw, stats_audio, stats, attempts_log, out_dir, art_mode, mastered=chosen)
+
+
+def finish_audio(profile: Profile, brief: dict, stats_audio: dict, stats: dict, attempts_log: list,
+                 out_dir: Path, mastered: dict) -> dict:
+    """The Music Studio's output: the gated, mastered song as MP3 and FLAC with its brief and
+    every take's verdict; no cover, video or release (those belong to a drop)."""
+    master_wav = out_dir / "master.wav"
+    if Path(mastered["master_wav"]) != master_wav:
+        shutil.copy(mastered["master_wav"], master_wav)
+    base = slug(brief["title"]) or "song"
+    mp3, flac = out_dir / f"{base}.mp3", out_dir / f"{base}.flac"
+    encode_flac(master_wav, flac)
+    encode_mp3(master_wav, mp3, tags={"title": brief["title"], "artist": profile.artist["name"],
+                                      "genre": brief.get("lane_name", ""), "TBPM": str(int(brief["bpm"]))})
+    meta = {"title": brief["title"], "genre": brief.get("lane_name"), "genre_line": brief.get("genre_line"),
+            "lane": brief.get("lane"), "bpm": brief["bpm"], "key": brief.get("key"),
+            "duration_s": round(float(stats_audio.get("duration_s") or brief["duration_s"]), 1),
+            "arrangement": brief.get("arrangement"), "caption": brief.get("caption"), "lyrics": brief.get("lyrics"),
+            "lyrics_sung": brief.get("lyrics_sung"), "mp3": mp3.name, "flac": flac.name,
+            "loudness": mastered.get("loud"), "qc": {"attempts": attempts_log}}
+    write_json(out_dir / "studio.json", meta)
+    log(f"studio: {brief['title']!r} ({brief.get('lane_name')}, {brief['bpm']} BPM) -> {mp3.name}")
+    return meta
 
 
 def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: dict,
