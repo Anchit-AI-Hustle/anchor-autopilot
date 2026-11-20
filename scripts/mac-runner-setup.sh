@@ -67,7 +67,11 @@ mkdir -p "$HOME/Library/LaunchAgents" "$HOME/anchor-gpu"
 cat > "$HOME/anchor-gpu/heartbeat.sh" <<HBEOF
 #!/bin/bash
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
-pgrep -f "Runner.Listener" >/dev/null || exit 0
+if ! pgrep -f "Runner.Listener" >/dev/null; then
+  (cd "$DIR" && ./svc.sh start >/dev/null 2>&1)   # start the runner again if it stopped
+  sleep 10
+  pgrep -f "Runner.Listener" >/dev/null || exit 0
+fi
 gh variable set ANCHOR_MAC_SEEN -R "$REPO" --body "\$(date +%s)" >/dev/null 2>&1
 # start the next posting run when songs are due (tools/mac-autostart.sh; run from a copy, since it
 # updates the clone it lives in)
