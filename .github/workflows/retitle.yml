@@ -6,7 +6,7 @@ name: Retitle (search-led titles on every upload)
 # credentials (YT_CLIENT_ID, YT_CLIENT_SECRET, YT_REFRESH_TOKEN).
 on:
   schedule:
-    - cron: "37 9 * * 1"
+    - cron: "37 9 * * *"   # daily while labels change; 40 updates (2,000 units) at most a run
   workflow_dispatch:
     inputs:
       dry_run:

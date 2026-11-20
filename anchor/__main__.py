@@ -20,6 +20,11 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("plan", help="print today's brief")
     p.add_argument("--date", default=None)
 
+    st = sub.add_parser("studio", help="a song from a Music Studio (Jarvis) request, made like a drop")
+    st.add_argument("--request", required=True, help="the request JSON file (anchor/studio.py)")
+    st.add_argument("--out", required=True)
+    st.add_argument("--engine", default=None, choices=["acestep_cpp", "fixture"])
+    st.add_argument("--retries", type=int, default=1)
     m = sub.add_parser("make", help="generate track, master, cover and Short")
     m.add_argument("--date", default=None)
     m.add_argument("--out", default=None)
@@ -143,6 +148,21 @@ def main(argv: list[str] | None = None) -> int:
         day = args.date or pipeline.today_utc()
         brief = make_brief(profile, day, catalog.history(catalog.load(CATALOG_PATH)))
         print(json.dumps(brief, indent=2, ensure_ascii=False))
+    elif args.cmd == "studio":
+        from . import studio
+        req = json.loads(Path(args.request).read_text())
+        out = Path(args.out)
+        deadline = float(os.environ["ANCHOR_MAKE_DEADLINE"]) if os.environ.get("ANCHOR_MAKE_DEADLINE") else None
+        try:
+            meta = studio.run(profile, req, out, engine_name=args.engine, retries=args.retries, deadline=deadline)
+        except pipeline.SongGateHeld as held:
+            reasons = sorted({r for a in held.attempts for r in ((a.get("song_gate") or {}).get("fails") or a.get("fail") or [])})
+            out.mkdir(parents=True, exist_ok=True)
+            (out / "studio.json").write_text(json.dumps({"id": req.get("id"), "held": True, "why": reasons[:8],
+                                                          "qc": {"attempts": held.attempts}}, default=str))
+            print(json.dumps({"held": True, "why": reasons[:8]}))
+            return 3
+        print(json.dumps({k: meta[k] for k in ("title", "genre", "bpm", "key", "duration_s", "mp3", "arrangement")}))
     elif args.cmd == "make":
         day = args.date or pipeline.today_utc()
         out = Path(args.out or f"build/{day}")

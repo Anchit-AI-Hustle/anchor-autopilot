@@ -9,7 +9,7 @@ from datetime import date as Date, datetime, timezone
 
 from . import genres
 from . import originality, themes
-from . import songbook
+from . import songbook, songbook_club
 from .config import Lane, Profile
 from .music import SHAPES, arc, arrangement, section_names, structure
 from .titles import make_title
@@ -57,7 +57,9 @@ def slot_lanes(profile: Profile, day: str, slot: int) -> tuple[Lane, ...]:
 
 
 def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0,
-               avoid_titles: tuple[str, ...] = (), variant: str = "") -> dict:
+               avoid_titles: tuple[str, ...] = (), variant: str = "", *, lane_id: str | None = None,
+               song: "songbook.Song | None" = None, instrumental: bool = False,
+               bpm_wanted: int | None = None, duration_wanted: int | None = None) -> dict:
     """Build the brief for drop ``day``: a date (YYYY-MM-DD, the day's first song) or a date
     and slot (YYYY-MM-DD-2, its second). ``history`` is newest-first. Everything is seeded by
     the drop id, so the second song of a day is a different record, never a re-roll."""
@@ -84,6 +86,11 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         lanes.append(lane)
         weights.append(max(1, lane.weight * 3 - 2 * recent_lanes.count(lane.id)))
     lane = r.choices(lanes, weights=weights, k=1)[0]
+    # the Music Studio (Jarvis) names the lane from the prompt and brings its own song: the same
+    # brief, caption, palette and arrangement rules as a drop, only the choice is the user's
+    studio = lane_id is not None
+    if studio:
+        lane = profile.lane(lane_id)
 
     # visual family: none of the last 3
     recent_fams = {d.get("family") for d in recent}
@@ -96,6 +103,8 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     key = r.choice(keys)
 
     bpm = r.randint(lane.bpm[0], lane.bpm[1])
+    if bpm_wanted:
+        bpm = max(lane.bpm[0] - 10, min(lane.bpm[1] + 10, int(bpm_wanted)))
     # length and shape are drawn for the day too: two records of the same length cut to the
     # same shape share a timeline, and that is most of what "sounds the same" means
     lo, hi = profile.music.get("duration_range_s") or (profile.music["duration_s"], profile.music["duration_s"])
@@ -105,12 +114,18 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     # (Anchit, 2026-11-07: "proper theme selection and lyrics ... written as humans ... choose
     # the song name based on theme and lyrics"); the line-pool themes only when the book is dry
     check, title_report = originality.checker(), {}
-    song = songbook.pick(songbook.load(), lane.group or "any", rng("anchor-song", *seed_key), history,
-                         used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
-                         avoid_titles=tuple(avoid_titles), taken=check, report=title_report,
-                         prefer=_cinematic_ready())
+    if not studio:
+        song = songbook.pick(songbook.load(), lane.group or "any", rng("anchor-song", *seed_key), history,
+                             used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
+                             avoid_titles=tuple(avoid_titles), taken=check, report=title_report,
+                             prefer=_cinematic_ready())
+    if duration_wanted:
+        duration_s = max(60, min(int(profile.music.get("max_duration_s", 300)), int(duration_wanted)))
     theme = None
-    if song is not None:
+    # the chant lanes (hard tech, psy) sing the club cut: a few lines, instrumental drops
+    # (Anchit, 2026-11-15: "all songs dont need to have constant lyrics throughout the song")
+    club = song is not None and lane.voice == "chant" and not instrumental
+    if song is not None and not club:
         # a long song (Model B, Kindness Needs Truth) gets the time to sing every word (2026-11-08)
         duration_s = max(duration_s, songbook.length_s(song, int(lo), int(hi),
                                                        int(profile.music.get("max_duration_s", 300))))
@@ -120,10 +135,18 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
                             used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
                             avoid_titles=tuple(avoid_titles))
     sound = pick_palette(profile, rng("anchor-sound", *seed_key), past, group=lane.group or "")
+    r_state = r.getstate()
     style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape,
                           story=songbook.short(song.about, 100) if song else theme.idea, sound=sound,
-                          vocals=songbook.vocals_line(song) if song else None)
+                          vocals=("Vocals: none, instrumental" if instrumental else
+                                  (songbook_club.club_vocals_line(song) if club else songbook.vocals_line(song)) if song else None))
 
+    if club and len(style["caption"]) >= 1560:
+        # the caption's budget (1560): the club vocals line gives up words of the voice first
+        r.setstate(r_state)
+        style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s,
+                              shape=shape, story=songbook.short(song.about, 100), sound=sound,
+                              vocals=songbook_club.club_vocals_line(song, room=max(8, 44 - (len(style["caption"]) - 1555))))
     used_titles = [d.get("title", "") for d in history] + list(profile.artist["existing_titles"])
     # a name the singer could not say clearly on an earlier take is not tried again for this song
     used_titles += list(avoid_titles)
@@ -141,7 +164,11 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     if title is None:
         title = make_title(profile.titles, rng("anchor-title", *seed_key), used_titles, recent_titles,
                            taken=check, report=title_report)
-    if song is not None:
+    if instrumental:
+        lyrics = ""
+    elif club:
+        lyrics = songbook_club.club_cut(song, lane.group or "")
+    elif song is not None:
         lyrics = song.lyrics
     else:
         lyrics = vocal_sheet(profile, title, duration_s, tuple(style["textures"]), shape, rng("anchor-voice", *seed_key),
@@ -173,6 +200,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "family_name": family.name,
         "caption": style["caption"],
         "lyrics": lyrics,
+        "arrangement": "instrumental" if instrumental else "club" if club else ("song" if song is not None else "chant"),
         "vocal_style": (song.voice if song else
                         "rap verses and a shouted title chant hook" if lane.voice == "rap" else "whispers and a shouted crowd chant"),
         "textures": style["textures"],

@@ -67,9 +67,16 @@ def test_the_brief_sings_a_whole_songbook_song():
         b = make_brief(p, (start + timedelta(days=i)).isoformat(), history)
         song = songbook.find(b["theme"])
         assert song is not None, b["theme"]
-        assert b["title"] == song.title and b["lyrics"] == song.lyrics
-        assert f"Vocals: {songbook.short(song.voice, 110)}" in b["caption"]
-        assert b["model"] == song.model and b["duration_s"] >= songbook.length_s(song, 185, 215)
+        if b["arrangement"] == "club":
+            # the chant lanes sing the club cut of the song (Anchit, 2026-11-15)
+            from anchor import songbook_club
+            assert b["title"] == song.title and b["lyrics"] == songbook_club.club_cut(song, b["genre_group"])
+            assert "sparse, drops instrumental" in b["caption"]
+        else:
+            assert b["title"] == song.title and b["lyrics"] == song.lyrics
+            assert f"Vocals: {songbook.short(song.voice, 110)}" in b["caption"]
+            assert b["duration_s"] >= songbook.length_s(song, 185, 215)
+        assert b["model"] == song.model
         assert b["form"] == song.form and b["title"].lower() in b["lyrics"].lower()
         assert song.id not in seen
         seen.append(song.id)

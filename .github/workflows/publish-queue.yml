@@ -133,7 +133,7 @@ jobs:
           mkdir -p public/media
           find art/build -name '*-short.mp4' -exec cp {} public/media/ \;
           # keep the last few earlier Shorts online so a pending scheduled post still resolves
-          for tag in $(gh release list --limit 12 --json tagName -q '.[].tagName' | grep '^drop-' | head -3); do
+          for tag in $(gh release list --limit 60 --json tagName -q '.[].tagName' | grep '^drop-' | head -3); do
             gh release download "$tag" --pattern '*-short.mp4' --dir public/media --clobber || true
           done
           printf 'User-agent: *\nDisallow: /\n' > public/robots.txt

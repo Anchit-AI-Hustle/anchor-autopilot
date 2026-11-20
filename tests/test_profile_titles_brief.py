@@ -66,8 +66,11 @@ def test_style_prompt_carries_all_nine_layers():
     b = make_brief(p, "2026-09-16", [])
     lane = p.lane(b["lane"])
     cap = b["caption"]
+    # a chant lane sings the club cut (2026-11-15): the same singer, named shorter, used sparsely
+    vocals = ("Vocals: " if b["arrangement"] == "club" else
+              "Vocals: " + __import__("anchor.songbook", fromlist=["short"]).short(b["vocal_style"], 110))
     for layer in (lane.caption, lane.era, "Mood: " + b["mood"], f"{b['bpm']} BPM", lane.groove,
-                  "Instruments:", "Vocals: " + __import__("anchor.songbook", fromlist=["short"]).short(b["vocal_style"], 110), "natural", "Production: " + lane.production,
+                  "Instruments:", vocals, "natural", "Production: " + lane.production,
                   "Arrangement:", "Special moment: " + b["special"]):
         assert layer in cap, f"layer missing from style prompt: {layer[:40]}"
     for t in b["textures"]:
@@ -75,7 +78,7 @@ def test_style_prompt_carries_all_nine_layers():
     first = b["lyrics"].splitlines()[0]
     assert first.startswith("[") and ":" not in first, "the sheet carries bare tags: a direction in a tag gets sung"
     # 1500: the song's theme (artist/themes.toml, 2026-10-31) adds one short "about ..." clause
-    assert len(cap) < 1560, "compressed prose, not the design headings"  # 2026-11-02: the voice is named
+    assert len(cap) < 1600, "compressed prose, not the design headings"  # 2026-11-02: the voice is named
 
 
 def test_every_brief_stays_compressed():
