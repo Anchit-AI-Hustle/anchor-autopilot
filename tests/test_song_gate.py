@@ -286,7 +286,10 @@ def test_mac_takes_lean_on_anchits_own_songs_for_their_tone(tmp_path, monkeypatc
     assert AceStepCpp("bin", "models", "dit", None, ref_dir=tmp_path / "missing").reference({"seed": 1}) is None
     from anchor.config import load_profile
     songs = load_profile().music["reference_songs"]
-    assert len(songs) == 9 and all(u.endswith(".mp3") and "/releases/download/drop-2026-09-" in u for u in songs)
+    names = " ".join(songs)
+    assert len(songs) == 4 and all(u.endswith(".mp3") for u in songs)
+    for ref in ("outrun-your-shadow", "kindness-needs-truth", "move-before-thunder", "project-mayhem"):
+        assert ref in names, ref     # Anchit's major references, 2026-11-20
     text = (Path(__file__).resolve().parent.parent / ".github" / "workflows" / "daily.yml").read_text()
     assert 'echo "ANCHOR_REF_DIR=$G/refs" >> "$GITHUB_ENV"' in text
 

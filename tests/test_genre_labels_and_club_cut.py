@@ -31,7 +31,7 @@ def test_every_listing_says_the_lanes_own_genre():
 
 def test_a_suno_song_is_listed_under_the_lane_it_is_filed_in():
     lane = P.lane(genres.classify("acid techno, psychedelic, 303, female vocals", 170))
-    assert lane.genre_line.split(",")[0] == lane.name == "Acid Psychedelic Techno"
+    assert lane.genre_line.split(",")[0] == lane.name == "Psychedelic Acid"
 
 
 def _club_song():
@@ -75,3 +75,20 @@ def test_chant_lanes_get_the_club_cut_and_rap_keeps_its_verses():
     for g in ("rap", "hiphop"):
         if g in seen:
             assert seen[g] == {"song"}, seen
+
+
+def test_rap_songs_are_built_like_outrun_your_shadow():
+    """Anchit, 2026-11-20: "songs like outrun your shadow with better drops". Every verse stays,
+    and there are two drops that are music with one short chant, never two drops in a row."""
+    rap = [s for s in songbook.load() if set(s.groups) & {"rap", "hiphop"}]
+    assert rap
+    for s in rap:
+        cut = songbook_club.rap_cut(s)
+        tags = re.findall(r"^\[([^\]]+)\]$", cut, re.M)
+        assert tags.count("Drop") == 2, (s.title, tags)
+        assert not any(a == b == "Drop" for a, b in zip(tags, tags[1:])), (s.title, tags)
+        for d in re.findall(r"\[Drop\]\n([^\[]*)", cut):
+            assert 1 <= len(d.split()) <= 6, (s.title, d)
+        for tag, lines in songbook.sections(s.lyrics):
+            if tag.startswith("verse"):
+                assert all(ln in cut for ln in lines), (s.title, "a verse line was cut")

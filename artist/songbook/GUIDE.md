@@ -379,3 +379,16 @@ stopping the best acid techno and hard techno flows and even in the drops".
 - Never an empty chorus: ACE-Step renders an empty chorus as silence. Instrumental parts use
   `[Drop]`, `[Build-Up]` and `[Breakdown]`, and each drop carries one short shout.
 - Write the book as before (whole songs); the cut is made from them.
+
+## Genres and references (2026-11-20)
+
+- Only the decided genres and their mashups: Hard Techno, Industrial Techno, Warehouse Techno,
+  Acid Techno, Psychedelic Acid, Psychedelic Techno, Hard Rap; a mashup of two of them (Hard Acid
+  Techno, Industrial Acid Techno, Warehouse Acid Techno, Psychedelic Hard Techno, Psychedelic Hard
+  Rap, Industrial Hard Rap, Acid Hard Rap) runs over 180 BPM. Hip hop songs in this book are sung
+  as Hard Rap.
+- The major references, from Anchit's own uploads: Outrun Your Shadow (Model A), Kindness Needs
+  Truth (Model B), Red Dust Warning (psychedelic hard rap), Project Mayhem (industrial chant
+  song), Pull Under (industrial hard techno). The first four are the engine's timbre references.
+- Rap songs are built like Outrun Your Shadow: every verse, two drops that are music with one
+  chant, vocals on about 40 percent of the track.

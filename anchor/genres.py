@@ -188,34 +188,46 @@ def visual(ids: list[str]) -> str:
     return "; ".join(gs[i].visual for i in ids if i in gs)
 
 
+# The genres Anchit decided (2026-11-20) and their mashups (two of them, over 180 BPM), by lane id
+DECIDED = ("hardtech", "industrialtechno", "warehouse", "acidtechno", "acidpsy", "psy", "raptechno")
+MASHUPS = ("hyper", "industrialacid", "warehouseacid", "psytech", "psyrap", "hardtechrap", "acidrap")
+
+
 def classify(tags: str, bpm: int | None = None) -> str:
     """The active lane a song's own style prompt describes (Anchit's Suno songs, 2026-11-10: Red
     Dust Warning, hard techno with psytrance and rap verses, was filed by the day's slot instead).
-    Rap decides the voice; psy, acid, rawstyle, hardstyle, phonk, groove and tempo the sound."""
+    Only the decided genres and their mashups (Anchit, 2026-11-20): hard techno, industrial,
+    warehouse, acid, psychedelic acid, psychedelic techno, hard rap; a mashup is over 180 BPM.
+    Rap decides the voice; psy, acid, industrial, warehouse and tempo the sound."""
     import re
     t = (tags or "").lower()
     has = lambda *ws: any(re.search(rf"(?<![a-z]){re.escape(w)}", t) for w in ws)
-    rap = has("rap", "chopper", "mc ", "verses", "spitting")
+    rap = has("rap", "chopper", "mc ", "verses", "spitting", "hip hop", "hip-hop", "boom bap", "trap", "phonk")
     psy = has("psy", "psychedelic", "trance", "goa")
-    hiphop = has("hip hop", "hip-hop", "boom bap", "trap", "808")
-    if has("phonk", "cowbell"):
-        return "phonktechno"
+    acid = has("acid", "303")
+    industrial = has("industrial", "factory", "metal")
+    warehouse = has("warehouse")
+    fast = (bpm or 0) > 180 or bool(re.search(r"\b(18[1-9]|19\d|2\d\d)\s*bpm", t)) or has("hyper")
     if rap:
-        if hiphop:
-            return "psyhiphop" if psy else "hiphoptechno"
         if psy:
             return "psyrap"
-        return "hardtechrap" if has("industrial", "hard tech", "raw", "distorted") else "raptechno"
-    if has("hardstyle") and not has("rawstyle"):
-        return "hardstyletechno"
-    if has("rawstyle"):
-        return "rawbounce"
+        if acid:
+            return "acidrap"
+        if industrial:
+            return "hardtechrap"
+        return "raptechno"
     if psy:
-        return "acidpsy" if has("acid", "303") else "psy"
-    if has("hyper") or (bpm or 0) >= 185 or re.search(r"\b(1[89]\d|2\d\d)\s*bpm", t):
-        return "hyper" if has("acid", "hyper", "arp") else "bounce"
-    if has("groove"):
-        return "hardgroove"
-    if has("bounce", "bouncy"):
-        return "bounce"
+        if acid:
+            return "acidpsy"
+        return "psytech" if fast or has("hard techno", "hardstyle", "rawstyle") else "psy"
+    if acid:
+        if warehouse:
+            return "warehouseacid"
+        if industrial:
+            return "industrialacid"
+        return "hyper" if fast or has("hard techno", "hard acid") else "acidtechno"
+    if warehouse:
+        return "warehouse"
+    if industrial:
+        return "industrialtechno"
     return "hardtech"

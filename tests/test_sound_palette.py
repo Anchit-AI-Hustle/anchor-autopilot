@@ -69,14 +69,18 @@ def test_a_brief_carries_its_genre_groups_sound():
 
 def test_the_timbre_reference_matches_the_genre(tmp_path):
     from anchor.music import AceStepCpp
-    for name in ("ANCHOR-2026-09-04-then-do-it.mp3", "ANCHOR-2026-09-10-signal-detected.mp3"):
+    # Anchit's major references (2026-11-20), and an old reference that is no longer used
+    for name in ("ANCHOR-2026-11-07-outrun-your-shadow.mp3", "ANCHOR-legacy-kindness-needs-truth.mp3",
+                 "ANCHOR-2026-11-10-move-before-thunder.mp3", "ANCHOR-2026-09-13-project-mayhem.mp3",
+                 "ANCHOR-2026-09-04-then-do-it.mp3"):
         (tmp_path / name).write_bytes(b"x")
     groups = load_profile().music["ref_groups"]
     eng = AceStepCpp(tmp_path, tmp_path, "d", "l", ref_dir=tmp_path, ref_groups=groups)
-    assert eng.reference({"seed": 3, "genre_group": "hardtech"}).name.startswith("ANCHOR-2026-09-04")
-    assert eng.reference({"seed": 3, "genre_group": "psy"}).name.startswith("ANCHOR-2026-09-10")
+    pick = lambda g: {eng.reference({"seed": s, "genre_group": g}).name for s in range(8)}
+    assert pick("hardtech") == {"ANCHOR-2026-09-13-project-mayhem.mp3", "ANCHOR-legacy-kindness-needs-truth.mp3"}
+    assert pick("psy") == {"ANCHOR-2026-11-10-move-before-thunder.mp3", "ANCHOR-2026-09-13-project-mayhem.mp3"}
+    assert pick("rap") == {"ANCHOR-2026-11-07-outrun-your-shadow.mp3", "ANCHOR-2026-11-10-move-before-thunder.mp3"}
     assert eng.reference({"seed": 3, "genre_group": "hiphop"}) is None
-    assert eng.reference({"seed": 3, "genre_group": "rap"}) is None
 
 
 def test_a_half_time_beat_keeps_its_tempo():

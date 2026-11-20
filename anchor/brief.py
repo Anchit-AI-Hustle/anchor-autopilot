@@ -139,7 +139,9 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
     style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape,
                           story=songbook.short(song.about, 100) if song else theme.idea, sound=sound,
                           vocals=("Vocals: none, instrumental" if instrumental else
-                                  (songbook_club.club_vocals_line(song) if club else songbook.vocals_line(song)) if song else None))
+                                  (songbook_club.club_vocals_line(song) if club else
+                                   songbook_club.rap_vocals_line(songbook.vocals_line(song)) if lane.voice == "rap"
+                                   else songbook.vocals_line(song)) if song else None))
 
     if club and len(style["caption"]) >= 1560:
         # the caption's budget (1560): the club vocals line gives up words of the voice first
@@ -168,6 +170,9 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         lyrics = ""
     elif club:
         lyrics = songbook_club.club_cut(song, lane.group or "")
+    elif song is not None and lane.voice == "rap":
+        # Outrun Your Shadow's shape: full verses, two drops that are music with one chant
+        lyrics = songbook_club.rap_cut(song)
     elif song is not None:
         lyrics = song.lyrics
     else:

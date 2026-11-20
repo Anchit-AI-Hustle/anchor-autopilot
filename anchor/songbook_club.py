@@ -99,3 +99,34 @@ def club_vocals_line(song: Song, room: int = 44) -> str:
 
 def sung_words(sheet: str) -> int:
     return sum(len(ln.split()) for ln in sheet.splitlines() if ln.strip() and not ln.strip().startswith("["))
+
+
+def rap_cut(song: Song) -> str:
+    """A rap or hip hop song the way Outrun Your Shadow is built (GUIDE.md, Model A): every
+    verse kept, vocals on about 40 percent of the track, and two drops that are music with one
+    short chant, the second one right before the outro so the last lines are "spaced over the
+    last drops". Book songs with a single drop get the second one; a drop line is cut to a chant
+    of at most six words (Anchit, 2026-11-20: "songs like outrun your shadow with better drops")."""
+    secs = sections(song.lyrics)
+    drops = [lines for tag, lines in secs if _kind(tag).startswith("drop")]
+    chant = next((ln for d in drops for ln in d), "") or f"{song.title}!"
+    chant = " ".join(chant.split()[:6])
+    out = [(tag.split(":")[0].strip().title(), [chant] if _kind(tag).startswith("drop") else lines)
+           for tag, lines in secs]
+    kinds = [_kind(t) for t, _ in out]
+    if kinds.count("drop") < 2:
+        outro = next((i for i, k in enumerate(kinds) if k.startswith("outro")), len(out))
+        if outro and kinds[outro - 1] != "drop":
+            out.insert(outro, ("Drop", [chant]))
+        else:
+            # the one drop already closes the song: the first hook gets its drop too
+            hook = next((i for i, k in enumerate(kinds) if k.startswith(("hook", "chorus"))), None)
+            if hook is not None and (hook + 1 >= len(kinds) or kinds[hook + 1] != "drop"):
+                out.insert(hook + 1, ("Drop", [chant]))
+    text = "\n\n".join(f"[{tag}]\n" + "\n".join(lines) if lines else f"[{tag}]" for tag, lines in out)
+    return bare_tags(text)
+
+
+def rap_vocals_line(vocals_line: str) -> str:
+    """The rap caption's vocal layer plus how its drops land."""
+    return f"{vocals_line}; the drops are music, the kick and distorted bass slam back with one shouted chant"

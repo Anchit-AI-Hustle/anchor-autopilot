@@ -73,7 +73,9 @@ def test_the_brief_sings_a_whole_songbook_song():
             assert b["title"] == song.title and b["lyrics"] == songbook_club.club_cut(song, b["genre_group"])
             assert "sparse, drops instrumental" in b["caption"]
         else:
-            assert b["title"] == song.title and b["lyrics"] == song.lyrics
+            from anchor import songbook_club
+            want = songbook_club.rap_cut(song) if b["genre_group"] in ("rap", "hiphop") else song.lyrics
+            assert b["title"] == song.title and b["lyrics"] == want
             assert f"Vocals: {songbook.short(song.voice, 110)}" in b["caption"]
             assert b["duration_s"] >= songbook.length_s(song, 185, 215)
         assert b["model"] == song.model

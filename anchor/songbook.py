@@ -173,7 +173,9 @@ def pick(songs: tuple[Song, ...], group: str, r, history: list[dict], *, used_ti
     recent_words = set().union(*(_words(d.get("title", "")) for d in history[:recent])) if history else set()
     by_id = {s.id: s for s in songs}
     last_form = next((by_id[d["theme"]].form for d in history if d.get("theme") in by_id), None)
-    fits = [s for s in songs if group in s.groups and s.id not in used_ids and s.title.lower() not in used]
+    # hard rap draws on the hip hop songs too (2026-11-20: rap is hard rap, hip hop is no longer a lane)
+    wanted = {group, "hiphop"} if group == "rap" else {group}
+    fits = [s for s in songs if wanted & set(s.groups) and s.id not in used_ids and s.title.lower() not in used]
     if not fits:
         return None
     left = len(fits)
