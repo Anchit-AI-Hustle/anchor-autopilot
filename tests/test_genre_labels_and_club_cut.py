@@ -31,7 +31,7 @@ def test_every_listing_says_the_lanes_own_genre():
 
 def test_a_suno_song_is_listed_under_the_lane_it_is_filed_in():
     lane = P.lane(genres.classify("acid techno, psychedelic, 303, female vocals", 170))
-    assert lane.genre_line.split(",")[0] == lane.name == "Acid Psychedelic Techno"
+    assert lane.genre_line.split(",")[0] == lane.name == "Psychedelic Acid"
 
 
 def _club_song():

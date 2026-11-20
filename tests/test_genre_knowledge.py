@@ -40,14 +40,24 @@ def test_a_wrong_brief_is_caught():
     assert any("bpm" in x for x in genres.lane_problems(slow, ["hard_techno"]))
 
 
-def test_mashup_lanes_fuse_two_genres_on_a_hard_techno_base():
+def test_only_the_decided_genres_and_their_mashups_over_180():
+    """Anchit, 2026-11-20: "ensure only the genres as asked and their mashups are created - hard
+    techno, industrial techno, warehouse techno, acid techno, psychadellic acid, psychadellic
+    techno, rap hard rap - ensure mashups have bpm higher than 180 bpm"."""
     p = load_profile()
-    ids = {l.id for l in p.active_lanes}
-    assert {"hardstyletechno", "phonktechno"} <= ids
-    recipes = {(f["base"], f["top"]) for f in genres.mashups()["fusion"]}
-    assert ("hard_techno", "hardstyle") in recipes and ("hard_techno", "phonk") in recipes
-    assert ("hard_techno", "techno_rap") in recipes
-    assert genres.label(["hard_techno", "phonk"]) == "Drift Phonk x Hard Techno"
+    active = {l.id: l for l in p.active_lanes}
+    assert set(active) == set(genres.DECIDED) | set(genres.MASHUPS)
+    assert {active[i].name for i in genres.DECIDED} == {
+        "Hard Techno", "Industrial Techno", "Warehouse Techno", "Acid Techno", "Psychedelic Acid",
+        "Psychedelic Techno", "Hard Rap"}
+    for i in genres.MASHUPS:
+        assert active[i].bpm[0] > 180, (i, active[i].bpm)
+        assert len(genres.for_lane(p, i)) == 2, i
+    for i in genres.DECIDED:
+        assert active[i].bpm[1] <= 180, (i, active[i].bpm)
+    allowed = {"hard_techno", "industrial_techno", "warehouse_techno", "acid_techno", "psychedelic_techno", "techno_rap"}
+    for i in active:
+        assert set(genres.for_lane(p, i)) <= allowed, (i, genres.for_lane(p, i))
 
 
 def test_camelot_wheel_and_tempo_rules():
@@ -88,11 +98,17 @@ def test_his_own_songs_are_filed_by_what_they_are():
         "hardtechno with psychedelic trance crossover, relentless 150 BPM four-on-the-floor kick, "
         "aggressive rhythmic rap verses with clipped confident delivery": "psyrap",           # Red Dust Warning
         "Fast-paced cinematic chopper rap fused with peak-time hard acid techno and organic psytrance": "psyrap",
-        "hard techno, rawstyle hybrid, industrial, 156-158 bpm": "rawbounce",                  # Project Mayhem Part 2
+        "hard techno, rawstyle hybrid, industrial, 156-158 bpm": "industrialtechno",           # Project Mayhem Part 2
         "Hard techno, relentlessly fast bounce at 200 BPM and above, acid arpeggiator": "hyper",
-        "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick": "hardtech",
-        "Rap, brooding half-time trap bounce, snare-clap backbeat": "hiphoptechno",
-        "drift phonk cowbell over hard techno": "phonktechno",
+        "Hard techno, industrial techno, peak-time hypnotic techno, 154 BPM, powerful distorted kick": "industrialtechno",
+        "Rap, brooding half-time trap bounce, snare-clap backbeat": "raptechno",
+        "drift phonk cowbell over hard techno": "raptechno",
+        "raw warehouse techno, big room": "warehouse",
+        "warehouse acid, 303, 186 bpm": "warehouseacid",
+        "acid techno, 303 squelch": "acidtechno",
+        "psychedelic acid techno, 303": "acidpsy",
+        "rap over acid techno": "acidrap",
+        "hard techno, distorted kick": "hardtech",
         "aggressive rap over industrial hard techno, distorted kick": "hardtechrap",
     }
     for tags, lane in cases.items():

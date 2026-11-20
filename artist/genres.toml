@@ -559,3 +559,41 @@ prompt = ["rap over hard techno", "under every verse", "kick the whole song", "f
 negative = ["rap over an empty beat", "kick dropping out under the verses"]
 visual = "rapper in strobe-lit warehouse"
 sources = ["https://mixmag.net/feature/brutalismus-3000-interview-cover-feature-harmony"]
+
+[[genre]]
+id = "warehouse_techno"
+name = "Warehouse Techno"
+family = "techno"
+bpm = [130, 150]
+confidence = "low"
+note = "a club and scene term more than a production school: the raw techno of big concrete rooms"
+feel = "four-on-the-floor, straight, relentless"
+kick = "big rumbling kick with a long concrete-room tail"
+bass = "rumble fused with the kick, mono"
+percussion = "raw claps and hats in a huge room reverb, metal hits"
+synths = "raw stabs, noise, few melodies"
+vocals = "rare: a shouted phrase or a spoken line in the room"
+structure = "long hypnotic loops, a new layer every 8 bars, one big breakdown"
+prompt = ["warehouse techno", "warehouse room reverb", "rumbling kick", "raw stabs", "concrete room"]
+negative = ["bright pop chords", "funky swing", "acoustic drums"]
+visual = "concrete warehouse, one white strobe, haze, a crowd in silhouette"
+sources = ["https://muzeme.io/genre-guides/techno", "https://bpmcalc.com/genres/techno/"]
+
+[[genre]]
+id = "psychedelic_techno"
+name = "Psychedelic Techno"
+family = "techno"
+bpm = [135, 175]
+confidence = "low"
+note = "techno with psytrance colour: trippy sequences and delays over a techno kick, not full psytrance"
+feel = "four-on-the-floor, hypnotic, rolling"
+kick = "punchy techno kick, rolling bass between the kicks"
+bass = "rolling off-beat bass, sometimes the psy kick-bass-bass-bass roll"
+percussion = "swung off-beat hats, shakers, tribal toms"
+synths = "phased acid sequences, trippy delays, swirling filtered arps, new layer every 8 bars"
+vocals = "whispers, half-sung lines, chants"
+structure = "layers added every 4 to 8 bars up to a climax, a breakdown, then a new pattern over the bass"
+prompt = ["psychedelic techno", "phased acid sequences", "trippy delays", "swirling arps", "hypnotic"]
+negative = ["clean house kick", "acoustic drums", "ballad"]
+visual = "kaleidoscope colour, liquid light, fractals over a crowd"
+sources = ["https://en.wikipedia.org/wiki/Psychedelic_trance", "https://www.melodigging.com/genre/hypnotic-techno"]

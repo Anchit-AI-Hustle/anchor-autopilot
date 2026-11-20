@@ -6,7 +6,7 @@ from datetime import date, timedelta
 from anchor.brief import make_brief, slot_group, slot_lanes
 from anchor.config import load_profile
 
-GROUPS = {"hardtech", "psy", "rap", "hiphop"}
+GROUPS = {"hardtech", "psy", "rap"}   # 2026-11-20: hip hop is no longer asked for; rap is hard rap
 
 
 def test_each_active_lane_belongs_to_one_asked_genre():
@@ -14,7 +14,7 @@ def test_each_active_lane_belongs_to_one_asked_genre():
     assert {l.group for l in p.active_lanes} == GROUPS
     rap = [l for l in p.active_lanes if l.group in ("rap", "hiphop")]
     assert all(l.voice == "rap" for l in rap), "the rap and hip hop lanes rap their verses"
-    assert {"hardtechrap", "psyhiphop", "psyrap"} <= {l.id for l in p.active_lanes}, "the combinations are lanes too"
+    assert {"hardtechrap", "acidrap", "psyrap"} <= {l.id for l in p.active_lanes}, "the combinations are lanes too"
 
 
 def test_a_full_day_has_every_genre_and_the_lead_genre_turns():

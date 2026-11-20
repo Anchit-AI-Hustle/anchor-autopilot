@@ -112,7 +112,7 @@ def test_no_one_word_titles():
 def test_hard_tech_psy_rap_and_hip_hop_all_get_airtime():
     p = load_profile()
     ids = {l.id for l in p.active_lanes}
-    assert {"hardtech", "psytech", "raptechno", "hiphoptechno", "psyrap"} <= ids
+    assert {"hardtech", "psytech", "raptechno", "acidrap", "psyrap"} <= ids
     seen, rap_days = set(), 0
     start = date(2026, 10, 25)
     hist = []

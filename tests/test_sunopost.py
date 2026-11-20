@@ -30,7 +30,7 @@ def test_the_request_is_read_from_the_issue_body():
 def test_the_page_starts_from_what_the_robot_would_post():
     song = {"title": "Project Mayhem Part 2", "tags": "hard techno, rawstyle hybrid, industrial, 156-158 bpm"}
     d = sunopost.defaults(P, song)
-    assert d["lane"] == "rawbounce" and d["bpm"] == 156                  # word match, not "hard tech" in "hard techno"
+    assert d["lane"] == "industrialtechno" and d["bpm"] == 156                  # word match, not "hard tech" in "hard techno"
     assert d["youtube_title"].startswith("Project Mayhem Part 2") and "ANCHOR" in d["youtube_title"]
     assert d["hashtags"].startswith("#") and d["description"].rstrip().endswith(d["hashtags"])
     assert d["style"] == "motion"

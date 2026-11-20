@@ -18,12 +18,13 @@ LYRICS = ("[Intro]\nHold my hand\n\n[Verse 1]\nWe walked in when the gates were 
 
 
 @pytest.mark.parametrize("genre,prompt,lane", [
-    ("Acid Psychedelic Techno", "anything", "acidpsy"),
-    ("hardstyletechno", "anything", "hardstyletechno"),
+    ("Psychedelic Acid", "anything", "acidpsy"),
+    ("Warehouse Techno", "anything", "warehouse"),
     ("", "a psychedelic acid 303 rave at sunrise", "acidpsy"),
     ("", "hard hitting rap over raw industrial hard tech", "hardtechrap"),
-    ("", "rawstyle anthem for the main stage", "rawbounce"),
-    ("", "drift phonk with cowbells", "phonktechno"),
+    ("", "fast hard acid techno at 190 bpm", "hyper"),
+    ("", "rawstyle anthem for the main stage", "hardtech"),
+    ("", "drift phonk with cowbells", "raptechno"),
     ("", "a love song", "hardtech"),
 ])
 def test_the_prompt_picks_a_decided_genre(genre, prompt, lane):
@@ -33,8 +34,8 @@ def test_the_prompt_picks_a_decided_genre(genre, prompt, lane):
 def test_a_studio_brief_is_a_drop_brief_for_the_users_song():
     req = {"id": "t0001", "prompt": "an acid psychedelic rave until sunrise", "title": "Sun Comes Up", "lyrics": LYRICS}
     b = studio.brief_maker(P, req)(0, (), "")
-    assert b["lane"] == "acidpsy" and b["lane_name"] == "Acid Psychedelic Techno"
-    assert b["genre_line"].startswith("Acid Psychedelic Techno")
+    assert b["lane"] == "acidpsy" and b["lane_name"] == "Psychedelic Acid"
+    assert b["genre_line"].startswith("Psychedelic Acid")
     assert b["title"] == "Sun Comes Up" and b["arrangement"] == "club"
     assert "[Drop]\nSun Comes Up!" in b["lyrics"] and "sparse" in b["caption"]
     assert P.lane("acidpsy").bpm[0] <= b["bpm"] <= P.lane("acidpsy").bpm[1]
@@ -73,4 +74,4 @@ def test_a_studio_song_end_to_end_with_the_test_engine(tmp_path, monkeypatch):
     meta = studio.run(P, req, tmp_path, engine_name="fixture")
     assert (tmp_path / meta["mp3"]).stat().st_size > 100_000
     saved = json.loads((tmp_path / "studio.json").read_text())
-    assert saved["genre"] == "Acid Psychedelic Techno" and saved["qc"]["attempts"]
+    assert saved["genre"] == "Psychedelic Acid" and saved["qc"]["attempts"]
