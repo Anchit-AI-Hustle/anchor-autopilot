@@ -45,6 +45,11 @@ class Lane:
     negative: str = ""
     # the genre group a day's slot draws from (schedule.slot_groups): hardtech, psy, rap, hiphop
     group: str = ""
+    # artist/lanes.toml (2026-11-21): the lane's own feel (replaces the channel-wide one), the
+    # rap flow added to the groove ({half} = the half-time tempo) and its own instruments
+    feel: str = ""
+    flow: str = ""
+    palette: dict = field(default_factory=dict, compare=False, hash=False)
 
 
 @dataclass(frozen=True)
@@ -106,6 +111,7 @@ class Profile:
 def load_profile(path: Path | str = PROFILE_PATH) -> Profile:
     with open(path, "rb") as fh:
         raw = tomllib.load(fh)
+    apply_lane_defs(raw, Path(path).parent / "lanes.toml")
     lanes = tuple(
         Lane(
             id=l["id"], name=l["name"], bpm=(int(l["bpm"][0]), int(l["bpm"][1])),
@@ -118,6 +124,7 @@ def load_profile(path: Path | str = PROFILE_PATH) -> Profile:
             retired=bool(l.get("retired", False)),
             voice=l.get("voice", "chant"), vocals=l.get("vocals", ""), negative=l.get("negative", ""),
             group=l.get("group", ""),
+            feel=l.get("feel", ""), flow=l.get("flow", ""), palette=dict(l.get("palette") or {}),
         )
         for l in raw["music"]["lanes"]
     )
@@ -128,6 +135,20 @@ def load_profile(path: Path | str = PROFILE_PATH) -> Profile:
     )
     validate(raw, lanes, families)
     return Profile(raw=raw, lanes=lanes, families=families)
+
+
+def apply_lane_defs(raw: dict, path: Path) -> None:
+    """The decided genres' own definitions (artist/lanes.toml) over the lanes in anchor.toml,
+    field by field, matched by lane id. A lane id there that anchor.toml lacks is an error."""
+    if not path.exists():
+        return
+    with open(path, "rb") as fh:
+        defs = tomllib.load(fh).get("lane", [])
+    by_id = {l["id"]: l for l in raw["music"]["lanes"]}
+    for d in defs:
+        if d["id"] not in by_id:
+            raise ValueError(f"{path.name}: lane {d['id']!r} is not in anchor.toml")
+        by_id[d["id"]].update({k: v for k, v in d.items() if k != "id"})
 
 
 def validate(raw: dict, lanes: tuple[Lane, ...], families: tuple[Family, ...]) -> None:

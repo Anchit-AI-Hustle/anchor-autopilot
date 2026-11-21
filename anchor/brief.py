@@ -134,13 +134,13 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         theme = themes.pick(themes.load(), rng("anchor-theme", *seed_key), past,
                             used_titles=[d.get("title", "") for d in history] + list(profile.artist["existing_titles"]),
                             avoid_titles=tuple(avoid_titles))
-    sound = pick_palette(profile, rng("anchor-sound", *seed_key), past, group=lane.group or "")
+    sound = pick_palette(profile, rng("anchor-sound", *seed_key), past, group=lane.group or "", lane=lane)
     r_state = r.getstate()
     style = compose_style(profile, lane, r, bpm=bpm, duration_s=duration_s, shape=shape,
                           story=songbook.short(song.about, 100) if song else theme.idea, sound=sound,
                           vocals=("Vocals: none, instrumental" if instrumental else
                                   (songbook_club.club_vocals_line(song) if club else
-                                   songbook_club.rap_vocals_line(songbook.vocals_line(song)) if lane.voice == "rap"
+                                   songbook_club.rap_vocals_line(rap_vocals(lane, song)) if lane.voice == "rap"
                                    else songbook.vocals_line(song)) if song else None))
 
     if club and len(style["caption"]) >= 1560:
@@ -211,7 +211,7 @@ def make_brief(profile: Profile, day: str, history: list[dict], attempt: int = 0
         "textures": style["textures"],
         "mood": style["mood"],
         "special": style["special"],
-        "negative": lane.negative or profile.music["negative"],
+        "negative": lane_negative(profile, lane),
         "duration_s": duration_s,
         "shape": shape,
         "short_s": int(profile.music["short_s"]),
@@ -344,17 +344,52 @@ PALETTE_PARTS = ("lead", "bass", "drums", "melody", "chords")
 PALETTE_GAP = 8          # a lead sound or a melody shape comes back only after this many songs
 
 
+def lane_negative(profile: Profile, lane: Lane) -> str:
+    """What the model must not make. A rap lane's own list replaces the channel's (it cannot ban
+    rap verses); a chant lane's own list is added to the channel's, so it still bans rap."""
+    if lane.voice == "rap" or not lane.negative:
+        return lane.negative or profile.music["negative"]
+    seen, out = set(), []
+    for term in (profile.music["negative"] + ", " + lane.negative).split(","):
+        term = term.strip()
+        if term and term.lower() not in seen:
+            seen.add(term.lower())
+            out.append(term)
+    return ", ".join(out)
+
+
+RAP_MASTERING = "club master, rap loud and clear, sub audible on phones"
+
+
+def rap_vocals(lane: Lane, song) -> str:
+    """A rap song's vocal layer: the songwriter's voice (its first words: who raps) with the
+    lane's delivery (artist/lanes.toml, from Outrun Your Shadow and Red Dust Warning), not the
+    song sheet's own flow words ("double time bars" fall off the beat at 181 BPM, 2026-11-21)."""
+    if not lane.vocals:
+        return songbook.vocals_line(song)
+    who = song.voice.split(",")[0].strip()
+    if len(who) > 70:
+        # cut on a word and never leave a dangling "and a" (2026-11-21: "duet of ... with a quick nasal flow and a")
+        who = who[:70].rsplit(" ", 1)[0]
+        while who.split() and who.split()[-1].lower() in {"a", "an", "and", "the", "with", "of", "who", "in", "on", "over", "his", "her"}:
+            who = who.rsplit(" ", 1)[0]
+    return lane.vocals.format(rapper=who, singer=who)
+
+
 def pick_palette(profile: Profile, r, history: list[dict], gap: int = PALETTE_GAP,
-                 group: str = "") -> dict | None:
+                 group: str = "", lane: Lane | None = None) -> dict | None:
     """The sound of one song: a lead, a bass, a drum kit, a melody shape and a chord feel from
     ``[music.palette.<group>]`` (the lane's genre group: a hip hop song gets boom bap or trap
     drums and an 808, a psy song a rolling psy bassline), else ``[music.palette]``. No lead or
     melody of the last ``gap`` songs, no bass, kit or chords of the last few, and never the
     exact set of an earlier song. None without a palette."""
     pal = profile.music.get("palette")
-    if not pal:
+    if lane is not None and lane.palette:
+        # the lane's own instruments (artist/lanes.toml): never another genre's brass or chords
+        pal = lane.palette
+    elif not pal:
         return None
-    if isinstance(pal.get(group), dict):
+    elif isinstance(pal.get(group), dict):
         pal = pal[group]
     banks = {"lead": pal["leads"], "bass": pal["basses"], "drums": pal["drums"], "melody": pal["melodies"],
              "chords": pal["chords"]}
@@ -398,8 +433,10 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
     layers = [
         lane.caption,                                                   # 1 genre + core sound
         lane.era,                                                       # 2 era / sonic world
-        f"Mood: {mood}{f', about {story}' if story else ''}. Feel: {music['feel']}",   # 3 mood + what it is about
-        f"{bpm} BPM, {lane.groove}",                                    # 4 tempo / rhythm
+        f"Mood: {mood}{f', about {story}' if story else ''}. Feel: {lane.feel or music['feel']}",   # 3 mood + what it is about
+        # a rap at mashup speed rides the half-time pocket (artist/lanes.toml flow, 2026-11-21:
+        # "there is no sync in the music and the lyrics")
+        f"{bpm} BPM, {lane.groove}" + (f", {lane.flow.format(half=round(bpm / 2))}" if lane.flow else ""),   # 4 tempo / rhythm
         (f"Instruments: {sound['drums']}, {sound['bass']}, {sound['lead']} playing {sound['melody']} "
          f"over {sound['chords']}; {t0} intro, {t1} build, {t2} breakdown"
          if sound else
@@ -407,11 +444,13 @@ def compose_style(profile: Profile, lane: Lane, r, *, bpm: int, duration_s: int,
          f"{t1} arrives with the build, {t2} owns the breakdown"),      # 5 instruments + entry
         vocals or (lane.vocals or ((music.get("lyric_styles") or {}).get(lane.group or "") or {}).get("vocals")
                    or music["vocals"]).format(singer=singer, rapper=rapper),   # 6 vocals: a person
-        f"Production: {lane.production}; {music['mastering']}",         # 7 production
+        # a rap is mastered for the voice: the words loud and clear over the drums
+        f"Production: {lane.production}; "
+        + (RAP_MASTERING if lane.voice == "rap" else music['mastering']),   # 7 production
         arc(duration_s, textures, shape),                               # 8 arrangement arc
         f"Special moment: {special}",                                   # 9 special moment
     ]
-    caption = ". ".join(part.rstrip(".") for part in layers) + "."
+    caption = ". ".join(part.rstrip(".") for part in layers if part) + "."
     return {"caption": caption, "lyrics": structure(duration_s, textures, shape),
             "textures": list(textures), "mood": mood, "special": special}
 

@@ -1,0 +1,352 @@
+# The decided genres and their mashups, each defined as its own genre (Anchit, 2026-11-21:
+# "rap songs are still attrocious - mashups are incorrect - havent you integrated all learnings
+# into the new productions - there is no sync in the music and the lyrics"). Every field here
+# replaces the same field of the lane in artist/anchor.toml; the lanes there keep their old
+# words only for the records already out.
+#
+# What each lane is built from (artist/genres.toml and Anchit's references):
+# - hard techno: straight, no swing, heavy distorted kick with a rumble tail, offbeat hats,
+#   hard industrial stabs, dissonant acid; never bright supersaw chords or swing
+# - industrial techno: distorted clipped kick fused with the bass rumble, metallic hits,
+#   factory noise, steel factory atmosphere; never melodic leads, bright pads or funky swing
+# - warehouse techno: big rumbling kick with a long concrete-room tail, raw stabs, few melodies
+# - acid techno: the TB-303 as bass and lead, distorted, resonant filter that opens over the track
+# - psychedelic techno: rolling off-beat bass, phased acid sequences, trippy delays, swirling arps
+# - techno rap: the hard techno kick stays under every verse; the rap rides the half-time
+#   pocket (75 over 150), in 8-bar blocks. Outrun Your Shadow: gravelly barked staccato bars;
+#   Red Dust Warning: aggressive clipped delivery, chant-ready hook, warehouse pressure
+#
+# ``flow`` (rap lanes) is added to the groove with {half}, the half-time tempo, filled in: at
+# 181 BPM a rap in sixteenths of the kick is 12 syllables a second and falls off the beat.
+# ``palette`` is the lane's own instruments: a song never borrows a brass hook or power
+# chords from another genre. ``feel`` replaces the channel-wide feel for the lane.
+
+[[lane]]
+id = "hardtech"
+caption = "hard techno, peak time techno, heavy distorted kick with a rumbling tail dominant, distorted rumble bass bouncing on the off-beat, sharp off-beat hats, hard industrial stabs, dissonant acid line"
+era = "Mid-2020s hard techno, straight and relentless, built for the peak hour"
+groove = "straight four-on-the-floor with no swing, a distorted rumble bass bouncing on every off-beat, sharp off-beat hats, something new every 8 bars"
+production = "Loud and saturated, distorted kick up front, mono sub, stabs and acid wide"
+feel = "hard, driving and euphoric, straight and relentless, never dark"
+textures = ["distorted kick rumble", "hard industrial stabs", "dissonant acid stabs", "noise risers", "clanking metal hits", "filtered kick rolls"]
+mood_arcs = ["focused and driving, tightening into a full-room stomp, ending on one big hit",
+  "relentless from bar one, every drop harder, then one last big lift",
+  "tense and building, exploding into a hands-up peak, landing on the kick alone"]
+special_moments = ["one bar of only the kick rumble before the second drop", "the acid line opens fully on the final drop",
+  "the stabs double up for the last eight bars"]
+tags = ["hard techno", "peak time techno", "hard techno 2026", "techno", "rave"]
+style_line = "Hard Techno, Peak Time Techno, Industrial Techno, Driving Techno"
+negative = "swing shuffle, bouncy house groove, clean house kick, bright supersaw chords, trance chords, brass, power chords, acoustic drums, soft kick, thin weak bass, robotic vocals, vocoder voice, ballad singing, lo-fi, jazz, cheesy EDM build-ups, long 64-bar intro, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["hard industrial stab", "distorted acid 303 lead", "detuned hoover stab", "metallic FM stab", "screeching distorted lead", "filtered noise stab"]
+basses = ["distorted rumble bass on every off-beat after the kick", "saturated sidechained off-beat bass", "distorted rolling mid bass", "overdriven acid 303 bass in sixteenths"]
+drums = ["pounding distorted kick, rumbling tail, sharp off-beat hats", "distorted hard techno kick, metallic hits, rolling sixteenth hats", "clipped kick with rumble, offbeat open hats, snare rolls into drops"]
+melodies = ["a two-note stab riff that hammers the off-beat", "a dissonant acid riff that slowly opens its filter", "a falling stab riff that lands on the downbeat", "a three-note stab hook that repeats and hardens"]
+chords = ["minor stabs", "dissonant minor chords", "single-note stabs, no chords", "open fifths"]
+
+[[lane]]
+id = "industrialtechno"
+caption = "industrial techno, distorted clipped kick, rumbling bass bouncing between the kicks, metallic percussion, factory noise, clanking machinery, steel factory atmosphere, saturated, chanted hook"
+era = "Modern industrial techno, the Berlin and Dutch factory sound pushed to festival speed"
+groove = "straight four-on-the-floor, the bass rumble bouncing after every kick, straight sixteenth hats, long loops that harden every 8 bars"
+production = "Loud and saturated, clipped kick dry and up front, metal percussion wide, noise controlled"
+feel = "heavy, mechanical and hypnotic, high energy, never dark"
+textures = ["clanking machinery hits", "hydraulic hiss", "steel pipe percussion", "factory siren sweeps", "grinding metal noise", "distorted kick rumble"]
+mood_arcs = ["hard and focused, grinding into a full-room stomp, ending on one last hit",
+  "heavy from the first bar, every loop harder, then a clean cut",
+  "machine-tight and building, turning into pure force, then the machines power down"]
+special_moments = ["a factory siren that rises under the final drop", "one bar of only kick and metal before the last drop",
+  "the machinery hits lock into the kick for the last eight bars"]
+tags = ["industrial techno", "hard techno", "techno 2026", "industrial", "warehouse techno"]
+style_line = "Industrial Techno, Hard Techno, Dark Techno, Driving Techno"
+negative = "melodic leads, bright pads, bright pop chords, brass, power chords, funky swing, bouncy house groove, clean house kick, acoustic drums, soft kick, thin weak bass, robotic vocals, ballad singing, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["metallic FM stab", "distorted noise stab", "clanking machine sequence", "grinding resonant stab", "filtered siren lead"]
+basses = ["distorted rumble fused with the kick", "saturated low rumble on every off-beat", "clipped mono sub rumble"]
+drums = ["distorted clipped kick, metallic hits, straight sixteenth hats", "pounding industrial kick, steel pipe percussion, snare rolls", "saturated kick with rumble tail, hammer hits, noisy hats"]
+melodies = ["a single-note stab pattern that hardens each loop", "a two-note machine riff on the off-beat", "a mechanical sequence that never changes pitch", "a siren that slowly rises over the loop"]
+chords = ["no chords, only noise and stabs", "minor stabs", "open fifths"]
+
+[[lane]]
+id = "warehouse"
+caption = "warehouse techno, big rumbling kick with a long concrete room tail, rumbling bass bouncing between the kicks, raw stabs and claps in warehouse room reverb, metal hits, hypnotic, chanted hook"
+era = "The raw techno of big concrete rooms, loud, simple and relentless"
+groove = "straight four-on-the-floor that never stops, a rumbling kick tail filling the room, the bass bouncing between the kicks, claps on two and four, a new layer every 8 bars"
+production = "Big room, kick huge and dry, rumble mono, stabs and claps in a concrete reverb, chants close"
+feel = "raw, hypnotic and relentless, a big room losing itself, never dark"
+textures = ["warehouse room reverb", "raw chord stabs", "metal clangs", "crowd noise swells", "snare rolls into drops", "rumble tails"]
+mood_arcs = ["hypnotic and raw, the room filling up, ending in one big roar",
+  "simple and relentless, a new layer every eight bars, then a sudden clean stop",
+  "low-lit room, bright strobes, building to a hands-up drop"]
+special_moments = ["the room reverb swallows everything for one bar, then the kick slams back", "a raw stab answers the chant in the final drop",
+  "the crowd noise swells under the last breakdown"]
+tags = ["warehouse techno", "raw techno", "hard techno", "techno 2026", "rave"]
+style_line = "Warehouse Techno, Raw Techno, Hard Techno, Hypnotic Techno"
+negative = "bright pop chords, brass, power chords, trance chords, funky swing, bouncy house groove, clean house kick, acoustic drums, soft kick, thin weak bass, robotic vocals, ballad singing, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["raw chord stab", "hypnotic filtered stab", "distorted organ stab", "raw noise stab", "short metallic pluck"]
+basses = ["rumble fused with the kick, mono", "rolling low rumble between the kicks", "deep saturated off-beat bass"]
+drums = ["big rumbling kick, raw claps, open hats in room reverb", "huge concrete kick, metal clangs, rolling hats", "dry pounding kick, snare rolls, shaker loop in the room"]
+melodies = ["a hypnotic one-chord stab loop", "a two-note stab that repeats and opens", "a stab riff that answers the kick", "a slow filtered stab sequence"]
+chords = ["one raw minor chord", "open fifths", "minor stabs"]
+
+[[lane]]
+id = "acidtechno"
+caption = "acid techno, distorted TB-303 as bass and lead with wild slides and resonant filter sweeps, punchy distorted kick, bouncing off-beat bass, rattling percussion, rave energy, chanted hook"
+era = "1990s acid techno rave lineage, the 303 at the centre, fast for 2020s floors"
+groove = "straight four-on-the-floor, the 303 riding sixteenths with slides and accents, the bass bouncing on the off-beat, rattling hats, the filter opening over the track"
+production = "303 centred, distorted and screaming, kick punchy and dominant, chants dry"
+feel = "squelching, wild and driving, high energy, never dark"
+textures = ["rubbery acid squelches", "screaming 303 slides", "resonance peaks", "rattling percussion", "rising filter tension", "delay throws"]
+mood_arcs = ["squelching and sly, getting wilder every section, ending on one resonant scream",
+  "driving and focused, the filter opening wider each drop",
+  "an acid chase that never lets go, peaking in a screaming 303, then cut"]
+special_moments = ["the 303 filter opens fully only on the final drop", "one bar of only the 303 before the second drop",
+  "a second 303 answers the first in the last drop"]
+tags = ["acid techno", "303", "acid", "techno 2026", "rave"]
+style_line = "Acid Techno, Hard Acid, Rave Techno, Driving Techno"
+negative = "no 303, smooth pads, half-time, bright pop chords, brass, power chords, funky swing, clean house kick, acoustic drums, soft kick, thin weak bass, robotic vocals, ballad singing, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["screaming distorted 303 lead", "squelchy 303 acid lead", "second 303 answering line", "resonant acid stab"]
+basses = ["distorted 303 bassline in sixteenths with slides", "rolling acid 303 bass", "overdriven off-beat acid bass"]
+drums = ["punchy distorted kick, rattling hats, snappy claps", "hard kick, noisy rattling percussion, open hats", "pounding kick, cowbell rattle, snare rolls"]
+melodies = ["a 303 riff with slides that opens its filter each bar", "a sixteenth-note acid line with accents on the off-beat", "a call and response between two 303 lines", "a falling acid riff that lands on the downbeat"]
+chords = ["no chords, only the 303", "one minor stab", "open fifths"]
+
+[[lane]]
+id = "acidpsy"
+caption = "psychedelic acid techno, squelching 303 acid line with slides, rolling psychedelic bass bouncing on the off-beat, punchy kick, phased acid sequences, trippy delays"
+era = "1990s acid colours over a fast psychedelic techno low end"
+groove = "four-on-the-floor, a rolling bass bouncing between the kicks, the 303 riding sixteenths with slides, layers added every 8 bars"
+production = "Wide and colourful, 303 centred and squelching, delays and phasers around it, kick punchy and dominant"
+feel = "trippy, squelching and euphoric, colourful and fast, never dark"
+textures = ["rubbery acid squelches", "bouncing 303 slides", "trippy delay throws", "phased acid sequences", "rising filter tension", "swirling filtered arps"]
+mood_arcs = ["sly and squelching, spiralling into a kaleidoscope drop, ending on one resonant squeal",
+  "hypnotic and rolling, the acid getting wilder every section, then cut",
+  "curious at first, sharpening into euphoria, leaving on a single held note"]
+special_moments = ["the acid line rises a full octave under the final drop", "the delays spin around the room for two bars before the second drop",
+  "a phaser swallows the 303 for one bar, then it snaps back dry"]
+tags = ["acid techno", "psychedelic techno", "psy acid", "303", "techno 2026"]
+style_line = "Psychedelic Acid, Acid Techno, Psychedelic Techno, Rave Techno"
+negative = "no 303, bright pop chords, brass, power chords, clean house kick, acoustic drums, soft kick, thin weak bass, robotic vocals, ballad singing, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["squelchy 303 acid lead", "phased resonant sweep lead", "acid arpeggio lead", "bubbling resonant sequence", "twisting FM psy lead"]
+basses = ["rolling psychedelic off-beat bass", "squelchy acid 303 bass with slides", "rolling bass, three sixteenths per kick"]
+drums = ["punchy kick, swung off-beat hats, shaker sixteenths", "tight kick, crisp sixteenth hats, tribal toms", "driving kick, snappy claps, rolling bongos"]
+melodies = ["a 303 riff with slides that slowly opens its filter", "a phased sixteenth-note sequence that morphs", "a call and response between the acid line and the lead", "a spiralling sequence that climbs each bar"]
+chords = ["hypnotic minor drone", "suspended psychedelic chords", "open fifths"]
+
+[[lane]]
+id = "psy"
+caption = "psychedelic techno, hypnotic rolling kick, off-beat bass bouncing between the kicks, phased acid sequences, trippy delays, swirling filtered arps, whispered voices"
+era = "Techno with psytrance colour: trippy sequences and delays over a hard techno kick"
+groove = "four-on-the-floor, a rolling bass bouncing between the kicks, swung off-beat hats and shakers, layers added every 4 to 8 bars"
+production = "Wide and swirling, kick and bass dry and centred, sequences and whispers in ping-pong delay and phaser"
+feel = "hypnotic, trippy and euphoric, rolling and colourful, never dark"
+textures = ["swirling phaser sweeps", "ping-pong acid delays", "trippy filtered arps", "bubbling resonant squelches", "reversed whisper echoes", "shimmering noise risers"]
+mood_arcs = ["trippy and hypnotic, spiralling into a kaleidoscope, landing on one bright stab",
+  "floating then rolling, the colours getting brighter every drop",
+  "hypnotic and euphoric, tension that blooms into a hands-up climax"]
+special_moments = ["a new sequence appears over the bass after the breakdown", "the delays spin around the room for two bars before the last drop",
+  "the arps rise an octave under the final drop"]
+tags = ["psychedelic techno", "psy techno", "hypnotic techno", "techno 2026", "rave"]
+style_line = "Psychedelic Techno, Hypnotic Techno, Psy Techno, Rave Techno"
+negative = "clean house kick, acoustic drums, ballad singing, bright pop chords, brass, power chords, soft kick, thin weak bass, robotic vocals, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["twisting FM psy lead", "phased resonant sweep lead", "acid arpeggio lead", "flanged alien zap lead", "bubbling resonant sequence", "glassy FM bell lead"]
+basses = ["rolling psytrance bass, three sixteenths per kick", "rolling off-beat psy bass", "rolling FM bass locked to the kick"]
+drums = ["tight psy kick, swung off-beat hats, shaker sixteenths", "punchy techno kick, crisp sixteenth hats, tribal toms", "deep kick, snappy claps, rolling bongos"]
+melodies = ["a spiralling sequence that climbs each bar", "a hypnotic three-note riff that slowly opens its filter", "a phased sixteenth-note sequence that morphs", "a call and response between two sequences"]
+chords = ["hypnotic minor drone", "suspended psychedelic chords", "open fifths"]
+
+[[lane]]
+id = "raptechno"
+caption = "hard rap over hard techno, the kick under every verse, distorted rumble bass bouncing on the off-beat, hard industrial stabs"
+era = "Mid-2020s hard techno rap"
+groove = "straight four-on-the-floor under every verse and drop, a distorted rumble bass bouncing on every off-beat, sharp off-beat hats"
+flow = "rap in the half-time pocket at {half} BPM, one lyric line per half-time bar, on the downbeat"
+production = "Loud and saturated, distorted kick dominant, rap dry and centred, stabs wide"
+feel = "hungry, defiant and hard-hitting, never dark"
+textures = ["distorted kick rumble", "hard industrial stabs", "vocal ad-lib echoes", "snare rolls into hooks", "clanking metal hits", "noise risers"]
+mood_arcs = ["defiant and hungry, every verse harder, ending on one shouted hook",
+  "tense and focused bars, exploding into a hook the crowd screams back",
+  "steely confidence at first, louder every hook, ending on one big shout"]
+special_moments = ["the beat drops to just kick and rap for two bars before the hook slams back", "the crowd chant answers the rapper in the final drop",
+  "the rapper's last line lands alone on the downbeat, then everything slams back"]
+tags = ["hard rap", "rap techno", "techno rap", "hard techno", "hard techno rap"]
+style_line = "Hard Rap, Techno Rap, Hard Techno, Rave Rap"
+vocals = "Vocals: {rapper}, barked choppy staccato bars, clipped confident delivery, every word clear and on the beat, natural English, the title chanted as the hook"
+negative = "rap over an empty beat, kick dropping out under the verses, mumbled vocals, slurred or accented words, rushed rap, rap off the beat, autotune crooning, ballad singing, robotic vocals, vocoder voice, monotone text-to-speech voice, brass, power chords, bright pop chords, funky swing, trap beat, boom bap, soft kick, thin weak bass, lo-fi, jazz, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["hard industrial stab", "distorted acid stab", "detuned hoover stab", "metallic FM stab", "filtered noise stab"]
+basses = ["distorted rumble bass on every off-beat after the kick", "saturated sidechained off-beat bass", "distorted rolling mid bass"]
+drums = ["distorted kick, off-beat hats, snare rolls", "rumbling kick, metallic hits, rolling hats"]
+melodies = ["a two-note stab riff between the rap lines", "a hard stab hook that answers each line", "a falling stab riff that lands on the downbeat"]
+chords = ["minor stabs", "single-note stabs, no chords", "open fifths"]
+
+[[lane]]
+id = "hyper"
+caption = "hard acid techno, very fast heavy distorted kick with a rumbling tail, distorted rumble bass bouncing on the off-beat, screaming distorted 303 acid line with slides, hard industrial stabs, chanted hook"
+era = "Hard techno and acid techno fused at mashup speed, over 180 BPM"
+groove = "very fast straight four-on-the-floor with no swing, a distorted rumble bouncing on every off-beat, the 303 screaming in sixteenths with slides"
+production = "Loud and saturated, kick dominant, 303 centred and screaming, stabs wide"
+feel = "hard, fast and wild, the acid screaming, never dark"
+textures = ["screaming 303 slides", "distorted kick rumble", "hard industrial stabs", "resonance peaks", "noise risers", "rattling percussion"]
+mood_arcs = ["hard and fast, the acid screaming louder every drop, ending on one hit",
+  "relentless from the first bar, a 303 that never lets go",
+  "tense and building, exploding into a full-speed acid peak, then cut"]
+special_moments = ["the 303 filter opens fully only on the final drop", "one bar of only kick and acid before the second drop",
+  "the acid line climbs an octave into the last drop"]
+tags = ["hard acid techno", "acid techno", "hard techno", "hard acid", "techno 2026"]
+style_line = "Hard Acid Techno, Hard Techno, Acid Techno, Driving Techno"
+negative = "arcade blips, chiptune, neon pads, happy hardcore, trance chords, bright supersaw chords, brass, power chords, swing shuffle, clean house kick, acoustic drums, soft kick, thin weak bass, robotic vocals, ballad singing, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["screaming distorted 303 lead", "squelchy 303 acid lead", "hard industrial stab", "resonant acid stab"]
+basses = ["distorted rumble bass on every off-beat after the kick", "overdriven acid 303 bass in sixteenths", "saturated sidechained off-beat bass"]
+drums = ["very fast distorted kick, rumbling tail, sharp off-beat hats", "fast hard techno kick, rattling percussion, snare rolls"]
+melodies = ["a 303 riff with slides that opens its filter each bar", "a sixteenth-note acid line with accents on the off-beat", "a dissonant acid riff over a two-note stab"]
+chords = ["no chords, only the 303 and stabs", "minor stabs", "dissonant minor chords"]
+
+[[lane]]
+id = "industrialacid"
+caption = "industrial acid techno, very fast distorted clipped kick, rumbling bass bouncing between the kicks, screaming 303 acid line, metallic percussion, factory noise, chanted hook"
+era = "Industrial techno and acid techno fused at mashup speed, over 180 BPM"
+groove = "very fast straight four-on-the-floor, the rumble bouncing after every kick, the 303 screaming in sixteenths, metallic sixteenth hats"
+production = "Loud and saturated, kick dominant, 303 centred and screaming, metal percussion wide"
+feel = "heavy, mechanical and wild, high energy, never dark"
+textures = ["clanking machinery hits", "screaming 303 slides", "steel pipe percussion", "grinding metal noise", "resonance peaks", "factory siren sweeps"]
+mood_arcs = ["hard and fast, the acid screaming louder every drop, ending on one hit",
+  "machine-tight and frantic, building into a full-speed stomp",
+  "relentless from the first bar, a 303 that never lets go"]
+special_moments = ["the 303 and a factory siren lock together in the final drop", "one bar of only kick and acid before the second drop",
+  "the acid line climbs an octave into the last drop"]
+tags = ["industrial acid", "industrial techno", "acid techno", "hard techno", "techno 2026"]
+style_line = "Industrial Acid Techno, Industrial Techno, Acid Techno, Hard Techno"
+negative = "melodic leads, bright pads, bright pop chords, brass, power chords, funky swing, clean house kick, acoustic drums, soft kick, thin weak bass, robotic vocals, ballad singing, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["screaming distorted 303 lead", "metallic FM stab", "grinding resonant stab", "squelchy 303 acid lead"]
+basses = ["distorted rumble fused with the kick", "overdriven acid 303 bass in sixteenths"]
+drums = ["very fast clipped kick, metallic hits, straight sixteenth hats", "fast industrial kick, steel pipe percussion, snare rolls"]
+melodies = ["a 303 riff with slides that opens its filter each bar", "a mechanical acid sequence locked to the kick", "a two-note machine riff under the acid"]
+chords = ["no chords, only noise, acid and stabs", "minor stabs"]
+
+[[lane]]
+id = "warehouseacid"
+caption = "warehouse acid techno, very fast big rumbling kick with a concrete room tail, bass bouncing between the kicks, squelchy distorted 303 acid line in warehouse room reverb, raw stabs, rave energy, chanted hook"
+era = "Warehouse techno and acid techno fused at mashup speed, over 180 BPM"
+groove = "very fast straight four-on-the-floor, a rumbling kick tail filling the room, the bass bouncing between the kicks, the 303 riding sixteenths with slides, claps on two and four"
+production = "Big room, kick huge and dry, 303 centred, stabs and claps in a concrete reverb"
+feel = "raw, fast and euphoric, a big room going wild, never dark"
+textures = ["warehouse room reverb", "screaming 303 slides", "raw chord stabs", "snappy claps", "rising filter tension", "crowd noise swells"]
+mood_arcs = ["raw and fast, the 303 getting wilder in a giant room, ending in a roar",
+  "a hypnotic acid loop that keeps opening up, then a clean cut",
+  "fast and euphoric, every drop bigger than the last"]
+special_moments = ["the 303 filter opens fully only on the second drop", "the room reverb swallows the acid for one bar",
+  "a raw stab answers the chant in the final drop"]
+tags = ["warehouse acid", "warehouse techno", "acid techno", "rave techno", "techno 2026"]
+style_line = "Warehouse Acid Techno, Warehouse Techno, Acid Techno, Rave Techno"
+negative = "bright pop chords, brass, power chords, trance chords, funky swing, clean house kick, acoustic drums, soft kick, thin weak bass, robotic vocals, ballad singing, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["squelchy 303 acid lead", "screaming distorted 303 lead", "raw chord stab", "hypnotic filtered stab"]
+basses = ["rumble fused with the kick, mono", "rolling acid 303 bass"]
+drums = ["very fast big rumbling kick, raw claps, open hats in room reverb", "fast concrete kick, metal clangs, rolling hats"]
+melodies = ["a 303 riff with slides that opens its filter each bar", "a hypnotic acid loop under one raw stab", "a sixteenth-note acid line with accents on the off-beat"]
+chords = ["one raw minor chord", "no chords, only the 303 and stabs"]
+
+[[lane]]
+id = "psytech"
+caption = "psychedelic hard techno, very fast distorted kick, rolling off-beat bass bouncing between the kicks, phased acid sequences, trippy delays, hard industrial stabs, shouted chant hook"
+era = "Hard techno and psychedelic techno fused at mashup speed, over 180 BPM"
+groove = "very fast straight four-on-the-floor, a rolling bass bouncing between the kicks, sharp off-beat hats, layers added every 8 bars"
+production = "Loud and wide, distorted kick dry and up front, sequences swirling around a centred rolling bass"
+feel = "hard, trippy and euphoric, fast and colourful, never dark"
+textures = ["swirling 303 acid lines", "phasing psychedelic leads", "distorted kick rumble", "bubbling arpeggios", "ping-pong delay chops", "hard industrial stabs"]
+mood_arcs = ["hypnotic and hard, spiralling into a full-room peak, ending wide-eyed",
+  "tense and rolling, melting into a psychedelic hands-up drop, landing on one stab",
+  "driving from the first bar, more colourful every drop, then one last big lift"]
+special_moments = ["the acid line rises a full octave under the final drop", "a big riser, then everything slams back",
+  "the delay chops spin around the room for two bars before the second drop"]
+tags = ["psychedelic hard techno", "psy techno", "hard techno", "psychedelic techno", "techno 2026"]
+style_line = "Psychedelic Hard Techno, Hard Techno, Psychedelic Techno, Rave Techno"
+negative = "swing shuffle, bouncy house groove, clean house kick, bright supersaw chords, brass, power chords, acoustic drums, soft kick, thin weak bass, robotic vocals, ballad singing, lo-fi, jazz, cheesy EDM build-ups, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["twisting FM psy lead", "phased resonant sweep lead", "acid arpeggio lead", "hard industrial stab", "bubbling resonant sequence"]
+basses = ["rolling psytrance bass, three sixteenths per kick", "distorted rolling off-beat bass"]
+drums = ["very fast distorted kick, sharp off-beat hats, shaker sixteenths", "fast hard kick with rumble, crisp sixteenth hats, tribal toms"]
+melodies = ["a spiralling sequence that climbs each bar", "a phased sixteenth-note sequence that morphs", "a hypnotic three-note riff that slowly opens its filter"]
+chords = ["hypnotic minor drone", "minor stabs", "open fifths"]
+
+[[lane]]
+id = "psyrap"
+caption = "hard rap over psychedelic hard techno, distorted kick under every verse, rolling bass bouncing on the off-beat, hypnotic acid lines, spiralling synths"
+era = "Psychedelic hard techno rap"
+groove = "straight four-on-the-floor under every verse and drop, a rolling bass bouncing between the kicks"
+flow = "rap in the half-time pocket at {half} BPM, one lyric line per half-time bar, on the downbeat"
+production = "Saturated, controlled low end, wide psychedelic motion, rap dry and centred"
+feel = "hungry, defiant and trippy, never dark"
+textures = ["hypnotic acid lines", "spiralling resonant synths", "vocal ad-lib echoes", "granular textures", "snare rolls into hooks", "ping-pong delay chops"]
+mood_arcs = ["defiant and hungry, spiralling into a hook the crowd screams back",
+  "tense, clipped bars over a hypnotic acid line, exploding into a sudden rave drop",
+  "steely confidence at first, louder every hook, ending on one big shout"]
+special_moments = ["a riser under the last rap line, then everything slams back", "the acid line rises a full octave under the final hook",
+  "the rap voice is swallowed by a phaser for one bar, then snaps back dry"]
+tags = ["psychedelic hard rap", "rap techno", "techno rap", "psychedelic techno", "hard techno rap"]
+style_line = "Psychedelic Hard Rap, Techno Rap, Psychedelic Techno, Hard Techno"
+vocals = "Vocals: {rapper}, aggressive rhythmic rap verses, clipped confident delivery, every word clear and on the beat, natural English, the title chanted as the hook"
+negative = "rap over an empty beat, kick dropping out under the verses, mumbled vocals, slurred or accented words, rushed rap, rap off the beat, autotune crooning, ballad singing, robotic vocals, vocoder voice, monotone text-to-speech voice, brass, power chords, bright pop chords, funky clav, trap beat, boom bap, soft kick, thin weak bass, lo-fi, jazz, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["hypnotic acid line", "spiralling resonant synth", "phased resonant sweep lead", "twisting FM psy lead"]
+basses = ["distorted rumbling off-beat bass", "rolling psychedelic off-beat bass"]
+drums = ["distorted kick, industrial percussion, off-beat hats", "pounding kick, rolling hats, snare rolls"]
+melodies = ["a hypnotic acid riff between the rap lines", "a spiralling sequence that climbs under the hook", "a short resonant stab that answers each line"]
+chords = ["hypnotic minor drone", "minor stabs"]
+
+[[lane]]
+id = "hardtechrap"
+caption = "hard rap over industrial techno, distorted clipped kick under every verse, rumbling bass bouncing between the kicks, metallic percussion, factory noise"
+era = "Industrial techno rap"
+groove = "straight four-on-the-floor under every verse and drop, the rumble bouncing after every kick, metallic sixteenth hats"
+flow = "rap in the half-time pocket at {half} BPM, one lyric line per half-time bar, on the downbeat"
+production = "Loud and saturated, clipped kick dominant, rap dry and centred, metal wide"
+feel = "hungry, defiant and mechanical, never dark"
+textures = ["clanking machinery hits", "steel pipe percussion", "vocal ad-lib echoes", "grinding metal noise", "snare rolls into hooks", "factory siren sweeps"]
+mood_arcs = ["defiant and hungry, every verse harder, ending on one shouted hook",
+  "machine-tight bars, exploding into a hook the crowd screams back",
+  "focused and heavy from bar one, louder at every hook, landing on one shout"]
+special_moments = ["the beat drops to just kick and rap for two bars before the hook slams back", "a factory siren rises under the last verse",
+  "the rapper's last line lands alone on the downbeat, then everything slams back"]
+tags = ["industrial hard rap", "industrial techno", "rap techno", "techno rap", "hard rap"]
+style_line = "Industrial Hard Rap, Industrial Techno, Techno Rap, Hard Rap"
+vocals = "Vocals: {rapper}, barked choppy staccato bars, clipped confident delivery, every word clear and on the beat, natural English, the title chanted as the hook"
+negative = "rap over an empty beat, kick dropping out under the verses, mumbled vocals, slurred or accented words, rushed rap, rap off the beat, autotune crooning, ballad singing, robotic vocals, vocoder voice, monotone text-to-speech voice, brass, power chords, bright pop chords, melodic leads, bright pads, 303 acid, psychedelic, funky swing, trap beat, boom bap, soft kick, thin weak bass, lo-fi, jazz, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["metallic FM stab", "distorted noise stab", "grinding resonant stab", "clanking machine sequence"]
+basses = ["distorted rumble fused with the kick", "saturated low rumble on every off-beat"]
+drums = ["clipped kick, metallic hits, sixteenth hats", "industrial kick, steel pipe hits, snare rolls"]
+melodies = ["a single-note stab between the rap lines", "a two-note machine riff that answers each line", "a siren that rises under the hook"]
+chords = ["no chords, only noise and stabs", "minor stabs"]
+
+[[lane]]
+id = "acidrap"
+caption = "hard rap over acid techno, distorted kick under every verse, 303 squelching around the rap, rumbling bass bouncing on the off-beat"
+era = "Acid techno rap"
+groove = "straight four-on-the-floor under every verse and drop, the 303 riding sixteenths between the rap lines, the bass bouncing on every off-beat"
+flow = "rap in the half-time pocket at {half} BPM, one lyric line per half-time bar, on the downbeat"
+production = "Loud and saturated, kick dominant, rap dry and centred, 303 around it"
+feel = "hungry, defiant and wild, never dark"
+textures = ["squelching 303 lines", "vocal ad-lib echoes", "snare rolls into hooks", "resonance peaks", "distorted kick rumble", "rattling percussion"]
+mood_arcs = ["defiant and hungry, every verse harder, ending on one shout",
+  "clipped bars over a screaming 303, exploding into the hook",
+  "relentless bars, a hook the crowd screams back, then a hard stop"]
+special_moments = ["the 303 rises under the last rap line, then everything slams back", "the beat drops to just kick and rap for two bars before the hook",
+  "the crowd chant answers the rapper in the final drop"]
+tags = ["acid hard rap", "acid techno", "rap techno", "techno rap", "hard rap"]
+style_line = "Acid Hard Rap, Acid Techno, Techno Rap, Hard Rap"
+vocals = "Vocals: {rapper}, aggressive rhythmic rap verses, clipped confident delivery, every word clear and on the beat, natural English, the title chanted as the hook"
+negative = "rap over an empty beat, kick dropping out under the verses, mumbled vocals, slurred or accented words, rushed rap, rap off the beat, autotune crooning, ballad singing, robotic vocals, vocoder voice, monotone text-to-speech voice, brass, power chords, bright pop chords, funky clav, trap beat, boom bap, soft kick, thin weak bass, lo-fi, jazz, silent gaps, tape stops, dropouts, beat cutting out"
+[lane.palette]
+leads = ["squelchy 303 acid lead", "screaming distorted 303 lead", "resonant acid stab"]
+basses = ["distorted rumble bass on every off-beat after the kick", "rolling acid 303 bass"]
+drums = ["distorted kick, rattling hats, snare rolls", "pounding kick, off-beat hats, metallic hits"]
+melodies = ["a 303 riff that squelches between the rap lines", "an acid line that rises under the hook", "a short acid stab that answers each line"]
+chords = ["no chords, only the 303", "minor stabs"]
