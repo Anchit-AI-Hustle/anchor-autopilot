@@ -86,8 +86,11 @@ def _fail(*_, **__):
 
 
 def _gate_on(monkeypatch):
-    """The gate's verdicts come from the test; the fixture engine then counts as a real engine."""
+    """The gate's verdicts come from the test; the fixture engine then counts as a real engine.
+    These tests watch the gate itself, so a slot with no passing take stays held here
+    (tests/test_every_song_published.py covers publishing the best held take)."""
     monkeypatch.setenv("ANCHOR_SONG_GATE", "1")
+    monkeypatch.setenv("ANCHOR_SHIP_BEST_HELD", "0")
 
 
 def test_no_take_passing_holds_the_slot_and_ships_nothing(fast_profile, site_dir, tmp_path, monkeypatch):
@@ -103,6 +106,21 @@ def test_no_take_passing_holds_the_slot_and_ships_nothing(fast_profile, site_dir
     assert all(a["song_gate"]["verdict"] == "FAIL" and not a["ok"] for a in tries)
     assert "too little melody and harmony under the drums" in tries[0]["song_gate"]["fails"][0]
     assert not (out / "meta.json").exists() and not list(out.glob("*.mp4")), "nothing was rendered"
+
+
+@pytest.mark.slow
+def test_with_every_take_held_the_best_one_is_published(fast_profile, site_dir, tmp_path, monkeypatch):
+    """Anchit, 2026-11-21: "ensure all songs like Sky Belongs To Nobody etc are published"."""
+    _gate_on(monkeypatch)
+    monkeypatch.setenv("ANCHOR_SHIP_BEST_HELD", "1")
+    monkeypatch.setattr(pipeline, "gate_take", _fail)
+    meta = pipeline.make(fast_profile, "2026-10-25", tmp_path / "d", engine_name="fixture", art_mode="procedural",
+                         catalog_path=site_dir / "data" / "catalog.json", retries=1)
+    tries = meta["qc"]["attempts"]
+    assert len(tries) == 2 and not any(a["ok"] for a in tries), "both takes were held by the gate"
+    assert tries[-1]["chosen"] and tries[-1]["shipped_held"], "the best held take went out, last in the log"
+    assert any(w.startswith("published as the best held take") for w in tries[-1]["warn"])
+    assert (tmp_path / "d" / "meta.json").exists() and (tmp_path / "d" / "master.wav").exists()
 
 
 @pytest.mark.slow
@@ -246,9 +264,11 @@ def test_the_master_resamples_without_soxr_on_an_ffmpeg_that_lacks_it(monkeypatc
 
 def test_a_title_the_singer_cannot_say_is_replaced_on_the_next_take(fast_profile, site_dir, tmp_path, monkeypatch):
     """2026-10-31 dry run on the Mac: "Bolts And Boogie" was heard as boats, balls, bold on all
-    four takes; the run then failed instead of holding the slot."""
+    four takes; the run then failed instead of holding the slot. A title sung wrong is never
+    published, not even as the best held take."""
     from anchor import lyriccheck
     monkeypatch.setenv("ANCHOR_SONG_GATE", "1")
+    monkeypatch.setenv("ANCHOR_SHIP_BEST_HELD", "1")
     monkeypatch.setattr(lyriccheck, "enabled", lambda: True)
     titles = []
 

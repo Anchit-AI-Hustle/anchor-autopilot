@@ -38,6 +38,49 @@ class SongGateHeld(QualityError):
         self.attempts = attempts or []
 
 
+# a take is never published if it is broken, not original, or sings words it must not, even when
+# every take was held (a production note sung, 2026-10-26; a title sung wrong, 2026-10-30)
+NEVER_SHIP = ("audio contains NaN", "too quiet / near silent", "sounds like released drop",
+              "sings its production notes", "title sung wrong")
+
+
+def ship_best_held() -> bool:
+    """On unless ANCHOR_SHIP_BEST_HELD=0: a slot whose takes were all held publishes the best of them."""
+    return env("ANCHOR_SHIP_BEST_HELD", "1") != "0"
+
+
+def pick_best_held(held: list[dict]) -> dict | None:
+    """The best of the held takes, or None when every one is broken or a copy (NEVER_SHIP).
+    A take that passed QC and was held only by the song gate comes first (highest gate score),
+    then the take with the fewest fails, then the earliest."""
+    ok = [h for h in held if not any(f.startswith(NEVER_SHIP) for f in h["fails"])]
+    if not ok:
+        return None
+    return min(ok, key=lambda h: (h["mastered"] is None, -(h["score"] or 0.0), len(h["fails"]), h["attempt"]))
+
+
+REDO_PATH = Path(__file__).resolve().parent.parent / "artist" / "redo.json"
+
+
+def redo_for(profile: Profile, day: str, hist: list, path: Path = REDO_PATH) -> dict | None:
+    """The held song this slot makes again first, from artist/redo.json ({drop id: {song, lane}}),
+    or None. A song already released, or a song or lane that no longer exists, is skipped."""
+    from . import songbook
+    entry = (read_json(path, {}) or {}).get(day)
+    if not entry:
+        return None
+    song = songbook.find(entry.get("song"))
+    lane = next((l for l in profile.active_lanes if l.id == entry.get("lane")), None)
+    if song is None or lane is None:
+        log(f"redo: {day}: song {entry.get('song')!r} or lane {entry.get('lane')!r} not found; skipped")
+        return None
+    if any((d.get("title") or "").lower() == song.title.lower() for d in hist):
+        log(f"redo: {day}: {song.title!r} is already out; skipped")
+        return None
+    log(f"redo: {day} makes {song.title!r} ({lane.name}) again first")
+    return {"song": song, "lane": lane.id}
+
+
 def master_take(profile: Profile, raw: Path, work: Path) -> dict:
     """The finishing pass and the master of one take: what the song gate hears is what ships."""
     work.mkdir(parents=True, exist_ok=True)
@@ -209,7 +252,8 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
     # a slot held by an earlier run gets new seeds in the next one, never the same takes again
     salt = env("ANCHOR_SEED_SALT", "")
     gate_on = songgate.enabled()
-    attempts_log, take_s, passing, misheard_titles = [], [], [], []
+    attempts_log, take_s, passing, misheard_titles, held_takes = [], [], [], [], []
+    redo = redo_for(profile, day, hist) if brief_fn is None else None
     for attempt in range(takes):
         if attempt and not time_for_another_take(deadline, take_s):
             log(f"make: no time for take {attempt + 1} before the job's limit (slowest take "
@@ -219,8 +263,14 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         # with a run salt, every three takes try a different lane and song: six takes of one
         # song that keeps breaking off post nothing, a second song often passes
         variant = f"{salt}:{attempt // 3}" if salt else ""
-        brief = (brief_fn(attempt, tuple(misheard_titles), variant) if brief_fn else
-                 make_brief(profile, day, hist, attempt, avoid_titles=tuple(misheard_titles), variant=variant))
+        if brief_fn:
+            brief = brief_fn(attempt, tuple(misheard_titles), variant)
+        elif redo and attempt // 3 == 0:
+            # a song held before is made again in its own slot first (artist/redo.json)
+            brief = make_brief(profile, day, hist, attempt, avoid_titles=tuple(misheard_titles),
+                               lane_id=redo["lane"], song=redo["song"])
+        else:
+            brief = make_brief(profile, day, hist, attempt, avoid_titles=tuple(misheard_titles), variant=variant)
         if salt:
             brief["seed"] = seed_from("anchor-audio", day, attempt, salt) % 2_000_000_000
         log(f"brief: {brief['title']!r} | {brief['lane_name']} | {brief['bpm']} BPM | {brief['key']} | "
@@ -299,11 +349,28 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
                     fails = entry["fail"] = [*fails, *(f"song gate: {r}" for r in songgate.reasons(gate))]
         take_s.append(time.monotonic() - started)
         log(f"QC take {attempt + 1}: {'PASS' if ok else 'FAIL'} {fails or ''} {warns or ''}")
+        if not ok:
+            held_takes.append({"score": gate_score, "attempt": attempt, "brief": brief, "raw": raw, "stats": stats,
+                               "stats_audio": stats_audio, "mastered": mastered, "fails": list(fails)})
         if ok:
             passing.append({"score": gate_score, "attempt": attempt, "brief": brief, "raw": raw, "stats": stats,
                             "stats_audio": stats_audio, "mastered": mastered})
             if len(passing) >= best_of:
                 break
+    if not passing and ship_best_held():
+        # every song is published (Anchit, 2026-11-21: "ensure all songs like Sky Belongs To
+        # Nobody etc are published"): when no take passes, the best take that is still a real,
+        # original record goes out instead of nothing
+        best_held = pick_best_held(held_takes)
+        if best_held is not None:
+            if best_held["mastered"] is None:
+                best_held["mastered"] = master_take(profile, best_held["raw"], out_dir / f"take-{best_held['attempt']}")
+            entry = next(a for a in attempts_log if a["attempt"] == best_held["attempt"])
+            entry["shipped_held"] = True
+            entry["warn"] = [*entry["warn"], f"published as the best held take: {'; '.join(best_held['fails'][:4])}"]
+            log(f"make: no take passed; publishing the best held take {best_held['attempt'] + 1} "
+                f"(gate score {best_held['score']}): {best_held['fails'][:4]}")
+            passing.append(best_held)
     if not passing:
         if gate_on or any(a.get("song_gate") for a in attempts_log):
             raise SongGateHeld(f"no take passed the song gate in {len(take_s)} take{'' if len(take_s) == 1 else 's'}",
