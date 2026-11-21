@@ -289,6 +289,10 @@ def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path
     # the song's own art fills the stage behind the hologram, so no two thumbnails share a
     # background (2026-11-21: one dark navy stage under every song made thumbnails 35/256 apart)
     stage = Image.alpha_composite(art_backdrop(cover, W2, H2), stage_veil(stage, 45))
+    # the projection stands in a dark pool, so it reads as cyan light whatever the art's colour
+    pool = Image.new("RGBA", (W2, H2), (0, 0, 0, 0))
+    ImageDraw.Draw(pool).rectangle([ax - 30, ay - 30, ax + art_size + 30, ay + art_size + 30], fill=(4, 8, 14, 200))
+    stage = Image.alpha_composite(stage, pool.filter(ImageFilter.GaussianBlur(40)))
     stage.alpha_composite(holo_art(cover, art_size, fringe), (ax, ay))
 
     def font(size):
@@ -366,7 +370,7 @@ def art_backdrop(cover: Path, w: int, h: int) -> Image.Image:
     art = art.resize((int(art.width * s) + 1, int(art.height * s) + 1), Image.LANCZOS)
     art = art.crop(((art.width - w) // 2, (art.height - h) // 2, (art.width - w) // 2 + w, (art.height - h) // 2 + h))
     art = art.filter(ImageFilter.GaussianBlur(6))
-    ramp = np.clip(np.linspace(0.42, 1.0, w, dtype=np.float32), 0, 1)[None, :, None]
+    ramp = np.clip(np.linspace(0.3, 0.65, w, dtype=np.float32), 0, 1)[None, :, None]
     arr = np.asarray(art, dtype=np.float32) * ramp
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
 
@@ -374,7 +378,9 @@ def art_backdrop(cover: Path, w: int, h: int) -> Image.Image:
 def stage_veil(stage: Image.Image, alpha: int = 110) -> Image.Image:
     """The dark stage laid over the backdrop at partial strength: grid, emitter and beam stay."""
     a = np.asarray(stage.convert("RGBA")).copy()
-    a[..., 3] = alpha
+    # the stage's light (emitter, beam, grid lines) stays whole; its dark lets the art through
+    luma = a[..., :3].astype(np.float32).max(axis=2)
+    a[..., 3] = np.clip(alpha + (luma - 25) * 4, alpha, 255).astype(np.uint8)
     return Image.fromarray(a, "RGBA")
 
 

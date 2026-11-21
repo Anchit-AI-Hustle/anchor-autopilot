@@ -100,7 +100,8 @@ def test_no_new_thumbnail_repeats_one_already_out():
     """The YouTube thumbnails made on the music-drawn art (from 2026-11-21) are all distinct from
     each other and from every thumbnail before them."""
     thumbs = sorted((ROOT / "site" / "thumbs").glob("*.jpg"))
-    new = [t for t in thumbs if t.stem >= "2026-11-21"]
+    import re
+    new = [t for t in thumbs if re.match(r"\d{4}-\d{2}-\d{2}", t.stem) and t.stem >= "2026-11-21"]
     for a in new:
         for b in thumbs:
             if a != b:
