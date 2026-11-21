@@ -24,13 +24,24 @@ def test_the_heartbeat_keeps_the_pause_watcher_running():
     setup = (ROOT / "scripts" / "mac-runner-setup.sh").read_text()
     assert "mac-yield.sh" in setup and "--loop" in setup
     text = YIELD.read_text()
-    for name in ("ace-synth", "ace-lm", "python -m anchor (make|studio)", "cinematic/worker.py"):
-        assert name in text
+    import re
+    pattern = re.search(r"PATTERN='([^']+)'", text).group(1)
+    paused = ["/Users/a/anchor-gpu/acestep.cpp/build/ace-synth --request gen.json",
+              "/Users/a/anchor-gpu/acestep.cpp/build/ace-lm --models m",
+              "/opt/homebrew/Cellar/python@3.12/Python.app/Contents/MacOS/Python -m anchor make --date 2026-11-20",
+              "/Users/a/runner-venv/bin/python -m anchor studio --request r.json",
+              "ffmpeg -y -i build/2026-11-20/master.wav out.wav",
+              "/Users/a/anchor-gpu/cinematic/venv/bin/python /Users/a/anchor-gpu/cinematic/repo/tools/cinematic/worker.py"]
+    left = ["/bin/zsh -l -c grep ace-synth notes.txt && echo python -m anchor make",
+            "caffeinate -i python -m anchor make --date 2026-11-20",
+            "vim tools/mac-yield.sh", "ffmpeg -i ~/Movies/holiday.mov out.mp4"]
+    assert all(re.search(pattern, c) for c in paused), [c for c in paused if not re.search(pattern, c)]
+    assert not any(re.search(pattern, c) for c in left), [c for c in left if re.search(pattern, c)]
 
 
 @pytest.mark.skipif(not shutil.which("ioreg"), reason="macOS only: reads the keyboard and mouse idle time")
 def test_renders_pause_while_the_mac_is_used_and_carry_on_when_idle(tmp_path):
-    fake = subprocess.Popen(["bash", "-c", "exec -a ace-synth-yield-test sleep 120"])
+    fake = subprocess.Popen(["bash", "-c", "exec -a /tmp/yieldtest/ace-synth sleep 120"])
     try:
         time.sleep(0.5)
         env = {"PATH": "/usr/bin:/bin:/usr/sbin:/sbin", "HOME": str(tmp_path), "ANCHOR_GPU_DIR": str(tmp_path)}

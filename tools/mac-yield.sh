@@ -13,7 +13,9 @@ set -u
 BASE="${ANCHOR_GPU_DIR:-$HOME/anchor-gpu}"
 LOG="$BASE/yield.log"
 IDLE_S="${ANCHOR_YIELD_IDLE_S:-120}"
-PATTERN='ace-synth|ace-lm|python -m anchor (make|studio)|ffmpeg .*(/build/|/_work/)|cinematic/worker.py|demucs|faster_whisper'
+# anchored on the program itself, so no shell or editor that merely mentions these names is
+# ever paused (2026-11-21: an unanchored pattern paused a terminal running a command about it)
+PATTERN='^[^ ]*/ace-(synth|lm)( |$)|^[^ ]*/[Pp]ython[0-9.]* -m anchor (make|studio)( |$)|^ffmpeg .*(build/|_work/)|^[^ ]*/[Pp]ython[^ ]* [^ ]*cinematic/worker[.]py'
 
 idle_s() {
   ioreg -c IOHIDSystem 2>/dev/null | awk '/HIDIdleTime/ {print int($NF/1000000000); exit}'
