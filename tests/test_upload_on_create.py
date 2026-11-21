@@ -49,7 +49,7 @@ OLD = [{"status": "completed", "createdAt": "2026-11-14T09:27:56Z"}]
 def test_starts_a_posting_run_on_the_mac_when_songs_are_due(tmp_path):
     out = _run(tmp_path, runs=OLD)
     assert "workflow run daily.yml" in out and "renderer=mac" in out
-    assert "dry_run" not in out and "date=" not in out, "a posting run that plans the day itself"
+    assert "dry_run" not in out and "date=2026-11-14-2" in out, "one song a run: the first one the day still needs"
     assert (tmp_path / "gpu" / "autostart-2026-11-14.count").read_text().strip() == "1"
 
 
@@ -59,7 +59,7 @@ def test_starts_a_posting_run_on_the_mac_when_songs_are_due(tmp_path):
     {"runs": OLD, "plan": "[]"},          # nothing due or no quota left
     {"runs": OLD, "hm": "0700"},          # before the quota reset: overnight batch owns the Mac
     {"runs": OLD, "hm": "2130"},          # the overnight render-only batch is about to start
-    {"runs": OLD, "count": 8},            # at most 8 starts a day
+    {"runs": OLD, "count": 16},           # at most 16 starts a day
     {"runs": OLD, "off": True},           # paused by hand
     {"runs": OLD, "listener": False},     # the runner is not up
 ])
@@ -67,9 +67,9 @@ def test_does_not_start_a_run(tmp_path, kw):
     assert _run(tmp_path, **kw) == ""
 
 
-def test_waits_45_minutes_after_the_last_run(tmp_path):
+def test_waits_5_minutes_after_the_last_run(tmp_path):
     import datetime as d
-    recent = (d.datetime.now(d.timezone.utc) - d.timedelta(minutes=20)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    recent = (d.datetime.now(d.timezone.utc) - d.timedelta(minutes=2)).strftime("%Y-%m-%dT%H:%M:%SZ")
     assert _run(tmp_path, runs=[{"status": "completed", "createdAt": recent}]) == ""
 
 
@@ -81,13 +81,13 @@ def test_the_heartbeat_runs_the_autostart():
 def test_a_posting_run_first_posts_songs_already_made():
     wf = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
     plan = wf.split("id: plan\n", 1)[1].split("- name: Pick where the songs render", 1)[0]
-    assert '[ -z "${{ inputs.date }}" ] && [ -z "$FROM" ]' in plan
+    assert '[ -z "$FROM" ] && [ "${{ inputs.dry_run }}" != "true" ]' in plan
     assert '"${{ inputs.dry_run }}" != "true"' in plan, "a render-only run never posts"
     assert "python -m anchor has-drop --date" in plan, "a song already out is never posted again"
 
 
-@pytest.mark.parametrize("posted,want_from", [("no", "555"), ("yes", "")])
-def test_a_made_song_not_yet_up_is_posted_by_the_next_run(tmp_path, posted, want_from):
+@pytest.mark.parametrize("posted,want_from,asked", [("no", "555", ""), ("yes", "", ""), ("no", "555", "-3"), ("no", "", "-2")])
+def test_a_made_song_not_yet_up_is_posted_by_the_next_run(tmp_path, posted, want_from, asked):
     """Run the workflow's own plan shell: an earlier run made today's -3, so the next posting run
     posts it from that run instead of making it again, unless it is already on YouTube."""
     import datetime as d
@@ -96,7 +96,9 @@ def test_a_made_song_not_yet_up_is_posted_by_the_next_run(tmp_path, posted, want
     wf = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
     block = wf.split("id: plan\n", 1)[1].split("\n      - name:", 1)[0]
     script = textwrap.dedent(block.split("run: |\n", 1)[1])
-    script = (script.replace("${{ inputs.date }}", "").replace("${{ inputs.from_run }}", "")
+    import datetime as _d
+    asked_id = (_d.datetime.now(_d.timezone.utc).strftime("%Y-%m-%d") + asked) if asked else ""
+    script = (script.replace("${{ inputs.date }}", asked_id).replace("${{ inputs.from_run }}", "")
               .replace("${{ github.event_name }}", "workflow_dispatch").replace("${{ inputs.dry_run }}", "false"))
     today = d.datetime.now(d.timezone.utc).strftime("%Y-%m-%d")
     (tmp_path / "python").write_text(

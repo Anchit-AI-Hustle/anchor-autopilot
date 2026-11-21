@@ -7,7 +7,7 @@ import time
 from datetime import date as Date, datetime, timedelta, timezone
 from pathlib import Path
 
-from . import catalog, craft, ledger, lyriccheck, lyrics, originality, songgate
+from . import catalog, craft, gapfill, ledger, lyriccheck, lyrics, originality, songgate
 from .art import make_cover, og_card
 from .audio import (same_octave, analyze, arc, beat_phase, best_window, cut, decode, encode_flac, encode_mp3,
                     estimate_key, master, quality_gate)
@@ -228,7 +228,16 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         raw, stats = engine.generate(brief, out_dir / f"gen-{attempt}")
         stats_audio = analyze(decode(raw))
         raw, stats_audio = to_tempo(raw, stats_audio, brief, stats.get("engine"))
+        # a dropout no longer than a bar is mended with the bar before it (anchor/gapfill.py):
+        # 2026-11-21, every take of a rap song held for 0.3 to 0.8 s holes, nothing posted
+        mended = []
+        if stats.get("engine") != "fixture":
+            raw, mended = gapfill.mend_file(Path(raw), float(brief["bpm"]))
+            if mended:
+                stats_audio = analyze(decode(raw))
         ok, fails, warns = quality_gate(stats_audio, brief)
+        if mended:
+            warns = [*warns, f"mended {len(mended)} short gap(s) with the bar before"]
         if stats.get("engine") == "fixture":
             # the test engine is a fixed tone loop: its tempo is not a take to make again
             fails = [f for f in fails if not f.startswith("too slow:")]

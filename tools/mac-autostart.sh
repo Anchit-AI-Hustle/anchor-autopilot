@@ -7,7 +7,8 @@
 #     with the overnight render-only batch)
 #   - it is the YouTube quota day, 08:10 to 21:00 UTC (overnight, prerender.yml owns the Mac)
 #   - today still needs songs and the quota has room (python -m anchor plan-drops)
-#   - the last daily run started 45 min ago or more, and fewer than 8 were started here today
+#   - the last daily run started 5 min ago or more, and fewer than 16 were started here today
+#   - one song a run (the first one the day still needs), so each song posts as soon as it passes
 # Started with Anchit's own gh login, so the release step works (bot-started runs get 403).
 # Pause: touch ~/anchor-gpu/autostart.off   Log: ~/anchor-gpu/autostart.log
 set -u
@@ -32,12 +33,12 @@ import json,sys,datetime as d
 r=json.load(sys.stdin)
 t=d.datetime.fromisoformat(r[0]["createdAt"].replace("Z","+00:00")) if r else None
 print(int((d.datetime.now(d.timezone.utc)-t).total_seconds()) if t else 10**9)')" || exit 0
-[ "$AGO" -ge 2700 ] || exit 0
+[ "$AGO" -ge 300 ] || exit 0
 
 TODAY="${ANCHOR_TODAY:-$(date -u +%F)}"
 COUNT="$BASE/autostart-$TODAY.count"
 N="$(cat "$COUNT" 2>/dev/null || echo 0)"
-[ "$N" -lt 8 ] || exit 0
+[ "$N" -lt 16 ] || exit 0
 
 if [ ! -d "$DIR/.git" ]; then
   gh repo clone "$REPO" "$DIR" -- -q >/dev/null 2>&1 || { log "clone failed"; exit 0; }
@@ -46,9 +47,12 @@ git -C "$DIR" fetch -q origin main && git -C "$DIR" reset -q --hard origin/main 
 DROPS="$(cd "$DIR" && "$PY" -m anchor plan-drops 2>"$BASE/autostart-plan.txt")" || { log "plan failed: $(tail -n 1 "$BASE/autostart-plan.txt")"; exit 0; }
 [ -n "$DROPS" ] && [ "$DROPS" != "[]" ] || exit 0
 
-if gh workflow run daily.yml -R "$REPO" --ref main -f renderer=mac >/dev/null 2>&1; then
+# one song a run: a run posts its song the moment that song passes, instead of waiting for the
+# whole day's batch (2026-11-21: four songs in one run meant nothing went up for hours)
+FIRST="$(echo "$DROPS" | "$PY" -c 'import json,sys;print(json.load(sys.stdin)[0])')" || exit 0
+if gh workflow run daily.yml -R "$REPO" --ref main -f renderer=mac -f date="$FIRST" >/dev/null 2>&1; then
   echo $((N + 1)) > "$COUNT"
-  log "started a posting run for $DROPS ($(tail -n 1 "$BASE/autostart-plan.txt"))"
+  log "started a posting run for $FIRST of $DROPS ($(tail -n 1 "$BASE/autostart-plan.txt"))"
 else
   log "dispatch failed"
 fi
