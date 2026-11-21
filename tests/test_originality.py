@@ -134,7 +134,8 @@ def test_rap_lanes_rap_and_never_ban_rap(no_songbook):
     p = load_profile()
     for lane in p.active_lanes:
         if lane.voice != "rap":
-            assert lane.vocals == "" and lane.negative == ""
+            # a chant lane's own bans are added to the channel's, which ban rap verses
+            assert lane.vocals == "" and "rap verses" not in lane.negative
             continue
         assert "rap verses" not in lane.negative and "robotic vocals" in lane.negative
         assert "rap" in lane.vocals.lower() and "chant" in lane.vocals

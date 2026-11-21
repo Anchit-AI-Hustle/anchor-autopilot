@@ -62,8 +62,12 @@ def test_a_brief_carries_its_genre_groups_sound():
     p = load_profile()
     for i in range(30):
         b = make_brief(p, (date(2026, 11, 1) + timedelta(days=i)).isoformat(), [])
-        group = p.lane(b["lane"]).group
-        if group in p.music["palette"] and isinstance(p.music["palette"][group], dict):
+        lane = p.lane(b["lane"])
+        group = lane.group
+        if lane.palette:
+            # the decided genres bring their own instruments (artist/lanes.toml, 2026-11-21)
+            assert b["sound"]["drums"] in lane.palette["drums"], (b["lane"], b["sound"])
+        elif group in p.music["palette"] and isinstance(p.music["palette"][group], dict):
             assert b["sound"]["drums"] in p.music["palette"][group]["drums"], (b["lane"], b["sound"])
 
 

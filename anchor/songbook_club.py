@@ -129,4 +129,4 @@ def rap_cut(song: Song) -> str:
 
 def rap_vocals_line(vocals_line: str) -> str:
     """The rap caption's vocal layer plus how its drops land."""
-    return f"{vocals_line}; the drops are music, the kick and distorted bass slam back with one shouted chant"
+    return f"{vocals_line}; the drops are kick and bass with one shouted chant"

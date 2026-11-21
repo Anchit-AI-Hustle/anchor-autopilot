@@ -392,3 +392,12 @@ stopping the best acid techno and hard techno flows and even in the drops".
   song), Pull Under (industrial hard techno). The first four are the engine's timbre references.
 - Rap songs are built like Outrun Your Shadow: every verse, two drops that are music with one
   chant, vocals on about 40 percent of the track.
+
+## Genre-true lanes and the rap pocket (2026-11-21)
+
+Every decided genre and mashup is defined in `artist/lanes.toml`: its own caption, groove, feel
+and instruments (`palette`), so an industrial rap never gets a brass hook or power chords and a
+hard acid track never gets arcade blips. A rap lane raps in the half-time pocket: at 184 BPM the
+rap rides 92 BPM, one lyric line per half-time bar, with the delivery of the references (Outrun
+Your Shadow: barked choppy staccato; Red Dust Warning: clipped confident delivery). Write rap
+lines of 14 to 20 syllables, one line per bar; never write "double time" into a rap at 180+.

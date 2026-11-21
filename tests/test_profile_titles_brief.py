@@ -108,15 +108,18 @@ def test_songs_are_briefed_bouncy_and_fun():
         sound = " ".join([lane.caption, lane.era, lane.groove, lane.production,
                           *lane.mood_arcs, *lane.special_moments, *lane.textures]).lower()
         assert "bounc" in lane.caption.lower() and "bounc" in lane.groove.lower(), lane.id
+        # each decided genre has its own feel (artist/lanes.toml, 2026-11-21), never dark
+        assert "never dark" in (lane.feel or feel), lane.id
         hits = [w for w in DARK if w in sound]
         assert not hits, f"lane {lane.id} still briefs {hits}"
     start = date(2026, 10, 1)
     for i in range(30):
         b = make_brief(p, (start + timedelta(days=i)).isoformat(), [])
-        assert f"Feel: {feel}" in b["caption"], b["date"]
+        lane_feel = p.lane(b["lane"]).feel or feel
+        assert f"Feel: {lane_feel}" in b["caption"], b["date"]
         # a songbook song's words are a person's and may be dark (a revolt, a confession, 2026-11-07);
         # the sound the model is told to make never is
-        said = b["caption"].replace(feel, "").lower()
+        said = b["caption"].replace(lane_feel, "").lower()
         assert not [w for w in DARK if w in said], b["date"]
         assert "bouncing" in b["caption"] and " bass" in b["caption"]
 
@@ -172,7 +175,8 @@ def test_every_song_is_hard_acid_or_psychedelic_at_160_to_200_bpm():
     for lane in p.active_lanes:
         assert 160 <= lane.bpm[0] <= lane.bpm[1] <= 200, (lane.id, lane.bpm)
         style = (lane.caption + " " + lane.genre_line).lower()
-        assert any(w in style for w in ("hard techno", "acid", "psychedelic", "hyper")), lane.id
+        # the decided genres (2026-11-20): industrial and warehouse techno are hard techno's own
+        assert any(w in style for w in ("hard techno", "acid", "psychedelic", "industrial techno", "warehouse techno")), lane.id
     lanes = " ".join(l.genre_line.lower() for l in p.active_lanes)
     assert "acid techno" in lanes and "psychedelic techno" in lanes and "hard techno" in lanes
     assert {l.bpm[1] for l in p.active_lanes} & set(range(195, 201)), "the top of the range is used"
