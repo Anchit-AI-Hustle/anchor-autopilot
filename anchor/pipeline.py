@@ -81,7 +81,7 @@ def redo_for(profile: Profile, day: str, hist: list, path: Path = REDO_PATH) -> 
     return {"song": song, "lane": lane.id}
 
 
-ART_TRIES = 8
+ART_TRIES = 12
 
 
 def song_picture(profile: Profile, brief: dict, master_audio):
@@ -509,6 +509,8 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     tries = []   # every draw, kept for the ledger: variant, how close it came, to which picture
     for variant in range(ART_TRIES):
         base_img = sound(variant) if sound else None
+        # the thumbnail's layout follows the redraw too (video.mirror_layout)
+        brief["art_seed"] = int(brief["seed"]) + variant
         art = make_cover(fam, {**brief, "seed": int(brief["seed"]) + variant}, profile.artist["name"], out_dir,
                          art_mode, sound_base=base_img)
         dist, twin = nearest_cover(out_dir / "cover.jpg", covers_dir)
