@@ -17,6 +17,11 @@ on:
     - cron: "37 10 * * *"
     - cron: "37 16 * * *"
     - cron: "37 19 * * *"
+    # Never a day without a song (Anchit, 2026-11-21: "it cannot fail even a single day"): two
+    # last-chance runs; when the day still has nothing on YouTube they make one song only, on the
+    # Mac or else the CPU, so it posts the moment it passes. A day that has a song skips them.
+    - cron: "7 22 * * *"
+    - cron: "47 23 * * *"
   workflow_dispatch:
     inputs:
       date:
@@ -144,6 +149,20 @@ jobs:
                 break
               fi
             done
+          fi
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$((10#${ANCHOR_HOUR:-$(date -u +%H)}))" -ge 22 ] && [ -z "$FROM" ]; then
+            # the last-chance runs: one song, and only on a day that has none yet
+            TODAY="$(date -u +%F)"
+            OUT=no
+            for D in "$TODAY" "$TODAY-2" "$TODAY-3" "$TODAY-4" "$TODAY-5"; do
+              [ "$(python -m anchor has-drop --date "$D" 2>/dev/null)" = yes ] && OUT=yes
+            done
+            if [ "$OUT" = yes ]; then
+              DROPS="[]"; echo "::notice::$TODAY already has a song on YouTube; the last-chance run has nothing to do"
+            else
+              DROPS="$(python -c "import json,sys;d=json.loads(sys.argv[1]);print(json.dumps(d[:1]))" "$DROPS")"
+              echo "::notice::$TODAY has no song yet: last-chance run for $DROPS"
+            fi
           fi
           echo "from_run=$FROM" >> "$GITHUB_OUTPUT"
           echo "drops=$DROPS" >> "$GITHUB_OUTPUT"

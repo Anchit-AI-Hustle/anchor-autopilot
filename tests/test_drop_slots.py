@@ -97,7 +97,7 @@ def test_one_run_a_day_after_the_quota_reset_and_a_backup_that_fills_gaps():
     crons = re.findall(r'- cron: "([^"]+)"', head)
     assert crons[:2] == ["37 8 * * *", "37 13 * * *"]
     # Mac first (2026-11-11): later runs wait for the Mac, the 19:37 run is the CPU fallback
-    assert sorted(crons[2:]) == ["37 10 * * *", "37 16 * * *", "37 19 * * *"]
+    assert sorted(crons[2:]) == ["37 10 * * *", "37 16 * * *", "37 19 * * *", "47 23 * * *", "7 22 * * *"]
     assert all(int(c.split()[1]) >= 8 for c in crons), "after the Pacific quota reset all year (08:00 UTC in winter)"
     assert "|| 'daily-drop' }}\n  cancel-in-progress: false" in WORKFLOW, "the runs that post go one after the other"
     assert "inputs.dry_run && format('daily-render-{0}', github.run_id)" in WORKFLOW, "a render-only run never waits"
