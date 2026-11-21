@@ -214,7 +214,7 @@ jobs:
         run: |
           git config user.name "$ROBOT_NAME"
           git config user.email "$ROBOT_EMAIL"
-          git add site/data site/covers site/og.jpg queue
+          git add site/data site/covers site/thumbs site/og.jpg queue
           git commit -m "drops: released the queue to YouTube and the website" || { echo "nothing to commit"; exit 0; }
           for i in 1 2 3 4; do
             git pull --rebase -q origin main && git push origin HEAD:main && exit 0

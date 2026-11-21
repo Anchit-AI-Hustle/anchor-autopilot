@@ -286,6 +286,9 @@ def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path
     art_size, ax, ay = 760, 1080, 90
     ex, ey = ax + art_size // 2, 1000
     stage = holo_stage(W2, H2, emitter=(ex, ey, 520), beam_top=(ex, ay + art_size - 40, art_size))
+    # the song's own art fills the stage behind the hologram, so no two thumbnails share a
+    # background (2026-11-21: one dark navy stage under every song made thumbnails 35/256 apart)
+    stage = Image.alpha_composite(art_backdrop(cover, W2, H2), stage_veil(stage, 45))
     stage.alpha_composite(holo_art(cover, art_size, fringe), (ax, ay))
 
     def font(size):
@@ -324,10 +327,55 @@ def frame_169(cover: Path, brief: dict, lane_phrase: str, artist: str, out: Path
     for j, t in enumerate(subs):
         gd.text((96, yy + j * int(fs.size * 1.1)), t, font=fs, fill=(*_rgb(fringe), 255))
         idr.text((96, yy + j * int(fs.size * 1.1)), t, font=fs, fill=(*_rgb(fringe), 255))
+    if mirror_layout(brief):
+        # half the songs stand the hologram on the left and set the title on the right
+        stage = stage.transpose(Image.FLIP_LEFT_RIGHT)
+        glow = glow.transpose(Image.FLIP_LEFT_RIGHT)
+        ink = ink.transpose(Image.FLIP_LEFT_RIGHT)
+        shift = W2 - 96 - max(probe.textlength(t, font=f) for t in lines)
+        glow, ink = (Image.new("RGBA", (W2, H2), (0, 0, 0, 0)), Image.new("RGBA", (W2, H2), (0, 0, 0, 0)))
+        gd, idr = ImageDraw.Draw(glow), ImageDraw.Draw(ink)
+        for i, line in enumerate(lines):
+            x = W2 - 96 - probe.textlength(line, font=f)
+            gd.text((x, top + i * line_h), line, font=f, fill=(*HOLO, 255))
+            idr.text((x, top + i * line_h), line, font=f, fill=(240, 254, 255, 255))
+        yy = top + len(lines) * line_h + 40
+        for j, t in enumerate(subs):
+            x = W2 - 96 - probe.textlength(t, font=fs)
+            gd.text((x, yy + j * int(fs.size * 1.1)), t, font=fs, fill=(*_rgb(fringe), 255))
+            idr.text((x, yy + j * int(fs.size * 1.1)), t, font=fs, fill=(*_rgb(fringe), 255))
     stage.alpha_composite(glow.filter(ImageFilter.GaussianBlur(16)))
     stage.alpha_composite(ink)
     stage.convert("RGB").save(out, quality=93)
     return out
+
+
+def mirror_layout(brief: dict) -> bool:
+    """Which side the title sits on, from the song (its seed, else its title), never the same
+    pattern day after day."""
+    import zlib
+    key = str(brief.get("seed") or brief.get("title") or "")
+    return zlib.crc32(key.encode()) % 2 == 1
+
+
+def art_backdrop(cover: Path, w: int, h: int) -> Image.Image:
+    """The cover, cropped to fill the frame, blurred a little and dimmed: the song's picture as
+    the room the hologram stands in. The title side stays darker so it reads on a phone."""
+    art = Image.open(cover).convert("RGB")
+    s = max(w / art.width, h / art.height)
+    art = art.resize((int(art.width * s) + 1, int(art.height * s) + 1), Image.LANCZOS)
+    art = art.crop(((art.width - w) // 2, (art.height - h) // 2, (art.width - w) // 2 + w, (art.height - h) // 2 + h))
+    art = art.filter(ImageFilter.GaussianBlur(6))
+    ramp = np.clip(np.linspace(0.42, 1.0, w, dtype=np.float32), 0, 1)[None, :, None]
+    arr = np.asarray(art, dtype=np.float32) * ramp
+    return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
+
+
+def stage_veil(stage: Image.Image, alpha: int = 110) -> Image.Image:
+    """The dark stage laid over the backdrop at partial strength: grid, emitter and beam stay."""
+    a = np.asarray(stage.convert("RGBA")).copy()
+    a[..., 3] = alpha
+    return Image.fromarray(a, "RGBA")
 
 
 def frame_916(cover: Path, out: Path, fringe: str = "#ff3bd4") -> Path:
