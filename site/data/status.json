@@ -1,10 +1,10 @@
 {
   "last_run": {
     "result": "failed",
-    "stage": "make",
-    "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-21T08:32:32Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44870305921"
+    "stage": "pages",
+    "error": "The pages stage failed. Open the run log for details.",
+    "finished_at": "2026-11-21T19:44:45Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44932595138"
   },
   "next_post_at": "2026-11-21T17:30:00Z",
   "streak": 1,
@@ -14,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-21T08:32:32Z",
+  "updated_at": "2026-11-21T19:44:45Z",
   "engine": {
     "engine": "queue",
     "source_file": "00-nobody-leaves-till-morning.flac"
