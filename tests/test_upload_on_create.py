@@ -136,3 +136,37 @@ def test_the_pipeline_varies_the_song_every_three_takes():
     text = (ROOT / "anchor" / "pipeline.py").read_text()
     assert 'variant = f"{salt}:{attempt // 3}" if salt else ""' in text
     assert "variant=variant" in text
+
+
+@pytest.mark.parametrize("posted,want", [("no", 1), ("yes", 0)])
+def test_the_last_chance_runs_make_one_song_only_on_an_empty_day(tmp_path, posted, want):
+    """Anchit, 2026-11-21: "it cannot fail even a single day". The 22:07 and 23:47 UTC runs make
+    one song when the day has none on YouTube, and nothing when it has."""
+    import datetime as d
+    import shutil
+    import textwrap
+    wf = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
+    assert '- cron: "7 22 * * *"' in wf and '- cron: "47 23 * * *"' in wf
+    block = wf.split("id: plan\n", 1)[1].split("\n      - name:", 1)[0]
+    script = textwrap.dedent(block.split("run: |\n", 1)[1])
+    script = (script.replace("${{ inputs.date }}", "").replace("${{ inputs.from_run }}", "")
+              .replace("${{ github.event_name }}", "schedule").replace("${{ inputs.dry_run }}", ""))
+    today = d.datetime.now(d.timezone.utc).strftime("%Y-%m-%d")
+    (tmp_path / "python").write_text(
+        "#!/bin/sh\nif [ \"$1 $3\" = \"-m plan-drops\" ]; then echo why >&2; "
+        f"echo '[\"{today}\", \"{today}-2\", \"{today}-3\"]'; elif [ \"$1 $3\" = \"-m has-drop\" ]; then "
+        f"if [ \"$5\" = \"{today}-2\" ]; then echo {posted}; else echo no; fi; "
+        f"else exec {sys.executable} \"$@\"; fi\n")
+    (tmp_path / "gh").write_text("#!/bin/sh\nexit 0\n")
+    if shutil.which("gdate"):
+        (tmp_path / "date").write_text(f"#!/bin/sh\nexec {shutil.which('gdate')} \"$@\"\n")
+    for f in ("python", "gh", "date"):
+        if (tmp_path / f).exists():
+            (tmp_path / f).chmod(0o755)
+    out = tmp_path / "out"
+    env = {"PATH": f"{tmp_path}:/usr/bin:/bin", "GITHUB_OUTPUT": str(out), "GITHUB_REPOSITORY": "o/r", "ANCHOR_HOUR": "22"}
+    subprocess.run(["bash", "-e", "-c", script], check=True, capture_output=True, text=True, cwd=tmp_path, env=env)
+    lines = dict(l.split("=", 1) for l in out.read_text().splitlines())
+    assert lines["count"] == str(want)
+    if want:
+        assert json.loads(lines["drops"]) == [today]
