@@ -12,21 +12,21 @@ ROOT = Path(__file__).resolve().parent.parent
 YIELD = ROOT / "tools" / "mac-yield.sh"
 
 
-def test_the_mac_renders_at_background_priority_with_time_to_pause():
+def test_the_mac_renders_at_background_priority_with_room_for_slow_runs():
     daily = (ROOT / ".github" / "workflows" / "daily.yml").read_text()
     studio = (ROOT / ".github" / "workflows" / "studio.yml").read_text()
     assert "caffeinate -i taskpolicy -b nice -n 19 python -m anchor make" in daily
     assert "caffeinate -i taskpolicy -b nice -n 19 python -m anchor studio" in studio
-    assert "renderer == 'mac' && 480" in daily, "a paused render is not killed by the job limit"
+    assert "renderer == 'mac' && 480" in daily, "a slow background render is not killed by the job limit"
 
 
-def test_the_heartbeat_keeps_the_pause_watcher_running():
+def test_the_heartbeat_keeps_the_priority_watcher_running():
     setup = (ROOT / "scripts" / "mac-runner-setup.sh").read_text()
     assert "mac-yield.sh" in setup and "--loop" in setup
     text = YIELD.read_text()
     import re
     pattern = re.search(r"PATTERN='([^']+)'", text).group(1)
-    paused = ["/Users/a/anchor-gpu/acestep.cpp/build/ace-synth --request gen.json",
+    renders = ["/Users/a/anchor-gpu/acestep.cpp/build/ace-synth --request gen.json",
               "/Users/a/anchor-gpu/acestep.cpp/build/ace-lm --models m",
               "/opt/homebrew/Cellar/python@3.12/Python.app/Contents/MacOS/Python -m anchor make --date 2026-11-20",
               "/Users/a/runner-venv/bin/python -m anchor studio --request r.json",
@@ -35,21 +35,30 @@ def test_the_heartbeat_keeps_the_pause_watcher_running():
     left = ["/bin/zsh -l -c grep ace-synth notes.txt && echo python -m anchor make",
             "caffeinate -i python -m anchor make --date 2026-11-20",
             "vim tools/mac-yield.sh", "ffmpeg -i ~/Movies/holiday.mov out.mp4"]
-    assert all(re.search(pattern, c) for c in paused), [c for c in paused if not re.search(pattern, c)]
+    assert all(re.search(pattern, c) for c in renders), [c for c in renders if not re.search(pattern, c)]
     assert not any(re.search(pattern, c) for c in left), [c for c in left if re.search(pattern, c)]
 
 
-@pytest.mark.skipif(not shutil.which("ioreg"), reason="macOS only: reads the keyboard and mouse idle time")
-def test_renders_pause_while_the_mac_is_used_and_carry_on_when_idle(tmp_path):
+def test_renders_are_never_paused():
+    """Anchit, 2026-11-21: "no it should keep happening but ensure no impact on overall system
+    usage and efficiency"."""
+    text = YIELD.read_text()
+    assert "kill -STOP" not in text and '"-$state"' not in text and "HIDIdleTime" not in text
+    assert "taskpolicy -b -p" in text and "renice -n 19" in text
+
+
+@pytest.mark.skipif(not shutil.which("taskpolicy"), reason="macOS only: background QoS")
+def test_renders_keep_running_at_the_lowest_priority(tmp_path):
     fake = subprocess.Popen(["bash", "-c", "exec -a /tmp/yieldtest/ace-synth sleep 120"])
     try:
         time.sleep(0.5)
         env = {"PATH": "/usr/bin:/bin:/usr/sbin:/sbin", "HOME": str(tmp_path), "ANCHOR_GPU_DIR": str(tmp_path)}
-        state = lambda: subprocess.run(["ps", "-o", "stat=", "-p", str(fake.pid)], capture_output=True, text=True).stdout.strip()
-        subprocess.run(["bash", str(YIELD)], env={**env, "ANCHOR_YIELD_IDLE_S": "999999999"}, check=True)
-        assert state().startswith("T"), "in use: the render is paused"
-        subprocess.run(["bash", str(YIELD)], env={**env, "ANCHOR_YIELD_IDLE_S": "0"}, check=True)
-        assert not state().startswith("T"), "idle: the render carries on"
-        assert "STOP" in (tmp_path / "yield.log").read_text()
+        ps = lambda f: subprocess.run(["ps", "-o", f"{f}=", "-p", str(fake.pid)], capture_output=True, text=True).stdout.strip()
+        subprocess.run(["bash", str(YIELD)], env=env, check=True)
+        assert not ps("stat").startswith("T"), "the render keeps running"
+        assert ps("nice") == "19", "the render runs at the lowest priority"
+        assert f"background priority for {fake.pid}" in (tmp_path / "yield.log").read_text()
+        subprocess.run(["bash", str(YIELD)], env=env, check=True)
+        assert (tmp_path / "yield.log").read_text().count(str(fake.pid)) == 1, "logged once per process"
     finally:
         fake.kill()
