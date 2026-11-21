@@ -73,6 +73,11 @@ if ! pgrep -f "Runner.Listener" >/dev/null; then
   pgrep -f "Runner.Listener" >/dev/null || exit 0
 fi
 gh variable set ANCHOR_MAC_SEEN -R "$REPO" --body "\$(date +%s)" >/dev/null 2>&1
+# renders pause while Anchit uses the Mac (tools/mac-yield.sh), kept running from a copy
+if ! pgrep -f "anchor-gpu/yield.sh --loop" >/dev/null; then
+  cp "\$HOME/anchor-gpu/autostart-repo/tools/mac-yield.sh" "\$HOME/anchor-gpu/yield.sh" 2>/dev/null \\
+    && nohup bash "\$HOME/anchor-gpu/yield.sh" --loop >/dev/null 2>&1 &
+fi
 # start the next posting run when songs are due (tools/mac-autostart.sh; run from a copy, since it
 # updates the clone it lives in)
 cp "\$HOME/anchor-gpu/autostart-repo/tools/mac-autostart.sh" "\$HOME/anchor-gpu/autostart.sh" 2>/dev/null \\

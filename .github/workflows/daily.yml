@@ -236,7 +236,7 @@ jobs:
     # the CPU music engine can run past 3.5 h (210 cancelled the 10-18 and 10-22 drops); the Mac
     # renders a take in minutes, but a Mac short of memory (2026-11-02: 129 browser processes, load
     # 900) took 2 h for one song and the old 120 min limit killed it minutes before it was done
-    timeout-minutes: ${{ needs.plan.outputs.renderer == 'mac' && 240 || 350 }}
+    timeout-minutes: ${{ needs.plan.outputs.renderer == 'mac' && 480 || 350 }}
     env:
       ANCHOR_RENDERER: ${{ needs.plan.outputs.renderer }}
     strategy:
@@ -433,12 +433,15 @@ jobs:
             export ACE_THREADS="$(nproc)"
           fi
           # no new take starts that would run past the job's limit (take times are measured)
-          LIMIT_MIN=$([ "$ANCHOR_RENDERER" = "mac" ] && echo 115 || echo 340)
+          # the Mac pauses its renders while Anchit uses it, so it gets more wall time for its takes
+          LIMIT_MIN=$([ "$ANCHOR_RENDERER" = "mac" ] && echo 420 || echo 340)
           export ANCHOR_MAKE_DEADLINE=$(( $(date +%s) + LIMIT_MIN * 60 ))
           RC=0
           if [ "$ANCHOR_RENDERER" = "mac" ]; then
             # the Mac stays awake while it renders (a closed lid still sleeps it)
-            caffeinate -i python -m anchor make --date "$DATE" --out "build/$DATE" ${{ steps.day.outputs.noq }} || RC=$?
+            # background priority, and paused whenever Anchit uses the Mac (tools/mac-yield.sh):
+            # a song never slows the laptop (2026-11-21)
+            caffeinate -i taskpolicy -b nice -n 19 python -m anchor make --date "$DATE" --out "build/$DATE" ${{ steps.day.outputs.noq }} || RC=$?
           else
             python -m anchor make --date "$DATE" --out "build/$DATE" ${{ steps.day.outputs.noq }} || RC=$?
           fi
