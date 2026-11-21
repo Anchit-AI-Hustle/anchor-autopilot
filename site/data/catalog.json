@@ -7,8 +7,79 @@
     "tagline": "Official tracks and releases by ANCHOR",
     "bio": "Hard techno, hard tech, acid and psychedelic bounce, plus rave rap and hip hop crossovers, with whispers, chants and verses. One new track every day."
   },
-  "updated_at": "2026-11-19T13:54:14Z",
+  "updated_at": "2026-11-21T02:57:00Z",
   "drops": [
+    {
+      "id": "2026-11-20-2",
+      "date": "2026-11-20",
+      "title": "Sky Belongs To Nobody",
+      "lane": "hardtechrap",
+      "lane_name": "Industrial Hard Rap",
+      "bpm": 181,
+      "key": "G major",
+      "family": "void",
+      "family_name": "Void",
+      "duration_s": 215.47,
+      "short_s": 45,
+      "cover": "covers/2026-11-20-2.jpg",
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-20-2/ANCHOR-2026-11-20-sky-belongs-to-nobody.mp3",
+      "release_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/tag/drop-2026-11-20-2",
+      "short_url": "https://anchit-ai-hustle.github.io/anchor-autopilot/media/ANCHOR-2026-11-20-sky-belongs-to-nobody-full-916.mp4",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-20-2/ANCHOR-2026-11-20-sky-belongs-to-nobody-short.mp4",
+      "youtube_url": "https://youtu.be/FVviTZ8CJzE",
+      "buffer_post_id": "FVviTZ8CJzE",
+      "status": "public",
+      "post_at": "2026-11-21T02:56:44Z",
+      "qc": {
+        "bpm_est": 181.0,
+        "lufs": -14.06,
+        "warnings": [
+          "mended 5 short gap(s) with the bar before",
+          "craft: no breakdown (needs 8 s at least 8 dB under the peak; the channel's top record has two)",
+          "key is not clearly audible; kept the requested one"
+        ]
+      },
+      "art_source": "procedural",
+      "created_at": "2026-11-21T02:53:31Z",
+      "genre_line": "Industrial Hard Rap, Techno Rap, Industrial Techno",
+      "style_line": "Hard Tech Rap, Raw Hard Tech, Industrial Techno, Rave Rap",
+      "error": null,
+      "accent": "#f2f2f2",
+      "caption": "fast rap over raw hard tech, industrial beat under every verse, distorted rawstyle kick dominant, rumbling sub bass bouncing on the off-beat, clanking metal percussion, 303 acid stabs, chanted hook. Mid-2020s hard tech rap: chopper rap fused with raw industrial hard tech. Mood: cheeky swagger, building to a crowd-wide jump, ending on a grin, about they fence every field and tell us where to stand. Feel: bouncy, fun and psychedelic, never dark. 181 BPM, relentless fast four-on-the-floor under verses and drops alike, distorted rumble bass bouncing on every off-beat, the rap riding the hats. Instruments: hard tech kick, chopped breakbeat fills, off-beat open hats, rubber sub bass under the rap, brass stab hook playing a syncopated stabbing riff over bold power chords; screeching acid stabs intro, distorted kick rumble build, grinding metal hits breakdown. Vocals: proud resonant female hip hop MC with a smoky rasp, heavy storytelling double time bars, natural English; the drops are music, the kick and distorted bass slam back with one shouted chant. Production: Loud and saturated, distorted kick up front, mono sub, rap dry and centred; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, screeching acid stabs far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, screeching acid stabs last, a smooth fade out. Special moment: the bassline climbs an octave under the final hook.",
+      "seed": 643723954,
+      "visual_world": "warehouse",
+      "engine": {
+        "name": "acestep_cpp",
+        "steps": 8,
+        "render_s": 310.0,
+        "threads": 10,
+        "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+        "guidance": 1.0,
+        "source_file": null
+      },
+      "instagram_url": null,
+      "full_video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-20-2/ANCHOR-2026-11-20-sky-belongs-to-nobody-full-169.mp4",
+      "reel_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-20-2/ANCHOR-2026-11-20-sky-belongs-to-nobody-full-916.mp4",
+      "hook": null,
+      "lyrics": null,
+      "youtube_full_url": "https://youtu.be/FVviTZ8CJzE",
+      "youtube_via": "youtube_api",
+      "youtube_short_url": "https://www.youtube.com/watch?v=W5k_76x5xD8",
+      "buffer_short_post_id": "6b010877dd205ed779b3ff5e",
+      "short_status": "sent",
+      "short_via": "buffer",
+      "short_buffer_failed": false,
+      "theme": "sky-belongs-to-nobody",
+      "sound": {
+        "lead": "brass stab hook",
+        "bass": "rubber sub bass under the rap",
+        "drums": "hard tech kick, chopped breakbeat fills, off-beat open hats",
+        "melody": "a syncopated stabbing riff",
+        "chords": "bold power chords"
+      },
+      "instagram_status": "not connected",
+      "instagram_error": "createPost rejected: Instagram personal profile channels require notification scheduling. Use notification scheduling instead."
+    },
     {
       "id": "2026-11-19-4",
       "date": "2026-11-19",
@@ -28,7 +99,7 @@
       "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/drop-2026-11-19-4/ANCHOR-2026-11-19-spin-or-fall-short.mp4",
       "youtube_url": "https://youtu.be/wqwJJhruDcc",
       "buffer_post_id": "wqwJJhruDcc",
-      "status": "public",
+      "status": "sent",
       "post_at": "2026-11-19T13:53:51Z",
       "qc": {
         "bpm_est": 163.0,
@@ -6453,7 +6524,7 @@
   "catalogue": {
     "handle": "anchor_at",
     "profile_url": "https://suno.com/@anchor_at",
-    "checked_at": "2026-11-20T11:56:21Z",
+    "checked_at": "2026-11-21T02:57:02Z",
     "total": 38,
     "postable": 27,
     "families": 15,
@@ -6563,11 +6634,11 @@
           "reason": "released (on the site)"
         },
         "post": {
-          "lane": "hardstyletechno",
-          "lane_name": "Hardstyle Hard Techno",
+          "lane": "industrialtechno",
+          "lane_name": "Industrial Techno",
           "bpm": 165,
-          "youtube_title": "Project Mayhem | Hardstyle Hard Techno | ANCHOR",
-          "description": "Hardstyle Hard Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Project Mayhem | Industrial Techno | ANCHOR",
+          "description": "Industrial Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -6655,11 +6726,11 @@
           "reason": "released 2026-09-13"
         },
         "post": {
-          "lane": "rawbounce",
-          "lane_name": "Rawstyle Hard Tech",
-          "bpm": 170,
-          "youtube_title": "Crossing The Threshold | Rawstyle Hybrid | ANCHOR",
-          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nCrossing The Threshold. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Crossing The Threshold | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nCrossing The Threshold. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -6747,11 +6818,11 @@
           "reason": "released 2026-09-13"
         },
         "post": {
-          "lane": "rawbounce",
-          "lane_name": "Rawstyle Hard Tech",
-          "bpm": 170,
-          "youtube_title": "Silent Transmission | Rawstyle Hybrid | ANCHOR",
-          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nSilent Transmission. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Silent Transmission | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nSilent Transmission. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -6849,11 +6920,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway (it is in the queue, and the guard will skip it)"
         },
         "post": {
-          "lane": "rawbounce",
-          "lane_name": "Rawstyle Hard Tech",
+          "lane": "industrialtechno",
+          "lane_name": "Industrial Techno",
           "bpm": 156,
-          "youtube_title": "Project Mayhem Part 2 | Rawstyle Hybrid | ANCHOR",
-          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nProject Mayhem Part 2. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Project Mayhem Part 2 | Industrial Techno | ANCHOR",
+          "description": "Industrial Techno. An ANCHOR original, free download below.\n\nProject Mayhem Part 2. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -6941,11 +7012,11 @@
           "reason": "released 2026-09-13"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
           "bpm": 154,
-          "youtube_title": "Stay With Me | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nStay With Me. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Stay With Me | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nStay With Me. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7033,11 +7104,11 @@
           "reason": "released 2026-09-13"
         },
         "post": {
-          "lane": "rawbounce",
-          "lane_name": "Rawstyle Hard Tech",
-          "bpm": 170,
-          "youtube_title": "Where It Begins | Rawstyle Hybrid | ANCHOR",
-          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nWhere It Begins. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Where It Begins | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nWhere It Begins. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7125,11 +7196,11 @@
           "reason": "released 2026-09-13"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
-          "bpm": 164,
-          "youtube_title": "Robot Love | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nRobot Love. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Robot Love | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nRobot Love. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7218,10 +7289,10 @@
         },
         "post": {
           "lane": "hardtech",
-          "lane_name": "Raw Hard Tech",
+          "lane_name": "Hard Techno",
           "bpm": 170,
-          "youtube_title": "Pocket Of Matches | Hard Tech | ANCHOR",
-          "description": "Hard Tech. An ANCHOR original, free download below.\n\nPocket Of Matches. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Pocket Of Matches | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nPocket Of Matches. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7309,11 +7380,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
           "bpm": 154,
-          "youtube_title": "Stay With Me | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nStay With Me. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Stay With Me | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nStay With Me. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7401,11 +7472,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "rawbounce",
-          "lane_name": "Rawstyle Hard Tech",
-          "bpm": 170,
-          "youtube_title": "Crossing The Threshold | Rawstyle Hybrid | ANCHOR",
-          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nCrossing The Threshold. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Crossing The Threshold | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nCrossing The Threshold. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7494,10 +7565,10 @@
         },
         "post": {
           "lane": "hardtech",
-          "lane_name": "Raw Hard Tech",
+          "lane_name": "Hard Techno",
           "bpm": 170,
-          "youtube_title": "Pocket Of Matches | Hard Tech | ANCHOR",
-          "description": "Hard Tech. An ANCHOR original, free download below.\n\nPocket Of Matches. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Pocket Of Matches | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nPocket Of Matches. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7595,11 +7666,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "rawbounce",
-          "lane_name": "Rawstyle Hard Tech",
+          "lane": "industrialtechno",
+          "lane_name": "Industrial Techno",
           "bpm": 156,
-          "youtube_title": "Project Mayhem Part 1 | Rawstyle Hybrid | ANCHOR",
-          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nProject Mayhem Part 1. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Project Mayhem Part 1 | Industrial Techno | ANCHOR",
+          "description": "Industrial Techno. An ANCHOR original, free download below.\n\nProject Mayhem Part 1. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7687,11 +7758,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "rawbounce",
-          "lane_name": "Rawstyle Hard Tech",
-          "bpm": 170,
-          "youtube_title": "Where It Begins | Rawstyle Hybrid | ANCHOR",
-          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nWhere It Begins. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Where It Begins | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nWhere It Begins. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7779,11 +7850,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
-          "bpm": 164,
-          "youtube_title": "Robot Love | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nRobot Love. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Robot Love | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nRobot Love. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7881,11 +7952,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "hardstyletechno",
-          "lane_name": "Hardstyle Hard Techno",
+          "lane": "industrialtechno",
+          "lane_name": "Industrial Techno",
           "bpm": 165,
-          "youtube_title": "Project Mayhem | Hardstyle Hard Techno | ANCHOR",
-          "description": "Hardstyle Hard Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Project Mayhem | Industrial Techno | ANCHOR",
+          "description": "Industrial Techno. An ANCHOR original, free download below.\n\nProject Mayhem. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -7973,11 +8044,11 @@
           "reason": "released 2026-09-13"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
-          "bpm": 164,
-          "youtube_title": "Then Do It | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nThen Do It. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "industrialtechno",
+          "lane_name": "Industrial Techno",
+          "bpm": 165,
+          "youtube_title": "Then Do It | Industrial Techno | ANCHOR",
+          "description": "Industrial Techno. An ANCHOR original, free download below.\n\nThen Do It. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8065,11 +8136,11 @@
           "reason": "another take of a song already on the channel (same title idea); queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "rawbounce",
-          "lane_name": "Rawstyle Hard Tech",
-          "bpm": 170,
-          "youtube_title": "Silent Transmission | Rawstyle Hybrid | ANCHOR",
-          "description": "Rawstyle Hybrid. An ANCHOR original, free download below.\n\nSilent Transmission. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Silent Transmission | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nSilent Transmission. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8156,11 +8227,11 @@
           "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
-          "bpm": 164,
-          "youtube_title": "Do It | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nDo It. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "industrialtechno",
+          "lane_name": "Industrial Techno",
+          "bpm": 165,
+          "youtube_title": "Do It | Industrial Techno | ANCHOR",
+          "description": "Industrial Techno. An ANCHOR original, free download below.\n\nDo It. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8249,10 +8320,10 @@
         },
         "post": {
           "lane": "acidpsy",
-          "lane_name": "Acid Psychedelic Techno",
+          "lane_name": "Psychedelic Acid",
           "bpm": 160,
-          "youtube_title": "Let’s Fucking Go! | Acid Techno | ANCHOR",
-          "description": "Acid Techno. An ANCHOR original, free download below.\n\nLet’s Fucking Go!. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Let’s Fucking Go! | Psychedelic Acid | ANCHOR",
+          "description": "Psychedelic Acid. An ANCHOR original, free download below.\n\nLet’s Fucking Go!. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8341,10 +8412,10 @@
         },
         "post": {
           "lane": "acidpsy",
-          "lane_name": "Acid Psychedelic Techno",
+          "lane_name": "Psychedelic Acid",
           "bpm": 160,
-          "youtube_title": "Let’s Fucking Go! | Acid Techno | ANCHOR",
-          "description": "Acid Techno. An ANCHOR original, free download below.\n\nLet’s Fucking Go!. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Let’s Fucking Go! | Psychedelic Acid | ANCHOR",
+          "description": "Psychedelic Acid. An ANCHOR original, free download below.\n\nLet’s Fucking Go!. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8432,11 +8503,11 @@
           "reason": "released 2026-09-13"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
-          "bpm": 164,
-          "youtube_title": "Signal Detected | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nSignal Detected. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "Signal Detected | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nSignal Detected. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8525,10 +8596,10 @@
         },
         "post": {
           "lane": "acidpsy",
-          "lane_name": "Acid Psychedelic Techno",
+          "lane_name": "Psychedelic Acid",
           "bpm": 200,
-          "youtube_title": "New Beginnings | Acid Techno | ANCHOR",
-          "description": "Acid Techno. An ANCHOR original, free download below.\n\nNew Beginnings. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "New Beginnings | Psychedelic Acid | ANCHOR",
+          "description": "Psychedelic Acid. An ANCHOR original, free download below.\n\nNew Beginnings. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8622,10 +8693,10 @@
         },
         "post": {
           "lane": "acidpsy",
-          "lane_name": "Acid Psychedelic Techno",
+          "lane_name": "Psychedelic Acid",
           "bpm": 200,
-          "youtube_title": "Concrete Acid | Acid Techno | ANCHOR",
-          "description": "Acid Techno. An ANCHOR original, free download below.\n\nConcrete Acid. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Concrete Acid | Psychedelic Acid | ANCHOR",
+          "description": "Psychedelic Acid. An ANCHOR original, free download below.\n\nConcrete Acid. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8718,10 +8789,10 @@
         },
         "post": {
           "lane": "acidpsy",
-          "lane_name": "Acid Psychedelic Techno",
+          "lane_name": "Psychedelic Acid",
           "bpm": 200,
-          "youtube_title": "Squelch and Screech | Acid Techno | ANCHOR",
-          "description": "Acid Techno. An ANCHOR original, free download below.\n\nSquelch and Screech. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Squelch and Screech | Psychedelic Acid | ANCHOR",
+          "description": "Psychedelic Acid. An ANCHOR original, free download below.\n\nSquelch and Screech. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8820,10 +8891,10 @@
         },
         "post": {
           "lane": "acidpsy",
-          "lane_name": "Acid Psychedelic Techno",
+          "lane_name": "Psychedelic Acid",
           "bpm": 200,
-          "youtube_title": "New Beginnings | Acid Techno | ANCHOR",
-          "description": "Acid Techno. An ANCHOR original, free download below.\n\nNew Beginnings. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "New Beginnings | Psychedelic Acid | ANCHOR",
+          "description": "Psychedelic Acid. An ANCHOR original, free download below.\n\nNew Beginnings. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -8910,11 +8981,11 @@
           "reason": "same prompt batch as a song already on the channel; queue-add --force to release it anyway"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
-          "bpm": 164,
-          "youtube_title": "First Contact | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nFirst Contact. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "warehouse",
+          "lane_name": "Warehouse Techno",
+          "bpm": 165,
+          "youtube_title": "First Contact | Warehouse Techno | ANCHOR",
+          "description": "Warehouse Techno. An ANCHOR original, free download below.\n\nFirst Contact. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9003,10 +9074,10 @@
         },
         "post": {
           "lane": "psyrap",
-          "lane_name": "Psychedelic Rap Techno",
+          "lane_name": "Psychedelic Hard Rap",
           "bpm": 150,
-          "youtube_title": "DANCING WITH DEMONS | Psychedelic Rap Techno | ANCHOR",
-          "description": "Psychedelic Rap Techno. An ANCHOR original, free download below.\n\nDANCING WITH DEMONS. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "DANCING WITH DEMONS | Psychedelic Hard Rap | ANCHOR",
+          "description": "Psychedelic Hard Rap. An ANCHOR original, free download below.\n\nDANCING WITH DEMONS. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9089,10 +9160,10 @@
         },
         "post": {
           "lane": "psyrap",
-          "lane_name": "Psychedelic Rap Techno",
+          "lane_name": "Psychedelic Hard Rap",
           "bpm": 155,
-          "youtube_title": "Pressure Spiral | Psychedelic Rap Techno | ANCHOR",
-          "description": "Psychedelic Rap Techno. An ANCHOR original, free download below.\n\nPressure Spiral. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Pressure Spiral | Psychedelic Hard Rap | ANCHOR",
+          "description": "Psychedelic Hard Rap. An ANCHOR original, free download below.\n\nPressure Spiral. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9175,10 +9246,10 @@
         },
         "post": {
           "lane": "psyrap",
-          "lane_name": "Psychedelic Rap Techno",
+          "lane_name": "Psychedelic Hard Rap",
           "bpm": 150,
-          "youtube_title": "Red Dust Warning | Psychedelic Rap Techno | ANCHOR",
-          "description": "Psychedelic Rap Techno. An ANCHOR original, free download below.\n\nRed Dust Warning. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Red Dust Warning | Psychedelic Hard Rap | ANCHOR",
+          "description": "Psychedelic Hard Rap. An ANCHOR original, free download below.\n\nRed Dust Warning. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9266,10 +9337,10 @@
         },
         "post": {
           "lane": "hardtech",
-          "lane_name": "Raw Hard Tech",
+          "lane_name": "Hard Techno",
           "bpm": 170,
-          "youtube_title": "Raw Rage | Hard Tech | ANCHOR",
-          "description": "Hard Tech. An ANCHOR original, free download below.\n\nRaw Rage. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Raw Rage | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nRaw Rage. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9358,10 +9429,10 @@
         },
         "post": {
           "lane": "psyrap",
-          "lane_name": "Psychedelic Rap Techno",
+          "lane_name": "Psychedelic Hard Rap",
           "bpm": 150,
-          "youtube_title": "DANCING WITH DEMONS | Psychedelic Rap Techno | ANCHOR",
-          "description": "Psychedelic Rap Techno. An ANCHOR original, free download below.\n\nDANCING WITH DEMONS. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "DANCING WITH DEMONS | Psychedelic Hard Rap | ANCHOR",
+          "description": "Psychedelic Hard Rap. An ANCHOR original, free download below.\n\nDANCING WITH DEMONS. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9442,11 +9513,11 @@
           "reason": "not on format: 1.6 against a 2.0 floor, pulled down by hip hop, rap"
         },
         "post": {
-          "lane": "hiphoptechno",
-          "lane_name": "Hip Hop Hard Techno",
-          "bpm": 179,
-          "youtube_title": "Concrete Pulse | Hip Hop Techno | ANCHOR",
-          "description": "Hip Hop Techno. An ANCHOR original, free download below.\n\nConcrete Pulse. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "raptechno",
+          "lane_name": "Hard Rap",
+          "bpm": 165,
+          "youtube_title": "Concrete Pulse | Hard Rap | ANCHOR",
+          "description": "Hard Rap. An ANCHOR original, free download below.\n\nConcrete Pulse. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9534,11 +9605,11 @@
           "reason": "not on format: nothing in the prompt says hard techno, industrial, rawstyle or warehouse"
         },
         "post": {
-          "lane": "hiphoptechno",
-          "lane_name": "Hip Hop Hard Techno",
-          "bpm": 179,
-          "youtube_title": "Backseat Lottery | Hip Hop Techno | ANCHOR",
-          "description": "Hip Hop Techno. An ANCHOR original, free download below.\n\nBackseat Lottery. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "raptechno",
+          "lane_name": "Hard Rap",
+          "bpm": 165,
+          "youtube_title": "Backseat Lottery | Hard Rap | ANCHOR",
+          "description": "Hard Rap. An ANCHOR original, free download below.\n\nBackseat Lottery. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9626,11 +9697,11 @@
           "reason": "released 2026-11-12"
         },
         "post": {
-          "lane": "hiphoptechno",
-          "lane_name": "Hip Hop Hard Techno",
-          "bpm": 179,
-          "youtube_title": "Backseat Lottery | Hip Hop Techno | ANCHOR",
-          "description": "Hip Hop Techno. An ANCHOR original, free download below.\n\nBackseat Lottery. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "lane": "raptechno",
+          "lane_name": "Hard Rap",
+          "bpm": 165,
+          "youtube_title": "Backseat Lottery | Hard Rap | ANCHOR",
+          "description": "Hard Rap. An ANCHOR original, free download below.\n\nBackseat Lottery. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9718,10 +9789,10 @@
         },
         "post": {
           "lane": "psyrap",
-          "lane_name": "Psychedelic Rap Techno",
+          "lane_name": "Psychedelic Hard Rap",
           "bpm": 150,
-          "youtube_title": "Raw Rage | Psychedelic Rap Techno | ANCHOR",
-          "description": "Psychedelic Rap Techno. An ANCHOR original, free download below.\n\nRaw Rage. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Raw Rage | Psychedelic Hard Rap | ANCHOR",
+          "description": "Psychedelic Hard Rap. An ANCHOR original, free download below.\n\nRaw Rage. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9803,10 +9874,10 @@
         },
         "post": {
           "lane": "hardtech",
-          "lane_name": "Raw Hard Tech",
+          "lane_name": "Hard Techno",
           "bpm": 96,
-          "youtube_title": "Your Open Hand | Hard Tech | ANCHOR",
-          "description": "Hard Tech. An ANCHOR original, free download below.\n\nYour Open Hand. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Your Open Hand | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nYour Open Hand. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9893,11 +9964,11 @@
           "reason": "not on format: nothing in the prompt says hard techno, industrial, rawstyle or warehouse"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
+          "lane": "hardtech",
+          "lane_name": "Hard Techno",
           "bpm": 111,
-          "youtube_title": "Fresh Start Groove | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nFresh Start Groove. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Fresh Start Groove | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nFresh Start Groove. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9984,11 +10055,11 @@
           "reason": "not on format: nothing in the prompt says hard techno, industrial, rawstyle or warehouse"
         },
         "post": {
-          "lane": "hardgroove",
-          "lane_name": "Industrial Hard Groove",
+          "lane": "hardtech",
+          "lane_name": "Hard Techno",
           "bpm": 111,
-          "youtube_title": "Fresh Start Groove | Hard Groove Techno | ANCHOR",
-          "description": "Hard Groove Techno. An ANCHOR original, free download below.\n\nFresh Start Groove. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
+          "youtube_title": "Fresh Start Groove | Hard Techno | ANCHOR",
+          "description": "Hard Techno. An ANCHOR original, free download below.\n\nFresh Start Groove. Nothing soft in it.\n\nAll tracks: https://www.youtube.com/playlist?list=PLSA3gW62zSYE\nFree download: anchor.anchit-tandon.com · IG @anchor_at2803\nMade with AI music tools and my own hours. AI use disclosed.\n© 2026 ANCHOR\n\n#hardtechno #acidtechno #techno",
           "hashtags": "#hardtechno #acidtechno #techno",
           "style": "motion"
         }
@@ -9996,64 +10067,60 @@
     ],
     "lanes": [
       {
-        "id": "bounce",
-        "name": "Hard Bounce Techno"
-      },
-      {
-        "id": "rawbounce",
-        "name": "Rawstyle Hard Tech"
-      },
-      {
         "id": "psy",
-        "name": "Psychedelic Hard Techno"
+        "name": "Psychedelic Techno"
       },
       {
         "id": "acidpsy",
-        "name": "Acid Psychedelic Techno"
-      },
-      {
-        "id": "hardgroove",
-        "name": "Industrial Hard Groove"
+        "name": "Psychedelic Acid"
       },
       {
         "id": "hyper",
-        "name": "Hyper Acid Techno"
+        "name": "Hard Acid Techno"
+      },
+      {
+        "id": "industrialtechno",
+        "name": "Industrial Techno"
+      },
+      {
+        "id": "warehouse",
+        "name": "Warehouse Techno"
+      },
+      {
+        "id": "acidtechno",
+        "name": "Acid Techno"
+      },
+      {
+        "id": "industrialacid",
+        "name": "Industrial Acid Techno"
+      },
+      {
+        "id": "warehouseacid",
+        "name": "Warehouse Acid Techno"
+      },
+      {
+        "id": "acidrap",
+        "name": "Acid Hard Rap"
       },
       {
         "id": "hardtech",
-        "name": "Raw Hard Tech"
+        "name": "Hard Techno"
       },
       {
         "id": "psytech",
-        "name": "Psychedelic Hard Tech"
+        "name": "Psychedelic Hard Techno"
       },
       {
         "id": "raptechno",
-        "name": "Rap Hard Techno"
-      },
-      {
-        "id": "hiphoptechno",
-        "name": "Hip Hop Hard Techno"
+        "name": "Hard Rap"
       },
       {
         "id": "psyrap",
-        "name": "Psychedelic Rap Techno"
+        "name": "Psychedelic Hard Rap"
       },
       {
         "id": "hardtechrap",
-        "name": "Hard Tech Rap"
-      },
-      {
-        "id": "psyhiphop",
-        "name": "Psychedelic Hip Hop Techno"
-      },
-      {
-        "id": "hardstyletechno",
-        "name": "Hardstyle Hard Techno"
-      },
-      {
-        "id": "phonktechno",
-        "name": "Drift Phonk Hard Techno"
+        "name": "Industrial Hard Rap"
       }
     ]
   },
