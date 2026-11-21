@@ -81,6 +81,33 @@ def redo_for(profile: Profile, day: str, hist: list, path: Path = REDO_PATH) -> 
     return {"song": song, "lane": lane.id}
 
 
+ART_TRIES = 8
+
+
+def song_picture(profile: Profile, brief: dict, master_audio):
+    """A function variant -> the picture drawn from this song (anchor/soundart.py), or None when
+    the audio tools are missing (the fixed motifs of art.procedural then)."""
+    try:
+        from . import genres as genremod, soundart
+        from .audio import SR as AUDIO_SR
+        feat = soundart.features(master_audio, AUDIO_SR, float(brief["bpm"]))
+    except Exception as exc:  # noqa: BLE001 - art never stops a song
+        log(f"art: song picture unavailable ({type(exc).__name__}: {exc}); procedural art")
+        return None
+    gs = tuple(genremod.for_lane(profile, brief["lane"]))
+    minor = "minor" in str(brief.get("key", "")).lower()
+    return lambda variant: soundart.render(feat, gs, minor, variant=variant)
+
+
+def thumb_distance(out_dir: Path, brief: dict, profile: Profile, thumbs_dir: Path) -> tuple[float, str | None]:
+    """The thumbnail this cover makes (the 16:9 frame), against every thumbnail already out."""
+    from .video import frame_169
+    probe = out_dir / "thumb-probe.jpg"
+    frame_169(out_dir / "cover_art_raw.jpg", brief, genre_phrase(profile.lane(brief["lane"])),
+              profile.artist["name"], probe)
+    return nearest_cover(probe, thumbs_dir) if thumbs_dir.exists() else (999.0, None)
+
+
 def master_take(profile: Profile, raw: Path, work: Path) -> dict:
     """The finishing pass and the master of one take: what the song gate hears is what ships."""
     work.mkdir(parents=True, exist_ok=True)
@@ -475,19 +502,28 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     beat_offset = beat_phase(decode(short_wav).mean(axis=1), float(brief["bpm"]))
 
     fam = profile.family(brief["family"])
-    art = make_cover(fam, brief, profile.artist["name"], out_dir, art_mode)
-    # the cover must not repeat a motif already on the site; redraw from the next seeds
-    covers_dir = SITE / "covers"
-    tries = []   # every draw, kept for the ledger: seed, how close it came, to which cover
-    for bump in range(1, 6):
+    # the art is drawn from this song's own audio (anchor/soundart.py), in its genres' visual
+    # language; a cover or a thumbnail that comes too close to one already out is redrawn
+    sound = song_picture(profile, brief, master_audio)
+    covers_dir, thumbs_dir = SITE / "covers", SITE / "thumbs"
+    tries = []   # every draw, kept for the ledger: variant, how close it came, to which picture
+    for variant in range(ART_TRIES):
+        base_img = sound(variant) if sound else None
+        art = make_cover(fam, {**brief, "seed": int(brief["seed"]) + variant}, profile.artist["name"], out_dir,
+                         art_mode, sound_base=base_img)
         dist, twin = nearest_cover(out_dir / "cover.jpg", covers_dir)
-        tries.append({"seed": int(brief["seed"]) + bump - 1, "nearest": twin, "distance": dist,
-                      "ok": dist >= COVER_MIN_DISTANCE})
-        if dist >= COVER_MIN_DISTANCE:
+        tdist, ttwin = thumb_distance(out_dir, brief, profile, thumbs_dir)
+        ok = dist >= COVER_MIN_DISTANCE and tdist >= COVER_MIN_DISTANCE
+        tries.append({"variant": variant, "seed": int(brief["seed"]) + variant, "nearest": twin, "distance": dist,
+                      "thumb_nearest": ttwin, "thumb_distance": tdist, "ok": ok})
+        if ok:
             break
-        log(f"cover too close to {twin} ({dist:.0f}/256 < {COVER_MIN_DISTANCE}); redrawing with seed+{bump}")
-        art = make_cover(fam, {**brief, "seed": int(brief["seed"]) + bump}, profile.artist["name"], out_dir, art_mode)
-    art["nearest"] = {"id": twin, "distance": dist}
+        log(f"art too close (cover {dist:.0f} to {twin}, thumbnail {tdist:.0f} to {ttwin}; limit {COVER_MIN_DISTANCE}); "
+            f"redrawing variant {variant + 1}")
+    else:
+        # never a repeat: a song whose every variant came close is not published with it
+        raise QualityError(f"no original art in {ART_TRIES} draws: cover {dist:.0f} to {twin}, thumbnail {tdist:.0f} to {ttwin}")
+    art["nearest"] = {"id": twin, "distance": dist, "thumb_id": ttwin, "thumb_distance": tdist}
     art["tries"] = tries
     cover_named = out_dir / f"{base}-cover.jpg"
     shutil.copy(out_dir / "cover.jpg", cover_named)
@@ -980,6 +1016,17 @@ def record_mix(profile: Profile, mix_dir: Path, *, repo: str | None = None, cata
     return row
 
 
+def keep_thumb(drop_dir: Path, files: dict, site_dir: Path, drop_id: str) -> None:
+    """Every published thumbnail is kept (site/thumbs, 480 px) so no later one repeats it."""
+    src = drop_dir / (files.get("thumbnail") or "")
+    if not files.get("thumbnail") or not src.exists():
+        return
+    from PIL import Image
+    thumbs = site_dir / "thumbs"
+    thumbs.mkdir(parents=True, exist_ok=True)
+    Image.open(src).convert("RGB").resize((480, 270), Image.LANCZOS).save(thumbs / f"{drop_id}.jpg", quality=85)
+
+
 # ----------------------------------------------------------------------- record
 def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_url: str | None = None,
            run_url: str | None = None, catalog_path: Path = CATALOG_PATH, status_path: Path = STATUS_PATH,
@@ -992,6 +1039,7 @@ def record(profile: Profile, drop_dir: Path, *, repo: str | None = None, short_u
     covers = site_dir / "covers"
     covers.mkdir(parents=True, exist_ok=True)
     shutil.copy(drop_dir / files["cover_600"], covers / f"{brief['id']}.jpg")
+    keep_thumb(drop_dir, files, site_dir, brief["id"])
     status = "dry-run" if pub.get("dry_run") else (pub.get("status") or "made")
     if status == "buffer":   # Buffer's name for a queued post
         status = "scheduled"

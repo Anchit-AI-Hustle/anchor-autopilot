@@ -225,13 +225,18 @@ def finish(base: Image.Image, title: str, artist: str, fam: Family, seed: int, s
     return Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8), "RGB")
 
 
-def make_cover(fam: Family, brief: dict, artist: str, out_dir: Path, mode: str | None = None) -> dict:
-    """Write cover.jpg (1440), cover_1080.jpg (video) and cover_600.jpg (site). Returns metadata."""
+def make_cover(fam: Family, brief: dict, artist: str, out_dir: Path, mode: str | None = None,
+               sound_base: Image.Image | None = None) -> dict:
+    """Write cover.jpg (1440), cover_1080.jpg (video) and cover_600.jpg (site). Returns metadata.
+    ``sound_base`` is the picture drawn from the song itself (anchor/soundart.py): when given it
+    is the art (2026-11-21: "album art must be original and unique and music based only")."""
     out_dir.mkdir(parents=True, exist_ok=True)
     mode = mode or env("ANCHOR_ART", "auto")
     seed = int(brief["seed"]) % 2_147_483_647
     prompt = f"{fam.prompt}, {PROMPT_SUFFIX}"
     source, base, error = "procedural", None, None
+    if sound_base is not None:
+        source, base, mode = "sound", sound_base, "sound"
     account, token = env("CF_ACCOUNT_ID"), env("CF_API_TOKEN")
     if mode in ("auto", "cloudflare") and account and token:
         for attempt in range(2):
