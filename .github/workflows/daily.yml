@@ -118,8 +118,7 @@ jobs:
             echo "::notice::$(tail -n 1 plan.txt)"
           fi
           FROM="${{ inputs.from_run }}"
-          if [ "${{ github.event_name }}" = "schedule" ] || { [ -z "${{ inputs.date }}" ] && [ -z "$FROM" ] \
-              && [ "${{ inputs.dry_run }}" != "true" ]; }; then
+          if [ "${{ github.event_name }}" = "schedule" ] || { [ -z "$FROM" ] && [ "${{ inputs.dry_run }}" != "true" ]; }; then
             # Use the songs made overnight (prerender.yml): a render-only run of the last day whose
             # songs for today passed every check is posted as it is, nothing made again. A posting
             # run the Mac starts itself (tools/mac-autostart.sh, no date) does the same, so a ready
@@ -131,7 +130,13 @@ jobs:
               MADE="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RID/artifacts" -q '.artifacts[] | select(.expired | not) | .name' \
                 | sed -n "s/^drop-\($TODAY\(-[0-9]\)\{0,1\}\)$/\1/p" | sort -u)"
               WANT=""
-              for D in $MADE; do [ "$(python -m anchor has-drop --date "$D" 2>/dev/null)" = yes ] || WANT="$WANT $D"; done
+              for D in $MADE; do
+                # a run asked for certain songs posts only those (the Mac starts one song a run)
+                if [ -n "${{ inputs.date }}" ]; then
+                  python -c "import json,sys;sys.exit(0 if sys.argv[2] in json.loads(sys.argv[1]) else 1)" "$DROPS" "$D" || continue
+                fi
+                [ "$(python -m anchor has-drop --date "$D" 2>/dev/null)" = yes ] || WANT="$WANT $D"
+              done
               if [ -n "$WANT" ]; then
                 FROM="$RID"
                 DROPS="$(python -c "import json,sys;print(json.dumps(sys.argv[1].split()))" "$WANT")"

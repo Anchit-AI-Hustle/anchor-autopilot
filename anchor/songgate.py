@@ -78,16 +78,23 @@ def _checkerboard(n):
     return g * sign
 
 
+HOLE_S = 0.25
+
+
 def holes_and_breaks(y, sr):
     """(silence_holes, breaks) away from the ends: holes are runs of digital silence (every
-    sample under -80 dBFS) longer than 20 ms, from 5 s in to 5 s before the end; breaks are
+    sample under -80 dBFS) of a quarter second or more, from 5 s in to 5 s before the end; breaks are
     0.2 s or longer where 50 ms windows sit 18 dB or more under the median of the 4 s around
     them, from 10 s in to 10 s before the end. Anchit's nine songs: no holes, 0 to 4 breaks."""
     from scipy.ndimage import median_filter
     edge = int(5 * sr)
     quiet = np.abs(y) < 1e-4
     flips = np.flatnonzero(np.diff(np.concatenate([[0], quiet.astype(np.int8), [0]])))
-    holes = sum(1 for a, b in zip(flips[::2], flips[1::2]) if b - a > 0.02 * sr and edge < a < len(y) - edge)
+    # a hole is the music stopping: a quarter second of dead air. Shorter runs are the space
+    # between hits in a kick-only intro or breakdown after the 16-bit master (2026-11-21: 14
+    # "holes" of 20 to 50 ms between the kicks of Sky Belongs To Nobody's sparse intro held a
+    # take that had no gap at all before mastering)
+    holes = sum(1 for a, b in zip(flips[::2], flips[1::2]) if b - a >= HOLE_S * sr and edge < a < len(y) - edge)
     hop = int(0.05 * sr)
     n = len(y) // hop
     db = 20 * np.log10(np.sqrt((y[:n * hop].reshape(n, hop) ** 2).mean(axis=1) + 1e-12) + 1e-9)
