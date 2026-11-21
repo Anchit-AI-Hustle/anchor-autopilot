@@ -36,7 +36,7 @@ env:
 jobs:
   song:
     runs-on: [self-hosted, macOS, ARM64, anchor-mac]
-    timeout-minutes: 120
+    timeout-minutes: 480
     env:
       ANCHOR_RENDERER: mac
     steps:
@@ -101,9 +101,9 @@ jobs:
           req["id"] = os.environ["ID"]
           open(f"build/studio-{req['id']}/request.json", "w").write(json.dumps(req))
           PY
-          export ANCHOR_MAKE_DEADLINE=$(( $(date +%s) + 100 * 60 ))
+          export ANCHOR_MAKE_DEADLINE=$(( $(date +%s) + 420 * 60 ))
           RC=0
-          caffeinate -i python -m anchor studio --request "build/studio-$ID/request.json" --out "build/studio-$ID" | tee studio-out.json || RC=${PIPESTATUS[0]}
+          caffeinate -i taskpolicy -b nice -n 19 python -m anchor studio --request "build/studio-$ID/request.json" --out "build/studio-$ID" | tee studio-out.json || RC=${PIPESTATUS[0]}
           echo "rc=$RC" >> "$GITHUB_OUTPUT"
           [ "$RC" = 0 ] || [ "$RC" = 3 ] || exit "$RC"
 
