@@ -34,29 +34,55 @@ GENRE_HUE = {"hard_techno": 0.0, "industrial_techno": 0.06, "warehouse_techno": 
              "techno_rap": 0.12}
 
 
+def _stft(x: np.ndarray, n_fft: int = 2048, hop: int = 512) -> np.ndarray:
+    """Magnitude spectrogram, numpy only (works on every runner, with or without librosa)."""
+    if len(x) < n_fft:
+        x = np.pad(x, (0, n_fft - len(x)))
+    frames = 1 + (len(x) - n_fft) // hop
+    idx = np.arange(n_fft)[None, :] + hop * np.arange(frames)[:, None]
+    win = np.hanning(n_fft).astype(np.float32)
+    return np.abs(np.fft.rfft(x[idx] * win, axis=1)).T.astype(np.float32)
+
+
+def _mel_bands(sr: int, n_fft: int, n: int = 48, lo: float = 30.0, hi: float = 11000.0) -> np.ndarray:
+    """Triangular mel filters (n x bins)."""
+    mel = lambda f: 2595 * np.log10(1 + f / 700.0)
+    inv = lambda m: 700 * (10 ** (m / 2595.0) - 1)
+    edges = inv(np.linspace(mel(lo), mel(min(hi, sr / 2 - 1)), n + 2))
+    f = np.fft.rfftfreq(n_fft, 1 / sr)
+    fb = np.zeros((n, len(f)), np.float32)
+    for i in range(n):
+        a, b, c = edges[i], edges[i + 1], edges[i + 2]
+        fb[i] = np.clip(np.minimum((f - a) / (b - a + 1e-9), (c - f) / (c - b + 1e-9)), 0, None)
+    return fb
+
+
 def features(audio: np.ndarray, sr: int, bpm: float) -> dict:
-    """What the picture is made of, measured from the master."""
-    import librosa
-    mono = audio.mean(axis=1) if audio.ndim == 2 else audio
-    if sr != SR:
-        mono = librosa.resample(mono.astype(np.float32), orig_sr=sr, target_sr=SR)
-    mono = mono.astype(np.float32)
-    hop = 512
-    mel = librosa.power_to_db(librosa.feature.melspectrogram(y=mono, sr=SR, n_mels=48, hop_length=hop), ref=np.max)
+    """What the picture is made of, measured from the master (numpy only)."""
+    mono = (audio.mean(axis=1) if audio.ndim == 2 else audio).astype(np.float32)
+    step = max(1, int(round(sr / SR)))           # 48 kHz -> about 24 kHz, enough for a picture
+    mono, sr = mono[::step], sr / step
+    n_fft, hop = 2048, 512
+    S = _stft(mono, n_fft, hop)
+    f = np.fft.rfftfreq(n_fft, 1 / sr)
+    mel = 10 * np.log10(_mel_bands(int(sr), n_fft) @ (S ** 2) + 1e-10)
+    mel = np.clip(mel, mel.max() - 80, None)
     mel = (mel - mel.min()) / (np.ptp(mel) + 1e-9)
-    rms = librosa.feature.rms(y=mono, hop_length=hop)[0]
-    fps = SR / hop
+    rms = np.sqrt((S ** 2).mean(axis=0))
+    fps = sr / hop
     bar_frames = max(1, int(round(4 * 60.0 / bpm * fps)))
     bars = np.array([rms[i:i + bar_frames].mean() for i in range(0, len(rms), bar_frames)])
     bars = bars / (bars.max() + 1e-9)
-    cent = librosa.feature.spectral_centroid(y=mono, sr=SR, hop_length=hop)[0]
+    cent = (f[:, None] * S).sum(axis=0) / (S.sum(axis=0) + 1e-9)
     cent = np.convolve(cent, np.ones(9) / 9, mode="same")
     cent = (cent - cent.min()) / (np.ptp(cent) + 1e-9)
-    S = np.abs(librosa.stft(mono, n_fft=2048, hop_length=hop))
-    f = librosa.fft_frequencies(sr=SR, n_fft=2048)
     voice = S[(f > 1000) & (f < 4000)].mean(axis=0)
     voice = voice / (voice.max() + 1e-9)
-    chroma = librosa.feature.chroma_stft(S=S ** 2, sr=SR).mean(axis=1)
+    # pitch class of every bin from 55 Hz up, weighted by energy
+    ok = f > 55
+    pc = (np.round(12 * np.log2(f[ok] / 440.0)) + 9) % 12
+    energy = (S[ok] ** 2).sum(axis=1)
+    chroma = np.array([energy[pc == k].sum() for k in range(12)])
     rise = np.diff(np.convolve(bars, np.ones(2) / 2, mode="same"))
     drops = [int(i) for i in np.argsort(rise)[::-1][:4] if rise[i] > 0.12]
     return {"mel": mel, "bars": bars, "cent": cent, "voice": voice, "chroma": chroma,

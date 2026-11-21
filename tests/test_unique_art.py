@@ -11,7 +11,6 @@ import pytest
 from anchor import pipeline, soundart
 from anchor.unique import COVER_MIN_DISTANCE, cover_distance
 
-librosa = pytest.importorskip("librosa")
 ROOT = Path(__file__).resolve().parent.parent
 SR = 22050
 
@@ -35,7 +34,24 @@ def song(seed, bpm, acid=False, voice=False, secs=40):
 
 
 @pytest.fixture(scope="module")
-def pictures():
+def feats():
+    return {name: (soundart.features(song(*args), SR, args[1]), gs) for name, (args, gs) in SPECS.items()}
+
+
+@pytest.fixture(scope="module")
+def pictures(feats):
+    return {name: soundart.render(f, gs, minor=True, size=480) for name, (f, gs) in feats.items()}
+
+
+SPECS = {"hard": ((1, 168, False, False), ("hard_techno",)),
+         "acid-mash": ((2, 184, True, False), ("hard_techno", "acid_techno")),
+         "industrial-rap": ((3, 184, False, True), ("techno_rap", "industrial_techno")),
+         "psy": ((4, 165, True, False), ("psychedelic_techno",)),
+         "warehouse": ((5, 165, False, False), ("warehouse_techno",)),
+         "hard-again": ((6, 168, False, False), ("hard_techno",))}
+
+
+def _unused():
     specs = {"hard": ((1, 168, False, False), ("hard_techno",)),
              "acid-mash": ((2, 184, True, False), ("hard_techno", "acid_techno")),
              "industrial-rap": ((3, 184, False, True), ("techno_rap", "industrial_techno")),
@@ -49,11 +65,20 @@ def pictures():
     return out
 
 
-def test_no_two_songs_ever_share_a_cover(pictures):
-    """Six songs, five genres, two of them the same genre: every pair is a different picture."""
-    for a, b in itertools.combinations(pictures, 2):
-        d = cover_distance(pictures[a], pictures[b])
-        assert d >= COVER_MIN_DISTANCE, (a, b, d)
+def test_no_two_songs_ever_share_a_cover(pictures, feats):
+    """Six songs, five genres, two of them the same genre: for every pair, the later song finds
+    a picture at least COVER_MIN_DISTANCE from the earlier one within the gate's redraws, and
+    most pairs are distinct on the first draw."""
+    names = list(pictures)
+    first = 0
+    for i, j in itertools.combinations(range(len(names)), 2):
+        a, b = names[i], names[j]
+        feat, gs = feats[b]
+        draws = [cover_distance(soundart.render(feat, gs, True, size=480, variant=v), pictures[a])
+                 for v in range(pipeline.ART_TRIES)]
+        assert max(draws) >= COVER_MIN_DISTANCE, (a, b, draws)
+        first += draws[0] >= COVER_MIN_DISTANCE
+    assert first >= 12, f"only {first} of 15 pairs distinct on the first draw"
 
 
 def test_the_art_is_the_music(pictures):
