@@ -236,5 +236,16 @@
     "overrides": {},
     "from": "sync-with-suno",
     "released_at": "2026-11-12T11:05:49Z"
+  },
+  "00-nobody-leaves-till-morning.flac": {
+    "title": "Nobody Leaves Till Morning",
+    "keep_title": true,
+    "source": "anchor",
+    "lane": "acidpsy",
+    "lyrics": "[Intro]\nHold my hand, the night is long\n\n[Verse 1]\nWe walked in when the gates were gold\nThe bass came up through the soles of our shoes\nEvery stranger was a friend I'd known\nAnd every light was a colour I could use\n\n[Build-Up]\nDance till the sun comes up\nDance till the sun comes up\n\n[Drop]\nSun Comes Up!\n\n[Breakdown]\nOne more song, one more song\nThe sky is turning, we were right all along\n\n[Build-Up]\nDance till the sun comes up\nDance till the sun comes up\nNobody leaves till the morning\nDance till the sun comes up\n\n[Drop]\nSun Comes Up!\n\n[Outro]\nHold my hand, the night was long\n",
+    "caption": "acid techno, psychedelic hard techno, squelchy bouncing 303 acid line with wild slides and filter sweeps, punchy kick, rolling off-beat bass, trippy echoes. Acid techno lineage from 1990s rave parties, psychedelic and fast for 2020s hard dancefloors. Mood: sly and squelching, growing giddy and manic, ending in a happy resonant squeal, about an acid psychedelic rave about dancing until the sun comes up. Feel: bouncy, fun and psychedelic, never dark. 167 BPM, four-on-the-floor, a bouncing rolling psy bassline, the 303 riding sixteenths with slides. Instruments: minimal psy kick, clicky percussion, reversed cymbals, rolling off-beat psytech bass, glassy FM bell lead playing a rising arpeggio in triplets over dreamy suspended chords; rubbery acid squelches intro, snappy claps build, bouncing 303 slides breakdown. Vocals: warm female, natural English, sparse, drops instrumental. Production: 303 squelchy and centred with psychedelic delay throws, kick punchy and dominant, chants dry; club master, lead and chords loud over the drums, sub audible on phones, real dynamics. Arrangement: intro -> build -> drop -> breakdown -> build -> drop -> breakdown -> drop -> outro; filtered kick alone, no sub bass yet, rubbery acid squelches far back, tension only at the start, and the outro kick and bass strip back slowly, filter closing, rubbery acid squelches last, a smooth fade out. Special moment: one breakdown where the acid line bounces over soft percussion under a whisper.",
+    "note": "Music Studio render on the Mac GPU (studio-anchor6b00cb49a1b2c3d4, song gate PASS on take 1), first made as 'Sun Comes Up', a title already used by other songs; renamed after its own sung line. Anchit asked for it on YouTube (2026-11-21)",
+    "queued_at": "2026-11-21T04:30:00Z",
+    "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/studio-anchor6b00cb49a1b2c3d4/sun-comes-up.flac"
   }
 }
