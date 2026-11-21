@@ -2,31 +2,23 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-20-2",
-    "title": "Sky Belongs To Nobody",
-    "finished_at": "2026-11-21T02:57:00Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44854494945",
+    "drop_id": "2026-11-20",
+    "title": "Nobody Leaves Till Morning",
+    "finished_at": "2026-11-21T08:05:27Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44864822598",
     "error": null
   },
   "next_post_at": "2026-11-21T17:30:00Z",
   "streak": 1,
   "totals": {
-    "drops": 109
+    "drops": 110
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-21T02:57:00Z",
+  "updated_at": "2026-11-21T08:05:27Z",
   "engine": {
-    "engine": "acestep_cpp",
-    "threads": 10,
-    "steps": 8,
-    "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
-    "guidance": 1.0,
-    "lm_ms": 63434,
-    "ref_audio": "ANCHOR-2026-11-07-outrun-your-shadow.mp3",
-    "dit_ms": 78973,
-    "vae_ms": 76045,
-    "total_s": 310.0
+    "engine": "queue",
+    "source_file": "00-nobody-leaves-till-morning.flac"
   }
 }
