@@ -74,9 +74,14 @@ def mend(y: np.ndarray, sr: int, bpm: float) -> tuple[np.ndarray, list[tuple[flo
 
 
 def mend_file(path: Path, bpm: float, out: Path | None = None) -> tuple[Path, list[tuple[float, float]]]:
-    import soundfile as sf
-    y, sr = sf.read(str(path), always_2d=True)
-    fixed, done = mend(y, sr, float(bpm))
+    try:
+        import scipy  # noqa: F401  (the gate's measures)
+        import soundfile as sf
+        y, sr = sf.read(str(path), always_2d=True)
+        fixed, done = mend(y, sr, float(bpm))
+    except Exception as exc:       # noqa: BLE001  a take is never lost to the mend step
+        log(f"gapfill: left as rendered ({exc})")
+        return path, []
     if not done:
         return path, []
     out = out or path.with_name(path.stem + "-mended.wav")
