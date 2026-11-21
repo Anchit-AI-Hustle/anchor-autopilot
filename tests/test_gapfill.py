@@ -5,8 +5,11 @@ dead air at all; the 16-bit master turned the space between the kicks of a spars
 "holes" of 20 to 50 ms, and the takes that did have a real gap had one of 0.3 to 0.8 s that one
 bar of the groove fills."""
 import numpy as np
+import pytest
 
-from anchor import gapfill, songgate
+pytest.importorskip("scipy")   # the song gate's own dependency (requirements-gate.txt)
+
+from anchor import gapfill, songgate  # noqa: E402
 
 SR = 22050
 BPM = 170.0
