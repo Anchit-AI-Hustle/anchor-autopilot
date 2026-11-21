@@ -214,7 +214,9 @@ jobs:
         run: |
           git config user.name "$ROBOT_NAME"
           git config user.email "$ROBOT_EMAIL"
-          git add site/data site/covers site/thumbs site/og.jpg queue
+          git add site/data site/covers site/og.jpg queue
+          # every published thumbnail is kept so no later one repeats it (anchor/pipeline.py keep_thumb)
+          [ ! -d site/thumbs ] || git add site/thumbs
           git commit -m "drops: released the queue to YouTube and the website" || { echo "nothing to commit"; exit 0; }
           for i in 1 2 3 4; do
             git pull --rebase -q origin main && git push origin HEAD:main && exit 0
