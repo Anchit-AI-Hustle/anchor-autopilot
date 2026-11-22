@@ -1,29 +1,32 @@
 {
   "last_run": {
-    "result": "failed",
-    "stage": "make",
-    "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-22T03:51:36Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/44980940687"
+    "result": "ok",
+    "stage": "done",
+    "drop_id": "2026-11-22",
+    "title": "Dig Until Daylight",
+    "finished_at": "2026-11-22T09:20:39Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/45001623285",
+    "error": null
   },
-  "next_post_at": "2026-11-22T17:30:00Z",
+  "next_post_at": "2026-11-23T17:30:00Z",
   "streak": 3,
   "totals": {
-    "drops": 112
+    "drops": 113
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-22T03:51:36Z",
+  "updated_at": "2026-11-22T09:20:39Z",
   "engine": {
     "engine": "acestep_cpp",
-    "threads": 4,
-    "steps": 32,
-    "model": "acestep-v15-sft-Q8_0.gguf",
-    "guidance": 5.0,
-    "lm_ms": 192733,
-    "dit_ms": 6388822,
-    "vae_ms": 645532,
-    "total_s": 7249.4
+    "threads": 10,
+    "steps": 8,
+    "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
+    "guidance": 1.0,
+    "lm_ms": 46975,
+    "ref_audio": "ANCHOR-2026-09-13-project-mayhem.mp3",
+    "dit_ms": 31407,
+    "vae_ms": 46185,
+    "total_s": 205.3
   }
 }
