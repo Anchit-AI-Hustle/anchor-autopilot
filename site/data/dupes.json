@@ -1,6 +1,6 @@
 {
-  "printed": 119,
-  "releases": 110,
+  "printed": 123,
+  "releases": 114,
   "audio_pairs": [
     {
       "duplicate": "2026-09-15",
@@ -33,6 +33,17 @@
       "score": {
         "envelope": 0.513,
         "sequence": 0.639
+      }
+    },
+    {
+      "duplicate": "2026-11-21",
+      "of": "2026-10-10",
+      "duplicate_title": "Fingerprints On The Lightning",
+      "of_title": "Liquid Cipher",
+      "same_record": false,
+      "score": {
+        "envelope": 0.603,
+        "sequence": 0.161
       }
     },
     {
