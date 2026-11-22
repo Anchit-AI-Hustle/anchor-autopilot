@@ -10476,6 +10476,36 @@
   },
   "mixes": [
     {
+      "id": "mix-week-2026-11-22",
+      "period": "week",
+      "vol": 4,
+      "date": "2026-11-22",
+      "title": "Drift Phonk Hard Techno Mix 2026 | ANCHOR Vol. 4 | 13 tracks, 45 min, 160+ BPM warehouse rave",
+      "tracks": [
+        "2026-11-17-3",
+        "2026-11-20",
+        "2026-11-16",
+        "2026-11-22-2",
+        "2026-11-19-4",
+        "2026-11-16-3",
+        "2026-11-21-3",
+        "2026-11-22",
+        "2026-11-20-2",
+        "2026-11-21",
+        "2026-11-17-4",
+        "2026-11-17-2",
+        "2026-11-16-2"
+      ],
+      "duration_s": 2688.5,
+      "audio_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/mix-week-2026-11-22/ANCHOR-week-mix-2026-11-22-vol-4.mp3",
+      "video_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/releases/download/mix-week-2026-11-22/ANCHOR-week-mix-2026-11-22-vol-4-full-169.mp4",
+      "cover": "covers/mix-week-2026-11-22.jpg",
+      "youtube_url": "https://youtu.be/Uje-5s5CU1g",
+      "post_id": "Uje-5s5CU1g",
+      "status": "public",
+      "created_at": "2026-11-22T19:12:15Z"
+    },
+    {
       "id": "mix-week-2026-11-15",
       "period": "week",
       "vol": 3,
