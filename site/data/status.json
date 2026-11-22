@@ -2,31 +2,31 @@
   "last_run": {
     "result": "ok",
     "stage": "done",
-    "drop_id": "2026-11-22",
-    "title": "Dig Until Daylight",
-    "finished_at": "2026-11-22T09:20:39Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/45001623285",
+    "drop_id": "2026-11-22-2",
+    "title": "Roots Find Each Other",
+    "finished_at": "2026-11-22T09:56:36Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/45007204221",
     "error": null
   },
   "next_post_at": "2026-11-23T17:30:00Z",
-  "streak": 3,
+  "streak": 4,
   "totals": {
-    "drops": 113
+    "drops": 114
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-22T09:20:39Z",
+  "updated_at": "2026-11-22T09:56:36Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 10,
     "steps": 8,
     "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
     "guidance": 1.0,
-    "lm_ms": 46975,
+    "lm_ms": 47290,
     "ref_audio": "ANCHOR-2026-09-13-project-mayhem.mp3",
-    "dit_ms": 31407,
-    "vae_ms": 46185,
-    "total_s": 205.3
+    "dit_ms": 32312,
+    "vae_ms": 46266,
+    "total_s": 211.3
   }
 }
