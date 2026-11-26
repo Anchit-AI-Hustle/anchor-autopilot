@@ -1,30 +1,31 @@
 {
   "last_run": {
-    "result": "failed",
-    "stage": "make",
-    "error": "The make stage failed. Open the run log for details.",
-    "finished_at": "2026-11-25T03:42:33Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/45508321991"
+    "result": "ok",
+    "stage": "done",
+    "drop_id": "2026-11-25",
+    "title": "Glass Floor Ritual",
+    "finished_at": "2026-11-26T00:06:22Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/45691789731",
+    "error": null
   },
-  "next_post_at": "2026-11-23T17:30:00Z",
+  "next_post_at": "2026-11-26T17:30:00Z",
   "streak": 4,
   "totals": {
-    "drops": 114
+    "drops": 115
   },
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-25T03:42:33Z",
+  "updated_at": "2026-11-26T00:06:22Z",
   "engine": {
     "engine": "acestep_cpp",
-    "threads": 10,
-    "steps": 8,
-    "model": "acestep-v15-xl-sftturbo50-Q8_0.gguf",
-    "guidance": 1.0,
-    "lm_ms": 47290,
-    "ref_audio": "ANCHOR-2026-09-13-project-mayhem.mp3",
-    "dit_ms": 32312,
-    "vae_ms": 46266,
-    "total_s": 211.3
+    "threads": 4,
+    "steps": 32,
+    "model": "acestep-v15-sft-Q8_0.gguf",
+    "guidance": 5.0,
+    "lm_ms": 144608,
+    "dit_ms": 4059063,
+    "vae_ms": 392870,
+    "total_s": 4613.3
   }
 }
