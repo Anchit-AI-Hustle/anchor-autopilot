@@ -140,7 +140,13 @@ takes = 6           # 2026-10-31 first Mac run: 1 of 4 takes reached the gate, s
 best_of = 1         # 2026-11-09 "the songs shouldnt take so long": the first take that passes the gate ships
 
 [music.renderers.cpu]
-takes = 2
+# 2026-11-28: the Mac's XL DiT on the CPU too (see MODEL_FILES in daily.yml): 8 steps, no CFG (turbo),
+# about 5.8x less DiT time a take than the 2B SFT at 32 steps, so four takes fit where two did
+dit_model = "acestep-v15-xl-sftturbo50-Q8_0"
+steps = 8
+guidance = 1.0
+shift = 3.0
+takes = 4
 best_of = 1
 
 # The sound of each song, drawn fresh every time (Anchit, 2026-10-31: "different melodies,

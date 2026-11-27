@@ -195,3 +195,25 @@ voice on 2026-09-21; the thumbnails were redrawn for the phone the same day
 (`video.frame_169`), and full videos now render with a moving waveform
 (`video.render_motion`).
 
+
+## Quality fixes (2026-11-28 audit)
+
+Measured on the last 40 drop runs (138 takes): 21% of CPU takes and 25% of Mac takes passed the song gate,
+and 23 takes that failed it were published anyway as the "best held" take, three of them with no kick or bass.
+
+- **Broken audio never ships** (`anchor/pipeline.py`): no low end, a dropout, a cut to silence or a track that
+  keeps breaking off is never published as the best held take. A held take ships only as a near miss: every
+  song-gate fail within `NEAR_MISS` (0.25) of the spread of Anchit's own songs. Replayed on the 23 published
+  held takes: 13 would have been held and remade, 10 near misses still go out.
+- **The CPU renders the Mac's model** (`[music.renderers.cpu]`): the 4B XL DiT at 8 steps instead of the 2B
+  SFT at 32 steps with CFG. Same CPU, same request: 41.8 s a step against 60.2, about 5.8x less DiT time a
+  take, so four takes fit where two did.
+- **Mac offline alert** (`daily.yml`, plan job): after 6 hours without a heartbeat an issue opens (GitHub emails
+  you), gets one comment a day, and closes itself when the Mac is back. The Mac was away 4.5 days unnoticed.
+- **Storyline videos for every song** (`anchor/storystills.py`): when no filmed LTX shots exist, the song's
+  storyboard (twelve shots from its lyrics) becomes photoreal frames, each moving the way its prompt says the
+  camera moves, cut to the beat with the timed lyrics by `cinematic.py`. Needs one image key in the repository
+  secrets: `CF_ACCOUNT_ID` + `CF_API_TOKEN` (Cloudflare Workers AI, free daily quota; also turns on AI covers)
+  or `POLLINATIONS_TOKEN`. Without one the video stays the scene video. Filmed shots the Mac finishes are
+  published as the release `cinematic-<song>` so a song rendered on the CPU uses them too.
+  `python -m anchor.storystills --drop DROP_ID --out DIR` makes the storyline video of a released song.

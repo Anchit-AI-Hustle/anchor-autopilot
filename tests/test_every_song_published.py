@@ -31,10 +31,38 @@ def test_a_broken_or_copied_take_is_never_published():
     assert pipeline.pick_best_held([]) is None
 
 
-def test_without_a_mastered_take_the_one_with_fewest_fails_goes_out():
-    held = [take(0, ["dropout of 1.2s inside the track", "no low end (kick/bass share 0.1)"]),
-            take(1, ["dropout of 0.9s inside the track"])]
-    assert pipeline.pick_best_held(held)["attempt"] == 1
+def gate_take(attempt, gate_fails, score=0.3):
+    fails = [f"song gate: {f['why']}" for f in gate_fails]
+    return {"attempt": attempt, "fails": fails, "score": score, "mastered": {"m": attempt}, "gate_fails": gate_fails}
+
+
+def gf(check, value, limit, why="x"):
+    return {"check": check, "value": value, "limit": limit, "why": why}
+
+
+def test_broken_audio_is_never_published_as_the_best_held_take():
+    # 2026-11-27 Pink Sky Stomp and two more went out with no kick or bass (share 0.001 to 0.035)
+    held = [take(0, ["no low end (kick/bass share 0.001)"]),
+            take(1, ["dropout of 2.5s inside the track", "no low end (kick/bass share 0.035)"]),
+            take(2, ["song gate: the music cuts to silence in the middle (silence_holes 2, limit 0)"], 0.4, {"m": 2}),
+            take(3, ["song gate: the music keeps breaking off in the middle (breaks 7, limit 4)"], 0.4, {"m": 3})]
+    assert pipeline.pick_best_held(held) is None
+
+
+def test_a_take_far_off_his_songs_is_held_but_a_near_miss_still_goes_out():
+    # measured on the runs of 2026-11-20 to 11-27: noise 0.0662 is mostly noise (his songs 0.016-0.043)
+    far = gate_take(0, [gf("noise_score", 0.0662, 0.0462)], 0.5)
+    near = gate_take(1, [gf("section_changes", 7, 7.1), gf("noise_score", 0.0483, 0.0462)], 0.2)
+    assert pipeline.miss_by(far["gate_fails"][0]) > pipeline.NEAR_MISS
+    assert pipeline.pick_best_held([far]) is None
+    assert pipeline.pick_best_held([far, near])["attempt"] == 1
+
+
+def test_a_take_the_gate_never_measured_is_not_published_when_the_gate_is_on(monkeypatch):
+    monkeypatch.setenv("ANCHOR_SONG_GATE", "1")
+    assert pipeline.pick_best_held([take(0, ["too slow: landed at 150 BPM, asked 190"])]) is None
+    monkeypatch.setenv("ANCHOR_SONG_GATE", "0")
+    assert pipeline.pick_best_held([take(0, ["too slow: landed at 150 BPM, asked 190"])])["attempt"] == 0
 
 
 def test_shipping_held_takes_is_on_unless_switched_off(monkeypatch):
