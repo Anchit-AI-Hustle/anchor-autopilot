@@ -159,8 +159,11 @@ def test_period_window_volume_and_words():
     p = load_profile()
     assert mix.period_window("2026-09-27", "week") == ("2026-09-21", "2026-09-27")
     assert mix.period_window("2026-09-30", "month") == ("2026-09-01", "2026-09-30")
-    cat = {"drops": [{"id": d, "date": d, "title": f"T{i}", "bpm": 150 + i, "lane": "industrial", "audio_url": "https://x/a.mp3", "status": "sent"}
-                     for i, d in enumerate(("2026-09-21", "2026-09-23", "2026-09-27", "2026-09-10"))],
+    cat = {"drops": [{"id": d, "date": d, "title": f"T{i}", "bpm": 150 + i, "lane": "industrial", "audio_url": "https://x/a.mp3", "status": "sent",
+                      "youtube_url": f"https://youtu.be/v{i}"}
+                     for i, d in enumerate(("2026-09-21", "2026-09-23", "2026-09-27", "2026-09-10"))]
+           + [{"id": "2026-09-25", "date": "2026-09-25", "title": "Held", "bpm": 151, "lane": "industrial",
+               "audio_url": "https://x/h.mp3", "status": "scheduled"}],
            "mixes": [{"id": "m1", "period": "week"}]}
     assert [d["id"] for d in mix.pick_tracks(cat, "2026-09-27", "week")] == ["2026-09-21", "2026-09-23", "2026-09-27"]
     assert mix.volume_number(cat, "week") == 2 and mix.volume_number(cat, "month") == 1
@@ -179,7 +182,7 @@ def test_build_makes_audio_cover_video_and_chapters_from_the_period(fast_profile
     files = {d: _track(tmp_path, d, bpm, seconds=18, seed=i) for i, (d, bpm) in
              enumerate((("2026-09-21", 150), ("2026-09-23", 155), ("2026-09-25", 152)), 1)}
     cat = {"drops": [{"id": d, "date": d, "title": f"Track {d[-2:]}", "bpm": bpm, "lane": "industrial", "family": p.families[0].id,
-                      "seed": 5, "audio_url": f"file://{files[d]}", "status": "sent"} for d, bpm in (("2026-09-21", 150), ("2026-09-23", 155), ("2026-09-25", 152))]}
+                      "seed": 5, "audio_url": f"file://{files[d]}", "status": "sent", "youtube_url": f"https://youtu.be/{d}"} for d, bpm in (("2026-09-21", 150), ("2026-09-23", 155), ("2026-09-25", 152))]}
     monkeypatch.setattr(mix.urllib.request, "urlretrieve", lambda url, dst: Path(dst).write_bytes(Path(url[7:]).read_bytes()))
     meta = mix.build(p, cat, "2026-09-27", "week", tmp_path / "out", art_mode="procedural")
     out = tmp_path / "out"

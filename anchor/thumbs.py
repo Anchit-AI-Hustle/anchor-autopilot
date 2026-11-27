@@ -130,8 +130,25 @@ def run(api, videos: list[dict], data: dict, repo: str, work: Path, artist: str,
         max_sets: int = MAX_PER_RUN, short_test=is_short, catalog_path: Path = CATALOG_PATH) -> list[str]:
     """Redraw the thumbnail of every public video that still has an old (tempo) one."""
     done = data.setdefault("thumbs", [])
-    src = sources(repo, catalog_path)
     changed: list[str] = []
+    # a thumbnail redrawn because it came too close to another one (scripts/thumb_fix.py) goes up first
+    for fx in data.get("thumb_fixes", []):
+        if fx.get("set") or len(changed) >= max_sets:
+            continue
+        img = Path(fx["image"])
+        if not img.exists():
+            continue
+        try:
+            api.set_thumbnail(fx["video"], img)
+        except Exception as exc:          # noqa: BLE001 - quota: it follows tomorrow
+            log(f"thumbs: fix {fx['video']}: {str(exc)[:160]}")
+            if "quota" in str(exc).lower():
+                return changed
+            continue
+        fx["set"] = True
+        changed.append(fx["video"])
+        log(f"thumbs: original thumbnail set on {fx['video']} ({fx.get('drop')})")
+    src = sources(repo, catalog_path)
     for v in videos:
         if len(changed) >= max_sets:
             break

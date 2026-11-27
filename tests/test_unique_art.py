@@ -6,6 +6,7 @@ import itertools
 from pathlib import Path
 
 import numpy as np
+from PIL import Image
 import pytest
 
 from anchor import pipeline, soundart
@@ -131,3 +132,32 @@ def test_no_new_thumbnail_repeats_one_already_out():
         for b in thumbs:
             if a != b:
                 assert cover_distance(a, b) >= COVER_MIN_DISTANCE, (a.stem, b.stem)
+
+
+def test_a_redrawn_thumbnail_is_set_on_youtube_once(tmp_path):
+    """A thumbnail fixed by scripts/thumb_fix.py goes up on its video once, before anything else."""
+    from anchor import thumbs
+    img = tmp_path / "fix.jpg"
+    Image.new("RGB", (1280, 720), (10, 20, 30)).save(img)
+    calls = []
+
+    class Api:
+        def set_thumbnail(self, vid, path):
+            calls.append((vid, Path(path).name))
+
+    data = {"thumbs": [], "thumb_fixes": [{"drop": "2026-11-22", "video": "MtWfFiG3hpo", "image": str(img)}]}
+    cat = tmp_path / "catalog.json"
+    cat.write_text('{"drops": []}')
+    assert thumbs.run(Api(), [], data, "o/r", tmp_path, "ANCHOR", "MARK", catalog_path=cat) == ["MtWfFiG3hpo"]
+    assert data["thumb_fixes"][0]["set"] is True and calls == [("MtWfFiG3hpo", "fix.jpg")]
+    assert thumbs.run(Api(), [], data, "o/r", tmp_path, "ANCHOR", "MARK", catalog_path=cat) == []
+    assert len(calls) == 1
+
+
+def test_every_queued_thumbnail_fix_has_its_full_size_frame():
+    import json
+    up = json.loads((ROOT / "site" / "data" / "uploads.json").read_text())
+    for fx in up.get("thumb_fixes", []):
+        full = ROOT / fx["image"]
+        assert full.exists(), fx
+        assert Image.open(full).size == (1280, 720)

@@ -45,10 +45,14 @@ def period_window(day: str, period: str) -> tuple[str, str]:
 
 
 def pick_tracks(catalog: dict, day: str, period: str) -> list[dict]:
-    """The period's released drops that have a master to download, oldest first."""
+    """The period's released drops that have a master to download, oldest first.
+
+    Only a song already out on its own goes into a mix (Anchit, 2026-11-27: "always ensure each
+    song of every mashup mix also created is released separately"): it has its own YouTube video.
+    A song still held, scheduled or waiting for quota joins the next mix once it is out."""
     lo, hi = period_window(day, period)
     drops = [d for d in catalog.get("drops", []) if lo <= d.get("date", "") <= hi and d.get("audio_url")
-             and d.get("status") in ("sent", "scheduled", "released", "buffer", "public", None)]
+             and d.get("youtube_url") and d.get("status") in ("sent", "released", "public", None)]
     return sorted(drops, key=lambda d: d["date"])
 
 

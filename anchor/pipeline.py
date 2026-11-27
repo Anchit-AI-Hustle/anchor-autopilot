@@ -81,7 +81,9 @@ def redo_for(profile: Profile, day: str, hist: list, path: Path = REDO_PATH) -> 
     return {"song": song, "lane": lane.id}
 
 
-ART_TRIES = 12
+ART_TRIES = 24
+# where the covers and thumbnails already out are kept (tests point this at an empty folder)
+ART_SITE = SITE
 
 
 def song_picture(profile: Profile, brief: dict, master_audio):
@@ -101,11 +103,17 @@ def song_picture(profile: Profile, brief: dict, master_audio):
 
 def thumb_distance(out_dir: Path, brief: dict, profile: Profile, thumbs_dir: Path) -> tuple[float, str | None]:
     """The thumbnail this cover makes (the 16:9 frame), against every thumbnail already out."""
+    from PIL import Image
     from .video import frame_169
-    probe = out_dir / "thumb-probe.jpg"
+    # measured exactly as it will be kept: the family's accent (as make_videos draws it), then
+    # the 480 px copy keep_thumb stores. A full-size probe in the default accent let 2026-11-22
+    # through at 80 against 2026-10-28-2 once it was stored.
+    probe = out_dir / "thumb-probe-full.jpg"
     frame_169(out_dir / "cover_art_raw.jpg", brief, genre_phrase(profile.lane(brief["lane"])),
-              profile.artist["name"], probe)
-    return nearest_cover(probe, thumbs_dir) if thumbs_dir.exists() else (999.0, None)
+              profile.artist["name"], probe, profile.family(brief["family"]).accent or "#ff3bd4")
+    kept = out_dir / "thumb-probe.jpg"
+    Image.open(probe).convert("RGB").resize((480, 270), Image.LANCZOS).save(kept, quality=85)
+    return nearest_cover(kept, thumbs_dir) if thumbs_dir.exists() else (999.0, None)
 
 
 def master_take(profile: Profile, raw: Path, work: Path) -> dict:
@@ -505,7 +513,7 @@ def finish(profile: Profile, brief: dict, raw: Path, stats_audio: dict, stats: d
     # the art is drawn from this song's own audio (anchor/soundart.py), in its genres' visual
     # language; a cover or a thumbnail that comes too close to one already out is redrawn
     sound = song_picture(profile, brief, master_audio)
-    covers_dir, thumbs_dir = SITE / "covers", SITE / "thumbs"
+    covers_dir, thumbs_dir = ART_SITE / "covers", ART_SITE / "thumbs"
     tries = []   # every draw, kept for the ledger: variant, how close it came, to which picture
     for variant in range(ART_TRIES):
         base_img = sound(variant) if sound else None

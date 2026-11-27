@@ -264,6 +264,14 @@ def synth_techno(duration: float, bpm: int, seed: int) -> np.ndarray:
     tc = np.arange(int(0.18 * SR)) / SR
     clap = rs.standard_normal(len(tc)) * np.exp(-tc * 25)
     beats = int(duration / t_beat)
+    # drawn from a second generator so the drums above stay exactly what they were: each test
+    # song has its own lead and shape, so two test songs are two different records (the art
+    # gate, anchor/pipeline.py, rightly refuses to give two identical records new art)
+    rv = np.random.default_rng(seed + 7_919)
+    lead_hz = 220 * 2 ** (rv.integers(0, 24) / 12)
+    stab_steps = rv.random(int(rv.integers(3, 8))) > 0.45
+    stab_bars = rv.random(int(rv.integers(2, 6))) > 0.3
+    shape_rate, shape_phase = rv.uniform(0.15, 0.9), rv.uniform(0, 6.28)
     for b in range(beats):
         at = b * t_beat
         bar = b // 4
@@ -278,6 +286,13 @@ def synth_techno(duration: float, bpm: int, seed: int) -> np.ndarray:
             tb = np.arange(int(t_beat / 2 * SR)) / SR
             freq = 55 * (2 ** (rs.integers(0, 4) * 3 / 12))
             place(np.tanh(3 * np.sin(2 * np.pi * freq * tb)) * np.exp(-tb * 6), at + t_beat / 2, 0.35)
+        if not intro and not outro and stab_bars[bar % len(stab_bars)] and stab_steps[b % len(stab_steps)]:
+            ts = np.arange(int(t_beat * 0.4 * SR)) / SR
+            place(np.sign(np.sin(2 * np.pi * lead_hz * ts)) * np.exp(-ts * 9), at, 0.12)
+    # the record's own shape over the bars (where it swells and thins)
+    bars_n = max(1, beats // 4)
+    out *= np.interp(np.arange(n) / SR / (4 * t_beat), np.arange(bars_n + 1),
+                     0.75 + 0.25 * np.sin(np.arange(bars_n + 1) * shape_rate + shape_phase))
     peak = np.max(np.abs(out)) or 1.0
     mono = 0.8 * out / peak
     stereo = np.stack([mono, np.roll(mono, 24)], axis=1)

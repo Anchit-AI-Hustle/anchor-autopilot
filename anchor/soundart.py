@@ -258,8 +258,26 @@ def render(feat: dict, genres: tuple[str, ...], minor: bool, size: int = 1440, v
             arr[..., 3] = (arr[..., 3] * 0.85).astype(np.uint8)
             layer = Image.fromarray(arr, "RGBA")
         img = Image.alpha_composite(img, layer)
-    # each redraw is a different picture of the same song: mirrored, upside down, turned a
-    # quarter, so the uniqueness gate (anchor/pipeline.py) always finds one that is new
+    # from the fifth redraw on, a third drawing of the same audio joins the picture, in the visual
+    # language of a genre this song is not (each redraw a different one): the same music, a new
+    # structure, so a song whose genre already has many covers out still finds an original one
+    if variant >= 4:
+        others = [g for g in STYLES if g not in gs]
+        g3 = others[(variant - 4 + feat["key"]) % len(others)]
+        layer = DRAW[g3](size, feat, pal[::-1][:3], rot + 1.3)
+        arr = np.asarray(layer).copy()
+        arr[..., 3] = (arr[..., 3] * 0.7).astype(np.uint8)
+        img = Image.alpha_composite(img, Image.fromarray(arr, "RGBA"))
+    # each redraw is a different picture of the same song: a closer view of another part of it
+    # (a ring design looks the same mirrored, so the view itself must move), then mirrored,
+    # upside down, turned a quarter, so the uniqueness gate (anchor/pipeline.py) finds a new one
+    if variant:
+        zoom = 1.25 + 0.2 * (variant % 4)
+        ang = variant * 2.39996                      # the golden angle: no two views share a side
+        w = size / zoom
+        cx = size / 2 + math.cos(ang) * (size - w) / 2
+        cy = size / 2 + math.sin(ang) * (size - w) / 2
+        img = img.crop((int(cx - w / 2), int(cy - w / 2), int(cx + w / 2), int(cy + w / 2))).resize((size, size), Image.LANCZOS)
     if variant % 2:
         img = img.transpose(Image.FLIP_LEFT_RIGHT)
     if (variant // 2) % 2:

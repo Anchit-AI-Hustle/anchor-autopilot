@@ -73,6 +73,12 @@ if ! pgrep -f "Runner.Listener" >/dev/null; then
   pgrep -f "Runner.Listener" >/dev/null || exit 0
 fi
 gh variable set ANCHOR_MAC_SEEN -R "$REPO" --body "\$(date +%s)" >/dev/null 2>&1
+# the same stamp where a running workflow can read it (.github/workflows/daily.yml mac-alive):
+# a run stops and hands its songs to the CPU when the Mac sleeps mid-song
+date -u +%FT%TZ > "\$HOME/anchor-gpu/alive.txt"
+gh release upload mac-alive "\$HOME/anchor-gpu/alive.txt" --clobber -R "$REPO" >/dev/null 2>&1 \\
+  || gh release create mac-alive "\$HOME/anchor-gpu/alive.txt" --prerelease --title "Mac heartbeat" \\
+       --notes "Stamped every 5 min by the Mac's heartbeat; read by the daily run." -R "$REPO" >/dev/null 2>&1
 # renders pause while Anchit uses the Mac (tools/mac-yield.sh), kept running from a copy
 if ! pgrep -f "anchor-gpu/yield.sh --loop" >/dev/null; then
   cp "\$HOME/anchor-gpu/autostart-repo/tools/mac-yield.sh" "\$HOME/anchor-gpu/yield.sh" 2>/dev/null \\

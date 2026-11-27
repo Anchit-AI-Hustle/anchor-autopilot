@@ -37,6 +37,22 @@ def site_dir(tmp_path):
 
 
 @pytest.fixture(autouse=True)
+def isolated_site_art(tmp_path, monkeypatch):
+    """No test reads or writes the live site's covers and thumbnails (2026-11-21).
+
+    The art gate compares a new cover and thumbnail with every one already out. Against the live
+    site/covers, which grows every day, a test's song would pass one day and fail the next, and a
+    test catalogue without the live drops reuses live titles. Each test gets an empty site; the
+    live history is checked on its own (tests/test_unique_art.py).
+    """
+    from anchor import pipeline
+    art_site = tmp_path / "art-site"
+    (art_site / "covers").mkdir(parents=True)
+    (art_site / "thumbs").mkdir(parents=True)
+    monkeypatch.setattr(pipeline, "ART_SITE", art_site)
+
+
+@pytest.fixture(autouse=True)
 def isolated_queue(tmp_path, monkeypatch):
     """No test reads the real release queue.
 
