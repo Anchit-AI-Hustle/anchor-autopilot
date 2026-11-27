@@ -188,13 +188,17 @@ def animate(image: Path, out: Path, move: str, seed: int, seconds: float = SECON
 
 # ----------------------------------------------------------------------------- the whole set
 def ensure(song_id: str | None, dest_root: Path | None = None, chain: list | None = None,
-           stills_from: Path | None = None) -> list[Path]:
+           stills_from: Path | None = None, budget_s: float | None = None) -> list[Path]:
     """The song's still-made shots, making whatever is missing. Returns the shots in order, or []
     when the song has no storyboard or no frame could be made for enough of it.
 
     ``stills_from``: a folder of ready frames (still-NN.jpg) to use instead of a provider, for
-    frames made elsewhere."""
+    frames made elsewhere. ``budget_s``: stop making new frames after this long, and after three
+    shots in a row with no frame (a provider that is down or out of quota), so a drop never waits
+    on it for long; what is made stays for the next run."""
+    import time
     from .cinematic import MIN_SHOTS
+    started, misses = time.monotonic(), 0
     shots = board(song_id)
     if not shots:
         return []
@@ -214,9 +218,14 @@ def ensure(song_id: str | None, dest_root: Path | None = None, chain: list | Non
                 jpg.write_bytes(src.read_bytes())
                 provider = "supplied"
             elif not jpg.exists():
+                if misses >= 3 or (budget_s is not None and time.monotonic() - started > budget_s):
+                    log(f"story stills: {song_id}: stopping at shot {n} (provider down or out of time)")
+                    break
                 provider = still(s["prompt"], seed, jpg, chain)
                 if provider is None:
+                    misses += 1
                     continue
+                misses = 0
             else:
                 provider = "cached"
             move = move_for(s["prompt"])

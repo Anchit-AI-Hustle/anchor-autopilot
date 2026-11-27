@@ -57,9 +57,12 @@ def fetch_released(song_id: str, dest_root: Path | None = None, timeout: int = 6
     if (d / "complete").exists():
         return d
     url = f"https://api.github.com/repos/{REPO_SLUG}/releases/tags/cinematic-{song_id}"
+    headers = {"Accept": "application/vnd.github+json"}
+    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if token:   # a shared runner's anonymous limit is 60 calls an hour
+        headers["Authorization"] = f"Bearer {token}"
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers={"Accept": "application/vnd.github+json"}),
-                                    timeout=timeout) as r:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=timeout) as r:
             assets = json.loads(r.read()).get("assets", [])
     except Exception:  # noqa: BLE001 - no release (404) or no network: no synced shots
         return None
@@ -67,9 +70,13 @@ def fetch_released(song_id: str, dest_root: Path | None = None, timeout: int = 6
     if not any(a["name"].endswith(".mp4") for a in wanted):
         return None
     d.mkdir(parents=True, exist_ok=True)
-    for a in wanted:
-        with urllib.request.urlopen(a["browser_download_url"], timeout=timeout * 5) as r:
-            (d / a["name"]).write_bytes(r.read())
+    try:
+        for a in wanted:
+            with urllib.request.urlopen(a["browser_download_url"], timeout=timeout * 5) as r:
+                (d / a["name"]).write_bytes(r.read())
+    except Exception as exc:  # noqa: BLE001 - a half download is never used (no complete file)
+        log(f"cinematic: {song_id}: synced shots not fetched ({str(exc)[:120]})")
+        return None
     (d / "complete").write_text("synced\n")
     return d
 
@@ -89,19 +96,17 @@ def shots_for(song_id: str | None, directory: Path | None = None, sync: bool = F
         shots = _finished(directory / song_id)
         return shots if len(shots) >= MIN_SHOTS else []
     from .storystills import stills_dir
-    roots = [clips_dir() / song_id]
-    if sync:
-        got = fetch_released(song_id)
-        if got:
-            roots.append(got)
-    else:
-        roots.append(synced_dir() / song_id)
-    roots.append(stills_dir() / song_id)
-    for d in roots:
+
+    def enough(d: Path) -> list[Path]:
         shots = _finished(d) if d.exists() else []
-        if len(shots) >= MIN_SHOTS:
-            return shots
-    return []
+        return shots if len(shots) >= MIN_SHOTS else []
+    local = enough(clips_dir() / song_id)
+    if local:                       # the Mac's own clips: no network at all
+        return local
+    synced = synced_dir() / song_id
+    if sync and not (synced / "complete").exists():
+        fetch_released(song_id)
+    return enough(synced) or enough(stills_dir() / song_id)
 
 
 def ready_ids(directory: Path | None = None) -> set[str]:

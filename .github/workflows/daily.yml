@@ -176,7 +176,7 @@ jobs:
       # The Mac's GPU renders the big model (4B XL + 4B planner, best of several takes) when it
       # is online: its heartbeat (tools/mac-heartbeat.sh, every 5 min while the runner is up)
       # stamps the repo variable ANCHOR_MAC_SEEN. Older than 20 min means asleep or off, and the
-      # songs render on GitHub's CPU with the smaller model, as before.
+      # songs render on GitHub's CPU (the same XL DiT, the 0.6B planner, fewer takes).
       - name: Pick where the songs render
         id: where
         env:
@@ -221,7 +221,7 @@ jobs:
           SEEN: ${{ steps.where.outputs.mac_seen }}
         run: |
           TITLE="Mac renderer offline: songs are rendering on GitHub's CPU"
-          OPEN="$(gh issue list --state open --search "\"$TITLE\" in:title" --json number,updatedAt -q '.[0] | "\(.number) \(.updatedAt)"' 2>/dev/null || true)"
+          OPEN="$(gh issue list --state open --limit 100 --json number,title,updatedAt --jq "[.[] | select(.title == \"$TITLE\")][0] // empty | \"\\(.number) \\(.updatedAt)\"" 2>/dev/null || true)"
           NUM="${OPEN%% *}"
           if [ "${SEEN:-0}" != 0 ] && [ "${AGE:-0}" -le 1200 ]; then
             [ -n "$NUM" ] && gh issue close "$NUM" --comment "The Mac is back (heartbeat ${AGE}s ago): songs render on its GPU again." || true
@@ -230,7 +230,7 @@ jobs:
           [ "${AGE:-0}" -gt 21600 ] || exit 0
           HOURS=$(( ${AGE:-0} / 3600 ))
           [ "${SEEN:-0}" = 0 ] && HOURS=unknown
-          BODY="The Mac's heartbeat is ${HOURS} h old, so today's songs render on GitHub's CPU with the small model (fewer takes, lower pass rate). To fix: wake the Mac, keep it on the charger with the lid open, and check that the runner in ~/actions-runner-anchor is running (bash scripts/mac-runner-setup.sh starts it again). This issue closes by itself when the Mac is back."
+          BODY="The Mac's heartbeat is ${HOURS} h old, so today's songs render on GitHub's CPU (slower takes, fewer of them, a lower pass rate). To fix: wake the Mac, keep it on the charger with the lid open, and check that the runner in ~/actions-runner-anchor is running (bash scripts/mac-runner-setup.sh starts it again). This issue closes by itself when the Mac is back."
           if [ -z "$NUM" ]; then
             gh issue create --title "$TITLE" --body "$BODY"
           else

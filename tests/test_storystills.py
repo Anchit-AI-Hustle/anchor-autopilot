@@ -127,7 +127,7 @@ def test_the_macs_filmed_shots_are_fetched_from_their_release(monkeypatch, tmp_p
     assert cinematic.fetch_released("other", tmp_path) is None
 
 
-def test_the_worker_publishes_each_finished_set_once(tmp_path):
+def test_the_worker_publishes_each_finished_set_once(tmp_path, monkeypatch):
     sys.path.insert(0, str(ROOT / "tools" / "cinematic"))
     try:
         import worker
@@ -145,7 +145,7 @@ def test_the_worker_publishes_each_finished_set_once(tmp_path):
     gh = tmp_path / "gh"
     gh.write_text(f"#!/bin/bash\necho \"$@\" >> {log}\n")
     gh.chmod(0o755)
-    worker.LOG = tmp_path / "worker.log"
+    monkeypatch.setattr(worker, "LOG", tmp_path / "worker.log")
     assert worker.publish_complete(clips, gh=str(gh)) == ["a"]
     call = log.read_text()
     assert "release create cinematic-a" in call and "shot-01.mp4" in call and "cinematic-b" not in call
@@ -163,3 +163,36 @@ def test_stills_get_the_scene_without_the_camera_directions():
     assert storystills.scene_only(q) == "Handheld tracking shot behind a figure striding down a long corridor, harsh lights"
     for b in storystills.board("burn-the-blueprint"):
         assert storystills.scene_only(b["prompt"]).split(",")[0] == b["prompt"].split(",")[0]
+
+
+def test_a_provider_that_is_down_stops_after_three_misses(tmp_path):
+    calls = []
+
+    def down(prompt, seed):
+        calls.append(seed)
+        raise OSError("503")
+    assert storystills.ensure("burn-the-blueprint", tmp_path, chain=[("down", down)]) == []
+    assert len(calls) == 3 * 2            # three shots, two tries each, then it stops
+
+
+def test_local_clips_are_used_without_touching_the_network(monkeypatch, tmp_path):
+    d = tmp_path / "clips" / "song"
+    d.mkdir(parents=True)
+    for i in range(cinematic.MIN_SHOTS):
+        (d / f"shot-{i:02d}.mp4").write_bytes(b"x" * 20_000)
+    monkeypatch.setenv("ANCHOR_CINEMATIC_DIR", str(tmp_path / "clips"))
+    monkeypatch.setattr(cinematic, "fetch_released", lambda *a, **k: pytest.fail("network"))
+    assert len(cinematic.shots_for("song", sync=True)) == cinematic.MIN_SHOTS
+
+
+def test_a_failed_download_of_synced_shots_never_breaks_the_drop(monkeypatch, tmp_path):
+    release = {"assets": [{"name": "shot-01.mp4", "browser_download_url": "u/1.mp4"}]}
+
+    def urlopen(req, timeout=0):
+        url = getattr(req, "full_url", req)
+        if "releases/tags/" in url:
+            return FakeResp(json.dumps(release).encode())
+        raise TimeoutError("slow")
+    monkeypatch.setattr("urllib.request.urlopen", urlopen)
+    assert cinematic.fetch_released("song", tmp_path) is None
+    assert not (tmp_path / "song" / "complete").exists()

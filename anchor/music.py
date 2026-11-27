@@ -374,7 +374,8 @@ def renderer_settings(profile_music: dict, renderer: str | None = None) -> dict:
     """The music settings for the machine this run renders on. ``[music.renderers.<name>]``
     (ANCHOR_RENDERER) replaces the model and sampler lines of ``[music]``: the Mac's GPU runs
     the 4B XL DiT with the 4B planner at 50 steps (Anchit, 2026-10-29: "use the Mac GPU"), the
-    GitHub CPU keeps the 2B settings it can finish in time."""
+    GitHub CPU runs the same XL DiT at 8 steps with the 0.6B planner (2026-11-28: measured
+    5.8x less DiT time a take than the 2B SFT at 32 steps it used before)."""
     renderer = renderer or env("ANCHOR_RENDERER", "")
     over = (profile_music.get("renderers") or {}).get(renderer) if renderer else None
     if renderer and over is None:

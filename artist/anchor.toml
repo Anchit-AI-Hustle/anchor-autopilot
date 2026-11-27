@@ -112,7 +112,7 @@ true_peak_db = -1.5
 
 # Where a run renders decides how big a model it can afford (Anchit, 2026-10-29: "use the Mac
 # GPU"; songs were low quality). The daily run picks "mac" when the Mac runner is online, and
-# the lines above (2B DiT, 0.6B planner, 32 steps) stay the GitHub CPU fallback. Takes are
+# GitHub's CPU runs [music.renderers.cpu] (the XL DiT, 0.6B planner). The lines above are the base. Takes are
 # rendered until best_of of them pass the song gate, and the best passing take ships.
 # Anchit's nine Suno songs (2026-09-04 to 09-14): the timbre reference for the Mac's takes
 # (ace-synth --ref-audio). They set the song gate's limits; the gate passes all nine. A take
