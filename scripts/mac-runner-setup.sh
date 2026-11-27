@@ -68,7 +68,11 @@ cat > "$HOME/anchor-gpu/heartbeat.sh" <<HBEOF
 #!/bin/bash
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
 if ! pgrep -f "Runner.Listener" >/dev/null; then
-  (cd "$DIR" && ./svc.sh start >/dev/null 2>&1)   # start the runner again if it stopped
+  # start the runner again if it stopped. "svc.sh start" only loads the service, and a listener that
+  # exited on its own ("Runner session is invalid", 2026-11-23) stays loaded and stopped, so the Mac
+  # looked asleep for four days: kickstart restarts it, and svc.sh start covers an unloaded one
+  launchctl kickstart -k "gui/\$(id -u)/\$(cat "$DIR/.service" 2>/dev/null | xargs basename 2>/dev/null | sed 's/\.plist\$//')" >/dev/null 2>&1 \
+    || (cd "$DIR" && ./svc.sh start >/dev/null 2>&1)
   sleep 10
   pgrep -f "Runner.Listener" >/dev/null || exit 0
 fi
