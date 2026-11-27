@@ -358,7 +358,7 @@ def mirror_layout(brief: dict) -> bool:
     """Which side the title sits on, from the song (its seed, else its title), never the same
     pattern day after day."""
     import zlib
-    key = str(brief.get("seed") or brief.get("title") or "")
+    key = str(brief.get("art_seed") or brief.get("seed") or brief.get("title") or "")
     return zlib.crc32(key.encode()) % 2 == 1
 
 

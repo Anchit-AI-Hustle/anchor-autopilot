@@ -42,8 +42,15 @@ def test_the_mac_awake_renders_on_the_mac(tmp_path):
     assert pick(tmp_path, age=60, event="schedule", hour=8) == "mac"
 
 
-def test_a_scheduled_run_waits_for_the_mac_before_19_utc(tmp_path):
-    assert pick(tmp_path, age=3 * 3600, event="schedule", hour=16) == "wait"
+def test_a_scheduled_run_waits_for_a_mac_that_just_dozed_off(tmp_path):
+    assert pick(tmp_path, age=30 * 60, event="schedule", hour=16) == "wait"
+
+
+def test_a_mac_asleep_for_over_an_hour_never_costs_a_song(tmp_path):
+    """Anchit, 2026-11-21: "ensure Mac being asleep is not a problem"."""
+    for hour in (8, 13, 16):
+        assert pick(tmp_path, age=3 * 3600, event="schedule", hour=hour) == "cpu"
+    assert pick(tmp_path, age=61 * 60, event="schedule", hour=10) == "cpu"
 
 
 def test_the_last_run_of_the_day_falls_back_to_the_cpu(tmp_path):

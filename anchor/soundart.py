@@ -98,7 +98,7 @@ def palette(feat: dict, genres: tuple[str, ...], minor: bool, variant: int = 0) 
     for i, g in enumerate(genres or ("hard_techno",)):
         _, s, v = TINT.get(g, (0.0, 0.7, 0.9))
         hue = (k + 0.137 * variant) % 1.0 if g == "psychedelic_techno" else \
-            (GENRE_HUE.get(g, 0.0) + (k - 0.5) * 0.12 + 0.05 * variant) % 1.0
+            (GENRE_HUE.get(g, 0.0) + (k - 0.5) * 0.12 + 0.09 * variant) % 1.0
         v = v * (0.85 if minor else 1.0)
         for dh, ds, dv in ((0, 0, 0), (0.06, -0.2, -0.2), (-0.04, 0.05, -0.55)):
             r, gg, b = colorsys.hsv_to_rgb((hue + dh) % 1.0, min(1, max(0, s + ds)), min(1, max(0.05, v + dv)))
@@ -258,6 +258,30 @@ def render(feat: dict, genres: tuple[str, ...], minor: bool, size: int = 1440, v
             arr[..., 3] = (arr[..., 3] * 0.85).astype(np.uint8)
             layer = Image.fromarray(arr, "RGBA")
         img = Image.alpha_composite(img, layer)
+    # from the fifth redraw on, a third drawing of the same audio joins the picture, in the visual
+    # language of a genre this song is not (each redraw a different one): the same music, a new
+    # structure, so a song whose genre already has many covers out still finds an original one
+    if variant >= 4:
+        others = [g for g in STYLES if g not in gs]
+        g3 = others[(variant - 4 + feat["key"]) % len(others)]
+        layer = DRAW[g3](size, feat, pal[::-1][:3], rot + 1.3)
+        arr = np.asarray(layer).copy()
+        arr[..., 3] = (arr[..., 3] * 0.7).astype(np.uint8)
+        img = Image.alpha_composite(img, Image.fromarray(arr, "RGBA"))
+    # each redraw is a different picture of the same song: a closer view of another part of it
+    # (a ring design looks the same mirrored, so the view itself must move), then mirrored,
+    # upside down, turned a quarter, so the uniqueness gate (anchor/pipeline.py) finds a new one
+    if variant:
+        zoom = 1.25 + 0.2 * (variant % 4)
+        ang = variant * 2.39996                      # the golden angle: no two views share a side
+        w = size / zoom
+        cx = size / 2 + math.cos(ang) * (size - w) / 2
+        cy = size / 2 + math.sin(ang) * (size - w) / 2
+        img = img.crop((int(cx - w / 2), int(cy - w / 2), int(cx + w / 2), int(cy + w / 2))).resize((size, size), Image.LANCZOS)
     if variant % 2:
         img = img.transpose(Image.FLIP_LEFT_RIGHT)
+    if (variant // 2) % 2:
+        img = img.transpose(Image.FLIP_TOP_BOTTOM)
+    if (variant // 4) % 2:
+        img = img.transpose(Image.ROTATE_90)
     return img.convert("RGB")

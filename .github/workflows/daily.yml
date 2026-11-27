@@ -182,11 +182,13 @@ jobs:
           case "$SEEN" in ''|*[!0-9]*) SEEN=0 ;; esac
           AGE=$(( $(date +%s) - SEEN ))
           HOUR=$((10#$(date -u +%H)))
-          if [ "$WANT" = "auto" ] && [ "$AGE" -gt 1200 ] && [ "$EVENT" = "schedule" ] && [ "$HOUR" -lt 19 ]; then
-            # Mac first: wait for a later run while the Mac may still wake up today
+          # Mac first, but a sleeping Mac never costs a song (Anchit, 2026-11-21: "ensure Mac being
+          # asleep is not a problem"): a Mac that dozed off in the last hour may be back for the
+          # next run, so that run waits; one asleep for longer hands the song to GitHub's CPU now
+          if [ "$WANT" = "auto" ] && [ "$AGE" -gt 1200 ] && [ "$AGE" -le 3600 ] && [ "$EVENT" = "schedule" ] && [ "$HOUR" -lt 19 ]; then
             echo "renderer=wait" >> "$GITHUB_OUTPUT"
             echo 'runs_on="ubuntu-24.04"' >> "$GITHUB_OUTPUT"
-            echo "::notice::The Mac is asleep (heartbeat ${AGE}s ago): waiting for a later run to render on its GPU; the 19:37 UTC run falls back to the CPU"
+            echo "::notice::The Mac dozed off (heartbeat ${AGE}s ago): the next run renders on its GPU if it is back, on GitHub's CPU if not"
           elif [ "$WANT" = "mac" ] || { [ "$WANT" = "auto" ] && [ "$AGE" -le 1200 ]; }; then
             echo "renderer=mac" >> "$GITHUB_OUTPUT"
             echo 'runs_on=["self-hosted","macOS","ARM64","anchor-mac"]' >> "$GITHUB_OUTPUT"
@@ -227,6 +229,43 @@ jobs:
           gh workflow run daily.yml --ref "$GITHUB_REF_NAME" -f renderer=cpu -f date="$DATE" -f force="$FORCE" \
             -f dry_run="$DRY" -f publish_now="$NOW_" -f ignore_queue="$IGNQ"
           gh run cancel "$RUN_ID"
+
+  # A Mac that falls asleep in the middle of a song (lid closed, battery) would keep its job
+  # running for hours and hold every later run behind it (concurrency group daily-drop). The
+  # Mac's heartbeat stamps the release asset mac-alive/alive.txt every 5 min
+  # (scripts/mac-runner-setup.sh); when it is 15 min old twice in a row while songs are still
+  # rendering, this stops the run, so the next scheduled run renders them on GitHub's CPU
+  # (the plan hands a Mac asleep over an hour to the CPU). Anchit, 2026-11-21.
+  mac-alive:
+    needs: plan
+    if: needs.plan.outputs.count != '0' && needs.plan.outputs.renderer == 'mac' && needs.plan.outputs.from_run == ''
+    runs-on: ubuntu-24.04
+    timeout-minutes: 485
+    steps:
+      - name: Stop the run if the Mac falls asleep mid-song
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          stale=0
+          for i in $(seq 1 240); do
+            LEFT="$(gh api "repos/$GH_REPO/actions/runs/$RUN_ID/jobs?per_page=50" \
+              -q '[.jobs[] | select(.name | startswith("make")) | select(.status != "completed")] | length' || echo 1)"
+            [ "${LEFT:-1}" = 0 ] && { echo "Every song is rendered."; exit 0; }
+            AT="$(gh api "repos/$GH_REPO/releases/tags/mac-alive" -q '.assets[] | select(.name == "alive.txt") | .updated_at' 2>/dev/null || true)"
+            if [ -n "$AT" ]; then
+              AGE=$(( $(date +%s) - $(python3 -c "import sys,datetime;print(int(datetime.datetime.strptime(sys.argv[1],'%Y-%m-%dT%H:%M:%SZ').replace(tzinfo=datetime.timezone.utc).timestamp()))" "$AT") ))
+              if [ "$AGE" -gt 900 ]; then stale=$((stale + 1)); else stale=0; fi
+              echo "Mac heartbeat ${AGE}s ago (stale checks: $stale)"
+              if [ "$stale" -ge 2 ]; then
+                echo "::warning::The Mac fell asleep mid-song (heartbeat ${AGE}s ago); stopping this run so the next scheduled run renders on GitHub's CPU"
+                gh run cancel "$RUN_ID"
+                exit 0
+              fi
+            fi
+            sleep 120
+          done
 
   make:
     needs: plan
