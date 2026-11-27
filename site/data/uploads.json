@@ -1474,7 +1474,8 @@
     {
       "drop": "2026-11-22",
       "video": "MtWfFiG3hpo",
-      "image": "site/thumbs/full/2026-11-22.jpg"
+      "image": "site/thumbs/full/2026-11-22.jpg",
+      "set": true
     }
   ]
 }
