@@ -229,7 +229,45 @@ def mark_complete(song: dict) -> None:
         (d / "complete").write_text(time.strftime("%Y-%m-%d %H:%M:%S\n"))
 
 
+GH_REPO = os.environ.get("ANCHOR_GH_REPO", "Anchit-AI-Hustle/anchor-autopilot")
+
+
+def publish_complete(clips: Path | None = None, gh: str = "gh") -> list[str]:
+    """Every finished set of shots goes up as the GitHub release ``cinematic-<song id>`` once, so a
+    song rendered on GitHub's CPU (Mac asleep) still gets its filmed video: anchor/cinematic.py
+    fetches the release (2026-11-28 audit: the shots only ever lived on this Mac). A ``published``
+    file marks a set as done; a failed upload is simply tried again next time."""
+    done = []
+    for d in sorted((clips or CLIPS).glob("*/complete")):
+        song = d.parent
+        if (song / "published").exists():
+            continue
+        files = [str(p) for p in sorted(song.glob("shot-*.mp4")) + sorted(song.glob("shot-*.json"))
+                 if ".part" not in p.name]
+        if not files:
+            continue
+        tag = f"cinematic-{song.name}"
+        r = subprocess.run([gh, "release", "create", tag, "-R", GH_REPO, "--title", f"Cinematic shots: {song.name}",
+                            "--notes", "Filmed storyboard shots made on the Mac (tools/cinematic/worker.py).",
+                            "--latest=false", *files], capture_output=True, text=True, timeout=1800, check=False)
+        if r.returncode != 0 and "already exists" in (r.stderr or ""):
+            r = subprocess.run([gh, "release", "upload", tag, "-R", GH_REPO, "--clobber", *files],
+                               capture_output=True, text=True, timeout=1800, check=False)
+        if r.returncode == 0:
+            (song / "published").write_text(time.strftime("%Y-%m-%d %H:%M:%S\n"))
+            done.append(song.name)
+            log(f"published {tag} ({len(files)} files)")
+        else:
+            log(f"publish {tag} failed: {(r.stderr or '').strip()[:200]}")
+    return done
+
+
 def main() -> int:
+    # cheap and network-only, so it runs even while the Mac is busy
+    try:
+        publish_complete()
+    except Exception as exc:  # noqa: BLE001
+        log(f"publish: {exc}")
     reason = why_not()
     if reason:
         log(f"skip: {reason}")

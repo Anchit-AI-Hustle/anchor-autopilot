@@ -59,6 +59,7 @@ permissions:
   pages: write
   id-token: write
   actions: write   # the Mac watch: cancel a run whose Mac never picked it up and start it on GitHub's CPU
+  issues: write    # the Mac-offline alert: one open issue (GitHub emails the owner) while the Mac is away
 
 concurrency:
   # runs that post go one after the other; a render-only run (dry_run) posts nothing, so it renders
@@ -71,12 +72,16 @@ env:
   ACESTEP_CPP_REF: c9045e270c3145a288579fee4f298286e03aa881
   HF_REPO: Serveurperso/ACE-Step-1.5-GGUF
   # file:bytes, verified against huggingface.co/Serveurperso/ACE-Step-1.5-GGUF (MIT licence)
+  # 2026-11-28: the CPU renders with the Mac's 4B XL DiT (sftturbo50, 8 steps) instead of the 2B SFT at 32
+  # steps with CFG: measured on the same CPU, 41.8 s a step against 60.2, so about 5.8x less DiT time a
+  # take (two-hour takes left room for two), and it is the model with the better gate record (Mac 14 of 57
+  # takes passed, CPU 13 of 81). The small planner stays: the 4B one was never measured on a CPU.
   MODEL_FILES: >-
-    acestep-v15-sft-Q8_0.gguf:2549527936
+    acestep-v15-xl-sftturbo50-Q8_0.gguf:5305828768
     acestep-5Hz-lm-0.6B-Q8_0.gguf:709846656
     Qwen3-Embedding-0.6B-Q8_0.gguf:784144960
     vae-BF16.gguf:337420928
-  MODELS_CACHE_KEY: acestep15-gguf-q8-sft-lm06-v1
+  MODELS_CACHE_KEY: acestep15-gguf-q8-xlturbo-lm06-v1
   # the Mac renderer's models (Anchit, 2026-10-29: "use the Mac GPU"): the 4B XL DiT (sftturbo50) and the 4B
   # planner, kept on the Mac in ~/anchor-gpu/models between runs (tools/mac-runner-setup.sh)
   MAC_MODEL_FILES: >-
@@ -171,7 +176,7 @@ jobs:
       # The Mac's GPU renders the big model (4B XL + 4B planner, best of several takes) when it
       # is online: its heartbeat (tools/mac-heartbeat.sh, every 5 min while the runner is up)
       # stamps the repo variable ANCHOR_MAC_SEEN. Older than 20 min means asleep or off, and the
-      # songs render on GitHub's CPU with the smaller model, as before.
+      # songs render on GitHub's CPU (the same XL DiT, the 0.6B planner, fewer takes).
       - name: Pick where the songs render
         id: where
         env:
@@ -197,6 +202,40 @@ jobs:
             echo "renderer=cpu" >> "$GITHUB_OUTPUT"
             echo 'runs_on="ubuntu-24.04"' >> "$GITHUB_OUTPUT"
             echo "::notice::Rendering on GitHub's CPU (Mac heartbeat $([ "$SEEN" = 0 ] && echo never || echo "${AGE}s ago"))"
+          fi
+          echo "mac_age=$AGE" >> "$GITHUB_OUTPUT"
+          echo "mac_seen=$SEEN" >> "$GITHUB_OUTPUT"
+
+      # 2026-11-28 audit: the Mac was away for 4.5 days (heartbeat 394,232 s old) and nobody knew;
+      # every song of those days rendered on GitHub's CPU with the small model, where 13 of 81
+      # takes passed the song gate against 14 of 57 on the Mac. One open issue says so (GitHub
+      # emails the owner once), it gets a comment at most once a day, and it closes itself when
+      # the Mac is back. It never stops the drop.
+      - name: Tell Anchit when the Mac has been away for more than 6 hours
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          AGE: ${{ steps.where.outputs.mac_age }}
+          SEEN: ${{ steps.where.outputs.mac_seen }}
+        run: |
+          TITLE="Mac renderer offline: songs are rendering on GitHub's CPU"
+          OPEN="$(gh issue list --state open --limit 100 --json number,title,updatedAt --jq "[.[] | select(.title == \"$TITLE\")][0] // empty | \"\\(.number) \\(.updatedAt)\"" 2>/dev/null || true)"
+          NUM="${OPEN%% *}"
+          if [ "${SEEN:-0}" != 0 ] && [ "${AGE:-0}" -le 1200 ]; then
+            [ -n "$NUM" ] && gh issue close "$NUM" --comment "The Mac is back (heartbeat ${AGE}s ago): songs render on its GPU again." || true
+            exit 0
+          fi
+          [ "${AGE:-0}" -gt 21600 ] || exit 0
+          HOURS=$(( ${AGE:-0} / 3600 ))
+          [ "${SEEN:-0}" = 0 ] && HOURS=unknown
+          BODY="The Mac's heartbeat is ${HOURS} h old, so today's songs render on GitHub's CPU (slower takes, fewer of them, a lower pass rate). To fix: wake the Mac, keep it on the charger with the lid open, and check that the runner in ~/actions-runner-anchor is running (bash scripts/mac-runner-setup.sh starts it again). This issue closes by itself when the Mac is back."
+          if [ -z "$NUM" ]; then
+            gh issue create --title "$TITLE" --body "$BODY"
+          else
+            LAST="$(date -d "${OPEN#* }" +%s 2>/dev/null || echo 0)"
+            [ $(( $(date +%s) - LAST )) -gt 79200 ] && gh issue comment "$NUM" --body "Still away: heartbeat ${HOURS} h old." || true
           fi
 
   # A Mac run whose Mac never picks up the work (asleep, lid closed) would wait in the queue for
@@ -466,6 +505,8 @@ jobs:
           ANCHOR_SEED_SALT: ${{ github.run_id }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
           CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+          # story videos from stills when no filmed shots exist (anchor/storystills.py); optional
+          POLLINATIONS_TOKEN: ${{ secrets.POLLINATIONS_TOKEN }}
         run: |
           if [ "$ANCHOR_RENDERER" != "mac" ]; then
             export ACESTEP_BIN="$GITHUB_WORKSPACE/vendor/acestep.cpp/build" ACESTEP_MODELS="$GITHUB_WORKSPACE/vendor/models"

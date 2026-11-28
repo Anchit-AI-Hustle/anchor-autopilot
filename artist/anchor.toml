@@ -112,7 +112,7 @@ true_peak_db = -1.5
 
 # Where a run renders decides how big a model it can afford (Anchit, 2026-10-29: "use the Mac
 # GPU"; songs were low quality). The daily run picks "mac" when the Mac runner is online, and
-# the lines above (2B DiT, 0.6B planner, 32 steps) stay the GitHub CPU fallback. Takes are
+# GitHub's CPU runs [music.renderers.cpu] (the XL DiT, 0.6B planner). The lines above are the base. Takes are
 # rendered until best_of of them pass the song gate, and the best passing take ships.
 # Anchit's nine Suno songs (2026-09-04 to 09-14): the timbre reference for the Mac's takes
 # (ace-synth --ref-audio). They set the song gate's limits; the gate passes all nine. A take
@@ -140,7 +140,13 @@ takes = 6           # 2026-10-31 first Mac run: 1 of 4 takes reached the gate, s
 best_of = 1         # 2026-11-09 "the songs shouldnt take so long": the first take that passes the gate ships
 
 [music.renderers.cpu]
-takes = 2
+# 2026-11-28: the Mac's XL DiT on the CPU too (see MODEL_FILES in daily.yml): 8 steps, no CFG (turbo),
+# about 5.8x less DiT time a take than the 2B SFT at 32 steps, so four takes fit where two did
+dit_model = "acestep-v15-xl-sftturbo50-Q8_0"
+steps = 8
+guidance = 1.0
+shift = 3.0
+takes = 4
 best_of = 1
 
 # The sound of each song, drawn fresh every time (Anchit, 2026-10-31: "different melodies,

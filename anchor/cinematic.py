@@ -41,13 +41,72 @@ def clips_dir() -> Path:
     return Path(os.environ.get("ANCHOR_CINEMATIC_DIR", Path.home() / "anchor-gpu" / "cinematic" / "clips"))
 
 
-def shots_for(song_id: str | None, directory: Path | None = None) -> list[Path]:
-    """The finished shots of a songbook song, in order; [] when there are too few to carry a video."""
+REPO_SLUG = "Anchit-AI-Hustle/anchor-autopilot"
+
+
+def synced_dir() -> Path:
+    return Path(os.environ.get("ANCHOR_CINEMATIC_SYNC_DIR", Path(__file__).resolve().parent.parent / "build" / "cinematic-sync"))
+
+
+def fetch_released(song_id: str, dest_root: Path | None = None, timeout: int = 60) -> Path | None:
+    """The Mac's filmed shots of a song from its GitHub release ``cinematic-<id>`` (the worker
+    uploads a finished set there), so a song rendered on GitHub's CPU can use them too. None when
+    there is no such release. The repo is public: no token needed."""
+    import urllib.request
+    d = (dest_root or synced_dir()) / song_id
+    if (d / "complete").exists():
+        return d
+    url = f"https://api.github.com/repos/{REPO_SLUG}/releases/tags/cinematic-{song_id}"
+    headers = {"Accept": "application/vnd.github+json"}
+    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if token:   # a shared runner's anonymous limit is 60 calls an hour
+        headers["Authorization"] = f"Bearer {token}"
+    try:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=timeout) as r:
+            assets = json.loads(r.read()).get("assets", [])
+    except Exception:  # noqa: BLE001 - no release (404) or no network: no synced shots
+        return None
+    wanted = [a for a in assets if re.fullmatch(r"shot-\d+\.(mp4|json)", a.get("name", ""))]
+    if not any(a["name"].endswith(".mp4") for a in wanted):
+        return None
+    d.mkdir(parents=True, exist_ok=True)
+    try:
+        for a in wanted:
+            with urllib.request.urlopen(a["browser_download_url"], timeout=timeout * 5) as r:
+                (d / a["name"]).write_bytes(r.read())
+    except Exception as exc:  # noqa: BLE001 - a half download is never used (no complete file)
+        log(f"cinematic: {song_id}: synced shots not fetched ({str(exc)[:120]})")
+        return None
+    (d / "complete").write_text("synced\n")
+    return d
+
+
+def _finished(d: Path) -> list[Path]:
+    return sorted(p for p in d.glob("shot-*.mp4") if ".part" not in p.name and p.stat().st_size > 10_000)
+
+
+def shots_for(song_id: str | None, directory: Path | None = None, sync: bool = False) -> list[Path]:
+    """The finished shots of a song, in order; [] when there are too few to carry a video.
+
+    Filmed shots first (the Mac's LTX clips, then the same clips synced from their release when
+    ``sync``), then shots made from stills (storystills.py). With ``directory`` only that folder."""
     if not song_id:
         return []
-    d = (directory or clips_dir()) / song_id
-    shots = sorted(p for p in d.glob("shot-*.mp4") if ".part" not in p.name and p.stat().st_size > 10_000)
-    return shots if len(shots) >= MIN_SHOTS else []
+    if directory is not None:
+        shots = _finished(directory / song_id)
+        return shots if len(shots) >= MIN_SHOTS else []
+    from .storystills import stills_dir
+
+    def enough(d: Path) -> list[Path]:
+        shots = _finished(d) if d.exists() else []
+        return shots if len(shots) >= MIN_SHOTS else []
+    local = enough(clips_dir() / song_id)
+    if local:                       # the Mac's own clips: no network at all
+        return local
+    synced = synced_dir() / song_id
+    if sync and not (synced / "complete").exists():
+        fetch_released(song_id)
+    return enough(synced) or enough(stills_dir() / song_id)
 
 
 def ready_ids(directory: Path | None = None) -> set[str]:

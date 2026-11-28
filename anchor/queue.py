@@ -62,7 +62,7 @@ def waiting_for_shots(entry: dict) -> bool:
     from datetime import datetime, timezone
 
     from .cinematic import shots_for
-    if shots_for(entry["suno_id"]):
+    if shots_for(entry["suno_id"], sync=True):
         return False
     try:
         at = datetime.fromisoformat(str(entry.get("queued_at", "")).replace("Z", "+00:00"))

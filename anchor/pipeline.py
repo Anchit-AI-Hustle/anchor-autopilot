@@ -41,7 +41,19 @@ class SongGateHeld(QualityError):
 # a take is never published if it is broken, not original, or sings words it must not, even when
 # every take was held (a production note sung, 2026-10-26; a title sung wrong, 2026-10-30)
 NEVER_SHIP = ("audio contains NaN", "too quiet / near silent", "sounds like released drop",
-              "sings its production notes", "title sung wrong")
+              "sings its production notes", "title sung wrong",
+              # broken audio is never a "near miss" (2026-11-28 audit: three hard tech songs went
+              # out with a kick/bass share of 0.001 to 0.035, i.e. no kick and no bass at all, and
+              # one with a 2.5 s hole in the middle, because only the gate's structure was weighed)
+              "no low end", "dropout of", "song gate: the music cuts to silence",
+              "song gate: the music keeps breaking off")
+
+# How far past a song-gate limit a held take may sit and still go out when no take passed, in
+# units of the spread of Anchit's own songs on that measure (songgate.REFERENCE). 2026-11-28
+# audit: 23 of the takes published as "best held" in Nov 2026 missed by up to 0.7 of that spread
+# (noise_score 0.066 against a limit of 0.046 and his songs' 0.016 to 0.043: mostly noise, not
+# notes). A near miss (section_changes 7 against 7.1) still ships, so every song still comes out.
+NEAR_MISS = 0.25
 
 
 def ship_best_held() -> bool:
@@ -49,11 +61,32 @@ def ship_best_held() -> bool:
     return env("ANCHOR_SHIP_BEST_HELD", "1") != "0"
 
 
+def miss_by(fail: dict) -> float:
+    """How far one song-gate fail sits past its limit, in spreads of Anchit's songs (0 at the limit)."""
+    lo, hi = songgate.REFERENCE.get(fail.get("check"), (0.0, 1.0))
+    spread = max(abs(hi - lo), 1e-9)
+    try:
+        return abs(float(fail["value"]) - float(fail["limit"])) / spread
+    except (KeyError, TypeError, ValueError):
+        return float("inf")
+
+
+def near_miss(held: dict) -> bool:
+    """A held take that is close enough to Anchit's songs to go out when nothing passed: measured by
+    the song gate (when the gate is on), and every gate fail within NEAR_MISS of its limit."""
+    gate_fails = held.get("gate_fails")
+    if gate_fails is None:
+        # never measured: with the gate on, an unmeasured take is not published as "close enough"
+        return held.get("mastered") is not None or not songgate.enabled()
+    return all(miss_by(f) <= NEAR_MISS for f in gate_fails)
+
+
 def pick_best_held(held: list[dict]) -> dict | None:
-    """The best of the held takes, or None when every one is broken or a copy (NEVER_SHIP).
-    A take that passed QC and was held only by the song gate comes first (highest gate score),
-    then the take with the fewest fails, then the earliest."""
-    ok = [h for h in held if not any(f.startswith(NEVER_SHIP) for f in h["fails"])]
+    """The best of the held takes, or None when every one is broken, a copy (NEVER_SHIP) or clearly
+    off Anchit's sound (more than NEAR_MISS past a gate limit). A take that passed QC and was held
+    only by the song gate comes first (highest gate score), then the take with the fewest fails,
+    then the earliest."""
+    ok = [h for h in held if not any(f.startswith(NEVER_SHIP) for f in h["fails"]) and near_miss(h)]
     if not ok:
         return None
     return min(ok, key=lambda h: (h["mastered"] is None, -(h["score"] or 0.0), len(h["fails"]), h["attempt"]))
@@ -372,13 +405,14 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
                  "nearest_audio": {"id": twin, "similarity": round(sim, 3),
                                    "envelope": round(score["envelope"], 3), "sequence": round(score["sequence"], 3)}}
         attempts_log.append(entry)
-        mastered, gate_score = None, 0.0
+        mastered, gate_score, gate_fails = None, 0.0, None
         if ok:
             mastered = master_take(profile, raw, out_dir / f"take-{attempt}")
             gate = gate_take(mastered, stats.get("engine"), hard=(brief.get("genre_group") == "hardtech"))
             if gate is not None:
                 entry["song_gate"] = gate_note(gate)
                 gate_score = entry["song_gate"]["score"]
+                gate_fails = gate.get("fails") or []
                 if gate["verdict"] != "PASS":
                     ok = entry["ok"] = False
                     fails = entry["fail"] = [*fails, *(f"song gate: {r}" for r in songgate.reasons(gate))]
@@ -386,7 +420,8 @@ def make(profile: Profile, day: str, out_dir: Path, *, engine_name: str | None =
         log(f"QC take {attempt + 1}: {'PASS' if ok else 'FAIL'} {fails or ''} {warns or ''}")
         if not ok:
             held_takes.append({"score": gate_score, "attempt": attempt, "brief": brief, "raw": raw, "stats": stats,
-                               "stats_audio": stats_audio, "mastered": mastered, "fails": list(fails)})
+                               "stats_audio": stats_audio, "mastered": mastered, "fails": list(fails),
+                               "gate_fails": gate_fails})
         if ok:
             passing.append({"score": gate_score, "attempt": attempt, "brief": brief, "raw": raw, "stats": stats,
                             "stats_audio": stats_audio, "mastered": mastered})

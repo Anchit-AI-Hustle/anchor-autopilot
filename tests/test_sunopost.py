@@ -101,7 +101,7 @@ def test_a_cinematic_song_waits_for_its_shots_then_goes_out_anyway(tmp_path, mon
 def test_the_chosen_look_decides_the_video(monkeypatch):
     from anchor import cinematic, video
     asked = []
-    monkeypatch.setattr(cinematic, "shots_for", lambda sid: asked.append(sid) or ["s"])
+    monkeypatch.setattr(cinematic, "shots_for", lambda sid, **kw: asked.append(sid) or ["s"])
     brief = {"theme": "queue", "cinematic_id": "suno-1", "video_style": "cinematic"}
     assert video.cinematic_shots(brief) == ["s"] and asked == ["suno-1"]
     assert video.cinematic_shots({**brief, "video_style": "motion"}) == [] and asked == ["suno-1"]

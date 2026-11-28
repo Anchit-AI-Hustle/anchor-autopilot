@@ -12,7 +12,7 @@ from pathlib import Path
 import numpy as np
 from PIL import Image, ImageEnhance, ImageFilter
 
-from .config import FONTS, Family
+from .config import FONTS, Family, env
 from .util import media_summary, run
 
 W, H, FPS = 1080, 1920, 30
@@ -478,7 +478,18 @@ def cinematic_shots(brief: dict) -> list:
     from . import cinematic
     if (brief.get("video_style") or "auto") == "motion":
         return []
-    return cinematic.shots_for(brief.get("cinematic_id") or brief.get("theme"))
+    song_id = brief.get("cinematic_id") or brief.get("theme")
+    try:
+        shots = cinematic.shots_for(song_id, sync=True)
+        if shots or env("ANCHOR_STORY_STILLS", "1") == "0":
+            return shots
+        # no filmed shots: the storyboard made into shots from stills, when an image provider is
+        # set up (2026-11-28: every video had been the motion-graphics fallback)
+        from . import storystills
+        return storystills.ensure(song_id, budget_s=float(env("ANCHOR_STILLS_BUDGET_S", "900")))
+    except Exception as exc:  # noqa: BLE001 - the scene video still makes the drop
+        print(f"::warning::story shots failed, using the scene video: {exc}"[:600])
+        return []
 
 
 def render_full(art_raw: Path, cover: Path, audio: Path, out_dir: Path, base: str, brief: dict,

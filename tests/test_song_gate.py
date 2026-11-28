@@ -204,12 +204,15 @@ def test_make_on_the_command_line_exits_3_and_writes_why(tmp_path, monkeypatch):
     assert note["why"] == ["ends in dead air (silent_tail_s 4.2 s, limit 3.0)"]
 
 
-def test_the_mac_renders_the_big_model_and_the_cpu_keeps_the_small_one(fast_profile, monkeypatch):
+def test_the_mac_and_the_cpu_render_the_xl_model_with_their_own_planners(fast_profile, monkeypatch):
     music = fast_profile.music
     mac, cpu, plain = renderer_settings(music, "mac"), renderer_settings(music, "cpu"), renderer_settings(music, "")
     assert mac["dit_model"] == "acestep-v15-xl-sftturbo50-Q8_0" and mac["lm_model"] == "acestep-5Hz-lm-4B-Q8_0"
     assert mac["steps"] == 8 and mac["takes"] == 6 and mac["best_of"] == 1   # 2026-11-09: the first passing take ships
-    assert cpu["dit_model"] == plain["dit_model"] == "acestep-v15-sft-Q8_0" and cpu["best_of"] == 1
+    # 2026-11-28: measured 5.8x less DiT time a take on the CPU than the 2B SFT at 32 steps
+    assert cpu["dit_model"] == "acestep-v15-xl-sftturbo50-Q8_0" and cpu["steps"] == 8 and cpu["guidance"] == 1.0
+    assert cpu["lm_model"] == "acestep-5Hz-lm-0.6B-Q8_0" and cpu["takes"] == 4 and cpu["best_of"] == 1
+    assert plain["dit_model"] == "acestep-v15-sft-Q8_0"            # no renderer named: the base settings
     with pytest.raises(ValueError):
         renderer_settings(music, "gpu-cluster")
     monkeypatch.setenv("ANCHOR_RENDERER", "mac")
