@@ -1,12 +1,10 @@
 {
   "last_run": {
-    "result": "ok",
-    "stage": "done",
-    "drop_id": "2026-11-28-4",
-    "title": "Move Before Thunder",
-    "finished_at": "2026-11-28T08:22:23Z",
-    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/46104785566",
-    "error": null
+    "result": "failed",
+    "stage": "make",
+    "error": "The make stage failed. Open the run log for details.",
+    "finished_at": "2026-11-28T08:22:53Z",
+    "run_url": "https://github.com/Anchit-AI-Hustle/anchor-autopilot/actions/runs/46104785566"
   },
   "next_post_at": "2026-11-29T17:30:00Z",
   "streak": 2,
@@ -16,7 +14,7 @@
   "schedule": {
     "post_time_utc": "17:30"
   },
-  "updated_at": "2026-11-28T08:22:23Z",
+  "updated_at": "2026-11-28T08:22:53Z",
   "engine": {
     "engine": "acestep_cpp",
     "threads": 4,
